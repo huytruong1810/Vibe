@@ -35,5 +35,26 @@ export const SourceManifestSchema = z
       )
       .optional(),
   })
-  .strict();
+  .strict()
+  .superRefine((source, ctx) => {
+    for (const [kind, rows] of [
+      ['frame', source.frames],
+      ['clip', source.clips],
+      ['appearance', source.appearances],
+    ] as const) {
+      const seen = new Set<string>();
+      for (const row of rows) {
+        if (seen.has(row.id))
+          ctx.addIssue({ code: 'custom', message: `Duplicate source ${kind} ID: ${row.id}` });
+        seen.add(row.id);
+      }
+    }
+    const bindings = new Set<string>();
+    for (const appearance of source.appearances) {
+      const id = `${appearance.kind}:${appearance.contentId}`;
+      if (bindings.has(id))
+        ctx.addIssue({ code: 'custom', message: `Duplicate source identity: ${id}` });
+      bindings.add(id);
+    }
+  });
 export type SourceManifest = z.infer<typeof SourceManifestSchema>;

@@ -142,6 +142,23 @@ and disposal prevent late callbacks from reviving old presentation state.
 
 ## Checks and review evidence
 
+### Terrain material registration
+
+Ground materials `ground_grass`, `ground_dirt`, `ground_sand` and
+`ground_freshwater` are 64×64 full-tile images. Freshwater corner transitions use
+explicit environment content IDs `shore_freshwater_mask_1` through
+`shore_freshwater_mask_14`: 64×64 transparent overlays, with NW=1, NE=2, SW=4,
+SE=8. Mask 0 draws nothing; mask 15 uses the full freshwater material. These
+are content bindings, not filename inference. Mask previews belong in the gallery.
+The original generic `shore_freshwater` proof may remain as reference but cannot
+substitute for the fourteen transition masks.
+
+`cliff_grass` is a 64×16 repeatable strip per elevation step; `ramp_grass` is
+64×64. Houses, trees and canopy exports retain untrimmed foot registration. The
+renderer layers materials without changing collision or protected access routes.
+Strides are positive world-tile distances for walk/run clips and must use
+`playback: "distance"`; source pixel dimensions must not determine movement speed.
+
 ```sh
 npm run assets:build
 npm run check:assets
