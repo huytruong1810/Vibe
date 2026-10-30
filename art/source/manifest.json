@@ -99,6 +99,36 @@
       "contentId": "npc:bram",
       "hud96": "exports/portraits/portrait_npc_bram_96.png",
       "hud128": "exports/portraits/portrait_npc_bram_128.png"
+    },
+    {
+      "kind": "npc",
+      "contentId": "npc:flint",
+      "hud96": "exports/portraits/portrait_npc_flint_96.png",
+      "hud128": "exports/portraits/portrait_npc_flint_128.png"
+    },
+    {
+      "kind": "npc",
+      "contentId": "npc:cora",
+      "hud96": "exports/portraits/portrait_npc_cora_96.png",
+      "hud128": "exports/portraits/portrait_npc_cora_128.png"
+    },
+    {
+      "kind": "npc",
+      "contentId": "npc:runa",
+      "hud96": "exports/portraits/portrait_npc_runa_96.png",
+      "hud128": "exports/portraits/portrait_npc_runa_128.png"
+    },
+    {
+      "kind": "npc",
+      "contentId": "npc:iona",
+      "hud96": "exports/portraits/portrait_npc_iona_96.png",
+      "hud128": "exports/portraits/portrait_npc_iona_128.png"
+    },
+    {
+      "kind": "npc",
+      "contentId": "npc:aster",
+      "hud96": "exports/portraits/portrait_npc_aster_96.png",
+      "hud128": "exports/portraits/portrait_npc_aster_128.png"
     }
   ]
 }
