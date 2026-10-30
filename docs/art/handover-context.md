@@ -178,3 +178,4 @@ When `npm run check:assets` runs, it enforces:
 - Zero domain leaks into `src/domain/` or `src/engine/`.
 
 You are fully equipped with all scripts, paths, and constraints to deliver clean, AAA pixel art with zero identity drift.
+

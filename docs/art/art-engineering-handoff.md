@@ -118,31 +118,13 @@ To reconcile **commercial AAA aesthetics** with **engineering determinism**, we 
 ## 5. Architectural Guidance for Engineering
 
 1. **Atlas Budget**:
-   - 742 runtime frames pack into **1 single page** (3.89 MiB full / 1.07 MiB half). The engineering agent does not need to engineer complex multi-page atlas streaming for this slice.
+   - 790 runtime frames pack into **1 single page** (3.96 MiB full / 1.20 MiB half). The engineering agent does not need to engineer complex multi-page atlas streaming for this slice.
 2. **Untouched Runtime & Simulation Boundaries**:
    - The art agent works exclusively in `Vibe-art` on branch `art/hd-aqualia-slice`.
    - Simulation domains, worker bridges, state machines, and runtime adapters have remained untouched.
 3. **Deterministic Rebuild Hook**:
    - Engineering can run `python art/source/pipeline/rebuild.py --check` at any time to verify that assets on disk match the master pipeline output.
 4. **Interactive Verification**:
-   - Engineering can review generated proofs in [`docs/art/review-gallery.md`](review-gallery.md), [`reboot_art_review.md`](file:///C:/Users/htruong/.gemini/antigravity/brain/0bf989ca-d73f-4388-8d74-3ca48c13f29e/reboot_art_review.md), or the live gallery at `/gallery.html` (`npm run dev`).
+   - Engineering can review generated proofs in [`docs/art/handover-context.md`](handover-context.md), [`docs/art/review-gallery.md`](review-gallery.md), or the live gallery at `/gallery.html` (`npm run dev`).
 
-  - A complete character slice requires only 1 generation call.
-- **Automated Resume Scheduling**:
-  - When cloud image generation hits API rate limits (HTTP 429 cooldowns), the agent schedules background wakeup timers using the `schedule` tool.
-  - The agent automatically wakes up when the quota resets and continues work without human intervention.
-
----
-
-## 5. Architectural Guidance for Engineering
-
-1. **Atlas Budget**:
-   - 660 runtime frames pack into **1 single page** (2.08 MiB full / 0.52 MiB half). The engineering agent does not need to engineer complex multi-page atlas streaming for this slice.
-2. **Untouched Runtime & Simulation Boundaries**:
-   - The art agent works exclusively in `Vibe-art` on branch `art/hd-aqualia-slice`.
-   - Simulation domains, worker bridges, state machines, and runtime adapters have remained untouched.
-3. **Deterministic Rebuild Hook**:
-   - Engineering can run `python art/source/pipeline/rebuild.py --check` at any time to verify that assets on disk match the master pipeline output.
-4. **Interactive Verification**:
-   - Engineering can review generated proofs in [`docs/art/review-gallery.md`](review-gallery.md), [`reboot_art_review.md`](file:///C:/Users/htruong/.gemini/antigravity/brain/0bf989ca-d73f-4388-8d74-3ca48c13f29e/reboot_art_review.md), or the live gallery at `/gallery.html` (`npm run dev`).
 
