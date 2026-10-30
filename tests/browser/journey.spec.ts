@@ -438,23 +438,25 @@ test('human food, accelerated sleep, emergency waking, retaliation and predation
   Object.assign(body(hunt), { food: 1, water: 1, rest: 1 });
   Object.assign(hunter, {
     x: 266.5,
-    y: 284.5,
-    targetX: 267.5,
-    targetY: 284.5,
+    y: 285.5,
+    targetX: 267,
+    targetY: 285.5,
     food: 0.2,
     water: 1,
     rest: 1,
     commitUntil: hunt.elapsedSeconds + 100,
   });
   Object.assign(prey, {
-    x: 267.5,
-    y: 284.5,
-    targetX: 267.5,
-    targetY: 284.5,
+    x: 267,
+    y: 285.5,
+    targetX: 267,
+    targetY: 285.5,
     hp: 1,
     food: 1,
     water: 1,
-    rest: 1,
+    rest: 0.5,
+    sleeping: 1,
+    voluntaryRest: 1,
     commitUntil: hunt.elapsedSeconds + 100,
   });
   await importScenario(page, hunt);
