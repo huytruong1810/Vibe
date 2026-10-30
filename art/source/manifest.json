@@ -3,5 +3,78 @@
   "frames": [],
   "appearances": [],
   "clips": [],
-  "portraits": []
+  "portraits": [
+    {
+      "kind": "npc",
+      "contentId": "npc:vulkan",
+      "hud96": "exports/portraits/portrait_npc_vulkan_96.png",
+      "hud128": "exports/portraits/portrait_npc_vulkan_128.png"
+    },
+    {
+      "kind": "origin",
+      "contentId": "aqualia",
+      "hud96": "exports/portraits/portrait_player_aqualia_96.png",
+      "hud128": "exports/portraits/portrait_player_aqualia_128.png"
+    },
+    {
+      "kind": "origin",
+      "contentId": "zephyria",
+      "hud96": "exports/portraits/portrait_player_zephyria_96.png",
+      "hud128": "exports/portraits/portrait_player_zephyria_128.png"
+    },
+    {
+      "kind": "npc",
+      "contentId": "npc:marina",
+      "hud96": "exports/portraits/portrait_npc_marina_96.png",
+      "hud128": "exports/portraits/portrait_npc_marina_128.png"
+    },
+    {
+      "kind": "npc",
+      "contentId": "npc:neris",
+      "hud96": "exports/portraits/portrait_npc_neris_96.png",
+      "hud128": "exports/portraits/portrait_npc_neris_128.png"
+    },
+    {
+      "kind": "npc",
+      "contentId": "npc:reed",
+      "hud96": "exports/portraits/portrait_npc_reed_96.png",
+      "hud128": "exports/portraits/portrait_npc_reed_128.png"
+    },
+    {
+      "kind": "npc",
+      "contentId": "npc:willa",
+      "hud96": "exports/portraits/portrait_npc_willa_96.png",
+      "hud128": "exports/portraits/portrait_npc_willa_128.png"
+    },
+    {
+      "kind": "npc",
+      "contentId": "npc:oren",
+      "hud96": "exports/portraits/portrait_npc_oren_96.png",
+      "hud128": "exports/portraits/portrait_npc_oren_128.png"
+    },
+    {
+      "kind": "npc",
+      "contentId": "npc:mira",
+      "hud96": "exports/portraits/portrait_npc_mira_96.png",
+      "hud128": "exports/portraits/portrait_npc_mira_128.png"
+    },
+    {
+      "kind": "npc",
+      "contentId": "npc:lark",
+      "hud96": "exports/portraits/portrait_npc_lark_96.png",
+      "hud128": "exports/portraits/portrait_npc_lark_128.png"
+    },
+    {
+      "kind": "npc",
+      "contentId": "npc:dara",
+      "hud96": "exports/portraits/portrait_npc_dara_96.png",
+      "hud128": "exports/portraits/portrait_npc_dara_128.png"
+    },
+    {
+      "kind": "npc",
+      "contentId": "npc:finn",
+      "hud96": "exports/portraits/portrait_npc_finn_96.png",
+      "hud128": "exports/portraits/portrait_npc_finn_128.png"
+    }
+  ]
 }

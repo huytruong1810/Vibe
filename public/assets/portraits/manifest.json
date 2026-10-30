@@ -49,10 +49,20 @@
       "hud_128": "/assets/portraits/characters/portrait_npc_caelum_128.png",
       "hud_96": "/assets/portraits/characters/portrait_npc_caelum_96.png"
     },
+    "npc_dara": {
+      "master": "/assets/portraits/characters/portrait_npc_dara_cutout.png",
+      "hud_128": "/assets/portraits/characters/portrait_npc_dara_128.png",
+      "hud_96": "/assets/portraits/characters/portrait_npc_dara_96.png"
+    },
     "npc_finn": {
       "master": "/assets/portraits/characters/portrait_npc_finn_cutout.png",
       "hud_128": "/assets/portraits/characters/portrait_npc_finn_128.png",
       "hud_96": "/assets/portraits/characters/portrait_npc_finn_96.png"
+    },
+    "npc_lark": {
+      "master": "/assets/portraits/characters/portrait_npc_lark_cutout.png",
+      "hud_128": "/assets/portraits/characters/portrait_npc_lark_128.png",
+      "hud_96": "/assets/portraits/characters/portrait_npc_lark_96.png"
     },
     "npc_marina": {
       "master": "/assets/portraits/characters/portrait_npc_marina_cutout.png",
