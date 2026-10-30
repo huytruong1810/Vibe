@@ -297,6 +297,29 @@ export class PerceptionSystem {
 }
 
 export class ScheduleExecutor {
+  /** Read-only semantic activity for presentation. Never parse generated prose. */
+  presentation(npc: NpcState, index: number, calendar: WorldCalendar): 'idle' | 'work' | 'social' {
+    if (npc.followingUntil > calendar.elapsedSeconds) return 'idle';
+    const entries = NPC_PROFILES[index]!.week[calendar.weekday]!;
+    let active = entries[0]!;
+    for (const entry of entries) if (entry.hour <= calendar.hour) active = entry;
+    const location =
+      npc.override && npc.override.until > calendar.elapsedSeconds
+        ? npc.override.location
+        : npc.tomorrow &&
+            calendar.day === npc.tomorrow.day &&
+            calendar.hour >= npc.tomorrow.startHour &&
+            calendar.hour < npc.tomorrow.startHour + npc.tomorrow.durationHours
+          ? npc.tomorrow.location
+          : active.location;
+    const point = this.locations.locations(index)[location];
+    if (Math.hypot(npc.x - point.x, npc.y - point.y) > 1.1) return 'idle';
+    return location === 'work'
+      ? 'work'
+      : location === 'square' || location === 'shrine'
+        ? 'social'
+        : 'idle';
+  }
   private readonly locations = new SettlementPlanner();
   private readonly paths = new Map<NpcId, readonly WorldPosition[]>();
   private readonly goals = new Map<NpcId, string>();

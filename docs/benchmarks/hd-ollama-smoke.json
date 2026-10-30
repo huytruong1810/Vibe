@@ -1,0 +1,9 @@
+{
+  "recordedAt": "2026-10-30T12:37:12.323Z",
+  "model": "qwen2.5:3b",
+  "passed": false,
+  "capabilityPassed": true,
+  "capabilityMs": 7546.6568,
+  "elapsedMs": 53992.11,
+  "error": "The operation was aborted due to timeout"
+}

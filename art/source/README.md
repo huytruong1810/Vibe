@@ -9,6 +9,11 @@ under `proofs/`, and declare their registration and canonical bindings in
 `manifest.json`. Commit these source files, not generated texture pages. The
 engineering branch compiles them with the official Pixi AssetPack pipeline.
 
+`legacy-bindings.json` and `legacy-portraits.json` freeze the audited prototype
+identity metadata. Engineering maintains that compatibility adapter. Newly
+authored or revised portraits must be declared in this directory's source manifest;
+unreviewed edits to the old public portrait manifest do not enter generated bundles.
+
 `legacy-bindings.json` is an explicit identity bridge for the supplied prototype
 collection. Entries are authored mappings, not a naming convention. Missing
 villagers intentionally have no named replacement. Do not modify canonical game

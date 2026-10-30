@@ -21,6 +21,9 @@ type SurvivalTask = {
 /** Shared deterministic survival overrides schedules, plans, and following. No inventory
  * is created for NPCs: food is reserved and consumed at its actual source. */
 export class SurvivalController {
+  activity(id: number): SurvivalTask['kind'] | undefined {
+    return this.tasks.get(id)?.kind;
+  }
   private readonly tasks = new Map<number, SurvivalTask>();
   private readonly paths = new Map<number, readonly WorldPosition[]>();
   private readonly failedUntil = new Map<number, number>();

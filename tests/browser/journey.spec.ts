@@ -36,6 +36,15 @@ async function mockOllama(page: Page, valid = true): Promise<void> {
     });
   });
 }
+async function inspection(page: Page): Promise<void> {
+  if (!(await page.locator('#inspection-panel').isVisible()))
+    await page.getByRole('button', { name: 'Inspect F', exact: true }).click();
+}
+async function inventory(page: Page): Promise<void> {
+  if (!(await page.locator('#inventory-panel').isVisible()))
+    await page.getByRole('button', { name: 'Inventory I', exact: true }).click();
+}
+
 async function enter(page: Page): Promise<void> {
   await page.goto('/?test=1');
   await page.getByRole('button', { name: 'Connect & begin journey' }).click();
@@ -58,6 +67,7 @@ test('full world, movement, grounded dialogue, save and resume', async ({ page }
   const initial = await checkpoint(page);
   expect(initial.npcs).toHaveLength(30);
   expect(initial.entities.records.filter((e) => e.species !== 8).length).toBe(1000);
+  await inspection(page);
   await page.getByRole('tab', { name: 'Villagers' }).click();
   // Follow a real nearby villager; startup rendering time can put them at different points on their route.
   const held = new Set<string>();
@@ -222,6 +232,7 @@ test('creature care, crafting, elemental combat and recovery through a validated
     creature,
   );
   await expect.poll(async () => body(await checkpoint(page), creature).owner).toBe(0);
+  await inspection(page);
   await page.getByRole('tab', { name: 'Creatures' }).click();
   await expect(page.locator('.creature-title')).toContainText('Rivallie');
   await expect(page.locator('.creature-stats')).toBeVisible();
@@ -256,6 +267,7 @@ test('creature care, crafting, elemental combat and recovery through a validated
   });
   await expect(page.locator('#toast')).toContainText('imported');
   await page.getByRole('button', { name: 'Close settings' }).click();
+  await inventory(page);
   await page.getByRole('button', { name: 'Combine' }).click();
   await expect(page.locator('#inventory')).toContainText('Tool head');
   await page.keyboard.press('r');
@@ -302,6 +314,7 @@ test('human food, accelerated sleep, emergency waking, retaliation and predation
   initial.inventory = [{ id: 'berries', instance: 'item:1' }, null];
   initial.inventorySerial = 1;
   await importScenario(page, initial);
+  await inventory(page);
   await page.locator('#inventory').getByRole('button', { name: 'Use', exact: true }).click();
   await expect.poll(async () => body(await checkpoint(page)).food).toBeGreaterThan(0.5);
   await page.getByRole('button', { name: 'Eat at pantry', exact: true }).click();
@@ -356,6 +369,7 @@ test('human food, accelerated sleep, emergency waking, retaliation and predation
   await expect.poll(async () => body(await checkpoint(page)).sleeping).toBe(0);
   await expect.poll(async () => body(await checkpoint(page)).hp).toBeLessThan(sleeper.hp);
   expect(body(await checkpoint(page)).forcedRest).toBe(1);
+  await inspection(page);
   await page.getByRole('tab', { name: 'Villagers', exact: true }).click();
   await expect(page.locator('.human-inspector')).toContainText('Rest');
 

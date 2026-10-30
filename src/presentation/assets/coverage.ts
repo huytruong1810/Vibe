@@ -20,7 +20,7 @@ export const REQUIRED_ENVIRONMENT_IDS = [
   'ground_dirt',
   'ground_sand',
   'ground_freshwater',
-  'shore_freshwater',
+  ...Array.from({ length: 14 }, (_, i) => `shore_freshwater_mask_${i + 1}`),
   'cliff_grass',
   'ramp_grass',
   'canopy_oak',
@@ -128,6 +128,15 @@ export function assetCoverage(catalog: AssetCatalog): CoverageReport {
             gaps.push({
               appearanceId,
               requirement: `attack/${move}/${facing}: authoritative combat phase mapping`,
+            });
+          if (
+            clip &&
+            (row.state === 'walk' || row.state === 'run') &&
+            (clip.playback !== 'distance' || !clip.stride)
+          )
+            gaps.push({
+              appearanceId,
+              requirement: `${row.state}/${facing}: distance playback and world-tile stride`,
             });
         }
     }

@@ -1,5 +1,4 @@
 import './style.css';
-import { NPC_PROFILES } from './content/definitions';
 import { InferenceScheduler, OllamaAdapter } from './adapters/inference';
 import { IndexedDbSaveRepository, SaveCoordinator } from './adapters/persistence';
 import { WorkerBridge } from './adapters/worker-bridge';
@@ -24,6 +23,7 @@ export class GameBootstrap {
   private lastEventId = '';
   private connectedModel = '';
   private connectedEndpoint = '';
+  private hudMs = 0;
   private readonly autoSave: ReturnType<typeof setInterval>;
   constructor(root: HTMLElement) {
     this.hud = new HudPresenter(root, {
@@ -48,7 +48,9 @@ export class GameBootstrap {
       audio: () => this.audio.toggle(),
       select: (id) => this.renderer.select(id),
     });
-    this.rendererReady = this.renderer.initialize(this.hud.gameElement);
+    this.rendererReady = this.renderer.initialize(this.hud.gameElement).then(() => {
+      if (this.renderer.catalog) this.hud.setAssets(this.renderer.catalog);
+    });
     void this.rendererReady.catch((error) =>
       this.hud.notify(`Unable to initialize WebGL: ${String(error)}`),
     );
@@ -67,7 +69,9 @@ export class GameBootstrap {
       }
       this.frame = frame;
       this.renderer.apply(frame);
+      const hudStarted = performance.now();
       this.hud.update(frame, this.inference?.usage ?? null, this.renderer.stats);
+      this.hudMs = performance.now() - hudStarted;
       this.inference?.setBackgroundDeferred(frame.timeScale > 1);
       for (const job of frame.jobs) this.inference?.enqueue(job);
       if (frame.events.at(-1)?.id !== this.lastEventId) {
@@ -80,7 +84,10 @@ export class GameBootstrap {
       // Renderer copied entity coordinates; UI never reads packed data. Return only the disposable copy.
       this.bridge.recycle(frame.packed.buffer as ArrayBuffer);
       if (terrain && document.hidden) void this.bridge.send({ type: 'pause', token: 'hidden' });
-      if (terrain && document.querySelector('#settings-dialog[open], #map-dialog[open]'))
+      if (
+        terrain &&
+        document.querySelector('#settings-dialog[open], #map-dialog[open], #journal-dialog[open]')
+      )
         void this.bridge.send({ type: 'pause', token: 'menu' });
     };
     this.bindInput();
@@ -94,7 +101,7 @@ export class GameBootstrap {
           command: (command: CommandPayload) => this.bridge.send(command),
           checkpoint: () => this.bridge.checkpoint(),
           frame: () => this.frame,
-          stats: () => this.renderer.stats,
+          stats: () => ({ ...this.renderer.stats, hudMs: this.hudMs }),
         },
       });
     }
@@ -193,7 +200,10 @@ export class GameBootstrap {
         this.send({ type: 'attack', kind: key === 'j' ? 'strike' : 'element' });
       if (key === ' ') this.send({ type: 'dash' });
       if (key === 'm') this.hud.openMenu('map-dialog');
-      if (key === 'escape') this.hud.openMenu('settings-dialog');
+      if (key === 'i') this.hud.intent({ type: 'toggle', overlay: 'inventory' });
+      if (key === 'f') this.hud.intent({ type: 'toggle', overlay: 'inspection' });
+      if (key === 'l') this.hud.intent({ type: 'toggle', overlay: 'journal' });
+      if (key === 'escape' && !this.hud.closeOverlay()) this.hud.openMenu('settings-dialog');
     });
     window.addEventListener('keyup', (event) => {
       this.keys.delete(event.key.toLowerCase());
@@ -212,30 +222,27 @@ export class GameBootstrap {
       const canvas = this.renderer.app.canvas,
         bounds = canvas.getBoundingClientRect();
       if (!this.frame || this.hud.inputBlocked) return;
-      const x =
-        (((event.clientX - bounds.left) / bounds.width) * 480 + this.renderer.camera.x) / 16;
-      const y =
-        (((event.clientY - bounds.top) / bounds.height) * 270 + this.renderer.camera.y) / 16 + 0.5;
-      const creature = [...this.frame.creatures].sort(
-        (a, b) => Math.hypot(a.x - x, a.y - y) - Math.hypot(b.x - x, b.y - y),
-      )[0];
-      if (creature && Math.hypot(creature.x - x, creature.y - y) < 2)
-        this.hud.selectCreature(creature.id);
+      if (
+        event.clientX < bounds.left ||
+        event.clientY < bounds.top ||
+        event.clientX > bounds.right ||
+        event.clientY > bounds.bottom
+      )
+        return;
+      const picked = this.renderer.pickActor(event.clientX, event.clientY);
+      const creature = this.frame.creatures.find((c) => c.id === picked);
+      if (creature) this.hud.selectCreature(creature.id);
       else {
-        const npc = [...this.frame.npcs].sort(
-          (a, b) => Math.hypot(a.x - x, a.y - y) - Math.hypot(b.x - x, b.y - y),
-        )[0];
-        if (npc && Math.hypot(npc.x - x, npc.y - y) < 2) {
-          this.renderer.select(NPC_PROFILES.findIndex((p) => p.id === npc.profileId) + 1);
+        const npc = this.frame.npcs.find((n) => n.entityId === picked);
+        if (npc) {
+          this.renderer.select(npc.entityId);
           this.hud.showPanel('people');
         }
       }
     });
     const resize = new ResizeObserver(() => {
       if (!this.renderer.app.canvas) return;
-      const scale = Math.max(1, Math.floor(this.hud.gameElement.clientWidth / 480));
-      this.renderer.app.canvas.style.width = `${480 * scale}px`;
-      this.renderer.app.canvas.style.height = `${270 * scale}px`;
+      this.renderer.fit(this.hud.gameElement.clientWidth, this.hud.gameElement.clientHeight);
     });
     void this.rendererReady.then(() => resize.observe(this.hud.gameElement));
     window.addEventListener('pagehide', () => this.dispose(), { once: true });
@@ -267,4 +274,11 @@ export class GameBootstrap {
   }
 }
 
-new GameBootstrap(document.getElementById('app')!);
+const root = document.getElementById('app')!;
+if (import.meta.env.DEV && new URLSearchParams(location.search).get('gallery') === '1') {
+  void import('./presentation/gallery')
+    .then(({ initializeArtGallery }) => initializeArtGallery(root))
+    .catch((error) => {
+      root.textContent = `Art gallery unavailable: ${String(error)}`;
+    });
+} else new GameBootstrap(root);

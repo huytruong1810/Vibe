@@ -8,6 +8,22 @@ import { AssetManager, type AssetBackend } from '../src/presentation/assets/mana
 import { assetCoverage } from '../src/presentation/assets/coverage';
 import { SourceManifestSchema } from '../src/presentation/assets/source';
 
+it('rejects duplicate source frame identities instead of silently dropping an export', () => {
+  const frame = {
+    id: 'rivallie_idle_s_0',
+    path: 'exports/rivallie/idle_s_0.png',
+    anchor: { x: 0.5, y: 1 },
+  };
+  expect(() =>
+    SourceManifestSchema.parse({
+      schemaVersion: 1,
+      frames: [frame, frame],
+      appearances: [],
+      clips: [],
+    }),
+  ).toThrow('Duplicate source frame');
+});
+
 function catalog(): AssetCatalog {
   return {
     schemaVersion: 1,

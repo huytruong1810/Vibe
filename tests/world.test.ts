@@ -1,13 +1,7 @@
+import { DualGridAutotiler } from '../src/presentation/autotiler';
 import { describe, expect, it } from 'vitest';
 import { SETTLEMENTS } from '../src/content/definitions';
-import {
-  ClimateSampler,
-  DualGridAutotiler,
-  Fluid,
-  SurfaceRules,
-  TileFlag,
-  WorldGenerator,
-} from '../src/domain/world';
+import { ClimateSampler, Fluid, SurfaceRules, TileFlag, WorldGenerator } from '../src/domain/world';
 import { NavigationService, SpatialIndex } from '../src/domain/navigation';
 import { flatWorld } from './helpers';
 

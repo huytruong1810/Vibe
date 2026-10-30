@@ -244,6 +244,26 @@ export interface CombatEvent {
 }
 /** Combat, threats and hit windows operate on stable entity IDs for every controller. */
 export class CombatSystem {
+  presentationGuard(id: number, tick: number): boolean {
+    const slot = this.store.slot(id);
+    return (
+      slot !== undefined &&
+      this.active(id) &&
+      this.defense.defended(this.store.definition(slot), tick)
+    );
+  }
+  /** Pure projection: unlike advancing a combat state machine this never expires attacks. */
+  presentation(id: number, tick: number): import('./presentation-contract').ActionTiming | null {
+    const attack = id === 0 ? this.player.attack : this.attacks.get(id);
+    if (!attack) return null;
+    const definition = ATTACKS[attack.kind];
+    const activeAt = attack.startedAt + definition.windup;
+    const recoveryAt = activeAt + definition.active;
+    const endsAt = recoveryAt + definition.recovery;
+    return tick >= endsAt
+      ? null
+      : { move: attack.kind, startedAt: attack.startedAt, activeAt, recoveryAt, endsAt };
+  }
   readonly stateMachine = new CombatStateMachine();
   readonly encounters: EncounterService;
   readonly pursuits = new Map<number, Pursuit>();
