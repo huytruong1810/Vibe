@@ -1,6 +1,8 @@
 # Copyable art-agent handoff
 
-Engineering draft PR: [#1](https://github.com/huytruong1810/Vibe/pull/1).
+Engineering draft PR: [#1](https://github.com/huytruong1810/Vibe/pull/1).  
+Art slice PR: [#2](https://github.com/huytruong1810/Vibe/pull/2).  
+Architecture & Status Alignment Report: [art-engineering-handoff.md](art-engineering-handoff.md).
 
 > Base `art/hd-aqualia-slice` on **[e57bb92d8f78f3aba81873d6cb58f941992c5bd7](https://github.com/huytruong1810/Vibe/commit/e57bb92d8f78f3aba81873d6cb58f941992c5bd7)** from `eng/hd-presentation`. Use a separate worktree so engineering can continue in its existing checkout. Follow the tracked [art contract](contract.md), clip matrix and [coverage report](coverage.md). Target native 1080p detail: 64-pixel terrain units, approximately 96×144 human frames, and eight authored movement/combat directions. Preserve Hearthwild's portrait anatomy and identity.
 >
