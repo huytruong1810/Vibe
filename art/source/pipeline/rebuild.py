@@ -168,6 +168,24 @@ def main():
         process_asset(registered, out_file, (48, 86))
         rivallie_frames.append((facing, registered))
 
+    # 2.5 Process 7 Aqualia Villagers (Neris, Reed, Willa, Oren, Lark, Dara, Finn)
+    villagers = ["neris", "reed", "willa", "oren", "lark", "dara", "finn"]
+    villager_frames = []
+    for name in villagers:
+        cutout_path = cutouts_dir / f"npc_{name}.png"
+        if cutout_path.is_file():
+            cutout = Image.open(cutout_path)
+            registered = register_actor_on_canvas(
+                cutout=cutout,
+                target_canvas=(96, 144),
+                ground_anchor=(48, 132),
+                target_height=116,
+                max_width=88
+            )
+            out_file = exports_dir / "npcs" / name / "idle_s_0.png"
+            process_asset(registered, out_file, (48, 132))
+            villager_frames.append((name, registered))
+
     # 3. Process Environment Tiles & Props (44 frames)
     center_anchor_64 = (32, 32)
     foot_anchor_64 = (32, 64)
@@ -219,6 +237,11 @@ def main():
     r_sheet.save(r_sheet_bytes, format="PNG")
     r_sheet_path = proofs_dir / "rivallie-pose-proof.png"
 
+    v_sheet = build_contact_sheet(villager_frames, (96, 144), (48, 132))
+    v_sheet_bytes = io.BytesIO()
+    v_sheet.save(v_sheet_bytes, format="PNG")
+    v_sheet_path = proofs_dir / "aqualia-villagers-pose-proof.png"
+
     # Animated GIFs
     p_gif_bytes = io.BytesIO()
     p_imgs = [f[1] for f in player_frames]
@@ -244,6 +267,7 @@ def main():
     proof_deliverables = [
         (p_sheet_path, p_sheet_bytes.getvalue()),
         (r_sheet_path, r_sheet_bytes.getvalue()),
+        (v_sheet_path, v_sheet_bytes.getvalue()),
         (p_gif_path, p_gif_bytes.getvalue()),
         (r_gif_path, r_gif_bytes.getvalue()),
         (target_scene_path, target_scene_bytes.getvalue()),

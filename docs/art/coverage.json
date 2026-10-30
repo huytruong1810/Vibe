@@ -1,16 +1,8 @@
 {
   "status": "prototype-only",
   "requiredAppearances": 19,
-  "hdAppearances": 2,
-  "missingIdentities": [
-    "npc:neris",
-    "npc:reed",
-    "npc:willa",
-    "npc:oren",
-    "npc:lark",
-    "npc:dara",
-    "npc:finn"
-  ],
+  "hdAppearances": 9,
+  "missingIdentities": [],
   "gaps": [
     { "appearanceId": "origin:aqualia", "requirement": "idle/n: 6 authored frames" },
     { "appearanceId": "origin:aqualia", "requirement": "idle/ne: 6 authored frames" },
@@ -286,7 +278,6 @@
     { "appearanceId": "npc:npc:marina", "requirement": "recovery/e: 6 authored frames" },
     { "appearanceId": "npc:npc:marina", "requirement": "recovery/s: 6 authored frames" },
     { "appearanceId": "npc:npc:marina", "requirement": "recovery/w: 6 authored frames" },
-    { "appearanceId": "npc:npc:neris", "requirement": "native-detail approved HD appearance" },
     { "appearanceId": "npc:npc:neris", "requirement": "idle/n: 6 authored frames" },
     { "appearanceId": "npc:npc:neris", "requirement": "idle/ne: 6 authored frames" },
     { "appearanceId": "npc:npc:neris", "requirement": "idle/e: 6 authored frames" },
@@ -375,7 +366,6 @@
     { "appearanceId": "npc:npc:neris", "requirement": "recovery/e: 6 authored frames" },
     { "appearanceId": "npc:npc:neris", "requirement": "recovery/s: 6 authored frames" },
     { "appearanceId": "npc:npc:neris", "requirement": "recovery/w: 6 authored frames" },
-    { "appearanceId": "npc:npc:reed", "requirement": "native-detail approved HD appearance" },
     { "appearanceId": "npc:npc:reed", "requirement": "idle/n: 6 authored frames" },
     { "appearanceId": "npc:npc:reed", "requirement": "idle/ne: 6 authored frames" },
     { "appearanceId": "npc:npc:reed", "requirement": "idle/e: 6 authored frames" },
@@ -464,7 +454,6 @@
     { "appearanceId": "npc:npc:reed", "requirement": "recovery/e: 6 authored frames" },
     { "appearanceId": "npc:npc:reed", "requirement": "recovery/s: 6 authored frames" },
     { "appearanceId": "npc:npc:reed", "requirement": "recovery/w: 6 authored frames" },
-    { "appearanceId": "npc:npc:willa", "requirement": "native-detail approved HD appearance" },
     { "appearanceId": "npc:npc:willa", "requirement": "idle/n: 6 authored frames" },
     { "appearanceId": "npc:npc:willa", "requirement": "idle/ne: 6 authored frames" },
     { "appearanceId": "npc:npc:willa", "requirement": "idle/e: 6 authored frames" },
@@ -553,7 +542,6 @@
     { "appearanceId": "npc:npc:willa", "requirement": "recovery/e: 6 authored frames" },
     { "appearanceId": "npc:npc:willa", "requirement": "recovery/s: 6 authored frames" },
     { "appearanceId": "npc:npc:willa", "requirement": "recovery/w: 6 authored frames" },
-    { "appearanceId": "npc:npc:oren", "requirement": "native-detail approved HD appearance" },
     { "appearanceId": "npc:npc:oren", "requirement": "idle/n: 6 authored frames" },
     { "appearanceId": "npc:npc:oren", "requirement": "idle/ne: 6 authored frames" },
     { "appearanceId": "npc:npc:oren", "requirement": "idle/e: 6 authored frames" },
@@ -731,7 +719,6 @@
     { "appearanceId": "npc:npc:mira", "requirement": "recovery/e: 6 authored frames" },
     { "appearanceId": "npc:npc:mira", "requirement": "recovery/s: 6 authored frames" },
     { "appearanceId": "npc:npc:mira", "requirement": "recovery/w: 6 authored frames" },
-    { "appearanceId": "npc:npc:lark", "requirement": "native-detail approved HD appearance" },
     { "appearanceId": "npc:npc:lark", "requirement": "idle/n: 6 authored frames" },
     { "appearanceId": "npc:npc:lark", "requirement": "idle/ne: 6 authored frames" },
     { "appearanceId": "npc:npc:lark", "requirement": "idle/e: 6 authored frames" },
@@ -820,7 +807,6 @@
     { "appearanceId": "npc:npc:lark", "requirement": "recovery/e: 6 authored frames" },
     { "appearanceId": "npc:npc:lark", "requirement": "recovery/s: 6 authored frames" },
     { "appearanceId": "npc:npc:lark", "requirement": "recovery/w: 6 authored frames" },
-    { "appearanceId": "npc:npc:dara", "requirement": "native-detail approved HD appearance" },
     { "appearanceId": "npc:npc:dara", "requirement": "idle/n: 6 authored frames" },
     { "appearanceId": "npc:npc:dara", "requirement": "idle/ne: 6 authored frames" },
     { "appearanceId": "npc:npc:dara", "requirement": "idle/e: 6 authored frames" },
@@ -909,7 +895,6 @@
     { "appearanceId": "npc:npc:dara", "requirement": "recovery/e: 6 authored frames" },
     { "appearanceId": "npc:npc:dara", "requirement": "recovery/s: 6 authored frames" },
     { "appearanceId": "npc:npc:dara", "requirement": "recovery/w: 6 authored frames" },
-    { "appearanceId": "npc:npc:finn", "requirement": "native-detail approved HD appearance" },
     { "appearanceId": "npc:npc:finn", "requirement": "idle/n: 6 authored frames" },
     { "appearanceId": "npc:npc:finn", "requirement": "idle/ne: 6 authored frames" },
     { "appearanceId": "npc:npc:finn", "requirement": "idle/e: 6 authored frames" },
@@ -1825,6 +1810,6 @@
     { "appearanceId": "species:marshstalker", "requirement": "recovery/w: 6 authored frames" }
   ],
   "environmentGaps": [],
-  "fullTextureBytes": 2177680,
-  "halfTextureBytes": 541896
+  "fullTextureBytes": 2251480,
+  "halfTextureBytes": 636720
 }

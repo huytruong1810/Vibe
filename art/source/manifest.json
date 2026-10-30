@@ -416,6 +416,62 @@
         "x": 0.5,
         "y": 0.85
       }
+    },
+    {
+      "id": "npc_neris_idle_s_0",
+      "path": "exports/npcs/neris/idle_s_0.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_reed_idle_s_0",
+      "path": "exports/npcs/reed/idle_s_0.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_willa_idle_s_0",
+      "path": "exports/npcs/willa/idle_s_0.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_oren_idle_s_0",
+      "path": "exports/npcs/oren/idle_s_0.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_lark_idle_s_0",
+      "path": "exports/npcs/lark/idle_s_0.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_dara_idle_s_0",
+      "path": "exports/npcs/dara/idle_s_0.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_finn_idle_s_0",
+      "path": "exports/npcs/finn/idle_s_0.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
     }
   ],
   "appearances": [
@@ -795,6 +851,69 @@
       "quality": "hd",
       "clipIds": [],
       "frameId": "env_flora_fungi_burnt"
+    },
+    {
+      "id": "npc:npc:neris",
+      "kind": "npc",
+      "contentId": "npc:neris",
+      "quality": "hd",
+      "clipIds": [
+        "npc_neris_idle_s"
+      ]
+    },
+    {
+      "id": "npc:npc:reed",
+      "kind": "npc",
+      "contentId": "npc:reed",
+      "quality": "hd",
+      "clipIds": [
+        "npc_reed_idle_s"
+      ]
+    },
+    {
+      "id": "npc:npc:willa",
+      "kind": "npc",
+      "contentId": "npc:willa",
+      "quality": "hd",
+      "clipIds": [
+        "npc_willa_idle_s"
+      ]
+    },
+    {
+      "id": "npc:npc:oren",
+      "kind": "npc",
+      "contentId": "npc:oren",
+      "quality": "hd",
+      "clipIds": [
+        "npc_oren_idle_s"
+      ]
+    },
+    {
+      "id": "npc:npc:lark",
+      "kind": "npc",
+      "contentId": "npc:lark",
+      "quality": "hd",
+      "clipIds": [
+        "npc_lark_idle_s"
+      ]
+    },
+    {
+      "id": "npc:npc:dara",
+      "kind": "npc",
+      "contentId": "npc:dara",
+      "quality": "hd",
+      "clipIds": [
+        "npc_dara_idle_s"
+      ]
+    },
+    {
+      "id": "npc:npc:finn",
+      "kind": "npc",
+      "contentId": "npc:finn",
+      "quality": "hd",
+      "clipIds": [
+        "npc_finn_idle_s"
+      ]
     }
   ],
   "clips": [
@@ -882,6 +1001,83 @@
       "facing": "n",
       "frameIds": [
         "rivallie_idle_n_0"
+      ],
+      "fps": 6,
+      "playback": "loop"
+    },
+    {
+      "id": "npc_neris_idle_s",
+      "appearanceId": "npc:npc:neris",
+      "state": "idle",
+      "facing": "s",
+      "frameIds": [
+        "npc_neris_idle_s_0"
+      ],
+      "fps": 6,
+      "playback": "loop"
+    },
+    {
+      "id": "npc_reed_idle_s",
+      "appearanceId": "npc:npc:reed",
+      "state": "idle",
+      "facing": "s",
+      "frameIds": [
+        "npc_reed_idle_s_0"
+      ],
+      "fps": 6,
+      "playback": "loop"
+    },
+    {
+      "id": "npc_willa_idle_s",
+      "appearanceId": "npc:npc:willa",
+      "state": "idle",
+      "facing": "s",
+      "frameIds": [
+        "npc_willa_idle_s_0"
+      ],
+      "fps": 6,
+      "playback": "loop"
+    },
+    {
+      "id": "npc_oren_idle_s",
+      "appearanceId": "npc:npc:oren",
+      "state": "idle",
+      "facing": "s",
+      "frameIds": [
+        "npc_oren_idle_s_0"
+      ],
+      "fps": 6,
+      "playback": "loop"
+    },
+    {
+      "id": "npc_lark_idle_s",
+      "appearanceId": "npc:npc:lark",
+      "state": "idle",
+      "facing": "s",
+      "frameIds": [
+        "npc_lark_idle_s_0"
+      ],
+      "fps": 6,
+      "playback": "loop"
+    },
+    {
+      "id": "npc_dara_idle_s",
+      "appearanceId": "npc:npc:dara",
+      "state": "idle",
+      "facing": "s",
+      "frameIds": [
+        "npc_dara_idle_s_0"
+      ],
+      "fps": 6,
+      "playback": "loop"
+    },
+    {
+      "id": "npc_finn_idle_s",
+      "appearanceId": "npc:npc:finn",
+      "state": "idle",
+      "facing": "s",
+      "frameIds": [
+        "npc_finn_idle_s_0"
       ],
       "fps": 6,
       "playback": "loop"
