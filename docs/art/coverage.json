@@ -1,7 +1,7 @@
 {
   "status": "prototype-only",
   "requiredAppearances": 19,
-  "hdAppearances": 0,
+  "hdAppearances": 2,
   "missingIdentities": [
     "npc:neris",
     "npc:reed",
@@ -12,7 +12,6 @@
     "npc:finn"
   ],
   "gaps": [
-    { "appearanceId": "origin:aqualia", "requirement": "native-detail approved HD appearance" },
     { "appearanceId": "origin:aqualia", "requirement": "idle/n: 6 authored frames" },
     { "appearanceId": "origin:aqualia", "requirement": "idle/ne: 6 authored frames" },
     { "appearanceId": "origin:aqualia", "requirement": "idle/e: 6 authored frames" },
@@ -1088,7 +1087,6 @@
     { "appearanceId": "species:ignicap", "requirement": "recovery/e: 6 authored frames" },
     { "appearanceId": "species:ignicap", "requirement": "recovery/s: 6 authored frames" },
     { "appearanceId": "species:ignicap", "requirement": "recovery/w: 6 authored frames" },
-    { "appearanceId": "species:rivallie", "requirement": "native-detail approved HD appearance" },
     { "appearanceId": "species:rivallie", "requirement": "idle/n: 6 authored frames" },
     { "appearanceId": "species:rivallie", "requirement": "idle/ne: 6 authored frames" },
     { "appearanceId": "species:rivallie", "requirement": "idle/e: 6 authored frames" },
@@ -1872,6 +1870,6 @@
     "flora_fungi_harvested",
     "flora_fungi_burnt"
   ],
-  "fullTextureBytes": 1311000,
-  "halfTextureBytes": 381668
+  "fullTextureBytes": 1335552,
+  "halfTextureBytes": 392960
 }

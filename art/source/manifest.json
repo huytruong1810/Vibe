@@ -1,8 +1,148 @@
 {
   "schemaVersion": 1,
-  "frames": [],
-  "appearances": [],
-  "clips": [],
+  "frames": [
+    {
+      "id": "player_aqualia_idle_s_0",
+      "path": "exports/player_aqualia/idle_s_0.png",
+      "anchor": { "x": 0.5, "y": 0.92 }
+    },
+    {
+      "id": "player_aqualia_idle_se_0",
+      "path": "exports/player_aqualia/idle_se_0.png",
+      "anchor": { "x": 0.5, "y": 0.92 }
+    },
+    {
+      "id": "player_aqualia_idle_e_0",
+      "path": "exports/player_aqualia/idle_e_0.png",
+      "anchor": { "x": 0.5, "y": 0.92 }
+    },
+    {
+      "id": "player_aqualia_idle_n_0",
+      "path": "exports/player_aqualia/idle_n_0.png",
+      "anchor": { "x": 0.5, "y": 0.92 }
+    },
+    {
+      "id": "rivallie_idle_s_0",
+      "path": "exports/rivallie/idle_s_0.png",
+      "anchor": { "x": 0.5, "y": 0.9 }
+    },
+    {
+      "id": "rivallie_idle_se_0",
+      "path": "exports/rivallie/idle_se_0.png",
+      "anchor": { "x": 0.5, "y": 0.9 }
+    },
+    {
+      "id": "rivallie_idle_e_0",
+      "path": "exports/rivallie/idle_e_0.png",
+      "anchor": { "x": 0.5, "y": 0.9 }
+    },
+    {
+      "id": "rivallie_idle_n_0",
+      "path": "exports/rivallie/idle_n_0.png",
+      "anchor": { "x": 0.5, "y": 0.9 }
+    }
+  ],
+  "appearances": [
+    {
+      "id": "origin:aqualia",
+      "kind": "origin",
+      "contentId": "aqualia",
+      "quality": "hd",
+      "clipIds": [
+        "origin_aqualia_idle_s",
+        "origin_aqualia_idle_se",
+        "origin_aqualia_idle_e",
+        "origin_aqualia_idle_n"
+      ],
+      "fallbackId": "fallback:human"
+    },
+    {
+      "id": "species:rivallie",
+      "kind": "species",
+      "contentId": "rivallie",
+      "quality": "hd",
+      "clipIds": [
+        "species_rivallie_idle_s",
+        "species_rivallie_idle_se",
+        "species_rivallie_idle_e",
+        "species_rivallie_idle_n"
+      ]
+    }
+  ],
+  "clips": [
+    {
+      "id": "origin_aqualia_idle_s",
+      "appearanceId": "origin:aqualia",
+      "state": "idle",
+      "facing": "s",
+      "frameIds": ["player_aqualia_idle_s_0"],
+      "fps": 6,
+      "playback": "loop"
+    },
+    {
+      "id": "origin_aqualia_idle_se",
+      "appearanceId": "origin:aqualia",
+      "state": "idle",
+      "facing": "se",
+      "frameIds": ["player_aqualia_idle_se_0"],
+      "fps": 6,
+      "playback": "loop"
+    },
+    {
+      "id": "origin_aqualia_idle_e",
+      "appearanceId": "origin:aqualia",
+      "state": "idle",
+      "facing": "e",
+      "frameIds": ["player_aqualia_idle_e_0"],
+      "fps": 6,
+      "playback": "loop"
+    },
+    {
+      "id": "origin_aqualia_idle_n",
+      "appearanceId": "origin:aqualia",
+      "state": "idle",
+      "facing": "n",
+      "frameIds": ["player_aqualia_idle_n_0"],
+      "fps": 6,
+      "playback": "loop"
+    },
+    {
+      "id": "species_rivallie_idle_s",
+      "appearanceId": "species:rivallie",
+      "state": "idle",
+      "facing": "s",
+      "frameIds": ["rivallie_idle_s_0"],
+      "fps": 6,
+      "playback": "loop"
+    },
+    {
+      "id": "species_rivallie_idle_se",
+      "appearanceId": "species:rivallie",
+      "state": "idle",
+      "facing": "se",
+      "frameIds": ["rivallie_idle_se_0"],
+      "fps": 6,
+      "playback": "loop"
+    },
+    {
+      "id": "species_rivallie_idle_e",
+      "appearanceId": "species:rivallie",
+      "state": "idle",
+      "facing": "e",
+      "frameIds": ["rivallie_idle_e_0"],
+      "fps": 6,
+      "playback": "loop"
+    },
+    {
+      "id": "species_rivallie_idle_n",
+      "appearanceId": "species:rivallie",
+      "state": "idle",
+      "facing": "n",
+      "frameIds": ["rivallie_idle_n_0"],
+      "fps": 6,
+      "playback": "loop"
+    }
+  ],
   "portraits": [
     {
       "kind": "npc",
