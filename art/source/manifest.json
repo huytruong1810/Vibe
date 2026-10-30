@@ -1072,6 +1072,390 @@
         "x": 0.5,
         "y": 0.9167
       }
+    },
+    {
+      "id": "player_aqualia_idle_sw_0",
+      "path": "exports/player_aqualia/idle_sw_0.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.92
+      }
+    },
+    {
+      "id": "player_aqualia_idle_sw_1",
+      "path": "exports/player_aqualia/idle_sw_1.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.92
+      }
+    },
+    {
+      "id": "player_aqualia_idle_sw_2",
+      "path": "exports/player_aqualia/idle_sw_2.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.92
+      }
+    },
+    {
+      "id": "player_aqualia_idle_sw_3",
+      "path": "exports/player_aqualia/idle_sw_3.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.92
+      }
+    },
+    {
+      "id": "player_aqualia_idle_sw_4",
+      "path": "exports/player_aqualia/idle_sw_4.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.92
+      }
+    },
+    {
+      "id": "player_aqualia_idle_sw_5",
+      "path": "exports/player_aqualia/idle_sw_5.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.92
+      }
+    },
+    {
+      "id": "player_aqualia_idle_w_0",
+      "path": "exports/player_aqualia/idle_w_0.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.92
+      }
+    },
+    {
+      "id": "player_aqualia_idle_w_1",
+      "path": "exports/player_aqualia/idle_w_1.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.92
+      }
+    },
+    {
+      "id": "player_aqualia_idle_w_2",
+      "path": "exports/player_aqualia/idle_w_2.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.92
+      }
+    },
+    {
+      "id": "player_aqualia_idle_w_3",
+      "path": "exports/player_aqualia/idle_w_3.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.92
+      }
+    },
+    {
+      "id": "player_aqualia_idle_w_4",
+      "path": "exports/player_aqualia/idle_w_4.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.92
+      }
+    },
+    {
+      "id": "player_aqualia_idle_w_5",
+      "path": "exports/player_aqualia/idle_w_5.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.92
+      }
+    },
+    {
+      "id": "rivallie_idle_sw_0",
+      "path": "exports/rivallie/idle_sw_0.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9
+      }
+    },
+    {
+      "id": "rivallie_idle_sw_1",
+      "path": "exports/rivallie/idle_sw_1.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9
+      }
+    },
+    {
+      "id": "rivallie_idle_sw_2",
+      "path": "exports/rivallie/idle_sw_2.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9
+      }
+    },
+    {
+      "id": "rivallie_idle_sw_3",
+      "path": "exports/rivallie/idle_sw_3.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9
+      }
+    },
+    {
+      "id": "rivallie_idle_sw_4",
+      "path": "exports/rivallie/idle_sw_4.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9
+      }
+    },
+    {
+      "id": "rivallie_idle_sw_5",
+      "path": "exports/rivallie/idle_sw_5.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9
+      }
+    },
+    {
+      "id": "rivallie_idle_w_0",
+      "path": "exports/rivallie/idle_w_0.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9
+      }
+    },
+    {
+      "id": "rivallie_idle_w_1",
+      "path": "exports/rivallie/idle_w_1.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9
+      }
+    },
+    {
+      "id": "rivallie_idle_w_2",
+      "path": "exports/rivallie/idle_w_2.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9
+      }
+    },
+    {
+      "id": "rivallie_idle_w_3",
+      "path": "exports/rivallie/idle_w_3.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9
+      }
+    },
+    {
+      "id": "rivallie_idle_w_4",
+      "path": "exports/rivallie/idle_w_4.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9
+      }
+    },
+    {
+      "id": "rivallie_idle_w_5",
+      "path": "exports/rivallie/idle_w_5.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9
+      }
+    },
+    {
+      "id": "player_aqualia_idle_ne_0",
+      "path": "exports/player_aqualia/idle_ne_0.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.92
+      }
+    },
+    {
+      "id": "player_aqualia_idle_ne_1",
+      "path": "exports/player_aqualia/idle_ne_1.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.92
+      }
+    },
+    {
+      "id": "player_aqualia_idle_ne_2",
+      "path": "exports/player_aqualia/idle_ne_2.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.92
+      }
+    },
+    {
+      "id": "player_aqualia_idle_ne_3",
+      "path": "exports/player_aqualia/idle_ne_3.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.92
+      }
+    },
+    {
+      "id": "player_aqualia_idle_ne_4",
+      "path": "exports/player_aqualia/idle_ne_4.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.92
+      }
+    },
+    {
+      "id": "player_aqualia_idle_ne_5",
+      "path": "exports/player_aqualia/idle_ne_5.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.92
+      }
+    },
+    {
+      "id": "player_aqualia_idle_nw_0",
+      "path": "exports/player_aqualia/idle_nw_0.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.92
+      }
+    },
+    {
+      "id": "player_aqualia_idle_nw_1",
+      "path": "exports/player_aqualia/idle_nw_1.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.92
+      }
+    },
+    {
+      "id": "player_aqualia_idle_nw_2",
+      "path": "exports/player_aqualia/idle_nw_2.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.92
+      }
+    },
+    {
+      "id": "player_aqualia_idle_nw_3",
+      "path": "exports/player_aqualia/idle_nw_3.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.92
+      }
+    },
+    {
+      "id": "player_aqualia_idle_nw_4",
+      "path": "exports/player_aqualia/idle_nw_4.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.92
+      }
+    },
+    {
+      "id": "player_aqualia_idle_nw_5",
+      "path": "exports/player_aqualia/idle_nw_5.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.92
+      }
+    },
+    {
+      "id": "rivallie_idle_ne_0",
+      "path": "exports/rivallie/idle_ne_0.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9
+      }
+    },
+    {
+      "id": "rivallie_idle_ne_1",
+      "path": "exports/rivallie/idle_ne_1.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9
+      }
+    },
+    {
+      "id": "rivallie_idle_ne_2",
+      "path": "exports/rivallie/idle_ne_2.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9
+      }
+    },
+    {
+      "id": "rivallie_idle_ne_3",
+      "path": "exports/rivallie/idle_ne_3.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9
+      }
+    },
+    {
+      "id": "rivallie_idle_ne_4",
+      "path": "exports/rivallie/idle_ne_4.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9
+      }
+    },
+    {
+      "id": "rivallie_idle_ne_5",
+      "path": "exports/rivallie/idle_ne_5.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9
+      }
+    },
+    {
+      "id": "rivallie_idle_nw_0",
+      "path": "exports/rivallie/idle_nw_0.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9
+      }
+    },
+    {
+      "id": "rivallie_idle_nw_1",
+      "path": "exports/rivallie/idle_nw_1.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9
+      }
+    },
+    {
+      "id": "rivallie_idle_nw_2",
+      "path": "exports/rivallie/idle_nw_2.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9
+      }
+    },
+    {
+      "id": "rivallie_idle_nw_3",
+      "path": "exports/rivallie/idle_nw_3.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9
+      }
+    },
+    {
+      "id": "rivallie_idle_nw_4",
+      "path": "exports/rivallie/idle_nw_4.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9
+      }
+    },
+    {
+      "id": "rivallie_idle_nw_5",
+      "path": "exports/rivallie/idle_nw_5.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9
+      }
     }
   ],
   "appearances": [
@@ -1084,7 +1468,11 @@
         "origin_aqualia_idle_s",
         "origin_aqualia_idle_se",
         "origin_aqualia_idle_e",
-        "origin_aqualia_idle_n"
+        "origin_aqualia_idle_n",
+        "origin_aqualia_idle_sw",
+        "origin_aqualia_idle_w",
+        "origin_aqualia_idle_ne",
+        "origin_aqualia_idle_nw"
       ],
       "fallbackId": "fallback:human"
     },
@@ -1097,7 +1485,11 @@
         "species_rivallie_idle_s",
         "species_rivallie_idle_se",
         "species_rivallie_idle_e",
-        "species_rivallie_idle_n"
+        "species_rivallie_idle_n",
+        "species_rivallie_idle_sw",
+        "species_rivallie_idle_w",
+        "species_rivallie_idle_ne",
+        "species_rivallie_idle_nw"
       ]
     },
     {
@@ -1753,6 +2145,134 @@
         "npc_finn_idle_s_3",
         "npc_finn_idle_s_4",
         "npc_finn_idle_s_5"
+      ],
+      "fps": 6,
+      "playback": "loop"
+    },
+    {
+      "id": "origin_aqualia_idle_sw",
+      "appearanceId": "origin:aqualia",
+      "state": "idle",
+      "facing": "sw",
+      "frameIds": [
+        "player_aqualia_idle_sw_0",
+        "player_aqualia_idle_sw_1",
+        "player_aqualia_idle_sw_2",
+        "player_aqualia_idle_sw_3",
+        "player_aqualia_idle_sw_4",
+        "player_aqualia_idle_sw_5"
+      ],
+      "fps": 6,
+      "playback": "loop"
+    },
+    {
+      "id": "origin_aqualia_idle_w",
+      "appearanceId": "origin:aqualia",
+      "state": "idle",
+      "facing": "w",
+      "frameIds": [
+        "player_aqualia_idle_w_0",
+        "player_aqualia_idle_w_1",
+        "player_aqualia_idle_w_2",
+        "player_aqualia_idle_w_3",
+        "player_aqualia_idle_w_4",
+        "player_aqualia_idle_w_5"
+      ],
+      "fps": 6,
+      "playback": "loop"
+    },
+    {
+      "id": "species_rivallie_idle_sw",
+      "appearanceId": "species:rivallie",
+      "state": "idle",
+      "facing": "sw",
+      "frameIds": [
+        "rivallie_idle_sw_0",
+        "rivallie_idle_sw_1",
+        "rivallie_idle_sw_2",
+        "rivallie_idle_sw_3",
+        "rivallie_idle_sw_4",
+        "rivallie_idle_sw_5"
+      ],
+      "fps": 6,
+      "playback": "loop"
+    },
+    {
+      "id": "species_rivallie_idle_w",
+      "appearanceId": "species:rivallie",
+      "state": "idle",
+      "facing": "w",
+      "frameIds": [
+        "rivallie_idle_w_0",
+        "rivallie_idle_w_1",
+        "rivallie_idle_w_2",
+        "rivallie_idle_w_3",
+        "rivallie_idle_w_4",
+        "rivallie_idle_w_5"
+      ],
+      "fps": 6,
+      "playback": "loop"
+    },
+    {
+      "id": "origin_aqualia_idle_ne",
+      "appearanceId": "origin:aqualia",
+      "state": "idle",
+      "facing": "ne",
+      "frameIds": [
+        "player_aqualia_idle_ne_0",
+        "player_aqualia_idle_ne_1",
+        "player_aqualia_idle_ne_2",
+        "player_aqualia_idle_ne_3",
+        "player_aqualia_idle_ne_4",
+        "player_aqualia_idle_ne_5"
+      ],
+      "fps": 6,
+      "playback": "loop"
+    },
+    {
+      "id": "origin_aqualia_idle_nw",
+      "appearanceId": "origin:aqualia",
+      "state": "idle",
+      "facing": "nw",
+      "frameIds": [
+        "player_aqualia_idle_nw_0",
+        "player_aqualia_idle_nw_1",
+        "player_aqualia_idle_nw_2",
+        "player_aqualia_idle_nw_3",
+        "player_aqualia_idle_nw_4",
+        "player_aqualia_idle_nw_5"
+      ],
+      "fps": 6,
+      "playback": "loop"
+    },
+    {
+      "id": "species_rivallie_idle_ne",
+      "appearanceId": "species:rivallie",
+      "state": "idle",
+      "facing": "ne",
+      "frameIds": [
+        "rivallie_idle_ne_0",
+        "rivallie_idle_ne_1",
+        "rivallie_idle_ne_2",
+        "rivallie_idle_ne_3",
+        "rivallie_idle_ne_4",
+        "rivallie_idle_ne_5"
+      ],
+      "fps": 6,
+      "playback": "loop"
+    },
+    {
+      "id": "species_rivallie_idle_nw",
+      "appearanceId": "species:rivallie",
+      "state": "idle",
+      "facing": "nw",
+      "frameIds": [
+        "rivallie_idle_nw_0",
+        "rivallie_idle_nw_1",
+        "rivallie_idle_nw_2",
+        "rivallie_idle_nw_3",
+        "rivallie_idle_nw_4",
+        "rivallie_idle_nw_5"
       ],
       "fps": 6,
       "playback": "loop"

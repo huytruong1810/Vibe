@@ -4,10 +4,6 @@
   "hdAppearances": 9,
   "missingIdentities": [],
   "gaps": [
-    { "appearanceId": "origin:aqualia", "requirement": "idle/ne: 6 authored frames" },
-    { "appearanceId": "origin:aqualia", "requirement": "idle/sw: 6 authored frames" },
-    { "appearanceId": "origin:aqualia", "requirement": "idle/w: 6 authored frames" },
-    { "appearanceId": "origin:aqualia", "requirement": "idle/nw: 6 authored frames" },
     { "appearanceId": "origin:aqualia", "requirement": "walk/n: 8 authored frames" },
     { "appearanceId": "origin:aqualia", "requirement": "walk/ne: 8 authored frames" },
     { "appearanceId": "origin:aqualia", "requirement": "walk/e: 8 authored frames" },
@@ -1061,10 +1057,6 @@
     { "appearanceId": "species:ignicap", "requirement": "recovery/e: 6 authored frames" },
     { "appearanceId": "species:ignicap", "requirement": "recovery/s: 6 authored frames" },
     { "appearanceId": "species:ignicap", "requirement": "recovery/w: 6 authored frames" },
-    { "appearanceId": "species:rivallie", "requirement": "idle/ne: 6 authored frames" },
-    { "appearanceId": "species:rivallie", "requirement": "idle/sw: 6 authored frames" },
-    { "appearanceId": "species:rivallie", "requirement": "idle/w: 6 authored frames" },
-    { "appearanceId": "species:rivallie", "requirement": "idle/nw: 6 authored frames" },
     { "appearanceId": "species:rivallie", "requirement": "walk/n: 8 authored frames" },
     { "appearanceId": "species:rivallie", "requirement": "walk/ne: 8 authored frames" },
     { "appearanceId": "species:rivallie", "requirement": "walk/e: 8 authored frames" },
@@ -1795,6 +1787,6 @@
     { "appearanceId": "species:marshstalker", "requirement": "recovery/w: 6 authored frames" }
   ],
   "environmentGaps": [],
-  "fullTextureBytes": 4079268,
-  "halfTextureBytes": 1122576
+  "fullTextureBytes": 4832120,
+  "halfTextureBytes": 1384704
 }

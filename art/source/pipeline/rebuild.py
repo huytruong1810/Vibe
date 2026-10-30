@@ -136,13 +136,24 @@ def main():
             out_path.parent.mkdir(parents=True, exist_ok=True)
             out_path.write_bytes(img_bytes)
 
-    # 1. Process Player Aqualia Poses
+    # 1. Process Player Aqualia Poses (all 8 facings)
     player_frames = []
-    for idx, facing in enumerate(facings):
-        cutout_path = cutouts_dir / f"player_{idx}.png"
+    player_facings = [
+        ("s", cutouts_dir / "player_0.png", False),
+        ("se", cutouts_dir / "player_1.png", False),
+        ("e", cutouts_dir / "player_2.png", False),
+        ("ne", cutouts_dir / "player_ne.png", False),
+        ("n", cutouts_dir / "player_3.png", False),
+        ("nw", cutouts_dir / "player_nw.png", False),
+        ("w", cutouts_dir / "player_2.png", True),    # horizontal flip of E
+        ("sw", cutouts_dir / "player_1.png", True),   # horizontal flip of SE
+    ]
+    for facing, cutout_path, flip in player_facings:
         if not cutout_path.is_file():
             raise FileNotFoundError(f"Missing master cutout: {cutout_path}")
         cutout = Image.open(cutout_path)
+        if flip:
+            cutout = cutout.transpose(Image.FLIP_LEFT_RIGHT)
         registered = register_actor_on_canvas(
             cutout=cutout,
             target_canvas=(96, 144),
@@ -161,13 +172,24 @@ def main():
             process_asset(frame_img, out_file, (48, 132))
         player_frames.append((facing, registered))
 
-    # 2. Process Rivallie Otter Drake Poses
+    # 2. Process Rivallie Otter Drake Poses (all 8 facings)
     rivallie_frames = []
-    for idx, facing in enumerate(facings):
-        cutout_path = cutouts_dir / f"rivallie_{idx}.png"
+    rivallie_facings = [
+        ("s", cutouts_dir / "rivallie_0.png", False),
+        ("se", cutouts_dir / "rivallie_1.png", False),
+        ("e", cutouts_dir / "rivallie_2.png", False),
+        ("ne", cutouts_dir / "rivallie_ne.png", False),
+        ("n", cutouts_dir / "rivallie_3.png", False),
+        ("nw", cutouts_dir / "rivallie_nw.png", False),
+        ("w", cutouts_dir / "rivallie_2.png", True),    # horizontal flip of E
+        ("sw", cutouts_dir / "rivallie_1.png", True),   # horizontal flip of SE
+    ]
+    for facing, cutout_path, flip in rivallie_facings:
         if not cutout_path.is_file():
             raise FileNotFoundError(f"Missing master cutout: {cutout_path}")
         cutout = Image.open(cutout_path)
+        if flip:
+            cutout = cutout.transpose(Image.FLIP_LEFT_RIGHT)
         registered = register_actor_on_canvas(
             cutout=cutout,
             target_canvas=(96, 96),
