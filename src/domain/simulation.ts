@@ -204,7 +204,7 @@ export class SimulationHost {
       this.entities.restrictDiet(body, profile.dietRestrictions ?? []);
       bindBody(npc, this.entities, npc.entityId);
     }
-    this.query = new WorldQuery(this.npcs, this.creatures, this.calendar);
+    this.query = new WorldQuery(this.npcs, this.creatures, this.calendar, this.resources);
     for (let i = 0; i < this.npcs.length; i++) {
       const profile = NPC_PROFILES[i]!,
         npc = this.npcs[i]!;
@@ -233,12 +233,16 @@ export class SimulationHost {
     this.regrowth = new RegrowthSystem(this.world);
     this.reactions = new EnvironmentalReactionSystem(this.world);
     this.schedules = new ScheduleExecutor(this.world, this.navigation, this.entities);
+    const homes = new Map(
+      this.npcs.map((npc, index) => [npc.entityId, new SettlementPlanner().locations(index).home]),
+    );
     this.survival = new SurvivalController(
       this.entities,
       this.world,
       this.resources,
       this.locator,
       this.navigation,
+      (id) => homes.get(id),
     );
     this.ecology = new EcologyService(
       this.entities,
@@ -247,7 +251,9 @@ export class SimulationHost {
       this.ecologyRandom,
     );
     this.ecology.target = population;
-    this.combat = new CombatSystem(this.creatures, this.player, this.npcs, this.world);
+    this.combat = new CombatSystem(this.creatures, this.player, this.npcs, this.world, (id) =>
+      this.survival.feeding(id),
+    );
     this.rebuildSpatial();
     this.tiers.update(this.creatures, this.player);
     this.emit(
@@ -293,7 +299,18 @@ export class SimulationHost {
     const playerSlot = this.entities.require(this.player.entityId);
     if (
       (this.entities.sleeping[playerSlot] || this.player.hp <= 0) &&
-      ['move', 'attack', 'dash', 'harvest', 'travel', 'interact', 'care', 'tame'].includes(c.type)
+      [
+        'move',
+        'attack',
+        'dash',
+        'harvest',
+        'travel',
+        'interact',
+        'care',
+        'tame',
+        'use',
+        'service',
+      ].includes(c.type)
     )
       return {
         id: envelope.id,
@@ -480,14 +497,14 @@ export class SimulationHost {
           this.world,
         );
         ok = /enjoyed|feels better|leans into|clean and content/.test(message);
-        if (ok) this.emit('care', message, this.player, ['player', `creature:${c.creature}`], 4);
+        if (ok) this.emit('care', message, this.player, ['player', `entity:${c.creature}`], 4);
         break;
       case 'tame': {
         const before = this.partnership.partner;
         message = this.partnership.tame(this.entities.slot(c.creature) ?? -1, this.player);
         ok = before === null && this.creatures.owner[this.entities.slot(c.creature) ?? -1] === 0;
         if (ok)
-          this.emit('partnership', message, this.player, ['player', `creature:${c.creature}`], 8);
+          this.emit('partnership', message, this.player, ['player', `entity:${c.creature}`], 8);
         break;
       }
       case 'release':
@@ -940,7 +957,7 @@ export class SimulationHost {
           'partnership-lost',
           `${s.definition(i).name} has returned to the wild. Care can earn its trust again.`,
           s.position(i),
-          ['player', `creature:${i}`],
+          ['player', `entity:${s.id(i)}`],
           8,
         );
       // Coarse ecology keeps identity and uses the same resource quantities.
@@ -991,6 +1008,10 @@ export class SimulationHost {
         if (s.protected(i)) s.downed[i] = 1;
       }
     this.ecology.resolveDeaths(now);
+    if (this.tick % 30 === 0) {
+      this.survival.pruneRetired();
+      this.decisions.pruneRetired();
+    }
     this.combat.pruneRetired();
     SleepSystem.update(s, playerSlot, 0, now, this.combat.danger(0));
     if (

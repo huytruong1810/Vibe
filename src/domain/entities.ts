@@ -129,6 +129,7 @@ export class EntityStore {
   private readonly restrictions = new Map<number, readonly ItemId[]>();
   private readonly preferences = new Map<number, readonly ItemId[]>();
   private nextId = 100;
+  private humanCount = 0;
   count = 0;
   readonly capacity: number;
   constructor(readonly wildlifeCapacity: number = CONFIG.creatureCapacity) {
@@ -179,7 +180,7 @@ export class EntityStore {
   spawn(species: number, x: number, y: number, owner = -1): number {
     let slot = 0;
     while (slot < this.count && this.alive[slot]) slot++;
-    if (slot >= this.wildlifeCapacity || this.nextId > 0xffffffff)
+    if (slot >= this.wildlifeCapacity || this.nextId >= 0xffffffff)
       throw new Error('Entity capacity or identity space exhausted');
     this.count = Math.max(this.count, slot + 1);
     this.initialize(slot, this.nextId++, species, x, y, owner);
@@ -190,11 +191,14 @@ export class EntityStore {
       throw new Error('Invalid human identity');
     const slot = this.wildlifeCapacity + id;
     this.initialize(slot, id, 8, x, y, -1);
+    this.humanCount++;
     this.affinity[slot] = affinity;
     this.policies.set(id, NEUTRAL);
     return slot;
   }
   retire(slot: number): void {
+    if (!this.alive[slot]) return;
+    if (this.isHuman(slot)) throw new Error('Authored human identities cannot be retired');
     const id = this.ids[slot]!;
     this.alive[slot] = 0;
     this.sleeping[slot] = 0;
@@ -222,9 +226,7 @@ export class EntityStore {
     return this.byId.size;
   }
   get wildlifeCount(): number {
-    let count = 0;
-    for (let i = 0; i < this.count; i++) if (this.alive[i]) count++;
-    return count;
+    return this.byId.size - this.humanCount;
   }
   isHuman(slot: number): boolean {
     return this.species[slot] === 8;
@@ -311,6 +313,7 @@ export class EntityStore {
     this.restrictions.clear();
     this.preferences.clear();
     this.count = snapshot.count;
+    this.humanCount = snapshot.records.filter((r) => r.species === 8).length;
     this.nextId = snapshot.nextId;
     for (const r of snapshot.records) {
       for (const k of [...FLOAT_COLUMNS, ...BYTE_COLUMNS]) this[k][r.slot] = r[k];
@@ -381,9 +384,10 @@ export class NatureRules {
       !s.sleeping[actor]
     );
   }
-  static canHunt(s: EntityStore, actor: number, target: number): boolean {
+  static canHunt(s: EntityStore, actor: number, target: number, continuing = false): boolean {
     return (
       this.canAttack(s, actor, target) &&
+      (s.food[actor]! < 0.4 || (continuing && s.food[actor]! <= 0.8)) &&
       !s.protected(target) &&
       s.definition(actor).id !== s.definition(target).id &&
       !!s.definition(actor).prey?.includes(s.definition(target).id)
@@ -399,6 +403,7 @@ export class NatureRules {
     return (
       !!s.alive[actor] &&
       s.hp[actor]! > 0 &&
+      !s.sleeping[actor] &&
       remaining > 0 &&
       s.diet(actor).includes(food.id) &&
       ((food.id !== 'meat' && food.id !== 'meal') || origins.length > 0) &&

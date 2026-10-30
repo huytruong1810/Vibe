@@ -12,7 +12,7 @@ import { NavigationService } from './navigation';
 import { ResourceLocator, ResourceStore } from './resources';
 import { SettlementPlanner, SurfaceRules, type ChunkStore } from './world';
 import { CONFIG, clamp, distanceSquared, type NpcId, type WorldPosition } from './values';
-import { moveOnTerrain } from './creatures';
+import { moveOnTerrain, WellbeingPolicy } from './creatures';
 import { EntityStore } from './entities';
 
 const LocationSchema = z.enum(['home', 'work', 'square', 'shrine', 'outpost']);
@@ -379,7 +379,7 @@ export class ScheduleExecutor {
           dt *
             2.2 *
             (this.entities
-              ? Math.max(0.25, this.entities.wellbeing(this.entities.require(npc.entityId)))
+              ? WellbeingPolicy.speed(this.entities.wellbeing(this.entities.require(npc.entityId)))
               : 1),
         );
       const moved = moveOnTerrain(

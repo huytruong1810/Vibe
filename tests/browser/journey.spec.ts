@@ -59,28 +59,49 @@ test('full world, movement, grounded dialogue, save and resume', async ({ page }
   expect(initial.npcs).toHaveLength(30);
   expect(initial.entities.records.filter((e) => e.species !== 8).length).toBe(1000);
   await page.getByRole('tab', { name: 'Villagers' }).click();
-  // Villagers may already have reached work while first-time GPU caches are prepared. Walk up to them.
-  await page.keyboard.down('w');
+  // Follow a real nearby villager; startup rendering time can put them at different points on their route.
+  const held = new Set<string>();
   try {
     await expect
-      .poll(async () => {
-        const snapshot = await checkpoint(page);
-        return Math.min(
-          ...snapshot.npcs.map((n) =>
-            Math.hypot(
-              body(snapshot, n.entityId).x - body(snapshot).x,
-              body(snapshot, n.entityId).y - body(snapshot).y,
-            ),
-          ),
-        );
-      })
-      .toBeLessThan(2.5);
+      .poll(
+        async () => {
+          const snapshot = await checkpoint(page);
+          const position = body(snapshot),
+            nearest = snapshot.npcs
+              .map((n) => body(snapshot, n.entityId))
+              .sort(
+                (a, b) =>
+                  Math.hypot(a.x - position.x, a.y - position.y) -
+                  Math.hypot(b.x - position.x, b.y - position.y),
+              )[0]!;
+          const dx = nearest.x - position.x,
+            dy = nearest.y - position.y;
+          if (Math.hypot(dx, dy) < 1.2) {
+            await page.keyboard.press('e');
+            return page.locator('#conversation-dialog').isVisible();
+          }
+          const desired = new Set([
+            ...(dx > 0.3 ? ['d'] : dx < -0.3 ? ['a'] : []),
+            ...(dy > 0.3 ? ['s'] : dy < -0.3 ? ['w'] : []),
+          ]);
+          for (const key of held)
+            if (!desired.has(key)) {
+              await page.keyboard.up(key);
+              held.delete(key);
+            }
+          for (const key of desired)
+            if (!held.has(key)) {
+              await page.keyboard.down(key);
+              held.add(key);
+            }
+          return false;
+        },
+        { timeout: 15000 },
+      )
+      .toBe(true);
   } finally {
-    await page.keyboard.up('w');
+    for (const key of held) await page.keyboard.up(key);
   }
-  const talk = page.locator('.person-talk:not(:disabled)').first();
-  await expect(talk).toBeEnabled();
-  await talk.click();
   await expect(page.locator('#conversation-dialog')).toBeVisible();
   const before = await checkpoint(page);
   await page.waitForTimeout(350);
@@ -251,13 +272,11 @@ test('creature care, crafting, elemental combat and recovery through a validated
 
 async function importScenario(page: Page, save: GameSave): Promise<void> {
   await page.getByRole('button', { name: 'Settings', exact: true }).click();
-  await page
-    .locator('#import-input')
-    .setInputFiles({
-      name: 'entity-scenario.json',
-      mimeType: 'application/json',
-      buffer: Buffer.from(JSON.stringify(save)),
-    });
+  await page.locator('#import-input').setInputFiles({
+    name: 'entity-scenario.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(JSON.stringify(save)),
+  });
   await expect(page.locator('#toast')).toContainText('imported');
   await page.getByRole('button', { name: 'Close settings' }).click();
 }

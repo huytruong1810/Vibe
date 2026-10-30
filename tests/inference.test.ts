@@ -20,6 +20,24 @@ const job = (id: string, kind: InferenceJob['kind'] = 'plan'): InferenceJob => (
 });
 afterEach(() => vi.useRealTimers());
 describe('local inference adapter and scheduling', () => {
+  it('defers background starts during sleep acceleration while preserving dialogue priority', async () => {
+    const generate = vi.fn(async () => ({ output: { ready: true }, tokens: 1 }));
+    const scheduler = new InferenceScheduler(
+      { models: async () => [], capabilityCheck: async () => undefined, generate },
+      'model',
+      () => undefined,
+    );
+    scheduler.setBackgroundDeferred(true);
+    scheduler.enqueue(job('background'));
+    expect(generate).not.toHaveBeenCalled();
+    scheduler.enqueue(job('dialogue', 'dialogue'));
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    expect(generate).toHaveBeenCalledTimes(1);
+    scheduler.setBackgroundDeferred(false);
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    expect(generate).toHaveBeenCalledTimes(2);
+    scheduler.dispose();
+  });
   it('constrains endpoints to loopback and validates discovered capabilities', async () => {
     expect(() => new OllamaAdapter('https://unrelated.example')).toThrow(/loopback/);
     expect(() => new OllamaAdapter('http://user:secret@localhost:11434')).toThrow();

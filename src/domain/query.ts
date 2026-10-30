@@ -4,6 +4,7 @@ import type { CreatureStateStore } from './creatures';
 import { SeasonSystem, type WorldCalendar } from './core';
 import { SettlementPlanner, nearestSettlement } from './world';
 import { distanceSquared, type NpcId } from './values';
+import type { ResourceStore } from './resources';
 
 /** Read-only, actor-scoped facts. A prompt never receives the complete world store. */
 export class WorldQuery {
@@ -11,6 +12,7 @@ export class WorldQuery {
     private readonly npcs: readonly NpcState[],
     private readonly creatures: CreatureStateStore,
     private readonly calendar: WorldCalendar,
+    private readonly resources?: ResourceStore,
   ) {}
   perceivedFacts(npcId: NpcId): object {
     const index = this.npcs.findIndex((n) => n.profileId === npcId);
@@ -27,7 +29,19 @@ export class WorldQuery {
       weather: new SeasonSystem().weather(this.calendar),
       settlement: nearestSettlement(observer).name,
       partner: observer.partner === null ? null : s.definition(s.require(observer.partner)).name,
-      giftAvailable: observer.lastGiftDay !== this.calendar.day && observer.affinity >= 0,
+      giftAvailable:
+        observer.lastGiftDay !== this.calendar.day &&
+        observer.affinity >= 0 &&
+        (!this.resources ||
+          ['berries', 'water', 'fiber'].some((item) =>
+            this.resources!.hasSupply(observer, item as 'berries' | 'water' | 'fiber'),
+          )),
+      needs: {
+        food: s.food[s.require(observer.entityId)],
+        water: s.water[s.require(observer.entityId)],
+        rest: s.rest[s.require(observer.entityId)],
+        sleeping: !!s.sleeping[s.require(observer.entityId)],
+      },
       knownDestinations: new SettlementPlanner().locations(index),
       nearbyVillagers: this.npcs
         .filter((n) => n !== observer && distanceSquared(n, observer) < 12 ** 2)

@@ -236,6 +236,7 @@ describe('nature, social attacks and predation', () => {
       a = s.spawn(6, 4, 4),
       b = s.spawn(6, 5, 4),
       prey = s.spawn(2, 6, 4);
+    s.food[a] = 0.2;
     expect(NatureRules.canAttack(s, a, b)).toBe(true);
     expect(NatureRules.canHunt(s, a, b)).toBe(false);
     expect(NatureRules.canHunt(s, a, prey)).toBe(true);
@@ -261,6 +262,70 @@ describe('nature, social attacks and predation', () => {
     ecology.resolveDeaths(0);
     expect(resources.carrion).toHaveLength(0);
     expect(s.slot(s.id(b))).toBe(b);
+  });
+  it('checks hunger hysteresis and preserves an active hunt across save/load', () => {
+    const s = new EntityStore(3),
+      h = s.spawn(6, 4, 4),
+      prey = s.spawn(2, 5, 4);
+    expect(NatureRules.canHunt(s, h, prey)).toBe(false);
+    s.food[h] = 0.5;
+    expect(NatureRules.canHunt(s, h, prey)).toBe(false);
+    expect(NatureRules.canHunt(s, h, prey, true)).toBe(true);
+    const p = player();
+    s.spawnHuman(0, 1, 12, 12);
+    bindBody(p, s, 0);
+    const combat = new CombatSystem(s, p, []),
+      state = combat.snapshot();
+    state.hunting = [s.id(h)];
+    state.pursuits = [[s.id(h), { target: s.id(prey), cause: 'hunt', until: 600 }]];
+    combat.restore(state);
+    combat.advance(31, new SpatialIndex());
+    expect(combat.pursuits.get(s.id(h))?.cause).toBe('hunt');
+    s.food[h] = 0.81;
+    expect(NatureRules.canHunt(s, h, prey, true)).toBe(false);
+  });
+  it('reserves a hunt for one hunter and releases retired navigation work', () => {
+    const s = new EntityStore(4),
+      a = s.spawn(6, 4, 4),
+      b = s.spawn(6, 4, 5),
+      prey = s.spawn(2, 5, 4),
+      p = player();
+    s.spawnHuman(0, 1, 12, 12);
+    bindBody(p, s, 0);
+    s.food[a] = s.food[b] = 0.2;
+    const spatial = new SpatialIndex();
+    for (const slot of s.slots()) spatial.insert(slot, s.x[slot]!, s.y[slot]!);
+    const combat = new CombatSystem(s, p, []);
+    combat.advance(30, spatial);
+    expect(
+      [...combat.pursuits.values()].filter((p) => p.cause === 'hunt' && p.target === s.id(prey)),
+    ).toHaveLength(1);
+    const world = flatWorld(),
+      resources = new ResourceStore(world),
+      navigation = new NavigationService(world);
+    Object.assign(resources.supplies[0]!, { x: 8, y: 8, stock: { reeds: 1 } });
+    const eater = s.spawn(1, 4, 4, 1),
+      ai = new SurvivalController(s, world, resources, new ResourceLocator(resources), navigation);
+    s.food[eater] = 0.1;
+    ai.decide(eater, 0);
+    const id = s.id(eater);
+    navigation.request({ id: `survival:${id}`, start: { x: 4, y: 4 }, goal: { x: 8, y: 8 } });
+    s.retire(eater);
+    ai.pruneRetired();
+    expect(navigation.pending).toBe(0);
+    expect(ai.active(eater)).toBe(false);
+  });
+  it('does not consume food while sleeping and uses the same fatigue tiers for humans', () => {
+    const s = new EntityStore(1),
+      i = s.spawnHuman(0, 1, 4, 4);
+    SleepSystem.begin(s, i);
+    expect(NatureRules.canConsume(s, i, { id: 'berries' })).toBe(false);
+    const h = new SimulationHost(42, 1, 24);
+    h.inventory.add('berries');
+    send(h, { type: 'sleep' });
+    expect(send(h, { type: 'use', slot: 0 }).ok).toBe(false);
+    expect(h.inventory.state[0]?.id).toBe('berries');
+    expect(send(h, { type: 'service', action: 'eat' }).ok).toBe(false);
   });
   it('hunts only when hungry, handles passive flight, and grants no ambient XP', () => {
     const s = new EntityStore(3),
@@ -293,6 +358,51 @@ describe('nature, social attacks and predation', () => {
     expect(p.experience).toBe(0);
     expect(s.experience[hunter]).toBe(0);
   });
+  it('requires edible unbonded prey before replenishing a predator population', () => {
+    const s = new EntityStore(4),
+      world = flatWorld(32),
+      resources = new ResourceStore(world);
+    world.biome.fill(1);
+    s.spawn(2, 15, 15, 0);
+    s.spawn(2, 16, 15, 1);
+    const ecology = new EcologyService(s, world, resources, new SeededRandom(42));
+    ecology.target = 100;
+    ecology.replacements.push({ species: 6, due: 0, sourceId: 999 });
+    ecology.replenish(1);
+    expect(ecology.births).toBe(0);
+    expect(ecology.replacements).toHaveLength(1);
+  });
+  it('does not turn an unrelated companion assault into a rewarded duel', () => {
+    const h = new SimulationHost(42, 1, 24),
+      s = h.entities,
+      duelist = h.npcs.findIndex((n) => n.partner !== null),
+      npc = h.npcs[duelist]!;
+    const opponent = s.require(npc.partner!),
+      other = h.npcs.find((n) => n.partner !== null && n !== npc)!,
+      victim = s.require(other.partner!);
+    const ally = [...s.slots()].find((i) => !s.isHuman(i) && s.owner[i] === -1)!;
+    s.owner[ally] = 0;
+    s.x[ally] = h.player.x - 1;
+    s.y[ally] = h.player.y;
+    npc.x = h.player.x;
+    npc.y = h.player.y;
+    s.x[opponent] = h.player.x + 3.5;
+    s.y[opponent] = h.player.y;
+    expect(h.combat.encounters.startBattle(duelist, 0, h.tick)).toMatch(/begun/);
+    s.x[victim] = h.player.x + 1;
+    s.y[victim] = h.player.y;
+    s.hp[victim] = 1;
+    h.player.facingX = 1;
+    h.player.facingY = 0;
+    const spatial = new SpatialIndex();
+    for (const i of s.slots()) spatial.insert(i, s.x[i]!, s.y[i]!);
+    expect(h.combat.attack('strike', 0)).toBe(true);
+    for (let tick = 0; tick < 6; tick++) h.combat.advance(tick, spatial);
+    expect(s.hp[victim]).toBe(0);
+    expect(s.downed[victim]).toBe(1);
+    expect(h.player.experience).toBe(0);
+    expect(h.combat.encounters.encounters.some((e) => e.target === s.id(victim))).toBe(false);
+  });
   it('remembers bounded nonlethal villager assaults, retaliates and disallows dialogue escape', () => {
     const h = new SimulationHost(42, 1, 24),
       npc = h.npcs[10]!,
@@ -318,6 +428,17 @@ describe('nature, social attacks and predation', () => {
     expect(send(h, { type: 'interact', npcId: npc.profileId }).ok).toBe(false);
     expect(h.player.experience).toBe(0);
     expect(h.resources.carrion.some((c) => c.species === 'human')).toBe(false);
+    h.entities.hp[body] = 1;
+    h.player.attack = null;
+    h.player.stamina = 100;
+    npc.x = h.player.x + 1;
+    npc.y = h.player.y;
+    expect(send(h, { type: 'attack', kind: 'strike' }).ok).toBe(true);
+    h.advance(5);
+    expect(h.entities.hp[body]).toBe(0);
+    expect(h.entities.downed[body]).toBe(1);
+    expect(h.entities.recoverAt[body]).toBeGreaterThan(h.calendar.elapsedSeconds);
+    expect(h.player.experience).toBe(0);
   });
   it('retires killed wildlife exactly once, shares food quantities, and replaces with a fresh identity', () => {
     const s = new EntityStore(2),

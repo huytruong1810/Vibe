@@ -95,6 +95,7 @@ const attack = z
 const legacy = LegacySchema.shape;
 const combat = z
   .object({
+    hunting: z.array(uint).max(CONFIG.creatureCapacity).default([]),
     serial: uint,
     encounters: legacy.combat.shape.encounters,
     nextAttack: z.array(z.tuple([uint, uint])).max(CONFIG.creatureCapacity + 31),
@@ -172,7 +173,7 @@ export const GameSaveSchema = z
           })
           .strict(),
       )
-      .max(CONFIG.creatureCapacity),
+      .max(CONFIG.creatureCapacity * 2),
     supplies: z
       .array(
         z
@@ -264,6 +265,22 @@ export const GameSaveSchema = z
     if (save.combat.target !== null && !ids.has(save.combat.target)) fail('Invalid combat target');
     if (save.combat.pursuits.some(([id, p]) => !ids.has(id) || !ids.has(p.target)))
       fail('Invalid pursuit entity');
+    if (save.combat.hunting.some((id) => !ids.has(id))) fail('Invalid hunter identity');
+    if (
+      [
+        ...save.carrion.map((c) => c.sourceId),
+        ...save.ecology.replacements.map((r) => r.sourceId),
+      ].some((id) => id >= save.entities.nextId)
+    )
+      fail('Retired identity exceeds allocation counter');
+    for (const entries of [
+      save.combat.pursuits,
+      save.combat.nextAttack,
+      save.combat.attacks,
+      save.combat.assaults,
+    ])
+      if (new Set(entries.map(([id]) => id)).size !== entries.length)
+        fail('Duplicate combat identity');
     for (const values of [
       save.worldDeltas.map((d) => d.index),
       save.drops.map((d) => d.id),
@@ -332,6 +349,7 @@ export function migrateSave(input: unknown): GameSave {
     const { creatures: unused, player: previous, npcs: oldNpcs, ...rest } = old;
     candidate = {
       ...rest,
+      events: old.events.map((event) => ({ ...event, subjects: event.subjects.map(reference) })),
       version: 3,
       contentVersion: 2,
       player: {

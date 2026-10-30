@@ -3,7 +3,7 @@ import { EntityStore, NatureRules, SleepSystem } from './entities';
 import { moveOnTerrain, WellbeingPolicy, creatureTraversal, CreatureMode } from './creatures';
 import { ResourceStore, ResourceLocator } from './resources';
 import { NavigationService } from './navigation';
-import { SettlementPlanner, SurfaceRules, TileFlag, type ChunkStore } from './world';
+import { SurfaceRules, TileFlag, type ChunkStore } from './world';
 import { CONFIG, clamp, distanceSquared, type WorldPosition } from './values';
 import { SeededRandom } from './core';
 
@@ -30,6 +30,7 @@ export class SurvivalController {
     private readonly resources: ResourceStore,
     private readonly locator: ResourceLocator,
     private readonly navigation: NavigationService,
+    private readonly homeFor: (id: number) => WorldPosition | undefined = () => undefined,
   ) {}
 
   decide(i: number, now: number, scheduledRest = false): boolean {
@@ -58,7 +59,7 @@ export class SurvivalController {
         .find((c) => SurfaceRules.walkable(this.world, c.x, c.y, creatureTraversal(s, i)));
       if (well) task = { ...base, kind: 'water', goal: well, source: well.index };
     }
-    if (!task && s.food[i]! < 0.6) {
+    if (!task && s.food[i]! < (s.definition(i).prey?.length ? 0.8 : 0.6)) {
       const corpse = this.resources.carrion
         .filter((c) =>
           NatureRules.canConsume(s, i, { id: 'meat', originSpecies: [c.species] }, c.remaining),
@@ -94,8 +95,7 @@ export class SurvivalController {
     }
     if (!task && (s.rest[i]! < 0.2 || scheduledRest || s.forcedRest[i])) {
       const humanOwner = s.isHuman(i) ? id : s.owner[i]!;
-      const home =
-        humanOwner > 0 ? new SettlementPlanner().locations(humanOwner - 1).home : position;
+      const home = this.homeFor(humanOwner) ?? position;
       task = { ...base, kind: 'rest', goal: home };
     }
     if (!task && s.cleanliness[i]! < 0.45) {
@@ -127,6 +127,9 @@ export class SurvivalController {
   }
   active(i: number): boolean {
     return !!this.s.sleeping[i] || this.tasks.has(this.s.id(i));
+  }
+  feeding(id: number): boolean {
+    return this.tasks.get(id)?.kind === 'food';
   }
   move(i: number, dt: number, now: number): void {
     const s = this.s,
@@ -232,6 +235,17 @@ export class SurvivalController {
     this.tasks.delete(id);
     this.paths.delete(id);
     this.failedUntil.set(id, now + 0.5);
+    this.navigation.cancel(`survival:${id}`);
+  }
+  pruneRetired(): void {
+    for (const [id, task] of this.tasks)
+      if (this.s.slot(id) === undefined) {
+        if (task.source !== undefined) this.locator.release(task.source, id);
+        this.tasks.delete(id);
+        this.navigation.cancel(`survival:${id}`);
+      }
+    for (const map of [this.paths, this.failedUntil])
+      for (const id of map.keys()) if (this.s.slot(id) === undefined) map.delete(id);
   }
   clear(): void {
     this.tasks.clear();
@@ -317,7 +331,12 @@ export class EcologyService {
       for (let i = 0; i < this.s.count; i++)
         if (this.s.alive[i] && distanceSquared(this.s.position(i), { x, y }) < 16 ** 2) {
           if (this.s.species[i] === species) neighbors++;
-          if (definition.prey?.includes(this.s.definition(i).id)) prey++;
+          if (
+            !this.s.protected(i) &&
+            this.s.hp[i]! > 0 &&
+            definition.prey?.includes(this.s.definition(i).id)
+          )
+            prey++;
         }
       if (
         neighbors >= 24 ||
@@ -333,6 +352,7 @@ export class EcologyService {
   private foodNearby(x: number, y: number, diet: readonly ItemId[]): boolean {
     for (let dy = -8; dy <= 8; dy += 2)
       for (let dx = -8; dx <= 8; dx += 2) {
+        if (!this.world.contains(x + dx, y + dy)) continue;
         const i = this.world.index(x + dx, y + dy);
         if (this.world.quantity[i] && diet.includes(this.resources.item(i)!)) return true;
       }

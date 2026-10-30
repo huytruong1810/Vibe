@@ -58,6 +58,7 @@ export interface Encounter {
   readonly startedAt: number;
 }
 export interface CombatSnapshot {
+  hunting: number[];
   serial: number;
   encounters: Encounter[];
   nextAttack: [number, number][];
@@ -156,6 +157,8 @@ export class EncounterService {
     if (
       opponent === undefined ||
       distanceSquared(npc, this.player) > 16 ||
+      distanceSquared(this.store.position(opponent), this.player) > 16 ||
+      distanceSquared(this.store.position(partner), this.player) > 16 ||
       this.store.hp[opponent]! <= 0 ||
       this.store.hp[partner]! <= 0
     )
@@ -258,6 +261,7 @@ export class CombatSystem {
     private readonly player: PlayerState,
     private readonly npcs: readonly NpcState[],
     private readonly world?: ChunkStore,
+    private readonly foodAvailable: (id: number) => boolean = () => false,
   ) {
     this.encounters = new EncounterService(store, player, npcs);
   }
@@ -301,6 +305,7 @@ export class CombatSystem {
       const prey =
         !!definition.prey?.length &&
         this.hunting.has(id) &&
+        !this.foodAvailable(id) &&
         (this.failedHunts.get(id) ?? 0) <= tick;
       const aggression = s.nature(i).aggression;
       if (!prey && !aggression.length) continue;
@@ -315,7 +320,7 @@ export class CombatSystem {
       for (const j of nearby) {
         const other = s.id(j),
           distance = distanceSquared(s.position(i), s.position(j));
-        if (prey && distance <= 36 && NatureRules.canHunt(s, i, j)) {
+        if (prey && distance <= 36 && NatureRules.canHunt(s, i, j, this.hunting.has(id))) {
           const reserved = this.huntReservations.get(other);
           if (reserved && reserved.until > tick && reserved.actor !== id) continue;
           this.huntReservations.set(other, { actor: id, until: tick + 600 });
@@ -375,8 +380,8 @@ export class CombatSystem {
       s.recoverAt[b] = this.now + 60;
     }
     if (target === this.player.entityId) this.player.invulnerableUntil = tick + 20;
-    if (s.nature(b).response === 'retaliate') this.pursue(target, actor, 'retaliate', tick);
-    else this.pursue(target, actor, 'retaliate', tick); // Same threat record; avoid policy selects flee below.
+    // Preserve an existing hunt/duel against the same attacker; Nature chooses flight or retaliation.
+    if (this.pursuits.get(target)?.target !== actor) this.pursue(target, actor, 'retaliate', tick);
     if (actor === this.player.entityId && s.isHuman(b)) {
       if ((this.assaults.get(target) ?? -Infinity) + 2700 <= tick) {
         this.assaults.set(target, tick);
@@ -395,9 +400,14 @@ export class CombatSystem {
     } else if (
       actor === this.player.entityId &&
       !s.isHuman(b) &&
-      (s.owner[b] === -1 || this.encounters.duel !== null)
+      (s.owner[b] === -1 ||
+        (this.encounters.duel !== null && this.npcs[this.encounters.duel]?.partner === target))
     ) {
-      this.encounters.open(target, this.encounters.duel, tick);
+      const duel =
+        this.encounters.duel !== null && this.npcs[this.encounters.duel]?.partner === target
+          ? this.encounters.duel
+          : null;
+      this.encounters.open(target, duel, tick);
     }
     events.push({ type: 'hit', actor, target, text: `${defend.name} took ${damage} damage.` });
     if (s.hp[b]! <= 0 && this.pursuits.get(actor)?.cause === 'hunt')
@@ -450,7 +460,8 @@ export class CombatSystem {
         s.hp[b]! <= 0 ||
         p.until <= tick ||
         distanceSquared(s.position(a), s.position(b)) > 144 ||
-        (p.cause === 'hunt' && (!NatureRules.canHunt(s, a, b) || !this.hunting.has(id)))
+        (p.cause === 'hunt' &&
+          (!NatureRules.canHunt(s, a, b, this.hunting.has(id)) || !this.hunting.has(id)))
       ) {
         this.pursuits.delete(id);
         this.attacks.delete(id);
@@ -556,6 +567,7 @@ export class CombatSystem {
   }
   snapshot(): CombatSnapshot {
     return {
+      hunting: [...this.hunting],
       ...this.encounters.snapshot(),
       nextAttack: [...this.nextAttack],
       pursuits: [...this.pursuits],
@@ -577,5 +589,9 @@ export class CombatSystem {
     this.huntReservations.clear();
     this.failedHunts.clear();
     this.hunting.clear();
+    for (const id of snapshot.hunting) this.hunting.add(id);
+    for (const [id, pursuit] of this.pursuits)
+      if (pursuit.cause === 'hunt')
+        this.huntReservations.set(pursuit.target, { actor: id, until: pursuit.until });
   }
 }

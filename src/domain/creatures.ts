@@ -323,6 +323,14 @@ export class CreatureDecisionSystem {
     this.paths.clear();
     this.failures.clear();
   }
+  pruneRetired(): void {
+    for (const map of [this.paths, this.failures])
+      for (const id of map.keys())
+        if (this.store.slot(id) === undefined) {
+          map.delete(id);
+          this.navigation.cancel(`entity:${id}`);
+        }
+  }
   debugPaths(observer: WorldPosition): { actor: string; points: readonly WorldPosition[] }[] {
     return [...this.paths]
       .filter(
@@ -330,7 +338,7 @@ export class CreatureDecisionSystem {
           points[0] && Math.hypot(points[0].x - observer.x, points[0].y - observer.y) < 40,
       )
       .slice(0, 12)
-      .map(([id, points]) => ({ actor: `creature:${id}`, points: points.slice(0, 48) }));
+      .map(([id, points]) => ({ actor: `entity:${id}`, points: points.slice(0, 48) }));
   }
 }
 
