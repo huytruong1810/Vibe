@@ -49,15 +49,65 @@
       "hud_128": "/assets/portraits/characters/portrait_npc_caelum_128.png",
       "hud_96": "/assets/portraits/characters/portrait_npc_caelum_96.png"
     },
+    "npc_finn": {
+      "master": "/assets/portraits/characters/portrait_npc_finn_cutout.png",
+      "hud_128": "/assets/portraits/characters/portrait_npc_finn_128.png",
+      "hud_96": "/assets/portraits/characters/portrait_npc_finn_96.png"
+    },
+    "npc_marina": {
+      "master": "/assets/portraits/characters/portrait_npc_marina_cutout.png",
+      "hud_128": "/assets/portraits/characters/portrait_npc_marina_128.png",
+      "hud_96": "/assets/portraits/characters/portrait_npc_marina_96.png"
+    },
+    "npc_mira": {
+      "master": "/assets/portraits/characters/portrait_npc_mira_cutout.png",
+      "hud_128": "/assets/portraits/characters/portrait_npc_mira_128.png",
+      "hud_96": "/assets/portraits/characters/portrait_npc_mira_96.png"
+    },
+    "npc_neris": {
+      "master": "/assets/portraits/characters/portrait_npc_neris_cutout.png",
+      "hud_128": "/assets/portraits/characters/portrait_npc_neris_128.png",
+      "hud_96": "/assets/portraits/characters/portrait_npc_neris_96.png"
+    },
+    "npc_oren": {
+      "master": "/assets/portraits/characters/portrait_npc_oren_cutout.png",
+      "hud_128": "/assets/portraits/characters/portrait_npc_oren_128.png",
+      "hud_96": "/assets/portraits/characters/portrait_npc_oren_96.png"
+    },
+    "npc_reed": {
+      "master": "/assets/portraits/characters/portrait_npc_reed_cutout.png",
+      "hud_128": "/assets/portraits/characters/portrait_npc_reed_128.png",
+      "hud_96": "/assets/portraits/characters/portrait_npc_reed_96.png"
+    },
+    "npc_vulkan": {
+      "master": "/assets/portraits/characters/portrait_npc_vulkan_cutout.png",
+      "hud_128": "/assets/portraits/characters/portrait_npc_vulkan_128.png",
+      "hud_96": "/assets/portraits/characters/portrait_npc_vulkan_96.png"
+    },
+    "npc_willa": {
+      "master": "/assets/portraits/characters/portrait_npc_willa_cutout.png",
+      "hud_128": "/assets/portraits/characters/portrait_npc_willa_128.png",
+      "hud_96": "/assets/portraits/characters/portrait_npc_willa_96.png"
+    },
     "npc_zephyr": {
       "master": "/assets/portraits/characters/portrait_npc_zephyr_cutout.png",
       "hud_128": "/assets/portraits/characters/portrait_npc_zephyr_128.png",
       "hud_96": "/assets/portraits/characters/portrait_npc_zephyr_96.png"
     },
+    "player_aqualia": {
+      "master": "/assets/portraits/characters/portrait_player_aqualia_cutout.png",
+      "hud_128": "/assets/portraits/characters/portrait_player_aqualia_128.png",
+      "hud_96": "/assets/portraits/characters/portrait_player_aqualia_96.png"
+    },
     "player_pyrador": {
       "master": "/assets/portraits/characters/portrait_player_pyrador_cutout.png",
       "hud_128": "/assets/portraits/characters/portrait_player_pyrador_128.png",
       "hud_96": "/assets/portraits/characters/portrait_player_pyrador_96.png"
+    },
+    "player_zephyria": {
+      "master": "/assets/portraits/characters/portrait_player_zephyria_cutout.png",
+      "hud_128": "/assets/portraits/characters/portrait_player_zephyria_128.png",
+      "hud_96": "/assets/portraits/characters/portrait_player_zephyria_96.png"
     }
   }
 }
