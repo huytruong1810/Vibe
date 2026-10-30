@@ -18,17 +18,23 @@
     "benchmark": "tsx scripts/benchmark.ts",
     "soak": "tsx scripts/soak.ts",
     "check:architecture": "tsx scripts/check-architecture.ts",
-    "check": "npm run typecheck && npm run check:architecture && npm test && vite build"
+    "check": "npm run typecheck && npm run check:architecture && npm test && vite build",
+    "assets:build": "tsx scripts/assets-build.ts",
+    "check:assets": "tsx scripts/assets-check.ts",
+    "check:assets:hd": "tsx scripts/assets-check.ts --require-hd",
+    "benchmark:render": "tsx scripts/render-benchmark.ts"
   },
   "dependencies": {
     "pixi.js": "^8.14.0",
     "zod": "^4.1.0"
   },
   "devDependencies": {
+    "@assetpack/core": "^1.7.0",
     "@playwright/test": "^1.56.0",
     "@types/node": "^22.18.0",
     "fake-indexeddb": "^6.2.0",
     "prettier": "^3.9.10",
+    "sharp": "^0.35.5",
     "tsx": "^4.20.0",
     "typescript": "~5.9.3",
     "vite": "^7.2.0",
@@ -36,5 +42,14 @@
   },
   "engines": {
     "node": ">=22.12.0"
+  },
+  "overrides": {
+    "@assetpack/core": {
+      "sharp": "0.35.5",
+      "minimatch": "10.2.6"
+    },
+    "gpu-tex-enc": {
+      "sharp": "0.35.5"
+    }
   }
 }

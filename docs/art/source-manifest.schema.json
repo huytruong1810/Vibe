@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schemaVersion": { "type": "number", "const": 1 },
+    "frames": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "pattern": "^[A-Za-z0-9_-]+$" },
+          "path": { "type": "string", "pattern": "^[A-Za-z0-9_./ -]+\\.png$" },
+          "anchor": {
+            "type": "object",
+            "properties": {
+              "x": { "type": "number", "minimum": 0, "maximum": 1 },
+              "y": { "type": "number", "minimum": 0, "maximum": 1 }
+            },
+            "required": ["x", "y"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["id", "path", "anchor"],
+        "additionalProperties": false
+      }
+    },
+    "appearances": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "minLength": 1, "maxLength": 160 },
+          "kind": {
+            "type": "string",
+            "enum": ["species", "npc", "origin", "item", "environment", "fallback"]
+          },
+          "contentId": { "type": "string", "minLength": 1, "maxLength": 160 },
+          "quality": { "type": "string", "enum": ["prototype", "hd"] },
+          "clipIds": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1, "maxLength": 160 }
+          },
+          "frameId": { "type": "string", "minLength": 1, "maxLength": 160 },
+          "fallbackId": { "type": "string", "minLength": 1, "maxLength": 160 }
+        },
+        "required": ["id", "kind", "contentId", "quality", "clipIds"],
+        "additionalProperties": false
+      }
+    },
+    "clips": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "minLength": 1, "maxLength": 160 },
+          "appearanceId": { "type": "string", "minLength": 1, "maxLength": 160 },
+          "state": {
+            "type": "string",
+            "enum": [
+              "idle",
+              "walk",
+              "run",
+              "attack",
+              "guard",
+              "hit",
+              "dash",
+              "eat",
+              "drink",
+              "bathe",
+              "work",
+              "social",
+              "sleep",
+              "downed",
+              "recovery"
+            ]
+          },
+          "facing": { "type": "string", "enum": ["n", "ne", "e", "se", "s", "sw", "w", "nw"] },
+          "frameIds": {
+            "minItems": 1,
+            "maxItems": 256,
+            "type": "array",
+            "items": { "type": "string", "minLength": 1, "maxLength": 160 }
+          },
+          "fps": { "type": "number", "exclusiveMinimum": 0, "maximum": 120 },
+          "playback": { "type": "string", "enum": ["loop", "once", "distance", "combat"] },
+          "stride": { "type": "number", "exclusiveMinimum": 0 },
+          "moveId": { "type": "string", "minLength": 1, "maxLength": 160 },
+          "phases": {
+            "type": "object",
+            "properties": {
+              "windup": {
+                "type": "array",
+                "prefixItems": [
+                  { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+                  { "type": "integer", "exclusiveMinimum": 0, "maximum": 9007199254740991 }
+                ],
+                "items": false,
+                "minItems": 2,
+                "maxItems": 2
+              },
+              "active": {
+                "type": "array",
+                "prefixItems": [
+                  { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+                  { "type": "integer", "exclusiveMinimum": 0, "maximum": 9007199254740991 }
+                ],
+                "items": false,
+                "minItems": 2,
+                "maxItems": 2
+              },
+              "recovery": {
+                "type": "array",
+                "prefixItems": [
+                  { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+                  { "type": "integer", "exclusiveMinimum": 0, "maximum": 9007199254740991 }
+                ],
+                "items": false,
+                "minItems": 2,
+                "maxItems": 2
+              }
+            },
+            "required": ["windup", "active", "recovery"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["id", "appearanceId", "state", "facing", "frameIds", "fps", "playback"],
+        "additionalProperties": false
+      }
+    },
+    "portraits": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "kind": { "type": "string", "enum": ["species", "npc", "origin"] },
+          "contentId": { "type": "string", "minLength": 1 },
+          "hud96": { "type": "string", "minLength": 1 },
+          "hud128": { "type": "string", "minLength": 1 }
+        },
+        "required": ["kind", "contentId", "hud96", "hud128"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["schemaVersion", "frames", "appearances", "clips"],
+  "additionalProperties": false
+}

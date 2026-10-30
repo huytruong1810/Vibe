@@ -1,0 +1,189 @@
+.art-gallery {
+  --gallery-ink: #e7eddf;
+  min-height: 100vh;
+  padding: clamp(16px, 3vw, 40px);
+  background: #101d20;
+  color: var(--gallery-ink);
+  font:
+    15px/1.5 system-ui,
+    sans-serif;
+}
+.art-gallery * {
+  box-sizing: border-box;
+}
+.art-gallery h1,
+.art-gallery h2,
+.art-gallery p {
+  margin: 0 0 12px;
+}
+.art-gallery h1 {
+  font:
+    500 clamp(25px, 4vw, 40px)/1.2 Georgia,
+    serif;
+}
+.art-gallery h2 {
+  font-size: 17px;
+}
+.art-gallery .art-eyebrow {
+  color: #a9cec1;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.art-gallery header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+.art-gallery a {
+  color: #b9dfc8;
+}
+.art-gallery .art-warning {
+  border-left: 3px solid #d7ab76;
+  padding: 10px 14px;
+  background: #382f25;
+  color: #f0d8ae;
+}
+.art-gallery .art-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 12px;
+  padding: 18px;
+  background: #1c2e30;
+  border: 1px solid #3a5151;
+  border-radius: 10px;
+  margin: 20px 0;
+}
+.art-gallery label {
+  display: grid;
+  gap: 5px;
+  margin: 0;
+  font-size: 13px;
+  color: #c4d2c8;
+}
+.art-gallery select,
+.art-gallery button {
+  min-height: 40px;
+  border: 1px solid #647c72;
+  border-radius: 5px;
+  background: #263b3b;
+  color: var(--gallery-ink);
+  padding: 8px 12px;
+  font: inherit;
+}
+.art-gallery button {
+  cursor: pointer;
+}
+.art-gallery button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.art-gallery :focus-visible {
+  outline: 3px solid #efcf8b;
+  outline-offset: 3px;
+}
+.art-gallery .art-checkbox {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  min-height: 40px;
+}
+.art-gallery input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+  accent-color: #bdcb9a;
+}
+.art-gallery .art-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(230px, 320px);
+  gap: 20px;
+}
+.art-gallery .art-stage,
+.art-gallery .art-metadata,
+.art-gallery .art-scene {
+  background: #1a2a2d;
+  border: 1px solid #3a5151;
+  padding: 18px;
+  border-radius: 10px;
+}
+.art-gallery .art-stage {
+  text-align: center;
+}
+.art-gallery canvas {
+  display: block;
+  max-width: 100%;
+  image-rendering: pixelated;
+}
+.art-gallery #art-frame {
+  width: 100%;
+  max-width: 640px;
+  margin: auto;
+  background: #1a262b;
+}
+.art-gallery .art-metadata dl {
+  margin: 0;
+}
+.art-gallery .art-metadata dt {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #a1b8ac;
+  margin-top: 14px;
+}
+.art-gallery .art-metadata dd {
+  margin: 2px 0 0;
+  overflow-wrap: anywhere;
+}
+.art-gallery .art-facing-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+}
+.art-gallery .art-facing-grid figure {
+  margin: 0;
+  padding: 8px;
+  background: #1a2a2d;
+  border: 1px solid #3a5151;
+  border-radius: 8px;
+  text-align: center;
+}
+.art-gallery .art-facing-grid canvas {
+  width: 100%;
+  margin: auto;
+}
+.art-gallery .art-facing-grid figcaption {
+  font-size: 12px;
+  color: #cad8c8;
+}
+.art-gallery .art-missing {
+  color: #e4b183;
+}
+.art-gallery .art-scene {
+  margin-top: 20px;
+}
+.art-gallery .art-scene canvas {
+  width: 100%;
+  margin: 16px auto 0;
+}
+.art-gallery .art-scene .art-controls {
+  margin-bottom: 0;
+}
+.art-gallery .art-status {
+  color: #bdd1bd;
+  min-height: 24px;
+}
+@media (max-width: 760px) {
+  .art-gallery .art-layout {
+    grid-template-columns: 1fr;
+  }
+  .art-gallery header {
+    display: block;
+  }
+  .art-gallery .art-facing-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
