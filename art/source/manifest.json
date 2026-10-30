@@ -75,6 +75,30 @@
       "contentId": "npc:finn",
       "hud96": "exports/portraits/portrait_npc_finn_96.png",
       "hud128": "exports/portraits/portrait_npc_finn_128.png"
+    },
+    {
+      "kind": "npc",
+      "contentId": "npc:emberlyn",
+      "hud96": "exports/portraits/portrait_npc_emberlyn_96.png",
+      "hud128": "exports/portraits/portrait_npc_emberlyn_128.png"
+    },
+    {
+      "kind": "npc",
+      "contentId": "npc:soren",
+      "hud96": "exports/portraits/portrait_npc_soren_96.png",
+      "hud128": "exports/portraits/portrait_npc_soren_128.png"
+    },
+    {
+      "kind": "npc",
+      "contentId": "npc:tala",
+      "hud96": "exports/portraits/portrait_npc_tala_96.png",
+      "hud128": "exports/portraits/portrait_npc_tala_128.png"
+    },
+    {
+      "kind": "npc",
+      "contentId": "npc:bram",
+      "hud96": "exports/portraits/portrait_npc_bram_96.png",
+      "hud128": "exports/portraits/portrait_npc_bram_128.png"
     }
   ]
 }
