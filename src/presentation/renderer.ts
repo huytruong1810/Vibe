@@ -189,6 +189,8 @@ export class WorldRenderer {
   private renderMs = 0;
   private loadMs = 0;
   private assetError = '';
+  private needsRedraw = true;
+  private sceneSignature = '';
   private gpu = 'unreported';
   private initialized = false;
   private disposed = false;
@@ -264,7 +266,11 @@ export class WorldRenderer {
       this.assetError = `Prototype rendering: ${error instanceof Error ? error.message : String(error)}`;
     }
     this.loadMs = performance.now() - started;
-    this.app.ticker.add(() => this.render());
+    // DOM menus remain responsive without continuously redrawing a frozen world.
+    this.app.ticker.remove(this.app.render, this.app);
+    this.app.ticker.add(() => {
+      if (this.render()) this.app.render();
+    });
   }
   fit(width: number, height: number): void {
     if (!this.initialized) return;
@@ -354,6 +360,7 @@ export class WorldRenderer {
       this.loadedTextureResolution = selectedResolution;
       previous?.release();
       this.assetError = '';
+      this.needsRedraw = true;
       const staticSignature = catalog.appearances
         .filter((a) => a.kind === 'environment' || a.kind === 'item')
         .map((a) => (a.frameId ? `${a.frameId}:${this.assets.texture(a.frameId)?.uid ?? 0}` : ''))
@@ -396,6 +403,8 @@ export class WorldRenderer {
     this.clearClippedTextures();
   }
   setTerrain(terrain: TerrainView): void {
+    this.needsRedraw = true;
+    this.sceneSignature = '';
     this.assetRequest?.abort();
     this.assetRequest = null;
     this.assetSignature = '';
@@ -425,6 +434,9 @@ export class WorldRenderer {
     this.effects.length = 0;
   }
   apply(frame: RenderSnapshot): void {
+    const signature = `${frame.session}:${frame.tick}:${frame.paused.join(',')}:${frame.debugEnabled}:${frame.deltas.length}:${frame.drops.map((d) => d.id).join(',')}:${frame.carrion.length}:${frame.cues.at(-1)?.sequence ?? 0}`;
+    if (signature !== this.sceneSignature) this.needsRedraw = true;
+    this.sceneSignature = signature;
     // packed/ids are returned to the worker immediately after apply; retaining empty views is intentional.
     this.frame = { ...frame, packed: new Float32Array(0), ids: new Uint32Array(0) };
     this.clock.accept(
@@ -532,6 +544,7 @@ export class WorldRenderer {
     void this.loadVisibleAssets(visibleActors);
   }
   settings(quality: Quality, reducedMotion: boolean, debug: boolean): void {
+    this.needsRedraw = true;
     const loweringBudget = TEXTURE_BUDGETS[quality] < TEXTURE_BUDGETS[this.quality];
     this.quality = quality;
     this.qualitySettings.configure(quality);
@@ -550,6 +563,7 @@ export class WorldRenderer {
     void this.loadVisibleAssets([...this.entities.values()].map((e) => e.actor));
   }
   select(id: number | null): void {
+    this.needsRedraw = true;
     this.selected = id;
   }
   private textureFor(
@@ -1043,13 +1057,13 @@ export class WorldRenderer {
     e.body.tint = hit ? 0xffc7aa : 0xffffff;
     e.body.alpha = e.hp <= 0 ? 0.55 : 1;
   }
-  private render(): void {
+  private render(): boolean {
     const now = performance.now(),
       dt = Math.min((now - this.last) / 1000, 0.1);
     this.last = now;
     const frame = this.frame,
       t = this.terrain;
-    if (!frame || !t) return;
+    if (!frame || !t || (frame.paused.length > 0 && !this.needsRedraw)) return false;
     const started = performance.now(),
       elevation =
         t.elevation[Math.floor(frame.player.y) * t.size + Math.floor(frame.player.x)] ?? 0;
@@ -1158,6 +1172,8 @@ export class WorldRenderer {
         PROFILE.height,
         this.qualitySettings.framebufferScale,
       );
+    this.needsRedraw = false;
+    return true;
   }
   private drawSurfaceEffects(seconds: number, quality: Quality, cx: number, cy: number): void {
     const g = this.surfaceEffects,

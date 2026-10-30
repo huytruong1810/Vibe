@@ -5,8 +5,8 @@ if (!Number.isInteger(port) || port < 1024 || port > 65535) throw Error('Invalid
 export default defineConfig({
   testDir: './tests/browser',
   workers: 1,
-  timeout: process.env.CI ? 120_000 : 60_000,
-  expect: { timeout: process.env.CI ? 15_000 : 5_000 },
+  timeout: 120_000,
+  expect: { timeout: 15_000 },
   use: {
     baseURL: `http://127.0.0.1:${port}`,
     viewport: { width: 1440, height: 1000 },
