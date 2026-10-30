@@ -1,0 +1,630 @@
+{
+  "generatedAt": "2026-10-30T20:47:05.464711+00:00",
+  "pipeline": "PIL code-authored procedural generators v1 (Stage 1 & 2)",
+  "assets": {
+    "art/source/exports/player_aqualia/idle_s_0.png": {
+      "sha256": "5d7809b29d25f4b219fceca5946e2421c9efbbb18bf0409ef7b562ef97e6fcba",
+      "size": 983,
+      "dimensions": [
+        96,
+        144
+      ],
+      "anchor": [
+        48,
+        132
+      ]
+    },
+    "art/source/exports/player_aqualia/idle_se_0.png": {
+      "sha256": "b46cf78cb93a379358751080a29698a6050361c51c31b6619155216e2ddca627",
+      "size": 854,
+      "dimensions": [
+        96,
+        144
+      ],
+      "anchor": [
+        48,
+        132
+      ]
+    },
+    "art/source/exports/player_aqualia/idle_e_0.png": {
+      "sha256": "42960c4df1d47dd14d6175100075bab2d7b54fbb0676b7171e064b15a51eeaf3",
+      "size": 814,
+      "dimensions": [
+        96,
+        144
+      ],
+      "anchor": [
+        48,
+        132
+      ]
+    },
+    "art/source/exports/player_aqualia/idle_n_0.png": {
+      "sha256": "f23ed5dd0388ca86687c1e0c484b8baad0aa6c6ba749b803359bdc6e8232a7c4",
+      "size": 944,
+      "dimensions": [
+        96,
+        144
+      ],
+      "anchor": [
+        48,
+        132
+      ]
+    },
+    "art/source/exports/rivallie/idle_s_0.png": {
+      "sha256": "31dd335d4a0a167f56c486efa301ae4d727cb167c668aaadbf00d8d85361cb66",
+      "size": 562,
+      "dimensions": [
+        96,
+        96
+      ],
+      "anchor": [
+        48,
+        86
+      ]
+    },
+    "art/source/exports/rivallie/idle_se_0.png": {
+      "sha256": "1194888a71828d61f1f14d225b37cda867c1140e5bc4ae82ba94f40fb0c29dcd",
+      "size": 544,
+      "dimensions": [
+        96,
+        96
+      ],
+      "anchor": [
+        48,
+        86
+      ]
+    },
+    "art/source/exports/rivallie/idle_e_0.png": {
+      "sha256": "f260da609c7c0e4df1484f4b083b48e3c45e0d6ab64a974c6856ecd9541b287c",
+      "size": 608,
+      "dimensions": [
+        96,
+        96
+      ],
+      "anchor": [
+        48,
+        86
+      ]
+    },
+    "art/source/exports/rivallie/idle_n_0.png": {
+      "sha256": "356327bbf6539c841e4c798fd0b4ae7ce472835a1b5765b01bf7a5f0716373fe",
+      "size": 551,
+      "dimensions": [
+        96,
+        96
+      ],
+      "anchor": [
+        48,
+        86
+      ]
+    },
+    "art/source/exports/environment/ground_grass.png": {
+      "sha256": "54aa62ba16dc4376c3574498a8ff5216ec7fee4f71f1a4dea4a34d37cb324e5f",
+      "size": 4650,
+      "dimensions": [
+        64,
+        64
+      ],
+      "anchor": [
+        0.5,
+        0.5
+      ]
+    },
+    "art/source/exports/environment/ground_dirt.png": {
+      "sha256": "4fee8b473910e33a9aa58a60add00310069ba47af2a4842c07338f871acbce99",
+      "size": 4865,
+      "dimensions": [
+        64,
+        64
+      ],
+      "anchor": [
+        0.5,
+        0.5
+      ]
+    },
+    "art/source/exports/environment/ground_sand.png": {
+      "sha256": "79976f4d8d08f2bb543c529ea0a5519f4e33dcf73b911c33515d10c3d0d18c75",
+      "size": 2948,
+      "dimensions": [
+        64,
+        64
+      ],
+      "anchor": [
+        0.5,
+        0.5
+      ]
+    },
+    "art/source/exports/environment/ground_freshwater.png": {
+      "sha256": "c0a3ebe999f6da52328f4047550b1ca7aff0f8f9a09e27aabaeb8223dd64f322",
+      "size": 1525,
+      "dimensions": [
+        64,
+        64
+      ],
+      "anchor": [
+        0.5,
+        0.5
+      ]
+    },
+    "art/source/exports/environment/shore_freshwater_mask_1.png": {
+      "sha256": "0aadd3710b019dc50a20d47022183fefb510365488639d0f2b735158e7af8136",
+      "size": 987,
+      "dimensions": [
+        64,
+        64
+      ],
+      "anchor": [
+        0.5,
+        0.5
+      ]
+    },
+    "art/source/exports/environment/shore_freshwater_mask_2.png": {
+      "sha256": "3a1cd1e25daba6d73a0b9640a290ffc2f6945c7b9fad9d5b89da79e7967f9ad7",
+      "size": 970,
+      "dimensions": [
+        64,
+        64
+      ],
+      "anchor": [
+        0.5,
+        0.5
+      ]
+    },
+    "art/source/exports/environment/shore_freshwater_mask_3.png": {
+      "sha256": "90376eeb3706fe236c289412eeeb84b5be4a50739b209ce530a721741263f329",
+      "size": 1011,
+      "dimensions": [
+        64,
+        64
+      ],
+      "anchor": [
+        0.5,
+        0.5
+      ]
+    },
+    "art/source/exports/environment/shore_freshwater_mask_4.png": {
+      "sha256": "3327e892478141d3de189d59455f68d8c5770a4e8311d186433417ab33f83134",
+      "size": 977,
+      "dimensions": [
+        64,
+        64
+      ],
+      "anchor": [
+        0.5,
+        0.5
+      ]
+    },
+    "art/source/exports/environment/shore_freshwater_mask_5.png": {
+      "sha256": "ec85a4b33ff39bf4f0173bfc1931184aa75dd21370a2f76993edf3faac9d52b9",
+      "size": 1301,
+      "dimensions": [
+        64,
+        64
+      ],
+      "anchor": [
+        0.5,
+        0.5
+      ]
+    },
+    "art/source/exports/environment/shore_freshwater_mask_6.png": {
+      "sha256": "9d7bec52c3eda7eb924e6856bf6903230ff036f760eb496ed39a411e3689535d",
+      "size": 1663,
+      "dimensions": [
+        64,
+        64
+      ],
+      "anchor": [
+        0.5,
+        0.5
+      ]
+    },
+    "art/source/exports/environment/shore_freshwater_mask_7.png": {
+      "sha256": "944e60a35434b58059a9f34af00d6e6614f8525fe38396817540df99ef00de8e",
+      "size": 1079,
+      "dimensions": [
+        64,
+        64
+      ],
+      "anchor": [
+        0.5,
+        0.5
+      ]
+    },
+    "art/source/exports/environment/shore_freshwater_mask_8.png": {
+      "sha256": "9fddc4d37d54ab4411085277b0134bb3d340dca5711e04c5cfa4982377492a98",
+      "size": 941,
+      "dimensions": [
+        64,
+        64
+      ],
+      "anchor": [
+        0.5,
+        0.5
+      ]
+    },
+    "art/source/exports/environment/shore_freshwater_mask_9.png": {
+      "sha256": "ea6b4d423c1a3ac90ee59d9e858596323f2cc79c5e723bc53a9074f01d5017c4",
+      "size": 1640,
+      "dimensions": [
+        64,
+        64
+      ],
+      "anchor": [
+        0.5,
+        0.5
+      ]
+    },
+    "art/source/exports/environment/shore_freshwater_mask_10.png": {
+      "sha256": "10f1efa2f43e537d6dabf91d0973329c24c5b847c6bb1f9a79a1fab4fd6fa7ef",
+      "size": 1267,
+      "dimensions": [
+        64,
+        64
+      ],
+      "anchor": [
+        0.5,
+        0.5
+      ]
+    },
+    "art/source/exports/environment/shore_freshwater_mask_11.png": {
+      "sha256": "5e88d080fd3d7e410fe20d73e8de75ec6e848cf647aa9a9ae8d3e85130015282",
+      "size": 1083,
+      "dimensions": [
+        64,
+        64
+      ],
+      "anchor": [
+        0.5,
+        0.5
+      ]
+    },
+    "art/source/exports/environment/shore_freshwater_mask_12.png": {
+      "sha256": "07e3e50eebc62bf50cf6faa8d941e11c42ff2521e412f4bebdcef85725153d98",
+      "size": 1017,
+      "dimensions": [
+        64,
+        64
+      ],
+      "anchor": [
+        0.5,
+        0.5
+      ]
+    },
+    "art/source/exports/environment/shore_freshwater_mask_13.png": {
+      "sha256": "c73d517a90088a268ea8a0b1d263e2e95276c70b6a4b955142b46f211fa4f61a",
+      "size": 1007,
+      "dimensions": [
+        64,
+        64
+      ],
+      "anchor": [
+        0.5,
+        0.5
+      ]
+    },
+    "art/source/exports/environment/shore_freshwater_mask_14.png": {
+      "sha256": "e57b62c6a2b22574d56b15ad10cac10621596c322dddf41afda789135281e405",
+      "size": 1070,
+      "dimensions": [
+        64,
+        64
+      ],
+      "anchor": [
+        0.5,
+        0.5
+      ]
+    },
+    "art/source/exports/environment/cliff_grass.png": {
+      "sha256": "116544d3f92e9de296da0734015365547901191fde5a450afb28644c24c23a2f",
+      "size": 752,
+      "dimensions": [
+        64,
+        16
+      ],
+      "anchor": [
+        0.5,
+        0.5
+      ]
+    },
+    "art/source/exports/environment/ramp_grass.png": {
+      "sha256": "83e19ab1042f456bfe0559ef3fc41ec4de443133394c5e5316138777996f1a13",
+      "size": 1451,
+      "dimensions": [
+        64,
+        64
+      ],
+      "anchor": [
+        0.5,
+        0.5
+      ]
+    },
+    "art/source/exports/environment/tree_oak.png": {
+      "sha256": "275dcebaff81a9a77c959881ab69563c3547b4836df757cfe0e33fbc64119fc0",
+      "size": 882,
+      "dimensions": [
+        128,
+        160
+      ],
+      "anchor": [
+        0.5,
+        0.94
+      ]
+    },
+    "art/source/exports/environment/canopy_oak.png": {
+      "sha256": "c64919508746d06dcb310b34109793cc4e36261a7f6319c36e24a9466a5165fc",
+      "size": 561,
+      "dimensions": [
+        128,
+        160
+      ],
+      "anchor": [
+        0.5,
+        0.94
+      ]
+    },
+    "art/source/exports/environment/house_aqualia.png": {
+      "sha256": "32e5c12cd57851444bd985bde22ab91ee056515a1be0d664d0fe424b7a890a7b",
+      "size": 1265,
+      "dimensions": [
+        192,
+        160
+      ],
+      "anchor": [
+        0.5,
+        0.94
+      ]
+    },
+    "art/source/exports/environment/landmark_well.png": {
+      "sha256": "99795cda2284977ebd9a74ee534213799d6b55336ef1aca6de1968adb938501c",
+      "size": 510,
+      "dimensions": [
+        64,
+        80
+      ],
+      "anchor": [
+        0.5,
+        0.925
+      ]
+    },
+    "art/source/exports/environment/landmark_waystone.png": {
+      "sha256": "acfa1a4d2fe6705533f8f7b6bd055eefc7676b7f4b51dec4fea42135560bf252",
+      "size": 454,
+      "dimensions": [
+        64,
+        96
+      ],
+      "anchor": [
+        0.5,
+        0.9375
+      ]
+    },
+    "art/source/exports/environment/prop_hearth.png": {
+      "sha256": "b3849a883267680138eb6897cd42290cd26a9d2545bd00fcf8dc6f8a197e126b",
+      "size": 350,
+      "dimensions": [
+        64,
+        64
+      ],
+      "anchor": [
+        0.5,
+        0.9
+      ]
+    },
+    "art/source/exports/environment/flora_berries_healthy.png": {
+      "sha256": "75c2018a0449286ae251a7bd6f2308213e1b88a15dbc55f4545261cd8567b4c9",
+      "size": 450,
+      "dimensions": [
+        48,
+        48
+      ],
+      "anchor": [
+        0.5,
+        0.85
+      ]
+    },
+    "art/source/exports/environment/flora_berries_harvested.png": {
+      "sha256": "9f4da7eb1d71e5770d5abe26b071fb854aaa916f086b3ca0fbb89c3b1bdc6e8d",
+      "size": 297,
+      "dimensions": [
+        48,
+        48
+      ],
+      "anchor": [
+        0.5,
+        0.85
+      ]
+    },
+    "art/source/exports/environment/flora_berries_burnt.png": {
+      "sha256": "82247bb405174b280a7cbdd141c148946996e08db3616a6f4df01303370010fa",
+      "size": 337,
+      "dimensions": [
+        48,
+        48
+      ],
+      "anchor": [
+        0.5,
+        0.85
+      ]
+    },
+    "art/source/exports/environment/flora_reeds_healthy.png": {
+      "sha256": "aceaf883ed68b19d212486c69528e9b8bf23730d00b696626e4693fe6d0d8899",
+      "size": 374,
+      "dimensions": [
+        48,
+        64
+      ],
+      "anchor": [
+        0.5,
+        0.9
+      ]
+    },
+    "art/source/exports/environment/flora_reeds_harvested.png": {
+      "sha256": "99ac604bc0c602e654079801c00b91b7af3ca9c44f0c5d5b62c27fb9f8c446ef",
+      "size": 197,
+      "dimensions": [
+        48,
+        64
+      ],
+      "anchor": [
+        0.5,
+        0.9
+      ]
+    },
+    "art/source/exports/environment/flora_reeds_burnt.png": {
+      "sha256": "cfa39c654c90ee1f1a6407e105461feb4b1cdd5dddcc67a4328b883d49ac2802",
+      "size": 217,
+      "dimensions": [
+        48,
+        64
+      ],
+      "anchor": [
+        0.5,
+        0.9
+      ]
+    },
+    "art/source/exports/environment/flora_wheat_healthy.png": {
+      "sha256": "a10092707d7c321ec51c276acf8e0240af50f26c358d12fdf6292b954230a0e8",
+      "size": 356,
+      "dimensions": [
+        48,
+        64
+      ],
+      "anchor": [
+        0.5,
+        0.9
+      ]
+    },
+    "art/source/exports/environment/flora_wheat_harvested.png": {
+      "sha256": "eee18a98c375e0269afc30b0a38a8e684246acf0b5127d146c1d5709f6be8ec1",
+      "size": 211,
+      "dimensions": [
+        48,
+        64
+      ],
+      "anchor": [
+        0.5,
+        0.9
+      ]
+    },
+    "art/source/exports/environment/flora_wheat_burnt.png": {
+      "sha256": "1aed851ce0d1853eb6d75318b7a1161f95b347f787d2f987f71dfffa06fa9440",
+      "size": 184,
+      "dimensions": [
+        48,
+        64
+      ],
+      "anchor": [
+        0.5,
+        0.9
+      ]
+    },
+    "art/source/exports/environment/flora_nectar_healthy.png": {
+      "sha256": "bbca157d50cc7fafcc0d1ef2e17923dd5fa4d1522cfbd401739603fa0dfb2c67",
+      "size": 351,
+      "dimensions": [
+        48,
+        48
+      ],
+      "anchor": [
+        0.5,
+        0.85
+      ]
+    },
+    "art/source/exports/environment/flora_nectar_harvested.png": {
+      "sha256": "60f233534cbb19c9747aa400ad90268ca813055943571f58418ef1c9c5cbd65b",
+      "size": 259,
+      "dimensions": [
+        48,
+        48
+      ],
+      "anchor": [
+        0.5,
+        0.85
+      ]
+    },
+    "art/source/exports/environment/flora_nectar_burnt.png": {
+      "sha256": "4c541195c76f59137c0ddd725b6c313ca2cb2ada65bdbe0b6b811a3e6e68aacd",
+      "size": 177,
+      "dimensions": [
+        48,
+        48
+      ],
+      "anchor": [
+        0.5,
+        0.85
+      ]
+    },
+    "art/source/exports/environment/flora_ashgrass_healthy.png": {
+      "sha256": "ddca92071c48dcd3a6bcc46770db660e38fe90e10486c623dbe3e4540b496284",
+      "size": 295,
+      "dimensions": [
+        48,
+        48
+      ],
+      "anchor": [
+        0.5,
+        0.85
+      ]
+    },
+    "art/source/exports/environment/flora_ashgrass_harvested.png": {
+      "sha256": "29512bd9be48179833fa876c8bae5c5dae73db13b7ae81c322dc7b9ba10e4356",
+      "size": 174,
+      "dimensions": [
+        48,
+        48
+      ],
+      "anchor": [
+        0.5,
+        0.85
+      ]
+    },
+    "art/source/exports/environment/flora_ashgrass_burnt.png": {
+      "sha256": "3422f5eb8fb465d91a87ba9a9df308239b7984ae33cb6461edbabd72b721f34d",
+      "size": 148,
+      "dimensions": [
+        48,
+        48
+      ],
+      "anchor": [
+        0.5,
+        0.85
+      ]
+    },
+    "art/source/exports/environment/flora_fungi_healthy.png": {
+      "sha256": "ea0255e89c76fa64e956b3c602cb71252748e032214b16dccb2a559fea93c656",
+      "size": 267,
+      "dimensions": [
+        48,
+        48
+      ],
+      "anchor": [
+        0.5,
+        0.85
+      ]
+    },
+    "art/source/exports/environment/flora_fungi_harvested.png": {
+      "sha256": "31367ac435f03e2b8daebe8581b92efa5afd67d89ef1dbd82b4fc449c208674b",
+      "size": 187,
+      "dimensions": [
+        48,
+        48
+      ],
+      "anchor": [
+        0.5,
+        0.85
+      ]
+    },
+    "art/source/exports/environment/flora_fungi_burnt.png": {
+      "sha256": "639523e88216fbaaf5524637562ed9dc8a5e091d28060e47c0897815ca57ec73",
+      "size": 177,
+      "dimensions": [
+        48,
+        48
+      ],
+      "anchor": [
+        0.5,
+        0.85
+      ]
+    }
+  }
+}

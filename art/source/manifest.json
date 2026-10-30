@@ -4,42 +4,418 @@
     {
       "id": "player_aqualia_idle_s_0",
       "path": "exports/player_aqualia/idle_s_0.png",
-      "anchor": { "x": 0.5, "y": 0.92 }
+      "anchor": {
+        "x": 0.5,
+        "y": 0.92
+      }
     },
     {
       "id": "player_aqualia_idle_se_0",
       "path": "exports/player_aqualia/idle_se_0.png",
-      "anchor": { "x": 0.5, "y": 0.92 }
+      "anchor": {
+        "x": 0.5,
+        "y": 0.92
+      }
     },
     {
       "id": "player_aqualia_idle_e_0",
       "path": "exports/player_aqualia/idle_e_0.png",
-      "anchor": { "x": 0.5, "y": 0.92 }
+      "anchor": {
+        "x": 0.5,
+        "y": 0.92
+      }
     },
     {
       "id": "player_aqualia_idle_n_0",
       "path": "exports/player_aqualia/idle_n_0.png",
-      "anchor": { "x": 0.5, "y": 0.92 }
+      "anchor": {
+        "x": 0.5,
+        "y": 0.92
+      }
     },
     {
       "id": "rivallie_idle_s_0",
       "path": "exports/rivallie/idle_s_0.png",
-      "anchor": { "x": 0.5, "y": 0.9 }
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9
+      }
     },
     {
       "id": "rivallie_idle_se_0",
       "path": "exports/rivallie/idle_se_0.png",
-      "anchor": { "x": 0.5, "y": 0.9 }
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9
+      }
     },
     {
       "id": "rivallie_idle_e_0",
       "path": "exports/rivallie/idle_e_0.png",
-      "anchor": { "x": 0.5, "y": 0.9 }
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9
+      }
     },
     {
       "id": "rivallie_idle_n_0",
       "path": "exports/rivallie/idle_n_0.png",
-      "anchor": { "x": 0.5, "y": 0.9 }
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9
+      }
+    },
+    {
+      "id": "env_ground_grass",
+      "path": "exports/environment/ground_grass.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "env_ground_dirt",
+      "path": "exports/environment/ground_dirt.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "env_ground_sand",
+      "path": "exports/environment/ground_sand.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "env_ground_freshwater",
+      "path": "exports/environment/ground_freshwater.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "env_shore_freshwater_mask_1",
+      "path": "exports/environment/shore_freshwater_mask_1.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "env_shore_freshwater_mask_2",
+      "path": "exports/environment/shore_freshwater_mask_2.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "env_shore_freshwater_mask_3",
+      "path": "exports/environment/shore_freshwater_mask_3.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "env_shore_freshwater_mask_4",
+      "path": "exports/environment/shore_freshwater_mask_4.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "env_shore_freshwater_mask_5",
+      "path": "exports/environment/shore_freshwater_mask_5.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "env_shore_freshwater_mask_6",
+      "path": "exports/environment/shore_freshwater_mask_6.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "env_shore_freshwater_mask_7",
+      "path": "exports/environment/shore_freshwater_mask_7.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "env_shore_freshwater_mask_8",
+      "path": "exports/environment/shore_freshwater_mask_8.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "env_shore_freshwater_mask_9",
+      "path": "exports/environment/shore_freshwater_mask_9.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "env_shore_freshwater_mask_10",
+      "path": "exports/environment/shore_freshwater_mask_10.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "env_shore_freshwater_mask_11",
+      "path": "exports/environment/shore_freshwater_mask_11.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "env_shore_freshwater_mask_12",
+      "path": "exports/environment/shore_freshwater_mask_12.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "env_shore_freshwater_mask_13",
+      "path": "exports/environment/shore_freshwater_mask_13.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "env_shore_freshwater_mask_14",
+      "path": "exports/environment/shore_freshwater_mask_14.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "env_cliff_grass",
+      "path": "exports/environment/cliff_grass.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "env_ramp_grass",
+      "path": "exports/environment/ramp_grass.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "env_tree_oak",
+      "path": "exports/environment/tree_oak.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.94
+      }
+    },
+    {
+      "id": "env_canopy_oak",
+      "path": "exports/environment/canopy_oak.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.94
+      }
+    },
+    {
+      "id": "env_house_aqualia",
+      "path": "exports/environment/house_aqualia.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.94
+      }
+    },
+    {
+      "id": "env_landmark_well",
+      "path": "exports/environment/landmark_well.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.925
+      }
+    },
+    {
+      "id": "env_landmark_waystone",
+      "path": "exports/environment/landmark_waystone.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9375
+      }
+    },
+    {
+      "id": "env_prop_hearth",
+      "path": "exports/environment/prop_hearth.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9
+      }
+    },
+    {
+      "id": "env_flora_berries_healthy",
+      "path": "exports/environment/flora_berries_healthy.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.85
+      }
+    },
+    {
+      "id": "env_flora_berries_harvested",
+      "path": "exports/environment/flora_berries_harvested.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.85
+      }
+    },
+    {
+      "id": "env_flora_berries_burnt",
+      "path": "exports/environment/flora_berries_burnt.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.85
+      }
+    },
+    {
+      "id": "env_flora_reeds_healthy",
+      "path": "exports/environment/flora_reeds_healthy.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9
+      }
+    },
+    {
+      "id": "env_flora_reeds_harvested",
+      "path": "exports/environment/flora_reeds_harvested.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9
+      }
+    },
+    {
+      "id": "env_flora_reeds_burnt",
+      "path": "exports/environment/flora_reeds_burnt.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9
+      }
+    },
+    {
+      "id": "env_flora_wheat_healthy",
+      "path": "exports/environment/flora_wheat_healthy.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9
+      }
+    },
+    {
+      "id": "env_flora_wheat_harvested",
+      "path": "exports/environment/flora_wheat_harvested.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9
+      }
+    },
+    {
+      "id": "env_flora_wheat_burnt",
+      "path": "exports/environment/flora_wheat_burnt.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9
+      }
+    },
+    {
+      "id": "env_flora_nectar_healthy",
+      "path": "exports/environment/flora_nectar_healthy.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.85
+      }
+    },
+    {
+      "id": "env_flora_nectar_harvested",
+      "path": "exports/environment/flora_nectar_harvested.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.85
+      }
+    },
+    {
+      "id": "env_flora_nectar_burnt",
+      "path": "exports/environment/flora_nectar_burnt.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.85
+      }
+    },
+    {
+      "id": "env_flora_ashgrass_healthy",
+      "path": "exports/environment/flora_ashgrass_healthy.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.85
+      }
+    },
+    {
+      "id": "env_flora_ashgrass_harvested",
+      "path": "exports/environment/flora_ashgrass_harvested.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.85
+      }
+    },
+    {
+      "id": "env_flora_ashgrass_burnt",
+      "path": "exports/environment/flora_ashgrass_burnt.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.85
+      }
+    },
+    {
+      "id": "env_flora_fungi_healthy",
+      "path": "exports/environment/flora_fungi_healthy.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.85
+      }
+    },
+    {
+      "id": "env_flora_fungi_harvested",
+      "path": "exports/environment/flora_fungi_harvested.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.85
+      }
+    },
+    {
+      "id": "env_flora_fungi_burnt",
+      "path": "exports/environment/flora_fungi_burnt.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.85
+      }
     }
   ],
   "appearances": [
@@ -67,6 +443,358 @@
         "species_rivallie_idle_e",
         "species_rivallie_idle_n"
       ]
+    },
+    {
+      "id": "environment:ground_grass",
+      "kind": "environment",
+      "contentId": "ground_grass",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_ground_grass"
+    },
+    {
+      "id": "environment:ground_dirt",
+      "kind": "environment",
+      "contentId": "ground_dirt",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_ground_dirt"
+    },
+    {
+      "id": "environment:ground_sand",
+      "kind": "environment",
+      "contentId": "ground_sand",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_ground_sand"
+    },
+    {
+      "id": "environment:ground_freshwater",
+      "kind": "environment",
+      "contentId": "ground_freshwater",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_ground_freshwater"
+    },
+    {
+      "id": "environment:shore_freshwater_mask_1",
+      "kind": "environment",
+      "contentId": "shore_freshwater_mask_1",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_shore_freshwater_mask_1"
+    },
+    {
+      "id": "environment:shore_freshwater_mask_2",
+      "kind": "environment",
+      "contentId": "shore_freshwater_mask_2",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_shore_freshwater_mask_2"
+    },
+    {
+      "id": "environment:shore_freshwater_mask_3",
+      "kind": "environment",
+      "contentId": "shore_freshwater_mask_3",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_shore_freshwater_mask_3"
+    },
+    {
+      "id": "environment:shore_freshwater_mask_4",
+      "kind": "environment",
+      "contentId": "shore_freshwater_mask_4",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_shore_freshwater_mask_4"
+    },
+    {
+      "id": "environment:shore_freshwater_mask_5",
+      "kind": "environment",
+      "contentId": "shore_freshwater_mask_5",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_shore_freshwater_mask_5"
+    },
+    {
+      "id": "environment:shore_freshwater_mask_6",
+      "kind": "environment",
+      "contentId": "shore_freshwater_mask_6",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_shore_freshwater_mask_6"
+    },
+    {
+      "id": "environment:shore_freshwater_mask_7",
+      "kind": "environment",
+      "contentId": "shore_freshwater_mask_7",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_shore_freshwater_mask_7"
+    },
+    {
+      "id": "environment:shore_freshwater_mask_8",
+      "kind": "environment",
+      "contentId": "shore_freshwater_mask_8",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_shore_freshwater_mask_8"
+    },
+    {
+      "id": "environment:shore_freshwater_mask_9",
+      "kind": "environment",
+      "contentId": "shore_freshwater_mask_9",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_shore_freshwater_mask_9"
+    },
+    {
+      "id": "environment:shore_freshwater_mask_10",
+      "kind": "environment",
+      "contentId": "shore_freshwater_mask_10",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_shore_freshwater_mask_10"
+    },
+    {
+      "id": "environment:shore_freshwater_mask_11",
+      "kind": "environment",
+      "contentId": "shore_freshwater_mask_11",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_shore_freshwater_mask_11"
+    },
+    {
+      "id": "environment:shore_freshwater_mask_12",
+      "kind": "environment",
+      "contentId": "shore_freshwater_mask_12",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_shore_freshwater_mask_12"
+    },
+    {
+      "id": "environment:shore_freshwater_mask_13",
+      "kind": "environment",
+      "contentId": "shore_freshwater_mask_13",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_shore_freshwater_mask_13"
+    },
+    {
+      "id": "environment:shore_freshwater_mask_14",
+      "kind": "environment",
+      "contentId": "shore_freshwater_mask_14",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_shore_freshwater_mask_14"
+    },
+    {
+      "id": "environment:cliff_grass",
+      "kind": "environment",
+      "contentId": "cliff_grass",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_cliff_grass"
+    },
+    {
+      "id": "environment:ramp_grass",
+      "kind": "environment",
+      "contentId": "ramp_grass",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_ramp_grass"
+    },
+    {
+      "id": "environment:tree_oak",
+      "kind": "environment",
+      "contentId": "tree_oak",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_tree_oak"
+    },
+    {
+      "id": "environment:canopy_oak",
+      "kind": "environment",
+      "contentId": "canopy_oak",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_canopy_oak"
+    },
+    {
+      "id": "environment:house_aqualia",
+      "kind": "environment",
+      "contentId": "house_aqualia",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_house_aqualia"
+    },
+    {
+      "id": "environment:landmark_well",
+      "kind": "environment",
+      "contentId": "landmark_well",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_landmark_well"
+    },
+    {
+      "id": "environment:landmark_waystone",
+      "kind": "environment",
+      "contentId": "landmark_waystone",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_landmark_waystone"
+    },
+    {
+      "id": "environment:prop_hearth",
+      "kind": "environment",
+      "contentId": "prop_hearth",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_prop_hearth"
+    },
+    {
+      "id": "environment:flora_berries_healthy",
+      "kind": "environment",
+      "contentId": "flora_berries_healthy",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_flora_berries_healthy"
+    },
+    {
+      "id": "environment:flora_berries_harvested",
+      "kind": "environment",
+      "contentId": "flora_berries_harvested",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_flora_berries_harvested"
+    },
+    {
+      "id": "environment:flora_berries_burnt",
+      "kind": "environment",
+      "contentId": "flora_berries_burnt",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_flora_berries_burnt"
+    },
+    {
+      "id": "environment:flora_reeds_healthy",
+      "kind": "environment",
+      "contentId": "flora_reeds_healthy",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_flora_reeds_healthy"
+    },
+    {
+      "id": "environment:flora_reeds_harvested",
+      "kind": "environment",
+      "contentId": "flora_reeds_harvested",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_flora_reeds_harvested"
+    },
+    {
+      "id": "environment:flora_reeds_burnt",
+      "kind": "environment",
+      "contentId": "flora_reeds_burnt",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_flora_reeds_burnt"
+    },
+    {
+      "id": "environment:flora_wheat_healthy",
+      "kind": "environment",
+      "contentId": "flora_wheat_healthy",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_flora_wheat_healthy"
+    },
+    {
+      "id": "environment:flora_wheat_harvested",
+      "kind": "environment",
+      "contentId": "flora_wheat_harvested",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_flora_wheat_harvested"
+    },
+    {
+      "id": "environment:flora_wheat_burnt",
+      "kind": "environment",
+      "contentId": "flora_wheat_burnt",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_flora_wheat_burnt"
+    },
+    {
+      "id": "environment:flora_nectar_healthy",
+      "kind": "environment",
+      "contentId": "flora_nectar_healthy",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_flora_nectar_healthy"
+    },
+    {
+      "id": "environment:flora_nectar_harvested",
+      "kind": "environment",
+      "contentId": "flora_nectar_harvested",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_flora_nectar_harvested"
+    },
+    {
+      "id": "environment:flora_nectar_burnt",
+      "kind": "environment",
+      "contentId": "flora_nectar_burnt",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_flora_nectar_burnt"
+    },
+    {
+      "id": "environment:flora_ashgrass_healthy",
+      "kind": "environment",
+      "contentId": "flora_ashgrass_healthy",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_flora_ashgrass_healthy"
+    },
+    {
+      "id": "environment:flora_ashgrass_harvested",
+      "kind": "environment",
+      "contentId": "flora_ashgrass_harvested",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_flora_ashgrass_harvested"
+    },
+    {
+      "id": "environment:flora_ashgrass_burnt",
+      "kind": "environment",
+      "contentId": "flora_ashgrass_burnt",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_flora_ashgrass_burnt"
+    },
+    {
+      "id": "environment:flora_fungi_healthy",
+      "kind": "environment",
+      "contentId": "flora_fungi_healthy",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_flora_fungi_healthy"
+    },
+    {
+      "id": "environment:flora_fungi_harvested",
+      "kind": "environment",
+      "contentId": "flora_fungi_harvested",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_flora_fungi_harvested"
+    },
+    {
+      "id": "environment:flora_fungi_burnt",
+      "kind": "environment",
+      "contentId": "flora_fungi_burnt",
+      "quality": "hd",
+      "clipIds": [],
+      "frameId": "env_flora_fungi_burnt"
     }
   ],
   "clips": [
@@ -75,7 +803,9 @@
       "appearanceId": "origin:aqualia",
       "state": "idle",
       "facing": "s",
-      "frameIds": ["player_aqualia_idle_s_0"],
+      "frameIds": [
+        "player_aqualia_idle_s_0"
+      ],
       "fps": 6,
       "playback": "loop"
     },
@@ -84,7 +814,9 @@
       "appearanceId": "origin:aqualia",
       "state": "idle",
       "facing": "se",
-      "frameIds": ["player_aqualia_idle_se_0"],
+      "frameIds": [
+        "player_aqualia_idle_se_0"
+      ],
       "fps": 6,
       "playback": "loop"
     },
@@ -93,7 +825,9 @@
       "appearanceId": "origin:aqualia",
       "state": "idle",
       "facing": "e",
-      "frameIds": ["player_aqualia_idle_e_0"],
+      "frameIds": [
+        "player_aqualia_idle_e_0"
+      ],
       "fps": 6,
       "playback": "loop"
     },
@@ -102,7 +836,9 @@
       "appearanceId": "origin:aqualia",
       "state": "idle",
       "facing": "n",
-      "frameIds": ["player_aqualia_idle_n_0"],
+      "frameIds": [
+        "player_aqualia_idle_n_0"
+      ],
       "fps": 6,
       "playback": "loop"
     },
@@ -111,7 +847,9 @@
       "appearanceId": "species:rivallie",
       "state": "idle",
       "facing": "s",
-      "frameIds": ["rivallie_idle_s_0"],
+      "frameIds": [
+        "rivallie_idle_s_0"
+      ],
       "fps": 6,
       "playback": "loop"
     },
@@ -120,7 +858,9 @@
       "appearanceId": "species:rivallie",
       "state": "idle",
       "facing": "se",
-      "frameIds": ["rivallie_idle_se_0"],
+      "frameIds": [
+        "rivallie_idle_se_0"
+      ],
       "fps": 6,
       "playback": "loop"
     },
@@ -129,7 +869,9 @@
       "appearanceId": "species:rivallie",
       "state": "idle",
       "facing": "e",
-      "frameIds": ["rivallie_idle_e_0"],
+      "frameIds": [
+        "rivallie_idle_e_0"
+      ],
       "fps": 6,
       "playback": "loop"
     },
@@ -138,7 +880,9 @@
       "appearanceId": "species:rivallie",
       "state": "idle",
       "facing": "n",
-      "frameIds": ["rivallie_idle_n_0"],
+      "frameIds": [
+        "rivallie_idle_n_0"
+      ],
       "fps": 6,
       "playback": "loop"
     }
