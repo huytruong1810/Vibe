@@ -31,38 +31,44 @@ export class WorkerBridge {
   onError: (message: string) => void = () => undefined;
   constructor() {
     this.worker.onmessage = (event: MessageEvent<FromWorker>): void => {
-      const message = event.data;
-      switch (message.type) {
-        case 'ready':
-        case 'restored':
-          this.session = message.frame.session;
-          this.onFrame(message.frame, message.terrain);
-          if (message.type === 'restored') this.resolve(message.requestId, undefined);
-          else if (this.start) {
-            clearTimeout(this.start.timeout);
-            this.start.resolve();
-            this.start = null;
+      try {
+        const message = event.data;
+        switch (message.type) {
+          case 'ready':
+          case 'restored':
+            this.session = message.frame.session;
+            this.onFrame(message.frame, message.terrain);
+            if (message.type === 'restored') this.resolve(message.requestId, undefined);
+            else if (this.start) {
+              clearTimeout(this.start.timeout);
+              this.start.resolve();
+              this.start = null;
+            }
+            break;
+          case 'frame':
+            if (message.frame.session === this.session) this.onFrame(message.frame);
+            break;
+          case 'result':
+            this.resolve(message.result.id, message.result);
+            break;
+          case 'checkpoint':
+            this.resolve(message.requestId, message.snapshot);
+            break;
+          case 'error': {
+            const error = new Error(message.message);
+            if (message.requestId) this.reject(message.requestId, error);
+            else if (this.start) {
+              clearTimeout(this.start.timeout);
+              this.start.reject(error);
+              this.start = null;
+            } else this.onError(message.message);
+            break;
           }
-          break;
-        case 'frame':
-          if (message.frame.session === this.session) this.onFrame(message.frame);
-          break;
-        case 'result':
-          this.resolve(message.result.id, message.result);
-          break;
-        case 'checkpoint':
-          this.resolve(message.requestId, message.snapshot);
-          break;
-        case 'error': {
-          const error = new Error(message.message);
-          if (message.requestId) this.reject(message.requestId, error);
-          else if (this.start) {
-            clearTimeout(this.start.timeout);
-            this.start.reject(error);
-            this.start = null;
-          } else this.onError(message.message);
-          break;
         }
+      } catch (error) {
+        const failure = error instanceof Error ? error : new Error(String(error));
+        this.failPending(failure);
+        this.onError(`Presentation failed: ${failure.message}`);
       }
     };
     this.worker.onerror = (event) => {

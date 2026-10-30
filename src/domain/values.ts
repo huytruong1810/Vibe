@@ -38,9 +38,6 @@ export function need(value: number): Need {
 export const CONFIG = Object.freeze({
   worldSize: 512,
   chunkSize: 32,
-  tileSize: 16,
-  nativeWidth: 480,
-  nativeHeight: 270,
   tickRate: 30,
   daySeconds: 1440,
   seasonDays: 7,
