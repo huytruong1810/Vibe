@@ -57,8 +57,11 @@ def segment_and_extract_figures(
         xmin_pad = max(0, xmin - padding)
         xmax_pad = min(matted.width, xmax + padding)
 
-        # Extract cutout from matted RGBA image
-        cutout = matted.crop((xmin_pad, ymin_pad, xmax_pad, ymax_pad))
+        # Extract cutout from matted RGBA image with strict component isolation
+        comp_rgba = np.array(matted)[ymin_pad:ymax_pad, xmin_pad:xmax_pad].copy()
+        mask_pad = (labeled[ymin_pad:ymax_pad, xmin_pad:xmax_pad] == (idx + 1))
+        comp_rgba[~mask_pad, 3] = 0
+        cutout = Image.fromarray(comp_rgba)
         # Ensure tight transparent bounding box
         bbox = cutout.getbbox()
         if bbox:

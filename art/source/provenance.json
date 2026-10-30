@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-30T21:24:10.053577+00:00",
+  "generatedAt": "2026-10-30T21:34:21.740154+00:00",
   "pipeline": "Master Art Pipeline Reboot v2 (Stage 1 & 2)",
   "assets": {
     "art/source/exports/player_aqualia/idle_s_0.png": {
@@ -51,8 +51,8 @@
       ]
     },
     "art/source/exports/rivallie/idle_s_0.png": {
-      "sha256": "cc57e8c837a6a6a4213a9c9eea2f258eb18fa92ceb641916a53fa0135aae4b2e",
-      "size": 5918,
+      "sha256": "787673e88ca1289a6ad222b9fd6cd5f8d65b553be9517281a182197aab89c2a7",
+      "size": 5981,
       "dimensions": [
         96,
         96
@@ -63,8 +63,8 @@
       ]
     },
     "art/source/exports/rivallie/idle_se_0.png": {
-      "sha256": "a948066e8f3a78186e4713af820c53596a8c4177460c8dc8b2cf7511e94f7d03",
-      "size": 9367,
+      "sha256": "230244d93549698afdeec75b004110967bf743599fd93303bacca633228f7ace",
+      "size": 9592,
       "dimensions": [
         96,
         96
@@ -75,8 +75,8 @@
       ]
     },
     "art/source/exports/rivallie/idle_e_0.png": {
-      "sha256": "0ac40c9fc179616c8d2057b7317db8ac29a31cf0c0922ef97af4a69d4f6462b2",
-      "size": 8886,
+      "sha256": "c89c2588fce5baba84cc9597401846a94c9e3d00bcde8e84b66d0f6b266e50e7",
+      "size": 9060,
       "dimensions": [
         96,
         96
@@ -87,8 +87,8 @@
       ]
     },
     "art/source/exports/rivallie/idle_n_0.png": {
-      "sha256": "05e9558f4a2414793f04da8c59d51940cc70a5d16a5664635188b15b47e0981c",
-      "size": 4633,
+      "sha256": "6245cff28995aa8752c18d974ea10985ab75eabe1b41cd750dc4d74daf9c05df",
+      "size": 4389,
       "dimensions": [
         96,
         96
