@@ -133,6 +133,8 @@ export interface PerformanceView {
   readonly inferencePending: number;
 }
 export interface RenderSnapshot {
+  readonly actors: readonly import('./presentation-contract').ActorPresentation[];
+  readonly cues: readonly import('./presentation-contract').PresentationCue[];
   readonly ids: Uint32Array;
   readonly timeScale: number;
   readonly humanNeeds: readonly HumanView[];

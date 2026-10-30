@@ -75,6 +75,7 @@ import { migrateSave, type GameSave } from './save-schema';
 import { WorldQuery } from './query';
 import { EntityStore, bindBody, NatureRules, SleepSystem } from './entities';
 import { SurvivalController, EcologyService } from './survival';
+import type { ActorPresentation, PresentationCue } from './presentation-contract';
 
 export class SimulationHost {
   readonly world: ChunkStore;
@@ -129,6 +130,16 @@ export class SimulationHost {
   private movement = { x: 0, y: 0 };
   private debugEnabled = false;
   private eventSerial = 0;
+  private cueSerial = 0;
+  private readonly presentationCues = new RingBuffer<PresentationCue>(64);
+  private readonly presentationPositions = new Map<
+    number,
+    { x: number; y: number; moving: boolean; tick: number; hp: number; recoveryUntil: number }
+  >();
+  private readonly presentationActions = new Map<
+    number,
+    { pose: ActorPresentation['pose']; until: number }
+  >();
   tick = 0;
   dialogue: DialogueState | null = null;
   stepMs = 0;
@@ -481,6 +492,10 @@ export class SimulationHost {
             this.entities.water[playerSlot]! + (ITEMS[item.id].water ?? 0),
           );
           this.player.stamina = Math.min(100, this.player.stamina + 15);
+          this.presentationActions.set(0, {
+            pose: ITEMS[item.id].water ? 'drink' : 'eat',
+            until: this.tick + 24,
+          });
           message = `Used ${ITEMS[item.id].name}.`;
         } else {
           ok = false;
@@ -666,6 +681,19 @@ export class SimulationHost {
         this.emit('travel', message, this.player, ['player'], 4);
         break;
       }
+    }
+    if (ok) {
+      const pose: ActorPresentation['pose'] | null =
+        c.type === 'service'
+          ? c.action === 'wash'
+            ? 'bathe'
+            : c.action
+          : c.type === 'harvest' || c.type === 'combine'
+            ? 'work'
+            : c.type === 'care'
+              ? 'social'
+              : null;
+      if (pose) this.presentationActions.set(0, { pose, until: this.tick + 24 });
     }
     return { id: envelope.id, ok, message };
   }
@@ -932,6 +960,19 @@ export class SimulationHost {
           if (this.survival.active(i)) this.survival.move(i, 1, now);
         }
     for (const event of this.combat.advance(this.tick, this.spatial, now)) {
+      if (
+        event.type === 'hit' ||
+        event.type === 'assault' ||
+        event.type === 'hunt' ||
+        event.type === 'victory'
+      )
+        this.presentationCues.push({
+          sequence: ++this.cueSerial,
+          tick: this.tick,
+          actor: event.actor ?? 0,
+          target: event.target,
+          kind: event.type === 'hit' || event.type === 'assault' ? 'hit' : 'defeat',
+        });
       this.emit(
         event.type,
         event.text,
@@ -1184,7 +1225,92 @@ export class SimulationHost {
       return true;
     });
     const jobs = this.outgoingJobs.splice(0).filter((job) => this.pendingJobs.has(job.id));
+    const actors: ActorPresentation[] = [];
+    for (const slot of s.slots()) {
+      if (distanceSquared(s.position(slot), this.player) > 36 ** 2 && s.owner[slot] !== 0) continue;
+      const id = s.id(slot),
+        npc = this.npcs.find((n) => n.entityId === id),
+        x = s.x[slot]!,
+        y = s.y[slot]!;
+      const previous = this.presentationPositions.get(id);
+      const moving =
+        previous?.tick === this.tick
+          ? previous.moving
+          : !!previous && Math.hypot(x - previous.x, y - previous.y) > 0.001;
+      const recoveryUntil =
+        previous && previous.hp <= 0 && s.hp[slot]! > 0
+          ? this.tick + 24
+          : (previous?.recoveryUntil ?? 0);
+      this.presentationPositions.set(id, {
+        x,
+        y,
+        moving,
+        tick: this.tick,
+        hp: s.hp[slot]!,
+        recoveryUntil,
+      });
+      const task = this.survival.activity(id),
+        action = this.combat.presentation(id, this.tick);
+      const mode = s.mode[slot],
+        recent = this.presentationActions.get(id);
+      if (recent && recent.until <= this.tick) this.presentationActions.delete(id);
+      const atGoal =
+        distanceSquared(s.position(slot), { x: s.targetX[slot]!, y: s.targetY[slot]! }) < 1;
+      const pose: ActorPresentation['pose'] =
+        s.hp[slot]! <= 0
+          ? 'downed'
+          : action
+            ? 'attack'
+            : id === 0 && this.player.dashUntil > this.tick
+              ? 'dash'
+              : s.sleeping[slot]
+                ? 'sleep'
+                : recoveryUntil > this.tick
+                  ? 'recovery'
+                  : this.combat.presentationGuard(id, this.tick)
+                    ? 'guard'
+                    : moving
+                      ? 'walk'
+                      : task === 'food' || (mode === CreatureMode.Feed && atGoal)
+                        ? 'eat'
+                        : task === 'water' || (mode === CreatureMode.Drink && atGoal)
+                          ? 'drink'
+                          : task === 'clean' || (mode === CreatureMode.Bathe && atGoal)
+                            ? 'bathe'
+                            : task === 'social' || (mode === CreatureMode.Socialize && atGoal)
+                              ? 'social'
+                              : recent && recent.until > this.tick
+                                ? recent.pose
+                                : npc
+                                  ? this.schedules.presentation(
+                                      npc,
+                                      this.npcs.indexOf(npc),
+                                      this.calendar,
+                                    )
+                                  : 'idle';
+      actors.push({
+        id,
+        appearanceKind: id === 0 ? 'origin' : npc ? 'npc' : 'species',
+        appearanceId:
+          id === 0
+            ? ['pyrador', 'aqualia', 'zephyria'][this.player.origin]!
+            : (npc?.profileId ?? s.definition(slot).id),
+        x,
+        y,
+        elevation: this.world.elevation[this.world.index(x, y)] ?? 0,
+        facingX: id === 0 ? this.player.facingX : (npc?.facingX ?? s.vx[slot]!),
+        facingY: id === 0 ? this.player.facingY : (npc?.facingY ?? s.vy[slot]!),
+        pose,
+        protected: s.isHuman(slot) || s.owner[slot]! >= 0,
+        action,
+      });
+    }
+    const presentIds = new Set(actors.map((a) => a.id));
+    for (const id of this.presentationPositions.keys())
+      if (!presentIds.has(id)) this.presentationPositions.delete(id);
     return {
+      actors,
+      cues: [...this.presentationCues.values()],
       debugEnabled: this.debugEnabled,
       debugPaths: this.debugEnabled
         ? [...this.schedules.debugPaths(this.player), ...this.decisions.debugPaths(this.player)]
@@ -1324,6 +1450,10 @@ export class SimulationHost {
     }) as unknown as GameSave;
   }
   restore(save: GameSave): void {
+    this.presentationCues.clear();
+    this.cueSerial = 0;
+    this.presentationPositions.clear();
+    this.presentationActions.clear();
     save = migrateSave(save);
     if (save.seed !== this.seed)
       throw new Error('Restore requires a host generated with the saved seed');
