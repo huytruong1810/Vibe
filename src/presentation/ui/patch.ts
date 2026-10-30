@@ -6,6 +6,7 @@ export function patchView(element: HTMLElement, html: string): void {
   const key = (node: Node): string | null =>
     node instanceof HTMLElement
       ? node.id ||
+        node.dataset.key ||
         (node.dataset.action
           ? `${node.tagName}:${node.dataset.action}:${node.dataset.id ?? ''}:${node.dataset.care ?? ''}`
           : null)

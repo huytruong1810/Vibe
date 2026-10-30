@@ -96,3 +96,7 @@ The world has one traversable height surface per tile, not stacked floors or a 3
 Placeholder art, synthesized audio, schedules, and eight nonhuman species are included. Production art, extensive authored stories, mobile controls, hosted inference, multiplayer, and a backend are outside this reference implementation.
 
 All 1,031 initial actors share health, elemental affinity, five needs and combat rules. The needs panel offers finite settlement meals, spring water, washing, Rest and safe 8× sleep. Villager inspection shows the same meters. Wildlife hunts according to diet and hunger; humans and bonded companions cannot be consumed. Player assaults on villagers are nonlethal, remembered and grant no XP. Existing v2 saves migrate to v3 without regenerating terrain or replacing their populations.
+
+## HD presentation integration
+
+The [Aqualia HD slice specification](docs/hd-presentation.md) separates runtime readiness from native art approval. Run `npm run assets:build` and `npm run check:assets` to compile/validate the shared catalog. `npm run check:assets:hd` is the stricter visual completion gate. Review assets with `npm run dev` at `http://127.0.0.1:5173/?gallery=1`; this development-only gallery does not require Ollama. The playable game retains its local-model entry check. I opens inventory, F inspection, and L the journal. Current prototype artwork is explicitly labeled and cannot count as approved native HD coverage.
