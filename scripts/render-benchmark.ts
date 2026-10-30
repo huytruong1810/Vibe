@@ -85,6 +85,41 @@ try {
   await page
     .locator('#setup-dialog')
     .waitFor({ state: 'hidden', timeout: liveModel ? 90000 : 30000 });
+  if (liveModel) {
+    // A fresh 08:00 world has no planner eligible in this short sample. Seed a
+    // validated later-morning fixture; ordinary ticks and scheduler budgets still execute.
+    const mature = await page.evaluate(() =>
+      (
+        window as unknown as { __hearthwild: { checkpoint(): Promise<GameSave> } }
+      ).__hearthwild.checkpoint(),
+    );
+    mature.elapsedSeconds = Math.max(650, mature.elapsedSeconds);
+    for (const npc of mature.npcs) npc.lastPlan = 0;
+    await page.getByRole('button', { name: 'Settings', exact: true }).click();
+    const beforeImportSession1 = await page.evaluate(
+      () =>
+        (
+          window as unknown as { __hearthwild: { frame(): { session: string } } }
+        ).__hearthwild.frame().session,
+    );
+    await page.locator('#import-input').setInputFiles({
+      name: 'mature-benchmark.json',
+      mimeType: 'application/json',
+      buffer: Buffer.from(JSON.stringify(mature)),
+    });
+    await page.waitForFunction(
+      (previous) =>
+        (
+          window as unknown as { __hearthwild: { frame(): { session: string } } }
+        ).__hearthwild.frame().session !== previous,
+      beforeImportSession1,
+      { timeout: liveModel ? 90000 : 30000 },
+    );
+    await page.waitForFunction(() =>
+      document.querySelector('#toast')?.textContent?.includes('imported'),
+    );
+    await page.getByRole('button', { name: 'Close settings' }).click();
+  }
   type Stats = {
     fps: number;
     renderMs: number;
@@ -118,11 +153,25 @@ try {
         e.y = player.y + (Math.floor(i / 12) - 5) * 0.3;
       });
       await page.getByRole('button', { name: 'Settings', exact: true }).click();
+      const beforeImportSession2 = await page.evaluate(
+        () =>
+          (
+            window as unknown as { __hearthwild: { frame(): { session: string } } }
+          ).__hearthwild.frame().session,
+      );
       await page.locator('#import-input').setInputFiles({
         name: 'benchmark.json',
         mimeType: 'application/json',
         buffer: Buffer.from(JSON.stringify(save)),
       });
+      await page.waitForFunction(
+        (previous) =>
+          (
+            window as unknown as { __hearthwild: { frame(): { session: string } } }
+          ).__hearthwild.frame().session !== previous,
+        beforeImportSession2,
+        { timeout: liveModel ? 90000 : 30000 },
+      );
       await page.waitForFunction(() =>
         document.querySelector('#toast')?.textContent?.includes('imported'),
       );
@@ -222,16 +271,25 @@ try {
       const data = sample as { sampleStart: number; sampleEnd: number };
       return {
         ...data,
-        inferenceOverlapMs: requests.reduce(
-          (total, r) =>
-            total +
-            Math.max(
-              0,
-              Math.min(data.sampleEnd, r.end ?? data.sampleEnd) -
-                Math.max(data.sampleStart, r.start),
-            ),
-          0,
-        ),
+        inferenceOverlapMs: (() => {
+          const spans = requests
+            .map(
+              (r) =>
+                [
+                  Math.max(data.sampleStart, r.start),
+                  Math.min(data.sampleEnd, r.end ?? data.sampleEnd),
+                ] as const,
+            )
+            .filter(([a, b]) => b > a)
+            .sort((a, b) => a[0] - b[0]);
+          let total = 0,
+            end = -Infinity;
+          for (const [a, b] of spans) {
+            total += Math.max(0, b - Math.max(a, end));
+            end = Math.max(end, b);
+          }
+          return total;
+        })(),
       };
     }),
     failures,

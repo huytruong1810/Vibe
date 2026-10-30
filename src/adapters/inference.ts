@@ -142,6 +142,29 @@ export class InferenceScheduler {
   private lastMs = 0;
   private outputTokens = 0;
   private backgroundDeferred = false;
+  private settling: Promise<void> | null = null;
+  private controls = 0;
+  private controlTail: Promise<void> = Promise.resolve();
+  /** Readiness checks share the same request boundary as generation. Abort and
+   * settle current work before entering a serialized browser lifecycle operation. */
+  async exclusive<T>(operation: () => Promise<T>): Promise<T> {
+    this.controls++;
+    const predecessor = this.controlTail;
+    let release!: () => void;
+    this.controlTail = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+    this.active?.abort.abort();
+    try {
+      await predecessor;
+      await this.settling;
+      return await operation();
+    } finally {
+      this.controls--;
+      release();
+      this.pump();
+    }
+  }
   setBackgroundDeferred(value: boolean): void {
     this.backgroundDeferred = value;
     if (!value) this.pump();
@@ -167,7 +190,7 @@ export class InferenceScheduler {
     this.pump();
   }
   private pump(): void {
-    if (this.active || !this.queue.length) return;
+    if (this.active || this.settling || this.controls || !this.queue.length) return;
     if (this.timer) {
       clearTimeout(this.timer);
       this.timer = null;
@@ -194,7 +217,7 @@ export class InferenceScheduler {
     if (job.kind !== 'dialogue') this.backgroundStarts.push(now);
     this.requests++;
     const timeout = setTimeout(() => abort.abort(), job.kind === 'dialogue' ? 45_000 : 30_000);
-    void this.provider
+    this.settling = this.provider
       .generate(job, this.model, abort.signal)
       .then((response) => {
         if (generation !== this.generation) return;
@@ -211,7 +234,11 @@ export class InferenceScheduler {
       })
       .finally(() => {
         clearTimeout(timeout);
-        if (generation !== this.generation) return;
+        this.settling = null;
+        if (generation !== this.generation) {
+          this.pump();
+          return;
+        }
         this.lastMs = this.now() - now;
         this.active = null;
         this.pump();

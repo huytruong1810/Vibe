@@ -32,8 +32,40 @@ test('HD overlays preserve focus, portrait identity, quality and saved outcomes'
   await expect(page.getByRole('button', { name: 'Close inventory' })).toBeFocused();
   await page.keyboard.press('i');
   await expect(page.locator('#inventory-panel')).not.toBeVisible();
+  const dashBefore = await page.evaluate(
+    async () =>
+      (
+        await (
+          window as unknown as {
+            __hearthwild: { checkpoint(): Promise<{ player: { dashReadyAt: number } }> };
+          }
+        ).__hearthwild.checkpoint()
+      ).player.dashReadyAt,
+  );
+  await page.getByRole('button', { name: 'Inventory I', exact: true }).focus();
+  await page.keyboard.press('Space');
+  await expect(page.locator('#inventory-panel')).toBeVisible();
+  const dashAfter = await page.evaluate(
+    async () =>
+      (
+        await (
+          window as unknown as {
+            __hearthwild: { checkpoint(): Promise<{ player: { dashReadyAt: number } }> };
+          }
+        ).__hearthwild.checkpoint()
+      ).player.dashReadyAt,
+  );
+  expect(dashAfter).toBe(dashBefore);
+  await page.getByRole('button', { name: 'Close inventory' }).click();
   await page.keyboard.press('f');
   await expect(page.locator('#inspection-panel')).toBeVisible();
+  await page.getByRole('tab', { name: 'Journey', exact: true }).focus();
+  await page.keyboard.press('ArrowRight');
+  await expect(page.getByRole('tab', { name: 'Creatures', exact: true })).toBeFocused();
+  await expect(page.getByRole('tab', { name: 'Creatures', exact: true })).toHaveAttribute(
+    'aria-selected',
+    'true',
+  );
   await page.getByRole('tab', { name: 'Villagers', exact: true }).click();
   const control = page.locator('[data-action="inspect-human"]').first();
   await control.focus();

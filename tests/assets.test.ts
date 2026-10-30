@@ -8,6 +8,19 @@ import { AssetManager, type AssetBackend } from '../src/presentation/assets/mana
 import { assetCoverage } from '../src/presentation/assets/coverage';
 import { SourceManifestSchema } from '../src/presentation/assets/source';
 
+it('rejects using a named character or species as a missing identity fallback', () => {
+  const data = catalog();
+  data.appearances.push({
+    id: 'npc:neris',
+    kind: 'npc',
+    contentId: 'npc:neris',
+    quality: 'prototype',
+    clipIds: [],
+    fallbackId: data.appearances[0]!.id,
+  });
+  expect(() => AssetCatalogSchema.parse(data)).toThrow('explicit generic prototype');
+});
+
 it('rejects duplicate source frame identities instead of silently dropping an export', () => {
   const frame = {
     id: 'rivallie_idle_s_0',
