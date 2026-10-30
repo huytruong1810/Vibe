@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-10-30T21:04:34.240808+00:00",
-  "pipeline": "PIL code-authored procedural generators v1 (Stage 1 & 2)",
+  "generatedAt": "2026-10-30T21:24:10.053577+00:00",
+  "pipeline": "Master Art Pipeline Reboot v2 (Stage 1 & 2)",
   "assets": {
     "art/source/exports/player_aqualia/idle_s_0.png": {
-      "sha256": "573e066a7e3dc17f05364a91f7169d77485a09c9df51b5124a4f7124c41689da",
-      "size": 2678,
+      "sha256": "caa3c4a3d51a4812b55a58a8d90d44818e01b0cf38a110a28aee75b0d64269cc",
+      "size": 10474,
       "dimensions": [
         96,
         144
@@ -15,8 +15,8 @@
       ]
     },
     "art/source/exports/player_aqualia/idle_se_0.png": {
-      "sha256": "2b993c078f1747adfa42abed17e012a2ec250fad23f4425f8aff13ac703f1009",
-      "size": 2438,
+      "sha256": "344ecba513638b5ec9a49eeee2b2a627043a499cdce38c029d1ac4dfa36ad8ae",
+      "size": 10085,
       "dimensions": [
         96,
         144
@@ -27,8 +27,8 @@
       ]
     },
     "art/source/exports/player_aqualia/idle_e_0.png": {
-      "sha256": "2407018b4782796bd4e966f53fd86aebcf9cf7cad29d2c358771218640e53777",
-      "size": 2333,
+      "sha256": "7b5fc73e9c7da839ed8fee7f682b87784eef442c2e3dd31a1a761793c2a1b005",
+      "size": 7590,
       "dimensions": [
         96,
         144
@@ -39,8 +39,8 @@
       ]
     },
     "art/source/exports/player_aqualia/idle_n_0.png": {
-      "sha256": "bd42aca3164232271bbaef6699bdae2305773d69d744b7643b9bf646cdbc8ff8",
-      "size": 2633,
+      "sha256": "6c3bf015d8fe36077051e2cbc86833b29a07010fedcb1af904e30bded8f08518",
+      "size": 10324,
       "dimensions": [
         96,
         144
@@ -51,8 +51,8 @@
       ]
     },
     "art/source/exports/rivallie/idle_s_0.png": {
-      "sha256": "185ffb5243123085165c4972f22a133c0d7c7e2bacfad1484358a28c398bba56",
-      "size": 1600,
+      "sha256": "cc57e8c837a6a6a4213a9c9eea2f258eb18fa92ceb641916a53fa0135aae4b2e",
+      "size": 5918,
       "dimensions": [
         96,
         96
@@ -63,8 +63,8 @@
       ]
     },
     "art/source/exports/rivallie/idle_se_0.png": {
-      "sha256": "e7fbdf4dbc25593eec08aa45facd632db0db33895dc9f42ec396c9886b0252df",
-      "size": 1878,
+      "sha256": "a948066e8f3a78186e4713af820c53596a8c4177460c8dc8b2cf7511e94f7d03",
+      "size": 9367,
       "dimensions": [
         96,
         96
@@ -75,8 +75,8 @@
       ]
     },
     "art/source/exports/rivallie/idle_e_0.png": {
-      "sha256": "11d3ffbedb270a2e205bee4beaaa9fdd2c03de7dacbe6793af9d045047bb6317",
-      "size": 1777,
+      "sha256": "0ac40c9fc179616c8d2057b7317db8ac29a31cf0c0922ef97af4a69d4f6462b2",
+      "size": 8886,
       "dimensions": [
         96,
         96
@@ -87,8 +87,8 @@
       ]
     },
     "art/source/exports/rivallie/idle_n_0.png": {
-      "sha256": "12bf4f3620ea23619d80f4a7986096ea4b37bb93769351c153f8551e72b45217",
-      "size": 1083,
+      "sha256": "05e9558f4a2414793f04da8c59d51940cc70a5d16a5664635188b15b47e0981c",
+      "size": 4633,
       "dimensions": [
         96,
         96
