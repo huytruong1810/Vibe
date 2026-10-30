@@ -1,0 +1,66 @@
+name: Reference game checks
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 8 * * 1'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm run assets:build
+      - run: git diff --exit-code -- public/assets/generated docs/art/asset-catalog.schema.json docs/art/source-manifest.schema.json docs/art/coverage.json
+      - run: npm run check
+      - run: npm run format:check
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:browser
+      - run: npm run benchmark
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: verification-artifacts
+          path: |
+            artifacts/
+            test-results/
+  ecology-soak:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: scope
+        shell: bash
+        env:
+          EVENT: ${{ github.event_name }}
+          BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          if [ "$EVENT" = schedule ] || [ "$EVENT" = workflow_dispatch ] || ! git cat-file -e "$BASE^{commit}" 2>/dev/null; then
+            echo 'run=true' >> "$GITHUB_OUTPUT"
+          elif git diff --name-only "$BASE" HEAD -- src/domain src/worker src/content scripts/soak.ts | read -r changed; then
+            echo 'run=true' >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/setup-node@v4
+        if: steps.scope.outputs.run == 'true'
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+        if: steps.scope.outputs.run == 'true'
+      - run: npm run soak
+        if: steps.scope.outputs.run == 'true'
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.scope.outputs.run == 'true'
+        with:
+          name: ecology-soak
+          path: artifacts/soak.json
