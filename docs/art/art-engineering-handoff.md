@@ -1,8 +1,8 @@
 # Hearthwild Art & Engineering Architecture Alignment Handoff
 
 **PR Reference**: [#2 (`art/hd-aqualia-slice`)](https://github.com/huytruong1810/Vibe/pull/2) &rarr; Targeted at [#1 (`eng/hd-presentation`)](https://github.com/huytruong1810/Vibe/pull/1)  
-**Latest Art Commit**: `d11c8c4`  
-**Current CI Status**: 133/133 tests passing, `npm run check:assets` passing (660 frames, 1 atlas page), `check:architecture` passing.
+**Latest Art Branch**: `art/hd-aqualia-slice`  
+**Current CI Status**: 133/133 tests passing, `npm run check:assets` passing (742 frames, 1 single atlas page), `check:architecture` passing, deterministic SHA256 reproducibility (`rebuild.py --check`) in < 2s.
 
 ---
 
@@ -32,6 +32,13 @@ Our goal is simple: **deliver commercial AAA JRPG-grade pixel art while rigorous
 - **What was attempted**: Cropping multi-figure master turnaround sheets into individual sprites using connected component bounding boxes.
 - **Why it failed**:
   - In sheets where figures were positioned closely (e.g. Rivallie East's long paddle tail reaching $x=1095$ while Rivallie North began at $x=1070$), the rectangular bounding box of Rivallie North captured the tail tip of Rivallie East, resulting in a vertical line cut artifact on the left margin.
+  - *Fix*: Applied strict connected component mask isolation (`comp_rgba[~mask_pad, 3] = 0`).
+
+### Failure 4: Discrete Row-Shift Scanline Tearing in Breathing Generators
+- **What was attempted**: Forward-shifting rows `y + y_shift` to simulate chest expansion and breathing heave.
+- **Why it failed**:
+  - Whenever `y_shift` stepped by 1 (e.g., from $-2$ to $-1$), destination row $y-1$ was skipped, producing 1-pixel wide horizontal transparent slits across the torso.
+  - *Fix*: Implemented continuous inverse mapping with hole-filling interpolation in `art/source/generators/actors/breathing.py`, guaranteeing 0 introduced column or row gaps.
 
 ---
 
@@ -43,6 +50,7 @@ To reconcile **commercial AAA aesthetics** with **engineering determinism**, we 
 ┌─────────────────────────────────────────────────────────────┐
 │ Visual Authoring Layer (AAA Aesthetic Quality)             │
 │ - Batched Master Turnaround Sheets (4-8 facings per plate)  │
+│ - Consolidated Aqualia Villager Lineup Sheets               │
 │ - Canonical 1080p Settlement Plates & Regional Sheets       │
 │ - Batched Bust Dialogue Portraits                          │
 └──────────────────────────────┬──────────────────────────────┘
@@ -57,13 +65,14 @@ To reconcile **commercial AAA aesthetics** with **engineering determinism**, we 
 │    - Humanoids: 96x144 canvas, ground anchor at (48, 132)   │
 │    - Rivallie:  96x96 canvas, ground anchor at (48, 86)    │
 │ 5. Boundary audit enforcing >= 2px transparent margins      │
-│ 6. Caching segmented cutouts in art/source/masters/cutouts/ │
+│ 6. Inverse-mapped 6-frame breathing cycle expansion         │
+│ 7. Caching segmented cutouts in art/source/masters/cutouts/ │
 └──────────────────────────────┬──────────────────────────────┘
                                │
                                ▼
 ┌─────────────────────────────────────────────────────────────┐
 │ Engineering Pipeline (scripts/assets-build.ts)              │
-│ - Compiles 660 frames onto 1 single atlas page (2.08 MiB)   │
+│ - Compiles 742 frames onto 1 single atlas page (3.89 MiB)   │
 │ - Schema validation (SourceManifestSchema)                  │
 │ - Deterministic CI check: rebuild.py --check (exits 0)      │
 └─────────────────────────────────────────────────────────────┘
@@ -86,7 +95,8 @@ To reconcile **commercial AAA aesthetics** with **engineering determinism**, we 
 3. **Margin Guarantee**:
    - Player Aqualia: Left margin $\ge 21\text{px}$, Right margin $\ge 21\text{px}$, Top margin $16\text{px}$, Bottom margin $12\text{px}$.
    - Rivallie: Left margin $\ge 9\text{px}$, Right margin $\ge 9\text{px}$, Top margin $20\text{px}$, Bottom margin $10\text{px}$.
-   - Zero edge-contact pixels anywhere on any asset.
+   - 7 Villagers: Left margin $\ge 12\text{px}$, Right margin $\ge 12\text{px}$, Top margin $\ge 14\text{px}$, Bottom margin $12\text{px}$.
+   - Zero edge-contact pixels anywhere on any asset ($\ge 2\text{px}$ transparent padding enforced everywhere).
 
 4. **100% Deterministic CI Testability**:
    - `python art/source/pipeline/rebuild.py --check` runs in under 2 seconds. Because pre-segmented master cutouts are checked into `art/source/masters/cutouts/`, CI builds do not require network calls, GPU hardware, or heavy neural inference.
@@ -97,7 +107,26 @@ To reconcile **commercial AAA aesthetics** with **engineering determinism**, we 
 
 - **Host Hardware Profile**: Python environment is CPU-only (`torch 2.14.0+cpu`, no CUDA). Running local diffusion on CPU takes 20–30 minutes per image.
 - **Quota Conservation via Batched Masters**:
-  - Rather than prompting cloud APIs for hundreds of individual animation frames, we author **single consolidated master sheets** containing all facings.
+  - Rather than prompting cloud APIs for hundreds of individual animation frames, we author **single consolidated master sheets** containing multiple characters/facings.
+  - A complete 7-villager lineup sheet required only 1 generation call.
+- **Automated Resume Scheduling**:
+  - When cloud image generation hits API rate limits (HTTP 429 cooldowns), the agent schedules background wakeup timers using the `schedule` tool.
+  - The agent automatically wakes up when the quota resets and continues work without human intervention.
+
+---
+
+## 5. Architectural Guidance for Engineering
+
+1. **Atlas Budget**:
+   - 742 runtime frames pack into **1 single page** (3.89 MiB full / 1.07 MiB half). The engineering agent does not need to engineer complex multi-page atlas streaming for this slice.
+2. **Untouched Runtime & Simulation Boundaries**:
+   - The art agent works exclusively in `Vibe-art` on branch `art/hd-aqualia-slice`.
+   - Simulation domains, worker bridges, state machines, and runtime adapters have remained untouched.
+3. **Deterministic Rebuild Hook**:
+   - Engineering can run `python art/source/pipeline/rebuild.py --check` at any time to verify that assets on disk match the master pipeline output.
+4. **Interactive Verification**:
+   - Engineering can review generated proofs in [`docs/art/review-gallery.md`](review-gallery.md), [`reboot_art_review.md`](file:///C:/Users/htruong/.gemini/antigravity/brain/0bf989ca-d73f-4388-8d74-3ca48c13f29e/reboot_art_review.md), or the live gallery at `/gallery.html` (`npm run dev`).
+
   - A complete character slice requires only 1 generation call.
 - **Automated Resume Scheduling**:
   - When cloud image generation hits API rate limits (HTTP 429 cooldowns), the agent schedules background wakeup timers using the `schedule` tool.

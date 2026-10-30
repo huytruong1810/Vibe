@@ -472,6 +472,606 @@
         "x": 0.5,
         "y": 0.9167
       }
+    },
+    {
+      "id": "player_aqualia_idle_s_1",
+      "path": "exports/player_aqualia/idle_s_1.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "player_aqualia_idle_s_2",
+      "path": "exports/player_aqualia/idle_s_2.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "player_aqualia_idle_s_3",
+      "path": "exports/player_aqualia/idle_s_3.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "player_aqualia_idle_s_4",
+      "path": "exports/player_aqualia/idle_s_4.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "player_aqualia_idle_s_5",
+      "path": "exports/player_aqualia/idle_s_5.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "player_aqualia_idle_se_1",
+      "path": "exports/player_aqualia/idle_se_1.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "player_aqualia_idle_se_2",
+      "path": "exports/player_aqualia/idle_se_2.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "player_aqualia_idle_se_3",
+      "path": "exports/player_aqualia/idle_se_3.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "player_aqualia_idle_se_4",
+      "path": "exports/player_aqualia/idle_se_4.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "player_aqualia_idle_se_5",
+      "path": "exports/player_aqualia/idle_se_5.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "player_aqualia_idle_e_1",
+      "path": "exports/player_aqualia/idle_e_1.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "player_aqualia_idle_e_2",
+      "path": "exports/player_aqualia/idle_e_2.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "player_aqualia_idle_e_3",
+      "path": "exports/player_aqualia/idle_e_3.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "player_aqualia_idle_e_4",
+      "path": "exports/player_aqualia/idle_e_4.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "player_aqualia_idle_e_5",
+      "path": "exports/player_aqualia/idle_e_5.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "player_aqualia_idle_n_1",
+      "path": "exports/player_aqualia/idle_n_1.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "player_aqualia_idle_n_2",
+      "path": "exports/player_aqualia/idle_n_2.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "player_aqualia_idle_n_3",
+      "path": "exports/player_aqualia/idle_n_3.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "player_aqualia_idle_n_4",
+      "path": "exports/player_aqualia/idle_n_4.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "player_aqualia_idle_n_5",
+      "path": "exports/player_aqualia/idle_n_5.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "rivallie_idle_s_1",
+      "path": "exports/rivallie/idle_s_1.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.8958
+      }
+    },
+    {
+      "id": "rivallie_idle_s_2",
+      "path": "exports/rivallie/idle_s_2.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.8958
+      }
+    },
+    {
+      "id": "rivallie_idle_s_3",
+      "path": "exports/rivallie/idle_s_3.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.8958
+      }
+    },
+    {
+      "id": "rivallie_idle_s_4",
+      "path": "exports/rivallie/idle_s_4.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.8958
+      }
+    },
+    {
+      "id": "rivallie_idle_s_5",
+      "path": "exports/rivallie/idle_s_5.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.8958
+      }
+    },
+    {
+      "id": "rivallie_idle_se_1",
+      "path": "exports/rivallie/idle_se_1.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.8958
+      }
+    },
+    {
+      "id": "rivallie_idle_se_2",
+      "path": "exports/rivallie/idle_se_2.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.8958
+      }
+    },
+    {
+      "id": "rivallie_idle_se_3",
+      "path": "exports/rivallie/idle_se_3.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.8958
+      }
+    },
+    {
+      "id": "rivallie_idle_se_4",
+      "path": "exports/rivallie/idle_se_4.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.8958
+      }
+    },
+    {
+      "id": "rivallie_idle_se_5",
+      "path": "exports/rivallie/idle_se_5.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.8958
+      }
+    },
+    {
+      "id": "rivallie_idle_e_1",
+      "path": "exports/rivallie/idle_e_1.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.8958
+      }
+    },
+    {
+      "id": "rivallie_idle_e_2",
+      "path": "exports/rivallie/idle_e_2.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.8958
+      }
+    },
+    {
+      "id": "rivallie_idle_e_3",
+      "path": "exports/rivallie/idle_e_3.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.8958
+      }
+    },
+    {
+      "id": "rivallie_idle_e_4",
+      "path": "exports/rivallie/idle_e_4.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.8958
+      }
+    },
+    {
+      "id": "rivallie_idle_e_5",
+      "path": "exports/rivallie/idle_e_5.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.8958
+      }
+    },
+    {
+      "id": "rivallie_idle_n_1",
+      "path": "exports/rivallie/idle_n_1.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.8958
+      }
+    },
+    {
+      "id": "rivallie_idle_n_2",
+      "path": "exports/rivallie/idle_n_2.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.8958
+      }
+    },
+    {
+      "id": "rivallie_idle_n_3",
+      "path": "exports/rivallie/idle_n_3.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.8958
+      }
+    },
+    {
+      "id": "rivallie_idle_n_4",
+      "path": "exports/rivallie/idle_n_4.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.8958
+      }
+    },
+    {
+      "id": "rivallie_idle_n_5",
+      "path": "exports/rivallie/idle_n_5.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.8958
+      }
+    },
+    {
+      "id": "npc_neris_idle_s_1",
+      "path": "exports/npcs/neris/idle_s_1.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_neris_idle_s_2",
+      "path": "exports/npcs/neris/idle_s_2.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_neris_idle_s_3",
+      "path": "exports/npcs/neris/idle_s_3.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_neris_idle_s_4",
+      "path": "exports/npcs/neris/idle_s_4.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_neris_idle_s_5",
+      "path": "exports/npcs/neris/idle_s_5.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_reed_idle_s_1",
+      "path": "exports/npcs/reed/idle_s_1.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_reed_idle_s_2",
+      "path": "exports/npcs/reed/idle_s_2.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_reed_idle_s_3",
+      "path": "exports/npcs/reed/idle_s_3.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_reed_idle_s_4",
+      "path": "exports/npcs/reed/idle_s_4.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_reed_idle_s_5",
+      "path": "exports/npcs/reed/idle_s_5.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_willa_idle_s_1",
+      "path": "exports/npcs/willa/idle_s_1.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_willa_idle_s_2",
+      "path": "exports/npcs/willa/idle_s_2.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_willa_idle_s_3",
+      "path": "exports/npcs/willa/idle_s_3.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_willa_idle_s_4",
+      "path": "exports/npcs/willa/idle_s_4.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_willa_idle_s_5",
+      "path": "exports/npcs/willa/idle_s_5.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_oren_idle_s_1",
+      "path": "exports/npcs/oren/idle_s_1.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_oren_idle_s_2",
+      "path": "exports/npcs/oren/idle_s_2.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_oren_idle_s_3",
+      "path": "exports/npcs/oren/idle_s_3.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_oren_idle_s_4",
+      "path": "exports/npcs/oren/idle_s_4.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_oren_idle_s_5",
+      "path": "exports/npcs/oren/idle_s_5.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_lark_idle_s_1",
+      "path": "exports/npcs/lark/idle_s_1.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_lark_idle_s_2",
+      "path": "exports/npcs/lark/idle_s_2.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_lark_idle_s_3",
+      "path": "exports/npcs/lark/idle_s_3.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_lark_idle_s_4",
+      "path": "exports/npcs/lark/idle_s_4.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_lark_idle_s_5",
+      "path": "exports/npcs/lark/idle_s_5.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_dara_idle_s_1",
+      "path": "exports/npcs/dara/idle_s_1.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_dara_idle_s_2",
+      "path": "exports/npcs/dara/idle_s_2.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_dara_idle_s_3",
+      "path": "exports/npcs/dara/idle_s_3.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_dara_idle_s_4",
+      "path": "exports/npcs/dara/idle_s_4.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_dara_idle_s_5",
+      "path": "exports/npcs/dara/idle_s_5.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_finn_idle_s_1",
+      "path": "exports/npcs/finn/idle_s_1.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_finn_idle_s_2",
+      "path": "exports/npcs/finn/idle_s_2.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_finn_idle_s_3",
+      "path": "exports/npcs/finn/idle_s_3.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_finn_idle_s_4",
+      "path": "exports/npcs/finn/idle_s_4.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
+    },
+    {
+      "id": "npc_finn_idle_s_5",
+      "path": "exports/npcs/finn/idle_s_5.png",
+      "anchor": {
+        "x": 0.5,
+        "y": 0.9167
+      }
     }
   ],
   "appearances": [
@@ -923,7 +1523,12 @@
       "state": "idle",
       "facing": "s",
       "frameIds": [
-        "player_aqualia_idle_s_0"
+        "player_aqualia_idle_s_0",
+        "player_aqualia_idle_s_1",
+        "player_aqualia_idle_s_2",
+        "player_aqualia_idle_s_3",
+        "player_aqualia_idle_s_4",
+        "player_aqualia_idle_s_5"
       ],
       "fps": 6,
       "playback": "loop"
@@ -934,7 +1539,12 @@
       "state": "idle",
       "facing": "se",
       "frameIds": [
-        "player_aqualia_idle_se_0"
+        "player_aqualia_idle_se_0",
+        "player_aqualia_idle_se_1",
+        "player_aqualia_idle_se_2",
+        "player_aqualia_idle_se_3",
+        "player_aqualia_idle_se_4",
+        "player_aqualia_idle_se_5"
       ],
       "fps": 6,
       "playback": "loop"
@@ -945,7 +1555,12 @@
       "state": "idle",
       "facing": "e",
       "frameIds": [
-        "player_aqualia_idle_e_0"
+        "player_aqualia_idle_e_0",
+        "player_aqualia_idle_e_1",
+        "player_aqualia_idle_e_2",
+        "player_aqualia_idle_e_3",
+        "player_aqualia_idle_e_4",
+        "player_aqualia_idle_e_5"
       ],
       "fps": 6,
       "playback": "loop"
@@ -956,7 +1571,12 @@
       "state": "idle",
       "facing": "n",
       "frameIds": [
-        "player_aqualia_idle_n_0"
+        "player_aqualia_idle_n_0",
+        "player_aqualia_idle_n_1",
+        "player_aqualia_idle_n_2",
+        "player_aqualia_idle_n_3",
+        "player_aqualia_idle_n_4",
+        "player_aqualia_idle_n_5"
       ],
       "fps": 6,
       "playback": "loop"
@@ -967,7 +1587,12 @@
       "state": "idle",
       "facing": "s",
       "frameIds": [
-        "rivallie_idle_s_0"
+        "rivallie_idle_s_0",
+        "rivallie_idle_s_1",
+        "rivallie_idle_s_2",
+        "rivallie_idle_s_3",
+        "rivallie_idle_s_4",
+        "rivallie_idle_s_5"
       ],
       "fps": 6,
       "playback": "loop"
@@ -978,7 +1603,12 @@
       "state": "idle",
       "facing": "se",
       "frameIds": [
-        "rivallie_idle_se_0"
+        "rivallie_idle_se_0",
+        "rivallie_idle_se_1",
+        "rivallie_idle_se_2",
+        "rivallie_idle_se_3",
+        "rivallie_idle_se_4",
+        "rivallie_idle_se_5"
       ],
       "fps": 6,
       "playback": "loop"
@@ -989,7 +1619,12 @@
       "state": "idle",
       "facing": "e",
       "frameIds": [
-        "rivallie_idle_e_0"
+        "rivallie_idle_e_0",
+        "rivallie_idle_e_1",
+        "rivallie_idle_e_2",
+        "rivallie_idle_e_3",
+        "rivallie_idle_e_4",
+        "rivallie_idle_e_5"
       ],
       "fps": 6,
       "playback": "loop"
@@ -1000,7 +1635,12 @@
       "state": "idle",
       "facing": "n",
       "frameIds": [
-        "rivallie_idle_n_0"
+        "rivallie_idle_n_0",
+        "rivallie_idle_n_1",
+        "rivallie_idle_n_2",
+        "rivallie_idle_n_3",
+        "rivallie_idle_n_4",
+        "rivallie_idle_n_5"
       ],
       "fps": 6,
       "playback": "loop"
@@ -1011,7 +1651,12 @@
       "state": "idle",
       "facing": "s",
       "frameIds": [
-        "npc_neris_idle_s_0"
+        "npc_neris_idle_s_0",
+        "npc_neris_idle_s_1",
+        "npc_neris_idle_s_2",
+        "npc_neris_idle_s_3",
+        "npc_neris_idle_s_4",
+        "npc_neris_idle_s_5"
       ],
       "fps": 6,
       "playback": "loop"
@@ -1022,7 +1667,12 @@
       "state": "idle",
       "facing": "s",
       "frameIds": [
-        "npc_reed_idle_s_0"
+        "npc_reed_idle_s_0",
+        "npc_reed_idle_s_1",
+        "npc_reed_idle_s_2",
+        "npc_reed_idle_s_3",
+        "npc_reed_idle_s_4",
+        "npc_reed_idle_s_5"
       ],
       "fps": 6,
       "playback": "loop"
@@ -1033,7 +1683,12 @@
       "state": "idle",
       "facing": "s",
       "frameIds": [
-        "npc_willa_idle_s_0"
+        "npc_willa_idle_s_0",
+        "npc_willa_idle_s_1",
+        "npc_willa_idle_s_2",
+        "npc_willa_idle_s_3",
+        "npc_willa_idle_s_4",
+        "npc_willa_idle_s_5"
       ],
       "fps": 6,
       "playback": "loop"
@@ -1044,7 +1699,12 @@
       "state": "idle",
       "facing": "s",
       "frameIds": [
-        "npc_oren_idle_s_0"
+        "npc_oren_idle_s_0",
+        "npc_oren_idle_s_1",
+        "npc_oren_idle_s_2",
+        "npc_oren_idle_s_3",
+        "npc_oren_idle_s_4",
+        "npc_oren_idle_s_5"
       ],
       "fps": 6,
       "playback": "loop"
@@ -1055,7 +1715,12 @@
       "state": "idle",
       "facing": "s",
       "frameIds": [
-        "npc_lark_idle_s_0"
+        "npc_lark_idle_s_0",
+        "npc_lark_idle_s_1",
+        "npc_lark_idle_s_2",
+        "npc_lark_idle_s_3",
+        "npc_lark_idle_s_4",
+        "npc_lark_idle_s_5"
       ],
       "fps": 6,
       "playback": "loop"
@@ -1066,7 +1731,12 @@
       "state": "idle",
       "facing": "s",
       "frameIds": [
-        "npc_dara_idle_s_0"
+        "npc_dara_idle_s_0",
+        "npc_dara_idle_s_1",
+        "npc_dara_idle_s_2",
+        "npc_dara_idle_s_3",
+        "npc_dara_idle_s_4",
+        "npc_dara_idle_s_5"
       ],
       "fps": 6,
       "playback": "loop"
@@ -1077,7 +1747,12 @@
       "state": "idle",
       "facing": "s",
       "frameIds": [
-        "npc_finn_idle_s_0"
+        "npc_finn_idle_s_0",
+        "npc_finn_idle_s_1",
+        "npc_finn_idle_s_2",
+        "npc_finn_idle_s_3",
+        "npc_finn_idle_s_4",
+        "npc_finn_idle_s_5"
       ],
       "fps": 6,
       "playback": "loop"

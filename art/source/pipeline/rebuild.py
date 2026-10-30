@@ -30,6 +30,10 @@ from art.source.pipeline.process_master_sheet import (
     segment_and_extract_figures,
     init_matting_session,
 )
+from art.source.generators.actors.breathing import (
+    generate_humanoid_breathing_frames,
+    generate_rivallie_breathing_frames,
+)
 from art.source.generators.environment.terrain import (
     render_ground_grass, render_ground_dirt, render_ground_sand, render_ground_freshwater,
     render_shore_freshwater_mask, render_cliff_grass, render_ramp_grass
@@ -146,8 +150,15 @@ def main():
             target_height=116,
             max_width=88
         )
-        out_file = player_dir / f"idle_{facing}_0.png"
-        process_asset(registered, out_file, (48, 132))
+        breathing_frames = generate_humanoid_breathing_frames(
+            base_frame=registered,
+            target_canvas=(96, 144),
+            ground_y=132,
+            num_frames=6
+        )
+        for f_idx, frame_img in enumerate(breathing_frames):
+            out_file = player_dir / f"idle_{facing}_{f_idx}.png"
+            process_asset(frame_img, out_file, (48, 132))
         player_frames.append((facing, registered))
 
     # 2. Process Rivallie Otter Drake Poses
@@ -164,8 +175,16 @@ def main():
             target_height=66,
             max_width=84
         )
-        out_file = rivallie_dir / f"idle_{facing}_0.png"
-        process_asset(registered, out_file, (48, 86))
+        breathing_frames = generate_rivallie_breathing_frames(
+            base_frame=registered,
+            facing=facing,
+            target_canvas=(96, 96),
+            ground_y=86,
+            num_frames=6
+        )
+        for f_idx, frame_img in enumerate(breathing_frames):
+            out_file = rivallie_dir / f"idle_{facing}_{f_idx}.png"
+            process_asset(frame_img, out_file, (48, 86))
         rivallie_frames.append((facing, registered))
 
     # 2.5 Process 7 Aqualia Villagers (Neris, Reed, Willa, Oren, Lark, Dara, Finn)
@@ -182,8 +201,15 @@ def main():
                 target_height=116,
                 max_width=88
             )
-            out_file = exports_dir / "npcs" / name / "idle_s_0.png"
-            process_asset(registered, out_file, (48, 132))
+            breathing_frames = generate_humanoid_breathing_frames(
+                base_frame=registered,
+                target_canvas=(96, 144),
+                ground_y=132,
+                num_frames=6
+            )
+            for f_idx, frame_img in enumerate(breathing_frames):
+                out_file = exports_dir / "npcs" / name / f"idle_s_{f_idx}.png"
+                process_asset(frame_img, out_file, (48, 132))
             villager_frames.append((name, registered))
 
     # 3. Process Environment Tiles & Props (44 frames)
