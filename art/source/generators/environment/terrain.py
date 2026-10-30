@@ -265,3 +265,4 @@ def render_ramp_grass(seed: int = 707) -> Image.Image:
             draw_pixel(img, x, y, color)
 
     return img
+

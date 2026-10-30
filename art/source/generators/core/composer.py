@@ -93,3 +93,4 @@ def composite_layers(
             canvas.alpha_composite(layer_img)
 
     return canvas
+

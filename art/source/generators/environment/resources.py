@@ -215,3 +215,4 @@ def render_flora_fungi(state: str) -> Image.Image:
         draw_pixel(img, cx, ground_y - 4, f["burnt_ash"])
 
     return apply_selective_outline(img, OUTLINE_DARK)
+

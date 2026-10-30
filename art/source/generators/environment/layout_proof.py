@@ -169,3 +169,4 @@ def _paste_prop(canvas: Image.Image, sprite: Image.Image, wx: float, wy: float, 
     px = int(sx - sprite.width * anchor[0])
     py = int(sy - sprite.height * anchor[1])
     canvas.paste(sprite, (px, py), sprite)
+

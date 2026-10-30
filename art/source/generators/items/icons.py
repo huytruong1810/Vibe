@@ -296,3 +296,4 @@ def render_weapon_arrow_bundle() -> Image.Image:
         # Feather fletching
         draw_shaded_rect(img, cx + dx - 2, cy - 32, 5, 6, aq["cloth_teal_bright"], hex_to_rgba("#f7f3eb"), OUTLINE_DARK)
     return apply_selective_outline(img, OUTLINE_DARK)
+

@@ -2,7 +2,7 @@
 Pixel-perfect geometric rasterization, cluster shading, and outline utilities for PIL pixel art.
 """
 
-from typing import List, Tuple, Optional
+from typing import List, Tuple, Optional, Dict
 from PIL import Image, ImageDraw
 import numpy as np
 from .palette import RGBA, CLEAR, OUTLINE_DARK
@@ -123,3 +123,154 @@ def dither_fill(
             bayer_val = BAYER_2X2[yi % 2][xi % 2]
             chosen = color_b if bayer_val < threshold else color_a
             draw_pixel(image, xi, yi, chosen)
+
+def draw_shaded_ellipsoid(
+    image: Image.Image,
+    center: Tuple[float, float],
+    rx: float,
+    ry: float,
+    ramp: List[RGBA],
+    angle: float = 0.0,
+    light_dir: Tuple[float, float] = (-0.6, -0.8),
+    outline_color: Optional[RGBA] = None,
+):
+    """
+    Renders an organically shaded 3D ellipsoid with normal-mapped spherical shading.
+    ramp: 4-step color ramp [deep_shadow, shadow, midtone, highlight].
+    """
+    cx, cy = center
+    cos_a, sin_a = np.cos(angle), np.sin(angle)
+    lx, ly = light_dir
+    l_mag = np.hypot(lx, ly)
+    if l_mag > 0:
+        lx, ly = lx / l_mag, ly / l_mag
+
+    min_x = max(0, int(cx - max(rx, ry) - 2))
+    max_x = min(image.width, int(cx + max(rx, ry) + 3))
+    min_y = max(0, int(cy - max(rx, ry) - 2))
+    max_y = min(image.height, int(cy + max(rx, ry) + 3))
+
+    for y in range(min_y, max_y):
+        for x in range(min_x, max_x):
+            dx = x - cx
+            dy = y - cy
+            # Rotate into local coordinate frame
+            u = (dx * cos_a + dy * sin_a) / rx
+            v = (-dx * sin_a + dy * cos_a) / ry
+            dist_sq = u * u + v * v
+
+            if dist_sq <= 1.0:
+                dist = np.sqrt(dist_sq)
+                # Reconstruct pseudo-3D surface normal (nx, ny, nz)
+                nz = np.sqrt(max(0.0, 1.0 - dist_sq))
+                # Unrotated surface normal
+                nx = (u * cos_a - v * sin_a)
+                ny = (u * sin_a + v * cos_a)
+                
+                # Dot product with light source
+                dot = nx * lx + ny * ly + nz * 0.5
+                
+                # Bayer dither threshold perturbation
+                dither = (BAYER_2X2[y % 2][x % 2] - 1.5) * 0.12
+                effective_dot = dot + dither
+
+                if dist > 0.88 and outline_color is not None:
+                    color = outline_color
+                elif effective_dot > 0.40:
+                    color = ramp[3]  # Highlight
+                elif effective_dot > -0.05:
+                    color = ramp[2]  # Midtone
+                elif effective_dot > -0.45:
+                    color = ramp[1]  # Shadow
+                else:
+                    color = ramp[0]  # Deep shadow
+
+                draw_pixel(image, x, y, color)
+
+def draw_shaded_capsule(
+    image: Image.Image,
+    p0: Tuple[float, float],
+    p1: Tuple[float, float],
+    radius: float,
+    ramp: List[RGBA],
+    light_dir: Tuple[float, float] = (-0.6, -0.8),
+    outline_color: Optional[RGBA] = None,
+):
+    """
+    Renders an organically shaded 3D cylindrical capsule between p0 and p1.
+    Ideal for limbs, fingers, tails, horns, and cloth folds.
+    """
+    x0, y0 = p0
+    x1, y1 = p1
+    vx = x1 - x0
+    vy = y1 - y0
+    seg_len_sq = vx * vx + vy * vy
+    seg_len = np.sqrt(seg_len_sq)
+
+    lx, ly = light_dir
+    l_mag = np.hypot(lx, ly)
+    if l_mag > 0:
+        lx, ly = lx / l_mag, ly / l_mag
+
+    min_x = max(0, int(min(x0, x1) - radius - 2))
+    max_x = min(image.width, int(max(x0, x1) + radius + 3))
+    min_y = max(0, int(min(y0, y1) - radius - 2))
+    max_y = min(image.height, int(max(y0, y1) + radius + 3))
+
+    for y in range(min_y, max_y):
+        for x in range(min_x, max_x):
+            px = x - x0
+            py = y - y0
+            if seg_len_sq == 0:
+                t = 0.0
+            else:
+                t = max(0.0, min(1.0, (px * vx + py * vy) / seg_len_sq))
+
+            closest_x = x0 + t * vx
+            closest_y = y0 + t * vy
+            dx = x - closest_x
+            dy = y - closest_y
+            dist_sq = (dx * dx + dy * dy) / (radius * radius)
+
+            if dist_sq <= 1.0:
+                dist = np.sqrt(dist_sq)
+                nz = np.sqrt(max(0.0, 1.0 - dist_sq))
+                nx = dx / radius
+                ny = dy / radius
+
+                dot = nx * lx + ny * ly + nz * 0.5
+                dither = (BAYER_2X2[y % 2][x % 2] - 1.5) * 0.12
+                effective_dot = dot + dither
+
+                if dist > 0.88 and outline_color is not None:
+                    color = outline_color
+                elif effective_dot > 0.40:
+                    color = ramp[3]
+                elif effective_dot > -0.05:
+                    color = ramp[2]
+                elif effective_dot > -0.45:
+                    color = ramp[1]
+                else:
+                    color = ramp[0]
+
+                draw_pixel(image, x, y, color)
+
+def blit_pixel_matrix(
+    image: Image.Image,
+    top_left: Tuple[int, int],
+    matrix_str: str,
+    char_map: Dict[str, Optional[RGBA]],
+):
+    """
+    Renders an exact pixel grid template.
+    Allows hand-sculpting eyes, mouths, hair strands, and decorative emblems pixel by pixel.
+    """
+    lines = [line.strip() for line in matrix_str.strip().splitlines() if line.strip()]
+    ox, oy = top_left
+    for row_idx, row in enumerate(lines):
+        for col_idx, char in enumerate(row):
+            color = char_map.get(char)
+            if color is not None:
+                draw_pixel(image, ox + col_idx, oy + row_idx, color)
+
+

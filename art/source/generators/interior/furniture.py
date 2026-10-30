@@ -99,3 +99,4 @@ def render_furniture_shelf_aqualia() -> Image.Image:
     # Tier 3 items: Storage crates
     draw_shaded_rect(img, cx - 14, ground_y - 22, 28, 10, aq["timber_shadow"], aq["timber_mid"], OUTLINE_DARK)
     return apply_selective_outline(img, OUTLINE_DARK)
+
