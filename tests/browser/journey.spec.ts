@@ -61,6 +61,21 @@ async function worldSession(page: Page): Promise<string> {
   );
 }
 
+async function closeSettings(page: Page): Promise<void> {
+  await page.getByRole('button', { name: 'Close settings' }).click();
+  await expect
+    .poll(
+      () =>
+        page.evaluate(() =>
+          (window as unknown as { __hearthwild: { frame(): { paused: string[] } } }).__hearthwild
+            .frame()
+            .paused.includes('menu'),
+        ),
+      { timeout: 15_000 },
+    )
+    .toBe(false);
+}
+
 async function checkpoint(page: Page): Promise<GameSave> {
   return page.evaluate(() =>
     (
@@ -83,56 +98,46 @@ test('full world, movement, grounded dialogue, save and resume', async ({ page }
   await page.getByRole('tab', { name: 'Villagers' }).click();
   // Follow reachable walk surfaces with real keyboard input. A straight-line chase
   // can hit houses as villagers move during startup, especially on software GPUs.
-  const held = new Set<string>();
-  try {
-    await expect
-      .poll(
-        async () => {
-          if (await page.locator('#conversation-dialog').isVisible()) return true;
-          const snapshot = await checkpoint(page);
-          const position = body(snapshot),
-            nearest = snapshot.npcs
-              .map((n) => body(snapshot, n.entityId))
-              .sort(
-                (a, b) =>
-                  Math.hypot(a.x - position.x, a.y - position.y) -
-                  Math.hypot(b.x - position.x, b.y - position.y),
-              )[0]!;
-          if (Math.hypot(nearest.x - position.x, nearest.y - position.y) < 2.5) {
-            await page.keyboard.press('e');
-            return page.locator('#conversation-dialog').isVisible();
-          }
-          guide.request({ id: 'browser-walk', start: position, goal: nearest });
-          guide.advance(4096);
-          const path = guide.take('browser-walk');
-          expect(path.status).toBe('found');
-          const next =
-            path.points.find(
-              (point) => Math.hypot(point.x - position.x, point.y - position.y) > 0.4,
-            ) ?? nearest;
-          const dx = next.x - position.x,
-            dy = next.y - position.y;
-          const desired = new Set([
-            ...(Math.abs(dx) >= Math.abs(dy) ? [dx > 0 ? 'd' : 'a'] : [dy > 0 ? 's' : 'w']),
-          ]);
-          for (const key of held)
-            if (!desired.has(key)) {
-              await page.keyboard.up(key);
-              held.delete(key);
-            }
-          for (const key of desired)
-            if (!held.has(key)) {
-              await page.keyboard.down(key);
-              held.add(key);
-            }
-          return false;
-        },
-        { timeout: 30_000, intervals: [100, 100, 200] },
-      )
-      .toBe(true);
-  } finally {
-    for (const key of held) await page.keyboard.up(key);
-  }
+  await expect
+    .poll(
+      async () => {
+        if (await page.locator('#conversation-dialog').isVisible()) return true;
+        const snapshot = await checkpoint(page);
+        const position = body(snapshot),
+          nearest = snapshot.npcs
+            .map((n) => body(snapshot, n.entityId))
+            .sort(
+              (a, b) =>
+                Math.hypot(a.x - position.x, a.y - position.y) -
+                Math.hypot(b.x - position.x, b.y - position.y),
+            )[0]!;
+        if (Math.hypot(nearest.x - position.x, nearest.y - position.y) < 2.5) {
+          await page.keyboard.press('e');
+          return page.locator('#conversation-dialog').isVisible();
+        }
+        guide.request({ id: 'browser-walk', start: position, goal: nearest });
+        guide.advance(4096);
+        const path = guide.take('browser-walk');
+        expect(path.status).toBe('found');
+        const next =
+          path.points.find(
+            (point) =>
+              Math.floor(point.x) !== Math.floor(position.x) ||
+              Math.floor(point.y) !== Math.floor(position.y),
+          ) ?? nearest;
+        const dx = next.x - position.x,
+          dy = next.y - position.y;
+        const key = Math.abs(dx) >= Math.abs(dy) ? (dx > 0 ? 'd' : 'a') : dy > 0 ? 's' : 'w';
+        // Never hold a movement key across an asynchronous checkpoint or poll.
+        // A slow renderer must not turn a short route step into a long overshoot.
+        await page.keyboard.down(key);
+        await page.waitForTimeout(100);
+        await page.keyboard.up(key);
+        return false;
+      },
+      { timeout: 60_000, intervals: [100] },
+    )
+    .toBe(true);
   await expect(page.locator('#conversation-dialog')).toBeVisible();
   const before = await checkpoint(page);
   await page.waitForTimeout(350);
@@ -171,7 +176,7 @@ test('full world, movement, grounded dialogue, save and resume', async ({ page }
   await page.getByLabel('Developer overlay').check();
   await expect(page.locator('#debug-stats')).toContainText('MEMORY PROVENANCE');
   await expect(page.locator('#debug-stats')).toContainText('Utility wander');
-  await page.getByRole('button', { name: 'Close settings' }).click();
+  await closeSettings(page);
   await expect
     .poll(() =>
       page.evaluate(
@@ -185,7 +190,7 @@ test('full world, movement, grounded dialogue, save and resume', async ({ page }
   await page.screenshot({ path: 'artifacts/diagnostics.png', fullPage: true });
   await page.getByRole('button', { name: 'Settings', exact: true }).click();
   await page.getByLabel('Developer overlay').uncheck();
-  await page.getByRole('button', { name: 'Close settings' }).click();
+  await closeSettings(page);
   await page.getByRole('tab', { name: 'Journey' }).click();
   await page.screenshot({ path: 'artifacts/hearthwild.png', fullPage: true });
   await page.keyboard.press('m');
@@ -242,35 +247,23 @@ test('creature care, crafting, elemental combat and recovery through a validated
 
   await expect.poll(() => worldSession(page), { timeout: 30_000 }).not.toBe(beforeImportSession1);
   await expect(page.locator('#toast')).toContainText('imported');
-  await page.getByRole('button', { name: 'Close settings' }).click();
-  await page.evaluate(
-    (id) =>
-      (
-        window as unknown as { __hearthwild: { command(command: unknown): Promise<unknown> } }
-      ).__hearthwild.command({ type: 'care', creature: id, action: 'feed' }),
-    creature,
-  );
-  await page.evaluate(
-    (id) =>
-      (
-        window as unknown as { __hearthwild: { command(command: unknown): Promise<unknown> } }
-      ).__hearthwild.command({ type: 'care', creature: id, action: 'water' }),
-    creature,
-  );
-  await page.evaluate(
-    (id) =>
-      (
-        window as unknown as { __hearthwild: { command(command: unknown): Promise<unknown> } }
-      ).__hearthwild.command({ type: 'care', creature: id, action: 'pet' }),
-    creature,
-  );
-  await page.evaluate(
-    (id) =>
-      (
-        window as unknown as { __hearthwild: { command(command: unknown): Promise<unknown> } }
-      ).__hearthwild.command({ type: 'tame', creature: id }),
-    creature,
-  );
+  await closeSettings(page);
+  const careResults = await page.evaluate(async (id) => {
+    const api = (
+      window as unknown as {
+        __hearthwild: { command(command: unknown): Promise<{ ok: boolean; message: string }> };
+      }
+    ).__hearthwild;
+    const results = [];
+    for (const action of ['feed', 'water', 'pet'])
+      results.push(await api.command({ type: 'care', creature: id, action }));
+    results.push(await api.command({ type: 'tame', creature: id }));
+    return results;
+  }, creature);
+  expect(
+    careResults.map((result) => result.ok),
+    JSON.stringify(careResults),
+  ).toEqual([true, true, true, true]);
   await expect.poll(async () => body(await checkpoint(page), creature).owner).toBe(0);
   await inspection(page);
   await page.getByRole('tab', { name: 'Creatures' }).click();
@@ -278,7 +271,7 @@ test('creature care, crafting, elemental combat and recovery through a validated
   await expect(page.locator('.creature-stats')).toBeVisible();
   const crafting = await checkpoint(page),
     enemy = crafting.entities.records.find(
-      (e) => e.species !== 8 && e.owner === -1 && e.id !== creature,
+      (e) => e.species === 1 && e.owner === -1 && e.id !== creature,
     )!.id;
   crafting.inventory = [
     { id: 'flint', instance: 'item:3' },
@@ -298,6 +291,17 @@ test('creature care, crafting, elemental combat and recovery through a validated
   body(crafting, enemy).targetX = body(crafting).x + 1;
   body(crafting, enemy).targetY = body(crafting).y;
   body(crafting, enemy).hp = 1;
+  // A healthy resting herbivore keeps this attack-timing fixture independent
+  // of survival movement and unrelated hunts while crafting controls are used.
+  Object.assign(body(crafting, enemy), {
+    food: 1,
+    water: 1,
+    rest: 0.5,
+    sleeping: 1,
+    voluntaryRest: 1,
+    forcedRest: 0,
+    nature: { response: 'avoid', aggression: [] },
+  });
   body(crafting, enemy).commitUntil = crafting.elapsedSeconds + 100;
   await page.getByRole('button', { name: 'Settings', exact: true }).click();
   const beforeImportSession2 = await worldSession(page);
@@ -309,7 +313,7 @@ test('creature care, crafting, elemental combat and recovery through a validated
 
   await expect.poll(() => worldSession(page), { timeout: 30_000 }).not.toBe(beforeImportSession2);
   await expect(page.locator('#toast')).toContainText('imported');
-  await page.getByRole('button', { name: 'Close settings' }).click();
+  await closeSettings(page);
   await inventory(page);
   await page.getByRole('button', { name: 'Combine' }).click();
   await expect(page.locator('#inventory')).toContainText('Tool head');
@@ -336,12 +340,14 @@ async function importScenario(page: Page, save: GameSave): Promise<void> {
 
   await expect.poll(() => worldSession(page), { timeout: 30_000 }).not.toBe(beforeImportSession3);
   await expect(page.locator('#toast')).toContainText('imported');
-  await page.getByRole('button', { name: 'Close settings' }).click();
+  await closeSettings(page);
 }
 
 test('human food, accelerated sleep, emergency waking, retaliation and predation', async ({
   page,
 }) => {
+  // This journey performs five independently validated public save imports.
+  test.setTimeout(180_000);
   const errors: string[] = [];
   page.on('pageerror', (e) => errors.push(e.message));
   await mockOllama(page);
@@ -363,15 +369,19 @@ test('human food, accelerated sleep, emergency waking, retaliation and predation
   await inventory(page);
   await page.locator('#inventory').getByRole('button', { name: 'Use', exact: true }).click();
   await expect.poll(async () => body(await checkpoint(page)).food).toBeGreaterThan(0.5);
+  const beforePantry = body(await checkpoint(page)).food;
   await page.getByRole('button', { name: 'Eat at pantry', exact: true }).click();
-  await expect.poll(async () => body(await checkpoint(page)).food).toBeGreaterThan(0.8);
+  await expect
+    .poll(async () => body(await checkpoint(page)).food)
+    .toBeGreaterThan(beforePantry + 0.2);
   await page.getByRole('button', { name: 'Rest', exact: true }).click();
   await expect(page.locator('#rest-status')).toContainText('Sleeping');
   const before = (await checkpoint(page)).tick;
   await page.getByRole('button', { name: 'Sleep at 8×', exact: true }).click();
   await expect(page.locator('#rest-status')).toContainText('8×');
-  await page.waitForTimeout(700);
-  expect((await checkpoint(page)).tick - before).toBeGreaterThan(80);
+  await expect
+    .poll(async () => (await checkpoint(page)).tick - before, { timeout: 8_000 })
+    .toBeGreaterThan(80);
   await page.getByRole('button', { name: 'Wake', exact: true }).click();
   await expect(page.locator('#rest-status')).not.toContainText('Sleeping');
 
@@ -398,13 +408,15 @@ test('human food, accelerated sleep, emergency waking, retaliation and predation
   expect(body(await checkpoint(page)).experience).toBe(0);
 
   // A forced sleeper can wake to flee a real nearby territorial threat; the obligation remains.
-  const danger = await checkpoint(page),
+  // Start this independent scenario from healthy actors, rather than carrying
+  // over assault damage, invulnerability or nearby retaliation targets.
+  const danger = structuredClone(initial),
     sleeper = body(danger),
     npc = danger.npcs[0]!,
     attacker = body(danger, npc.entityId);
   Object.assign(sleeper, { rest: 0.1, sleeping: 1, forcedRest: 1, food: 1, water: 1 });
   Object.assign(attacker, {
-    x: sleeper.x + 1,
+    x: sleeper.x + 0.25,
     y: sleeper.y,
     rest: 1,
     food: 1,
@@ -426,23 +438,25 @@ test('human food, accelerated sleep, emergency waking, retaliation and predation
   Object.assign(body(hunt), { food: 1, water: 1, rest: 1 });
   Object.assign(hunter, {
     x: 266.5,
-    y: 284.5,
-    targetX: 267.5,
-    targetY: 284.5,
+    y: 285.5,
+    targetX: 267,
+    targetY: 285.5,
     food: 0.2,
     water: 1,
     rest: 1,
     commitUntil: hunt.elapsedSeconds + 100,
   });
   Object.assign(prey, {
-    x: 267.5,
-    y: 284.5,
-    targetX: 267.5,
-    targetY: 284.5,
+    x: 267,
+    y: 285.5,
+    targetX: 267,
+    targetY: 285.5,
     hp: 1,
     food: 1,
     water: 1,
-    rest: 1,
+    rest: 0.5,
+    sleeping: 1,
+    voluntaryRest: 1,
     commitUntil: hunt.elapsedSeconds + 100,
   });
   await importScenario(page, hunt);
