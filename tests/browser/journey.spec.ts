@@ -1,5 +1,7 @@
 import { test, expect, type Page } from '@playwright/test';
 import type { GameSave } from '../../src/domain/save-schema';
+import { WorldGenerator, SurfaceRules, PLAYER_TRAVERSAL } from '../../src/domain/world';
+import { NavigationService } from '../../src/domain/navigation';
 
 const body = (save: GameSave, id = 0) => save.entities.records.find((e) => e.id === id)!;
 
@@ -51,6 +53,14 @@ async function enter(page: Page): Promise<void> {
   await expect(page.locator('#setup-dialog')).not.toBeVisible({ timeout: 30_000 });
   await expect(page.locator('#location-title')).toContainText('Aqualia');
 }
+async function worldSession(page: Page): Promise<string> {
+  return page.evaluate(
+    () =>
+      (window as unknown as { __hearthwild: { frame(): { session: string } } }).__hearthwild.frame()
+        .session,
+  );
+}
+
 async function checkpoint(page: Page): Promise<GameSave> {
   return page.evaluate(() =>
     (
@@ -67,14 +77,18 @@ test('full world, movement, grounded dialogue, save and resume', async ({ page }
   const initial = await checkpoint(page);
   expect(initial.npcs).toHaveLength(30);
   expect(initial.entities.records.filter((e) => e.species !== 8).length).toBe(1000);
+  const terrain = new WorldGenerator().generate(initial.seed),
+    guide = new NavigationService(terrain);
   await inspection(page);
   await page.getByRole('tab', { name: 'Villagers' }).click();
-  // Follow a real nearby villager; startup rendering time can put them at different points on their route.
+  // Follow reachable walk surfaces with real keyboard input. A straight-line chase
+  // can hit houses as villagers move during startup, especially on software GPUs.
   const held = new Set<string>();
   try {
     await expect
       .poll(
         async () => {
+          if (await page.locator('#conversation-dialog').isVisible()) return true;
           const snapshot = await checkpoint(page);
           const position = body(snapshot),
             nearest = snapshot.npcs
@@ -84,15 +98,22 @@ test('full world, movement, grounded dialogue, save and resume', async ({ page }
                   Math.hypot(a.x - position.x, a.y - position.y) -
                   Math.hypot(b.x - position.x, b.y - position.y),
               )[0]!;
-          const dx = nearest.x - position.x,
-            dy = nearest.y - position.y;
-          if (Math.hypot(dx, dy) < 1.2) {
+          if (Math.hypot(nearest.x - position.x, nearest.y - position.y) < 2.5) {
             await page.keyboard.press('e');
             return page.locator('#conversation-dialog').isVisible();
           }
+          guide.request({ id: 'browser-walk', start: position, goal: nearest });
+          guide.advance(4096);
+          const path = guide.take('browser-walk');
+          expect(path.status).toBe('found');
+          const next =
+            path.points.find(
+              (point) => Math.hypot(point.x - position.x, point.y - position.y) > 0.4,
+            ) ?? nearest;
+          const dx = next.x - position.x,
+            dy = next.y - position.y;
           const desired = new Set([
-            ...(dx > 0.3 ? ['d'] : dx < -0.3 ? ['a'] : []),
-            ...(dy > 0.3 ? ['s'] : dy < -0.3 ? ['w'] : []),
+            ...(Math.abs(dx) >= Math.abs(dy) ? [dx > 0 ? 'd' : 'a'] : [dy > 0 ? 's' : 'w']),
           ]);
           for (const key of held)
             if (!desired.has(key)) {
@@ -106,7 +127,7 @@ test('full world, movement, grounded dialogue, save and resume', async ({ page }
             }
           return false;
         },
-        { timeout: 15000 },
+        { timeout: 30_000, intervals: [100, 100, 200] },
       )
       .toBe(true);
   } finally {
@@ -125,11 +146,27 @@ test('full world, movement, grounded dialogue, save and resume', async ({ page }
   await expect.poll(async () => (await checkpoint(page)).drops.length).toBe(1);
   await page.getByRole('button', { name: 'Save journey' }).click();
   await expect(page.locator('#toast')).toContainText('saved');
-  const beforeMove = body(await checkpoint(page)).x;
-  await page.keyboard.down('d');
+  const beforeMove = body(await checkpoint(page));
+  const direction = [
+    ['d', 1, 0],
+    ['a', -1, 0],
+    ['s', 0, 1],
+    ['w', 0, -1],
+  ] as const;
+  const movement = direction.find(([, dx, dy]) =>
+    SurfaceRules.canStep(
+      terrain,
+      beforeMove,
+      { x: beforeMove.x + dx, y: beforeMove.y + dy },
+      PLAYER_TRAVERSAL,
+    ),
+  )!;
+  expect(movement).toBeDefined();
+  await page.keyboard.down(movement[0]);
   await page.waitForTimeout(500);
-  await page.keyboard.up('d');
-  expect(body(await checkpoint(page)).x).toBeGreaterThan(beforeMove);
+  await page.keyboard.up(movement[0]);
+  const afterMove = body(await checkpoint(page));
+  expect(Math.hypot(afterMove.x - beforeMove.x, afterMove.y - beforeMove.y)).toBeGreaterThan(0.1);
   await page.getByRole('button', { name: 'Settings', exact: true }).click();
   await page.getByLabel('Developer overlay').check();
   await expect(page.locator('#debug-stats')).toContainText('MEMORY PROVENANCE');
@@ -196,11 +233,14 @@ test('creature care, crafting, elemental combat and recovery through a validated
   ];
   save.inventorySerial = 2;
   await page.getByRole('button', { name: 'Settings', exact: true }).click();
+  const beforeImportSession1 = await worldSession(page);
   await page.locator('#import-input').setInputFiles({
     name: 'encounter.json',
     mimeType: 'application/json',
     buffer: Buffer.from(JSON.stringify(save)),
   });
+
+  await expect.poll(() => worldSession(page), { timeout: 30_000 }).not.toBe(beforeImportSession1);
   await expect(page.locator('#toast')).toContainText('imported');
   await page.getByRole('button', { name: 'Close settings' }).click();
   await page.evaluate(
@@ -260,11 +300,14 @@ test('creature care, crafting, elemental combat and recovery through a validated
   body(crafting, enemy).hp = 1;
   body(crafting, enemy).commitUntil = crafting.elapsedSeconds + 100;
   await page.getByRole('button', { name: 'Settings', exact: true }).click();
+  const beforeImportSession2 = await worldSession(page);
   await page.locator('#import-input').setInputFiles({
     name: 'craft-and-battle.json',
     mimeType: 'application/json',
     buffer: Buffer.from(JSON.stringify(crafting)),
   });
+
+  await expect.poll(() => worldSession(page), { timeout: 30_000 }).not.toBe(beforeImportSession2);
   await expect(page.locator('#toast')).toContainText('imported');
   await page.getByRole('button', { name: 'Close settings' }).click();
   await inventory(page);
@@ -284,11 +327,14 @@ test('creature care, crafting, elemental combat and recovery through a validated
 
 async function importScenario(page: Page, save: GameSave): Promise<void> {
   await page.getByRole('button', { name: 'Settings', exact: true }).click();
+  const beforeImportSession3 = await worldSession(page);
   await page.locator('#import-input').setInputFiles({
     name: 'entity-scenario.json',
     mimeType: 'application/json',
     buffer: Buffer.from(JSON.stringify(save)),
   });
+
+  await expect.poll(() => worldSession(page), { timeout: 30_000 }).not.toBe(beforeImportSession3);
   await expect(page.locator('#toast')).toContainText('imported');
   await page.getByRole('button', { name: 'Close settings' }).click();
 }

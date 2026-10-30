@@ -142,7 +142,10 @@ export class GameBootstrap {
   }
   private async requireConnection(): Promise<void> {
     if (!this.connectedModel) throw new Error('Connect local Ollama before resuming a journey');
-    await new OllamaAdapter(this.connectedEndpoint).capabilityCheck(this.connectedModel);
+    const check = () =>
+      new OllamaAdapter(this.connectedEndpoint).capabilityCheck(this.connectedModel);
+    if (this.inference) await this.inference.exclusive(check);
+    else await check();
   }
   private async save(): Promise<void> {
     await this.saves.checkpoint(await this.bridge.checkpoint());
@@ -168,6 +171,11 @@ export class GameBootstrap {
   private bindInput(): void {
     window.addEventListener('keydown', (event) => {
       const target = event.target as HTMLElement;
+      if (
+        (event.key === ' ' || event.key === 'Enter') &&
+        target.closest('button,a,summary,[role="tab"]')
+      )
+        return;
       if (
         target.matches('input, textarea, select') ||
         event.metaKey ||

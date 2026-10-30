@@ -20,6 +20,81 @@ const job = (id: string, kind: InferenceJob['kind'] = 'plan'): InferenceJob => (
 });
 afterEach(() => vi.useRealTimers());
 describe('local inference adapter and scheduling', () => {
+  it('settles cancelled generation before a readiness check and holds queued work until it ends', async () => {
+    let settle!: () => void, finishCheck!: () => void;
+    const checked = vi.fn(
+      () =>
+        new Promise<void>((resolve) => {
+          finishCheck = resolve;
+        }),
+    );
+    let first = true;
+    const generate = vi.fn((_job: InferenceJob, _model: string, signal: AbortSignal) => {
+      if (!first) return Promise.resolve({ output: { done: true }, tokens: 1 });
+      first = false;
+      return new Promise<{ output: unknown; tokens: number }>((_resolve, reject) => {
+        signal.addEventListener(
+          'abort',
+          () => {
+            settle = () => reject(Error('cancelled'));
+          },
+          { once: true },
+        );
+      });
+    });
+    const scheduler = new InferenceScheduler(
+      { models: async () => [], capabilityCheck: async () => undefined, generate },
+      'model',
+      () => undefined,
+    );
+    scheduler.enqueue(job('active'));
+    const control = scheduler.exclusive(checked);
+    scheduler.enqueue(job('queued'));
+    await Promise.resolve();
+    expect(checked).not.toHaveBeenCalled();
+    expect(generate).toHaveBeenCalledTimes(1);
+    settle();
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    expect(checked).toHaveBeenCalledTimes(1);
+    expect(generate).toHaveBeenCalledTimes(1);
+    finishCheck();
+    await control;
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    expect(generate).toHaveBeenCalledTimes(2);
+    scheduler.dispose();
+  });
+  it('keeps a replacement session queued until obsolete transport cancellation settles', async () => {
+    let settle!: () => void,
+      first = true;
+    const receipts: InferenceReceipt[] = [];
+    const generate = vi.fn((_job: InferenceJob, _model: string, signal: AbortSignal) => {
+      if (!first) return Promise.resolve({ output: { done: true }, tokens: 1 });
+      first = false;
+      return new Promise<{ output: unknown; tokens: number }>((_resolve, reject) => {
+        signal.addEventListener(
+          'abort',
+          () => {
+            settle = () => reject(Error('cancelled'));
+          },
+          { once: true },
+        );
+      });
+    });
+    const scheduler = new InferenceScheduler(
+      { models: async () => [], capabilityCheck: async () => undefined, generate },
+      'model',
+      (r) => receipts.push(r),
+    );
+    scheduler.enqueue(job('old'));
+    scheduler.reset('world:new');
+    scheduler.enqueue({ ...job('new'), session: 'world:new' });
+    expect(generate).toHaveBeenCalledTimes(1);
+    settle();
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    expect(generate).toHaveBeenCalledTimes(2);
+    expect(receipts.map((r) => r.jobId)).toEqual(['new']);
+    scheduler.dispose();
+  });
   it('defers background starts during sleep acceleration while preserving dialogue priority', async () => {
     const generate = vi.fn(async () => ({ output: { ready: true }, tokens: 1 }));
     const scheduler = new InferenceScheduler(

@@ -125,10 +125,28 @@ export class HudPresenter {
       this.el(`close-${overlay}`).addEventListener('click', () =>
         this.intent({ type: 'toggle', overlay }),
       );
-    for (const button of document.querySelectorAll<HTMLButtonElement>('[data-panel]'))
+    for (const button of document.querySelectorAll<HTMLButtonElement>('[data-panel]')) {
+      button.tabIndex = button.getAttribute('aria-selected') === 'true' ? 0 : -1;
       button.addEventListener('click', () =>
         this.showPanel(button.dataset.panel as typeof this.panel),
       );
+      button.addEventListener('keydown', (event) => {
+        if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+        event.preventDefault();
+        event.stopPropagation();
+        const tabs = [...document.querySelectorAll<HTMLButtonElement>('[data-panel]')];
+        const index = tabs.indexOf(button),
+          next =
+            event.key === 'Home'
+              ? 0
+              : event.key === 'End'
+                ? tabs.length - 1
+                : (index + (event.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
+        const target = tabs[next]!;
+        this.showPanel(target.dataset.panel as typeof this.panel);
+        target.focus();
+      });
+    }
     for (const button of document.querySelectorAll<HTMLButtonElement>('[data-close]'))
       button.addEventListener('click', () =>
         this.el<HTMLDialogElement>(button.dataset.close!).close(),
@@ -480,8 +498,10 @@ export class HudPresenter {
     this.el('inspection-panel').hidden = false;
     this.el('inspection-button').setAttribute('aria-expanded', 'true');
     this.panel = panel;
-    for (const button of document.querySelectorAll<HTMLButtonElement>('[data-panel]'))
+    for (const button of document.querySelectorAll<HTMLButtonElement>('[data-panel]')) {
       button.setAttribute('aria-selected', String(button.dataset.panel === panel));
+      button.tabIndex = button.dataset.panel === panel ? 0 : -1;
+    }
     this.renderPanel();
   }
   selectCreature(id: number): void {

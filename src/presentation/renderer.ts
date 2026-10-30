@@ -1021,13 +1021,14 @@ export class WorldRenderer {
     const frameId = clip && this.animations.frame(e.actor, clip, tick),
       frame = frameId && this.frames.get(frameId),
       texture = frameId && this.assets.texture(frameId);
-    e.fallback = !texture;
+    const resolvedAppearance = clip && this.resolver?.getAppearance(clip.appearanceId);
+    e.fallback = !texture || (!!clip && clip.appearanceId !== e.appearance?.id);
     if (texture && frame) {
       texture.source.scaleMode = 'nearest';
       e.body.texture = texture;
       e.body.anchor.set(frame.anchor.x, frame.anchor.y);
       e.body.scale.set(
-        e.appearance?.quality === 'hd'
+        resolvedAppearance?.quality === 'hd'
           ? 1
           : e.kind === 2
             ? LEGACY_SCALE

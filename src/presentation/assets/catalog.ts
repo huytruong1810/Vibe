@@ -206,6 +206,9 @@ export const AssetCatalogSchema = z
         issue(`Unknown canonical binding: ${binding}`);
       if (appearance.fallbackId && !appearances.has(appearance.fallbackId))
         issue(`Missing fallback: ${appearance.id}`);
+      const fallback = appearance.fallbackId && appearances.get(appearance.fallbackId);
+      if (fallback && (fallback.kind !== 'fallback' || fallback.quality !== 'prototype'))
+        issue(`Fallback must be an explicit generic prototype: ${appearance.id}`);
       if (appearance.fallbackId === appearance.id) issue(`Recursive fallback: ${appearance.id}`);
       const fallbackChain = new Set([appearance.id]);
       let fallbackId = appearance.fallbackId;
@@ -246,6 +249,9 @@ export type AppearanceKind = AssetAppearance['kind'];
 
 /** Immutable lookup tables. Content IDs are canonical; filenames never select an identity. */
 export class AppearanceResolver {
+  getAppearance(id: string): AssetAppearance | undefined {
+    return this.byId.get(id);
+  }
   private readonly bindings: ReadonlyMap<string, AssetAppearance>;
   private readonly byId: ReadonlyMap<string, AssetAppearance>;
   private readonly clips: ReadonlyMap<string, AnimationClip>;

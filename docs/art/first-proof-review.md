@@ -13,16 +13,19 @@ These are source proof references; runtime visual approval remains pending.
 | `player-aqualia-pose-proof.png` | 1376×768 RGB PNG, opaque  | Four labeled views show the teal hair, shell pin, poncho and necklace consistently. Individual transparent 96×144 frames and their foot registration were not supplied. The harpoon is a prop proof; it cannot grant an extra carried tool slot or redefine a combat move. |
 | `rivallie-pose-proof.png`       | 1376×768 RGB PNG, opaque  | Front/back, side and diagonal views exist. The long dragon-like side profile needs reconciliation with the established rounded, otter-like portrait muzzle and body. The printed `48px` brackets are not runtime source dimensions or anchor metadata.                     |
 
-The art source manifest contains zero frames, appearances, clips or portraits.
-`check:assets` therefore validates the unchanged prototype runtime bundle. It does
-not validate the three new proof images as renderable actors. HD coverage remains
+At this first-proof commit the art source manifest contained zero frames,
+appearances, clips or portraits. The later `64e7963` portrait revision is accepted
+separately in the [portrait review](portrait-review.md). It still supplies no
+registered body frames or clips. `check:assets` does not validate the three proof
+images as renderable actors. HD coverage remains
 0/19 actor appearances and the required animation matrix remains unmet.
 
 ## Next proof revision
 
 1. Submit an Aqualia layout proof using the actual 1920×1080 camera coverage,
    64-pixel grid, orthographic feet/elevation projection and a 96×144 player
-   silhouette. Include traversable roads, service points and entrances. Keep
+   silhouette. Use seed 42's existing Aqualia footprint as the placement reference;
+   include traversable roads, service points and entrances. Keep
    bridges on the existing single walk-surface model; show explicit ramps where
    elevation changes. Preserve the canal palette without introducing a horizon
    or traversable floors beneath the bridge.
@@ -45,5 +48,5 @@ not validate the three new proof images as renderable actors. HD coverage remain
    dimensions and distinguish structural validation from the HD completion gate.
 
 The first proof round establishes direction. Hold bulk animation production until
-the revised camera, registration and anatomy proof is reviewed. No source images
-were resized, cut out, relabeled as HD or merged into runtime by engineering.
+the revised camera, registration and anatomy proof is reviewed. Engineering has
+not resized, cut out or relabeled these proof sheets as HD runtime actors.
