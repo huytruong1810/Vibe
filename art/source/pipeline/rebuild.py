@@ -34,6 +34,11 @@ from art.source.generators.actors.breathing import (
     generate_humanoid_breathing_frames,
     generate_rivallie_breathing_frames,
 )
+from art.source.generators.actors.mesh_rig import (
+    build_player_3d_mesh,
+    build_rivallie_3d_mesh,
+    render_actor_8way,
+)
 from art.source.generators.environment.terrain import (
     render_ground_grass, render_ground_dirt, render_ground_sand, render_ground_freshwater,
     render_shore_freshwater_mask, render_cliff_grass, render_ramp_grass
@@ -136,31 +141,20 @@ def main():
             out_path.parent.mkdir(parents=True, exist_ok=True)
             out_path.write_bytes(img_bytes)
 
-    # 1. Process Player Aqualia Poses (all 8 facings)
+    # 1. Process Player Aqualia Poses via 3D Geometric Mesh Rig (100% Volume Locked, All 8 Facings)
+    p_pts, p_cols, p_norms = build_player_3d_mesh()
+    p_rendered_8way = render_actor_8way(
+        points=p_pts,
+        colors=p_cols,
+        normals=p_norms,
+        target_canvas=(96, 144),
+        ground_anchor=(48, 132),
+        scale=1.06,
+        tilt_x_deg=18.0,
+        outline_dark=(24, 28, 38, 255)
+    )
     player_frames = []
-    player_facings = [
-        ("s", cutouts_dir / "player_0.png", False),
-        ("se", cutouts_dir / "player_1.png", False),
-        ("e", cutouts_dir / "player_2.png", False),
-        ("ne", cutouts_dir / "player_ne.png", False),
-        ("n", cutouts_dir / "player_3.png", False),
-        ("nw", cutouts_dir / "player_nw.png", False),
-        ("w", cutouts_dir / "player_2.png", True),    # horizontal flip of E
-        ("sw", cutouts_dir / "player_1.png", True),   # horizontal flip of SE
-    ]
-    for facing, cutout_path, flip in player_facings:
-        if not cutout_path.is_file():
-            raise FileNotFoundError(f"Missing master cutout: {cutout_path}")
-        cutout = Image.open(cutout_path)
-        if flip:
-            cutout = cutout.transpose(Image.FLIP_LEFT_RIGHT)
-        registered = register_actor_on_canvas(
-            cutout=cutout,
-            target_canvas=(96, 144),
-            ground_anchor=(48, 132),
-            target_height=116,
-            max_width=88
-        )
+    for facing, registered in p_rendered_8way:
         breathing_frames = generate_humanoid_breathing_frames(
             base_frame=registered,
             target_canvas=(96, 144),
@@ -172,31 +166,20 @@ def main():
             process_asset(frame_img, out_file, (48, 132))
         player_frames.append((facing, registered))
 
-    # 2. Process Rivallie Otter Drake Poses (all 8 facings)
+    # 2. Process Rivallie Otter Drake Poses via 3D Geometric Mesh Rig (100% Volume Locked, All 8 Facings)
+    r_pts, r_cols, r_norms = build_rivallie_3d_mesh()
+    r_rendered_8way = render_actor_8way(
+        points=r_pts,
+        colors=r_cols,
+        normals=r_norms,
+        target_canvas=(96, 96),
+        ground_anchor=(48, 86),
+        scale=1.22,
+        tilt_x_deg=22.0,
+        outline_dark=(12, 24, 40, 255)
+    )
     rivallie_frames = []
-    rivallie_facings = [
-        ("s", cutouts_dir / "rivallie_0.png", False),
-        ("se", cutouts_dir / "rivallie_1.png", False),
-        ("e", cutouts_dir / "rivallie_2.png", False),
-        ("ne", cutouts_dir / "rivallie_ne.png", False),
-        ("n", cutouts_dir / "rivallie_3.png", False),
-        ("nw", cutouts_dir / "rivallie_nw.png", False),
-        ("w", cutouts_dir / "rivallie_2.png", True),    # horizontal flip of E
-        ("sw", cutouts_dir / "rivallie_1.png", True),   # horizontal flip of SE
-    ]
-    for facing, cutout_path, flip in rivallie_facings:
-        if not cutout_path.is_file():
-            raise FileNotFoundError(f"Missing master cutout: {cutout_path}")
-        cutout = Image.open(cutout_path)
-        if flip:
-            cutout = cutout.transpose(Image.FLIP_LEFT_RIGHT)
-        registered = register_actor_on_canvas(
-            cutout=cutout,
-            target_canvas=(96, 96),
-            ground_anchor=(48, 86),
-            target_height=66,
-            max_width=84
-        )
+    for facing, registered in r_rendered_8way:
         breathing_frames = generate_rivallie_breathing_frames(
             base_frame=registered,
             facing=facing,

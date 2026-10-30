@@ -1787,6 +1787,6 @@
     { "appearanceId": "species:marshstalker", "requirement": "recovery/w: 6 authored frames" }
   ],
   "environmentGaps": [],
-  "fullTextureBytes": 4832120,
-  "halfTextureBytes": 1384704
+  "fullTextureBytes": 4147848,
+  "halfTextureBytes": 1255680
 }
