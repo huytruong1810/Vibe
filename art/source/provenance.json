@@ -1,52 +1,52 @@
 {
-  "generatedAt": "2026-10-31T02:23:54.778988+00:00",
+  "generatedAt": "2026-10-31T02:43:56.137696+00:00",
   "pipeline": "Master Art Pipeline Reboot v2 (Stage 1 & 2)",
   "assets": {
     "art/source/exports/player_aqualia/idle_s_0.png": {
-      "sha256": "0d200274a2e5249bd0073f0d257251c9134fab87cba944c63eaaa8429110ee49",
-      "size": 1109,
+      "sha256": "83f8a8a6e0f81b6fedb7377c83e35a9130ca2bcb6b2a93e799b947cd57c20514",
+      "size": 10431,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_se_0.png": {
-      "sha256": "c4f3ecb308623857ed9fbaed1952a98ba093e32f1cfdd485c2fde5eaf0ff10bf",
-      "size": 1065,
+      "sha256": "7dbe17e8d6d6d25b55ae722add1d92ee26150556a42106479fc68eeeba9c2cca",
+      "size": 10023,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_e_0.png": {
-      "sha256": "33cfa81af65a737ac674ac4b6e530a11cb4eee5c01b60b35bb1fd8449a050ed4",
-      "size": 888,
+      "sha256": "a57ce815d2c3bb04faec9af673d86e3f67fc2c8ad219812be95d929b8c8a8b53",
+      "size": 7589,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_n_0.png": {
-      "sha256": "89ed8f538402687c4d55fed0381c030d467e5da044080ae4d860dce89a5575e0",
-      "size": 982,
+      "sha256": "57617e8e21d1d418aad8b9f317eb5cb9866e7e5ea61a7568d7ae728b84badf55",
+      "size": 10328,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/rivallie/idle_s_0.png": {
-      "sha256": "92eeee998a1f9ce30720e002b79d09f1b39e5094ab7993386a55655f13058e65",
-      "size": 807,
+      "sha256": "aa166d5966931fade459fd78af53aaefdf9c946390473909e9f3af0ef6168ad7",
+      "size": 6002,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_se_0.png": {
-      "sha256": "6eb2b7895ff152d516e44d8b44ab58815299b4322dc9833cc1b22ec1af147cc5",
-      "size": 973,
+      "sha256": "e82d689f6cc8440837e7db3eda54b3556d615a123dcd930ee0d8822f27e0e635",
+      "size": 9608,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_e_0.png": {
-      "sha256": "00fd710524759f5b4a2612cfa5f026378c4b3a01617077a1d33d68bbecf46529",
-      "size": 1016,
+      "sha256": "8e166db87e21b1dd163c5c64ac903320c6594edee4b4010ec15c1e12d444965f",
+      "size": 9062,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_n_0.png": {
-      "sha256": "e5bcf051efb37efbf97bcd2761ba327f9ad540c7ac09f9a2822ad0b6742f3781",
-      "size": 776,
+      "sha256": "96b81e340b9ba01067ec2be726609375a722189f83127420cad4cd5f8a594305",
+      "size": 4411,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
@@ -171,38 +171,38 @@
       "anchor": [32, 32]
     },
     "art/source/exports/environment/tree_oak.png": {
-      "sha256": "cff7721082d6d7ff213e14fbb5d95c0b1116e1fa9a78c5f92f6d10c788890cc0",
-      "size": 920,
+      "sha256": "80c7bd33a5619db27ed708a823760c0551e303d2adf65187e0a2017aa235425d",
+      "size": 3012,
       "dimensions": [128, 160],
       "anchor": [64, 120]
     },
     "art/source/exports/environment/canopy_oak.png": {
-      "sha256": "ea0796900059428fd20649310f4adcaf9ca58fa44ae9287d4f86ec270813ac6d",
-      "size": 598,
+      "sha256": "7e46c4b3af74b270f187118f1bea4747c8962c9c17269cb52dc0c3dc9bb62e79",
+      "size": 2424,
       "dimensions": [128, 160],
       "anchor": [64, 64]
     },
     "art/source/exports/environment/house_aqualia.png": {
-      "sha256": "072c6ad48fb15e9f87a0873c3465b2e9e6a7ed3ce95b9974755661b46e63414e",
-      "size": 1306,
+      "sha256": "62f8aebf2c9dc0cf85cc0595750c5e996c50a3136b646b1375c3e8ab7a5203fc",
+      "size": 2125,
       "dimensions": [192, 160],
       "anchor": [96, 120]
     },
     "art/source/exports/environment/landmark_well.png": {
-      "sha256": "977c0815d34a75c4a86197c69a11920ebe2011cb746a5e14709b046620fec89a",
-      "size": 510,
+      "sha256": "9f353e7f64d74e21c6244a814e780722a73bbc3477aeada750ee17136d181140",
+      "size": 601,
       "dimensions": [64, 80],
       "anchor": [32, 64]
     },
     "art/source/exports/environment/landmark_waystone.png": {
-      "sha256": "1f2a898ab3bb0a0a40868c76488612a878067d709203d9263d76b0bc4623a6bb",
-      "size": 461,
+      "sha256": "9237bdd2d2955d6fd9f64d0e52ecda3f0818b61e7abe99286f7d31f116fafdc6",
+      "size": 513,
       "dimensions": [64, 96],
       "anchor": [32, 64]
     },
     "art/source/exports/environment/prop_hearth.png": {
-      "sha256": "6f19f0dfdbd97af126aefaff02196fa955bf9dc6b4f2a06a3ee06213a9efed48",
-      "size": 352,
+      "sha256": "dcc4feca2bf9a690627195e59689692e8b08161000f068bd2b84d0390912c20d",
+      "size": 376,
       "dimensions": [64, 64],
       "anchor": [32, 64]
     },
@@ -357,242 +357,242 @@
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_s_1.png": {
-      "sha256": "9f0cffb272a7ca6e4f5e0fe640d90102854bdc039d67622c7adb0d5b5ff0bf52",
-      "size": 1108,
+      "sha256": "ad3470cf1671d21522355716a0cb3d8627102bb17f1d46689c46f6a22f556874",
+      "size": 10431,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_s_2.png": {
-      "sha256": "e5964fdb56d34daac95015b801b92125355e826267f0b7f2b8ca86f2df5fd8ce",
-      "size": 1107,
+      "sha256": "4f1808ed964510a6d97ca5e58c49d820fbd02edb441cb4a785f63ff574665cb5",
+      "size": 10440,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_s_3.png": {
-      "sha256": "e5964fdb56d34daac95015b801b92125355e826267f0b7f2b8ca86f2df5fd8ce",
-      "size": 1107,
+      "sha256": "4f1808ed964510a6d97ca5e58c49d820fbd02edb441cb4a785f63ff574665cb5",
+      "size": 10440,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_s_4.png": {
-      "sha256": "9f0cffb272a7ca6e4f5e0fe640d90102854bdc039d67622c7adb0d5b5ff0bf52",
-      "size": 1108,
+      "sha256": "ad3470cf1671d21522355716a0cb3d8627102bb17f1d46689c46f6a22f556874",
+      "size": 10431,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_s_5.png": {
-      "sha256": "0d200274a2e5249bd0073f0d257251c9134fab87cba944c63eaaa8429110ee49",
-      "size": 1109,
+      "sha256": "83f8a8a6e0f81b6fedb7377c83e35a9130ca2bcb6b2a93e799b947cd57c20514",
+      "size": 10431,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_se_1.png": {
-      "sha256": "1dcd9f1bd923967442baafd8d1948775c8599899bba977ab4cdc8cba37e42126",
-      "size": 1069,
+      "sha256": "622d990732f382fc541fe5a2cc8520cf61e96fc15be47a73fcec0c3b3d4fc353",
+      "size": 10026,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_se_2.png": {
-      "sha256": "5f3f08d174a3b772bbfbf9fbd31c39682af0705fcbbd7f7f908ddd07a190b5ef",
-      "size": 1068,
+      "sha256": "bb67696d148c5f84efd422110389c52a265b3dc92c30919654f2dc4e68d523bd",
+      "size": 10027,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_se_3.png": {
-      "sha256": "5f3f08d174a3b772bbfbf9fbd31c39682af0705fcbbd7f7f908ddd07a190b5ef",
-      "size": 1068,
+      "sha256": "bb67696d148c5f84efd422110389c52a265b3dc92c30919654f2dc4e68d523bd",
+      "size": 10027,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_se_4.png": {
-      "sha256": "1dcd9f1bd923967442baafd8d1948775c8599899bba977ab4cdc8cba37e42126",
-      "size": 1069,
+      "sha256": "622d990732f382fc541fe5a2cc8520cf61e96fc15be47a73fcec0c3b3d4fc353",
+      "size": 10026,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_se_5.png": {
-      "sha256": "c4f3ecb308623857ed9fbaed1952a98ba093e32f1cfdd485c2fde5eaf0ff10bf",
-      "size": 1065,
+      "sha256": "7dbe17e8d6d6d25b55ae722add1d92ee26150556a42106479fc68eeeba9c2cca",
+      "size": 10023,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_e_1.png": {
-      "sha256": "90a51e79d95952c7b9d45615834fcd9b1867137d08e8ea2c2a71bc03322551e9",
-      "size": 887,
+      "sha256": "c304fa5716b6fba6553a7fe84baf172f67d02a5814f57d752be30613063627c7",
+      "size": 7589,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_e_2.png": {
-      "sha256": "4f00d05e9d39c3530d61aa0d111e55784887b3b9808a537147e13ed2fac181b7",
-      "size": 891,
+      "sha256": "2280bbeb354ced1b6094ca2b56189ded477c4c7696ed4563e600b037dc067136",
+      "size": 7594,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_e_3.png": {
-      "sha256": "4f00d05e9d39c3530d61aa0d111e55784887b3b9808a537147e13ed2fac181b7",
-      "size": 891,
+      "sha256": "2280bbeb354ced1b6094ca2b56189ded477c4c7696ed4563e600b037dc067136",
+      "size": 7594,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_e_4.png": {
-      "sha256": "90a51e79d95952c7b9d45615834fcd9b1867137d08e8ea2c2a71bc03322551e9",
-      "size": 887,
+      "sha256": "c304fa5716b6fba6553a7fe84baf172f67d02a5814f57d752be30613063627c7",
+      "size": 7589,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_e_5.png": {
-      "sha256": "33cfa81af65a737ac674ac4b6e530a11cb4eee5c01b60b35bb1fd8449a050ed4",
-      "size": 888,
+      "sha256": "a57ce815d2c3bb04faec9af673d86e3f67fc2c8ad219812be95d929b8c8a8b53",
+      "size": 7589,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_n_1.png": {
-      "sha256": "bc6b9dd272e83acb309579f8378eb6892e3a9e0d59e9781563b9531c18412b82",
-      "size": 984,
+      "sha256": "89ec237bef92e9e2cd62e8e061ae47f3634ee31f9180a6c71106ef7eef61c024",
+      "size": 10332,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_n_2.png": {
-      "sha256": "e678d5eb10bbc495d1ce9a9ed22ac08baf94741c64b61bfd94874f22c209f813",
-      "size": 986,
+      "sha256": "cd0f0249c112f7f5a7727a165fd0d58b6cd88798af707e49c023b5be60bce836",
+      "size": 10331,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_n_3.png": {
-      "sha256": "e678d5eb10bbc495d1ce9a9ed22ac08baf94741c64b61bfd94874f22c209f813",
-      "size": 986,
+      "sha256": "cd0f0249c112f7f5a7727a165fd0d58b6cd88798af707e49c023b5be60bce836",
+      "size": 10331,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_n_4.png": {
-      "sha256": "bc6b9dd272e83acb309579f8378eb6892e3a9e0d59e9781563b9531c18412b82",
-      "size": 984,
+      "sha256": "89ec237bef92e9e2cd62e8e061ae47f3634ee31f9180a6c71106ef7eef61c024",
+      "size": 10332,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_n_5.png": {
-      "sha256": "89ed8f538402687c4d55fed0381c030d467e5da044080ae4d860dce89a5575e0",
-      "size": 982,
+      "sha256": "57617e8e21d1d418aad8b9f317eb5cb9866e7e5ea61a7568d7ae728b84badf55",
+      "size": 10328,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/rivallie/idle_s_1.png": {
-      "sha256": "6b65ded54c4a2e3a9bb0b49fee70d3d1da26128b31cdf7d34204e9e5d00903da",
-      "size": 815,
+      "sha256": "f3a6be6aa05f8ef7f4ac0e04f228d61fa419f6336e46c1d59d196c70c8833f9c",
+      "size": 6011,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_s_2.png": {
-      "sha256": "6b65ded54c4a2e3a9bb0b49fee70d3d1da26128b31cdf7d34204e9e5d00903da",
-      "size": 815,
+      "sha256": "f3a6be6aa05f8ef7f4ac0e04f228d61fa419f6336e46c1d59d196c70c8833f9c",
+      "size": 6011,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_s_3.png": {
-      "sha256": "92eeee998a1f9ce30720e002b79d09f1b39e5094ab7993386a55655f13058e65",
-      "size": 807,
+      "sha256": "aa166d5966931fade459fd78af53aaefdf9c946390473909e9f3af0ef6168ad7",
+      "size": 6002,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_s_4.png": {
-      "sha256": "92eeee998a1f9ce30720e002b79d09f1b39e5094ab7993386a55655f13058e65",
-      "size": 807,
+      "sha256": "aa166d5966931fade459fd78af53aaefdf9c946390473909e9f3af0ef6168ad7",
+      "size": 6002,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_s_5.png": {
-      "sha256": "92eeee998a1f9ce30720e002b79d09f1b39e5094ab7993386a55655f13058e65",
-      "size": 807,
+      "sha256": "aa166d5966931fade459fd78af53aaefdf9c946390473909e9f3af0ef6168ad7",
+      "size": 6002,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_se_1.png": {
-      "sha256": "f7322b98dcad35b98ac6a137d6178bfad214e15feb18cb2b6f89050b59893be1",
-      "size": 976,
+      "sha256": "3d4d5ba635f2a25a91fd658bcb131209379a9085e365cd7c48e7368c56aabc06",
+      "size": 9614,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_se_2.png": {
-      "sha256": "f7322b98dcad35b98ac6a137d6178bfad214e15feb18cb2b6f89050b59893be1",
-      "size": 976,
+      "sha256": "3d4d5ba635f2a25a91fd658bcb131209379a9085e365cd7c48e7368c56aabc06",
+      "size": 9614,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_se_3.png": {
-      "sha256": "6eb2b7895ff152d516e44d8b44ab58815299b4322dc9833cc1b22ec1af147cc5",
-      "size": 973,
+      "sha256": "e82d689f6cc8440837e7db3eda54b3556d615a123dcd930ee0d8822f27e0e635",
+      "size": 9608,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_se_4.png": {
-      "sha256": "6eb2b7895ff152d516e44d8b44ab58815299b4322dc9833cc1b22ec1af147cc5",
-      "size": 973,
+      "sha256": "e82d689f6cc8440837e7db3eda54b3556d615a123dcd930ee0d8822f27e0e635",
+      "size": 9608,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_se_5.png": {
-      "sha256": "6eb2b7895ff152d516e44d8b44ab58815299b4322dc9833cc1b22ec1af147cc5",
-      "size": 973,
+      "sha256": "e82d689f6cc8440837e7db3eda54b3556d615a123dcd930ee0d8822f27e0e635",
+      "size": 9608,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_e_1.png": {
-      "sha256": "9de8bf67f0fb2ea571ce800b188bc9acc9f11ec8768e15af49542ff8dbbe7971",
-      "size": 1014,
+      "sha256": "8bb30084e070b3d5b323de0312e10f328f7d921fbbc65881b60ce41c082934e0",
+      "size": 9065,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_e_2.png": {
-      "sha256": "9de8bf67f0fb2ea571ce800b188bc9acc9f11ec8768e15af49542ff8dbbe7971",
-      "size": 1014,
+      "sha256": "8bb30084e070b3d5b323de0312e10f328f7d921fbbc65881b60ce41c082934e0",
+      "size": 9065,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_e_3.png": {
-      "sha256": "00fd710524759f5b4a2612cfa5f026378c4b3a01617077a1d33d68bbecf46529",
-      "size": 1016,
+      "sha256": "8e166db87e21b1dd163c5c64ac903320c6594edee4b4010ec15c1e12d444965f",
+      "size": 9062,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_e_4.png": {
-      "sha256": "00fd710524759f5b4a2612cfa5f026378c4b3a01617077a1d33d68bbecf46529",
-      "size": 1016,
+      "sha256": "8e166db87e21b1dd163c5c64ac903320c6594edee4b4010ec15c1e12d444965f",
+      "size": 9062,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_e_5.png": {
-      "sha256": "00fd710524759f5b4a2612cfa5f026378c4b3a01617077a1d33d68bbecf46529",
-      "size": 1016,
+      "sha256": "8e166db87e21b1dd163c5c64ac903320c6594edee4b4010ec15c1e12d444965f",
+      "size": 9062,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_n_1.png": {
-      "sha256": "5b8589647fbf073b0ed0c67f3f0db7652a6787b37894c3f04c114099ac69c45d",
-      "size": 779,
+      "sha256": "5d1e130cbed2f242588d069b8d42480366d8f9003587c69187bb3292cf99df6c",
+      "size": 4413,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_n_2.png": {
-      "sha256": "5b8589647fbf073b0ed0c67f3f0db7652a6787b37894c3f04c114099ac69c45d",
-      "size": 779,
+      "sha256": "5d1e130cbed2f242588d069b8d42480366d8f9003587c69187bb3292cf99df6c",
+      "size": 4413,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_n_3.png": {
-      "sha256": "e5bcf051efb37efbf97bcd2761ba327f9ad540c7ac09f9a2822ad0b6742f3781",
-      "size": 776,
+      "sha256": "96b81e340b9ba01067ec2be726609375a722189f83127420cad4cd5f8a594305",
+      "size": 4411,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_n_4.png": {
-      "sha256": "e5bcf051efb37efbf97bcd2761ba327f9ad540c7ac09f9a2822ad0b6742f3781",
-      "size": 776,
+      "sha256": "96b81e340b9ba01067ec2be726609375a722189f83127420cad4cd5f8a594305",
+      "size": 4411,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_n_5.png": {
-      "sha256": "e5bcf051efb37efbf97bcd2761ba327f9ad540c7ac09f9a2822ad0b6742f3781",
-      "size": 776,
+      "sha256": "96b81e340b9ba01067ec2be726609375a722189f83127420cad4cd5f8a594305",
+      "size": 4411,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
@@ -807,290 +807,290 @@
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_sw_0.png": {
-      "sha256": "331c4ee846ebc2fb97a6867a6f5b1a0899b552ea783994c19e88dc8d18941d56",
-      "size": 1123,
+      "sha256": "78f7ae481005531fef73310c1fc035b46a657063f79bbc1a2fb1a21c53b2b388",
+      "size": 9976,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_sw_1.png": {
-      "sha256": "ae1e5cd88edf3fcf3650b57276ee53060560221751add70e866896d18dc89080",
-      "size": 1125,
+      "sha256": "3e4e3d332df1f3f2a82c429e51af548c1fa074e3986ce2663f6195849d8d6a12",
+      "size": 9979,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_sw_2.png": {
-      "sha256": "d46c247dd44de86226c52cd3fbb9cd64135807b46e8b858f8f43e21656b21d1b",
-      "size": 1125,
+      "sha256": "953e20669fecf651945423a1bb576f0c72cfbd4a1a25829d0180ccb2de331d51",
+      "size": 9985,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_sw_3.png": {
-      "sha256": "d46c247dd44de86226c52cd3fbb9cd64135807b46e8b858f8f43e21656b21d1b",
-      "size": 1125,
+      "sha256": "953e20669fecf651945423a1bb576f0c72cfbd4a1a25829d0180ccb2de331d51",
+      "size": 9985,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_sw_4.png": {
-      "sha256": "ae1e5cd88edf3fcf3650b57276ee53060560221751add70e866896d18dc89080",
-      "size": 1125,
+      "sha256": "3e4e3d332df1f3f2a82c429e51af548c1fa074e3986ce2663f6195849d8d6a12",
+      "size": 9979,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_sw_5.png": {
-      "sha256": "331c4ee846ebc2fb97a6867a6f5b1a0899b552ea783994c19e88dc8d18941d56",
-      "size": 1123,
+      "sha256": "78f7ae481005531fef73310c1fc035b46a657063f79bbc1a2fb1a21c53b2b388",
+      "size": 9976,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_w_0.png": {
-      "sha256": "94c756a506524168f55e7ddc3cabdaa7eedab07d4b4475d583fa241c211e4bd3",
-      "size": 900,
+      "sha256": "6bf23e5d15af9155cea5161d4046b4d3970282ee8b59ea8e808e68d45181725e",
+      "size": 7584,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_w_1.png": {
-      "sha256": "c6558e084d8c61eb3e9af184bfb1185f6939837a25001cb097e2d776d3234d23",
-      "size": 897,
+      "sha256": "24f9643b5556a262388bb8fc9505805ab1a17daba3444d7d333e77fa37aba663",
+      "size": 7587,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_w_2.png": {
-      "sha256": "f984b786046e8ba8a7355e81ebda036b99f81cee719f32e324ca1e221f036328",
-      "size": 899,
+      "sha256": "07f464b350ca26cb17c8f01863a8e9337527a22c350a3e9bc9ed030f3f8f2456",
+      "size": 7592,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_w_3.png": {
-      "sha256": "f984b786046e8ba8a7355e81ebda036b99f81cee719f32e324ca1e221f036328",
-      "size": 899,
+      "sha256": "07f464b350ca26cb17c8f01863a8e9337527a22c350a3e9bc9ed030f3f8f2456",
+      "size": 7592,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_w_4.png": {
-      "sha256": "c6558e084d8c61eb3e9af184bfb1185f6939837a25001cb097e2d776d3234d23",
-      "size": 897,
+      "sha256": "24f9643b5556a262388bb8fc9505805ab1a17daba3444d7d333e77fa37aba663",
+      "size": 7587,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_w_5.png": {
-      "sha256": "94c756a506524168f55e7ddc3cabdaa7eedab07d4b4475d583fa241c211e4bd3",
-      "size": 900,
+      "sha256": "6bf23e5d15af9155cea5161d4046b4d3970282ee8b59ea8e808e68d45181725e",
+      "size": 7584,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/rivallie/idle_sw_0.png": {
-      "sha256": "938c85003c81ac36af8cc7a4f74f224c47c80ed6f8317e6a19c1df4ad5640129",
-      "size": 945,
+      "sha256": "734efbb448eae3c79621d12aeab85612991d58e2eb978cb7a9cf94683099ac86",
+      "size": 9567,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_sw_1.png": {
-      "sha256": "ab4d69b033db9416263d350b9660ae22d04272aea53b0d12f7e1046c4976cea9",
-      "size": 947,
+      "sha256": "cfcfdb2563c363920400ec0c8b5b155082acf53b22aec124dcca4c421a177631",
+      "size": 9567,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_sw_2.png": {
-      "sha256": "ab4d69b033db9416263d350b9660ae22d04272aea53b0d12f7e1046c4976cea9",
-      "size": 947,
+      "sha256": "cfcfdb2563c363920400ec0c8b5b155082acf53b22aec124dcca4c421a177631",
+      "size": 9567,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_sw_3.png": {
-      "sha256": "938c85003c81ac36af8cc7a4f74f224c47c80ed6f8317e6a19c1df4ad5640129",
-      "size": 945,
+      "sha256": "734efbb448eae3c79621d12aeab85612991d58e2eb978cb7a9cf94683099ac86",
+      "size": 9567,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_sw_4.png": {
-      "sha256": "938c85003c81ac36af8cc7a4f74f224c47c80ed6f8317e6a19c1df4ad5640129",
-      "size": 945,
+      "sha256": "734efbb448eae3c79621d12aeab85612991d58e2eb978cb7a9cf94683099ac86",
+      "size": 9567,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_sw_5.png": {
-      "sha256": "938c85003c81ac36af8cc7a4f74f224c47c80ed6f8317e6a19c1df4ad5640129",
-      "size": 945,
+      "sha256": "734efbb448eae3c79621d12aeab85612991d58e2eb978cb7a9cf94683099ac86",
+      "size": 9567,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_w_0.png": {
-      "sha256": "ffeb0baa1d202418405305c3c1879eb803a2a9684efd573277ebc216890cca1f",
-      "size": 993,
+      "sha256": "82f0fbab037bc734afa7e2d66d550364213c64227f27d44f8848164d6b422927",
+      "size": 9098,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_w_1.png": {
-      "sha256": "fa7b66d47a37fbf67ff7a2b6f84a238e741e105552af2a32abcd957878f782e0",
-      "size": 993,
+      "sha256": "b3c73e24c6bd3174bc0563df622b6a46307c56a93b0ac58dd5814110e089ea8e",
+      "size": 9099,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_w_2.png": {
-      "sha256": "fa7b66d47a37fbf67ff7a2b6f84a238e741e105552af2a32abcd957878f782e0",
-      "size": 993,
+      "sha256": "b3c73e24c6bd3174bc0563df622b6a46307c56a93b0ac58dd5814110e089ea8e",
+      "size": 9099,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_w_3.png": {
-      "sha256": "ffeb0baa1d202418405305c3c1879eb803a2a9684efd573277ebc216890cca1f",
-      "size": 993,
+      "sha256": "82f0fbab037bc734afa7e2d66d550364213c64227f27d44f8848164d6b422927",
+      "size": 9098,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_w_4.png": {
-      "sha256": "ffeb0baa1d202418405305c3c1879eb803a2a9684efd573277ebc216890cca1f",
-      "size": 993,
+      "sha256": "82f0fbab037bc734afa7e2d66d550364213c64227f27d44f8848164d6b422927",
+      "size": 9098,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_w_5.png": {
-      "sha256": "ffeb0baa1d202418405305c3c1879eb803a2a9684efd573277ebc216890cca1f",
-      "size": 993,
+      "sha256": "82f0fbab037bc734afa7e2d66d550364213c64227f27d44f8848164d6b422927",
+      "size": 9098,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/player_aqualia/idle_ne_0.png": {
-      "sha256": "e1ecac72875562a555a0419158d794c6f0f6ccf862b382d2a420ba78a7ea4c94",
-      "size": 1006,
+      "sha256": "43a9d1319b2dbbaa206a749964fe9e592fbb054c97d69d18a8c319973438e55a",
+      "size": 11434,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_ne_1.png": {
-      "sha256": "d9b3b22631e3681d6238c95dc968cb2103883878b8f4a958228d088304f646d8",
-      "size": 1007,
+      "sha256": "bcc206a4bb3f4febd7d82e564967b837e8d195e2435ea3d338e0e2931689cec5",
+      "size": 11437,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_ne_2.png": {
-      "sha256": "bfd4c68d82957ac0a21672e7ab79e076f518668105428a9a3880c74c21cde896",
-      "size": 1009,
+      "sha256": "f321221ac6468cc5078e8d0ceb6d5b2829fdf4b3d473efee49e2a912917f3759",
+      "size": 11441,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_ne_3.png": {
-      "sha256": "bfd4c68d82957ac0a21672e7ab79e076f518668105428a9a3880c74c21cde896",
-      "size": 1009,
+      "sha256": "f321221ac6468cc5078e8d0ceb6d5b2829fdf4b3d473efee49e2a912917f3759",
+      "size": 11441,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_ne_4.png": {
-      "sha256": "d9b3b22631e3681d6238c95dc968cb2103883878b8f4a958228d088304f646d8",
-      "size": 1007,
+      "sha256": "bcc206a4bb3f4febd7d82e564967b837e8d195e2435ea3d338e0e2931689cec5",
+      "size": 11437,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_ne_5.png": {
-      "sha256": "e1ecac72875562a555a0419158d794c6f0f6ccf862b382d2a420ba78a7ea4c94",
-      "size": 1006,
+      "sha256": "43a9d1319b2dbbaa206a749964fe9e592fbb054c97d69d18a8c319973438e55a",
+      "size": 11434,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_nw_0.png": {
-      "sha256": "7cccdd2c0b135a6d7838272d39423ada0a2f154aed7b295b9fdffe53f4bad0d5",
-      "size": 973,
+      "sha256": "d42281fe33de4c4aa9871ed17bda3d2e2c0a921706d239f6a9f1c8d9f09f6f4e",
+      "size": 11432,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_nw_1.png": {
-      "sha256": "b3b28336d56646acfc07435af118dfc43610c4fdca609a274fbbbde7b4d21856",
-      "size": 974,
+      "sha256": "22c889dc2ecd8a6b8e3701115e24becfb4bcf75094fbf722068a0e7aceebddad",
+      "size": 11436,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_nw_2.png": {
-      "sha256": "64aacce004ddc126c19cc8829559efccfa722f9cab20b0f81edefbaecc54af06",
-      "size": 978,
+      "sha256": "8fb667926346f4fc811a45128d03e6e4491ca3c83f8346d048127f0c9c6599fa",
+      "size": 11445,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_nw_3.png": {
-      "sha256": "64aacce004ddc126c19cc8829559efccfa722f9cab20b0f81edefbaecc54af06",
-      "size": 978,
+      "sha256": "8fb667926346f4fc811a45128d03e6e4491ca3c83f8346d048127f0c9c6599fa",
+      "size": 11445,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_nw_4.png": {
-      "sha256": "b3b28336d56646acfc07435af118dfc43610c4fdca609a274fbbbde7b4d21856",
-      "size": 974,
+      "sha256": "22c889dc2ecd8a6b8e3701115e24becfb4bcf75094fbf722068a0e7aceebddad",
+      "size": 11436,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_nw_5.png": {
-      "sha256": "7cccdd2c0b135a6d7838272d39423ada0a2f154aed7b295b9fdffe53f4bad0d5",
-      "size": 973,
+      "sha256": "d42281fe33de4c4aa9871ed17bda3d2e2c0a921706d239f6a9f1c8d9f09f6f4e",
+      "size": 11432,
       "dimensions": [96, 144],
       "anchor": [48, 132]
     },
     "art/source/exports/rivallie/idle_ne_0.png": {
-      "sha256": "d0e3d364033f481bdbe9316c94d29cdbb665d26fcd183498d695d95ffa7fe4dc",
-      "size": 1066,
+      "sha256": "8bf7493659c95a301ebb5cb4582c484363f427cf8cf5d02e728a0c41075395ea",
+      "size": 5706,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_ne_1.png": {
-      "sha256": "45dd28c480555c068a951b8996ead2daf61274cba3abcd42daad42864e27050d",
-      "size": 1068,
+      "sha256": "8aed9bbced00350caabac09f69a3e1a313d8113fa2bc4d16a77d0daf2ed63dab",
+      "size": 5714,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_ne_2.png": {
-      "sha256": "45dd28c480555c068a951b8996ead2daf61274cba3abcd42daad42864e27050d",
-      "size": 1068,
+      "sha256": "8aed9bbced00350caabac09f69a3e1a313d8113fa2bc4d16a77d0daf2ed63dab",
+      "size": 5714,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_ne_3.png": {
-      "sha256": "d0e3d364033f481bdbe9316c94d29cdbb665d26fcd183498d695d95ffa7fe4dc",
-      "size": 1066,
+      "sha256": "8bf7493659c95a301ebb5cb4582c484363f427cf8cf5d02e728a0c41075395ea",
+      "size": 5706,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_ne_4.png": {
-      "sha256": "d0e3d364033f481bdbe9316c94d29cdbb665d26fcd183498d695d95ffa7fe4dc",
-      "size": 1066,
+      "sha256": "8bf7493659c95a301ebb5cb4582c484363f427cf8cf5d02e728a0c41075395ea",
+      "size": 5706,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_ne_5.png": {
-      "sha256": "d0e3d364033f481bdbe9316c94d29cdbb665d26fcd183498d695d95ffa7fe4dc",
-      "size": 1066,
+      "sha256": "8bf7493659c95a301ebb5cb4582c484363f427cf8cf5d02e728a0c41075395ea",
+      "size": 5706,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_nw_0.png": {
-      "sha256": "9a88bd3b2bf1ec2c4ff091a46d47e84a2da8e49f4fd359b0e776bec1589663b2",
-      "size": 1034,
+      "sha256": "8ab201db368b7114151f6bd2c258d08bced9815b84e03eb496400b144fe03403",
+      "size": 5759,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_nw_1.png": {
-      "sha256": "6e8bb3b9c191b783ceb9b405af0ec8ef0a924f3379d824c3383dd30c674780a3",
-      "size": 1037,
+      "sha256": "640559b218dd7a53a2b3070f76e2e43782d037133973e4a3a14bf214cb4ea2eb",
+      "size": 5763,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_nw_2.png": {
-      "sha256": "6e8bb3b9c191b783ceb9b405af0ec8ef0a924f3379d824c3383dd30c674780a3",
-      "size": 1037,
+      "sha256": "640559b218dd7a53a2b3070f76e2e43782d037133973e4a3a14bf214cb4ea2eb",
+      "size": 5763,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_nw_3.png": {
-      "sha256": "9a88bd3b2bf1ec2c4ff091a46d47e84a2da8e49f4fd359b0e776bec1589663b2",
-      "size": 1034,
+      "sha256": "8ab201db368b7114151f6bd2c258d08bced9815b84e03eb496400b144fe03403",
+      "size": 5759,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_nw_4.png": {
-      "sha256": "9a88bd3b2bf1ec2c4ff091a46d47e84a2da8e49f4fd359b0e776bec1589663b2",
-      "size": 1034,
+      "sha256": "8ab201db368b7114151f6bd2c258d08bced9815b84e03eb496400b144fe03403",
+      "size": 5759,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_nw_5.png": {
-      "sha256": "9a88bd3b2bf1ec2c4ff091a46d47e84a2da8e49f4fd359b0e776bec1589663b2",
-      "size": 1034,
+      "sha256": "8ab201db368b7114151f6bd2c258d08bced9815b84e03eb496400b144fe03403",
+      "size": 5759,
       "dimensions": [96, 96],
       "anchor": [48, 86]
     }

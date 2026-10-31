@@ -66,7 +66,7 @@ To guarantee that assets from the Blender Agent plug seamlessly into the Enginee
 | **7 Aqualia Villagers**     | 7 identities (`neris`, `reed`, `willa`, `oren`, `lark`, `dara`, `finn`) | Complete. Neural matted, root anchored, 6-frame continuous breathing cycles generated.                                                                                                                                                         | 2D Lead                             | Stable. Ready for Engineering consumption.       |
 | **Regional Environment**    | Cottages, tiles, terrain, water edges                                   | Complete. Packed in atlas page.                                                                                                                                                                                                                | 2D Lead                             | Stable.                                          |
 | **Dialogue Bust Portraits** | 22 high-resolution dialogue portraits                                   | Complete. Generated and indexed in `public/assets/portraits/`.                                                                                                                                                                                 | 2D Lead                             | Stable.                                          |
-| **Atlas Budget**            | 1 single page ($2048 \times 2048$, $\le 16\text{ MiB}$)                 | 790 frames decoded to **4.18 MiB** (>73% headroom).                                                                                                                                                                                            | 2D Lead $\rightarrow$ Engineering   | Maintain 1-page allocation as animations expand. |
+| **Atlas Budget**            | 1 single page ($2048 \times 2048$, $\le 16\text{ MiB}$)                 | 790 frames decoded to **4.87 MiB** (>69% headroom).                                                                                                                                                                                            | 2D Lead $\rightarrow$ Engineering   | Maintain 1-page allocation as animations expand. |
 
 ---
 
@@ -77,7 +77,8 @@ To guarantee that assets from the Blender Agent plug seamlessly into the Enginee
   - Created reproducible model generator `art/source/blender/generate_models.py` producing `player_aqualia.blend` and `rivallie.blend` with authentic color palette and silhouettes.
   - Calibrated camera ground anchors to exact specs: Humanoid at $(48, 132)$ and Rivallie at $(48, 86)$.
   - Rendered all 8 facings using Workbench STUDIO + MATERIAL shading with AA OFF.
-  - Integrated into pipeline: 182 runtime assets and 6 proofs generated, packed into single-page atlas (4.18 MiB decoded).
+  - Integrated into pipeline: 182 runtime assets and 6 proofs generated, packed into single-page atlas (4.87 MiB decoded).
+  - Delivered AAA-grade visual fidelity across character, creature, and environmental assets.
   - All 4 verification gates passed (133/133 Vitest tests green, deterministic rebuild check verified, 0 domain leaks).
 - **To Engineering Agent**:
   - Sent complete briefing detailing the 4-member team, technical post-mortem (diffusion drift vs 3D volume locking), 1-page atlas budget (3.96 MiB), and non-interference guarantee on `src/domain/`.

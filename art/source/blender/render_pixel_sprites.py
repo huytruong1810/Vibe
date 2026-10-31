@@ -53,6 +53,12 @@ def setup_render_engine(width: int, height: int):
     scene.render.engine = 'BLENDER_WORKBENCH'
     scene.display.shading.light = 'STUDIO'
     scene.display.shading.color_type = 'MATERIAL'
+    scene.display.shading.show_cavity = True
+    scene.display.shading.cavity_type = 'BOTH'
+    scene.display.shading.curvature_ridge_factor = 2.0
+    scene.display.shading.curvature_valley_factor = 2.0
+    scene.display.shading.show_object_outline = True
+    scene.display.shading.object_outline_color = (0.09, 0.11, 0.15)
     scene.display.render_aa = 'OFF'  # Disable anti-aliasing for raw pixel art edges
 
 def setup_camera(target_canvas=(96, 144), pitch_deg=20.0, ortho_scale=2.2):

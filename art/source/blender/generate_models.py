@@ -1,7 +1,8 @@
 """
 Procedural 3D Mesh Generator for Hearthwild Blender Models.
-Constructs low-poly stylized models for Player Aqualia and Rivallie
-with exact zero-drift ground anchors, clean JRPG materials, and proper camera framing.
+Constructs high-detail low-poly stylized models for Player Aqualia and Rivallie
+with authentic JRPG pixel-art silhouettes, secondary clothing details, crest fins,
+and exact zero-drift ground anchors.
 """
 
 from pathlib import Path
@@ -23,7 +24,7 @@ def create_material(name: str, r: float, g: float, b: float, a: float = 1.0) -> 
     if bsdf:
         bsdf.inputs["Base Color"].default_value = (r, g, b, a)
         if "Roughness" in bsdf.inputs:
-            bsdf.inputs["Roughness"].default_value = 0.8
+            bsdf.inputs["Roughness"].default_value = 0.7
     return mat
 
 def hex_to_rgb(hex_str: str) -> tuple[float, float, float]:
@@ -94,16 +95,17 @@ def build_player_model():
     c_tunic = create_material("M_Tunic", *hex_to_rgb("ede4d1"))
     c_pants = create_material("M_Pants", *hex_to_rgb("2b3342"))
     c_boots = create_material("M_Boots", *hex_to_rgb("4a2e1b"))
-    c_belt = create_material("M_Belt", *hex_to_rgb("3d2012"))
+    c_leather = create_material("M_Leather", *hex_to_rgb("3d2012"))
     c_gold = create_material("M_Gold", *hex_to_rgb("e8be48"))
     c_shell = create_material("M_Shell", *hex_to_rgb("ffffff"))
     c_eye_dark = create_material("M_EyeDark", *hex_to_rgb("1b2d2f"))
     c_eye_teal = create_material("M_EyeTeal", *hex_to_rgb("2da89f"))
+    c_eye_white = create_material("M_EyeWhite", *hex_to_rgb("ffffff"))
 
     materials = [
         c_skin, c_hair, c_hair_hi, c_poncho, c_poncho_trim,
-        c_tunic, c_pants, c_boots, c_belt, c_gold, c_shell,
-        c_eye_dark, c_eye_teal
+        c_tunic, c_pants, c_boots, c_leather, c_gold, c_shell,
+        c_eye_dark, c_eye_teal, c_eye_white
     ]
     mat_map = {m.name: idx for idx, m in enumerate(materials)}
 
@@ -113,30 +115,39 @@ def build_player_model():
     # Exact base Z calibrated for lowest pixel y=132
     z_base = -0.847
 
-    # 1. Boots (left & right)
+    # 1. Boots with Folded Leather Cuffs & Gold Buckles
     for side in [-1, 1]:
         bx = side * 0.14
-        # Sole & foot
-        add_box(bm, (bx, -0.02, z_base + 0.10), (0.14, 0.22, 0.20), mat_map["M_Boots"])
+        # Sole rim
+        add_box(bm, (bx, -0.02, z_base + 0.03), (0.15, 0.23, 0.06), mat_map["M_Leather"])
+        # Boot foot
+        add_box(bm, (bx, -0.02, z_base + 0.11), (0.14, 0.21, 0.12), mat_map["M_Boots"])
         # Boot shaft
-        add_box(bm, (bx, -0.01, z_base + 0.26), (0.15, 0.18, 0.18), mat_map["M_Boots"])
+        add_box(bm, (bx, -0.01, z_base + 0.24), (0.14, 0.17, 0.16), mat_map["M_Boots"])
+        # Folded cuff
+        add_box(bm, (bx, -0.01, z_base + 0.33), (0.16, 0.19, 0.06), mat_map["M_Leather"])
+        # Brass boot buckle
+        add_box(bm, (bx, -0.11, z_base + 0.24), (0.04, 0.02, 0.04), mat_map["M_Gold"])
 
     # 2. Pants / Legs
     for side in [-1, 1]:
         lx = side * 0.13
-        add_box(bm, (lx, 0.0, z_base + 0.44), (0.13, 0.16, 0.22), mat_map["M_Pants"])
+        add_box(bm, (lx, 0.0, z_base + 0.45), (0.13, 0.16, 0.20), mat_map["M_Pants"])
 
     # 3. Tunic / Pelvis / Lower Torso
     add_box(bm, (0.0, 0.0, z_base + 0.62), (0.30, 0.22, 0.16), mat_map["M_Tunic"])
-    # Belt
-    add_box(bm, (0.0, 0.0, z_base + 0.70), (0.32, 0.23, 0.07), mat_map["M_Belt"])
+    # Braided Leather Belt
+    add_box(bm, (0.0, 0.0, z_base + 0.70), (0.32, 0.23, 0.07), mat_map["M_Leather"])
     # Belt Buckle (front)
     add_box(bm, (0.0, -0.12, z_base + 0.70), (0.08, 0.02, 0.06), mat_map["M_Gold"])
+    # Side Traveler's Pouch (right hip)
+    add_box(bm, (0.18, 0.02, z_base + 0.64), (0.07, 0.10, 0.09), mat_map["M_Leather"])
+    add_box(bm, (0.18, -0.04, z_base + 0.64), (0.03, 0.02, 0.03), mat_map["M_Gold"])
 
     # 4. Upper Torso & Chest
     add_box(bm, (0.0, 0.0, z_base + 0.86), (0.30, 0.22, 0.26), mat_map["M_Tunic"])
 
-    # 5. Poncho / Shawl
+    # 5. Layered Poncho / Shawl
     add_tapered_box(
         bm,
         bottom_center=(0.0, 0.0, z_base + 0.68),
@@ -145,44 +156,51 @@ def build_player_model():
         top_size=(0.38, 0.26),
         mat_idx=mat_map["M_Poncho"]
     )
-    # Poncho trim hem
+    # Folded Cowl Collar
+    add_box(bm, (0.0, -0.02, z_base + 1.04), (0.34, 0.24, 0.08), mat_map["M_Poncho"])
+    # Poncho Embroidered Hem Trim
     add_box(bm, (0.0, 0.0, z_base + 0.67), (0.50, 0.35, 0.04), mat_map["M_PonchoTrim"])
-    # Gold Clasp / Shell Brooch at chest
-    add_box(bm, (0.0, -0.17, z_base + 0.94), (0.07, 0.03, 0.07), mat_map["M_Gold"])
+    # Golden Shell Brooch on Left Shoulder
+    add_box(bm, (-0.14, -0.13, z_base + 0.98), (0.07, 0.05, 0.07), mat_map["M_Gold"])
+    add_box(bm, (-0.14, -0.15, z_base + 0.98), (0.04, 0.02, 0.04), mat_map["M_Shell"])
 
-    # 6. Arms & Hands
+    # 6. Arms & Sleeves
     for side in [-1, 1]:
         ax = side * 0.26
         add_box(bm, (ax, 0.0, z_base + 0.86), (0.10, 0.14, 0.22), mat_map["M_Poncho"])
         add_box(bm, (ax, -0.01, z_base + 0.68), (0.09, 0.12, 0.18), mat_map["M_Poncho"])
-        add_box(bm, (ax, -0.02, z_base + 0.55), (0.07, 0.09, 0.09), mat_map["M_Skin"])
+        add_box(bm, (ax, -0.01, z_base + 0.60), (0.10, 0.13, 0.04), mat_map["M_Leather"]) # Wrist cuff
+        add_box(bm, (ax, -0.02, z_base + 0.55), (0.07, 0.09, 0.08), mat_map["M_Skin"])
 
     # 7. Neck & Head
     add_box(bm, (0.0, 0.0, z_base + 1.08), (0.12, 0.12, 0.10), mat_map["M_Skin"])
-    # Head base
     add_box(bm, (0.0, -0.02, z_base + 1.28), (0.30, 0.30, 0.32), mat_map["M_Skin"])
 
-    # 8. Face Features (Front facing -Y)
+    # 8. Face Features & Expressive JRPG Eyes (Front -Y)
     add_box(bm, (-0.08, -0.175, z_base + 1.29), (0.06, 0.01, 0.08), mat_map["M_EyeDark"])
     add_box(bm, (0.08, -0.175, z_base + 1.29), (0.06, 0.01, 0.08), mat_map["M_EyeDark"])
     add_box(bm, (-0.08, -0.176, z_base + 1.28), (0.04, 0.01, 0.05), mat_map["M_EyeTeal"])
     add_box(bm, (0.08, -0.176, z_base + 1.28), (0.04, 0.01, 0.05), mat_map["M_EyeTeal"])
+    add_box(bm, (-0.07, -0.177, z_base + 1.30), (0.015, 0.01, 0.02), mat_map["M_EyeWhite"])
+    add_box(bm, (0.09, -0.177, z_base + 1.30), (0.015, 0.01, 0.02), mat_map["M_EyeWhite"])
 
-    # 9. Aqualia Hair
+    # 9. Aqualia Styled Hair & Layered Locks
     # Bangs
     add_box(bm, (0.0, -0.16, z_base + 1.40), (0.32, 0.08, 0.12), mat_map["M_HairHighlight"])
+    # Cowlick / ahoge tuft on top
+    add_box(bm, (0.02, -0.06, z_base + 1.54), (0.06, 0.06, 0.08), mat_map["M_HairHighlight"])
     # Top hair crown
     add_box(bm, (0.0, 0.0, z_base + 1.48), (0.34, 0.34, 0.14), mat_map["M_Hair"])
     # Back hair volume
     add_box(bm, (0.0, 0.14, z_base + 1.24), (0.32, 0.14, 0.38), mat_map["M_Hair"])
-    # Long flowing locks down back
     add_box(bm, (0.0, 0.15, z_base + 0.98), (0.28, 0.12, 0.28), mat_map["M_Hair"])
-    # Side hair locks
+    # Side hair locks framing face
     add_box(bm, (-0.16, -0.04, z_base + 1.22), (0.08, 0.28, 0.32), mat_map["M_Hair"])
     add_box(bm, (0.16, -0.04, z_base + 1.22), (0.08, 0.28, 0.32), mat_map["M_Hair"])
 
-    # 10. White Shell Hairpin on right side
+    # 10. Conch Shell Hairpin on right side
     add_box(bm, (0.19, -0.12, z_base + 1.38), (0.05, 0.06, 0.06), mat_map["M_Shell"])
+    add_box(bm, (0.20, -0.10, z_base + 1.39), (0.02, 0.04, 0.02), mat_map["M_Gold"])
 
     bm.to_mesh(mesh)
     bm.free()
@@ -207,11 +225,12 @@ def build_rivallie_model():
     c_aqua = create_material("M_RivallieAqua", *hex_to_rgb("4ecdc4"))
     c_eye_gold = create_material("M_RivallieEyeGold", *hex_to_rgb("f5b82e"))
     c_eye_dark = create_material("M_RivallieEyeDark", *hex_to_rgb("162429"))
+    c_eye_glint = create_material("M_RivallieGlint", *hex_to_rgb("ffffff"))
     c_nose = create_material("M_RivallieNose", *hex_to_rgb("162b28"))
 
     materials = [
         c_teal, c_teal_shade, c_cream, c_aqua,
-        c_eye_gold, c_eye_dark, c_nose
+        c_eye_gold, c_eye_dark, c_eye_glint, c_nose
     ]
     mat_map = {m.name: idx for idx, m in enumerate(materials)}
 
@@ -221,7 +240,7 @@ def build_rivallie_model():
     # Exact base Z calibrated for lowest pixel y=86
     z_base = -0.556
 
-    # 1. Four Webbed Paws
+    # 1. Four Webbed Paws with Soft Claws
     paws = [
         (-0.16, -0.18, "FL"),
         (0.16, -0.18, "FR"),
@@ -229,33 +248,53 @@ def build_rivallie_model():
         (0.16, 0.16, "HR"),
     ]
     for px, py, name in paws:
+        # Foot pad & webbing
         add_box(bm, (px, py, z_base + 0.04), (0.10, 0.12, 0.08), mat_map["M_RivallieDark"])
+        # Webbed toes / claws
+        add_box(bm, (px, py - 0.05, z_base + 0.02), (0.08, 0.04, 0.04), mat_map["M_RivallieDark"])
+        # Leg
         add_box(bm, (px, py, z_base + 0.14), (0.09, 0.10, 0.14), mat_map["M_RivallieTeal"])
 
-    # 2. Main Torso
+    # 2. Main Hydrodynamic Otter Torso
+    # Cream Underbelly Countershading
     add_box(bm, (0.0, 0.0, z_base + 0.22), (0.28, 0.44, 0.10), mat_map["M_RivallieCream"])
+    # Teal Flanks & Back
     add_box(bm, (0.0, 0.0, z_base + 0.32), (0.30, 0.46, 0.14), mat_map["M_RivallieTeal"])
-    add_box(bm, (0.0, 0.0, z_base + 0.41), (0.06, 0.38, 0.06), mat_map["M_RivallieAqua"])
+    # Dorsal Spinal Fin Ridge
+    add_box(bm, (0.0, 0.0, z_base + 0.41), (0.05, 0.40, 0.07), mat_map["M_RivallieAqua"])
 
-    # 3. Head & Snout (Front -Y)
+    # 3. Head & Cute Otter Muzzle (Front -Y)
     add_box(bm, (0.0, -0.28, z_base + 0.36), (0.24, 0.20, 0.18), mat_map["M_RivallieTeal"])
+    # Cheek fur tufts
+    add_box(bm, (-0.14, -0.27, z_base + 0.35), (0.06, 0.10, 0.08), mat_map["M_RivallieCream"])
+    add_box(bm, (0.14, -0.27, z_base + 0.35), (0.06, 0.10, 0.08), mat_map["M_RivallieCream"])
+    # Rounded cream snout & whisker pads
     add_box(bm, (0.0, -0.38, z_base + 0.31), (0.16, 0.14, 0.12), mat_map["M_RivallieCream"])
+    # Black button nose
     add_box(bm, (0.0, -0.455, z_base + 0.34), (0.05, 0.03, 0.04), mat_map["M_RivallieNose"])
 
-    # Eyes
+    # Golden Drake Eyes with Slit Pupil & Glint
     add_box(bm, (-0.11, -0.32, z_base + 0.40), (0.03, 0.04, 0.05), mat_map["M_RivallieEyeDark"])
     add_box(bm, (0.11, -0.32, z_base + 0.40), (0.03, 0.04, 0.05), mat_map["M_RivallieEyeDark"])
     add_box(bm, (-0.115, -0.32, z_base + 0.40), (0.02, 0.025, 0.03), mat_map["M_RivallieEyeGold"])
     add_box(bm, (0.115, -0.32, z_base + 0.40), (0.02, 0.025, 0.03), mat_map["M_RivallieEyeGold"])
+    add_box(bm, (-0.118, -0.325, z_base + 0.41), (0.01, 0.01, 0.015), mat_map["M_RivallieGlint"])
+    add_box(bm, (0.118, -0.325, z_base + 0.41), (0.01, 0.01, 0.015), mat_map["M_RivallieGlint"])
 
     # 4. Aquatic Ear Crest Fins
     add_box(bm, (-0.16, -0.22, z_base + 0.44), (0.08, 0.06, 0.10), mat_map["M_RivallieAqua"])
     add_box(bm, (0.16, -0.22, z_base + 0.44), (0.08, 0.06, 0.10), mat_map["M_RivallieAqua"])
+    # Fin ray rib
+    add_box(bm, (-0.17, -0.21, z_base + 0.47), (0.05, 0.03, 0.08), mat_map["M_RivallieTeal"])
+    add_box(bm, (0.17, -0.21, z_base + 0.47), (0.05, 0.03, 0.08), mat_map["M_RivallieTeal"])
 
-    # 5. Wide Paddle Fan Tail
+    # 5. Wide Paddle Fan Tail with Fin Rays
     add_box(bm, (0.0, 0.26, z_base + 0.28), (0.18, 0.12, 0.08), mat_map["M_RivallieTeal"])
     add_box(bm, (0.0, 0.38, z_base + 0.26), (0.28, 0.16, 0.05), mat_map["M_RivallieTeal"])
     add_box(bm, (0.0, 0.52, z_base + 0.24), (0.34, 0.18, 0.04), mat_map["M_RivallieAqua"])
+    # Tail fin rays
+    add_box(bm, (-0.10, 0.52, z_base + 0.25), (0.04, 0.16, 0.02), mat_map["M_RivallieTeal"])
+    add_box(bm, (0.10, 0.52, z_base + 0.25), (0.04, 0.16, 0.02), mat_map["M_RivallieTeal"])
     add_box(bm, (0.0, 0.62, z_base + 0.23), (0.24, 0.08, 0.03), mat_map["M_RivallieAqua"])
 
     bm.to_mesh(mesh)
