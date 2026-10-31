@@ -170,3 +170,17 @@ lines.
   - Write `art/review/digest-2026-W45.md` with everything waiting on the director, including C8 HUD visual acceptance and listening to the M15 scores.
 - done when: board and digest are pushed and cite records
 - evidence: docs/team/status-board.md, art/review/digest-2026-W45.md
+
+### M17 - Review the separate Rivallie face proof
+
+- status: open (no image-generation capacity needed)
+- goal: give concrete 2D readability feedback before the director's separate face decision.
+- work: open the two images linked in the [C3b handoff](../comms/codex/2026-10-31T2146--to-blender--c3b-publish-and-faces.md), inspect native size and nearest-neighbor enlargement. Report which expression/facing is unreadable or misplaced; distinguish registration bounds from anatomical fit. Keep body/clip approvals separate and do not repaint exports or modify forge code.
+- done when: an identity/facing-specific observation list is published in your own comms for Codex and the director. Technical feedback is not approval.
+
+### M18 - Prepare the C3b source-manifest mapping
+
+- status: open (preparation does not require production exports)
+- goal: make approved-body staging integration reviewable before machine-A exports arrive.
+- work: read `forgelib/publish.py`, the shared SourceFrameV2/AnimationClip/AuthoringProvenance contracts and existing canonical species appearances. Document the mapping from staging file paths and frame IDs to source records, clip references, rig/sockets, species identity and provenance; list original model/workspace dependencies needed on compiling machines. Coordinate with B8. Do not invent missing source hashes, edit generated catalogs or activate unapproved faces.
+- done when: a precise mapping/checklist and dependency questions are published in your own comms. Actual manifest integration waits for verified staged exports.

@@ -328,3 +328,20 @@ necessary on machine A. A missing or changed source is an explicit blocker, not
 permission to generate a replacement for an approved packet. The communicator owns
 manifest integration and Codex owns compilation/ledger transcription. Publication
 does not activate an appearance. See [C3b contracts](hd-presentation.md#c3b-creature-publication-and-face-sidecars).
+
+## ADR 025 — Isolated map validation and historical regression fixtures
+
+**Decision:** tests about the original village approval and unfinished Riverlands
+replay a pinned two-pass fixture. A separate test still replays every current pass
+against the canonical project. Importer negatives validate a temporary intentionally
+unfinished copy, never an assumption that the live art project must remain draft.
+
+Alternate-project validation is read-only and check-only, with project-digest/scoped
+QA receipts outside the canonical review directory. Builds still use the canonical
+map. Source/plan race checks, official schema validation, composition gates and
+exact-digest approvals remain unchanged.
+
+**Consequences:** legitimate map progress does not invalidate historical tests or
+their approvals, and fixture checks cannot overwrite current inspection receipts.
+Full-region candidate QA can succeed after Riverlands authoring without granting
+runtime activation. See [worldforge validation](worldforge.md#c7-candidate-compiler-and-domain-loader).

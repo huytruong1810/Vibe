@@ -37,6 +37,8 @@ class Authoring(unittest.TestCase):
         with redirect_stdout(output), patch(
             "worldlib.cli.layout_approval", return_value=None
         ), patch(
+            "worldlib.cli.PROJECT", self.fixture_project
+        ), patch(
             "worldlib.cli.dependencies", return_value=recorded["dependenciesDigest"]
         ):
             self.assertEqual(
@@ -56,7 +58,7 @@ class Authoring(unittest.TestCase):
         self.assertIsNone(layout_approval(modified, "aqualia_village"))
         self.assertIsNone(layout_approval(self.authored, "aqualia_riverlands"))
         output = io.StringIO()
-        with redirect_stdout(output):
+        with redirect_stdout(output), patch("worldlib.cli.PROJECT", self.fixture_project):
             self.assertEqual(
                 main(["next", "--region", "aqualia", "--level", "aqualia_village"]), 0
             )
@@ -166,7 +168,7 @@ class Authoring(unittest.TestCase):
         from unittest.mock import patch
 
         dependency = dependencies()
-        report = check(self.authored, self.plan, "aqualia_village")
+        report = check(self.latest_authored, self.plan, "aqualia_village")
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             work = root / "work"
@@ -178,7 +180,7 @@ class Authoring(unittest.TestCase):
             atomic_write(
                 work / "render.json",
                 {
-                    "projectDigest": sha(self.authored),
+                    "projectDigest": sha(self.latest_authored),
                     "planDigest": sha(self.plan),
                     "dependenciesDigest": dependency,
                     "images": {"overview.png": sha(b"receipt fixture")},
@@ -189,15 +191,15 @@ class Authoring(unittest.TestCase):
             ):
                 target = root / "art/review/selftest"
                 packet(
-                    self.authored, self.plan, "aqualia_village", work, target, report
+                    self.latest_authored, self.plan, "aqualia_village", work, target, report
                 )
             manifest = read(target / "packet.json")
             self.assertEqual(manifest["schemaVersion"], 2)
             self.assertEqual(
                 manifest["source"],
-                {"path": spec()["ldtk"]["project"], "sha256": sha(self.authored)},
+                {"path": spec()["ldtk"]["project"], "sha256": sha(self.latest_authored)},
             )
-            self.assertEqual(manifest["sourceDigest"], sha(self.authored))
+            self.assertEqual(manifest["sourceDigest"], sha(self.latest_authored))
             self.assertFalse((target / "hearthwild.ldtk").exists())
             for name, digest in manifest["files"].items():
                 self.assertEqual(sha((target / name).read_bytes()), digest)
@@ -209,7 +211,14 @@ class Authoring(unittest.TestCase):
         p = cls.empty
         for path in sorted((WORLD / "passes/aqualia").glob("*.json")):
             p = apply_pass(p, read(path))
-        cls.authored = p
+        cls.latest_authored = p
+        cls.authored = cls.empty
+        for name in ("001-village.json", "002-village-details.json"):
+            cls.authored = apply_pass(cls.authored, read(WORLD / "passes/aqualia" / name))
+        cls.fixture_dir = tempfile.TemporaryDirectory()
+        cls.addClassCleanup(cls.fixture_dir.cleanup)
+        cls.fixture_project = Path(cls.fixture_dir.name) / "village-only.ldtk"
+        atomic_write(cls.fixture_project, cls.authored)
 
     def edit(self, p, operations):
         return {
@@ -224,7 +233,7 @@ class Authoring(unittest.TestCase):
     def test_repeatable_native_schema_and_roundtrip(self):
         self.assertEqual(canonical(self.empty), canonical(new_project(self.plan)))
         validate_structure(read(PROJECT))
-        self.assertEqual(sha(self.authored), sha(read(PROJECT)))
+        self.assertEqual(sha(self.latest_authored), sha(read(PROJECT)))
         validate_structure(json.loads(canonical(self.empty)))
 
     def test_complete_village_does_not_certify_riverlands(self):
@@ -232,6 +241,21 @@ class Authoring(unittest.TestCase):
         self.assertEqual(report["findings"], [])
         self.assertEqual(report["unfinishedLevels"], ["aqualia_riverlands"])
         self.assertEqual(check(self.authored, self.plan)["status"], "draft")
+
+    def test_alternate_validation_is_read_only_and_receipts_are_isolated(self):
+        from worldlib.cli import main
+        from unittest.mock import patch
+        from contextlib import redirect_stdout
+        import io
+        before = PROJECT.read_bytes()
+        with tempfile.TemporaryDirectory() as tmp:
+            work = Path(tmp) / "work"
+            with patch("worldlib.cli.WORK", work), redirect_stdout(io.StringIO()):
+                self.assertEqual(main(["check", "--region", "aqualia", "--level",
+                    "aqualia_village", "--project", str(self.fixture_project)]), 0)
+            self.assertTrue((work / "validation" / sha(self.authored) / "aqualia_village/qa_report.json").is_file())
+            self.assertFalse((work / "aqualia").exists())
+        self.assertEqual(PROJECT.read_bytes(), before)
 
     def test_failed_pass_leaves_file_identical(self):
         with tempfile.TemporaryDirectory() as tmp:

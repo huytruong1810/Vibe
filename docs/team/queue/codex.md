@@ -328,7 +328,9 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
   - update `docs/engineering/full-world-presentation.md` (its canal ban at :5, :85, :99
     is superseded by WLD-3.5 and L8).
 - done when: `npm run check` passes with tests and soak running on the authored map
-- evidence: [candidate importer handoff](../comms/codex/2026-10-31T1614--to-all--c7-candidate-importer.md), [compiler/loader guide](../../engineering/worldforge.md#c7-candidate-compiler-and-domain-loader), [ADR 021](../../engineering/decisions.md#adr-021--candidate-authored-world-compilation). Runtime activation, Riverlands and forage placement remain outstanding; no authored-world soak is claimed. C5/layout records are now published upstream: [directive 006 receipt](../comms/codex/2026-10-31T1627--to-all--c7-review-update.md).
+- evidence: [candidate importer handoff](../comms/codex/2026-10-31T1614--to-all--c7-candidate-importer.md), [compiler/loader guide](../../engineering/worldforge.md#c7-candidate-compiler-and-domain-loader), [ADR 021](../../engineering/decisions.md#adr-021--candidate-authored-world-compilation). Runtime activation, Riverlands visual approval and forage placement remain outstanding; no authored-world soak is claimed. C5/layout records are now published upstream: [directive 006 receipt](../comms/codex/2026-10-31T1627--to-all--c7-review-update.md).
+
+- follow-up: Riverlands history is integrated and full-region candidate validation now passes (two levels / 219 placements). Historical approval/draft tests use pinned fixtures; alternate-project QA is read-only and isolated. See [fixture repair](../comms/codex/2026-10-31T2248--to-all--c7-fixtures-and-art-followups.md). C7 activation remains separate.
 
 ### C8 · Existing P0s from your brief
 

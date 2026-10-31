@@ -48,14 +48,15 @@ export async function buildWorld(options: {
   region: string;
   level?: string;
   check?: boolean;
+  project?: string;
 }): Promise<string> {
   if (options.region !== 'aqualia')
     throw new Error('Only the protected Aqualia region is authored');
   const planPath = resolve(root, `art/source/world/regions/${options.region}.plan.json`);
-  const before = await Promise.all([
-    readFile(resolve(root, source), 'utf8'),
-    readFile(planPath, 'utf8'),
-  ]);
+  if (options.project && !options.check)
+    throw new Error('Alternate projects support validation only; use the canonical map to build');
+  const projectFile = resolve(root, options.project ?? source);
+  const before = await Promise.all([readFile(projectFile, 'utf8'), readFile(planPath, 'utf8')]);
   // uv may be a standalone binary (machine A) or a pip module (machine B).
   const [runner, prefix] = spawnSync('uv', ['--version']).error
     ? [process.env.PYTHON ?? 'python', ['-m', 'uv']]
@@ -73,6 +74,7 @@ export async function buildWorld(options: {
     options.region,
   ];
   if (options.level) args.push('--level', options.level);
+  if (options.project) args.push('--project', projectFile);
   const qa = spawnSync(runner, args, {
     cwd: root,
     encoding: 'utf8',
@@ -83,7 +85,7 @@ export async function buildWorld(options: {
   if (qa.error || qa.status !== 0)
     throw new Error(`Worldforge validation failed: ${qa.error?.message ?? qa.stderr + qa.stdout}`);
   const [project, plan, dependencies] = await Promise.all([
-    readFile(resolve(root, source), 'utf8'),
+    readFile(projectFile, 'utf8'),
     readFile(planPath, 'utf8'),
     Promise.all(
       importerSources.map(async (name) => [
@@ -118,12 +120,16 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
       region: { type: 'string', default: 'aqualia' },
       level: { type: 'string' },
       check: { type: 'boolean', default: false },
+      project: { type: 'string' },
     },
   });
-  buildWorld({ region: values.region!, level: values.level, check: values.check }).catch(
-    (error: unknown) => {
-      console.error(error instanceof Error ? error.message : error);
-      process.exitCode = 1;
-    },
-  );
+  buildWorld({
+    region: values.region!,
+    level: values.level,
+    check: values.check,
+    project: values.project,
+  }).catch((error: unknown) => {
+    console.error(error instanceof Error ? error.message : error);
+    process.exitCode = 1;
+  });
 }

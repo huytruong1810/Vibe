@@ -3,6 +3,7 @@
 import argparse
 import json
 import sys
+from pathlib import Path
 from .project import (
     PROJECT,
     WORLD,
@@ -69,6 +70,8 @@ def main(argv):
         p = subs.add_parser(name)
         p.add_argument("--region", required=True)
         p.add_argument("--level")
+        if name == "check":
+            p.add_argument("--project", help="Read-only alternate project; receipts remain isolated")
         if name == "packet":
             p.add_argument("--revision", type=int, default=1)
     args = parser.parse_args(argv)
@@ -122,7 +125,8 @@ def main(argv):
         if args.command == "next" and not PROJECT.exists():
             print("NEXT: new " + region)
             return 0
-        project = read(PROJECT)
+        alternate = getattr(args, "project", None)
+        project = read(Path(alternate)) if alternate else read(PROJECT)
         if args.command == "example":
             from .golden import example
 
@@ -134,6 +138,8 @@ def main(argv):
                 "Select a level explicitly; draft levels cannot be silently included"
             )
         work = WORK / region / (level or "region")
+        if alternate:
+            work = WORK / "validation" / sha(project) / (level or "region")
         work.mkdir(parents=True, exist_ok=True)
         if args.command == "apply":
             source = __import__("pathlib").Path(args.file).resolve()
