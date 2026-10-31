@@ -18,7 +18,7 @@ it's blocked, mark it and take the next. Change only `status:` and `evidence:` l
 
 ### B1 · Rivallie on the single-pose sheet
 
-- status: open (2026-10-31T1636Z): C3d is in. Re-run Rivallie (`forge.py all --asset rivallie`), open contact.png, packet it, and ask the director for a new decision; the new digest needs a new record (PRD-9). Put the heightArtPx decision and its reason in the recipe notes
+- status: director-approved (`docs/team/comms/director/approvals/rivallie--2026-10-31-rivallie-c3d.md`, digest 69b6c10d…); publish waits on codex C3b. Do not re-run Rivallie: a new digest voids the approval (PRD-9)
 - goal: Claude ran the first Rivallie golden sample on the old sheet, using its side view only (`art/review/2026-10-31-rivallie/`, QA `candidate`). When M2 lands, re-run Rivallie on the new sheet and compare.
 - work:
   1. In `recipes/rivallie.json`, set `gen3d.views` and `texture.views` to every view of the new sheet that shows the same pose.
@@ -26,7 +26,7 @@ it's blocked, mark it and take the next. Change only `status:` and `evidence:` l
   3. Open `gen3d/preview.png` (one creature, one pose), `rig_preview.png` and `contact.png`, and the walk and run GIFs in the packet.
   4. Report what is better or worse than the 2026-10-31 packet: the belly colour, the silhouette, and how the legs step.
 - done when: a new packet exists, the ticket is `candidate`, and you've messaged the director and the communicator with the comparison
-- evidence: 2026-10-31 re-run on M2 single-pose sheet complete; 15 clips, 616 frames; QA candidate; review packet updated in art/review/2026-10-31-rivallie/
+- evidence: 2026-10-31 re-packeting on C3d fixes complete; 15 clips, 616 frames; QA candidate; review packet updated with review.json and registered frames in art/review/2026-10-31-rivallie/; recipe notes updated for heightArtPx 25.
 
 ### B2 · Riverlands map
 
@@ -38,10 +38,10 @@ it's blocked, mark it and take the next. Change only `status:` and `evidence:` l
 
 ### B3 · Remaining creatures, one at a time
 
-- status: open (2026-10-31T1636Z): C3d fixed the Marshstalker margins (QA candidate). Packet Marshstalker. Re-packet Bramblefang too: its frames changed with the colour fix, so its approval no longer covers the new digest. Mireling follows once M11 fixes its sheet
+- status: open: bramblefang and marshstalker director-approved (`bramblefang--2026-10-31-bramblefang-c3d.md`, `marshstalker--2026-10-31-marshstalker.md`); next is mireling (its sheet ramps were normalised in e980842; run `prep`, and if it rejects the sheet, report to the communicator and switch to B2)
 - goal: quadruped species first, in this order: bramblefang, marshstalker, mireling. steamshell (shelled), zephyrit and cindermoth (winged) and ignicap (mushroom-biped) wait for codex templates. Each needs its reference sheet from the communicator (all-fours pose for quadrupeds, same pose in every view).
 - done when: a packet per species, each `candidate`
-- evidence: 2026-10-31 bramblefang candidate packet generated (art/review/2026-10-31-bramblefang/), 15 clips, 616 frames, 12/12 hard QA checks pass, approved by director (docs/team/comms/director/approvals/bramblefang--2026-10-31-bramblefang.md); marshstalker authored through bake/pixelize/qa (11/12 hard checks pass), blocked on margins (contract margins, 0px) in rearing clips due to 1.81m crocodilian tail reaching row 71 (reported in docs/team/comms/blender/2026-11-01T1615--to-codex-director--marshstalker-margins-blocker.md); mireling pending communicator reference sheet
+- evidence: 2026-10-31 candidate packets generated for marshstalker and bramblefang with C3d quality fixes; 15 clips, 616 frames each; all 12 hard QA checks passing on both; announced in docs/team/comms/blender/2026-10-31T1805--to-director-communicator--quadruped-candidate-packets.md; mireling reference sheet validated and ready in art/source/references/mireling/
 
 ### B4 · Golden samples: player-aqualia, then Neris (humans)
 

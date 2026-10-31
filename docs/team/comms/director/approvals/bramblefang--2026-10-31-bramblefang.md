@@ -6,6 +6,7 @@ decision: director-approved
 scope: [body, clips]
 date: 2026-10-31
 recordedBy: director (decision); packetDigest added and code fence removed by claude on the director's instruction (2026-10-31T1620Z)
+superseded-by: bramblefang--2026-10-31-bramblefang-c3d.md
 ---
 
 The director's approval stands for the frames behind this digest (packet as committed in

@@ -56,9 +56,12 @@ export async function buildWorld(options: {
     readFile(resolve(root, source), 'utf8'),
     readFile(planPath, 'utf8'),
   ]);
+  // uv may be a standalone binary (machine A) or a pip module (machine B).
+  const [runner, prefix] = spawnSync('uv', ['--version']).error
+    ? [process.env.PYTHON ?? 'python', ['-m', 'uv']]
+    : ['uv', []];
   const args = [
-    '-m',
-    'uv',
+    ...prefix,
     'run',
     '--project',
     'art/source/forge',
@@ -70,7 +73,7 @@ export async function buildWorld(options: {
     options.region,
   ];
   if (options.level) args.push('--level', options.level);
-  const qa = spawnSync('python', args, {
+  const qa = spawnSync(runner, args, {
     cwd: root,
     encoding: 'utf8',
     shell: false,

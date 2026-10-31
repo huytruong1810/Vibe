@@ -18,6 +18,7 @@ art/source/blender/renders_test/
 .agents/state/
 art/source/forge/work/
 art/source/world/work/
+art/source/tiles/work/
 art/source/forge/.venv/
 
 # Sprite Forge vendored third-party inputs and gen3d environment (machine A only)

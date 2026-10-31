@@ -119,7 +119,15 @@ def main():
     mismatches = []
     generated_provenance = {}
 
+    # Tiles published by tileforge after a director approval (art/source/staging/tiles/*.json)
+    # replace the procedural placeholders; never overwrite or "fix" them from the generators.
+    tileforge_owned = set()
+    for record in sorted((art_source / "staging" / "tiles").glob("*.json")):
+        tileforge_owned |= {e["path"] for e in json.loads(record.read_text()).get("exports", [])}
+
     def process_asset(img: Image.Image, out_path: Path, pixel_anchor: Tuple[int, int]):
+        if str(out_path.relative_to(REPO_ROOT)).replace("\\", "/") in tileforge_owned:
+            return
         buf = io.BytesIO()
         img.save(buf, format="PNG", optimize=True)
         img_bytes = buf.getvalue()

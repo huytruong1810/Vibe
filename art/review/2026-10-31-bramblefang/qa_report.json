@@ -22,7 +22,7 @@
    "rule": "contract margins",
    "pass": true,
    "hard": true,
-   "detail": "smallest transparent margin 3px (need >= 2)"
+   "detail": "smallest transparent margin 2px (need >= 2)"
   },
   {
    "check": "anchorDrift",
@@ -78,7 +78,7 @@
    "rule": "ART-9.3",
    "pass": true,
    "hard": false,
-   "detail": "max changed fraction between frames 0.034"
+   "detail": "max changed fraction between frames 0.033"
   },
   {
    "check": "valueContrast",

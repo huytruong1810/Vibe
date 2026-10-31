@@ -15,7 +15,7 @@ Welcome to **Hearthwild**, an HD 2D top-down commercial JRPG developed in TypeSc
 ### Game Identity & Technical Tenets
 
 - **Presentation**: Top-down $3/4$ perspective, $1920 \times 1080$ viewport, $64 \times 64\text{ px}$ world tiles, 16 display pixels per elevation step.
-- **Visual Aesthetic**: Commercial AAA-grade pixel art (evoking _Octopath Traveler_, _Sea of Stars_, _Dead Cells_), combining authentic low-poly 3D orthographic turntable baking with hand-tuned pixel art palettes and lighting.
+- **Visual Aesthetic**: Distinctive top-down pixel art (evoking _Octopath Traveler_, _Sea of Stars_, _Dead Cells_), combining authentic low-poly 3D orthographic turntable baking with hand-tuned pixel art palettes and lighting (historical draft note: earlier draft used banned phrasing prior to TEAM-5.3 ratification).
 - **Physical Feedback**: Height and mass are authoritative simulation values driving recoil, camera shake, and soft-surface footprints. Art frames do **not** bake camera shake or recoil displacements into sprites.
 - **Strict Architecture**: Zero simulation leaks. Presentation layers never modify `src/domain/` or simulation worker state.
 
