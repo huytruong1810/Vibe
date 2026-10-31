@@ -110,11 +110,17 @@ def digest(paths: list[Path], extra: object = None) -> str:
     return h.hexdigest()
 
 
-def record(asset_id: str, stage: str, inputs: list[Path], outputs: list[Path], extra: dict | None = None) -> dict:
+_SAME = object()
+
+
+def record(asset_id: str, stage: str, inputs: list[Path], outputs: list[Path], extra: dict | None = None,
+           digest_extra: object = _SAME) -> dict:
+    """Write the stage record. The inputs digest must be computed exactly as the stage's
+    is_fresh() call computes it: pass digest_extra when the stored extra holds results."""
     rec = {
         "asset": asset_id,
         "stage": stage,
-        "inputsDigest": digest(inputs, extra),
+        "inputsDigest": digest(inputs, extra if digest_extra is _SAME else digest_extra),
         "inputs": [str(p.relative_to(REPO)) for p in inputs],
         "outputs": {str(p.relative_to(REPO)): sha256_file(p) for p in outputs if p.is_file()},
         "extra": extra or {},

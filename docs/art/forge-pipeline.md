@@ -4,11 +4,13 @@ The Sprite Forge (`art/source/forge/`) turns doctrine-standard reference sheets 
 layered pixel-art sprites. Quality comes from fixed, spec-driven scripts. The
 operator runs stages, looks at the output and fixes the inputs (PRD-1, PRD-6.3).
 
-> **Build status (2026-10-31):** `prep`, `gen3d`, `clean`, `texture`, `bake`,
-> `pixelize`, `qa`, `packet`, `next`, `status` and `doctor` work end to end on machine A
-> (Rivallie bring-up: about 3 minutes from sheet to contact sheet). **Not built yet:**
-> `rig`, `animate`, `faces`, `items`, `publish`. `doctor` reports them, and production
-> stays gated per asset class until codex (toolsmith, DOC-5) posts a `--to-blender--go-<class>-` message. The agent runbook is the `sprite-forge` skill.
+> **Build status (2026-11-01):** for **creatures** (quadruped template) the forge runs
+> `prep → gen3d → clean → texture → rig → animate → bake → pixelize → qa → packet` on
+> machine A: 15 clips, 616 frames. Rivallie takes about 15 minutes after gen3d.
+> **Not built yet:** the humanoid rig (UAL2 fit, UAL1 bone map), `fit`, `faces`, `items`,
+> `publish`, other creature templates and the `environment` kind; codex tickets C3 (rest),
+> C9 and C10. `doctor` prints readiness per class. Production is gated per class until a
+> `--to-blender--go-<class>-` message exists. The agent runbook is the `sprite-forge` skill.
 
 ## Why this design
 
@@ -31,21 +33,21 @@ well.
 
 ## Stages
 
-| #   | Stage      | What it does                                                                                                                                       | Output                          |
-| --- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- |
-| 1   | `prep`     | Validates a reference sheet against PRD-3                                                                                                          | `work/<asset>/prep.json`        |
-| 2   | `gen3d`    | Runs Hunyuan3D-2mv or TRELLIS locally (RTX 5080, sm_120 build) on the sheet                                                                        | raw `.glb` plus seed and hash   |
-| 3   | `clean`    | Scales to the spec height, sets feet origin, faces −Y, merges, decimates to 8–15k tris, keeps albedo only                                          | clean mesh                      |
-| 4   | `rig`      | Fits the UAL skeleton by A-pose landmarks; computes weights on a voxel proxy and transfers them to the mesh; adds socket empties                   | rigged body                     |
-| 5   | `fit`      | Fits parts onto a body type (Surface Deform / Shrinkwrap), transfers weights from the body, masks hidden body faces                                | dressed character               |
-| 6   | `animate`  | Applies the shared clip library (constant interpolation, exact frame counts, windup/active/recovery partitions)                                    | actions                         |
-| 7   | `bake`     | Cycles at 1 spp and 0.01 px filter. Per facing and frame: albedo, normal, depth, material ID, alpha passes, plus socket tracks (head, hands, root) | EXR passes plus `tracks.json`   |
-| 8   | `pixelize` | Banded N·L mapped to palette ramps (OKLab), selective outline, orphan and jaggy cleanup, anchor assertion                                          | body frames (PNG)               |
-| 9   | `faces`    | Renders the face grammar per facing and expression, recoloured from the recipe's ramps                                                             | face layer atlas                |
-| 10  | `items`    | Renders each prop for 8 facings × 8 grip angles, plus its inventory icon from the same mesh                                                        | item layers and icon            |
-| 11  | `qa`       | All spec QA checks; writes the report and a 4× contact sheet                                                                                       | `qa_report.json`, `contact.png` |
-| 12  | `packet`   | Assembles the director review packet; requires that the contact sheet was viewed                                                                   | `art/review/<date>-<asset>/`    |
-| 13  | `publish`  | Requires a director approval record; copies frames to `art/source/exports/`, runs `rebuild.py` and `npm run assets:build`                          | runtime source frames           |
+| #   | Stage      | What it does                                                                                                                                                                                                                                                                                           | Output                          |
+| --- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------- |
+| 1   | `prep`     | Validates a reference sheet against PRD-3                                                                                                                                                                                                                                                              | `work/<asset>/prep.json`        |
+| 2   | `gen3d`    | Runs Hunyuan3D-2mv or TRELLIS locally (RTX 5080, sm_120 build) on the sheet                                                                                                                                                                                                                            | raw `.glb` plus seed and hash   |
+| 3   | `clean`    | Scales to the spec height, sets feet origin, faces −Y, merges, decimates to 8–15k tris, keeps albedo only                                                                                                                                                                                              | clean mesh                      |
+| 4   | `rig`      | Orients creatures head-to-south, detects landmarks (leg columns, spine, head, tail by surface path), fits the template from `spec/skeletons/` with `Socket_*` bones and IK paw targets, weights on a voxel proxy and transfers them to the mesh; writes `rig_preview.png`. Humans: UAL2 fit (codex C9) | rigged body                     |
+| 5   | `fit`      | Fits parts onto a body type (Surface Deform / Shrinkwrap), transfers weights from the body, masks hidden body faces                                                                                                                                                                                    | dressed character               |
+| 6   | `animate`  | Creatures: parametric clips from the template gait (`blender/gaits.py`), every frame keyed with constant interpolation, exact frame counts, CMB-3 phases. Humans: UAL2 actions plus UAL1 through the bone map (codex C9)                                                                               | actions                         |
+| 7   | `bake`     | Cycles at 1 spp and 0.01 px filter. Per facing and frame: albedo, normal, depth, material ID, alpha passes, plus socket tracks (head, hands, root)                                                                                                                                                     | EXR passes plus `tracks.json`   |
+| 8   | `pixelize` | Banded N·L mapped to palette ramps (OKLab), selective outline, orphan and jaggy cleanup, anchor assertion                                                                                                                                                                                              | body frames (PNG)               |
+| 9   | `faces`    | Renders the face grammar per facing and expression, recoloured from the recipe's ramps                                                                                                                                                                                                                 | face layer atlas                |
+| 10  | `items`    | Renders each prop for 8 facings × 8 grip angles, plus its inventory icon from the same mesh                                                                                                                                                                                                            | item layers and icon            |
+| 11  | `qa`       | All spec QA checks; writes the report and a 4× contact sheet                                                                                                                                                                                                                                           | `qa_report.json`, `contact.png` |
+| 12  | `packet`   | Assembles the director review packet; requires that the contact sheet was viewed                                                                                                                                                                                                                       | `art/review/<date>-<asset>/`    |
+| 13  | `publish`  | Requires a director approval record; copies frames to `art/source/exports/`, runs `rebuild.py` and `npm run assets:build`                                                                                                                                                                              | runtime source frames           |
 
 `forge.py next --asset <id>` prints the exact next command for an asset, or the
 reason it is blocked.

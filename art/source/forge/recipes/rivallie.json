@@ -1,8 +1,23 @@
 {
   "asset": "rivallie",
   "kind": "creature",
-  "heightArtPx": 34,
-  "ramps": { "body": "teal", "belly": "cream", "fins": "glass" },
-  "gen3d": { "seed": 1234, "steps": 50, "views": ["front", "left", "back"] },
-  "notes": "Bring-up recipe on the master-cropped sheet. Eyes and nose come from the face layer (ART-8), not body ramps."
+  "heightArtPx": 31,
+  "ramps": {
+    "body": "teal",
+    "belly": "cream",
+    "fins": "glass"
+  },
+  "gen3d": {
+    "seed": 1234,
+    "steps": 50,
+    "views": [
+      "left"
+    ]
+  },
+  "notes": "Side view only (gen3d and texture): the master's front/back views are upright while the side view is on all fours, which fused into a hybrid mesh (2026-10-31). Neutral pose and locomotion are on all fours; rearing up is the social clip. Eyes and nose come from the face layer (ART-8), not body ramps. heightArtPx 31 (was 34): at 34 the tail toward the camera (n facing) and lying clips overflowed the 56x56 creature.medium canvas (QA margins, 2026-11-01). Body ramp teal: water was tried (2026-11-01) and lowered grass contrast to 0.003 because pixelize puts most of the body on the shadow step; teal passes dirt, sand and freshwater. Grass contrast is an open art-direction question for the director.",
+  "texture": {
+    "views": [
+      "left"
+    ]
+  }
 }

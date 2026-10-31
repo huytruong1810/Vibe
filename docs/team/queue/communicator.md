@@ -20,7 +20,7 @@ lines.
 ### M2 · Rivallie reference sheet, single pose
 
 - status: open
-- goal: redo `art/source/references/rivallie/` as a creature sheet with one consistent standing pose in front, left side and back views. The current sheet mixes poses, and that produced a hybrid mesh (forge QA draft, 2026-10-31).
+- goal: redo `art/source/references/rivallie/` as a creature sheet with **one all-fours pose** (the master's side pose) in front, left side and back views. The current sheet mixes an upright front and back with an all-fours side, which fused into a hybrid mesh; Claude worked around it with the side view only. Show the cream belly and chest clearly in the side view: today's sprite reads almost all teal. Rearing up is an animation (`social`), not a sheet pose.
 - inputs: the `reference-sheets` skill, the approved Rivallie portrait anatomy (ART-10: rounded otter body, cream belly, aqua crest fins, paddle tail)
 - done when: `sheet.json` and the views are committed, the image ledger is updated, and you've messaged codex and blender
 - evidence:
@@ -67,7 +67,7 @@ lines.
 ### M8 · Weekly review digest
 
 - status: open (recurring, every Friday)
-- goal: `art/review/digest-<YYYY-Www>.md` covering every packet, proposal and approval request waiting on the director, each with a one-line ask. The director decides them in one pass.
+- goal: `art/review/digest-<YYYY-Www>.md` covering every packet, proposal and approval request waiting on the director, each with a one-line ask. The director decides them in one pass. First digest: the Rivallie golden sample `art/review/2026-10-31-rivallie/`, and codex C5 (the Aqualia region bible, `docs/doctrine/regions/aqualia.md`, awaiting composition review).
 - done when: never closes; add a dated evidence line each week
 - evidence:
 

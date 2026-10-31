@@ -36,8 +36,13 @@ def _check(results: list, key: str, rule: str, ok: bool, detail: str, hard: bool
     results.append({"check": key, "rule": rule, "pass": bool(ok), "hard": hard, "detail": detail})
 
 
+def rest_clip_of(frames: dict) -> str:
+    """The clip that stands for the asset at rest: idle once animate exists, else the rest bake."""
+    return "idle" if "idle" in frames else "rest" if "rest" in frames else next(iter(frames))
+
+
 def run(asset_id: str, pix_dir: Path, bake_dir: Path, ramps_map: dict, canvas: dict, kind: str,
-        height_target: int, reference_cutout: Path | None) -> dict:
+        height_target: int, reference_cutout: Path | None, plan: list | None = None) -> dict:
     rs = spec("render_spec")
     q = rs["qa"]
     frames = _frames(pix_dir)
@@ -47,6 +52,19 @@ def run(asset_id: str, pix_dir: Path, bake_dir: Path, ramps_map: dict, canvas: d
     results: list = []
     imgs = {(c, f, i): np.array(Image.open(p)) for c, fs in frames.items() for f, ps in fs.items() for i, p in enumerate(ps)}
     ramps = RampSet(ramps_map)
+
+    rest_clip = rest_clip_of(frames)
+    if plan:
+        bad = []
+        for c in plan:
+            got = frames.get(c["name"], {})
+            if sorted(got) != sorted(c["facings"]):
+                bad.append(f"{c['name']}: facings {sorted(got)} != {sorted(c['facings'])}")
+            elif any(len(v) != c["frames"] for v in got.values()):
+                bad.append(f"{c['name']}: frame counts {sorted({len(v) for v in got.values()})} != {c['frames']}")
+        extra = sorted(set(frames) - {c["name"] for c in plan})
+        _check(results, "clipMatrix", "render_spec clips", not bad and not extra,
+               f"{len(plan)} clips as specified" if not bad and not extra else "; ".join(bad + [f"unexpected clips {extra}"] if extra else bad))
 
     sizes = {im.shape[:2] for im in imgs.values()}
     _check(results, "canvas", "spec canvases", sizes == {(H, W)}, f"frame sizes {sorted(sizes)}, expected {(H, W)}")
@@ -61,12 +79,10 @@ def run(asset_id: str, pix_dir: Path, bake_dir: Path, ramps_map: dict, canvas: d
                 for fs in tracks["clips"].values() for es in fs.values() for e in es)
     _check(results, "anchorDrift", "L2", drift <= q["anchorDriftMaxPx"] + 0.01, f"max root drift {drift:.3f}px")
 
-    tops = [AY - np.nonzero(im[..., 3])[0].min() for im in imgs.values() if im[..., 3].any()]
+    tops = [AY - np.nonzero(im[..., 3])[0].min() for (c, _, i), im in imgs.items() if c == rest_clip and i == 0 and im[..., 3].any()]
     tall = max(tops)
     _check(results, "height", "ART-6.1", abs(tall - height_target) <= q["heightToleranceArtPx"] + 1,
-           f"tallest extent above anchor {tall}px (target {height_target} +/- {q['heightToleranceArtPx']}, outline adds 1)")
-
-    rest_clip = next(iter(frames))
+           f"tallest extent above anchor in {rest_clip} {tall}px (target {height_target} +/- {q['heightToleranceArtPx']}, outline adds 1)")
     areas = {f: int((imgs[(rest_clip, f, 0)][..., 3] > 0).sum()) for f in frames[rest_clip]}
     med = float(np.median(list(areas.values())))
     ratio = {f: round(a / med, 2) for f, a in areas.items()}
@@ -100,7 +116,7 @@ def run(asset_id: str, pix_dir: Path, bake_dir: Path, ramps_map: dict, canvas: d
     _check(results, "orphans", "ART-5.4", orphans <= q["orphanPixelsMax"], f"{orphans} orphan interior pixels")
 
     flick = []
-    for c, fs in frames.items():
+    for c, fs in ((rest_clip, frames[rest_clip]),):
         for f, ps in fs.items():
             for i in range(1, len(ps)):
                 a, b = imgs[(c, f, i - 1)], imgs[(c, f, i)]
@@ -166,47 +182,83 @@ def _ramp_shares(img: np.ndarray, ramps: RampSet) -> dict[str, float]:
 
 
 def contact_sheet(asset_id: str, pix_dir: Path, canvas: dict, report: dict, reference: Path | None, out: Path) -> None:
-    """4x nearest contact sheet: every clip x facing x frame on grey and on grass, anchor marked,
-    reference beside it (PRD-5, PRD-9)."""
+    """4x nearest contact sheet (PRD-5, PRD-9): the rest pose in all 8 facings on grey and on
+    grass, then one row per clip in its most readable facing (se, else e), anchor marked,
+    reference beside it. Per-clip motion is judged from the packet's clip GIFs."""
     scale = spec("render_spec")["qa"]["contactSheetScale"]
     frames = _frames(pix_dir)
     W, H = canvas["size"]
     AX, AY = canvas["anchor"]
+    rest = rest_clip_of(frames)
     grass_p = REPO / "art/source/exports/environment/ground_grass.png"
     grass = Image.open(grass_p).convert("RGBA").resize((32, 32), Image.NEAREST) if grass_p.exists() else None
-    cols = max(len(ps) for fs in frames.values() for ps in fs.values()) * len(ORDER)
-    rows = sum(2 for _ in frames)
-    pad, head = 2, 14
-    sheet_w = (W + pad) * cols + pad
-    ref_w = 0
-    ref_img = None
+    clips = [c for c in frames if c != rest] if len(frames) > 1 else []
+    cols = max([len(ORDER)] + [max(len(v) for v in frames[c].values()) for c in clips])
+    pad, head, label = 2, 14, 44
+    rows = 2 + len(clips)
+    sheet_w = label + (W + pad) * cols + pad
+    ref_img, ref_w = None, 0
     if reference and reference.exists():
         ref_img = Image.open(reference).convert("RGBA")
         ref_img.thumbnail((10 ** 6, (H + pad) * 2 * scale), Image.LANCZOS)
         ref_w = ref_img.width // scale + pad
     sheet = Image.new("RGBA", (sheet_w + ref_w, head + rows * (H + pad) + pad), (40, 42, 52, 255))
     d = ImageDraw.Draw(sheet)
-    d.text((pad, 1), f"{asset_id}  status={report['status']}  colours={report['colors']}", fill=(220, 220, 220, 255))
+    d.text((pad, 1), f"{asset_id}  status={report['status']}  colours={report['colors']}  clips={len(frames)}", fill=(220, 220, 220, 255))
+
+    def tile(p: Path, bg: str) -> Image.Image:
+        t = Image.new("RGBA", (W, H), (110, 114, 128, 255))
+        if bg == "grass" and grass:
+            for gy in range(0, H, 32):
+                for gx in range(0, W, 32):
+                    t.alpha_composite(grass, (gx, gy))
+        t.alpha_composite(Image.open(p).convert("RGBA"))
+        if bg == "grey":
+            ImageDraw.Draw(t).point([(AX - 2, AY), (AX + 1, AY), (AX, AY + 1)], fill=(255, 40, 40, 255))
+        return t
+
     y = head
-    for clip, fs in frames.items():
-        for row_kind in ("grey", "grass"):
-            x = pad
-            for facing in ORDER:
-                for p in fs.get(facing, []):
-                    tile = Image.new("RGBA", (W, H), (110, 114, 128, 255))
-                    if row_kind == "grass" and grass:
-                        for gy in range(0, H, 32):
-                            for gx in range(0, W, 32):
-                                tile.alpha_composite(grass, (gx, gy))
-                    tile.alpha_composite(Image.open(p).convert("RGBA"))
-                    if row_kind == "grey":
-                        td = ImageDraw.Draw(tile)
-                        td.point([(AX - 2, AY), (AX + 1, AY), (AX, AY + 1)], fill=(255, 40, 40, 255))
-                    sheet.alpha_composite(tile, (x, y))
-                    x += W + pad
-            d.text((sheet_w - 40, y), f"{clip}", fill=(200, 200, 200, 255))
-            y += H + pad
+    for bg in ("grey", "grass"):
+        d.text((pad, y + 2), f"{rest}\n{bg}\n8 dirs", fill=(200, 200, 200, 255))
+        x = label
+        for f in ORDER:
+            if frames[rest].get(f):
+                sheet.alpha_composite(tile(frames[rest][f][0], bg), (x, y))
+            x += W + pad
+        y += H + pad
+    for c in clips:
+        facing = "se" if "se" in frames[c] else "e" if "e" in frames[c] else next(iter(frames[c]))
+        d.text((pad, y + 2), f"{c}\n{facing}\n{len(frames[c])} dirs", fill=(200, 200, 200, 255))
+        x = label
+        for p in frames[c][facing]:
+            sheet.alpha_composite(tile(p, "grey"), (x, y))
+            x += W + pad
+        y += H + pad
     big = sheet.resize((sheet.width * scale, sheet.height * scale), Image.NEAREST)
     if ref_img:
         big.alpha_composite(ref_img, (sheet_w * scale, head * scale))
     big.save(out)
+
+
+def clip_gifs(pix_dir: Path, canvas: dict, out_dir: Path) -> list[Path]:
+    """One looping GIF per clip with every facing side by side at the clip's fps, 4x (PRD-9)."""
+    rs = spec("render_spec")
+    scale = rs["qa"]["contactSheetScale"]
+    frames = _frames(pix_dir)
+    W, H = canvas["size"]
+    out_dir.mkdir(parents=True, exist_ok=True)
+    made = []
+    for c, fs in frames.items():
+        facings = [f for f in ORDER if f in fs]
+        n = max(len(v) for v in fs.values())
+        fps = (rs["clips"].get(c) or {}).get("fps") or 12
+        imgs = []
+        for i in range(n):
+            strip = Image.new("RGBA", (W * len(facings), H), (110, 114, 128, 255))
+            for k, f in enumerate(facings):
+                strip.alpha_composite(Image.open(fs[f][min(i, len(fs[f]) - 1)]).convert("RGBA"), (k * W, 0))
+            imgs.append(strip.resize((strip.width * scale, strip.height * scale), Image.NEAREST).convert("P"))
+        p = out_dir / f"{c}.gif"
+        imgs[0].save(p, save_all=True, append_images=imgs[1:], duration=int(1000 / fps), loop=0)
+        made.append(p)
+    return made

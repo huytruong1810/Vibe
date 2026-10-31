@@ -127,13 +127,40 @@ def pixelize_frame(albedo_p: Path, normal_p: Path, depth_p: Path, ramps: RampSet
         body_diag |= np.roll(mask, (dy, dx), axis=(0, 1))
     body_orth = np.roll(mask, 1, 0) | np.roll(mask, -1, 0) | np.roll(mask, 1, 1) | np.roll(mask, -1, 1)
     outline[corner & body_diag & ~body_orth] = 0
-    final = np.where(outline[..., 3:] > 0, outline, out)
+    final = _clean_orphans(np.where(outline[..., 3:] > 0, outline, out))
 
     info = {
         "labels": {ramps.slots[k]: int(((labels == k) & mask).sum()) for k in range(len(ramps.names))},
         "interiorLinePx": int(interior.sum()),
     }
     return final, info
+
+
+def _clean_orphans(img: np.ndarray, passes: int = 4) -> np.ndarray:
+    """Final pass with QA's exact definition (ART-5.4): an interior pixel (all four neighbours
+    opaque) whose colour matches none of its 8 neighbours takes their most common colour.
+    Runs on the composited frame, because the outline turns former edge pixels into interior."""
+    img = img.copy()
+    for _ in range(passes):
+        a = img[..., 3] > 0
+        interior = a & np.roll(a, 1, 0) & np.roll(a, -1, 0) & np.roll(a, 1, 1) & np.roll(a, -1, 1)
+        flat = (img[..., 0].astype(np.int64) << 16) | (img[..., 1].astype(np.int64) << 8) | img[..., 2]
+        same = np.zeros_like(a)
+        for dy in (-1, 0, 1):
+            for dx in (-1, 0, 1):
+                if dy or dx:
+                    same |= (np.roll(flat, (dy, dx), (0, 1)) == flat) & np.roll(a, (dy, dx), (0, 1))
+        bad = interior & ~same
+        if not bad.any():
+            break
+        for y, x in zip(*np.nonzero(bad)):
+            ys, xs = slice(y - 1, y + 2), slice(x - 1, x + 2)
+            nb = flat[ys, xs][a[ys, xs]]
+            nb = nb[nb != flat[y, x]]
+            vals, cnt = np.unique(nb, return_counts=True)
+            v = vals[cnt.argmax()]
+            img[y, x, :3] = ((v >> 16) & 255, (v >> 8) & 255, v & 255)
+    return img
 
 
 def upscale2(img: np.ndarray) -> np.ndarray:

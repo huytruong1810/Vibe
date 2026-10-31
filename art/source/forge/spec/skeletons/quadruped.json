@@ -1,0 +1,330 @@
+{
+  "schemaVersion": 1,
+  "rigId": "quadruped-v1",
+  "doctrine": [
+    "L6",
+    "ART-9.2",
+    "ART-9.3",
+    "ART-9.4",
+    "CMB-3"
+  ],
+  "note": "Creature template for four-legged species. The rig stage orients the mesh (head to -Y, south), detects landmarks, fits these bones, weights them on a voxel proxy and transfers the weights to the mesh. The animate stage drives them with the gait parameters below. Protected spec: change under DOC-5.",
+  "orientation": {
+    "forward": "-Y",
+    "up": "+Z",
+    "left": "+X",
+    "autoOrient": "PCA long axis in XY; the end whose 90th-percentile height is greater is the head. Recipe rig.yawDeg overrides."
+  },
+  "bones": [
+    {
+      "name": "root",
+      "parent": null,
+      "head": "ground",
+      "tail": "ground+up",
+      "deform": false
+    },
+    {
+      "name": "pelvis",
+      "parent": "root",
+      "head": "hip",
+      "tail": "spine_a",
+      "deform": true
+    },
+    {
+      "name": "spine_01",
+      "parent": "pelvis",
+      "head": "spine_a",
+      "tail": "spine_b",
+      "deform": true
+    },
+    {
+      "name": "spine_02",
+      "parent": "spine_01",
+      "head": "spine_b",
+      "tail": "spine_c",
+      "deform": true
+    },
+    {
+      "name": "spine_03",
+      "parent": "spine_02",
+      "head": "spine_c",
+      "tail": "shoulder",
+      "deform": true
+    },
+    {
+      "name": "neck",
+      "parent": "spine_03",
+      "head": "shoulder",
+      "tail": "head_base",
+      "deform": true
+    },
+    {
+      "name": "head",
+      "parent": "neck",
+      "head": "head_base",
+      "tail": "snout",
+      "deform": true
+    },
+    {
+      "name": "tail_01",
+      "parent": "pelvis",
+      "head": "tail_0",
+      "tail": "tail_1",
+      "deform": true
+    },
+    {
+      "name": "tail_02",
+      "parent": "tail_01",
+      "head": "tail_1",
+      "tail": "tail_2",
+      "deform": true
+    },
+    {
+      "name": "tail_03",
+      "parent": "tail_02",
+      "head": "tail_2",
+      "tail": "tail_3",
+      "deform": true
+    },
+    {
+      "name": "tail_04",
+      "parent": "tail_03",
+      "head": "tail_3",
+      "tail": "tail_4",
+      "deform": true
+    },
+    {
+      "name": "fl_upper",
+      "parent": "spine_03",
+      "head": "fl_joint",
+      "tail": "fl_knee",
+      "deform": true
+    },
+    {
+      "name": "fl_lower",
+      "parent": "fl_upper",
+      "head": "fl_knee",
+      "tail": "fl_ankle",
+      "deform": true
+    },
+    {
+      "name": "fl_paw",
+      "parent": "fl_lower",
+      "head": "fl_ankle",
+      "tail": "fl_toe",
+      "deform": true
+    },
+    {
+      "name": "fr_upper",
+      "parent": "spine_03",
+      "head": "fr_joint",
+      "tail": "fr_knee",
+      "deform": true
+    },
+    {
+      "name": "fr_lower",
+      "parent": "fr_upper",
+      "head": "fr_knee",
+      "tail": "fr_ankle",
+      "deform": true
+    },
+    {
+      "name": "fr_paw",
+      "parent": "fr_lower",
+      "head": "fr_ankle",
+      "tail": "fr_toe",
+      "deform": true
+    },
+    {
+      "name": "bl_upper",
+      "parent": "pelvis",
+      "head": "bl_joint",
+      "tail": "bl_knee",
+      "deform": true
+    },
+    {
+      "name": "bl_lower",
+      "parent": "bl_upper",
+      "head": "bl_knee",
+      "tail": "bl_ankle",
+      "deform": true
+    },
+    {
+      "name": "bl_paw",
+      "parent": "bl_lower",
+      "head": "bl_ankle",
+      "tail": "bl_toe",
+      "deform": true
+    },
+    {
+      "name": "br_upper",
+      "parent": "pelvis",
+      "head": "br_joint",
+      "tail": "br_knee",
+      "deform": true
+    },
+    {
+      "name": "br_lower",
+      "parent": "br_upper",
+      "head": "br_knee",
+      "tail": "br_ankle",
+      "deform": true
+    },
+    {
+      "name": "br_paw",
+      "parent": "br_lower",
+      "head": "br_ankle",
+      "tail": "br_toe",
+      "deform": true
+    },
+    {
+      "name": "Socket_Head",
+      "parent": "head",
+      "head": "crown",
+      "tail": "crown+up",
+      "deform": false
+    },
+    {
+      "name": "Socket_Mouth",
+      "parent": "head",
+      "head": "snout",
+      "tail": "snout+fwd",
+      "deform": false
+    },
+    {
+      "name": "Socket_Back",
+      "parent": "spine_02",
+      "head": "back_top",
+      "tail": "back_top+up",
+      "deform": false
+    },
+    {
+      "name": "ik_fl",
+      "parent": "root",
+      "head": "fl_ankle",
+      "tail": "fl_ankle+fwd",
+      "deform": false
+    },
+    {
+      "name": "ik_fr",
+      "parent": "root",
+      "head": "fr_ankle",
+      "tail": "fr_ankle+fwd",
+      "deform": false
+    },
+    {
+      "name": "ik_bl",
+      "parent": "root",
+      "head": "bl_ankle",
+      "tail": "bl_ankle+fwd",
+      "deform": false
+    },
+    {
+      "name": "ik_br",
+      "parent": "root",
+      "head": "br_ankle",
+      "tail": "br_ankle+fwd",
+      "deform": false
+    }
+  ],
+  "landmarks": {
+    "note": "Detected from the oriented mesh. Heights are fractions of the mesh height H, lengths of its length L. A recipe may override any landmark with model-space [x, y, z] under rig.landmarks.",
+    "legColumnBand": [
+      0.02,
+      0.22
+    ],
+    "legColumnCellFraction": 0.035,
+    "kneeFraction": 0.5,
+    "ankleHeight": 0.06,
+    "toeForward": 0.06,
+    "headRegionFraction": 0.28,
+    "tailRegionFraction": 0.3
+  },
+  "weights": {
+    "proxyVoxelFraction": 0.025,
+    "maxInfluences": 4,
+    "fallback": "nearest bone segment for proxy vertices heat weighting leaves empty"
+  },
+  "gait": {
+    "artPxPerUnit": 32,
+    "idle": {
+      "breathPx": 1,
+      "breathFrames": [
+        3,
+        4
+      ],
+      "tailSwayDeg": 3,
+      "headTurnDeg": 0,
+      "note": "Idle must stay under QA idleFlicker (0.08 changed fraction): breathing on the back only, a small tail sway, no head turn."
+    },
+    "walk": {
+      "upperSwingDeg": 26,
+      "lowerLiftDeg": 38,
+      "bobPx": 1,
+      "phase": {
+        "bl": 0.0,
+        "fl": 0.25,
+        "br": 0.5,
+        "fr": 0.75
+      },
+      "spineYawDeg": 4,
+      "tailSwayDeg": 10,
+      "strideUnits": 0.5,
+      "duty": 0.75,
+      "liftUnits": 0.08
+    },
+    "run": {
+      "upperSwingDeg": 40,
+      "lowerLiftDeg": 55,
+      "bobPx": 2,
+      "leanDeg": 6,
+      "phase": {
+        "bl": 0.0,
+        "br": 0.08,
+        "fl": 0.5,
+        "fr": 0.58
+      },
+      "spineFlexDeg": 10,
+      "tailSwayDeg": 6,
+      "strideUnits": 1.1,
+      "duty": 0.4,
+      "liftUnits": 0.14
+    },
+    "secondaryLagFrames": 1,
+    "settleFrames": 2
+  },
+  "species": {
+    "rivallie": "quadruped",
+    "bramblefang": "quadruped",
+    "marshstalker": "quadruped",
+    "mireling": "quadruped",
+    "steamshell": "shelled",
+    "zephyrit": "winged",
+    "cindermoth": "winged",
+    "ignicap": "mushroom-biped",
+    "note": "Template per species (L6). mireling: quadruped until its sheet says otherwise. Only quadruped is built (2026-11-01); the others are codex tickets."
+  },
+  "ik": [
+    {
+      "bone": "fl_lower",
+      "target": "ik_fl",
+      "chain": 2
+    },
+    {
+      "bone": "fr_lower",
+      "target": "ik_fr",
+      "chain": 2
+    },
+    {
+      "bone": "bl_lower",
+      "target": "ik_bl",
+      "chain": 2
+    },
+    {
+      "bone": "br_lower",
+      "target": "ik_br",
+      "chain": 2
+    }
+  ],
+  "ikNote": "Paw targets are children of root, so stance paws stay planted while the body bobs, leans or rears (ART-9.3). Knees bend the way the fitted rest pose bends (no pole)."
+}

@@ -23,8 +23,8 @@ Consequence, reconciled with asset contract v2: art is **authored** at art-pixel
 resolution and **exported** with exact 2× nearest-neighbour upscaling to the
 contract's display canvases. A human is authored at 48×72 with anchor (24,66) and
 exported at 96×144 with anchor (48,132), exactly the contract's human rig. Creatures
-use the class canvases in the spec (Rivallie: `creature.medium`, 56×56 at (28,44), exported
-at 112×112 with anchor (56,88)).
+use the class canvases in the spec (Rivallie: `creature.medium`, 56×56 at (28,41), exported
+at 112×112 with anchor (56,82)).
 One elevation step is 16 display px, which is 8 art px. Every exported pixel is
 part of a uniform 2×2 block; a lone display pixel is a mixel defect. All exact
 canvases and anchors live in `art/source/forge/spec/render_spec.json`.

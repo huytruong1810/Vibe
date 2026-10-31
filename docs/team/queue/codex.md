@@ -35,7 +35,7 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
   | human.locomotion           | 48×72 @ (24,66) |
   | human.combat               | 80×80 @ (40,72) |
   | creature.small             | 40×44 @ (20,34) |
-  | creature.medium (Rivallie) | 56×56 @ (28,44) |
+  | creature.medium (Rivallie) | 56×56 @ (28,41) |
   | creature.large             | 80×72 @ (40,56) |
   | layer.face                 | 16×12           |
   | layer.heldItem             | 32×32           |
@@ -74,7 +74,7 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 
 ### C2 · Forge contract and multi-clip groundwork
 
-- status: in-progress: claude (2026-11-01), creature half only; the humanoid half (UAL1 bone map, `spec/clips/humanoid.json`) moves to C9
+- status: done (claude, creature half). Humanoid half (UAL1 bone map, `spec/clips/humanoid.json`) is in C9
 - goal: settle the open spec questions, then make the forge handle more than one clip.
 - inputs: `art/source/forge/spec/render_spec.json`, `docs/art/contract.md`, `coverage.ts`
 - work:
@@ -118,11 +118,11 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
     it, see B0);
   - `qa_report.json` shows `orphans` 0;
   - doctor prints the class table.
-- evidence:
+- evidence: 2026-11-01 `spec/render_spec.json` (fps, strideTiles, runtime, phases, facing sets, Socket_* bones, rigIds; creature.medium anchor (28,41)), `spec/skeletons/quadruped.json`, multi-clip qa/contact sheet/turntable/clip GIFs, orphan fix (0), stage caching fix (`record(digest_extra=)`), downstream invalidation, doctor class table
 
 ### C3 · Creature path: rig, animate, faces, publish (golden sample Rivallie)
 
-- status: in-progress: claude (2026-11-01), on machine A
+- status: partial (claude): rig, animate, multi-clip bake, QA and packet done for creatures; `faces` and `publish` moved to C3b
 - goal: Rivallie goes from sheet to a director packet with its full clip matrix; then open the `creatures` gate.
 - inputs: C2, communicator M2 (single-pose Rivallie sheet). Rivallie also runs on the current sheet in the meantime.
 - work:
@@ -166,6 +166,25 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
     idleFlicker ≤ 0.08;
   - doctor shows `creatures: ready`;
   - you've posted `docs/team/comms/codex/<ts>--to-blender--go-creatures.md`.
+- evidence: 2026-11-01 `blender/rig.py`, `blender/animate.py`, `blender/gaits.py`; Rivallie packet `art/review/2026-10-31-rivallie/` (QA candidate, 15 clips, 616 frames, drift 0, orphans 0, idleFlicker 0.060); `--to-blender--go-creatures` posted
+
+### C3b · Creature faces and publish
+
+- status: open
+- goal: finish the creature class. Then `doctor` lists nothing pending for creatures, and approved creature packets can be published.
+- inputs: the Rivallie packet `art/review/2026-10-31-rivallie/`, `bake/tracks.json` (Socket_Head per frame), ART-8, `render_spec.expressions`, `catalog.ts` `AuthoringProvenanceSchema`.
+- work:
+  1. **`faces`**: a palette-indexed decal grammar (eyes 2 px with a 1 px highlight on the light side, brows 1 px, mouth 1–2 px) for the creature subset: neutral, warm, fearful, hurt, sleep.
+     - It is drawn on `layer.face` 16×12, registered to `Socket_Head` in facings s, se, sw, e and w.
+     - Implement the `faceAnchor` QA check.
+     - Rivallie's eyes are `hair-ink` and its nose is `outline-neutral` (sheet ramps).
+  2. **`publish`**:
+     - Define the staging record `art/source/staging/blender/<asset>.json` with frames, clips (fps, playback, strideTiles from the animate record, runtime state/moveId, phases), `sourceSize`, `anchorPx`, sockets per frame and `rigId`.
+     - Include provenance per `AuthoringProvenanceSchema`: `blender-bake`, the `.blend` input as model, the script inputs and the pinned Blender version.
+     - Record the packet sha and the approval record path.
+     - Copy the exact 2× frames from `pix/export/` into `art/source/exports/<asset>/`, gated on the approval file (`st_publish` already checks it).
+  3. In `forge.py` `CLASSES`, remove these two from creatures' `pending`. Update the `sprite-forge` skill and the `qa-fixes.md` banner.
+- done when: Rivallie re-runs with faces in the packet; `publish` writes the staging record once a director approval record exists (test with a scratch record and delete it afterwards); `doctor` shows creatures with nothing pending
 - evidence:
 
 ### C4 · World contract (WLD-4.4)

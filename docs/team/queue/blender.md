@@ -16,13 +16,16 @@ it's blocked, mark it and take the next. Change only `status:` and `evidence:` l
 - done when: the session log is committed, `npm run check:hygiene` passes, and the reply to each test request is pushed
 - evidence:
 
-### B1 · Golden sample: Rivallie (creatures)
+### B1 · Rivallie on the single-pose sheet
 
-- status: blocked: waiting for `docs/team/comms/codex/*--to-blender--go-creatures*`
-- goal: Rivallie sheet → packet with its full creature clip matrix (PRD-4.1).
-- inputs: `art/source/references/rivallie/` (the single-pose sheet from communicator M2 once it lands), `art/source/forge/recipes/rivallie.json`
-- work: `forge.py next --asset rivallie`, then the `sprite-forge` skill loop. Open `rig_preview.png` and `contact.png`. Fix inputs only (recipe, landmarks).
-- done when: the packet is in `art/review/`, status is `candidate`, and you've messaged the communicator and the director
+- status: blocked: waiting for the communicator's single-pose Rivallie sheet (M2)
+- goal: Claude ran the first Rivallie golden sample on the old sheet, using its side view only (`art/review/2026-10-31-rivallie/`, QA `candidate`). When M2 lands, re-run Rivallie on the new sheet and compare.
+- work:
+  1. In `recipes/rivallie.json`, set `gen3d.views` and `texture.views` to every view of the new sheet that shows the same pose.
+  2. Run `forge.py next --asset rivallie` until `packet`.
+  3. Open `gen3d/preview.png` (one creature, one pose), `rig_preview.png` and `contact.png`, and the walk and run GIFs in the packet.
+  4. Report what is better or worse than the 2026-10-31 packet: the belly colour, the silhouette, and how the legs step.
+- done when: a new packet exists, the ticket is `candidate`, and you've messaged the director and the communicator with the comparison
 - evidence:
 
 ### B2 · Riverlands map
@@ -35,8 +38,8 @@ it's blocked, mark it and take the next. Change only `status:` and `evidence:` l
 
 ### B3 · Remaining creatures, one at a time
 
-- status: blocked: B1 must be director-approved first (PRD-4)
-- goal: in this order: bramblefang, marshstalker, mireling, steamshell, zephyrit, cindermoth, ignicap. Each needs its reference sheet from the communicator and its class gate (`go-creatures` covers only the templates doctor lists as ready).
+- status: blocked: the director must approve a Rivallie golden sample first (PRD-4)
+- goal: quadruped species first, in this order: bramblefang, marshstalker, mireling. steamshell (shelled), zephyrit and cindermoth (winged) and ignicap (mushroom-biped) wait for codex templates. Each needs its reference sheet from the communicator (all-fours pose for quadrupeds, same pose in every view).
 - done when: a packet per species, each `candidate`
 - evidence:
 

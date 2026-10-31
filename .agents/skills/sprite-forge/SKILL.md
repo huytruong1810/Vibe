@@ -35,12 +35,22 @@ The old box-modelling scripts were deleted; never recreate them.
 $F next --asset <asset-id>      # prints the exact next command, or BLOCKED: <reason>
 ```
 
-Run exactly what it prints. Repeat. Typical order: `prep → gen3d → clean → rig →
-fit → animate → bake → pixelize → faces → items → qa → packet`.
+Run exactly what it prints. Repeat. Built order for creatures: `prep → gen3d → clean →
+texture → rig → animate → bake → pixelize → qa → packet`. (`fit`, `faces` and `items`
+are added by codex; `doctor` lists what exists.)
 
-After **every** stage that writes images (`gen3d` preview, `rig` preview, `bake`
-preview, `pixelize`, `qa`), open the PNG it names with `read_file` and write one
-line in your session log saying what you saw.
+After **every** stage that writes images, open the PNG it names with `read_file` and
+write one line in your session log saying what you saw:
+
+- `gen3d/preview.png`: one creature in **one pose**. Two bodies fused together means a
+  mixed-pose sheet (recipes README, `gen3d.views`).
+- `texture_preview.png`: colours sit on the right parts.
+- `rig_preview.png`: red dots on the body (head, spine, legs), yellow dots along the
+  tail; in the stride, rear-up and head-turn test poses nothing tears, stretches into
+  spikes or leaves parts behind.
+- `contact.png` (after `qa`): rest pose in 8 facings on grey and grass, then one row
+  per clip. Also open `art/review/<packet>/clips/<clip>.gif` for walk, run and idle
+  after `packet`: legs should step, not slide or swim.
 
 ## 2. QA and the contact sheet
 

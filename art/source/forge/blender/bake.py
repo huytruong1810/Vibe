@@ -3,7 +3,7 @@
 blender -b --factory-startup -P bake.py -- <in.blend> <out_dir> <params.json>
 params: {"canvas": [w, h], "anchor": [ax, ay], "artPxPerUnit": 32, "elevationDeg": 30,
          "facings": {"s": 0, ...}, "clips": [{"name": "idle", "action": "Idle" | null,
-         "frames": [1, 5, ...]}], "sockets": ["DEF-head", ...]}
+         "frames": [1, 5, ...], "facings": ["n", "e", ...]}], "sockets": ["Socket_Head", ...]}
 Writes <out_dir>/<clip>/<facing>_<i>_{albedo,normal,depth}.png (16-bit, raw/linear) and
 <out_dir>/tracks.json with projected root/socket positions in art pixels (doctrine L2, L4, ART-2).
 One sample at the pixel centre with a 0.01 px filter: no anti-aliasing, fully deterministic.
@@ -159,7 +159,8 @@ for clip in P["clips"]:
         arm.animation_data_create()
         arm.animation_data.action = bpy.data.actions[clip["action"]]
     ctrack = tracks["clips"].setdefault(clip["name"], {})
-    for facing, deg in P["facings"].items():
+    wanted = clip.get("facings") or list(P["facings"])  # 4-facing clips render cardinals only
+    for facing, deg in ((f, d) for f, d in P["facings"].items() if f in wanted):
         pivot.rotation_euler = (0, 0, math.radians(deg))
         ftrack = ctrack.setdefault(facing, [])
         for i, frame in enumerate(clip.get("frames") or [scene.frame_current]):
