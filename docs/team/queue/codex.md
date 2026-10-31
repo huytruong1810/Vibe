@@ -187,6 +187,8 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 - done when: Rivallie re-runs with faces in the packet; `publish` writes the staging record once a director approval record exists (test with a scratch record and delete it afterwards); `doctor` shows creatures with nothing pending
 - evidence: [C3b tool handoff](../comms/codex/2026-10-31T2146--to-blender--c3b-publish-and-faces.md); [registered face candidate](../../../art/review/2026-10-31-rivallie-faces-145faf106c4e/faces.json); 16 finishing and two packet-export tests pass. Body approval excludes faces; no approved packet is rerun.
 
+- distribution: source-only branch `eng/c3b-c7-tools` at `f037e2e` / draft PR #3 avoids the protected runbook merge delta. [Guarded handoff](../comms/codex/2026-10-31T2346--to-blender--c3b-source-only-handoff.md); machine-A execution remains outstanding.
+
 ### C3d · Forge quality: speckles, lying creatures, edge wrap, Marshstalker tail, digest-bound publish
 
 - status: done (claude, 2026-10-31T1636Z)

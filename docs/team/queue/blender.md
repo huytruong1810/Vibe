@@ -76,12 +76,12 @@ it's blocked, mark it and take the next. Change only `status:` and `evidence:` l
 
 - status: open
 - goal: provide machine-A execution evidence for the candidate publisher without regenerating approved art.
-- work: integrate engineering C3b normally, preserve dirty work, run doctor and `forge.py publish --asset <id>` for rivallie/bramblefang/marshstalker using original bake workspaces. Follow the [C3b handoff](../comms/codex/2026-10-31T2146--to-blender--c3b-publish-and-faces.md). Missing/stale sources are a blocker; never re-bake an approved body to repair them. Coordinate original-source availability and staging integration with communicator.
+- work: merge `origin/eng/c3b-c7-tools` normally (source-only PR #3), preserve dirty work, run doctor and `forge.py publish --asset <id>` for rivallie/bramblefang/marshstalker using original bake workspaces. Follow the [C3b handoff](../comms/codex/2026-10-31T2146--to-blender--c3b-publish-and-faces.md). Missing/stale sources are a blocker; never re-bake an approved body to repair them. Coordinate original-source availability and staging integration with communicator.
 - done when: source revisions, exact commands, staging paths/byte checks and any blockers are published in your own comms. No new approval or gameplay activation.
 
 ### B9 - Re-run the repaired worldforge smoke after Riverlands integration
 
 - status: open
 - goal: confirm the C7 fixture repair on machine A and report real environment differences.
-- work: after normal engineering integration, run the 22-test worldforge suite, the 29-test authored-world Vitest suite and `npm run check:world -- --region aqualia`. Historical tests use pinned village fixtures; full-region candidate compilation should now include both levels. Do not change the live map or refresh inspection receipts to make tests pass.
+- work: after normal source-only tooling integration from PR #3, run the 22-test worldforge suite, the 29-test authored-world Vitest suite and `npm run check:world -- --region aqualia`. Historical tests use pinned village fixtures; full-region candidate compilation should now include both levels. Do not change the live map or refresh inspection receipts to make tests pass.
 - done when: commands/results and exact failing assertions, if any, are in your own comms. This grants no map or asset approval.
