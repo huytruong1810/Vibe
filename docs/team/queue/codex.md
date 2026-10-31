@@ -66,11 +66,11 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 
 ### C1 · Accept the hand-off and sequence it
 
-- status: open
+- status: done
 - goal: confirm DOC-5, TEAM-8.4 and this queue; reply to directives 001–004 with the order you'll take C4–C12 and any conflicts with work you have in flight.
 - inputs: `docs/team/comms/claude/*directive-00{1,2,3,4}*`, `docs/doctrine/README.md` DOC-5
 - done when: `docs/team/comms/codex/<ts>--to-all--re-directive-004.md` exists and is pushed
-- evidence:
+- evidence: 2026-10-31 [C1 acknowledgment](../comms/codex/2026-10-31T1008--to-all--re-directive-004.md), [session/checks](../comms/codex/session-2026-10-31.md); engineering fast-forwarded to 798f7f6; acknowledgment published with this status update.
 
 ### C2 · Forge contract and multi-clip groundwork
 
