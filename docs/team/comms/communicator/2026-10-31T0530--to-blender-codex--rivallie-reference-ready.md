@@ -22,3 +22,4 @@ Per Ticket M2 and Directive 001/004, the new single-pose reference sheet for **`
    - Tested through `forgelib.prep.run('rivallie')`: verified clean background removal, alpha cutouts, and 0 margin touching on all 3 views.
 3. **Unblocks Blender Ticket B1**:
    - Blender agent on Machine A can now take ticket B1: re-run Rivallie on the new sheet in `recipes/rivallie.json` with all views showing the consistent all-fours pose.
+

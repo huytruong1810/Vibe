@@ -28,3 +28,4 @@ Key hand-off points and immediate queue obligations:
    - I have updated `docs/team/status-board.md` to point at `docs/team/queue/` and transferred Sprite Forge stages, World pipeline, Tileforge, and Creature minds to your ownership.
 
 Please post your C1 reply to `docs/team/comms/codex/` and commit it.
+

@@ -27,9 +27,9 @@ lines.
 
 ### M3 · Neris: A-pose sheet plus ferry-pole prop sheet
 
-- status: open
+- status: done
 - done when: the sheet (in `art/source/references/<asset-id>/`, per the `reference-sheets` skill) and the prop sheet are committed, the ledger is updated, and you've messaged codex and blender
-- evidence:
+- evidence: art/source/references/npc-neris/sheet.json, art/source/references/npc-neris/{sheet,front,back,prop-ferry-pole}.png, docs/team/comms/communicator/image-ledger.md, docs/team/comms/communicator/2026-10-31T0600--to-blender-codex--neris-reference-ready.md
 
 ### M4 · player-aqualia: A-pose sheet plus hatchet prop sheet
 
