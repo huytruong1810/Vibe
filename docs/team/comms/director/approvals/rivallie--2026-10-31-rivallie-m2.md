@@ -6,6 +6,7 @@ decision: changes-requested
 scope: [body, clips]
 date: 2026-10-31
 recordedBy: claude on the director's instruction (2026-10-31T1620Z)
+superseded-by: rivallie--2026-10-31-rivallie-c3d.md
 ---
 
 Reviewed `contact.png` and the clip strips:
