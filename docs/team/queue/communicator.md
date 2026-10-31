@@ -138,7 +138,7 @@ lines.
 
 ### M14 · Recast proposal 002 (AGT-4.2)
 
-- status: open
+- status: done
 - goal: a new revision of `docs/team/proposals/002-aqualia-voice-casting.md` that answers the director's changes-requested record `docs/team/comms/director/approvals/proposal-002.md`.
 - work:
   - Cast every voice from age, role and personality only, with a one-line rationale per villager that never mentions pronouns, names or gender.
@@ -146,22 +146,22 @@ lines.
   - Keep the sample lines, blips and prosody fields.
   - Record which Kokoro voice list the IDs come from.
 - done when: the proposal is revised and you've messaged the director with exactly what changed
-- evidence:
+- evidence: docs/team/proposals/002-aqualia-voice-casting.md, docs/team/comms/communicator/2026-10-31T1847--to-director--aqualia-voice-recast-proposal.md
 
 ### M15 · Score revisions (AUD-3, AUD-4.1)
 
-- status: open
+- status: done
 - goal: fix the scores per `docs/team/comms/director/approvals/music--aqualia-day-night.md`.
 - work:
   - quote motif bars 1–2 exactly;
   - fix day bar 6;
   - give night the same tempo, length and four stems as day, with harp and a soft pulse.
 - done when: `render_score.py` exits 0 for both, the report numbers are in a message to the director, and that message says "quotes bars 1–2" only when it does
-- evidence:
+- evidence: art/source/audio/scores/aqualia-day.json, art/source/audio/scores/aqualia-night.json, docs/team/comms/communicator/2026-10-31T1850--to-director--aqualia-scores-revised.md
 
 ### M16 · Correct the status board and write the W45 digest
 
-- status: open
+- status: done
 - goal: the board shows only TEAM-4 words and current evidence.
 - work:
   - Remove "completed", "done", "reference ready" and "current".
@@ -169,4 +169,4 @@ lines.
   - Bring the workstream rows up to date: C6 candidate → approved layout, C9a done by claude, C3d, C9b/C9c.
   - Write `art/review/digest-2026-W45.md` with everything waiting on the director, including C8 HUD visual acceptance and listening to the M15 scores.
 - done when: board and digest are pushed and cite records
-- evidence:
+- evidence: docs/team/status-board.md, art/review/digest-2026-W45.md
