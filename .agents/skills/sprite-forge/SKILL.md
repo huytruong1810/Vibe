@@ -36,8 +36,8 @@ $F next --asset <asset-id>      # prints the exact next command, or BLOCKED: <re
 ```
 
 Run exactly what it prints. Repeat. Built order for creatures and humans: `prep → gen3d → clean →
-texture → rig → animate → bake → pixelize → qa → packet`. (`fit`, `faces` and `items`
-are added by codex; `doctor` lists what exists.) Humans need an **A-pose** sheet
+texture → rig → animate → bake → pixelize → qa → packet`. (`fit`, human `faces` and `items`
+remain C9b; creature faces use the separate sidecar command below.) Humans need an **A-pose** sheet
 (PRD-3.1) at 4.5–5 heads (L3); their clips come from the UAL animation libraries.
 
 After **every** stage that writes images, open the PNG it names with `read_file` and
@@ -92,6 +92,31 @@ of the sprite. Status: `candidate`. **Wait** for an approval record in
 ```
 $F publish --asset <asset-id>   # refuses without a director-approved record
 ```
+
+## 3b. Approved creature bodies and separate faces (C3b)
+
+Do not re-run an approved body to add faces (PRD-9). On machine A, with its
+original bake workspace available:
+
+```
+$F publish --asset rivallie
+$F faces --asset rivallie
+```
+
+`publish` verifies the body/clip approval scope, every PNG and reconstructed bake
+metadata before writing immutable exports and an atomic staging record. It needs
+the original `animate.blend`, tracks and stage records, plus Blender 4.2.x. Missing
+sources are a blocker, never a reason to regenerate an approved packet.
+
+`faces` writes a **separate candidate** in `art/review/*-faces-*/`: `faces.json`,
+`contact.png` and `registered.png`. Open both images. Five expressions in order:
+neutral, warm, fearful, hurt, sleep. Columns: s, se, sw, e, w. No back-face decal.
+Face-anchor bounds QA does not approve anatomical fit or emotion readability.
+Request a separate director decision for faces; body approval does not cover them.
+
+The communicator alone integrates staging into `manifest.json` (TEAM-2a), including
+canonical identity mapping. Codex owns compilation and approval-ledger transcription.
+No CLI publication changes gameplay or grants a face approval.
 
 ## 4. Recipes (your main creative input)
 

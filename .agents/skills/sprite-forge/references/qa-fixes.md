@@ -1,8 +1,8 @@
 # QA failure → input fix
 
 > **Built (2026-11-01):** `rig` and `animate` for creatures (quadruped template) and humans
-> (UAL2 rig, UAL clips). **Not built yet:** `fit`, `faces`, `items`, `publish` and the checks
-> `thinFeature` and `faceAnchor`. If a row names something doctor doesn't list as built,
+> (UAL2 rig, UAL clips). **C3b:** creature `faces`, body/clip `publish` and `faceAnchor` are built.
+> **Not built yet:** human faces, `fit`, `items` and `thinFeature`. If a row names something doctor doesn't list as built,
 > ignore the row and message codex. Codex updates this file when each one lands.
 
 Fix the earliest input that explains the failure, then re-run from the stage named.
@@ -26,3 +26,8 @@ Never change `spec/` limits or forge code (PRD-6.3).
 | `referenceFidelity`                                                        | PRD-3.5           | Ramps don't match the reference colours                                                   | Re-pick ramps closest to the sheet's dominant colours                                                                                  | `pixelize`        |
 | `valueContrast`                                                            | ART-7.3           | Character too close in value to a ground material                                         | Shift the dominant costume ramp darker or lighter (director decides if identity changes)                                               | `pixelize`        |
 | `faceAnchor`                                                               | ART-8             | Head bone landmark misplaced                                                              | Re-run `rig` and check the landmark preview image                                                                                      | `rig`             |
+
+For `faceAnchor`, inspect the separate face packet and the head socket overlay.
+For an unapproved body, correct rig inputs and regenerate its candidate. For an
+approved body, report the exact failing frame and preserve its digest; agree a new
+candidate/review with the director before any re-rig or re-bake (PRD-9).

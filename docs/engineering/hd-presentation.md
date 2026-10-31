@@ -157,3 +157,43 @@ zero/partial/full masks, time boundaries/pause/restore, UI-independent save outc
 and desktop browser journeys with occupied slots, companion needs and real duels.
 Review captures are linked from the Codex handoff. C8b remains candidate until the
 director records visual acceptance; placeholder world artwork is not approved by it.
+
+## C3b creature publication and face sidecars
+
+The forge's creature `publish` stage consumes an existing body/clip director record
+and original machine-A workspace. It validates frame hashes, clip references,
+integer registration, actual RGBA dimensions, hard QA and the approval's asset,
+scope, path and digest. Reconstructing a temporary review from the original bake
+also detects edited metadata with an unchanged digest label. It never overwrites
+the approved packet or creates an approval record.
+
+Exports live in `art/source/exports/<asset>/<body-digest>/`; the staging pointer is
+`art/source/staging/blender/<asset>.json`. Frames retain source size, integer root,
+sockets and rig identity. Clips retain timing/runtime/move metadata; distance
+strides come from the actual animate record rather than generic defaults. Provenance
+uses the shared generated AuthoringProvenance contract and pins the original blend,
+tracks, relevant publication scripts, animate record and Blender 4.2.x. Original
+model bytes must still match their stage record. Content-addressed exports precede
+an atomic staging-record replacement; a failed pointer write retains the previous
+record and can leave only an unreferenced immutable export directory.
+
+The communicator integrates staging into the source manifest (TEAM-2a), translating
+frame IDs/paths and canonical species bindings without losing registration or
+provenance. Staging is not automatically ingested or activated by the compiler.
+Provenance references original workspace artifacts: source availability on another
+machine must be resolved before compiling those records there. Missing sources
+must not be fabricated or replaced with a fresh bake of an approved asset.
+
+`faces --asset rivallie` creates a separate `art/review/*-faces-*/` candidate from the
+existing body review. It draws palette-indexed ART-8 grammar on the 16x12 art-pixel
+decal canvas and exports nearest-neighbor 32x24 PNGs: neutral, warm, fearful, hurt,
+sleep in s/se/sw/e/w. Back facings intentionally have no decal. Its `faceAnchor`
+check binds Socket_Head registration and decal ink bounds across supplied frames;
+contact and standing registered previews support visual review. Bounds alone do
+not establish anatomical fit, occlusion or emotion readability during movement.
+
+Face candidates bind their body manifest/digest and have their own source digest.
+Body/clip approval excludes faces; adding faces never changes the approved body
+packet or activates a runtime face layer. Human expressions/composition remain
+separate C9b/C8 work. Machine-B unit tests use fake approvals only in temporary
+repositories; production publish and moving face review still require machine A.

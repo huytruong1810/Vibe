@@ -170,7 +170,7 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 
 ### C3b · Creature faces and publish
 
-- status: open
+- status: partial (tool implementation candidate; machine-A publication and face review remain)
 - goal: finish the creature class. Then `doctor` lists nothing pending for creatures, and approved creature packets can be published.
 - inputs: the Rivallie packet `art/review/2026-10-31-rivallie/`, `bake/tracks.json` (Socket_Head per frame), ART-8, `render_spec.expressions`, `catalog.ts` `AuthoringProvenanceSchema`.
 - work:
@@ -185,7 +185,7 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
      - Copy the exact 2× frames from `pix/export/` into `art/source/exports/<asset>/`, gated on the approval file (`st_publish` already checks it).
   3. In `forge.py` `CLASSES`, remove these two from creatures' `pending`. Update the `sprite-forge` skill and the `qa-fixes.md` banner.
 - done when: Rivallie re-runs with faces in the packet; `publish` writes the staging record once a director approval record exists (test with a scratch record and delete it afterwards); `doctor` shows creatures with nothing pending
-- evidence:
+- evidence: [C3b tool handoff](../comms/codex/2026-10-31T2146--to-blender--c3b-publish-and-faces.md); [registered face candidate](../../../art/review/2026-10-31-rivallie-faces-145faf106c4e/faces.json); 16 finishing and two packet-export tests pass. Body approval excludes faces; no approved packet is rerun.
 
 ### C3d · Forge quality: speckles, lying creatures, edge wrap, Marshstalker tail, digest-bound publish
 

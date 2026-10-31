@@ -314,3 +314,17 @@ remain unchanged. Native dimensions and DOM focus require browser verification
 in addition to pixel/compiler tests. Visual acceptance remains director-owned.
 See [C8b presentation details](hd-presentation.md#c8b-kit-meters-slots-and-time-card).
 
+## ADR 024 — Scope-bound creature publication without body regeneration
+
+**Decision:** C3b publishes the existing approved body packet through a validation
+and atomic staging boundary. Reconstruct its review from original source artifacts
+to bind metadata as well as bytes. Preserve actual per-species locomotion stride.
+Keep faces in independent candidate sidecars bound to the body manifest; body/clip
+approval never grants face approval. Do not insert faces into the linear body stage
+chain, which would invalidate approved bodies merely to add a decal.
+
+**Consequences:** source artifacts and their compatible pinned specification remain
+necessary on machine A. A missing or changed source is an explicit blocker, not
+permission to generate a replacement for an approved packet. The communicator owns
+manifest integration and Codex owns compilation/ledger transcription. Publication
+does not activate an appearance. See [C3b contracts](hd-presentation.md#c3b-creature-publication-and-face-sidecars).
