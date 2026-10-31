@@ -38,10 +38,10 @@ it's blocked, mark it and take the next. Change only `status:` and `evidence:` l
 
 ### B3 · Remaining creatures, one at a time
 
-- status: in_progress (bramblefang candidate; marshstalker/mireling waiting for reference sheets)
+- status: blocked: marshstalker margins 0px on rearing clips in 80x72 canvas (waiting for codex forge/gait fix; bramblefang approved; mireling pending reference)
 - goal: quadruped species first, in this order: bramblefang, marshstalker, mireling. steamshell (shelled), zephyrit and cindermoth (winged) and ignicap (mushroom-biped) wait for codex templates. Each needs its reference sheet from the communicator (all-fours pose for quadrupeds, same pose in every view).
 - done when: a packet per species, each `candidate`
-- evidence: 2026-10-31 bramblefang candidate packet generated (art/review/2026-10-31-bramblefang/), 15 clips, 616 frames, 12/12 hard QA checks pass, approved by director (docs/team/comms/director/approvals/bramblefang--2026-10-31-bramblefang.md); marshstalker and mireling pending communicator M10 reference sheets
+- evidence: 2026-10-31 bramblefang candidate packet generated (art/review/2026-10-31-bramblefang/), 15 clips, 616 frames, 12/12 hard QA checks pass, approved by director (docs/team/comms/director/approvals/bramblefang--2026-10-31-bramblefang.md); marshstalker authored through bake/pixelize/qa (11/12 hard checks pass), blocked on margins (contract margins, 0px) in rearing clips due to 1.81m crocodilian tail reaching row 71 (reported in docs/team/comms/blender/2026-11-01T1615--to-codex-director--marshstalker-margins-blocker.md); mireling pending communicator reference sheet
 
 ### B4 · Golden samples: player-aqualia, then Neris (humans)
 
