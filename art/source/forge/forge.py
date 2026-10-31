@@ -8,6 +8,7 @@ Commands:
   status --asset ID      stage table for one asset
   next --asset ID        print the exact next command, or BLOCKED: <reason>
   prep|gen3d|clean|texture|rig|animate|bake|pixelize|qa|packet|publish --asset ID   run one stage
+  faces --asset ID       separate creature decal candidate; never re-bakes an approved body
   all --asset ID         run every runnable stage in order (stops at the first block)
 """
 
@@ -31,7 +32,7 @@ CMD = "uv run --project art/source/forge python art/source/forge/forge.py"
 STAGES = ["prep", "gen3d", "clean", "texture", "rig", "animate", "bake", "pixelize", "qa", "packet", "publish"]
 # Readiness per asset class (doctor). A class is ready when every stage it needs up to `packet` exists.
 CLASSES = {
-    "creatures": {"ready": True, "pending": ["faces (creature subset)", "publish"], "templates": ["quadruped"]},
+    "creatures": {"ready": True, "pending": [], "templates": ["quadruped"]},
     "humans": {"ready": True, "pending": ["faces", "items (held layers)", "fit (garment parts)", "publish"], "templates": ["humanoid"]},
     "items": {"ready": False, "pending": ["items stage (8 facings x 8 grips + icon)"], "ticket": "codex C9b"},
     "environment": {"ready": False, "pending": ["environment kind: canvas, depth stretch, layers, footprint QA"], "ticket": "codex C10"},
@@ -381,11 +382,41 @@ def approval_for(asset: str) -> tuple[Path, Path] | None:
 
 
 def st_publish(asset: str) -> str:
+    if asset_kind(asset) != "creature":
+        raise ForgeError("Human publication remains C9b; C3b supports creatures only.")
     found = approval_for(asset)
     if not found:
         raise ForgeError(f"No director-approved record in {_rel(core.APPROVALS)} whose packetDigest matches the current "
                          f"packet of {asset} (L7, PRD-9). Regenerated frames need a new approval; wait for the director.")
-    raise ForgeError(f"Approval {_rel(found[0])} matches; publish itself is not built yet (codex C3b).")
+    from forgelib.publish import publish_body
+    import re
+    version = subprocess.run([core.blender_bin(), "--version"], capture_output=True, text=True, check=True).stdout
+    match = re.search(r"Blender (4\.2\.\d+)", version)
+    if not match:
+        raise ForgeError("Publish needs the pinned Blender 4.2.x binary")
+    wd = work_dir(asset)
+    path = publish_body(REPO, wd, found[1], found[0], asset, spec("render_spec"), _canvas(asset), match[1])
+    record(asset, "publish", [found[0], found[1] / "review.json"], [path], {"scope": ["body", "clips"]})
+    return f"staged {_rel(path)}; faces need separate approval; gameplay activation is not changed"
+
+
+def st_faces(asset: str) -> str:
+    """Sidecar workflow: do not insert faces into the approved body's stage chain."""
+    if asset_kind(asset) != "creature":
+        raise ForgeError("Human expression grammar remains C9b")
+    from forgelib.faces import build_faces
+    found = approval_for(asset)
+    packets = sorted(core.REVIEW.glob(f"*-{slug(asset)}/review.json"))
+    if not found and not packets:
+        raise ForgeError("Faces need an existing body review packet with head sockets")
+    packet = found[1] if found else packets[-1].parent
+    code = core.FORGE / "forgelib/faces.py"
+    revision = core.digest([code, packet / "review.json", core.SPEC_DIR / "palette.json", core.SPEC_DIR / "render_spec.json"])[:12]
+    output = core.REVIEW / f"{time.strftime('%Y-%m-%d', time.gmtime())}-{slug(asset)}-faces-{revision}"
+    report = build_faces(packet, output, asset, spec("render_spec"), spec("palette"))
+    record(asset, "faces", [code, packet / "review.json"], [output / "faces.json", output / "contact.png"],
+           {"status": report["status"], "scope": ["faces"]})
+    return f"{report['status']}: {_rel(output)}; OPEN contact.png and registered.png; request a separate faces decision"
 
 
 RUNNERS = {"prep": st_prep, "gen3d": st_gen3d, "clean": st_clean, "texture": st_texture, "rig": st_rig, "animate": st_animate, "bake": st_bake,
@@ -394,6 +425,12 @@ RUNNERS = {"prep": st_prep, "gen3d": st_gen3d, "clean": st_clean, "texture": st_
 
 # ---------------------------------------------------------------- next / status / doctor
 def next_step(asset: str) -> str:
+    # Approved bodies must not be sent back through prep merely because this machine
+    # lacks machine-A stage caches. Publishing validates the originals on machine A.
+    if approval_for(asset):
+        published = core.stage_record(asset, "publish")
+        if not published:
+            return f"{CMD} publish --asset {asset}"
     try:
         core.load_sheet(asset)
     except ForgeError as e:
@@ -417,6 +454,13 @@ def next_step(asset: str) -> str:
                 return f"{CMD} packet --asset {asset}"
             continue
         if st == "publish":
+            if rec:
+                output = next(iter(rec["outputs"]), None)
+                path = REPO / output if output else None
+                if path and path.is_file() and core.sha256_file(path) == rec["outputs"][output]:
+                    return "body/clips staged; face candidates and their approval are separate"
+            if approval_for(asset):
+                return f"{CMD} publish --asset {asset}"
             return "BLOCKED: waiting for the director's approval record (L7). Message the director with the packet path."
         if not rec:
             return f"{CMD} {st} --asset {asset}"
@@ -551,7 +595,7 @@ def _run(asset: str, st: str) -> str:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("command", choices=["doctor", "selftest", "status", "next", "all", *STAGES])
+    ap.add_argument("command", choices=["doctor", "selftest", "status", "next", "all", "faces", *STAGES])
     ap.add_argument("--asset")
     ap.add_argument("--kind", choices=["human", "creature", "all"], default="all", help="selftest fixture kind")
     a = ap.parse_args()
@@ -570,14 +614,18 @@ def main() -> int:
             print(next_step(a.asset))
         elif a.command == "status":
             print(status(a.asset))
+        elif a.command == "faces":
+            print(st_faces(a.asset))
         elif a.command == "all":
+            if approval_for(a.asset):
+                raise ForgeError("This body has a matching director approval; use publish or faces, not an all-stage rerun (PRD-9).")
             for st in STAGES[:-2]:
                 print(f"[{st}] {_run(a.asset, st)}")
             print("next:", next_step(a.asset))
         else:
             print(f"[{a.command}] {_run(a.asset, a.command)}")
             print("next:", next_step(a.asset))
-    except ForgeError as e:
+    except (ForgeError, OSError, ValueError, KeyError) as e:
         print(f"FORGE ERROR [{a.command}]: {e}", file=sys.stderr)
         return 2
     return 0

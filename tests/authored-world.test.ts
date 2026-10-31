@@ -1,4 +1,4 @@
-import { readFile, mkdtemp, rm } from 'node:fs/promises';
+import { readFile, writeFile, mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { beforeAll, expect, it } from 'vitest';
@@ -298,9 +298,24 @@ it('rejects malformed compiled input before exposing a world', () => {
 it('validates the official project and scoped QA, and refuses unfinished full-region compilation', async () => {
   const bytes = await buildWorld({ region: 'aqualia', level: options.level, check: true });
   expect(JSON.parse(bytes).provenance.contractDigest).toMatch(/^[a-f0-9]{64}$/);
-  await expect(buildWorld({ region: 'aqualia', check: true })).rejects.toThrow(
-    'Worldforge validation failed',
-  );
+  const directory = await mkdtemp(join(tmpdir(), 'hearthwild-draft-map-'));
+  try {
+    const draft = structuredClone(source);
+    const riverlands = draft.levels.find((l) => l.identifier === 'aqualia_riverlands')!;
+    // Deliberately unfinished fixture, independent of live authoring progress.
+    riverlands.layerInstances.forEach((l) => {
+      l.intGridCsv.fill(0);
+      l.entityInstances = [];
+    });
+    const project = join(directory, 'draft.ldtk');
+    await writeFile(project, JSON.stringify(draft));
+    await expect(buildWorld({ region: 'aqualia', check: true, project })).rejects.toThrow(
+      'Worldforge validation failed',
+    );
+    await expect(buildWorld({ region: 'aqualia', project })).rejects.toThrow('validation only');
+  } finally {
+    await rm(directory, { recursive: true, force: true });
+  }
 }, 30000);
 it('atomically replaces valid output and preserves it when compilation is rejected', async () => {
   const dir = await mkdtemp(join(tmpdir(), 'hearthwild-import-')),
