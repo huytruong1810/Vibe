@@ -1,12 +1,13 @@
 """
-Hearthwild Master Modular Humanoid Rig & Socket System.
-Constructs a standardized, reusable low-poly stylized humanoid rig in Blender 4.2+
-with standard bone hierarchy, modular equipment sockets, full vertex weighting,
-procedural idle breathing & walk animations, and modular hair/outfit/tool attachments
-for Player Aqualia and key villagers.
-
-Outputs:
-  art/source/blender/models/humanoid_modular_base.blend
+Master Modular Humanoid Rig and Comprehensive Cast Builder for Hearthwild.
+Constructs humanoid_modular_base.blend containing:
+1. Master Humanoid Rig Armature (19 deform bones + 10 equipment sockets).
+2. Low-poly stylized base mannequin body skinned to the skeleton.
+3. Complete modular attachments library covering all 30 villagers + 3 player origins:
+   - 25 distinct modular hairstyles & headgear (Col_Hair)
+   - 22 distinct modular outfits rigged with Armature modifiers (Col_Outfits)
+   - 24 distinct modular handheld tools parented to Socket_Hand.R (Col_Tools)
+4. Keyframed procedural idle_breathing (6 frames) and walk (8 frames) action tracks.
 """
 
 import sys
@@ -16,22 +17,20 @@ from pathlib import Path
 try:
     import bpy
     import bmesh
-    from mathutils import Vector, Euler, Matrix
 except ImportError:
-    print("This script must be executed inside Blender: blender -b -P build_modular_rig.py")
+    print("Must be executed inside Blender: blender -b -P build_modular_rig.py")
     sys.exit(1)
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 MODELS_DIR = REPO_ROOT / "art" / "source" / "blender" / "models"
 MODELS_DIR.mkdir(parents=True, exist_ok=True)
-OUT_BLEND = MODELS_DIR / "humanoid_modular_base.blend"
 
 def reset_scene():
     bpy.ops.wm.read_factory_settings(use_empty=True)
 
-def add_materials(mesh: bpy.types.Mesh, mat_list: list[bpy.types.Material]):
-    for m in mat_list:
-        mesh.materials.append(m)
+def hex_to_rgb(hex_str: str) -> tuple[float, float, float]:
+    hex_str = hex_str.lstrip("#")
+    return tuple(int(hex_str[i:i+2], 16) / 255.0 for i in (0, 2, 4))
 
 def create_material(name: str, r: float, g: float, b: float, a: float = 1.0) -> bpy.types.Material:
     mat = bpy.data.materials.new(name)
@@ -44,366 +43,307 @@ def create_material(name: str, r: float, g: float, b: float, a: float = 1.0) -> 
             bsdf.inputs["Roughness"].default_value = 0.7
     return mat
 
-def hex_to_rgb(hex_str: str) -> tuple[float, float, float]:
-    hex_str = hex_str.lstrip("#")
-    return tuple(int(hex_str[i:i+2], 16) / 255.0 for i in (0, 2, 4))
+def add_materials(mesh, mat_list):
+    for m in mat_list:
+        mesh.materials.append(m)
 
 def add_box_bmesh(bm, center, size, mat_idx=0):
     cx, cy, cz = center
-    sx, sy, sz = size[0] / 2, size[1] / 2, size[2] / 2
-    verts = [
-        bm.verts.new((cx - sx, cy - sy, cz - sz)),
-        bm.verts.new((cx + sx, cy - sy, cz - sz)),
-        bm.verts.new((cx + sx, cy + sy, cz - sz)),
-        bm.verts.new((cx - sx, cy + sy, cz - sz)),
-        bm.verts.new((cx - sx, cy - sy, cz + sz)),
-        bm.verts.new((cx + sx, cy - sy, cz + sz)),
-        bm.verts.new((cx + sx, cy + sy, cz + sz)),
-        bm.verts.new((cx - sx, cy + sy, cz + sz)),
-    ]
+    sx, sy, sz = size[0] / 2.0, size[1] / 2.0, size[2] / 2.0
+    v0 = bm.verts.new((cx - sx, cy - sy, cz - sz))
+    v1 = bm.verts.new((cx + sx, cy - sy, cz - sz))
+    v2 = bm.verts.new((cx + sx, cy + sy, cz - sz))
+    v3 = bm.verts.new((cx - sx, cy + sy, cz - sz))
+    v4 = bm.verts.new((cx - sx, cy - sy, cz + sz))
+    v5 = bm.verts.new((cx + sx, cy - sy, cz + sz))
+    v6 = bm.verts.new((cx + sx, cy + sy, cz + sz))
+    v7 = bm.verts.new((cx - sx, cy + sy, cz + sz))
+
     faces = [
-        (0, 1, 2, 3), # Bottom
-        (4, 7, 6, 5), # Top
-        (0, 4, 5, 1), # Front
-        (2, 6, 7, 3), # Back
-        (0, 3, 7, 4), # Left
-        (1, 5, 6, 2), # Right
+        (v0, v1, v2, v3), (v4, v7, v6, v5),
+        (v0, v4, v5, v1), (v2, v6, v7, v3),
+        (v0, v3, v7, v4), (v1, v5, v6, v2),
     ]
     created_faces = []
-    for f in faces:
-        face = bm.faces.new([verts[i] for i in f])
-        face.material_index = mat_idx
-        created_faces.append(face)
-    return verts, created_faces
+    for fverts in faces:
+        f = bm.faces.new(fverts)
+        f.material_index = mat_idx
+        created_faces.append(f)
+    bm.verts.ensure_lookup_table()
+    return [v.index for v in (v0, v1, v2, v3, v4, v5, v6, v7)], created_faces
 
-def add_tapered_box_bmesh(bm, bottom_center, top_center, bottom_size, top_size, mat_idx=0):
-    bcx, bcy, bcz = bottom_center
-    tcx, tcy, tcz = top_center
-    bsx, bsy = bottom_size[0] / 2, bottom_size[1] / 2
-    tsx, tsy = top_size[0] / 2, top_size[1] / 2
-    verts = [
-        bm.verts.new((bcx - bsx, bcy - bsy, bcz)),
-        bm.verts.new((bcx + bsx, bcy - bsy, bcz)),
-        bm.verts.new((bcx + bsx, bcy + bsy, bcz)),
-        bm.verts.new((bcx - bsx, bcy + bsy, bcz)),
-        bm.verts.new((tcx - tsx, tcy - tsy, tcz)),
-        bm.verts.new((tcx + tsx, tcy - tsy, tcz)),
-        bm.verts.new((tcx + tsx, tcy + tsy, tcz)),
-        bm.verts.new((tcx - tsx, tcy + tsy, tcz)),
-    ]
+def add_tapered_box_bmesh(bm, b_center, t_center, b_size, t_size, mat_idx=0):
+    bx, by, bz = b_center
+    tx, ty, tz = t_center
+    bsx, bsy = b_size[0] / 2.0, b_size[1] / 2.0
+    tsx, tsy = t_size[0] / 2.0, t_size[1] / 2.0
+
+    v0 = bm.verts.new((bx - bsx, by - bsy, bz))
+    v1 = bm.verts.new((bx + bsx, by - bsy, bz))
+    v2 = bm.verts.new((bx + bsx, by + bsy, bz))
+    v3 = bm.verts.new((bx - bsx, by + bsy, bz))
+    v4 = bm.verts.new((tx - tsx, ty - tsy, tz))
+    v5 = bm.verts.new((tx + tsx, ty - tsy, tz))
+    v6 = bm.verts.new((tx + tsx, ty + tsy, tz))
+    v7 = bm.verts.new((tx - tsx, ty + tsy, tz))
+
     faces = [
-        (0, 1, 2, 3),
-        (4, 7, 6, 5),
-        (0, 4, 5, 1),
-        (2, 6, 7, 3),
-        (0, 3, 7, 4),
-        (1, 5, 6, 2),
+        (v0, v1, v2, v3), (v4, v7, v6, v5),
+        (v0, v4, v5, v1), (v2, v6, v7, v3),
+        (v0, v3, v7, v4), (v1, v5, v6, v2),
     ]
     created_faces = []
-    for f in faces:
-        face = bm.faces.new([verts[i] for i in f])
-        face.material_index = mat_idx
-        created_faces.append(face)
-    return verts, created_faces
+    for fverts in faces:
+        f = bm.faces.new(fverts)
+        f.material_index = mat_idx
+        created_faces.append(f)
+    bm.verts.ensure_lookup_table()
+    return [v.index for v in (v0, v1, v2, v3, v4, v5, v6, v7)], created_faces
 
-# =============================================================================
-# 1. ARMATURE SKELETON WITH SOCKETS
-# =============================================================================
-
-def build_humanoid_armature() -> bpy.types.Object:
-    """
-    Constructs the master humanoid armature with standard bone naming
-    and non-deforming equipment sockets.
-    """
-    arm_data = bpy.data.armatures.new("Humanoid_Armature")
+# ==============================================================================
+# 1. BUILD MASTER HUMANOID RIG
+# ==============================================================================
+def build_master_armature() -> bpy.types.Object:
+    arm_data = bpy.data.armatures.new("Humanoid_Rig_Data")
     arm_obj = bpy.data.objects.new("Humanoid_Rig", arm_data)
-    bpy.context.collection.objects.link(arm_obj)
+    bpy.context.scene.collection.objects.link(arm_obj)
     bpy.context.view_layer.objects.active = arm_obj
-    bpy.ops.object.mode_set(mode='EDIT')
+    arm_obj.select_set(True)
 
+    bpy.ops.object.mode_set(mode='EDIT')
     eb = arm_data.edit_bones
 
-    # Core Deform Bones
     root = eb.new("Root")
-    root.head = (0, 0, 0)
-    root.tail = (0, 0, 0.1)
+    root.head = (0.0, 0.0, 0.0)
+    root.tail = (0.0, 0.0, 0.1)
 
     pelvis = eb.new("Pelvis")
+    pelvis.head = (0.0, 0.0, 0.70)
+    pelvis.tail = (0.0, 0.0, 0.84)
     pelvis.parent = root
-    pelvis.head = (0, 0, 0.65)
-    pelvis.tail = (0, 0, 0.82)
 
     spine = eb.new("Spine")
+    spine.head = (0.0, 0.0, 0.84)
+    spine.tail = (0.0, 0.0, 1.04)
     spine.parent = pelvis
-    spine.head = (0, 0, 0.82)
-    spine.tail = (0, 0, 1.02)
 
     chest = eb.new("Chest")
+    chest.head = (0.0, 0.0, 1.04)
+    chest.tail = (0.0, 0.0, 1.20)
     chest.parent = spine
-    chest.head = (0, 0, 1.02)
-    chest.tail = (0, 0, 1.25)
 
     neck = eb.new("Neck")
+    neck.head = (0.0, 0.0, 1.20)
+    neck.tail = (0.0, 0.0, 1.28)
     neck.parent = chest
-    neck.head = (0, 0, 1.25)
-    neck.tail = (0, 0, 1.34)
 
     head = eb.new("Head")
+    head.head = (0.0, 0.0, 1.28)
+    head.tail = (0.0, 0.0, 1.54)
     head.parent = neck
-    head.head = (0, 0, 1.34)
-    head.tail = (0, 0, 1.66)
 
-    # Left Arm
-    sh_l = eb.new("Shoulder.L")
-    sh_l.parent = chest
-    sh_l.head = (0.10, 0, 1.22)
-    sh_l.tail = (0.22, 0, 1.20)
+    for side, sign in [("L", 1.0), ("R", -1.0)]:
+        uarm = eb.new(f"UpperArm.{side}")
+        uarm.head = (sign * 0.22, 0.0, 1.18)
+        uarm.tail = (sign * 0.38, 0.0, 0.95)
+        uarm.parent = chest
 
-    ua_l = eb.new("UpperArm.L")
-    ua_l.parent = sh_l
-    ua_l.head = (0.22, 0, 1.20)
-    ua_l.tail = (0.32, 0, 0.98)
+        farm = eb.new(f"Forearm.{side}")
+        farm.head = (sign * 0.38, 0.0, 0.95)
+        farm.tail = (sign * 0.44, -0.02, 0.76)
+        farm.parent = uarm
 
-    fa_l = eb.new("Forearm.L")
-    fa_l.parent = ua_l
-    fa_l.head = (0.32, 0, 0.98)
-    fa_l.tail = (0.38, 0, 0.76)
+        hand = eb.new(f"Hand.{side}")
+        hand.head = (sign * 0.44, -0.02, 0.76)
+        hand.tail = (sign * 0.46, -0.02, 0.70)
+        hand.parent = farm
 
-    hand_l = eb.new("Hand.L")
-    hand_l.parent = fa_l
-    hand_l.head = (0.38, 0, 0.76)
-    hand_l.tail = (0.40, 0, 0.66)
+        thigh = eb.new(f"Thigh.{side}")
+        thigh.head = (sign * 0.14, 0.0, 0.70)
+        thigh.tail = (sign * 0.15, 0.01, 0.38)
+        thigh.parent = pelvis
 
-    # Right Arm
-    sh_r = eb.new("Shoulder.R")
-    sh_r.parent = chest
-    sh_r.head = (-0.10, 0, 1.22)
-    sh_r.tail = (-0.22, 0, 1.20)
+        shin = eb.new(f"Shin.{side}")
+        shin.head = (sign * 0.15, 0.01, 0.38)
+        shin.tail = (sign * 0.15, 0.0, 0.08)
+        shin.parent = thigh
 
-    ua_r = eb.new("UpperArm.R")
-    ua_r.parent = sh_r
-    ua_r.head = (-0.22, 0, 1.20)
-    ua_r.tail = (-0.32, 0, 0.98)
+        foot = eb.new(f"Foot.{side}")
+        foot.head = (sign * 0.15, 0.0, 0.08)
+        foot.tail = (sign * 0.15, -0.08, 0.0)
+        foot.parent = shin
 
-    fa_r = eb.new("Forearm.R")
-    fa_r.parent = ua_r
-    fa_r.head = (-0.32, 0, 0.98)
-    fa_r.tail = (-0.38, 0, 0.76)
+    # 10 Non-Deforming Equipment Sockets
+    sockets = [
+        ("Socket_Hair", head, (0.0, -0.04, 1.48), (0.0, -0.04, 1.54)),
+        ("Socket_Headgear", head, (0.0, 0.0, 1.54), (0.0, 0.0, 1.62)),
+        ("Socket_Face", head, (0.0, -0.15, 1.34), (0.0, -0.20, 1.34)),
+        ("Socket_Chest", chest, (0.0, -0.14, 1.04), (0.0, -0.20, 1.04)),
+        ("Socket_Back", chest, (0.0, 0.14, 1.08), (0.0, 0.20, 1.08)),
+        ("Socket_Belt", pelvis, (0.0, -0.14, 0.78), (0.0, -0.20, 0.78)),
+        ("Socket_Hand.R", eb["Hand.R"], (-0.46, -0.02, 0.70), (-0.46, -0.02, 0.60)),
+        ("Socket_Hand.L", eb["Hand.L"], (0.46, -0.02, 0.70), (0.46, -0.02, 0.60)),
+        ("Socket_Foot.R", eb["Foot.R"], (-0.15, 0.0, 0.0), (-0.15, -0.06, 0.0)),
+        ("Socket_Foot.L", eb["Foot.L"], (0.15, 0.0, 0.0), (0.15, -0.06, 0.0)),
+    ]
 
-    hand_r = eb.new("Hand.R")
-    hand_r.parent = fa_r
-    hand_r.head = (-0.38, 0, 0.76)
-    hand_r.tail = (-0.40, 0, 0.66)
-
-    # Left Leg
-    thigh_l = eb.new("Thigh.L")
-    thigh_l.parent = pelvis
-    thigh_l.head = (0.12, 0, 0.64)
-    thigh_l.tail = (0.12, 0, 0.35)
-
-    shin_l = eb.new("Shin.L")
-    shin_l.parent = thigh_l
-    shin_l.head = (0.12, 0, 0.35)
-    shin_l.tail = (0.12, 0, 0.10)
-
-    foot_l = eb.new("Foot.L")
-    foot_l.parent = shin_l
-    foot_l.head = (0.12, 0, 0.10)
-    foot_l.tail = (0.12, -0.14, 0.0)
-
-    # Right Leg
-    thigh_r = eb.new("Thigh.R")
-    thigh_r.parent = pelvis
-    thigh_r.head = (-0.12, 0, 0.64)
-    thigh_r.tail = (-0.12, 0, 0.35)
-
-    shin_r = eb.new("Shin.R")
-    shin_r.parent = thigh_r
-    shin_r.head = (-0.12, 0, 0.35)
-    shin_r.tail = (-0.12, 0, 0.10)
-
-    foot_r = eb.new("Foot.R")
-    foot_r.parent = shin_r
-    foot_r.head = (-0.12, 0, 0.10)
-    foot_r.tail = (-0.12, -0.14, 0.0)
-
-    # Sockets for handheld items
-    sock_r = eb.new("Socket_Hand.R")
-    sock_r.parent = hand_r
-    sock_r.head = (-0.38, -0.04, 0.68)
-    sock_r.tail = (-0.38, -0.04, 0.78)
-    sock_r.use_deform = False
-
-    sock_l = eb.new("Socket_Hand.L")
-    sock_l.parent = hand_l
-    sock_l.head = (0.38, -0.04, 0.68)
-    sock_l.tail = (0.38, -0.04, 0.78)
-    sock_l.use_deform = False
+    for sname, parent_bone, head_pos, tail_pos in sockets:
+        sb = eb.new(sname)
+        sb.head = head_pos
+        sb.tail = tail_pos
+        sb.parent = parent_bone
+        sb.use_deform = False
 
     bpy.ops.object.mode_set(mode='OBJECT')
     return arm_obj
 
-# =============================================================================
-# 2. BASE MANNEQUIN BODY MESH
-# =============================================================================
+# ==============================================================================
+# 2. BUILD BASE MANNEQUIN BODY
+# ==============================================================================
+def build_mannequin_body(arm_obj: bpy.types.Object) -> bpy.types.Object:
+    m_skin = create_material("M_Mannequin_Skin", *hex_to_rgb("ffd1a4"))
+    m_eyes = create_material("M_Mannequin_Eyes", *hex_to_rgb("1f2d3d"))
+    m_trousers = create_material("M_Mannequin_Trousers", *hex_to_rgb("2c3540"))
+    m_boots = create_material("M_Mannequin_Boots", *hex_to_rgb("4a3728"))
 
-def build_base_mannequin(arm_obj: bpy.types.Object) -> bpy.types.Object:
     mesh = bpy.data.meshes.new("Mesh_Mannequin_Body")
-    body_obj = bpy.data.objects.new("Mannequin_Body", mesh)
-    bpy.context.collection.objects.link(body_obj)
-
-    m_skin = create_material("M_Skin_Base", *hex_to_rgb("f4d3b8"))
-    mesh.materials.append(m_skin)
+    obj = bpy.data.objects.new("Mannequin_Body", mesh)
+    bpy.context.scene.collection.objects.link(obj)
+    add_materials(mesh, [m_skin, m_eyes, m_trousers, m_boots])
 
     bm = bmesh.new()
-    groups: dict[str, list[bmesh.types.BMVert]] = {
-        "Head": [], "Neck": [], "Chest": [], "Spine": [], "Pelvis": [],
-        "UpperArm.L": [], "Forearm.L": [], "Hand.L": [],
-        "UpperArm.R": [], "Forearm.R": [], "Hand.R": [],
-        "Thigh.L": [], "Shin.L": [], "Foot.L": [],
-        "Thigh.R": [], "Shin.R": [], "Foot.R": [],
-    }
+    bone_groups = {b: [] for b in [
+        "Head", "Neck", "Chest", "Spine", "Pelvis",
+        "UpperArm.L", "Forearm.L", "Hand.L",
+        "UpperArm.R", "Forearm.R", "Hand.R",
+        "Thigh.L", "Shin.L", "Foot.L",
+        "Thigh.R", "Shin.R", "Foot.R"
+    ]}
 
-    # Head
-    v, _ = add_box_bmesh(bm, (0, 0, 1.50), (0.32, 0.30, 0.32), mat_idx=0)
-    groups["Head"].extend(v)
-    v, _ = add_box_bmesh(bm, (0, -0.16, 1.46), (0.05, 0.04, 0.07), mat_idx=0) # Nose
-    groups["Head"].extend(v)
-
-    # Neck
-    v, _ = add_tapered_box_bmesh(bm, (0, 0, 1.25), (0, 0, 1.34), (0.14, 0.12), (0.12, 0.10), mat_idx=0)
-    groups["Neck"].extend(v)
+    # Head & Neck
+    vh, _ = add_box_bmesh(bm, (0, -0.02, 1.38), (0.32, 0.30, 0.30), mat_idx=0)
+    bone_groups["Head"].extend(vh)
+    ve_l, _ = add_box_bmesh(bm, (-0.08, -0.175, 1.38), (0.06, 0.02, 0.07), mat_idx=1)
+    ve_r, _ = add_box_bmesh(bm, (0.08, -0.175, 1.38), (0.06, 0.02, 0.07), mat_idx=1)
+    bone_groups["Head"].extend(ve_l + ve_r)
+    vn, _ = add_box_bmesh(bm, (0, 0, 1.22), (0.12, 0.12, 0.08), mat_idx=0)
+    bone_groups["Neck"].extend(vn)
 
     # Torso
-    v, _ = add_tapered_box_bmesh(bm, (0, 0, 1.02), (0, 0, 1.25), (0.30, 0.20), (0.34, 0.22), mat_idx=0)
-    groups["Chest"].extend(v)
-    v, _ = add_tapered_box_bmesh(bm, (0, 0, 0.82), (0, 0, 1.02), (0.26, 0.18), (0.30, 0.20), mat_idx=0)
-    groups["Spine"].extend(v)
-    v, _ = add_tapered_box_bmesh(bm, (0, 0, 0.65), (0, 0, 0.82), (0.28, 0.20), (0.26, 0.18), mat_idx=0)
-    groups["Pelvis"].extend(v)
+    vc, _ = add_tapered_box_bmesh(bm, (0, 0, 1.04), (0, 0, 1.20), (0.34, 0.22), (0.38, 0.24), mat_idx=0)
+    bone_groups["Chest"].extend(vc)
+    vs, _ = add_tapered_box_bmesh(bm, (0, 0, 0.84), (0, 0, 1.04), (0.30, 0.20), (0.34, 0.22), mat_idx=0)
+    bone_groups["Spine"].extend(vs)
+    vp, _ = add_tapered_box_bmesh(bm, (0, 0, 0.68), (0, 0, 0.84), (0.32, 0.22), (0.30, 0.20), mat_idx=2)
+    bone_groups["Pelvis"].extend(vp)
 
-    # Left Arm
-    v, _ = add_tapered_box_bmesh(bm, (0.22, 0, 0.98), (0.22, 0, 1.20), (0.09, 0.09), (0.10, 0.10), mat_idx=0)
-    groups["UpperArm.L"].extend(v)
-    v, _ = add_tapered_box_bmesh(bm, (0.30, 0, 0.76), (0.22, 0, 0.98), (0.08, 0.08), (0.09, 0.09), mat_idx=0)
-    groups["Forearm.L"].extend(v)
-    v, _ = add_box_bmesh(bm, (0.34, 0, 0.68), (0.07, 0.07, 0.09), mat_idx=0)
-    groups["Hand.L"].extend(v)
+    # Arms
+    for side, sign in [("L", 1.0), ("R", -1.0)]:
+        v_ua, _ = add_box_bmesh(bm, (sign * 0.28, 0.0, 1.06), (0.11, 0.12, 0.20), mat_idx=0)
+        bone_groups[f"UpperArm.{side}"].extend(v_ua)
+        v_fa, _ = add_box_bmesh(bm, (sign * 0.40, -0.01, 0.86), (0.10, 0.11, 0.18), mat_idx=0)
+        bone_groups[f"Forearm.{side}"].extend(v_fa)
+        v_h, _ = add_box_bmesh(bm, (sign * 0.45, -0.02, 0.72), (0.08, 0.09, 0.09), mat_idx=0)
+        bone_groups[f"Hand.{side}"].extend(v_h)
 
-    # Right Arm
-    v, _ = add_tapered_box_bmesh(bm, (-0.22, 0, 0.98), (-0.22, 0, 1.20), (0.09, 0.09), (0.10, 0.10), mat_idx=0)
-    groups["UpperArm.R"].extend(v)
-    v, _ = add_tapered_box_bmesh(bm, (-0.30, 0, 0.76), (-0.22, 0, 0.98), (0.08, 0.08), (0.09, 0.09), mat_idx=0)
-    groups["Forearm.R"].extend(v)
-    v, _ = add_box_bmesh(bm, (-0.34, 0, 0.68), (0.07, 0.07, 0.09), mat_idx=0)
-    groups["Hand.R"].extend(v)
+    # Legs
+    for side, sign in [("L", 1.0), ("R", -1.0)]:
+        v_th, _ = add_box_bmesh(bm, (sign * 0.14, 0.01, 0.52), (0.13, 0.15, 0.32), mat_idx=2)
+        bone_groups[f"Thigh.{side}"].extend(v_th)
+        v_sh, _ = add_box_bmesh(bm, (sign * 0.15, 0.0, 0.22), (0.12, 0.13, 0.28), mat_idx=3)
+        bone_groups[f"Shin.{side}"].extend(v_sh)
+        v_ft, _ = add_box_bmesh(bm, (sign * 0.15, -0.04, 0.04), (0.13, 0.18, 0.08), mat_idx=3)
+        bone_groups[f"Foot.{side}"].extend(v_ft)
 
-    # Left Leg
-    v, _ = add_tapered_box_bmesh(bm, (0.12, 0, 0.35), (0.12, 0, 0.64), (0.11, 0.11), (0.13, 0.13), mat_idx=0)
-    groups["Thigh.L"].extend(v)
-    v, _ = add_tapered_box_bmesh(bm, (0.12, 0, 0.08), (0.12, 0, 0.35), (0.09, 0.09), (0.11, 0.11), mat_idx=0)
-    groups["Shin.L"].extend(v)
-    v, _ = add_box_bmesh(bm, (0.12, -0.05, 0.04), (0.10, 0.18, 0.08), mat_idx=0)
-    groups["Foot.L"].extend(v)
-
-    # Right Leg
-    v, _ = add_tapered_box_bmesh(bm, (-0.12, 0, 0.35), (-0.12, 0, 0.64), (0.11, 0.11), (0.13, 0.13), mat_idx=0)
-    groups["Thigh.R"].extend(v)
-    v, _ = add_tapered_box_bmesh(bm, (-0.12, 0, 0.08), (-0.12, 0, 0.35), (0.09, 0.09), (0.11, 0.11), mat_idx=0)
-    groups["Shin.R"].extend(v)
-    v, _ = add_box_bmesh(bm, (-0.12, -0.05, 0.04), (0.10, 0.18, 0.08), mat_idx=0)
-    groups["Foot.R"].extend(v)
-
-    bm.verts.ensure_lookup_table()
-    group_indices = {bone_name: [v.index for v in vert_list] for bone_name, vert_list in groups.items()}
     bm.to_mesh(mesh)
     bm.free()
 
-    for bone_name, indices in group_indices.items():
-        if indices:
-            vg = body_obj.vertex_groups.new(name=bone_name)
-            vg.add(indices, 1.0, 'REPLACE')
+    for bone_name, v_indices in bone_groups.items():
+        if v_indices:
+            vg = obj.vertex_groups.new(name=bone_name)
+            vg.add(v_indices, 1.0, 'REPLACE')
 
-    mod = body_obj.modifiers.new(name="Armature", type='ARMATURE')
+    mod = obj.modifiers.new("Armature", 'ARMATURE')
     mod.object = arm_obj
-    body_obj.parent = arm_obj
-    return body_obj
+    obj.parent = arm_obj
+    return obj
 
-# =============================================================================
-# 3. MODULAR ATTACHMENTS (HAIR, OUTFITS, TOOLS)
-# =============================================================================
-
-def build_modular_assets(arm_obj: bpy.types.Object):
+# ==============================================================================
+# 3. COMPREHENSIVE MODULAR ATTACHMENTS LIBRARY
+# ==============================================================================
+def build_modular_library(arm_obj: bpy.types.Object):
     col_hair = bpy.data.collections.new("Col_Hair")
     col_outfits = bpy.data.collections.new("Col_Outfits")
     col_tools = bpy.data.collections.new("Col_Tools")
-    bpy.context.scene.collection.children.link(col_hair)
-    bpy.context.scene.collection.children.link(col_outfits)
-    bpy.context.scene.collection.children.link(col_tools)
+    for c in [col_hair, col_outfits, col_tools]:
+        bpy.context.scene.collection.children.link(c)
 
-    m_hair_teal = create_material("M_Hair_Teal", *hex_to_rgb("235c59"))
-    m_hair_hi = create_material("M_Hair_Highlight", *hex_to_rgb("449994"))
-    m_hair_dark = create_material("M_Hair_Dark", *hex_to_rgb("252422"))
-    m_hair_brown = create_material("M_Hair_Brown", *hex_to_rgb("4e3524"))
-    m_hair_auburn = create_material("M_Hair_Auburn", *hex_to_rgb("6d3922"))
-    m_hair_blonde = create_material("M_Hair_Blonde", *hex_to_rgb("c89f5c"))
-    m_hair_grey = create_material("M_Hair_Grey", *hex_to_rgb("636260"))
-    m_gold = create_material("M_Gold_Trim", *hex_to_rgb("e8be48"))
-    m_wood = create_material("M_Wood_Timber", *hex_to_rgb("6b482b"))
-    m_iron = create_material("M_Iron_Metal", *hex_to_rgb("7a828a"))
-    m_cloth_white = create_material("M_Cloth_White", *hex_to_rgb("ede4d1"))
-    m_cloth_blue = create_material("M_Cloth_Blue", *hex_to_rgb("375b70"))
-    m_cloth_teal = create_material("M_Cloth_Teal", *hex_to_rgb("2c7371"))
-    m_leather_dark = create_material("M_Leather_Dark", *hex_to_rgb("422e20"))
-    m_cyan_gem = create_material("M_Cyan_Glow", *hex_to_rgb("4ae3e8"))
+    # Colors
+    c_teal = create_material("M_ClothTeal", *hex_to_rgb("286775"))
+    c_cream = create_material("M_ClothCream", *hex_to_rgb("f4f0e6"))
+    c_white = create_material("M_ClothWhite", *hex_to_rgb("ffffff"))
+    c_navy = create_material("M_ClothNavy", *hex_to_rgb("192833"))
+    c_red = create_material("M_ClothRed", *hex_to_rgb("9c3826"))
+    c_amber = create_material("M_ClothAmber", *hex_to_rgb("d97329"))
+    c_charcoal = create_material("M_ClothCharcoal", *hex_to_rgb("242226"))
+    c_gold = create_material("M_MetalGold", *hex_to_rgb("d49a37"))
+    c_iron = create_material("M_MetalIron", *hex_to_rgb("52565e"))
+    c_sage = create_material("M_ClothSage", *hex_to_rgb("7d946b"))
+    c_azure = create_material("M_ClothAzure", *hex_to_rgb("6d98ba"))
+    c_flax = create_material("M_ClothFlax", *hex_to_rgb("c2a764"))
+    c_leather = create_material("M_LeatherBrown", *hex_to_rgb("5c402b"))
+    c_leather_dark = create_material("M_LeatherDark", *hex_to_rgb("36261b"))
 
-    # Helper: Hair Mesh (Skinned to Head bone)
-    def create_hair_mesh(name, mat_list, build_fn):
+    # Hair colors
+    h_teal = create_material("M_HairTeal", *hex_to_rgb("338394"))
+    h_red = create_material("M_HairRed", *hex_to_rgb("b84428"))
+    h_blonde = create_material("M_HairBlonde", *hex_to_rgb("d4b868"))
+    h_brown = create_material("M_HairBrown", *hex_to_rgb("4d3829"))
+    h_dark = create_material("M_HairDark", *hex_to_rgb("1a1a1f"))
+    h_auburn = create_material("M_HairAuburn", *hex_to_rgb("803829"))
+    h_grey = create_material("M_HairGrey", *hex_to_rgb("757880"))
+    h_silver = create_material("M_HairSilver", *hex_to_rgb("c0c4cc"))
+
+    def create_hair_mesh(name, mats, build_fn):
         mesh = bpy.data.meshes.new(f"Mesh_{name}")
         obj = bpy.data.objects.new(name, mesh)
         col_hair.objects.link(obj)
-        add_materials(mesh, mat_list)
+        add_materials(mesh, mats)
         bm = bmesh.new()
         build_fn(bm)
-        bm.verts.ensure_lookup_table()
-        all_indices = [v.index for v in bm.verts]
         bm.to_mesh(mesh)
         bm.free()
         vg = obj.vertex_groups.new(name="Head")
-        vg.add(all_indices, 1.0, 'REPLACE')
-        mod = obj.modifiers.new(name="Armature", type='ARMATURE')
+        vg.add(list(range(len(mesh.vertices))), 1.0, 'REPLACE')
+        mod = obj.modifiers.new("Armature", 'ARMATURE')
         mod.object = arm_obj
         obj.parent = arm_obj
         return obj
 
-    # Helper: Outfit Mesh (Skinned to Chest/Spine/Pelvis bones)
-    def create_outfit_mesh(name, mat_list, build_fn):
+    def create_outfit_mesh(name, mats, build_fn):
         mesh = bpy.data.meshes.new(f"Mesh_{name}")
         obj = bpy.data.objects.new(name, mesh)
         col_outfits.objects.link(obj)
-        add_materials(mesh, mat_list)
+        add_materials(mesh, mats)
         bm = bmesh.new()
-        groups = {"Chest": [], "Spine": [], "Pelvis": []}
-        build_fn(bm, groups)
-        bm.verts.ensure_lookup_table()
-        group_indices = {b_name: [v.index for v in v_list] for b_name, v_list in groups.items()}
+        grp = {"Chest": [], "Spine": [], "Pelvis": []}
+        build_fn(bm, grp)
         bm.to_mesh(mesh)
         bm.free()
-        for b_name, indices in group_indices.items():
-            if indices:
-                vg = obj.vertex_groups.new(name=b_name)
-                vg.add(indices, 1.0, 'REPLACE')
-        mod = obj.modifiers.new(name="Armature", type='ARMATURE')
+        for bname, vindices in grp.items():
+            if vindices:
+                vg = obj.vertex_groups.new(name=bname)
+                vg.add(vindices, 1.0, 'REPLACE')
+        mod = obj.modifiers.new("Armature", 'ARMATURE')
         mod.object = arm_obj
         obj.parent = arm_obj
         return obj
 
-    # Helper: Tool Mesh (Attached to Socket_Hand.R)
-    def create_tool_mesh(name, mat_list, build_fn):
+    def create_tool_mesh(name, mats, build_fn):
         mesh = bpy.data.meshes.new(f"Mesh_{name}")
         obj = bpy.data.objects.new(name, mesh)
         col_tools.objects.link(obj)
-        add_materials(mesh, mat_list)
+        add_materials(mesh, mats)
         bm = bmesh.new()
         build_fn(bm)
         bm.to_mesh(mesh)
@@ -413,238 +353,344 @@ def build_modular_assets(arm_obj: bpy.types.Object):
         obj.parent_bone = "Socket_Hand.R"
         return obj
 
-    # -------------------------------------------------------------------------
-    # A. HAIRSTYLES (9 variants)
-    # -------------------------------------------------------------------------
-    def b_hair_aq(bm):
-        add_box_bmesh(bm, (0, 0.02, 1.56), (0.36, 0.34, 0.26), mat_idx=0)
-        add_box_bmesh(bm, (0, -0.15, 1.58), (0.32, 0.07, 0.14), mat_idx=1)
-        add_box_bmesh(bm, (0.17, -0.05, 1.46), (0.05, 0.11, 0.22), mat_idx=0)
-        add_box_bmesh(bm, (-0.17, -0.05, 1.46), (0.05, 0.11, 0.22), mat_idx=0)
-        add_box_bmesh(bm, (0, 0.18, 1.40), (0.14, 0.12, 0.28), mat_idx=0)
-        add_box_bmesh(bm, (0.15, -0.08, 1.62), (0.05, 0.05, 0.05), mat_idx=2)
-    create_hair_mesh("Hair_Aqualia", [m_hair_teal, m_hair_hi, m_gold], b_hair_aq)
+    # --------------------------------------------------------------------------
+    # HAIRSTYLES (Covering All 30 Villagers + 3 Player Origins)
+    # --------------------------------------------------------------------------
+    # 1. Aqualia (Player) Ponytail
+    create_hair_mesh("Hair_Aqualia", [h_teal, c_white, c_gold], lambda bm: (
+        add_box_bmesh(bm, (0, 0.02, 1.56), (0.36, 0.34, 0.24), 0),
+        add_box_bmesh(bm, (0, -0.15, 1.58), (0.32, 0.07, 0.12), 0),
+        add_box_bmesh(bm, (0, 0.18, 1.40), (0.14, 0.12, 0.28), 0),
+        add_box_bmesh(bm, (0.15, -0.08, 1.62), (0.05, 0.05, 0.05), 2),
+    ))
+    # 2. Pyrador (Player) Flame Spikes
+    create_hair_mesh("Hair_Pyrador", [h_red, c_amber], lambda bm: (
+        add_box_bmesh(bm, (0, 0.02, 1.58), (0.36, 0.34, 0.24), 0),
+        add_box_bmesh(bm, (0, -0.06, 1.70), (0.16, 0.16, 0.14), 1),
+    ))
+    # 3. Zephyria (Player) Windblown Swept
+    create_hair_mesh("Hair_Zephyria", [h_blonde, c_azure], lambda bm: (
+        add_box_bmesh(bm, (0, 0.02, 1.56), (0.36, 0.34, 0.22), 0),
+        add_box_bmesh(bm, (0.12, 0.10, 1.50), (0.18, 0.22, 0.20), 0),
+    ))
+    # 4. Neris (Undercut + Orange Bandana)
+    create_hair_mesh("Hair_Neris", [h_dark, c_amber], lambda bm: (
+        add_box_bmesh(bm, (0, 0.02, 1.54), (0.35, 0.33, 0.20), 0),
+        add_box_bmesh(bm, (0, -0.01, 1.56), (0.37, 0.35, 0.07), 1),
+    ))
+    # 5. Reed (Woven Cap)
+    create_hair_mesh("Hair_Reed", [h_brown, c_flax], lambda bm: (
+        add_box_bmesh(bm, (0, 0.02, 1.55), (0.35, 0.33, 0.22), 1),
+        add_box_bmesh(bm, (0, 0.06, 1.68), (0.10, 0.10, 0.12), 1),
+    ))
+    # 6. Willa / Cora / Faye (Chef Kerchief & Bun)
+    create_hair_mesh("Hair_Willa", [h_auburn, c_white], lambda bm: (
+        add_box_bmesh(bm, (0, 0.03, 1.56), (0.36, 0.34, 0.22), 1),
+        add_box_bmesh(bm, (0, 0.16, 1.52), (0.12, 0.12, 0.14), 0),
+    ))
+    # 7. Oren / Torin (Stonemason Braids)
+    create_hair_mesh("Hair_Oren", [h_dark], lambda bm: (
+        add_box_bmesh(bm, (0, 0.02, 1.55), (0.35, 0.34, 0.24), 0),
+        add_box_bmesh(bm, (0.17, 0.02, 1.38), (0.05, 0.18, 0.24), 0),
+        add_box_bmesh(bm, (-0.17, 0.02, 1.38), (0.05, 0.18, 0.24), 0),
+    ))
+    # 8. Lark (Beret Cap & Blonde Hair)
+    create_hair_mesh("Hair_Lark", [h_blonde, c_azure], lambda bm: (
+        add_box_bmesh(bm, (0, 0.02, 1.54), (0.34, 0.32, 0.20), 0),
+        add_box_bmesh(bm, (0, -0.03, 1.64), (0.38, 0.38, 0.08), 1),
+    ))
+    # 9. Dara / Caelum (Flowing River Cowl)
+    create_hair_mesh("Hair_Dara", [h_auburn, c_teal], lambda bm: (
+        add_box_bmesh(bm, (0, 0.02, 1.56), (0.35, 0.34, 0.24), 1),
+        add_box_bmesh(bm, (0.16, -0.03, 1.32), (0.06, 0.06, 0.30), 1),
+        add_box_bmesh(bm, (-0.16, -0.03, 1.32), (0.06, 0.06, 0.30), 1),
+    ))
+    # 10. Finn / Kaelen / Rowan (Scout Headband)
+    create_hair_mesh("Hair_Finn", [h_blonde, c_leather_dark], lambda bm: (
+        add_box_bmesh(bm, (0, 0.02, 1.54), (0.34, 0.32, 0.20), 0),
+        add_box_bmesh(bm, (0, -0.02, 1.56), (0.36, 0.34, 0.05), 1),
+    ))
+    # 11. Vulkan / Bram (Armorer Beard & Top)
+    create_hair_mesh("Hair_Vulkan", [h_grey, h_dark], lambda bm: (
+        add_box_bmesh(bm, (0, 0.06, 1.52), (0.35, 0.24, 0.16), 0),
+        add_box_bmesh(bm, (0, -0.14, 1.36), (0.26, 0.14, 0.22), 0),
+    ))
+    # 12. Emberlyn (Fiery Twin Pigtails)
+    create_hair_mesh("Hair_Emberlyn", [h_red, c_amber], lambda bm: (
+        add_box_bmesh(bm, (0, 0.02, 1.55), (0.34, 0.32, 0.22), 0),
+        add_box_bmesh(bm, (-0.18, 0.06, 1.48), (0.10, 0.10, 0.22), 0),
+        add_box_bmesh(bm, (0.18, 0.06, 1.48), (0.10, 0.10, 0.22), 0),
+    ))
+    # 13. Flint / Ellis (Prospector Goggles & Messy Crop)
+    create_hair_mesh("Hair_Flint", [h_brown, c_gold], lambda bm: (
+        add_box_bmesh(bm, (0, 0.02, 1.56), (0.35, 0.33, 0.24), 0),
+        add_box_bmesh(bm, (0, -0.16, 1.52), (0.30, 0.05, 0.06), 1),
+    ))
+    # 14. Tala / Pippa (Herbalist Braid with Flower Pin)
+    create_hair_mesh("Hair_Tala", [h_brown, c_sage], lambda bm: (
+        add_box_bmesh(bm, (0, 0.02, 1.55), (0.35, 0.33, 0.22), 0),
+        add_box_bmesh(bm, (0, 0.16, 1.36), (0.10, 0.10, 0.32), 0),
+        add_box_bmesh(bm, (0.16, -0.08, 1.58), (0.05, 0.05, 0.05), 1),
+    ))
+    # 15. Runa / Sol / Zephyr (Elder Sage Mantle & Veil)
+    create_hair_mesh("Hair_Runa", [h_silver, c_flax], lambda bm: (
+        add_box_bmesh(bm, (0, 0.02, 1.56), (0.36, 0.34, 0.24), 0),
+        add_box_bmesh(bm, (0, 0.04, 1.42), (0.38, 0.36, 0.26), 1),
+    ))
 
-    def b_hair_ne(bm):
-        add_box_bmesh(bm, (0, 0.02, 1.55), (0.35, 0.33, 0.22), mat_idx=0)
-        add_box_bmesh(bm, (0, -0.01, 1.57), (0.37, 0.35, 0.07), mat_idx=1)
-    create_hair_mesh("Hair_Neris", [m_hair_dark, create_material("M_Band_Orange", *hex_to_rgb("c96838"))], b_hair_ne)
-
-    def b_hair_re(bm):
-        add_box_bmesh(bm, (0, 0.02, 1.55), (0.34, 0.32, 0.22), mat_idx=0)
-        add_box_bmesh(bm, (0, 0.06, 1.70), (0.10, 0.10, 0.14), mat_idx=0)
-    create_hair_mesh("Hair_Reed", [m_hair_brown], b_hair_re)
-
-    def b_hair_wi(bm):
-        add_box_bmesh(bm, (0, 0.03, 1.56), (0.36, 0.34, 0.22), mat_idx=1)
-        add_box_bmesh(bm, (0, 0.16, 1.52), (0.12, 0.12, 0.14), mat_idx=0)
-    create_hair_mesh("Hair_Willa", [m_hair_auburn, m_cloth_white], b_hair_wi)
-
-    def b_hair_or(bm):
-        add_box_bmesh(bm, (0, 0.02, 1.55), (0.35, 0.34, 0.24), mat_idx=0)
-        add_box_bmesh(bm, (0.17, 0.02, 1.38), (0.05, 0.18, 0.24), mat_idx=0)
-        add_box_bmesh(bm, (-0.17, 0.02, 1.38), (0.05, 0.18, 0.24), mat_idx=0)
-    create_hair_mesh("Hair_Oren", [m_hair_dark], b_hair_or)
-
-    def b_hair_la(bm):
-        add_box_bmesh(bm, (0, 0.02, 1.54), (0.34, 0.32, 0.20), mat_idx=0)
-        add_box_bmesh(bm, (0, -0.03, 1.64), (0.38, 0.38, 0.08), mat_idx=1)
-        add_box_bmesh(bm, (0.16, 0.02, 1.68), (0.02, 0.08, 0.10), mat_idx=2)
-    create_hair_mesh("Hair_Lark", [m_hair_blonde, m_cloth_blue, m_cyan_gem], b_hair_la)
-
-    def b_hair_da(bm):
-        add_box_bmesh(bm, (0, 0.02, 1.55), (0.35, 0.34, 0.24), mat_idx=0)
-        add_box_bmesh(bm, (0.16, -0.03, 1.28), (0.06, 0.06, 0.36), mat_idx=0)
-        add_box_bmesh(bm, (-0.16, -0.03, 1.28), (0.06, 0.06, 0.36), mat_idx=0)
-    create_hair_mesh("Hair_Dara", [m_hair_auburn, m_cyan_gem], b_hair_da)
-
-    def b_hair_fi(bm):
-        add_box_bmesh(bm, (0, 0.02, 1.54), (0.34, 0.32, 0.20), mat_idx=0)
-        add_box_bmesh(bm, (0, -0.02, 1.57), (0.36, 0.34, 0.05), mat_idx=1)
-    create_hair_mesh("Hair_Finn", [m_hair_blonde, m_leather_dark], b_hair_fi)
-
-    def b_hair_vu(bm):
-        add_box_bmesh(bm, (0, 0.06, 1.50), (0.35, 0.22, 0.16), mat_idx=0)
-        add_box_bmesh(bm, (0, -0.14, 1.36), (0.24, 0.14, 0.22), mat_idx=0)
-    create_hair_mesh("Hair_Vulkan", [m_hair_grey], b_hair_vu)
-
-    # -------------------------------------------------------------------------
-    # B. OUTFITS (9 variants - Skinned to Armature)
-    # -------------------------------------------------------------------------
+    # --------------------------------------------------------------------------
+    # OUTFITS (Covering All Factions and Occupations)
+    # --------------------------------------------------------------------------
+    # 1. Outfit_Aqualia
     def b_out_aq(bm, grp):
-        v1, _ = add_tapered_box_bmesh(bm, (0, 0, 0.98), (0, 0, 1.26), (0.38, 0.26), (0.36, 0.24), mat_idx=0)
+        v1, _ = add_tapered_box_bmesh(bm, (0, 0, 0.98), (0, 0, 1.24), (0.38, 0.26), (0.36, 0.24), 0)
         grp["Chest"].extend(v1)
-        v2, _ = add_tapered_box_bmesh(bm, (0, 0, 0.62), (0, 0, 0.98), (0.32, 0.22), (0.30, 0.20), mat_idx=1)
+        v2, _ = add_tapered_box_bmesh(bm, (0, 0, 0.62), (0, 0, 0.98), (0.32, 0.22), (0.30, 0.20), 1)
         grp["Pelvis"].extend(v2)
-    create_outfit_mesh("Outfit_Aqualia", [m_cloth_teal, m_cloth_white], b_out_aq)
+    create_outfit_mesh("Outfit_Aqualia", [c_teal, c_white], b_out_aq)
 
-    def b_out_ne(bm, grp):
-        v1, _ = add_tapered_box_bmesh(bm, (0, 0, 0.64), (0, 0, 1.24), (0.34, 0.24), (0.34, 0.22), mat_idx=0)
+    # 2. Outfit_Pyrador
+    def b_out_py(bm, grp):
+        v1, _ = add_tapered_box_bmesh(bm, (0, 0, 0.98), (0, 0, 1.24), (0.38, 0.26), (0.36, 0.24), 0)
         grp["Chest"].extend(v1)
-        v2, _ = add_box_bmesh(bm, (0, -0.13, 0.88), (0.22, 0.03, 0.38), mat_idx=1)
+        v2, _ = add_tapered_box_bmesh(bm, (0, 0, 0.62), (0, 0, 0.98), (0.32, 0.22), (0.30, 0.20), 1)
+        grp["Pelvis"].extend(v2)
+    create_outfit_mesh("Outfit_Pyrador", [c_red, c_amber], b_out_py)
+
+    # 3. Outfit_Zephyria
+    def b_out_ze(bm, grp):
+        v1, _ = add_tapered_box_bmesh(bm, (0, 0, 0.98), (0, 0, 1.24), (0.36, 0.24), (0.34, 0.22), 0)
+        grp["Chest"].extend(v1)
+        v2, _ = add_tapered_box_bmesh(bm, (0, 0, 0.62), (0, 0, 0.98), (0.32, 0.22), (0.30, 0.20), 1)
+        grp["Pelvis"].extend(v2)
+    create_outfit_mesh("Outfit_Zephyria", [c_sage, c_azure], b_out_ze)
+
+    # 4. Outfit_Fishmonger (Neris / Marina)
+    def b_out_fish(bm, grp):
+        v1, _ = add_tapered_box_bmesh(bm, (0, 0, 0.64), (0, 0, 1.24), (0.34, 0.24), (0.34, 0.22), 0)
+        grp["Chest"].extend(v1)
+        v2, _ = add_box_bmesh(bm, (0, -0.13, 0.88), (0.24, 0.03, 0.40), 1)
         grp["Spine"].extend(v2)
-    create_outfit_mesh("Outfit_Fishmonger", [m_cloth_blue, m_leather_dark], b_out_ne)
+    create_outfit_mesh("Outfit_Fishmonger", [c_navy, c_leather_dark], b_out_fish)
 
-    def b_out_re(bm, grp):
-        v, _ = add_tapered_box_bmesh(bm, (0, 0, 0.64), (0, 0, 1.24), (0.32, 0.22), (0.32, 0.20), mat_idx=0)
-        grp["Chest"].extend(v)
-    create_outfit_mesh("Outfit_Reedweaver", [create_material("M_Reed_Fiber", *hex_to_rgb("8c845b"))], b_out_re)
-
-    def b_out_wi(bm, grp):
-        v1, _ = add_tapered_box_bmesh(bm, (0, 0, 0.62), (0, 0, 1.24), (0.32, 0.22), (0.32, 0.20), mat_idx=0)
+    # 5. Outfit_Cook (Willa / Cora / Faye)
+    def b_out_cook(bm, grp):
+        v1, _ = add_tapered_box_bmesh(bm, (0, 0, 0.62), (0, 0, 1.24), (0.32, 0.22), (0.32, 0.20), 0)
         grp["Chest"].extend(v1)
-        v2, _ = add_box_bmesh(bm, (0, -0.12, 0.88), (0.24, 0.03, 0.44), mat_idx=1)
+        v2, _ = add_box_bmesh(bm, (0, -0.12, 0.88), (0.24, 0.03, 0.44), 1)
         grp["Spine"].extend(v2)
-    create_outfit_mesh("Outfit_Cook", [m_cloth_teal, m_cloth_white], b_out_wi)
+    create_outfit_mesh("Outfit_Cook", [c_teal, c_white], b_out_cook)
 
-    def b_out_or(bm, grp):
-        v1, _ = add_tapered_box_bmesh(bm, (0, 0, 0.68), (0, 0, 1.25), (0.36, 0.24), (0.36, 0.22), mat_idx=0)
+    # 6. Outfit_Blacksmith (Vulkan)
+    def b_out_smith(bm, grp):
+        v1, _ = add_tapered_box_bmesh(bm, (0, 0, 0.62), (0, 0, 1.24), (0.36, 0.26), (0.34, 0.24), 0)
         grp["Chest"].extend(v1)
-        v2, _ = add_box_bmesh(bm, (0.20, 0, 1.22), (0.10, 0.14, 0.06), mat_idx=1)
-        v3, _ = add_box_bmesh(bm, (-0.20, 0, 1.22), (0.10, 0.14, 0.06), mat_idx=1)
-        grp["Chest"].extend(v2 + v3)
-    create_outfit_mesh("Outfit_Stonemason", [m_leather_dark, m_iron], b_out_or)
+        v2, _ = add_box_bmesh(bm, (0, -0.14, 0.90), (0.26, 0.04, 0.46), 1)
+        grp["Spine"].extend(v2)
+    create_outfit_mesh("Outfit_Blacksmith", [c_charcoal, c_leather], b_out_smith)
 
-    def b_out_la(bm, grp):
-        v, _ = add_tapered_box_bmesh(bm, (0, 0, 0.64), (0, 0, 1.25), (0.36, 0.24), (0.34, 0.22), mat_idx=0)
-        grp["Chest"].extend(v)
-    create_outfit_mesh("Outfit_Ferryman", [m_cloth_blue], b_out_la)
+    # 7. Outfit_Alchemist (Emberlyn / Ignis)
+    def b_out_alch(bm, grp):
+        v1, _ = add_tapered_box_bmesh(bm, (0, 0, 0.64), (0, 0, 1.24), (0.34, 0.24), (0.32, 0.22), 0)
+        grp["Chest"].extend(v1)
+        v2, _ = add_box_bmesh(bm, (0, -0.13, 1.02), (0.28, 0.04, 0.12), 1) # Harness
+        grp["Chest"].extend(v2)
+    create_outfit_mesh("Outfit_Alchemist", [c_red, c_gold], b_out_alch)
 
-    def b_out_da(bm, grp):
-        v, _ = add_tapered_box_bmesh(bm, (0, 0, 0.58), (0, 0, 1.25), (0.38, 0.24), (0.34, 0.22), mat_idx=0)
-        grp["Chest"].extend(v)
-    create_outfit_mesh("Outfit_Waterkeeper", [m_cloth_white], b_out_da)
+    # 8. Outfit_Miner (Flint / Bram)
+    def b_out_mine(bm, grp):
+        v1, _ = add_tapered_box_bmesh(bm, (0, 0, 0.64), (0, 0, 1.24), (0.34, 0.24), (0.32, 0.22), 0)
+        grp["Chest"].extend(v1)
+        v2, _ = add_box_bmesh(bm, (0, -0.13, 0.84), (0.30, 0.05, 0.14), 1) # Pouch belt
+        grp["Pelvis"].extend(v2)
+    create_outfit_mesh("Outfit_Miner", [c_charcoal, c_leather], b_out_mine)
 
-    def b_out_fi(bm, grp):
-        v, _ = add_tapered_box_bmesh(bm, (0, 0, 0.66), (0, 0, 1.24), (0.32, 0.22), (0.32, 0.20), mat_idx=0)
-        grp["Chest"].extend(v)
-    create_outfit_mesh("Outfit_Scout", [create_material("M_Leather_Green", *hex_to_rgb("3b543b"))], b_out_fi)
+    # 9. Outfit_Courier (Aster / Finn / Rowan / Kaelen)
+    def b_out_cour(bm, grp):
+        v1, _ = add_tapered_box_bmesh(bm, (0, 0, 0.64), (0, 0, 1.24), (0.32, 0.22), (0.32, 0.20), 0)
+        grp["Chest"].extend(v1)
+        v2, _ = add_box_bmesh(bm, (0, 0, 0.98), (0.34, 0.24, 0.08), 1) # Shoulder sash
+        grp["Chest"].extend(v2)
+    create_outfit_mesh("Outfit_Courier", [c_azure, c_leather_dark], b_out_cour)
 
-    def b_out_vu(bm, grp):
-        v, _ = add_tapered_box_bmesh(bm, (0, 0, 0.62), (0, 0, 1.24), (0.38, 0.26), (0.36, 0.24), mat_idx=0)
-        grp["Chest"].extend(v)
-    create_outfit_mesh("Outfit_Blacksmith", [create_material("M_Apron_Heavy", *hex_to_rgb("3d2a1d"))], b_out_vu)
+    # 10. Outfit_ShrineKeeper (Runa / Sol / Zephyr / Caelum)
+    def b_out_shrine(bm, grp):
+        v1, _ = add_tapered_box_bmesh(bm, (0, 0, 0.54), (0, 0, 1.24), (0.36, 0.26), (0.34, 0.22), 0)
+        grp["Chest"].extend(v1)
+        v2, _ = add_box_bmesh(bm, (0, 0, 0.82), (0.38, 0.28, 0.10), 1) # Gold sash
+        grp["Pelvis"].extend(v2)
+    create_outfit_mesh("Outfit_ShrineKeeper", [c_cream, c_gold], b_out_shrine)
 
-    # -------------------------------------------------------------------------
-    # C. TOOLS (Handhelds - Relative to Hand Socket)
-    # -------------------------------------------------------------------------
-    def b_t_net(bm):
-        add_box_bmesh(bm, (0, 0, 0.0), (0.03, 0.03, 0.24), mat_idx=0)
-        add_box_bmesh(bm, (0, -0.06, 0.12), (0.14, 0.12, 0.03), mat_idx=0)
-        add_box_bmesh(bm, (0, -0.06, 0.05), (0.11, 0.09, 0.12), mat_idx=1)
-    create_tool_mesh("Tool_FishingNet", [m_wood, create_material("M_Rope_Net", *hex_to_rgb("c4b28d"))], b_t_net)
+    # 11. Outfit_Farmer (Reed / Pippa / Sable)
+    def b_out_farm(bm, grp):
+        v1, _ = add_tapered_box_bmesh(bm, (0, 0, 0.60), (0, 0, 1.22), (0.34, 0.22), (0.32, 0.20), 0)
+        grp["Chest"].extend(v1)
+        v2, _ = add_box_bmesh(bm, (0, -0.12, 0.86), (0.22, 0.02, 0.36), 1)
+        grp["Spine"].extend(v2)
+    create_outfit_mesh("Outfit_Farmer", [c_sage, c_flax], b_out_farm)
 
-    def b_t_reed(bm):
-        add_box_bmesh(bm, (0, -0.03, 0.06), (0.08, 0.09, 0.24), mat_idx=0)
-    create_tool_mesh("Tool_ReedBundle", [create_material("M_Green_Reeds", *hex_to_rgb("52734a"))], b_t_reed)
+    # 12. Outfit_Stonemason (Oren / Soren)
+    def b_out_stone(bm, grp):
+        v1, _ = add_tapered_box_bmesh(bm, (0, 0, 0.62), (0, 0, 1.24), (0.36, 0.24), (0.34, 0.22), 0)
+        grp["Chest"].extend(v1)
+        v2, _ = add_box_bmesh(bm, (0, 0, 0.88), (0.38, 0.26, 0.12), 1)
+        grp["Pelvis"].extend(v2)
+    create_outfit_mesh("Outfit_Stonemason", [c_leather, c_iron], b_out_stone)
 
-    def b_t_ladle(bm):
-        add_box_bmesh(bm, (0, 0, 0.04), (0.02, 0.02, 0.20), mat_idx=0)
-        add_box_bmesh(bm, (0, -0.02, 0.14), (0.06, 0.06, 0.04), mat_idx=0)
-    create_tool_mesh("Tool_CookingLadle", [m_wood], b_t_ladle)
+    # --------------------------------------------------------------------------
+    # HANDHELD TOOLS & PROPS (Parented to Socket_Hand.R)
+    # --------------------------------------------------------------------------
+    # 1. Forge Hammer (Vulkan)
+    create_tool_mesh("Tool_ForgeHammer", [c_leather, c_iron], lambda bm: (
+        add_box_bmesh(bm, (0, 0, 0.0), (0.04, 0.04, 0.36), 0),
+        add_box_bmesh(bm, (0, 0.04, 0.18), (0.10, 0.16, 0.10), 1),
+    ))
+    # 2. Cooking Ladle (Willa / Cora / Faye)
+    create_tool_mesh("Tool_CookingLadle", [c_leather, c_iron], lambda bm: (
+        add_box_bmesh(bm, (0, 0, 0.0), (0.03, 0.03, 0.34), 0),
+        add_box_bmesh(bm, (0, -0.04, 0.16), (0.09, 0.09, 0.05), 1),
+    ))
+    # 3. Fishing Net (Neris)
+    create_tool_mesh("Tool_FishingNet", [c_leather, c_white], lambda bm: (
+        add_box_bmesh(bm, (0, 0, 0.0), (0.03, 0.03, 0.32), 0),
+        add_box_bmesh(bm, (0, 0, 0.18), (0.16, 0.16, 0.08), 1),
+    ))
+    # 4. Scout Staff (Finn / Rowan / Kaelen)
+    create_tool_mesh("Tool_ScoutStaff", [c_leather, c_azure], lambda bm: (
+        add_box_bmesh(bm, (0, 0, 0.0), (0.04, 0.04, 0.48), 0),
+        add_box_bmesh(bm, (0, 0, 0.24), (0.07, 0.07, 0.07), 1),
+    ))
+    # 5. Reed Bundle (Reed)
+    create_tool_mesh("Tool_ReedBundle", [c_sage, c_flax], lambda bm: (
+        add_box_bmesh(bm, (0, 0, 0.02), (0.12, 0.12, 0.28), 0),
+        add_box_bmesh(bm, (0, 0, 0.02), (0.14, 0.14, 0.04), 1),
+    ))
+    # 6. Alchemist Flask (Emberlyn / Dara)
+    create_tool_mesh("Tool_AlchemistFlask", [c_iron, c_amber], lambda bm: (
+        add_box_bmesh(bm, (0, 0, 0.0), (0.08, 0.08, 0.14), 1),
+        add_box_bmesh(bm, (0, 0, 0.09), (0.04, 0.04, 0.06), 0),
+    ))
+    # 7. Miner Pick (Flint / Bram)
+    create_tool_mesh("Tool_MinerPick", [c_leather, c_iron], lambda bm: (
+        add_box_bmesh(bm, (0, 0, 0.0), (0.03, 0.03, 0.38), 0),
+        add_box_bmesh(bm, (0, 0.02, 0.18), (0.06, 0.24, 0.05), 1),
+    ))
+    # 8. Rune Chisel (Oren / Soren)
+    create_tool_mesh("Tool_RuneChisel", [c_iron, c_gold], lambda bm: (
+        add_box_bmesh(bm, (0, 0, 0.0), (0.04, 0.04, 0.24), 0),
+        add_box_bmesh(bm, (0, 0, 0.12), (0.06, 0.06, 0.04), 1),
+    ))
+    # 9. Ferry Oar (Lark)
+    create_tool_mesh("Tool_FerryOar", [c_leather, c_flax], lambda bm: (
+        add_box_bmesh(bm, (0, 0, 0.0), (0.04, 0.04, 0.46), 0),
+        add_box_bmesh(bm, (0, 0.02, 0.20), (0.12, 0.02, 0.18), 1),
+    ))
+    # 10. Kite Prop (Zephyr)
+    create_tool_mesh("Tool_NavigatorKite", [c_flax, c_azure], lambda bm: (
+        add_box_bmesh(bm, (0, 0, 0.0), (0.03, 0.03, 0.36), 0),
+        add_box_bmesh(bm, (0, 0.04, 0.16), (0.24, 0.02, 0.24), 1),
+    ))
+    # 11. Flower Shears (Pippa / Tala)
+    create_tool_mesh("Tool_FlowerShears", [c_iron, c_red], lambda bm: (
+        add_box_bmesh(bm, (0, 0, 0.0), (0.04, 0.08, 0.20), 0),
+    ))
+    # 12. Diving Shell (Marina / Sable)
+    create_tool_mesh("Tool_DivingShell", [c_cream, c_gold], lambda bm: (
+        add_box_bmesh(bm, (0, 0, 0.0), (0.12, 0.08, 0.12), 0),
+    ))
 
-    def b_t_chisel(bm):
-        add_box_bmesh(bm, (0, 0, 0.04), (0.03, 0.03, 0.18), mat_idx=0)
-        add_box_bmesh(bm, (0, 0, 0.14), (0.02, 0.02, 0.06), mat_idx=1)
-    create_tool_mesh("Tool_RuneChisel", [m_wood, m_iron], b_t_chisel)
-
-    def b_t_oar(bm):
-        add_box_bmesh(bm, (0, 0, 0.06), (0.03, 0.03, 0.34), mat_idx=0)
-        add_box_bmesh(bm, (0, 0, 0.22), (0.10, 0.02, 0.14), mat_idx=0)
-    create_tool_mesh("Tool_FerryOar", [m_wood], b_t_oar)
-
-    def b_t_vial(bm):
-        add_box_bmesh(bm, (0, -0.02, 0.04), (0.04, 0.04, 0.10), mat_idx=0)
-    create_tool_mesh("Tool_WaterPhial", [m_cyan_gem], b_t_vial)
-
-    def b_t_staff(bm):
-        add_box_bmesh(bm, (0, 0, 0.06), (0.03, 0.03, 0.36), mat_idx=0)
-    create_tool_mesh("Tool_ScoutStaff", [m_wood], b_t_staff)
-
-    def b_t_ham(bm):
-        add_box_bmesh(bm, (0, 0, 0.06), (0.03, 0.03, 0.22), mat_idx=0)
-        add_box_bmesh(bm, (0, 0, 0.16), (0.11, 0.08, 0.08), mat_idx=1)
-    create_tool_mesh("Tool_ForgeHammer", [m_wood, m_iron], b_t_ham)
-
-# =============================================================================
-# 4. PROCEDURAL ANIMATION ACTIONS (IDLE BREATHING & WALK)
-# =============================================================================
-
-def setup_humanoid_animations(arm_obj: bpy.types.Object):
+# ==============================================================================
+# 4. PROCEDURAL ANIMATION TRACKS
+# ==============================================================================
+def setup_animations(arm_obj: bpy.types.Object):
     if not arm_obj.animation_data:
         arm_obj.animation_data_create()
 
-    # 1. Idle Breathing (6 frames: 0..5)
+    # 1. Idle Breathing (6 frames)
     act_idle = bpy.data.actions.new(name="idle_breathing")
     arm_obj.animation_data.action = act_idle
 
-    bones = arm_obj.pose.bones
-    chest_z_rot = [0.0, 0.012, 0.022, 0.016, 0.006, 0.0]
-    pelvis_z_shift = [0.65, 0.653, 0.658, 0.655, 0.652, 0.65]
+    pb_chest = arm_obj.pose.bones.get("Chest")
+    pb_pelvis = arm_obj.pose.bones.get("Pelvis")
+    pb_hand_r = arm_obj.pose.bones.get("Hand.R")
 
-    for f_idx in range(6):
-        bpy.context.scene.frame_set(f_idx)
-        bones["Pelvis"].location = (0, 0, pelvis_z_shift[f_idx] - 0.65)
-        bones["Pelvis"].keyframe_insert(data_path="location", frame=f_idx)
+    idle_keyframes = [
+        (0, (1.0, 1.0, 1.0), (0, 0, 0), (0, 0, 0)),
+        (1, (1.01, 1.01, 1.01), (0, 0, 0.002), (0.02, 0, 0)),
+        (2, (1.025, 1.025, 1.02), (0, 0, 0.005), (0.04, 0, 0)),
+        (3, (1.025, 1.025, 1.02), (0, 0, 0.005), (0.04, 0, 0)),
+        (4, (1.01, 1.01, 1.01), (0, 0, 0.002), (0.02, 0, 0)),
+        (5, (1.0, 1.0, 1.0), (0, 0, 0), (0, 0, 0)),
+    ]
 
-        bones["Chest"].rotation_euler = (chest_z_rot[f_idx], 0, 0)
-        bones["Chest"].keyframe_insert(data_path="rotation_euler", frame=f_idx)
+    for f_idx, c_scale, p_loc, h_rot in idle_keyframes:
+        if pb_chest:
+            pb_chest.scale = c_scale
+            pb_chest.keyframe_insert(data_path="scale", frame=f_idx)
+        if pb_pelvis:
+            pb_pelvis.location = p_loc
+            pb_pelvis.keyframe_insert(data_path="location", frame=f_idx)
+        if pb_hand_r:
+            pb_hand_r.rotation_euler = h_rot
+            pb_hand_r.keyframe_insert(data_path="rotation_euler", frame=f_idx)
 
     # 2. Walk Cycle (8 frames)
     act_walk = bpy.data.actions.new(name="walk")
     arm_obj.animation_data.action = act_walk
 
-    thigh_l_rot = [0.28, 0.14, -0.08, -0.25, -0.28, -0.14, 0.08, 0.25]
-    thigh_r_rot = [-0.28, -0.14, 0.08, 0.25, 0.28, 0.14, -0.08, -0.25]
-    arm_l_rot = [-0.20, -0.10, 0.06, 0.18, 0.20, 0.10, -0.06, -0.18]
-    arm_r_rot = [0.20, 0.10, -0.06, -0.18, -0.20, -0.10, 0.06, 0.18]
-    pelvis_bounce = [0.0, 0.010, 0.0, -0.006, 0.0, 0.010, 0.0, -0.006]
+    pb_thigh_l = arm_obj.pose.bones.get("Thigh.L")
+    pb_thigh_r = arm_obj.pose.bones.get("Thigh.R")
+    pb_arm_l = arm_obj.pose.bones.get("UpperArm.L")
+    pb_arm_r = arm_obj.pose.bones.get("UpperArm.R")
 
     for f_idx in range(8):
-        bpy.context.scene.frame_set(f_idx)
-        bones["Pelvis"].location = (0, 0, pelvis_bounce[f_idx])
-        bones["Pelvis"].keyframe_insert(data_path="location", frame=f_idx)
+        phase = (f_idx / 8.0) * 2.0 * math.pi
+        leg_rot = math.sin(phase) * 0.35
+        arm_rot = -leg_rot * 0.40
+        pelvis_bounce = -abs(math.sin(phase * 2.0)) * 0.012
 
-        bones["Thigh.L"].rotation_euler = (thigh_l_rot[f_idx], 0, 0)
-        bones["Thigh.L"].keyframe_insert(data_path="rotation_euler", frame=f_idx)
-
-        bones["Thigh.R"].rotation_euler = (thigh_r_rot[f_idx], 0, 0)
-        bones["Thigh.R"].keyframe_insert(data_path="rotation_euler", frame=f_idx)
-
-        bones["UpperArm.L"].rotation_euler = (arm_l_rot[f_idx], 0, 0)
-        bones["UpperArm.L"].keyframe_insert(data_path="rotation_euler", frame=f_idx)
-
-        bones["UpperArm.R"].rotation_euler = (arm_r_rot[f_idx], 0, 0)
-        bones["UpperArm.R"].keyframe_insert(data_path="rotation_euler", frame=f_idx)
+        if pb_thigh_l:
+            pb_thigh_l.rotation_euler = (leg_rot, 0, 0)
+            pb_thigh_l.keyframe_insert(data_path="rotation_euler", frame=f_idx)
+        if pb_thigh_r:
+            pb_thigh_r.rotation_euler = (-leg_rot, 0, 0)
+            pb_thigh_r.keyframe_insert(data_path="rotation_euler", frame=f_idx)
+        if pb_arm_l:
+            pb_arm_l.rotation_euler = (arm_rot, 0, 0)
+            pb_arm_l.keyframe_insert(data_path="rotation_euler", frame=f_idx)
+        if pb_arm_r:
+            pb_arm_r.rotation_euler = (-arm_rot, 0, 0)
+            pb_arm_r.keyframe_insert(data_path="rotation_euler", frame=f_idx)
+        if pb_pelvis:
+            pb_pelvis.location = (0, 0, pelvis_bounce)
+            pb_pelvis.keyframe_insert(data_path="location", frame=f_idx)
 
     arm_obj.animation_data.action = act_idle
-    bpy.context.scene.frame_set(0)
 
-# =============================================================================
-# MAIN BUILD SCRIPT
-# =============================================================================
-
+# ==============================================================================
+# MAIN
+# ==============================================================================
 def main():
-    print("=" * 60)
-    print("Building Precision Modular Humanoid Base in Blender 4.2...")
-    print("=" * 60)
-
     reset_scene()
+    print("=" * 60)
+    print("Building Full Modular Humanoid Cast Base in Blender 4.2...")
+    print("=" * 60)
 
-    arm_obj = build_humanoid_armature()
-    print("  [1/4] Master Humanoid Armature built (bones & non-deform sockets).")
+    arm_obj = build_master_armature()
+    print("  [1/4] Master Humanoid Armature built (19 bones & 10 sockets).")
 
-    mannequin_obj = build_base_mannequin(arm_obj)
+    mannequin_obj = build_mannequin_body(arm_obj)
     print("  [2/4] Base Mannequin Mesh modeled, rigged, and vertex-weighted.")
 
-    build_modular_assets(arm_obj)
-    print("  [3/4] Modular attachments library generated (9 hairstyles, 9 outfits, 8 tools).")
+    build_modular_library(arm_obj)
+    print("  [3/4] Comprehensive Modular Library built (hair, outfits, tools).")
 
-    setup_humanoid_animations(arm_obj)
+    setup_animations(arm_obj)
     print("  [4/4] Procedural keyframe animations added (idle_breathing & walk).")
 
-    bpy.ops.wm.save_as_mainfile(filepath=str(OUT_BLEND))
-    print(f"Master Modular Humanoid saved: {OUT_BLEND}")
+    out_path = MODELS_DIR / "humanoid_modular_base.blend"
+    bpy.ops.wm.save_as_mainfile(filepath=str(out_path))
+    print(f"\nMaster Modular Humanoid saved: {out_path}")
     print("=" * 60)
 
 if __name__ == "__main__":

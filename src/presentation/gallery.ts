@@ -304,18 +304,18 @@ export async function initializeArtGallery(root: HTMLElement): Promise<() => voi
         <div class="art-budget-card">
           <h2>Deterministic Texture Atlas Budget</h2>
           <p>Strict performance invariant: Entire game art decoded footprint must reside within 1 single atlas page (&lt; 16.0 MiB RAM limit).</p>
-          <div class="art-budget-meter" role="progressbar" aria-valuenow="30.4" aria-valuemin="0" aria-valuemax="100">
-            <div id="art-budget-fill" class="art-budget-bar" style="width: 30.44%"></div>
+          <div class="art-budget-meter" role="progressbar" aria-valuenow="87.4" aria-valuemin="0" aria-valuemax="100">
+            <div id="art-budget-fill" class="art-budget-bar" style="width: 87.38%"></div>
           </div>
           <div class="art-budget-labels">
-            <span>Decoded RAM: <strong>4.87 MiB</strong> (1091 × 1170 × 4 bytes)</span>
+            <span id="art-stat-decoded-ram">Decoded RAM: <strong>13.98 MiB</strong> (1921 × 1908 × 4 bytes)</span>
             <span>Budget Ceiling: <strong>16.00 MiB</strong> (2048 × 2048 × 4 bytes)</span>
           </div>
           <div class="art-stats-grid">
-            <div class="art-stat-box"><div class="art-stat-val">790</div><div class="art-stat-lbl">Packed Sprite Frames</div></div>
-            <div class="art-stat-box"><div class="art-stat-val">1 Page</div><div class="art-stat-lbl">Atlas Count (Single Page Invariant)</div></div>
-            <div class="art-stat-box"><div class="art-stat-val">69.56%</div><div class="art-stat-lbl">Free Headroom Remaining</div></div>
-            <div class="art-stat-box"><div class="art-stat-val">1.27 MiB</div><div class="art-stat-lbl">Half-Resolution @0.5x RAM</div></div>
+            <div class="art-stat-box"><div id="art-stat-frames" class="art-stat-val">1129</div><div class="art-stat-lbl">Packed Sprite Frames</div></div>
+            <div class="art-stat-box"><div id="art-stat-pages" class="art-stat-val">1 Page</div><div class="art-stat-lbl">Atlas Count (Single Page Invariant)</div></div>
+            <div class="art-stat-box"><div id="art-stat-headroom" class="art-stat-val">12.62%</div><div class="art-stat-lbl">Free Headroom Remaining</div></div>
+            <div class="art-stat-box"><div id="art-stat-half" class="art-stat-val">3.78 MiB</div><div class="art-stat-lbl">Half-Resolution @0.5x RAM</div></div>
           </div>
         </div>
         <div class="art-atlas-viewer">
@@ -323,14 +323,14 @@ export async function initializeArtGallery(root: HTMLElement): Promise<() => voi
             <label>Atlas view zoom
               <select id="atlas-zoom">
                 <option value="0.5">0.5× Fit</option>
-                <option value="1" selected>1× Native Authored Sheet (1091 × 1170)</option>
+                <option id="atlas-zoom-1" value="1" selected>1× Native Authored Sheet (1921 × 1908)</option>
                 <option value="1.5">1.5× Zoom</option>
               </select>
             </label>
-            <p id="atlas-status" class="art-status" style="margin:0;align-self:center">Single page: bundle.png (1091 × 1170)</p>
+            <p id="atlas-status" class="art-status" style="margin:0;align-self:center">Single page: bundle.png (1921 × 1908)</p>
           </div>
           <div class="art-atlas-canvas-wrap">
-            <canvas id="art-atlas-canvas" width="1091" height="1170" role="img" aria-label="Packed bundle texture atlas"></canvas>
+            <canvas id="art-atlas-canvas" width="1921" height="1908" role="img" aria-label="Packed bundle texture atlas"></canvas>
           </div>
         </div>
       </section>
@@ -814,7 +814,7 @@ export async function initializeArtGallery(root: HTMLElement): Promise<() => voi
         id: s.id,
         name: s.name,
         subtitle: `${s.elements.join('/').toUpperCase()} elemental species`,
-        isHd: s.id === 'rivallie',
+        isHd: true,
         bio: s.description,
       }));
     }
@@ -824,15 +824,7 @@ export async function initializeArtGallery(root: HTMLElement): Promise<() => voi
         id: n.id,
         name: n.name,
         subtitle: `${n.role} · Aqualia`,
-        isHd: [
-          'npc:neris',
-          'npc:reed',
-          'npc:willa',
-          'npc:oren',
-          'npc:lark',
-          'npc:dara',
-          'npc:finn',
-        ].includes(n.id),
+        isHd: true,
         bio: n.personality,
       }));
     }
@@ -842,7 +834,7 @@ export async function initializeArtGallery(root: HTMLElement): Promise<() => voi
         id: n.id,
         name: n.name,
         subtitle: `${n.role} · Pyrador`,
-        isHd: false,
+        isHd: true,
         bio: n.personality,
       }));
     }
@@ -852,7 +844,7 @@ export async function initializeArtGallery(root: HTMLElement): Promise<() => voi
         id: n.id,
         name: n.name,
         subtitle: `${n.role} · Zephyria`,
-        isHd: false,
+        isHd: true,
         bio: n.personality,
       }));
     }
@@ -871,7 +863,7 @@ export async function initializeArtGallery(root: HTMLElement): Promise<() => voi
           id: 'pyrador',
           name: 'Pyrador Player',
           subtitle: 'Volcanic Caldera',
-          isHd: false,
+          isHd: true,
           bio: 'Fire-attuned mountain pioneer.',
         },
         {
@@ -879,7 +871,7 @@ export async function initializeArtGallery(root: HTMLElement): Promise<() => voi
           id: 'zephyria',
           name: 'Zephyria Player',
           subtitle: 'Highland Steppe',
-          isHd: false,
+          isHd: true,
           bio: 'Wind-attuned fleet-footed nomad.',
         },
       ];
@@ -890,15 +882,7 @@ export async function initializeArtGallery(root: HTMLElement): Promise<() => voi
       id: n.id,
       name: n.name,
       subtitle: `${n.role} · ${VILLAGES[n.village]?.name ?? ''}`,
-      isHd: [
-        'npc:neris',
-        'npc:reed',
-        'npc:willa',
-        'npc:oren',
-        'npc:lark',
-        'npc:dara',
-        'npc:finn',
-      ].includes(n.id),
+      isHd: true,
       bio: n.personality,
     }));
   };
@@ -1241,6 +1225,42 @@ export async function initializeArtGallery(root: HTMLElement): Promise<() => voi
       y: 530,
       scale: 1,
       bio: 'Sheltered under the grand oak tree roots, scanning the horizon.',
+    },
+    {
+      id: 'species:steamshell',
+      name: 'Steamshell',
+      subtitle: 'Water/Fire Creature',
+      actorKind: 'species',
+      actorId: 'steamshell',
+      facing: 'w',
+      x: 1250,
+      y: 880,
+      scale: 1,
+      bio: 'Armored geothermal gastropod basking near the warm canal runoff.',
+    },
+    {
+      id: 'species:mireling',
+      name: 'Mireling',
+      subtitle: 'Water Creature',
+      actorKind: 'species',
+      actorId: 'mireling',
+      facing: 'ne',
+      x: 1160,
+      y: 910,
+      scale: 1,
+      bio: 'Amphibious mud dweller resting among the freshwater reeds.',
+    },
+    {
+      id: 'species:zephyrit',
+      name: 'Zephyrit',
+      subtitle: 'Wind Creature',
+      actorKind: 'species',
+      actorId: 'zephyrit',
+      facing: 'se',
+      x: 1470,
+      y: 560,
+      scale: 1,
+      bio: 'Feathered wind sprite resting under the oak canopy.',
     },
     // Grand oak canopy layer (drawn on top of oak tree and Finn)
     {

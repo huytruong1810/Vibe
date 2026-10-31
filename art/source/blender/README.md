@@ -83,30 +83,30 @@ The armature contains **19 deform bones** and **10 non-deforming equipment socke
 
 All pixel-art sprites rendered for humanoids must conform to the following camera and canvas contract:
 
-| Metric | Specification | Rationale |
-| :--- | :--- | :--- |
-| **Canvas Dimensions** | $96 \times 144\text{ px}$ | Standard human vertical framing |
-| **Ground Anchor** | $(48, 132)$ | World origin $(0, 0, 0)$ maps to pixel $(48, 132)$ |
-| **Camera Type** | Orthographic | Eliminates perspective distortion across angles |
-| **Camera Pitch** | $20.0^\circ$ | Hearthwild standard elevation angle |
-| **Orthographic Scale** | $2.80$ | Preserves proportions with $\ge 2\text{px}$ margin on all borders |
-| **Camera Y-Shift** | $60.0 / 144.0$ ($0.41667$) | Exactly maps $(0, 0, 0)$ to pixel row $132$ |
-| **Shading** | Workbench Studio + Cavity + Outline | Stylized rim outlines (`rgb(23, 28, 38)`) without anti-aliasing blur |
+| Metric                 | Specification                       | Rationale                                                            |
+| :--------------------- | :---------------------------------- | :------------------------------------------------------------------- |
+| **Canvas Dimensions**  | $96 \times 144\text{ px}$           | Standard human vertical framing                                      |
+| **Ground Anchor**      | $(48, 132)$                         | World origin $(0, 0, 0)$ maps to pixel $(48, 132)$                   |
+| **Camera Type**        | Orthographic                        | Eliminates perspective distortion across angles                      |
+| **Camera Pitch**       | $20.0^\circ$                        | Hearthwild standard elevation angle                                  |
+| **Orthographic Scale** | $2.80$                              | Preserves proportions with $\ge 2\text{px}$ margin on all borders    |
+| **Camera Y-Shift**     | $60.0 / 144.0$ ($0.41667$)          | Exactly maps $(0, 0, 0)$ to pixel row $132$                          |
+| **Shading**            | Workbench Studio + Cavity + Outline | Stylized rim outlines (`rgb(23, 28, 38)`) without anti-aliasing blur |
 
 ### 8-Directional Facings
 
 The renderer samples 8 rotation angles around the Z-axis:
 
 | Code | Facing Name | Compass Direction | Blender Rig Z-Rotation |
-| :--- | :--- | :--- | :--- |
-| `s` | South | Forward / Down | $0^\circ$ |
-| `se` | South-East | Front-Right | $45^\circ$ |
-| `e` | East | Right | $90^\circ$ |
-| `ne` | North-East | Back-Right | $135^\circ$ |
-| `n` | North | Backward / Up | $180^\circ$ |
-| `nw` | North-West | Back-Left | $225^\circ$ |
-| `w` | West | Left | $270^\circ$ |
-| `sw` | South-West | Front-Left | $315^\circ$ |
+| :--- | :---------- | :---------------- | :--------------------- |
+| `s`  | South       | Forward / Down    | $0^\circ$              |
+| `se` | South-East  | Front-Right       | $45^\circ$             |
+| `e`  | East        | Right             | $90^\circ$             |
+| `ne` | North-East  | Back-Right        | $135^\circ$            |
+| `n`  | North       | Backward / Up     | $180^\circ$            |
+| `nw` | North-West  | Back-Left         | $225^\circ$            |
+| `w`  | West        | Left              | $270^\circ$            |
+| `sw` | South-West  | Front-Left        | $315^\circ$            |
 
 ---
 
@@ -121,6 +121,7 @@ blender -b -P art/source/blender/build_modular_rig.py
 ```
 
 This constructs:
+
 1. The 19-bone deform skeleton and 10 non-deforming sockets.
 2. The stylized low-poly base mannequin with vertex weights.
 3. 9 distinct modular hairstyles and 9 modular outfits.
