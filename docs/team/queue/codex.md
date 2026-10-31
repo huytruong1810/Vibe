@@ -300,17 +300,21 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 - done when: the acceptance column of each row in `docs/team/briefs/codex.md`
 - evidence:
 
-### C9 · Human path: UAL2 rig, UAL1 retarget, items, fit
+### C9a · Human path: UAL2 rig fit, UAL retarget, human clips, forge selftest
 
-- status: open
-- goal: rig and animate the UAL2 mannequin first, then `player-aqualia` and `npc:neris` (communicator M3, M4).
-- work:
-  - `items`: 8 facings × 8 grip angles plus an inventory icon from one mesh (ART-15).
-  - `fit` for garment parts (Surface Deform or Shrinkwrap, weights from the body,
-    hidden faces masked, PRD-1).
-  - Implement the `thinFeature` check.
-  - Update the skills.
-- done when: doctor shows `humans: ready` and `items: ready`, and you've posted `--to-blender--go-humans.md` and `--to-blender--go-items.md`
+- status: in-progress: claude (2026-11-01), on machine A
+- goal: the forge rigs an A-pose human on the UAL2 skeleton, retargets UAL2 and UAL1 actions into all 19 human clips, bakes combat clips on `human.combat`, and has a `forge.py selftest` harness on a mannequin fixture.
+- evidence:
+
+### C9b · Items, fit, human faces
+
+- status: open (after C9a)
+- goal: the remaining human-class stages.
+  - `items`: 8 facings × 8 grip angles plus an inventory icon from one mesh (ART-15), registered to `Socket_Hand.*`.
+  - `fit`: garment parts (Surface Deform or Shrinkwrap, weights from the body, hidden body faces masked, PRD-1).
+  - The `thinFeature` check.
+  - Human faces: the full 9 expressions plus blink, sleep and hurt, sharing the C3b grammar.
+- done when: doctor shows `items: ready` and humans with nothing pending; you've posted `--to-blender--go-items`
 - evidence:
 
 ### C10 · Environment asset kind
