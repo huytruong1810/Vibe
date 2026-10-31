@@ -273,3 +273,18 @@ the unchanged map by path/digest and retains replay passes, rather than duplicat
 the project. `next` uses exact-digest, layout-scoped director records only for
 operator guidance; it does not write approvals or activate gameplay. See the
 [worldforge guide](worldforge.md). Historical packets and their records stay intact.
+
+## 2026-10-31: tileforge makes terrain tiles from swatches (C11)
+
+**Decision:** terrain tiles (ART-11.2) come from `tileforge`, not from hand pixelling or
+procedural generators:
+
+- the communicator designs a swatch and a recipe;
+- the tool quantises to at most four palette values, makes the tile seamless with
+  border-shared variants, builds the 14 dual-grid masks that `autotiler.ts` uses, runs QA,
+  and packets;
+- publish is digest-bound to a director record (PRD-9);
+- `rebuild.py` never overwrites published tiles.
+
+**Consequences:** the renderer and worldforge renders must consume variants and overlay
+families (C11b). See the [tileforge guide](tileforge.md).
