@@ -34,8 +34,8 @@
     "faceDecalFacings": ["s", "se", "sw", "e", "w"]
   },
   "light": {
-    "keyDirectionWorld": [-0.55, 0.3, 0.78],
-    "keyDirectionNote": "Unit-ish vector pointing TOWARD the light: west, slightly north, above. Reads as screen upper-left.",
+    "keyDirectionWorld": [-0.5, -0.45, 0.74],
+    "keyDirectionNote": "Vector TOWARD the light in world space (model faces -Y toward the viewer): west, toward the viewer, above. Reads as screen upper-left; front-facing surfaces land in the mid band, tops and left faces in light (ART-3.1).",
     "ambient": 0.18,
     "bands": {
       "shadowBelow": 0.2,
@@ -89,30 +89,30 @@
       }
     },
     "creature.small": {
-      "size": [40, 40],
-      "anchor": [20, 36],
+      "size": [40, 44],
+      "anchor": [20, 34],
       "species": ["ignicap", "zephyrit", "cindermoth"],
       "display": {
-        "size": [80, 80],
-        "anchor": [40, 72]
+        "size": [80, 88],
+        "anchor": [40, 68]
       }
     },
     "creature.medium": {
-      "size": [48, 48],
-      "anchor": [24, 43],
+      "size": [56, 56],
+      "anchor": [28, 44],
       "species": ["rivallie", "mireling"],
       "display": {
-        "size": [96, 96],
-        "anchor": [48, 86]
+        "size": [112, 112],
+        "anchor": [56, 88]
       }
     },
     "creature.large": {
-      "size": [72, 56],
-      "anchor": [36, 51],
+      "size": [80, 72],
+      "anchor": [40, 56],
       "species": ["steamshell", "bramblefang", "marshstalker"],
       "display": {
-        "size": [144, 112],
-        "anchor": [72, 102]
+        "size": [160, 144],
+        "anchor": [80, 112]
       }
     },
     "layer.face": {
@@ -284,5 +284,6 @@
     "contactSheetScale": 4,
     "maxStatus": "candidate",
     "exportUniform2x2Blocks": true
-  }
+  },
+  "canvasNote": "Creature canvases leave room below the root: at 30 deg elevation a long body's front projects below the feet in s/n facings. These supersede the contract's proposed 96x96 Rivallie proof canvas (contract v2 asks for anatomy-specific creature canvases)."
 }

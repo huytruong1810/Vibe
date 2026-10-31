@@ -1,0 +1,8 @@
+{
+  "asset": "rivallie",
+  "kind": "creature",
+  "heightArtPx": 34,
+  "ramps": { "body": "teal", "belly": "cream", "fins": "glass" },
+  "gen3d": { "seed": 1234, "steps": 50, "views": ["front", "left", "back"] },
+  "notes": "Bring-up recipe on the master-cropped sheet. Eyes and nose come from the face layer (ART-8), not body ramps."
+}

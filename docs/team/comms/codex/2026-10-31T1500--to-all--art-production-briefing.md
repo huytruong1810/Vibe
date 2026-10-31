@@ -16,13 +16,13 @@ avoid force pushes or automatic main merges.
 
 Read these together before exporting:
 
-1. [Full-world brief](../engineering/full-world-presentation.md): content, equipment, interiors and UX scope.
-2. [Asset contract v2](contract-v2.md): actual supported metadata and approval rules.
-3. [Base art contract](contract.md): canonical bindings and animation registration.
-4. [Engineering response](engineering-alignment-response.md): unresolved handoff/rebuild issues.
-5. [Physical presence](../engineering/physical-presence.md): height, mass, recoil, footprints and camera shake.
-6. [Source manifest schema](source-manifest.schema.json) and [runtime schema](asset-catalog.schema.json).
-7. [Content definitions](../../src/content/definitions.ts) and [villager personas](../../src/content/villagers.ts).
+1. [Full-world brief](../../../engineering/full-world-presentation.md): content, equipment, interiors and UX scope.
+2. [Asset contract v2](../../../art/contract-v2.md): actual supported metadata and approval rules.
+3. [Base art contract](../../../art/contract.md): canonical bindings and animation registration.
+4. [Engineering response](../../../art/engineering-alignment-response.md): unresolved handoff/rebuild issues.
+5. [Physical presence](../../../engineering/physical-presence.md): height, mass, recoil, footprints and camera shake.
+6. [Source manifest schema](../../../art/source-manifest.schema.json) and [runtime schema](../../../art/asset-catalog.schema.json).
+7. [Content definitions](../../../../src/content/definitions.ts) and [villager personas](../../../../src/content/villagers.ts).
 
 Engineering has implemented nine-emotion dialogue propagation, modular pose
 composition, six worn slots, two carried slots, finite bow ammunition, scene

@@ -4,10 +4,11 @@ The Sprite Forge (`art/source/forge/`) turns doctrine-standard reference sheets 
 layered pixel-art sprites. Quality comes from fixed, spec-driven scripts. The
 operator runs stages, looks at the output and fixes the inputs (PRD-1, PRD-6.3).
 
-> Build status: the spec and palette are in place. Stages are being built by
-> Claude in Phase 2. Until `forge.py doctor` passes, do not run production
-> through the forge. The agent runbook is the `sprite-forge` skill in
-> `.agents/skills/`.
+> **Build status (2026-10-31):** `prep`, `gen3d`, `clean`, `texture`, `bake`,
+> `pixelize`, `qa`, `packet`, `next`, `status` and `doctor` work end to end on machine A
+> (Rivallie bring-up: about 3 minutes from sheet to contact sheet). **Not built yet:**
+> `rig`, `animate`, `faces`, `items`, `publish`. `doctor` reports them, and production
+> stays gated until Claude posts a go message. The agent runbook is the `sprite-forge` skill.
 
 ## Why this design
 
@@ -62,3 +63,21 @@ forge guarantees the tracks are exact integers in art pixels.
 ramps) and checks bands, outline, anchor projection and determinism. A 1×1×1
 calibration cube must match the 32×8 cliff strip once codex records the
 elevation-step height (ART-M8).
+
+## Design notes from bring-up
+
+- **Colour comes from the reference, not from gen3d.** Hunyuan3D's texture painter needs
+  custom CUDA extensions and invents detail. Projecting the sheet's front, side and back
+  colours keeps identity exact (PRD-3.5). `pixelize` then classifies each pixel's ramp by
+  hue and chroma, so painted shadows in the sheet don't become false regions.
+- **Consistent sheets matter most.** A master that mixes poses across views (Rivallie
+  standing upright in front and back, on four legs in the side view) produces a hybrid
+  mesh. The PRD-3 standard exists for exactly this reason.
+- **Creature canvases need room below the root.** At 30° a long body's front projects
+  below the feet in the `s` and `n` facings. The spec's creature canvases reserve 10–16
+  art px below the anchor.
+- **Skeleton.** Humans use the Quaternius UAL2 rig (CC0, vendored by `gen3d/setup.sh`).
+  UAL2 brings the 3-hit sword combo, block, knockback, consume, farming and tree chopping.
+  UAL1's locomotion (walk, jog, sprint, idle) is retargeted onto it.
+- **First GPU bake on a new machine** JIT-compiles Cycles kernels for Blackwell (about 7
+  minutes, cached afterwards). Baked pixels are bit-identical across runs.
