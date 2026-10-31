@@ -12,10 +12,9 @@ from typing import List, Tuple, Dict, Optional
 import numpy as np
 from PIL import Image, ImageDraw
 import scipy.ndimage
-import rembg
-
 def init_matting_session():
     """Initializes high-precision BiRefNet alpha matting session."""
+    import rembg
     return rembg.new_session("birefnet-general")
 
 def segment_and_extract_figures(

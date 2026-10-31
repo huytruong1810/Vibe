@@ -49,10 +49,10 @@ def setup_render_engine(width: int, height: int):
     scene.render.image_settings.color_mode = 'RGBA'
     scene.render.image_settings.color_depth = '8'
 
-    # Use Workbench or EEVEE for crisp, fast rendering on CPU
+    # Use Workbench for crisp, fast rendering on CPU
     scene.render.engine = 'BLENDER_WORKBENCH'
-    scene.display.shading.light = 'MATCAP'
-    scene.display.shading.color_type = 'TEXTURE'
+    scene.display.shading.light = 'STUDIO'
+    scene.display.shading.color_type = 'MATERIAL'
     scene.display.render_aa = 'OFF'  # Disable anti-aliasing for raw pixel art edges
 
 def setup_camera(target_canvas=(96, 144), pitch_deg=20.0, ortho_scale=2.2):

@@ -1,6 +1,6 @@
 # Hearthwild 3D-to-Pixel-Art Blender Workflow
 
-This directory contains the headless rendering pipeline and specifications for baking 3D character and creature models into zero-drift, 8-directional 2D pixel-art sprite sheets (*Dead Cells* / Motion Twin style).
+This directory contains the headless rendering pipeline and specifications for baking 3D character and creature models into zero-drift, 8-directional 2D pixel-art sprite sheets (_Dead Cells_ / Motion Twin style).
 
 ---
 
@@ -16,6 +16,7 @@ art/source/blender/
 ```
 
 Output frames are automatically written directly to:
+
 - `art/source/exports/player_aqualia/idle_{facing}_0.png`
 - `art/source/exports/rivallie/idle_{facing}_0.png`
 
@@ -23,19 +24,20 @@ Output frames are automatically written directly to:
 
 ## 2. Canvas & Technical Specifications
 
-| Entity | Canvas (W x H) | Ground Anchor (X, Y) | Camera Pitch | Ortho Scale | Required Border Padding |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **Player / Humanoids** | $96 \times 144\text{ px}$ | $(48, 132)$ | $18.0^\circ$ | $2.0$ | $\ge 2\text{ px}$ transparent |
-| **Rivallie (Creature)** | $96 \times 96\text{ px}$ | $(48, 86)$ | $22.0^\circ$ | $1.5$ | $\ge 2\text{ px}$ transparent |
+| Entity                  | Canvas (W x H)            | Ground Anchor (X, Y) | Camera Pitch | Ortho Scale | Required Border Padding       |
+| :---------------------- | :------------------------ | :------------------- | :----------- | :---------- | :---------------------------- |
+| **Player / Humanoids**  | $96 \times 144\text{ px}$ | $(48, 132)$          | $18.0^\circ$ | $2.0$       | $\ge 2\text{ px}$ transparent |
+| **Rivallie (Creature)** | $96 \times 96\text{ px}$  | $(48, 86)$           | $22.0^\circ$ | $1.5$       | $\ge 2\text{ px}$ transparent |
 
 ### Facing Angles Baked by Script
-1. `s`  – South ($0^\circ$)
+
+1. `s` – South ($0^\circ$)
 2. `se` – South-East ($45^\circ$)
-3. `e`  – East ($90^\circ$)
+3. `e` – East ($90^\circ$)
 4. `ne` – North-East ($135^\circ$)
-5. `n`  – North ($180^\circ$)
+5. `n` – North ($180^\circ$)
 6. `nw` – North-West ($225^\circ$)
-7. `w`  – West ($270^\circ$)
+7. `w` – West ($270^\circ$)
 8. `sw` – South-West ($315^\circ$)
 
 ---
@@ -45,11 +47,13 @@ Output frames are automatically written directly to:
 Make sure `blender` is in your system `PATH` (Blender 3.x, 4.x, or LTS).
 
 ### Render Player Aqualia
+
 ```bash
 blender -b art/source/blender/models/player_aqualia.blend -P art/source/blender/render_pixel_sprites.py
 ```
 
 ### Render Rivallie
+
 ```bash
 blender -b art/source/blender/models/rivallie.blend -P art/source/blender/render_pixel_sprites.py
 ```
@@ -78,6 +82,7 @@ npm test
 ## 5. Git Synchronization Workflow
 
 ### On New Machine (First Time):
+
 ```bash
 git clone https://github.com/huytruong1810/Vibe.git
 cd Vibe
@@ -86,6 +91,7 @@ npm install
 ```
 
 ### After Baking & Validating:
+
 ```bash
 git add art/source/blender/models/
 git add art/source/exports/

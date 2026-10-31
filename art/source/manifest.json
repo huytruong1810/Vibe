@@ -1849,63 +1849,49 @@
       "kind": "npc",
       "contentId": "npc:neris",
       "quality": "hd",
-      "clipIds": [
-        "npc_neris_idle_s"
-      ]
+      "clipIds": ["npc_neris_idle_s"]
     },
     {
       "id": "npc:npc:reed",
       "kind": "npc",
       "contentId": "npc:reed",
       "quality": "hd",
-      "clipIds": [
-        "npc_reed_idle_s"
-      ]
+      "clipIds": ["npc_reed_idle_s"]
     },
     {
       "id": "npc:npc:willa",
       "kind": "npc",
       "contentId": "npc:willa",
       "quality": "hd",
-      "clipIds": [
-        "npc_willa_idle_s"
-      ]
+      "clipIds": ["npc_willa_idle_s"]
     },
     {
       "id": "npc:npc:oren",
       "kind": "npc",
       "contentId": "npc:oren",
       "quality": "hd",
-      "clipIds": [
-        "npc_oren_idle_s"
-      ]
+      "clipIds": ["npc_oren_idle_s"]
     },
     {
       "id": "npc:npc:lark",
       "kind": "npc",
       "contentId": "npc:lark",
       "quality": "hd",
-      "clipIds": [
-        "npc_lark_idle_s"
-      ]
+      "clipIds": ["npc_lark_idle_s"]
     },
     {
       "id": "npc:npc:dara",
       "kind": "npc",
       "contentId": "npc:dara",
       "quality": "hd",
-      "clipIds": [
-        "npc_dara_idle_s"
-      ]
+      "clipIds": ["npc_dara_idle_s"]
     },
     {
       "id": "npc:npc:finn",
       "kind": "npc",
       "contentId": "npc:finn",
       "quality": "hd",
-      "clipIds": [
-        "npc_finn_idle_s"
-      ]
+      "clipIds": ["npc_finn_idle_s"]
     }
   ],
   "clips": [
