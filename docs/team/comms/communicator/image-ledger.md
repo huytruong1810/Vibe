@@ -68,9 +68,11 @@ Doctrine constraint: PRD-7.3 (maximum 4 generations per reference sheet, 2 per p
 | # | date (UTC) | template | purpose | result | kept? | why |
 | :- | :--- | :--- | :--- | :--- | :--- | :--- |
 | 1 | 2026-10-31 10:36 | creature v1 | 3-view quadruped | none | no | 429 RESOURCE_EXHAUSTED on gemini-3.1-flash-image (resets ~14:55 UTC) |
+| 2 | 2026-10-31 14:57 | creature v1 | 3-view quadruped (front, left profile, back) | art/source/references/marshstalker/sheet.png | yes | passes PRD-3 checklist: single all-fours stance across all 3 views, 4 planted webbed feet separated from body, forward-curving bioluminescent cyan antenna lure, cyan neck frills, olive green hide with cyan scutes, plain grey background, no labels |
 
 ## mireling
 
 | # | date (UTC) | template | purpose | result | kept? | why |
 | :- | :--- | :--- | :--- | :--- | :--- | :--- |
 | 1 | 2026-10-31 10:36 | creature v1 | 3-view quadruped | none | no | 429 RESOURCE_EXHAUSTED on gemini-3.1-flash-image (resets ~14:55 UTC) |
+| 2 | 2026-10-31 14:57 | creature v1 | 3-view quadruped | none | no | 429 RESOURCE_EXHAUSTED on gemini-3.1-flash-image (extended model capacity limit) |
