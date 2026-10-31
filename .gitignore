@@ -13,3 +13,8 @@ __pycache__/
 *.blend1
 art/source/blender/renders_modular/
 art/source/blender/renders_test/
+
+# Hearthwild agent harness (machine-local state) and forge scratch
+.agents/state/
+art/source/forge/work/
+art/source/forge/.venv/

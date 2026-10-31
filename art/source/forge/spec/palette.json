@@ -1,0 +1,506 @@
+{
+  "schemaVersion": 1,
+  "doctrine": "ART-4",
+  "generator": "art/source/forge/tools/gen_palette.py",
+  "steps": [
+    "deep",
+    "shadow",
+    "mid",
+    "light",
+    "highlight"
+  ],
+  "rules": {
+    "maxColorsActor": 24,
+    "maxColorsCreature": 20,
+    "maxColorsEnvironment": 32,
+    "forbidden": [
+      "#000000",
+      "#ffffff"
+    ],
+    "regionAccents": {
+      "aqualia": [
+        "teal",
+        "navy",
+        "reed",
+        "timber",
+        "sand"
+      ],
+      "pyrador": [
+        "ember",
+        "ochre",
+        "basalt",
+        "glass"
+      ],
+      "zephyria": [
+        "sky",
+        "cream",
+        "sage",
+        "sail"
+      ]
+    }
+  },
+  "ramps": {
+    "skin-porcelain": {
+      "group": "skin",
+      "glossy": false,
+      "steps": {
+        "deep": "#714e49",
+        "shadow": "#b78572",
+        "mid": "#f0c4a2",
+        "light": "#fed8b8",
+        "highlight": "#ffe9d5"
+      }
+    },
+    "skin-warm": {
+      "group": "skin",
+      "glossy": false,
+      "steps": {
+        "deep": "#6a3e3c",
+        "shadow": "#a86956",
+        "mid": "#d69c76",
+        "light": "#ebb894",
+        "highlight": "#f9d5ba"
+      }
+    },
+    "skin-tan": {
+      "group": "skin",
+      "glossy": false,
+      "steps": {
+        "deep": "#5f3130",
+        "shadow": "#914f3d",
+        "mid": "#b37650",
+        "light": "#d59f7a",
+        "highlight": "#efc9ad"
+      }
+    },
+    "skin-deep": {
+      "group": "skin",
+      "glossy": false,
+      "steps": {
+        "deep": "#482426",
+        "shadow": "#67342a",
+        "mid": "#7a4a31",
+        "light": "#ae8167",
+        "highlight": "#dbbba6"
+      }
+    },
+    "hair-ink": {
+      "group": "hair",
+      "glossy": true,
+      "steps": {
+        "deep": "#191928",
+        "shadow": "#26243b",
+        "mid": "#34324a",
+        "light": "#786f86",
+        "highlight": "#bcb1c1"
+      }
+    },
+    "hair-brown": {
+      "group": "hair",
+      "glossy": true,
+      "steps": {
+        "deep": "#432525",
+        "shadow": "#5d342a",
+        "mid": "#6e4832",
+        "light": "#a4806a",
+        "highlight": "#d4baa8"
+      }
+    },
+    "hair-auburn": {
+      "group": "hair",
+      "glossy": true,
+      "steps": {
+        "deep": "#58202a",
+        "shadow": "#812e2c",
+        "mid": "#9c4b2f",
+        "light": "#cb8161",
+        "highlight": "#efb99f"
+      }
+    },
+    "hair-blonde": {
+      "group": "hair",
+      "glossy": true,
+      "steps": {
+        "deep": "#71422d",
+        "shadow": "#ae733d",
+        "mid": "#d6ae66",
+        "light": "#e9c587",
+        "highlight": "#f6ddb1"
+      }
+    },
+    "hair-silver": {
+      "group": "hair",
+      "glossy": true,
+      "steps": {
+        "deep": "#4e515a",
+        "shadow": "#82858f",
+        "mid": "#b5b9c6",
+        "light": "#d2cec5",
+        "highlight": "#e5e1d9"
+      }
+    },
+    "hair-teal": {
+      "group": "hair",
+      "glossy": true,
+      "steps": {
+        "deep": "#024c58",
+        "shadow": "#077680",
+        "mid": "#3a9fa0",
+        "light": "#72c2b8",
+        "highlight": "#ade1d2"
+      }
+    },
+    "eye-blue": {
+      "group": "eye",
+      "glossy": true,
+      "steps": {
+        "deep": "#233d64",
+        "shadow": "#335e97",
+        "mid": "#4f80ba",
+        "light": "#6bafd9",
+        "highlight": "#a0d9ee"
+      }
+    },
+    "eye-brown": {
+      "group": "eye",
+      "glossy": true,
+      "steps": {
+        "deep": "#432622",
+        "shadow": "#5e3626",
+        "mid": "#6e4b2f",
+        "light": "#a38367",
+        "highlight": "#d3bca7"
+      }
+    },
+    "eye-green": {
+      "group": "eye",
+      "glossy": true,
+      "steps": {
+        "deep": "#02473c",
+        "shadow": "#0e6c4e",
+        "mid": "#4f8b5c",
+        "light": "#85b383",
+        "highlight": "#bbd8b2"
+      }
+    },
+    "eye-amber": {
+      "group": "eye",
+      "glossy": true,
+      "steps": {
+        "deep": "#6f321f",
+        "shadow": "#a85615",
+        "mid": "#c98a2e",
+        "light": "#e4ad62",
+        "highlight": "#f7d09d"
+      }
+    },
+    "teal": {
+      "group": "aqualia",
+      "glossy": false,
+      "steps": {
+        "deep": "#074b54",
+        "shadow": "#12747a",
+        "mid": "#2f9d99",
+        "light": "#6ec1b2",
+        "highlight": "#abe0cf"
+      }
+    },
+    "navy": {
+      "group": "aqualia",
+      "glossy": false,
+      "steps": {
+        "deep": "#1a243e",
+        "shadow": "#213156",
+        "mid": "#2e4066",
+        "light": "#5e809f",
+        "highlight": "#9fbfd1"
+      }
+    },
+    "reed": {
+      "group": "aqualia",
+      "glossy": false,
+      "steps": {
+        "deep": "#1b5337",
+        "shadow": "#488046",
+        "mid": "#8ba65b",
+        "light": "#b0c37f",
+        "highlight": "#d4dfae"
+      }
+    },
+    "timber": {
+      "group": "aqualia",
+      "glossy": false,
+      "steps": {
+        "deep": "#502a28",
+        "shadow": "#743e2f",
+        "mid": "#8c5b3b",
+        "light": "#ba8d6e",
+        "highlight": "#e1c1a8"
+      }
+    },
+    "sand": {
+      "group": "aqualia",
+      "glossy": false,
+      "steps": {
+        "deep": "#694d41",
+        "shadow": "#a78467",
+        "mid": "#d8c098",
+        "light": "#e7d2af",
+        "highlight": "#f2e3ca"
+      }
+    },
+    "ember": {
+      "group": "pyrador",
+      "glossy": false,
+      "steps": {
+        "deep": "#6a1630",
+        "shadow": "#a01f32",
+        "mid": "#c4482f",
+        "light": "#ec7f5b",
+        "highlight": "#feba9f"
+      }
+    },
+    "ochre": {
+      "group": "pyrador",
+      "glossy": false,
+      "steps": {
+        "deep": "#6e3323",
+        "shadow": "#a65822",
+        "mid": "#c98b3a",
+        "light": "#e4ae69",
+        "highlight": "#f7d1a1"
+      }
+    },
+    "basalt": {
+      "group": "pyrador",
+      "glossy": false,
+      "steps": {
+        "deep": "#2f303c",
+        "shadow": "#424355",
+        "mid": "#56576a",
+        "light": "#8f8a9c",
+        "highlight": "#c6bfcb"
+      }
+    },
+    "glass": {
+      "group": "pyrador",
+      "glossy": true,
+      "steps": {
+        "deep": "#27595f",
+        "shadow": "#459194",
+        "mid": "#7cc6bf",
+        "light": "#9ddbcc",
+        "highlight": "#c4ebdc"
+      }
+    },
+    "sky": {
+      "group": "zephyria",
+      "glossy": false,
+      "steps": {
+        "deep": "#2d4b6d",
+        "shadow": "#4779aa",
+        "mid": "#6fa7d8",
+        "light": "#85c8e9",
+        "highlight": "#b0e4f3"
+      }
+    },
+    "cream": {
+      "group": "zephyria",
+      "glossy": false,
+      "steps": {
+        "deep": "#6d594f",
+        "shadow": "#b19b84",
+        "mid": "#ece0c2",
+        "light": "#f0e5cb",
+        "highlight": "#fbf3e0"
+      }
+    },
+    "sage": {
+      "group": "zephyria",
+      "glossy": false,
+      "steps": {
+        "deep": "#335545",
+        "shadow": "#608766",
+        "mid": "#9cb489",
+        "light": "#bacca4",
+        "highlight": "#d8e2c5"
+      }
+    },
+    "sail": {
+      "group": "zephyria",
+      "glossy": false,
+      "steps": {
+        "deep": "#5b5d67",
+        "shadow": "#9b9ea9",
+        "mid": "#e4e0d3",
+        "light": "#eae6dd",
+        "highlight": "#f7f3eb"
+      }
+    },
+    "leather": {
+      "group": "material",
+      "glossy": false,
+      "steps": {
+        "deep": "#482826",
+        "shadow": "#673a2c",
+        "mid": "#7b5337",
+        "light": "#ad886c",
+        "highlight": "#d9bea9"
+      }
+    },
+    "iron": {
+      "group": "material",
+      "glossy": true,
+      "steps": {
+        "deep": "#3b404a",
+        "shadow": "#5b6372",
+        "mid": "#7d8696",
+        "light": "#a0aeba",
+        "highlight": "#c7d4da"
+      }
+    },
+    "copper": {
+      "group": "material",
+      "glossy": true,
+      "steps": {
+        "deep": "#642c2b",
+        "shadow": "#974831",
+        "mid": "#b9713f",
+        "light": "#db9b6c",
+        "highlight": "#f4c7a4"
+      }
+    },
+    "gold": {
+      "group": "material",
+      "glossy": true,
+      "steps": {
+        "deep": "#703b1e",
+        "shadow": "#a8671b",
+        "mid": "#c9a044",
+        "light": "#e1bc6f",
+        "highlight": "#f3d9a4"
+      }
+    },
+    "wood": {
+      "group": "material",
+      "glossy": false,
+      "steps": {
+        "deep": "#562f29",
+        "shadow": "#804932",
+        "mid": "#9b6c43",
+        "light": "#c39973",
+        "highlight": "#e5c7aa"
+      }
+    },
+    "stone": {
+      "group": "material",
+      "glossy": false,
+      "steps": {
+        "deep": "#3f424b",
+        "shadow": "#646670",
+        "mid": "#8f8b85",
+        "light": "#b3afa7",
+        "highlight": "#d7d3cb"
+      }
+    },
+    "linen": {
+      "group": "material",
+      "glossy": false,
+      "steps": {
+        "deep": "#565963",
+        "shadow": "#9295a0",
+        "mid": "#d6d2c6",
+        "light": "#e8e4db",
+        "highlight": "#f5f1e8"
+      }
+    },
+    "plum": {
+      "group": "material",
+      "glossy": false,
+      "steps": {
+        "deep": "#3a284a",
+        "shadow": "#553868",
+        "mid": "#6e4b7b",
+        "light": "#a97ea5",
+        "highlight": "#dbb6ce"
+      }
+    },
+    "crimson": {
+      "group": "material",
+      "glossy": false,
+      "steps": {
+        "deep": "#681535",
+        "shadow": "#9e1c3c",
+        "mid": "#c3443c",
+        "light": "#ec7c64",
+        "highlight": "#ffb9a3"
+      }
+    },
+    "foliage": {
+      "group": "nature",
+      "glossy": false,
+      "steps": {
+        "deep": "#014a34",
+        "shadow": "#117139",
+        "mid": "#5f8f3f",
+        "light": "#92b56b",
+        "highlight": "#c3d9a2"
+      }
+    },
+    "foliage-deep": {
+      "group": "nature",
+      "glossy": false,
+      "steps": {
+        "deep": "#023d2f",
+        "shadow": "#0b5736",
+        "mid": "#3f6b3b",
+        "light": "#7b9d6d",
+        "highlight": "#b7cca7"
+      }
+    },
+    "water": {
+      "group": "nature",
+      "glossy": true,
+      "steps": {
+        "deep": "#075067",
+        "shadow": "#0e7f9a",
+        "mid": "#3eaec3",
+        "light": "#6ecdd2",
+        "highlight": "#a8e7e2"
+      }
+    },
+    "blossom": {
+      "group": "nature",
+      "glossy": false,
+      "steps": {
+        "deep": "#66445b",
+        "shadow": "#a8708c",
+        "mid": "#e2a2b7",
+        "light": "#f6bac5",
+        "highlight": "#ffd5d8"
+      }
+    },
+    "moss": {
+      "group": "nature",
+      "glossy": false,
+      "steps": {
+        "deep": "#154931",
+        "shadow": "#386d3c",
+        "mid": "#6f8a4a",
+        "light": "#9db176",
+        "highlight": "#cad6ab"
+      }
+    },
+    "outline-neutral": {
+      "group": "neutral",
+      "glossy": false,
+      "steps": {
+        "deep": "#2c2937",
+        "shadow": "#3b374b",
+        "mid": "#4b455a",
+        "light": "#897d90",
+        "highlight": "#c4b8c5"
+      }
+    }
+  }
+}
