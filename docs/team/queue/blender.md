@@ -18,7 +18,7 @@ it's blocked, mark it and take the next. Change only `status:` and `evidence:` l
 
 ### B1 · Rivallie on the single-pose sheet
 
-- status: candidate (art/review/2026-10-31-rivallie/, digest `69b6c10d650efacf33c0681f635d1098cfaff666b21bbc03f187f30a7c5b3744`, awaiting director approval record under PRD-9)
+- status: director-approved (`docs/team/comms/director/approvals/rivallie--2026-10-31-rivallie-c3d.md`, digest 69b6c10d…); publish waits on codex C3b. Do not re-run Rivallie: a new digest voids the approval (PRD-9)
 - goal: Claude ran the first Rivallie golden sample on the old sheet, using its side view only (`art/review/2026-10-31-rivallie/`, QA `candidate`). When M2 lands, re-run Rivallie on the new sheet and compare.
 - work:
   1. In `recipes/rivallie.json`, set `gen3d.views` and `texture.views` to every view of the new sheet that shows the same pose.
@@ -38,7 +38,7 @@ it's blocked, mark it and take the next. Change only `status:` and `evidence:` l
 
 ### B3 · Remaining creatures, one at a time
 
-- status: candidate (marshstalker candidate packet `art/review/2026-10-31-marshstalker/` digest `654b7fa0bdc29d2a83e334cae46d1531544d892045e8e9cb6c73b8b92f79d99d`; bramblefang re-packet `art/review/2026-10-31-bramblefang/` digest `ef40a024ed16fa6126a23bace25b464a7da81ecb66a7dcd45d8fdbeacc77c535`; both awaiting director approval records under PRD-9; mireling sheet ready)
+- status: open: bramblefang and marshstalker director-approved (`bramblefang--2026-10-31-bramblefang-c3d.md`, `marshstalker--2026-10-31-marshstalker.md`); next is mireling (its sheet ramps were normalised in e980842; run `prep`, and if it rejects the sheet, report to the communicator and switch to B2)
 - goal: quadruped species first, in this order: bramblefang, marshstalker, mireling. steamshell (shelled), zephyrit and cindermoth (winged) and ignicap (mushroom-biped) wait for codex templates. Each needs its reference sheet from the communicator (all-fours pose for quadrupeds, same pose in every view).
 - done when: a packet per species, each `candidate`
 - evidence: 2026-10-31 candidate packets generated for marshstalker and bramblefang with C3d quality fixes; 15 clips, 616 frames each; all 12 hard QA checks passing on both; announced in docs/team/comms/blender/2026-10-31T1805--to-director-communicator--quadruped-candidate-packets.md; mireling reference sheet validated and ready in art/source/references/mireling/

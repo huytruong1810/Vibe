@@ -73,7 +73,7 @@ lines.
 
 ### M9 · Aqualia terrain set through tileforge (long design session)
 
-- status: open (C11 landed 2026-10-31). Do M11 first (it blocks blender's humans), then this.
+- status: open (C11 landed 2026-10-31). Do M11 first (it blocks blender's humans), then this. When image generation is out of capacity, work on another ticket (M14, M15, M16, M12, M13) and come back; never substitute concept-master crops or other agents' art as swatches.
 - goal: the whole Aqualia ground in palette-locked 32-px tiles (ART-11.2), designed by you, made exact by tileforge: grass, dirt, sand, stone, mud, reedbed, boardwalk; freshwater with its 14 shore masks; dirt-path and stone-path edges; cliff strip and ramp.
 - inputs: `.agents/skills/tile-forge/SKILL.md` (read it fully first); region bible `docs/doctrine/regions/aqualia.md` and ART-13 (teal, sand, warm timber); the concept `art/source/masters/aqualia_canal_settlement_master.jpg` for mood only (its grid lines and props make it unusable as a swatch); the golden sample `art/source/tiles/sets/aqualia-grass-water/` and its packet `art/review/tiles-aqualia-grass-water-1/` (procedural stand-in swatches; beat them).
 - work, one material at a time (PRD-4), each through the skill's loop (swatch, recipe, `all`, look at all three previews, fix inputs, repeat):
