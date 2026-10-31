@@ -50,6 +50,9 @@ jobs:
       - run: npm run assets:build
       - run: npm run check:assets
       - run: python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p review_selftest.py
+      - run: python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/world/tools/worldlib -p worldforge_selftest.py
+      - run: node --test .agents/hooks/test/hooks.test.mjs
+      - run: npm run check:packets
       - name: Require reproducible engineering integration bundles
         if: steps.art-scope.outputs.source_only != 'true'
         run: git diff --exit-code -- public/assets/generated docs/art/asset-catalog.schema.json docs/art/source-manifest.schema.json docs/art/art-approval-record.schema.json docs/art/candidates.json docs/art/coverage.json docs/art/coverage.md

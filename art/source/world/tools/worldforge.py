@@ -7,7 +7,8 @@ Commands (built):
                                   the world schema and the composition rules (WLD-3, WLD-4.1)
   plan render <region> [--out P]  draw the plan sketch (screen grid, zones, routes, landmarks)
 
-Planned (codex C6): doctor, next, new, apply <pass.json>, render, check, packet.
+Built (codex C6): doctor, next, new, example, apply <pass.json>, render, check, packet.
+See docs/engineering/worldforge.md for the authoring loop and scoped review gates.
 Agents run this tool; they never hand-edit .ldtk JSON (WLD-4.3).
 """
 
@@ -404,6 +405,9 @@ def render_plan(plan: dict, out: Path) -> Path:
 
 # ---------------------------------------------------------------- cli
 def main() -> int:
+    if len(sys.argv) > 1 and sys.argv[1] != "plan":
+        from worldlib.cli import main as commands
+        return commands(sys.argv[1:])
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
     p = sub.add_parser("plan", help="region plan commands")

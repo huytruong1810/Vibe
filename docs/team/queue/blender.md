@@ -55,3 +55,19 @@ it's blocked, mark it and take the next. Change only `status:` and `evidence:` l
 - goal: in the order the region bible lists landmarks: a house, the ferry and dock, the mill and waterwheel, a willow, boardwalk pieces, lanterns, the sluice gate. Use the `environment-forge` skill.
 - done when: a packet per asset
 - evidence:
+
+### B6 · Worldforge cross-machine smoke
+
+- status: open
+- goal: verify C6 tooling on machine A without changing the shared map or starting new art.
+- work: after normal branch integration, run worldforge doctor, plan check aqualia, village-scoped check and the worldforge_selftest.py unittest command from docs/engineering/worldforge.md. Verify packet file hashes. Report platform differences in your own comms. Riverlands-wide check is expected to remain draft.
+- done when: commands, packet hashes and observed failures are published; this ticket does not grant B2 layout go.
+- evidence:
+
+### B7 · Delivered creature gallery smoke
+
+- status: open
+- goal: confirm the existing Rivallie/Bramblefang packets load on machine A with all supplied facings, overlay controls and inspection magnification.
+- work: run the development gallery or tests/browser/packets.spec.ts against existing packet files. Inspect captures before describing them. Do not regenerate, rig or bake assets for this check.
+- done when: a technical result and captures are published in your own comms; director approval and gameplay publishing remain separate.
+- evidence:

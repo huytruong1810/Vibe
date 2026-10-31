@@ -157,7 +157,7 @@ export const LANES = {
 };
 // Paths a role changes only through forge commands, never by direct file edits.
 export const VIA_TOOL_ONLY = {
-  blender: ['art/source/exports/**'],
+  blender: ['art/source/exports/**', 'art/source/world/**/*.ldtk'],
   communicator: [],
 };
 
@@ -174,11 +174,23 @@ export function writeDenial(role, rel) {
   if (!role) {
     return 'No role is set for this machine. Ask the director which role you are, then run: node .agents/hooks/set-role.mjs <blender|communicator>.';
   }
+  if (role === 'blender' && /^art\/source\/world\/.*\.ldtk$/i.test(rel))
+    return `${rel} is written only by worldforge passes (WLD-4.3).`;
+  if (role === 'blender' && rel.startsWith('art/source/world/tools/'))
+    return `${rel} is maintained by the Codex toolsmith (DOC-5).`;
   if (match(rel, LANES[role] ?? [])) return null;
   if (match(rel, VIA_TOOL_ONLY[role] ?? [])) {
     return `${rel} is written only by \`forge.py publish\` after a director approval record exists (L7, TEAM-2).`;
   }
   return `${rel} is outside the ${role} lane (TEAM-2). Ask its owner via docs/team/comms/${role}/ instead.`;
+}
+
+/** A tool call, not a shell wrapper: reject chaining, substitutions and inline code. */
+export function worldforgeCommand(command) {
+  if (/[;&|><\r\n`$]/.test(command)) return false;
+  return /^(?:uv|python3? -m uv) run --project art\/source\/forge python (?:-B )?art\/source\/world\/tools\/worldforge\.py (?:doctor|next|new|example|apply|render|check|packet|plan)(?: [A-Za-z0-9_./:\-=" ]+)?$/.test(
+    command.trim().replaceAll('\\', '/'),
+  );
 }
 
 /** Same as writeDenial but also accepts tool-generated paths (used by the stop check). */

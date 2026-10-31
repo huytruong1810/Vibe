@@ -9,6 +9,7 @@ import {
   readStdin,
   repoRel,
   writeDenial,
+  worldforgeCommand,
 } from './lib.mjs';
 
 const READ_ONLY_TOOL =
@@ -53,6 +54,19 @@ const role = readRole();
 
 if (name === 'run_command') {
   const cmd = String(arg(args, 'CommandLine', 'command', 'Command') ?? '');
+  if (role === 'blender') {
+    if (/worldforge\.py/i.test(cmd)) {
+      if (!worldforgeCommand(cmd))
+        deny('Use a single canonical worldforge command; shell wrappers are denied (WLD-4.3).');
+    } else if (
+      (/\.ldtk|source[\\/]+world/i.test(cmd) &&
+        (WRITE_OPS.test(cmd) || /writealltext|writefilesync|appendalltext/i.test(cmd))) ||
+      (/\b(?:python3?|node)\b[^\n]*(?:\s-c\b|\s-e\b)/.test(cmd) &&
+        /write|base64|eval|exec\(/i.test(cmd))
+    ) {
+      deny('Direct or encoded map writes are denied; use worldforge passes (WLD-4.3).');
+    }
+  }
   for (const [re, reason] of DESTRUCTIVE_GIT) if (re.test(cmd)) deny(reason);
   if (
     /set-role\.mjs/.test(cmd) &&

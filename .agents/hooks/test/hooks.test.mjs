@@ -6,6 +6,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { test } from 'node:test';
+import { createHash } from 'node:crypto';
 
 const HOOKS = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -41,6 +42,56 @@ const edit = (p) => ({
   toolCall: { name: 'edit_file', args: { Path: `"${p}"`, Target: 'a', Replacement: 'b' } },
 });
 const cmd = (c) => ({ toolCall: { name: 'run_command', args: { CommandLine: c } } });
+
+test('world maps require canonical worldforge calls, including shell bypass attempts', () => {
+  const fx = fixtureRepo();
+  assert.equal(
+    run('guard.mjs', write('art/source/world/hearthwild.ldtk'), fx, 'blender').decision,
+    'deny',
+  );
+  assert.equal(
+    run('guard.mjs', write('art/source/world/tools/worldforge.py'), fx, 'blender').decision,
+    'deny',
+  );
+  const good =
+    'uv run --project art/source/forge python art/source/world/tools/worldforge.py apply art/source/world/passes/aqualia/001-village.json';
+  assert.equal(run('guard.mjs', cmd(good), fx, 'blender').decision, 'allow');
+  for (const bad of [
+    good + '; echo hacked > art/source/world/hearthwild.ldtk',
+    'echo x > art/source/world/hearthwild.ldtk',
+    'python -c "exec(base64.b64decode(payload))"',
+    'python other/worldforge.py new aqualia',
+    '[IO.File]::WriteAllText("art/source/world/hearthwild.ldtk", "bad")',
+  ])
+    assert.equal(run('guard.mjs', cmd(bad), fx, 'blender').decision, 'deny', bad);
+});
+
+test('stop binds world map writes to their authoring receipt', () => {
+  const fx = fixtureRepo();
+  run('inject.mjs', { conversationId: 'world-map' }, fx, 'blender', ['session']);
+  const world = path.join(fx.root, 'art/source/world');
+  mkdirSync(path.join(world, 'work'), { recursive: true });
+  const map = path.join(world, 'hearthwild.ldtk');
+  writeFileSync(map, '{}\n');
+  const result = run(
+    'stop.mjs',
+    { conversationId: 'world-map', terminationReason: 'NO_TOOL_CALL' },
+    fx,
+    'blender',
+  );
+  assert.match(result.reason, /authoring receipt/);
+  writeFileSync(
+    path.join(world, 'work/authoring-receipt.json'),
+    JSON.stringify({ projectSha256: createHash('sha256').update('{}\n').digest('hex') }),
+  );
+  const okay = run(
+    'stop.mjs',
+    { conversationId: 'world-map', terminationReason: 'NO_TOOL_CALL' },
+    fx,
+    'blender',
+  );
+  assert.doesNotMatch(okay.reason ?? '', /authoring receipt/);
+});
 
 test('doctrine writes are denied for every role, absolute or relative, quoted or not', () => {
   const fx = fixtureRepo();

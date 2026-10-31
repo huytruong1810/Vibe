@@ -22,6 +22,7 @@
     "check": "npm run check:hygiene && npm run typecheck && npm run check:architecture && npm run check:assets && npm test && vite build",
     "assets:build": "tsx scripts/assets-build.ts",
     "check:assets": "tsx scripts/assets-check.ts",
+    "check:packets": "tsx scripts/check-packets.ts",
     "check:assets:hd": "tsx scripts/assets-check.ts --require-hd",
     "benchmark:render": "tsx scripts/render-benchmark.ts"
   },

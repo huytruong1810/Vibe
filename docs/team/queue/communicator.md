@@ -95,3 +95,19 @@ lines.
   3. **Ramp names.** `river-blue`, `charcoal` and `outline-dark` don't exist in `art/source/forge/spec/palette.json`. Use names from that file. Keep to at most 5 ramps per character: player-aqualia came out at 27 colours, and the limit is 24 (ART-4.4).
 - done when: both sheets are committed with front, left and back views at 4.5–5 heads, valid ramp names and an updated ledger, and you've messaged codex and blender
 - evidence:
+
+### M12 · Relay C6 review evidence
+
+- status: open
+- goal: add the candidate village packet to the next review digest and relay its C5 composition gate to the director.
+- work: use the Codex C6 handoff and art/review/world-aqualia-aqualia_village-1/packet.json. Distinguish objective QA from visual approval; link only published evidence.
+- done when: digest and relay cite the packet, its preview limitations and the required director decision.
+- evidence:
+
+### M13 · Existing world-preview kit inventory
+
+- status: open
+- goal: identify which existing source/catalog terrain and environment assets can replace the village preview fallbacks when their owning production gates permit.
+- work: report canonical IDs, dimensions, anchors, available layers and approval status in your own comms. Read existing artwork/catalog; do not invent assets, edit generated output or activate candidates.
+- done when: a source-linked inventory and explicit missing-kit list are published for Codex/C10/C11.
+- evidence:

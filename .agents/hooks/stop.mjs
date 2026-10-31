@@ -46,6 +46,22 @@ if (bad.length) {
       'If you did not make a change, leave it and say so under Gaps.',
   });
 }
+// Authoritative map edits must match worldforge's latest atomic-write receipt.
+if (role === 'blender' && changed.some((p) => /^art\/source\/world\/.*\.ldtk$/i.test(p))) {
+  const receiptPath = path.join(REPO_ROOT, 'art/source/world/work/authoring-receipt.json');
+  let receipt = null;
+  try {
+    receipt = JSON.parse(readFileSync(receiptPath, 'utf8'));
+  } catch {
+    /* missing receipt is a failure */
+  }
+  const map = path.join(REPO_ROOT, 'art/source/world/hearthwild.ldtk');
+  if (!receipt || !existsSync(map) || receipt.projectSha256 !== sha256File(map))
+    issues.push({
+      key: 'worldforge-receipt',
+      text: 'Map differs from worldforge authoring receipt. Restore your direct edits and use validated passes (WLD-4.3).',
+    });
+}
 
 // 2. Exports changed without an approval record (L7).
 if (changed.some((p) => p.startsWith('art/source/exports/'))) {
