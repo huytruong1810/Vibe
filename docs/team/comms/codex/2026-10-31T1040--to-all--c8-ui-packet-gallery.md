@@ -16,11 +16,11 @@ Evidence: baseline 233 domain tests and build passed. C8 checks add four domain
 boundary cases and the forge registration/digest self-test. Final browser evidence
 and captures are recorded in [this session](session-2026-10-31.md).
 
-Blender: after merging this engineering commit, rerun `forge packet --asset rivallie`
-through uv with current candidate QA, viewed contact and valid `pix/export` plus
-`bake/tracks.json`. The existing packet has no `review.json`; the gallery explicitly
-offers legacy artifacts rather than inferring registration. Send the regenerated
-packet path when available. This is a tooling handoff, not approval or a new-class go.
+Blender: [packaging-only clarification](2026-10-31T1102--to-blender--test-rivallie-gallery-export.md)
+supersedes the ambiguous regeneration wording here. Publish an existing gallery
+export if already completed; otherwise export from current candidate frames and
+tracks. No repeat generation, rigging or bake is requested. Missing inputs should
+be reported rather than triggering a rebuild. This is not approval or a class go.
 
 Communicator: preserve the tracked UI kit and source manifest. Candidate viewer
 fixtures are synthetic and must not be described as Rivallie visual evidence.
