@@ -28,3 +28,25 @@ class PacketExportTest(unittest.TestCase):
             tracks["clips"]["idle"]["s"][0]["Socket_Head"][0] = 29
             (wd / "bake/tracks.json").write_text(json.dumps(tracks))
             self.assertNotEqual(first["sourceDigest"], export_packet(*args)["sourceDigest"])
+
+    def test_per_clip_canvases(self):
+        """Human combat clips register on human.combat, not the locomotion canvas (C9a, C9c)."""
+        with tempfile.TemporaryDirectory() as tmp:
+            wd = Path(tmp)
+            for clip, size in (("idle", (112, 152)), ("strike", (160, 176))):
+                (wd / f"pix/export/{clip}").mkdir(parents=True)
+                Image.new("RGBA", size).save(wd / f"pix/export/{clip}/s_0.png")
+            (wd / "bake").mkdir()
+            (wd / "packet").mkdir()
+            (wd / "qa_report.json").write_text('{"checks": []}')
+            tracks = {"clips": {"idle": {"s": [{}]}, "strike": {"s": [{}]}},
+                      "canvases": {"idle": {"size": [56, 76], "anchor": [28, 66]},
+                                   "strike": {"size": [80, 88], "anchor": [40, 72]}}}
+            (wd / "bake/tracks.json").write_text(json.dumps(tracks))
+            spec = {"clips": {"idle": {"runtime": {"state": "idle"}, "fps": 6, "playback": "loop"},
+                              "strike": {"runtime": {"state": "attack", "moveId": "strike"}, "playback": "combat"}}}
+            m = export_packet(wd, wd / "packet", "player-aqualia", spec, {"size": [56, 76], "anchor": [28, 66]})
+            by = {f["id"].split(":")[1]: f for f in m["frames"]}
+            self.assertEqual(by["idle"]["anchorPx"], {"x": 56, "y": 132})
+            self.assertEqual(by["strike"]["anchorPx"], {"x": 80, "y": 144})
+            self.assertEqual(by["strike"]["sourceSize"], {"w": 160, "h": 176})

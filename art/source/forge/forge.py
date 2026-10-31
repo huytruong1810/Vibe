@@ -130,9 +130,10 @@ def st_texture(asset: str) -> str:
     chosen = _recipe(asset).get("texture", {}).get("views") or prep_rec["extra"]["views"]
     views = {v: str(wd / "prep" / f"{v}_fill.png") for v in chosen}
     vfile = wd / "views.json"
-    vfile.write_text(json.dumps(views))
+    views_param = {**views, "_mirrorSides": _recipe(asset).get("texture", {}).get("mirrorSides", asset_kind(asset) == "creature")}
+    vfile.write_text(json.dumps(views_param))
     src, out = wd / "clean.blend", wd / "texture.blend"
-    inputs = [src, vfile, *[Path(p) for p in views.values()]]
+    inputs = [src, vfile, core.BLENDER_SCRIPTS / "texture.py", *[Path(p) for p in views.values()]]
     if core.is_fresh(asset, "texture", inputs):
         return "fresh (cached)"
     core.run_blender("texture.py", [str(src), str(out), str(vfile)], wd / "logs" / "texture.log")
@@ -288,13 +289,14 @@ def st_pixelize(asset: str) -> str:
     from forgelib import pixelize
     r, wd = _recipe(asset), work_dir(asset)
     bake_files = sorted((wd / "bake").rglob("*.png")) + [wd / "bake" / "tracks.json"]
-    extra = {"ramps": r["ramps"]}
+    extra = {"ramps": r["ramps"], "detailSlots": r.get("detailSlots", [])}
     out = wd / "pix"
-    if core.is_fresh(asset, "pixelize", bake_files + [core.SPEC_DIR / "render_spec.json", core.SPEC_DIR / "palette.json"], extra):
+    code = [core.FORGE / "forgelib" / "pixelize.py"]
+    if core.is_fresh(asset, "pixelize", bake_files + code + [core.SPEC_DIR / "render_spec.json", core.SPEC_DIR / "palette.json"], extra):
         return "fresh (cached)"
     shutil.rmtree(out, ignore_errors=True)
-    pixelize.run_dir(wd / "bake", out, r["ramps"])
-    record(asset, "pixelize", bake_files + [core.SPEC_DIR / "render_spec.json", core.SPEC_DIR / "palette.json"],
+    pixelize.run_dir(wd / "bake", out, r["ramps"], r.get("detailSlots", []))
+    record(asset, "pixelize", bake_files + code + [core.SPEC_DIR / "render_spec.json", core.SPEC_DIR / "palette.json"],
            sorted(out.rglob("*.png")), extra)
     return f"{len(list((out).glob('*/*.png')))} frames"
 
@@ -362,12 +364,28 @@ def _turntable(wd: Path, out: Path) -> None:
     tiles[0].save(out, save_all=True, append_images=tiles[1:], duration=350, loop=0)
 
 
+def approval_for(asset: str) -> tuple[Path, Path] | None:
+    """(record, packet dir) of a director-approved record whose packetDigest matches its packet's
+    current review.json sourceDigest (PRD-9). A record for regenerated frames matches nothing."""
+    for rec in sorted(core.APPROVALS.glob(f"{slug(asset)}--*.md")):
+        text = rec.read_text()
+        meta = dict(l.split(":", 1) for l in text.split("---")[1].strip().splitlines() if ":" in l) if text.startswith("---") else {}
+        meta = {k.strip(): v.strip() for k, v in meta.items()}
+        if meta.get("decision") != "director-approved":
+            continue
+        pdir = REPO / meta.get("packet", "").strip().rstrip("/")
+        review = pdir / "review.json"
+        if review.exists() and json.loads(review.read_text()).get("sourceDigest") == meta.get("packetDigest"):
+            return rec, pdir
+    return None
+
+
 def st_publish(asset: str) -> str:
-    approvals = sorted(core.APPROVALS.glob(f"{slug(asset)}--*.md"))
-    ok = [a for a in approvals if "decision: director-approved" in a.read_text()]
-    if not ok:
-        raise ForgeError(f"No director-approved record in {_rel(core.APPROVALS)} for {asset} (L7). Wait for the director.")
-    raise ForgeError("publish is not built yet (forge bring-up): it lands with rig/animate. Tell claude.")
+    found = approval_for(asset)
+    if not found:
+        raise ForgeError(f"No director-approved record in {_rel(core.APPROVALS)} whose packetDigest matches the current "
+                         f"packet of {asset} (L7, PRD-9). Regenerated frames need a new approval; wait for the director.")
+    raise ForgeError(f"Approval {_rel(found[0])} matches; publish itself is not built yet (codex C3b).")
 
 
 RUNNERS = {"prep": st_prep, "gen3d": st_gen3d, "clean": st_clean, "texture": st_texture, "rig": st_rig, "animate": st_animate, "bake": st_bake,

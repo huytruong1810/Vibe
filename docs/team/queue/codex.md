@@ -189,7 +189,7 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 
 ### C3d · Forge quality: speckles, lying creatures, edge wrap, Marshstalker tail, digest-bound publish
 
-- status: in-progress: claude (2026-10-31T1620Z), on machine A, at the director's request
+- status: done (claude, 2026-10-31T1636Z)
 - goal: fix the defects the director's review found in the creature packets (`approvals/rivallie--2026-10-31-rivallie-m2.md`).
 - work:
   1. **Speckles.** Denoise material labels before shading, with a majority filter and a minimum region size, so specular highlights stop turning into cream-ramp spots.
@@ -198,7 +198,7 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
   4. **Marshstalker rear-up.** Its tail stays on the canvas.
   5. **Digest-bound publish.** `forge.py publish` checks the record's `packetDigest` against `review.json` `sourceDigest` (PRD-9).
 - done when: `forge.py selftest` passes; Rivallie and Marshstalker re-run to QA `candidate`; the director's review of the new contact sheets finds no speckles
-- evidence:
+- evidence: 2026-10-31T1636Z: texture.py (head-on coverage, mirrored flank, neighbour fill), pixelize.py (classify against the highlight step, min-region merge, wrap-free shifts), gaits.py (belly-down lying clips, tail lift in rear-up, hit and sleep), forge.py `approval_for` (digest-bound, PRD-9); Rivallie, Bramblefang and Marshstalker all QA candidate; `forge.py selftest` PASS
 
 ### C4 · World contract (WLD-4.4)
 
@@ -309,7 +309,7 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 
 - status: open
 - goal:
-  - **Dash button:** shows "Spce". `layout.ts:7` draws "Space" (and "J"/"K") over kit buttons that already carry labels; draw one label, not two.
+  - **Done (claude):** the dash button text is hidden on the kit buttons (`theme.css`); the aria-labels stay. Previously: `layout.ts:7` draws "Space" (and "J"/"K") over kit buttons that already carry labels; draw one label, not two.
   - **Kit art:** use the kit's `bar_*.png` and `slot_*.png` instead of flat CSS fills.
   - **Day/phase panel:** keep it separate from the minimap, as in `art/source/ui/kit/hud_mock.png`.
   - Send the director new 1080p captures for visual acceptance.
@@ -364,7 +364,7 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 - status: open
 - goal: finish what the C9a validation run (`work/player-aqualia`, `work/selftest-human`) showed.
 - work:
-  1. **`forgelib/review.py` `export_packet`:** register frames per clip canvas. Humans bake combat clips on `human.combat` and lying/bending clips on `human.wide`; `bake/tracks.json` has `canvases[clip]`. Today it uses one canvas.
+  1. **Done (claude, 2026-10-31T1636Z):** `forgelib/review.py` `export_packet` now registers frames per clip canvas, with a test in `review_selftest.py`. Previously: Humans bake combat clips on `human.combat` and lying/bending clips on `human.wide`; `bake/tracks.json` has `canvases[clip]`. Today it uses one canvas.
   2. **Weak combat reads:** strike (UAL1 Punch_Jab), element (Spell_Simple_Shoot) and bow_shot (a two-handed pistol aim as a stand-in) barely move at 56 px. Add authored pose overlays: bone rotations at given frames, layered after the retarget and declared in `spec/clips/humanoid.json`. Give each one a readable windup, active and recovery (CMB-3, ART-9.2). bow_shot needs a real draw: left arm forward, right hand to the ear, release.
   3. **eat and drink:** the hand stays at chest height. Pick the Consume window by eye, or add an overlay to bring the hand to the mouth.
   4. **Contract docs:** update `docs/art/contract.md`, `contract-v2.md` and `docs/engineering/hd-presentation.md` for the human canvases now in `render_spec.json`.

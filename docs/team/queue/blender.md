@@ -18,7 +18,7 @@ it's blocked, mark it and take the next. Change only `status:` and `evidence:` l
 
 ### B1 · Rivallie on the single-pose sheet
 
-- status: changes-requested (director record `rivallie--2026-10-31-rivallie-m2.md`): re-run after codex C3d lands; state the heightArtPx decision and its reason in the recipe notes
+- status: open (2026-10-31T1636Z): C3d is in. Re-run Rivallie (`forge.py all --asset rivallie`), open contact.png, packet it, and ask the director for a new decision; the new digest needs a new record (PRD-9). Put the heightArtPx decision and its reason in the recipe notes
 - goal: Claude ran the first Rivallie golden sample on the old sheet, using its side view only (`art/review/2026-10-31-rivallie/`, QA `candidate`). When M2 lands, re-run Rivallie on the new sheet and compare.
 - work:
   1. In `recipes/rivallie.json`, set `gen3d.views` and `texture.views` to every view of the new sheet that shows the same pose.
@@ -38,7 +38,7 @@ it's blocked, mark it and take the next. Change only `status:` and `evidence:` l
 
 ### B3 · Remaining creatures, one at a time
 
-- status: blocked: marshstalker rear-up margins wait for codex C3d (claude is fixing it); mireling next once its sheet ramps are valid (communicator M11)
+- status: open (2026-10-31T1636Z): C3d fixed the Marshstalker margins (QA candidate). Packet Marshstalker. Re-packet Bramblefang too: its frames changed with the colour fix, so its approval no longer covers the new digest. Mireling follows once M11 fixes its sheet
 - goal: quadruped species first, in this order: bramblefang, marshstalker, mireling. steamshell (shelled), zephyrit and cindermoth (winged) and ignicap (mushroom-biped) wait for codex templates. Each needs its reference sheet from the communicator (all-fours pose for quadrupeds, same pose in every view).
 - done when: a packet per species, each `candidate`
 - evidence: 2026-10-31 bramblefang candidate packet generated (art/review/2026-10-31-bramblefang/), 15 clips, 616 frames, 12/12 hard QA checks pass, approved by director (docs/team/comms/director/approvals/bramblefang--2026-10-31-bramblefang.md); marshstalker authored through bake/pixelize/qa (11/12 hard checks pass), blocked on margins (contract margins, 0px) in rearing clips due to 1.81m crocodilian tail reaching row 71 (reported in docs/team/comms/blender/2026-11-01T1615--to-codex-director--marshstalker-margins-blocker.md); mireling pending communicator reference sheet

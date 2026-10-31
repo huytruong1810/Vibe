@@ -177,11 +177,13 @@ def element(c: Ctx, n: int, phases: dict) -> list[dict]:
 
 
 def _rear(p: dict, c: Ctx, deg: float) -> None:
-    """Rear up on the hind legs; forepaws ride up to the chest."""
+    """Rear up on the hind legs; forepaws ride up to the chest. The tail lifts and curls so a
+    long tail stays on the canvas instead of dropping below the anchor (C3d, Marshstalker)."""
     f = deg / 40.0
     _body(p, c, pitch=deg)
     for leg in ("fl", "fr"):
         _add(p, f"ik_{leg}", move=(0, 0.1 * c.L * f, 0.45 * c.H * f))
+    _tail(p, 22 * f, pitch=deg * 0.6, falloff=(1.0, 1.1, 1.2, 1.3))  # +pitch lifts the tail end
 
 
 def guard(c: Ctx, n: int) -> list[dict]:
@@ -208,7 +210,7 @@ def hit(c: Ctx, n: int) -> list[dict]:
         _body(p, c, fwd=-0.08 * k, pitch=8 * k)
         _add(p, "neck", rot=(12 * k, 0, 6 * k))
         _add(p, "head", rot=(10 * k, 0, 0))
-        _tail(p, 12 * k, pitch=-8 * k)
+        _tail(p, 12 * k, pitch=8 * k)
         poses.append(p)
     return poses
 
@@ -285,16 +287,28 @@ def social(c: Ctx, n: int) -> list[dict]:
     return poses
 
 
+def _ground(p: dict, c: Ctx, k: float, splay: bool) -> None:
+    """Belly on the ground: the trunk drops by most of the hip height while the IK paws stay
+    planted, so the legs fold under it. Forepaws reach forward (sphinx); a downed body splays."""
+    drop = c.g.get("lieDropFraction", 0.62) * c.zb * k
+    _body(p, c, up_px=-drop / c.px_v, pitch=-3 * k)
+    for leg in ("fl", "fr"):
+        _add(p, f"ik_{leg}", move=(0, -0.12 * c.L * k, 0))
+    if splay:
+        _add(p, "ik_bl", move=(0.07 * c.L * k, 0.05 * c.L * k, 0))
+        _add(p, "ik_br", move=(-0.07 * c.L * k, 0.05 * c.L * k, 0))
+
+
 def sleep(c: Ctx, n: int) -> list[dict]:
     poses = []
     for i in range(n):
         p: dict = {}
-        _body(p, c, up_px=-(c.zb * 0.3) / c.px_v)
-        _add(p, "spine_02", rot=(0, 0, 18))
-        _add(p, "spine_03", rot=(0, 0, 18))
-        _add(p, "neck", rot=(-22, 0, 34))
-        _add(p, "head", rot=(-10, 0, 20))
-        _tail(p, -40, pitch=-10)
+        _ground(p, c, 1.0, splay=False)
+        _add(p, "spine_02", rot=(0, 0, 16))
+        _add(p, "spine_03", rot=(0, 0, 16))
+        _add(p, "neck", rot=(-30, 0, 34))
+        _add(p, "head", rot=(-16, 0, 18))
+        _tail(p, -45, pitch=4)
         if i in (1, 2):
             _breathe(p, c)  # slow breath
         poses.append(p)
@@ -302,10 +316,11 @@ def sleep(c: Ctx, n: int) -> list[dict]:
 
 
 def _lie(p: dict, c: Ctx, k: float) -> None:
-    _body(p, c, up_px=-(c.zb * 0.32 * k) / c.px_v, pitch=-4 * k)
-    _add(p, "neck", rot=(-26 * k, 0, 10 * k))
-    _add(p, "head", rot=(-14 * k, 0, 0))
-    _tail(p, -38 * k)  # curl the tail sideways: a lying otter never points it at the camera
+    """Downed: flat on the belly, legs splayed, head on the ground, tail limp to the side."""
+    _ground(p, c, k, splay=True)
+    _add(p, "neck", rot=(-34 * k, 0, 12 * k))
+    _add(p, "head", rot=(-18 * k, 0, 0))
+    _tail(p, -38 * k)  # curl the tail sideways: a lying body never points it at the camera
 
 
 def downed(c: Ctx, n: int) -> list[dict]:
