@@ -33,9 +33,9 @@ lines.
 
 ### M4 · player-aqualia: A-pose sheet plus hatchet prop sheet
 
-- status: open
+- status: done
 - done when: same as M3
-- evidence:
+- evidence: art/source/references/player-aqualia/sheet.json, art/source/references/player-aqualia/{sheet,front,back,prop-hatchet}.png, docs/team/comms/communicator/image-ledger.md, docs/team/comms/communicator/2026-10-31T0630--to-blender-codex--player-aqualia-reference-ready.md
 
 ### M5 · Four body-type mannequin sheets (standard, sturdy, slender, elder)
 
