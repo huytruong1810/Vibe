@@ -69,7 +69,7 @@ lines.
 - status: open (recurring, every Friday)
 - goal: `art/review/digest-<YYYY-Www>.md` covering every packet, proposal and approval request waiting on the director, each with a one-line ask. The director decides them in one pass. First digest: the Rivallie golden sample `art/review/2026-10-31-rivallie/`, and codex C5 (the Aqualia region bible, `docs/doctrine/regions/aqualia.md`, awaiting composition review).
 - done when: never closes; add a dated evidence line each week
-- evidence:
+- evidence: art/review/digest-2026-W44.md (2026-10-31)
 
 ### M9 · Aqualia terrain set through tileforge
 
