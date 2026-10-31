@@ -56,3 +56,21 @@ Doctrine constraint: PRD-7.3 (maximum 4 generations per reference sheet, 2 per p
 | # | date (UTC) | template | purpose | result | kept? | why |
 | :- | :--- | :--- | :--- | :--- | :--- | :--- |
 | 1 | 2026-10-31 10:15 | bodytype v1 | elder base mannequin (4.5 heads) | art/source/references/mannequin-elder/sheet.png | yes | passes PRD-3 checklist: 2-view A-pose front and back, mature ~4.5-head proportions with softened spine posture, matte grey mannequin, empty hands, even lighting, plain grey background |
+
+## bramblefang
+
+| # | date (UTC) | template | purpose | result | kept? | why |
+| :- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 1 | 2026-10-31 10:36 | creature v1 | 3-view quadruped (front, left profile, back) | art/source/references/bramblefang/sheet.png | yes | passes PRD-3 checklist: consistent all-fours standing pose across all 3 views, four planted limbs separated from body, extended tail with ember tuft, charcoal-slate fur, dual saber fangs, blazing lion-like ember mane matching approved portrait |
+
+## marshstalker
+
+| # | date (UTC) | template | purpose | result | kept? | why |
+| :- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 1 | 2026-10-31 10:36 | creature v1 | 3-view quadruped | none | no | 429 RESOURCE_EXHAUSTED on gemini-3.1-flash-image (resets ~14:55 UTC) |
+
+## mireling
+
+| # | date (UTC) | template | purpose | result | kept? | why |
+| :- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 1 | 2026-10-31 10:36 | creature v1 | 3-view quadruped | none | no | 429 RESOURCE_EXHAUSTED on gemini-3.1-flash-image (resets ~14:55 UTC) |

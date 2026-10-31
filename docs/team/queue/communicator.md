@@ -77,3 +77,11 @@ lines.
 - goal: grass, dirt, sand, stone, mud, reedbed, boardwalk; freshwater with the 14 shore masks; cliff and ramp, all at 32-px tiles (ART-11.2). Use the `tile-forge` skill.
 - done when: a packet per material set
 - evidence:
+
+### M10 · Quadruped creature reference sheets (bramblefang, marshstalker, mireling)
+
+- status: in_progress (bramblefang done; marshstalker and mireling paused on image quota reset at 14:55 UTC)
+- goal: produce 3-view orthographic reference sheets (front, left side, back) in `art/source/references/<species>/` for the three quadrupeds in the order specified in Blender B3 (bramblefang, marshstalker, mireling). Single all-fours standing pose, limbs separated from body, mouth closed, plain grey background, no labels, matching approved portraits.
+- inputs: the `reference-sheets` skill, approved portraits (`public/assets/portraits/creatures/portrait_<species>_128.png`)
+- done when: sheets committed with views and `sheet.json`, ledger updated, and blender notified
+- evidence: art/source/references/bramblefang/{sheet.png,front.png,left.png,back.png,sheet.json}, docs/team/comms/communicator/image-ledger.md, docs/team/comms/communicator/2026-10-31T0900--to-blender-codex--bramblefang-reference-ready.md
