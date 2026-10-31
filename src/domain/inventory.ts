@@ -11,6 +11,7 @@ export interface ItemInstance {
   readonly id: ItemId;
   readonly instance: string;
   readonly originSpecies?: readonly SpeciesId[];
+  readonly charges?: number;
 }
 export type InventoryState = readonly [ItemInstance | null, ItemInstance | null];
 export class TwoSlotInventory {
@@ -26,6 +27,7 @@ export class TwoSlotInventory {
       id,
       instance: `item:${++this.sequence}`,
       ...(originSpecies?.length ? { originSpecies: [...originSpecies] } : {}),
+      ...(ITEMS[id].ammo ? { charges: ITEMS[id].ammo!.capacity } : {}),
     };
     return true;
   }
@@ -33,6 +35,24 @@ export class TwoSlotInventory {
     const item = this.slots[slot];
     this.slots[slot] = null;
     return item;
+  }
+  /** Replaces one carried item without changing identity or allocating hidden storage. */
+  set(slot: 0 | 1, item: ItemInstance | null): void {
+    this.slots[slot] = item;
+  }
+  insert(item: ItemInstance): boolean {
+    const slot = this.slots[0] === null ? 0 : this.slots[1] === null ? 1 : -1;
+    if (slot === -1) return false;
+    this.slots[slot] = { ...item };
+    this.sequence = Math.max(this.sequence, Number(item.instance.split(':').at(-1)) || 0);
+    return true;
+  }
+  create(id: ItemId): ItemInstance {
+    return {
+      id,
+      instance: `item:${++this.sequence}`,
+      ...(ITEMS[id].ammo ? { charges: ITEMS[id].ammo!.capacity } : {}),
+    };
   }
   swap(): void {
     [this.slots[0], this.slots[1]] = [this.slots[1], this.slots[0]];
@@ -48,6 +68,7 @@ export class TwoSlotInventory {
         id: result,
         instance: `item:${++this.sequence}`,
         ...(originSpecies.length ? { originSpecies } : {}),
+        ...(ITEMS[result].ammo ? { charges: ITEMS[result].ammo!.capacity } : {}),
       },
       null,
     ];
@@ -65,9 +86,8 @@ export class TwoSlotInventory {
 export class RecipeRegistry {
   private readonly recipes = new Map<string, ItemId>();
   constructor(recipes: readonly Recipe[] = RECIPES) {
-    const reachable = new Set<ItemId>(
-      itemIds.filter((id) => !['tool-head', 'hatchet', 'poultice', 'fiber'].includes(id)),
-    );
+    const products = new Set(recipes.map((r) => r.result));
+    const reachable = new Set<ItemId>(itemIds.filter((id) => !products.has(id)));
     for (const r of recipes) {
       const key = this.key(r.a, r.b);
       if (this.recipes.has(key)) throw new Error(`Ambiguous recipe: ${key}`);

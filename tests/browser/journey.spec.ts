@@ -233,10 +233,10 @@ test('creature care, crafting, elemental combat and recovery through a validated
     commitUntil: save.elapsedSeconds + 100,
   });
   save.inventory = [
-    { id: 'reeds', instance: 'item:1' },
-    { id: 'water', instance: 'item:2' },
+    { id: 'reeds', instance: `item:${++save.inventorySerial}` },
+    { id: 'water', instance: `item:${++save.inventorySerial}` },
   ];
-  save.inventorySerial = 2;
+
   await page.getByRole('button', { name: 'Settings', exact: true }).click();
   const beforeImportSession1 = await worldSession(page);
   await page.locator('#import-input').setInputFiles({
@@ -274,10 +274,10 @@ test('creature care, crafting, elemental combat and recovery through a validated
       (e) => e.species === 1 && e.owner === -1 && e.id !== creature,
     )!.id;
   crafting.inventory = [
-    { id: 'flint', instance: 'item:3' },
-    { id: 'stick', instance: 'item:4' },
+    { id: 'flint', instance: `item:${++crafting.inventorySerial}` },
+    { id: 'stick', instance: `item:${++crafting.inventorySerial}` },
   ];
-  crafting.inventorySerial = 4;
+
   crafting.drops.push({
     id: Math.max(0, ...crafting.drops.map((d) => d.id)) + 1,
     item: 'fiber',
@@ -363,8 +363,8 @@ test('human food, accelerated sleep, emergency waking, retaliation and predation
     facingX: 1,
     facingY: 0,
   });
-  initial.inventory = [{ id: 'berries', instance: 'item:1' }, null];
-  initial.inventorySerial = 1;
+  initial.inventory = [{ id: 'berries', instance: `item:${++initial.inventorySerial}` }, null];
+
   await importScenario(page, initial);
   await inventory(page);
   await page.locator('#inventory').getByRole('button', { name: 'Use', exact: true }).click();

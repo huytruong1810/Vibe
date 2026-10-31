@@ -46,7 +46,8 @@ export class WorkerBridge {
             }
             break;
           case 'frame':
-            if (message.frame.session === this.session) this.onFrame(message.frame);
+            if (message.frame.session === this.session)
+              this.onFrame(message.frame, message.terrain);
             break;
           case 'result':
             this.resolve(message.result.id, message.result);

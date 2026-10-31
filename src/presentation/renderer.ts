@@ -8,11 +8,18 @@ import {
   TexturePool,
   Texture,
   Rectangle,
+  RenderTexture,
 } from 'pixi.js';
 import { SETTLEMENTS, itemIds } from '../content/definitions';
 import { ENTITY_STRIDE, type RenderSnapshot, type TerrainView } from '../domain/contracts';
-import type { ActorPresentation, PresentationCue } from '../domain/presentation-contract';
-import { BIOME_COLORS, Biome, TileFlag } from '../domain/world';
+import type {
+  ActorPresentation,
+  PresentationCue,
+  ScenePresentation,
+  ProjectilePresentation,
+} from '../domain/presentation-contract';
+import { BIOME_COLORS, Biome, Fluid, TileFlag } from '../domain/world';
+import { CameraShake, FootprintTrail } from './motion-feedback';
 import { clamp } from '../domain/values';
 import { PixelArt } from './art';
 import { DualGridAutotiler } from './autotiler';
@@ -22,6 +29,8 @@ import {
   PresentationClock,
   PresentationCueReader,
   facingFor,
+  layerFrameId,
+  type PoseSample,
 } from './animation';
 import { CameraController, HD_PROFILE, WorldProjection } from './projection';
 import { QualitySettings, TEXTURE_BUDGETS, type Quality } from './quality';
@@ -31,8 +40,23 @@ import {
   type AssetAppearance,
   type AssetFrame,
   type Facing,
+  type EffectDefinition,
 } from './assets/catalog';
 import { AssetManager, type AssetLease } from './assets/manager';
+import {
+  BoundedCompositeCache,
+  compositeKey,
+  compositeBounds,
+  layerRegistration,
+  layerSockets,
+  selectModularLayers,
+  socketWorld,
+  frameAnchor,
+  type CompositeLease,
+  type ModularSelection,
+} from './compositor';
+import { EffectDirector, visibleProjectiles, effectSeed } from './effects';
+import { actorInScene, sceneCamera } from './scene-view';
 
 export type { Quality } from './quality';
 export { CameraController } from './projection';
@@ -63,6 +87,12 @@ interface EntitySprite {
   facing: Facing;
   hitUntil: number;
   fallback: boolean;
+  composite?: CompositeLease<RenderTexture>;
+  compositeKey?: string;
+  poseSample?: PoseSample;
+  baseFrame?: AssetFrame;
+  socketPositions?: ReadonlyMap<string, { x: number; y: number }>;
+  socketAnchor?: { x: number; y: number };
 }
 interface ChunkView {
   readonly container: Container;
@@ -75,6 +105,14 @@ interface PropView {
   readonly sprite: Sprite;
   readonly canopy: boolean;
   readonly foliage: boolean;
+}
+interface AuthoredEffect {
+  readonly definition: EffectDefinition;
+  readonly actor: number;
+  readonly sceneId: string;
+  readonly startedAt: number;
+  readonly origin: { x: number; y: number };
+  readonly sprite: Sprite;
 }
 
 /** Shared bounded particles evaluated from simulation time. No entity ticker or simulation mutation. */
@@ -111,7 +149,7 @@ export class LightingRenderer {
     private readonly art: PixelArt,
     private readonly projection: WorldProjection,
   ) {}
-  render(frame: RenderSnapshot, camera: CameraController, quality: Quality): void {
+  render(frame: RenderSnapshot, camera: Pick<CameraController, 'x' | 'y'>, quality: Quality): void {
     const night = clamp((Math.cos((frame.hour / 24) * Math.PI * 2) + 0.1) * 0.45, 0, 0.48);
     this.darkness
       .clear()
@@ -156,12 +194,15 @@ export class WorldRenderer {
   readonly camera = new CameraController(this.projection);
   private readonly art = new PixelArt();
   private readonly assets = new AssetManager({
-    budgetBytes: TEXTURE_BUDGETS.medium - PRESENTATION_RESERVE_BYTES,
+    budgetBytes: TEXTURE_BUDGETS.medium - PRESENTATION_RESERVE_BYTES - 16 * 1024 ** 2,
   });
   private resolver: AppearanceResolver | null = null;
   private readonly frames = new Map<string, AssetFrame>();
   private readonly ground = new Container();
   private readonly objects = new Container();
+  private readonly foreground = new Container();
+  private readonly groundProps = new Container();
+  private readonly vfxLayer = new Container();
   private readonly labels = new Container();
   private readonly chunks = new Map<string, ChunkView>();
   private readonly entities = new Map<number, EntitySprite>();
@@ -177,7 +218,17 @@ export class WorldRenderer {
   private readonly clock = new PresentationClock();
   private readonly cueReader = new PresentationCueReader();
   private readonly effects: PresentationCue[] = [];
+  private readonly shake = new CameraShake();
+  private readonly footprints = new FootprintTrail();
+  private readonly footprintGraphics = new Graphics();
+  private renderCamera = { x: 0, y: 0 };
   private readonly qualitySettings = new QualitySettings();
+  private readonly composites = new BoundedCompositeCache<RenderTexture>(16 * 1024 ** 2, (t) =>
+    t.destroy(true),
+  );
+  private readonly effectDirector = new EffectDirector();
+  private readonly actionEffects = new Set<string>();
+  private readonly authoredEffects = new Map<string, AuthoredEffect>();
   private terrain: TerrainView | null = null;
   private frame: RenderSnapshot | null = null;
   private lastPropsTile = '';
@@ -202,6 +253,10 @@ export class WorldRenderer {
   private readonly clippedTextures = new Map<string, Texture>();
   private assetRequest: AbortController | null = null;
   private assetLease: AssetLease | null = null;
+  private preparedLease: AssetLease | null = null;
+  private preparedAtSceneId = '';
+  private preparedSession = '';
+  private prepareRequest: AbortController | null = null;
   private readonly labelStyle = new TextStyle({
     fontFamily: 'monospace',
     fontSize: 26,
@@ -211,6 +266,46 @@ export class WorldRenderer {
   });
   get catalog(): AssetCatalog | null {
     return this.assets.catalog;
+  }
+  private get scene(): ScenePresentation {
+    return (
+      (this.frame as (RenderSnapshot & { scene?: ScenePresentation }) | null)?.scene ?? {
+        id: 'overworld',
+        width: this.terrain?.size ?? 512,
+        height: this.terrain?.size ?? 512,
+        outside: true,
+        props: [],
+        portals: [],
+      }
+    );
+  }
+  /** Portal UI may preload artwork; the worker still revalidates every actual transition. */
+  async prepareScene(assetContentIds: readonly string[]): Promise<void> {
+    const catalog = this.assets.catalog;
+    if (!catalog) throw new Error('Artwork catalog is not ready');
+    this.prepareRequest?.abort();
+    const request = new AbortController();
+    this.prepareRequest = request;
+    const ids = new Set(assetContentIds);
+    const appearanceIds = new Set(
+      catalog.sceneAssets?.filter((a) => ids.has(a.id)).map((a) => a.appearanceId) ?? [],
+    );
+    const frames = catalog.appearances
+      .filter((a) => ids.has(a.contentId) || appearanceIds.has(a.id))
+      .flatMap((a) => (a.frameId ? [a.frameId] : []));
+    const lease = await this.assets.acquire(
+      frames,
+      this.quality === 'low' ? 0.5 : this.textureResolution,
+      request.signal,
+    );
+    if (this.disposed || request.signal.aborted) {
+      lease.release();
+      throw new DOMException('Scene preload superseded', 'AbortError');
+    }
+    this.preparedLease?.release();
+    this.preparedLease = lease;
+    this.preparedAtSceneId = this.scene.id;
+    this.preparedSession = this.frame?.session ?? '';
   }
 
   async initialize(element: HTMLElement): Promise<void> {
@@ -242,10 +337,15 @@ export class WorldRenderer {
     element.appendChild(this.app.canvas);
     this.fit(element.clientWidth, element.clientHeight);
     this.objects.sortableChildren = true;
+    this.foreground.sortableChildren = true;
     this.app.stage.addChild(
       this.ground,
+      this.groundProps,
       this.surfaceEffects,
+      this.footprintGraphics,
       this.objects,
+      this.foreground,
+      this.vfxLayer,
       this.indicators,
       this.labels,
       this.lighting.darkness,
@@ -287,8 +387,8 @@ export class WorldRenderer {
     // Actual anchored bounds in painter order preserve elevation and trim registration.
     const sorted = [...this.entities].sort((a, b) => b[1].body.zIndex - a[1].body.zIndex);
     for (const [id, e] of sorted) {
-      const left = e.body.x - this.camera.x - e.body.anchor.x * e.body.width;
-      const top = e.body.y - this.camera.y - e.body.anchor.y * e.body.height;
+      const left = e.body.x - this.renderCamera.x - e.body.anchor.x * e.body.width;
+      const top = e.body.y - this.renderCamera.y - e.body.anchor.y * e.body.height;
       if (p.x >= left && p.x <= left + e.body.width && p.y >= top && p.y <= top + e.body.height)
         return id;
     }
@@ -298,20 +398,73 @@ export class WorldRenderer {
     const catalog = this.assets.catalog;
     if (!catalog || !this.resolver) return;
     if (performance.now() < this.assetRetryAfter) return;
-    const requestedFrames = new Set(
-      catalog.appearances
-        .filter((a) => a.kind === 'environment' || a.kind === 'item')
-        .flatMap((a) => (a.frameId ? [a.frameId] : [])),
-    );
+    const contentIds = new Set([
+      ...(this.scene.sceneAssetIds ?? []),
+      ...this.scene.props.map((p) => p.contentId),
+    ]);
+    if (this.scene.floorContentId) contentIds.add(this.scene.floorContentId);
+    if (this.scene.outside) {
+      for (const id of [
+        'ground_grass',
+        'ground_dirt',
+        'ground_sand',
+        'ground_freshwater',
+        'cliff_grass',
+        'ramp_grass',
+        'tree_oak',
+        'tree_oak_variant',
+        'canopy_oak',
+        ...HOUSE_ART,
+        'landmark_waystone',
+        'landmark_well',
+        'landmark_lantern',
+        'landmark_fence',
+        'prop_hearth',
+        'rock_pebbles',
+        'rock_copper_rich',
+        'rock_copper_depleted',
+      ])
+        contentIds.add(id);
+      for (let i = 1; i < 15; i++) contentIds.add(`shore_freshwater_mask_${i}`);
+      for (const plant of ['berries', 'reeds', 'wheat', 'nectar', 'ashgrass', 'fungi'])
+        for (const state of ['healthy', 'harvested', 'burnt'])
+          contentIds.add(`flora_${plant}_${state}`);
+    }
+    const requestedFrames = new Set<string>();
+    for (const id of contentIds) {
+      const appearance = this.environmentAppearance(id);
+      if (appearance?.frameId) requestedFrames.add(appearance.frameId);
+    }
+    for (const drop of this.frame?.drops ?? []) {
+      const appearance = this.resolver.resolve('item', drop.item);
+      if (appearance?.frameId) requestedFrames.add(appearance.frameId);
+    }
     for (const actor of actors) {
       const appearance = this.resolver.resolve(actor.appearanceKind, actor.appearanceId);
       if (!appearance) continue;
       const entity = this.entities.get(actor.id);
       const facing = facingFor(actor.facingX, actor.facingY, entity?.facing);
-      const pose = this.poses.resolve(actor, (entity?.hitUntil ?? 0) > (this.frame?.tick ?? 0));
+      const tick = this.frame?.tick ?? 0;
+      const reactionActive =
+        !!actor.reaction && tick >= actor.reaction.startedAt && tick < actor.reaction.endsAt;
+      const pose = this.poses.resolve(
+        reactionActive ? actor : { ...actor, reaction: undefined },
+        (entity?.hitUntil ?? 0) > tick,
+      );
       // Acquire only the current direction/state and likely same-facing locomotion transitions.
       // A full eight-direction production appearance can contain thousands of frames.
       for (const state of new Set([pose, 'idle', 'walk'] as const)) {
+        const modular = selectModularLayers(
+          catalog,
+          this.resolver,
+          actor,
+          appearance,
+          state,
+          facing,
+        );
+        if (modular?.complete)
+          for (const layer of modular.layers)
+            for (const id of layer.clip.frameIds) requestedFrames.add(id);
         const clip = this.resolver.clip(
           appearance,
           state,
@@ -320,6 +473,10 @@ export class WorldRenderer {
         );
         if (clip) for (const id of clip.frameIds) requestedFrames.add(id);
       }
+    }
+    for (const effect of this.authoredEffects.values()) {
+      const clip = catalog.clips.find((c) => c.id === effect.definition.clipId);
+      if (clip) for (const id of clip.frameIds) requestedFrames.add(id);
     }
     const frameIds = [...requestedFrames].sort();
     const frameSignature = frameIds.join(',');
@@ -359,6 +516,10 @@ export class WorldRenderer {
       this.assetLease = lease;
       this.loadedTextureResolution = selectedResolution;
       previous?.release();
+      if (this.preparedAtSceneId !== this.scene.id) {
+        this.preparedLease?.release();
+        this.preparedLease = null;
+      }
       this.assetError = '';
       this.needsRedraw = true;
       const staticSignature = catalog.appearances
@@ -389,6 +550,9 @@ export class WorldRenderer {
   private detachLoadedAssets(): void {
     this.staticTextureSignature = '';
     for (const e of this.entities.values()) {
+      e.composite?.release();
+      e.composite = undefined;
+      e.compositeKey = undefined;
       e.body.texture = e.fallbackTexture;
       e.body.anchor.set(0.5, 1);
       e.body.scale.set(e.kind === 2 ? LEGACY_SCALE : PROFILE.humanHeight / 24);
@@ -403,6 +567,8 @@ export class WorldRenderer {
     this.clearClippedTextures();
   }
   setTerrain(terrain: TerrainView): void {
+    this.prepareRequest?.abort();
+    this.prepareRequest = null;
     this.needsRedraw = true;
     this.sceneSignature = '';
     this.assetRequest?.abort();
@@ -422,6 +588,7 @@ export class WorldRenderer {
     for (const p of this.props.values()) p.sprite.destroy();
     this.props.clear();
     for (const e of this.entities.values()) {
+      e.composite?.release();
       e.body.destroy();
       e.shadow.destroy();
       e.health.destroy();
@@ -432,9 +599,24 @@ export class WorldRenderer {
     this.clock.reset();
     this.cueReader.reset();
     this.effects.length = 0;
+    this.shake.reset();
+    this.footprints.reset();
+    this.footprintGraphics.clear();
+    this.composites.clear();
+    this.effectDirector.reset();
+    this.actionEffects.clear();
+    for (const effect of this.authoredEffects.values()) effect.sprite.destroy();
+    this.authoredEffects.clear();
   }
   apply(frame: RenderSnapshot): void {
-    const signature = `${frame.session}:${frame.tick}:${frame.paused.join(',')}:${frame.debugEnabled}:${frame.deltas.length}:${frame.drops.map((d) => d.id).join(',')}:${frame.carrion.length}:${frame.cues.at(-1)?.sequence ?? 0}`;
+    if (this.preparedLease && this.preparedSession !== frame.session) {
+      this.preparedLease.release();
+      this.preparedLease = null;
+    }
+    const nextScene =
+      (frame as RenderSnapshot & { scene?: ScenePresentation }).scene?.id ?? 'overworld';
+    if (this.frame && this.scene.id !== nextScene && this.terrain) this.setTerrain(this.terrain);
+    const signature = `${nextScene}:${frame.session}:${frame.tick}:${frame.paused.join(',')}:${frame.debugEnabled}:${frame.deltas.length}:${frame.drops.map((d) => d.id).join(',')}:${frame.carrion.length}:${frame.cues.at(-1)?.sequence ?? 0}`;
     if (signature !== this.sceneSignature) this.needsRedraw = true;
     this.sceneSignature = signature;
     // packed/ids are returned to the worker immediately after apply; retaining empty views is intentional.
@@ -446,6 +628,7 @@ export class WorldRenderer {
       frame.paused.length > 0,
       performance.now(),
     );
+    this.animations.accept(frame.session, frame.tick, frame.actors);
     const terrain = this.terrain;
     if (!terrain) return;
     for (const delta of frame.deltas) {
@@ -469,6 +652,32 @@ export class WorldRenderer {
     const cues = this.cueReader.read(frame.session, frame.tick, frame.cues);
     this.effects.push(...cues);
     if (this.effects.length > 64) this.effects.splice(0, this.effects.length - 64);
+    for (const cue of cues) {
+      const actor = actors.get(cue.target ?? cue.actor);
+      if (!actor || !actorInScene(actor, this.scene.id)) continue;
+      if (cue.kind === 'hit' && Math.hypot(actor.x - frame.player.x, actor.y - frame.player.y) < 6)
+        this.shake.add(cue.tick, (cue.strength ?? 1) * (actor.id === 0 ? 2 : 0.7), cue.sequence);
+      this.emitEffect(
+        cue.kind === 'hit'
+          ? 'hit'
+          : cue.kind === 'care' || cue.kind === 'recover'
+            ? 'heal'
+            : 'ambient',
+        `cue:${frame.session}:${cue.sequence}`,
+        actor,
+        cue.tick,
+      );
+      const p = this.projection.world(actor.x, actor.y, actor.elevation);
+      this.effectDirector.emit({
+        id: `cue:${frame.session}:${cue.sequence}`,
+        sceneId: this.scene.id,
+        kind: cue.kind,
+        tick: cue.tick,
+        seed: cue.sequence,
+        origin: p,
+        count: cue.kind === 'hit' ? 8 : 4,
+      });
+    }
     const visibleActors: ActorPresentation[] = [];
     for (let i = 0; i < frame.count; i++) {
       const at = i * ENTITY_STRIDE,
@@ -479,9 +688,18 @@ export class WorldRenderer {
         y = p[at + 3]!;
       if (Math.abs(x - frame.player.x) > 23 || Math.abs(y - frame.player.y) > 17) continue;
       const actor = actors.get(id);
-      if (!actor) continue;
+      if (!actor || !actorInScene(actor, this.scene.id)) continue;
       seen.add(id);
       visibleActors.push(actor);
+      if (actor.action) {
+        const key = `${frame.session}:${this.scene.id}:${actor.id}:${actor.action.instanceId ?? actor.action.startedAt}`;
+        if (!this.actionEffects.has(key)) {
+          this.actionEffects.add(key);
+          if (this.actionEffects.size > 256)
+            this.actionEffects.delete(this.actionEffects.values().next().value!);
+          this.emitEffect('attack', key, actor, actor.action.startedAt);
+        }
+      }
       let e = this.entities.get(id);
       if (!e) {
         const body = new Sprite(
@@ -535,6 +753,7 @@ export class WorldRenderer {
     }
     for (const [id, e] of this.entities)
       if (!seen.has(id)) {
+        e.composite?.release();
         e.body.destroy();
         e.shadow.destroy();
         e.health.destroy();
@@ -550,7 +769,15 @@ export class WorldRenderer {
     this.qualitySettings.configure(quality);
     this.reducedMotion = reducedMotion;
     this.debugEnabled = debug;
-    this.assets.setBudget(TEXTURE_BUDGETS[quality] - PRESENTATION_RESERVE_BYTES);
+    const compositeBudget = (quality === 'high' ? 32 : quality === 'low' ? 8 : 16) * 1024 ** 2;
+    for (const e of this.entities.values()) {
+      e.composite?.release();
+      e.composite = undefined;
+      e.compositeKey = undefined;
+      e.body.texture = e.fallbackTexture;
+    }
+    this.composites.configure(compositeBudget);
+    this.assets.setBudget(TEXTURE_BUDGETS[quality] - PRESENTATION_RESERVE_BYTES - compositeBudget);
     this.textureResolution = quality === 'low' ? 0.5 : 1;
     this.assetRetryAfter = 0;
     if (loweringBudget) {
@@ -571,13 +798,26 @@ export class WorldRenderer {
     id: string,
     fallback: Texture,
   ): { texture: Texture; frame?: AssetFrame; scale: number } {
-    const appearance = this.resolver?.resolve(kind, id),
+    const appearance =
+        kind === 'environment' ? this.environmentAppearance(id) : this.resolver?.resolve(kind, id),
       frame = appearance?.frameId && this.frames.get(appearance.frameId);
     const texture = frame && this.assets.texture(frame.id);
     if (texture) texture.source.scaleMode = 'nearest';
     return texture && frame
       ? { texture, frame, scale: appearance?.quality === 'hd' ? 1 : LEGACY_SCALE }
       : { texture: fallback, scale: LEGACY_SCALE };
+  }
+  private environmentAppearance(id: string): AssetAppearance | undefined {
+    const direct = this.resolver?.resolve('environment', id);
+    if (direct) return direct;
+    const definition =
+      this.catalog?.sceneAssets?.find(
+        (a) => a.id === id && a.stage !== 'proof' && a.stage !== 'candidate',
+      ) ??
+      this.catalog?.furniture?.find(
+        (a) => a.id === id && a.stage !== 'proof' && a.stage !== 'candidate',
+      );
+    return definition && this.resolver?.getAppearance(definition.appearanceId);
   }
   private drawChunk(chunk: ChunkView): void {
     const t = this.terrain!,
@@ -587,14 +827,15 @@ export class WorldRenderer {
       for (let dx = 0; dx < REGION; dx++) {
         const x = chunk.cx * REGION + dx,
           y = chunk.cy * REGION + dy;
-        if (x >= t.size || y >= t.size) continue;
+        if (x >= t.size || y >= t.size || x >= this.scene.width || y >= this.scene.height) continue;
         const i = y * t.size + x,
           color = BIOME_COLORS[t.biome[i]!] ?? 0x8da570,
           flags = t.flags[i]!,
           px = dx * TILE,
           py = dy * TILE;
-        const material =
-          flags & TileFlag.Road
+        const material = !this.scene.outside
+          ? this.scene.floorContentId
+          : flags & TileFlag.Road
             ? 'ground_dirt'
             : t.biome[i] === Biome.Beach
               ? 'ground_sand'
@@ -602,7 +843,12 @@ export class WorldRenderer {
                 ? 'ground_grass'
                 : undefined;
         const groundArt = material && this.drawCatalogTexture(g, material, px, py, TILE, TILE);
-        if (!groundArt) g.rect(px, py, TILE, TILE).fill(color);
+        if (!groundArt)
+          g.rect(px, py, TILE, TILE).fill(
+            this.scene.outside ? color : this.scene.kind === 'cave' ? 0x424c48 : 0x86735b,
+          );
+        if (!this.scene.outside && flags & TileFlag.Solid)
+          g.rect(px, py, TILE, TILE).fill({ color: 0x233b36, alpha: 0.7 });
         const hash = (Math.imul(x + 13, 73856093) ^ Math.imul(y + 7, 19349663)) >>> 0,
           e = t.elevation[i]!,
           next = t.elevation[i + t.size] ?? e;
@@ -626,7 +872,7 @@ export class WorldRenderer {
               });
           }
         }
-        if (!groundArt && !t.fluid[i] && !(flags & TileFlag.Road)) {
+        if (this.scene.outside && !groundArt && !t.fluid[i] && !(flags & TileFlag.Road)) {
           const sy = py - e * PROFILE.elevationPixels;
           g.rect(px + (hash % 13) * 4, sy + ((hash >>> 4) % 13) * 4, 4, 10).fill({
             color: 0x365f40,
@@ -742,7 +988,7 @@ export class WorldRenderer {
     height: number,
     clipRegion = false,
   ): boolean {
-    const appearance = this.resolver?.resolve('environment', id);
+    const appearance = this.environmentAppearance(id);
     const frame = appearance?.frameId && this.frames.get(appearance.frameId);
     const texture = frame && this.assets.texture(frame.id);
     if (!texture || !frame) return false;
@@ -784,10 +1030,15 @@ export class WorldRenderer {
     const t = this.terrain!,
       pixels = REGION * TILE;
     const left = Math.max(0, Math.floor(this.camera.x / pixels)),
-      right = Math.min(t.size / REGION - 1, Math.floor((this.camera.x + PROFILE.width) / pixels));
+      right = Math.min(
+        Math.ceil(this.scene.width / REGION) - 1,
+        Math.ceil(t.size / REGION) - 1,
+        Math.floor((this.camera.x + PROFILE.width) / pixels),
+      );
     const top = Math.max(0, Math.floor(this.camera.y / pixels)),
       bottom = Math.min(
-        t.size / REGION - 1,
+        Math.ceil(this.scene.height / REGION) - 1,
+        Math.ceil(t.size / REGION) - 1,
         Math.floor((this.camera.y + PROFILE.height + 128) / pixels),
       );
     for (let cy = top; cy <= bottom; cy++)
@@ -816,6 +1067,10 @@ export class WorldRenderer {
     if (evicted) TexturePool.clear(true);
   }
   private updateProps(): void {
+    if (!this.scene.outside) {
+      this.updateLocalProps(this.scene);
+      return;
+    }
     const t = this.terrain!,
       frame = this.frame!,
       centerX = Math.floor(frame.player.x),
@@ -843,7 +1098,7 @@ export class WorldRenderer {
         sprite.scale.set(source.scale);
         view = { sprite, canopy, foliage: id.startsWith('tree:') };
         this.props.set(id, view);
-        this.objects.addChild(sprite);
+        (id.startsWith('canopy:') ? this.foreground : this.objects).addChild(sprite);
       }
       const e = t.elevation[Math.floor(y) * t.size + Math.floor(x)] ?? 0,
         p = this.projection.world(x, y, e);
@@ -1011,6 +1266,7 @@ export class WorldRenderer {
           kind: 'item',
           id: drop.item,
         });
+    this.appendSceneProps(this.scene, wanted);
     for (const [id, p] of this.props)
       if (!wanted.has(id)) {
         p.sprite.destroy();
@@ -1026,18 +1282,109 @@ export class WorldRenderer {
         this.labels.addChild(label);
       }
   }
+  private updateLocalProps(scene: ScenePresentation): void {
+    const key = `${scene.id}:${scene.props.map((p) => `${p.id}:${p.variant ?? ''}`).join(',')}`;
+    if (key === this.lastPropsTile) return;
+    this.lastPropsTile = key;
+    const wanted = new Set<string>();
+    this.appendSceneProps(scene, wanted);
+    for (const [id, view] of this.props)
+      if (!wanted.has(id)) {
+        view.sprite.destroy();
+        this.props.delete(id);
+      }
+  }
+  private appendSceneProps(scene: ScenePresentation, wanted: Set<string>): void {
+    for (const prop of scene.props) {
+      if (
+        this.frame &&
+        (Math.abs(prop.x - this.frame.player.x) > 30 || Math.abs(prop.y - this.frame.player.y) > 22)
+      )
+        continue;
+      wanted.add(prop.id);
+      let view = this.props.get(prop.id);
+      if (!view) {
+        const fallback = this.art.texture('local-prop-prototype', 32, 32, (c) => {
+          c.fillStyle = '#30453c';
+          c.fillRect(3, 5, 26, 25);
+          c.fillStyle = '#a38e68';
+          c.fillRect(5, 3, 22, 24);
+          c.fillStyle = '#cbbb8b';
+          c.fillRect(7, 5, 18, 4);
+        });
+        const source = this.textureFor('environment', prop.contentId, fallback),
+          sprite = new Sprite(source.texture);
+        sprite.anchor.set(source.frame?.anchor.x ?? 0.5, source.frame?.anchor.y ?? 1);
+        sprite.scale.set(source.frame ? source.scale : 2);
+        view = { sprite, canopy: prop.layer === 'roof' || prop.layer === 'canopy', foliage: false };
+        this.props.set(prop.id, view);
+        (view.canopy
+          ? this.foreground
+          : prop.layer === 'ground'
+            ? this.groundProps
+            : this.objects
+        ).addChild(sprite);
+      }
+      const p = this.projection.world(prop.x, prop.y, prop.elevation ?? 0);
+      view.sprite.position.set(p.x, p.y);
+      view.sprite.zIndex = this.projection.depth(prop.y, 0);
+    }
+  }
   private animate(e: EntitySprite, tick: number): void {
     e.facing = facingFor(e.actor.facingX, e.actor.facingY, e.facing);
     const hit = tick >= e.hitUntil - 5 && tick < e.hitUntil;
-    const pose = this.poses.resolve(e.actor, hit),
+    const reactionActive =
+      !!e.actor.reaction && tick >= e.actor.reaction.startedAt && tick < e.actor.reaction.endsAt;
+    const reactionActor = reactionActive ? e.actor : { ...e.actor, reaction: undefined };
+    const pose = this.poses.resolve(reactionActor, hit),
       clip =
         e.appearance && this.resolver?.clip(e.appearance, pose, e.facing, e.actor.action?.move);
-    const frameId = clip && this.animations.frame(e.actor, clip, tick),
+    const sample = clip && this.animations.sample(e.actor, clip, tick);
+    e.poseSample = sample;
+    const frameId = sample?.frameId,
       frame = frameId && this.frames.get(frameId),
       texture = frameId && this.assets.texture(frameId);
+    e.baseFrame = frame || undefined;
+    e.socketPositions = undefined;
+    e.socketAnchor = undefined;
     const resolvedAppearance = clip && this.resolver?.getAppearance(clip.appearanceId);
     e.fallback = !texture || (!!clip && clip.appearanceId !== e.appearance?.id);
-    if (texture && frame) {
+    const modular =
+      sample &&
+      e.appearance &&
+      this.catalog &&
+      this.resolver &&
+      selectModularLayers(
+        this.catalog,
+        this.resolver,
+        e.actor,
+        e.appearance,
+        sample.state,
+        sample.facing,
+      );
+    let composed = false;
+    try {
+      composed = !!(modular && sample && frame && this.composeActor(e, modular, sample, frame));
+    } catch (error) {
+      this.assetError = `Prototype composition: ${error instanceof Error ? error.message : String(error)}`;
+    }
+    if (composed) {
+      e.fallback = false;
+    } else if (e.appearance?.recipeId) {
+      e.composite?.release();
+      e.composite = undefined;
+      e.compositeKey = undefined;
+      e.body.texture = e.fallbackTexture;
+      e.body.anchor.set(0.5, 1);
+      e.body.scale.set(e.kind === 2 ? LEGACY_SCALE : PROFILE.humanHeight / 24);
+      e.fallback = true;
+      e.baseFrame = undefined;
+      e.socketPositions = undefined;
+      e.socketAnchor = undefined;
+    } else if (texture && frame) {
+      e.composite?.release();
+      e.composite = undefined;
+      e.compositeKey = undefined;
       texture.source.scaleMode = 'nearest';
       e.body.texture = texture;
       e.body.anchor.set(frame.anchor.x, frame.anchor.y);
@@ -1054,8 +1401,211 @@ export class WorldRenderer {
       e.body.scale.set(e.kind === 2 ? LEGACY_SCALE : PROFILE.humanHeight / 24);
     }
     e.body.rotation = 0;
-    e.body.tint = hit ? 0xffc7aa : 0xffffff;
+    e.body.tint = hit || reactionActive ? 0xffc7aa : 0xffffff;
     e.body.alpha = e.hp <= 0 ? 0.55 : 1;
+  }
+  private composeActor(
+    e: EntitySprite,
+    selection: ModularSelection,
+    sample: PoseSample,
+    bodyFrame: AssetFrame,
+  ): boolean {
+    if (!selection.complete) return false;
+    const { rig, recipe } = selection;
+    const layers: { texture: Texture; frame: AssetFrame; target: { x: number; y: number } }[] = [];
+    for (const layer of selection.layers) {
+      const id = layerFrameId(layer.clip, sample),
+        frame = id && this.frames.get(id),
+        texture = id && this.assets.texture(id);
+      const socket = layer.definition.socketId
+        ? bodyFrame.sockets?.[layer.definition.socketId]
+        : undefined;
+      if (!frame || !texture || (layer.definition.socketId && !socket)) {
+        if (layer.definition.required) return false;
+        continue;
+      }
+      layers.push({ texture, frame, target: socket ?? rig.anchorPx });
+    }
+    if (!layers.length) return false;
+    const bounds = compositeBounds(rig.canvas, layers);
+    e.socketPositions = new Map(
+      layers.flatMap((layer) => Object.entries(layerSockets(layer.frame, layer.target))),
+    );
+    e.socketAnchor = rig.anchorPx;
+    const key = compositeKey(
+      e.actor,
+      recipe.id,
+      layers.map((l) => `${l.frame.id}:${l.texture.uid}`),
+      this.loadedTextureResolution,
+    );
+    if (e.compositeKey !== key || !e.composite) {
+      e.composite?.release();
+      e.composite = undefined;
+      e.compositeKey = undefined;
+      const bytes =
+        Math.ceil(bounds.w * this.loadedTextureResolution) *
+        Math.ceil(bounds.h * this.loadedTextureResolution) *
+        4;
+      const lease = this.composites.acquire(key, bytes, () => {
+        const container = new Container();
+        for (const layer of layers) {
+          const sprite = new Sprite(layer.texture),
+            p = layerRegistration(layer.frame, layer.target);
+          sprite.anchor.set(0);
+          sprite.position.set(p.x - bounds.x, p.y - bounds.y);
+          container.addChild(sprite);
+        }
+        const texture = RenderTexture.create({
+          width: bounds.w,
+          height: bounds.h,
+          resolution: this.loadedTextureResolution,
+          antialias: false,
+        });
+        texture.source.scaleMode = 'nearest';
+        try {
+          this.app.renderer.render({ container, target: texture, clear: true });
+        } catch (error) {
+          texture.destroy(true);
+          throw error;
+        } finally {
+          container.destroy({ children: true });
+        }
+        return texture;
+      });
+      if (!lease) return false;
+      e.composite = lease;
+      e.compositeKey = key;
+    }
+    e.body.texture = e.composite.value;
+    e.body.anchor.set(
+      (rig.anchorPx.x - bounds.x) / bounds.w,
+      (rig.anchorPx.y - bounds.y) / bounds.h,
+    );
+    e.body.scale.set(
+      e.appearance?.quality === 'hd'
+        ? 1
+        : e.kind === 2
+          ? LEGACY_SCALE
+          : PROFILE.humanHeight / rig.canvas.h,
+    );
+    return true;
+  }
+  private emitEffect(
+    trigger: EffectDefinition['trigger'],
+    instance: string,
+    actor: ActorPresentation,
+    tick: number,
+  ): void {
+    for (const definition of this.catalog?.effects ?? []) {
+      if (
+        definition.trigger !== trigger ||
+        definition.stage === 'proof' ||
+        definition.stage === 'candidate' ||
+        (definition.rigId && definition.rigId !== actor.rigId) ||
+        (definition.moveId && definition.moveId !== actor.action?.move)
+      )
+        continue;
+      const id = `${definition.id}:${instance}`;
+      if (
+        this.authoredEffects.has(id) ||
+        this.authoredEffects.size >= 128 ||
+        [...this.authoredEffects.values()].filter((e) => e.definition.id === definition.id)
+          .length >= definition.maxInstances
+      )
+        continue;
+      const sprite = new Sprite(Texture.EMPTY);
+      sprite.visible = false;
+      sprite.blendMode = definition.blendMode;
+      this.vfxLayer.addChild(sprite);
+      this.authoredEffects.set(id, {
+        definition,
+        actor: actor.id,
+        sceneId: this.scene.id,
+        startedAt: tick,
+        origin: this.projection.world(actor.x, actor.y, actor.elevation),
+        sprite,
+      });
+      this.effectDirector.emit({
+        id,
+        sceneId: this.scene.id,
+        kind: trigger === 'hit' ? 'hit' : trigger === 'heal' ? 'care' : 'craft',
+        tick,
+        seed: effectSeed(id),
+        origin: this.projection.world(actor.x, actor.y, actor.elevation),
+        count: 4,
+        essential: definition.essential,
+      });
+    }
+  }
+  private renderEffects(tick: number, quality: Quality, cx: number, cy: number): void {
+    for (const [id, effect] of this.authoredEffects) {
+      const age = tick - effect.startedAt,
+        definition = effect.definition;
+      if (effect.sceneId !== this.scene.id || age > definition.lifetimeTicks) {
+        effect.sprite.destroy();
+        this.authoredEffects.delete(id);
+        continue;
+      }
+      effect.sprite.visible = false;
+      if (age < 0 || (!definition.essential && (quality === 'low' || this.reducedMotion))) continue;
+      const clip = this.catalog?.clips.find((c) => c.id === definition.clipId);
+      const frameId =
+        clip?.frameIds[Math.min(clip.frameIds.length - 1, Math.floor((age / 30) * clip.fps))];
+      const frame = frameId && this.frames.get(frameId),
+        texture = frameId && this.assets.texture(frameId);
+      if (!frame || !texture) continue;
+      let point = effect.origin;
+      const actor = this.entities.get(effect.actor);
+      if (definition.attachment !== 'world') {
+        if (!actor) continue;
+        point = { x: actor.body.x, y: actor.body.y };
+        if (definition.attachment === 'socket') {
+          const base = actor.baseFrame,
+            socket = definition.socketId && actor.socketPositions?.get(definition.socketId),
+            bodySocket = definition.socketId && base?.sockets?.[definition.socketId];
+          if (socket && actor.socketAnchor)
+            point = {
+              x: point.x + (socket.x - actor.socketAnchor.x) * actor.body.scale.x,
+              y: point.y + (socket.y - actor.socketAnchor.y) * actor.body.scale.y,
+            };
+          else {
+            if (!base || !bodySocket) continue;
+            point = socketWorld(base, bodySocket, point, actor.body.scale.x);
+          }
+        }
+      }
+      const anchor = frameAnchor(frame);
+      effect.sprite.texture = texture;
+      effect.sprite.anchor.set(anchor.x / frame.sourceSize.w, anchor.y / frame.sourceSize.h);
+      effect.sprite.position.set(point.x - cx, point.y - cy);
+      effect.sprite.visible = true;
+    }
+    for (const particle of this.effectDirector.sample(
+      this.scene.id,
+      tick,
+      this.reducedMotion,
+      quality === 'low',
+    ))
+      this.indicators
+        .circle(particle.x - cx, particle.y - cy - 32, particle.radius)
+        .fill({ color: particle.kind === 'hit' ? 0xf5d2a1 : 0xaed5bf, alpha: particle.alpha });
+    const projectiles =
+      (this.frame as (RenderSnapshot & { projectiles?: readonly ProjectilePresentation[] }) | null)
+        ?.projectiles ?? [];
+    for (const projectile of visibleProjectiles(projectiles, this.scene.id)) {
+      const p = this.projection.screen(projectile.x, projectile.y, 0, { x: cx, y: cy }),
+        dx = projectile.facingX * 24,
+        dy = projectile.facingY * 24;
+      this.indicators
+        .moveTo(p.x - dx / 2, p.y - dy / 2)
+        .lineTo(p.x + dx / 2, p.y + dy / 2)
+        .stroke({ color: 0xffedbb, width: 4 });
+      this.indicators
+        .moveTo(p.x + dx / 2 - dx * 0.3 - dy * 0.2, p.y + dy / 2 - dy * 0.3 + dx * 0.2)
+        .lineTo(p.x + dx / 2, p.y + dy / 2)
+        .lineTo(p.x + dx / 2 - dx * 0.3 + dy * 0.2, p.y + dy / 2 - dy * 0.3 - dx * 0.2)
+        .stroke({ color: 0xf8d49b, width: 3 });
+    }
   }
   private render(): boolean {
     const now = performance.now(),
@@ -1069,12 +1619,19 @@ export class WorldRenderer {
         t.elevation[Math.floor(frame.player.y) * t.size + Math.floor(frame.player.x)] ?? 0;
     const presentation = this.clock.sample(now);
     this.camera.follow(frame.player.x, frame.player.y, elevation, dt);
+    const camera = sceneCamera(this.camera, this.scene, TILE, PROFILE);
+    this.camera.x = camera.x;
+    this.camera.y = camera.y;
     this.updateChunks();
     this.updateProps();
-    const cx = Math.round(this.camera.x),
-      cy = Math.round(this.camera.y);
+    const shake = this.shake.sample(presentation.tick, this.reducedMotion);
+    const cx = Math.round(this.camera.x) - shake.x,
+      cy = Math.round(this.camera.y) - shake.y;
+    this.renderCamera = { x: cx, y: cy };
     this.ground.position.set(-cx, -cy);
     this.objects.position.set(-cx, -cy);
+    this.foreground.position.set(-cx, -cy);
+    this.groundProps.position.set(-cx, -cy);
     this.labels.position.set(-cx, -cy);
     const effectQuality =
       this.qualitySettings.effects <= 0
@@ -1082,12 +1639,13 @@ export class WorldRenderer {
         : this.qualitySettings.effects < 1
           ? 'medium'
           : this.quality;
-    this.drawSurfaceEffects(presentation.seconds, effectQuality, cx, cy);
+    if (this.scene.outside) this.drawSurfaceEffects(presentation.seconds, effectQuality, cx, cy);
+    else this.surfaceEffects.clear();
     for (const [id, e] of this.entities) {
-      const factor = this.reducedMotion || frame.paused.length ? 1 : 1 - Math.exp(-dt * 24);
-      e.x += (e.targetX - e.x) * factor;
-      e.y += (e.targetY - e.y) * factor;
-      const p = this.projection.world(e.x, e.y, e.elevated);
+      const position = this.animations.position(e.actor, presentation.tick);
+      e.x = position.x;
+      e.y = position.y;
+      const p = this.projection.world(e.x, e.y, position.elevation);
       e.body.position.set(Math.round(p.x), Math.round(p.y));
       e.body.zIndex = this.projection.depth(e.y, id);
       e.shadow.position.copyFrom(e.body.position);
@@ -1095,7 +1653,41 @@ export class WorldRenderer {
       e.health.position.copyFrom(e.body.position);
       e.health.zIndex = e.body.zIndex + 0.01;
       this.animate(e, presentation.tick);
+      const index = Math.floor(e.y) * t.size + Math.floor(e.x);
+      this.footprints.observe(
+        e.actor,
+        presentation.tick,
+        this.scene.outside &&
+          (t.biome[index] === Biome.Beach ||
+            t.fluid[index] === Fluid.Mud ||
+            frame.weather.kind === 'snow'),
+      );
+      // A small additive lean reads as unstable footing; authored gait remains in control.
+      const moving = e.actor.pose === 'walk' || e.actor.pose === 'run';
+      const phase =
+        ((e.actor.locomotion?.distance ?? 0) /
+          Math.max(0.2, e.actor.physique?.strideTiles ?? 1.5)) *
+        Math.PI *
+        2;
+      const body = e.actor.physique;
+      const stability = body
+        ? clamp(body.heightMeters / 1.7 / Math.cbrt(body.massKg / 70), 0.5, 1.5)
+        : 1;
+      e.body.skew.x =
+        !this.reducedMotion && moving && t.fluid[index] === Fluid.Mud
+          ? Math.sin(phase) * 0.014 * stability
+          : 0;
     }
+    this.footprints.prune(presentation.tick, new Set(this.entities.keys()));
+    this.footprintGraphics.clear();
+    if (!this.reducedMotion && effectQuality !== 'low')
+      for (const mark of this.footprints.marks) {
+        const p = this.projection.world(mark.x, mark.y, mark.elevation),
+          age = presentation.tick - mark.tick;
+        this.footprintGraphics
+          .ellipse(p.x - cx, p.y - cy, mark.size, mark.size * 0.45)
+          .fill({ color: 0x574f3c, alpha: 0.24 * Math.max(0, 1 - age / 180) });
+      }
     const player = this.entities.get(0);
     if (player)
       for (const p of this.props.values()) {
@@ -1108,11 +1700,11 @@ export class WorldRenderer {
             : 0;
         s.alpha =
           p.canopy &&
-          player.body.zIndex < s.zIndex &&
-          player.body.x > left &&
-          player.body.x < left + s.width &&
+          (s.parent === this.foreground || player.body.zIndex < s.zIndex) &&
+          player.body.x + player.body.width / 2 > left &&
+          player.body.x - player.body.width / 2 < left + s.width &&
           player.body.y > top &&
-          player.body.y < s.y
+          player.body.y - player.body.height < s.y
             ? 0.35
             : 1;
       }
@@ -1162,8 +1754,25 @@ export class WorldRenderer {
           .circle(e.body.x - cx, e.body.y - cy - 48, 20 + age * 2)
           .stroke({ color: 0xf6dda7, width: 3, alpha: (1 - age / 16) * 0.8 });
     }
-    this.lighting.render(frame, this.camera, effectQuality);
-    this.weather.render(frame, presentation.seconds, effectQuality, this.reducedMotion);
+    this.renderEffects(presentation.tick, effectQuality, cx, cy);
+    for (const portal of this.scene.portals) {
+      const p = this.projection.screen(portal.x, portal.y, 0, { x: cx, y: cy });
+      if (p.x < 0 || p.y < 0 || p.x > PROFILE.width || p.y > PROFILE.height) continue;
+      this.indicators
+        .rect(p.x - 20, p.y - 52, 40, 52)
+        .stroke({ color: portal.allowed ? 0xe8d59c : 0xb7796b, width: 3, alpha: 0.8 });
+    }
+    this.lighting.lights.visible = this.scene.outside;
+    if (this.scene.outside) {
+      this.lighting.render(frame, this.renderCamera, effectQuality);
+      this.weather.render(frame, presentation.seconds, effectQuality, this.reducedMotion);
+    } else {
+      this.weather.graphics.clear();
+      this.lighting.darkness
+        .clear()
+        .rect(0, 0, PROFILE.width, PROFILE.height)
+        .fill({ color: 0x0c201c, alpha: this.scene.kind === 'cave' ? 0.18 : 0.04 });
+    }
     this.drawDebug(frame, cx, cy);
     this.renderMs = performance.now() - started;
     if (!frame.paused.length && this.qualitySettings.sample(dt * 1000))
@@ -1267,6 +1876,7 @@ export class WorldRenderer {
     atlasBytes: number;
     cacheBytes: number;
     framebufferBytes: number;
+    compositeBytes: number;
     framebufferScale: number;
     textureResolution: 1 | 0.5;
     gpu: string;
@@ -1287,7 +1897,8 @@ export class WorldRenderer {
       fps: this.initialized ? this.app.ticker.FPS : 0,
       renderMs: this.renderMs,
       loadMs: this.loadMs,
-      textureBytes: atlasBytes + cacheBytes + framebufferBytes,
+      textureBytes: atlasBytes + cacheBytes + framebufferBytes + this.composites.stats.bytes,
+      compositeBytes: this.composites.stats.bytes,
       atlasBytes,
       cacheBytes,
       framebufferBytes,
@@ -1304,6 +1915,12 @@ export class WorldRenderer {
     this.disposed = true;
     this.assetRequest?.abort();
     this.assetLease?.release();
+    this.prepareRequest?.abort();
+    this.preparedLease?.release();
+    for (const e of this.entities.values()) e.composite?.release();
+    this.composites.clear();
+    for (const effect of this.authoredEffects.values()) effect.sprite.destroy();
+    this.authoredEffects.clear();
     this.clearClippedTextures();
     void this.assets.dispose().catch(() => undefined);
     if (this.initialized) this.app.destroy(true, { children: true });

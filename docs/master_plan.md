@@ -2,6 +2,12 @@
 
 Status: playable reference architecture; [HD Aqualia slice](hd-presentation.md) engineering integration in progress, native art approval pending. Start with the [README](../README.md), then the [architecture guide](architecture.md). The [original draft](archive/master_plan_original.md) is retained as historical input, not the current specification.
 
+The approved [full-world presentation, equipment and scenes expansion](full-world-presentation.md) extends the visual target to all nine settlements, 42 building interiors and three caves. It defines the source/catalog-v2 art stages, modular worn equipment, nine-expression human portraits, guarded combat/finite ammunition, scene permissions and save-v4 compatibility. Its newer equipment and scene rules supersede the earlier passive-clothing and overworld-only baseline below; native art approval and final validation remain explicit gates.
+
+The [current production workflow](full-world-presentation.md#production-method-and-content-scope) uses reviewed master artwork and Blender pixel bakes with pinned offline ingestion. Reported art-branch frame counts or a compact prototype atlas do not establish full animation coverage, visual approval or passing integration checks.
+
+The [physical presence specification](physical-presence.md) adds durable height/mass, bounded movement and combat factors, collision-constrained recoil, footprints, mud lean and accessible camera shake. Species balance and earned progression remain separate from physique.
+
 ## Product and operating constraints
 
 Build a lively single-player browser Action RPG with a seeded, finite wilderness, visible creature herds, recoverable ecology, elemental combat, and villagers with schedules, observations, memories, and bounded LLM autonomy.

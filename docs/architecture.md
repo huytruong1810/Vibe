@@ -90,7 +90,7 @@ Generator, content, and save versions are independent. Terrain is reconstructed 
 
 Paths, rendering caches, resource indexes, spatial indexes, pause tokens, in-flight requests, and unfinished dialogue offers are derived/transient. Restoring recomputes these; it does not promise bit-identical future movement relative to an uninterrupted run with partially completed path searches. Same seed/version generation and deterministic calculations remain reproducible.
 
-Never change the meaning of terrain generation while silently retaining the generator version for released saves. Migration rejects unknown future versions and invalid ownership/array shapes. Save v3/content v2 retain generator v1. The frozen legacy schema and captured real v2 fixture verify migration into shared bodies, healthy newly introduced needs, protected/downed defeat handling and unchanged social progress. See [entity compatibility](unified_entities.md#migration-and-lifecycle).
+Never change terrain generation while silently retaining its generator version. Save v4/content v3 retain generator v1. The frozen v2/v3 schemas and captured v2 fixture verify migration into shared bodies, scene membership and authored equipment while preserving existing geography and progress. Worn items, finite ammunition, reservations and committed projectiles persist alongside stable scene bindings. Shared settlement accounts remain authoritative across multiple service points. See [entity compatibility](unified_entities.md#migration-and-lifecycle) and the [full-world expansion](full-world-presentation.md).
 
 ## Performance and tests
 

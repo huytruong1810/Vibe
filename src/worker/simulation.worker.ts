@@ -10,16 +10,23 @@ const clock = new FixedStepClock();
 const buffers: ArrayBuffer[] = [];
 let previous = performance.now(),
   lastFrame = 0;
+let publishedScene = '';
 const send = (message: FromWorker, transfer: Transferable[] = []): void =>
   worker.postMessage(message, transfer);
 const publish = (type: 'ready' | 'frame' | 'restored', requestId = ''): void => {
   if (!host) return;
   const frame = host.frame(buffers.pop());
-  if (type === 'frame') send({ type, frame }, [frame.packed.buffer]);
+  if (type === 'frame' && publishedScene === frame.scene.id)
+    send({ type, frame }, [frame.packed.buffer]);
   else {
     const terrain = host.terrain();
+    publishedScene = frame.scene.id;
     const message: FromWorker =
-      type === 'ready' ? { type, terrain, frame } : { type, requestId, terrain, frame };
+      type === 'ready'
+        ? { type, terrain, frame }
+        : type === 'frame'
+          ? { type, terrain, frame }
+          : { type, requestId, terrain, frame };
     send(message, [
       frame.packed.buffer,
       terrain.biome.buffer,

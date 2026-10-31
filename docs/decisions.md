@@ -133,3 +133,33 @@ These records explain why the implementation differs from the original draft. St
 **Alternatives rejected:** enlarging prototype sprites as finished HD art; filename/village-number identity inference; automatic diagonal rotation; per-actor animation tickers; putting damage timing in animation data; changing tile coordinates or saves to fit display pixels.
 
 **Consequences:** native target scene and player/Rivallie proofs must precede bulk production. Missing or incomplete HD clips block visual acceptance, while explicit prototype fallbacks keep the full world playable. Texture leases and adaptive quality bound presentation cost separately from simulation/inference. See [HD specification](hd-presentation.md).
+
+## ADR 016 — explicit equipment and committed ammunition
+
+**Problem:** modular clothing and ranged weapons must not create hidden inventory space or duplicate arrows after interruption or restore.
+
+**Decision:** keep two carried slots and six worn slots. Equipping atomically exchanges item instances. NPC combat loadouts accept weapons and finite ammunition only. A bow reserves one charge at attack start and consumes it once at authoritative release; interruption cancels the reservation. Fixed-tick swept projectiles resolve their first valid collision. Save v4 persists both reservations and committed release state.
+
+**Alternatives rejected:** an implicit quiver, resources in NPC pockets, ammunition consumed by artwork, recoverable arrows before a pickup conservation model, and changing base HP/XP when garments change.
+
+**Consequences:** equipment changes are blocked during incompatible attacks. NPC resupply consumes settlement stock; fletching consumes real flint and reeds. Sprite layers share one pose sample and do not decide combat timing.
+
+## ADR 017 — globally simulated pocket scenes
+
+**Problem:** interiors can duplicate actors, pantry quantities and ecology if implemented as independent game instances.
+
+**Decision:** maintain one entity store and clock. Stable scene IDs map to compact saved membership codes. Transfers revalidate proximity, access and the destination before changing the existing body atomically. Spatial queries, navigation, resources, combat and perception use scene membership. Interior pantry service points reference the exterior settlement account. Caves receive individuals from the same global population budget.
+
+**Alternatives rejected:** copying an NPC indoors, pausing distant scenes, duplicating pantry stock, changing existing outdoor footprints, or granting access because dialogue prose mentions an invitation.
+
+**Consequences:** exits remain usable after permissions expire. Preloading leaves the actor in the source scene without invulnerability. Disposable terrain copies accompany scene changes over the worker boundary; authoritative arrays remain owned by the worker.
+
+## ADR 018 — hybrid authoring with revision-bound approval
+
+**Problem:** reproducible primitive drawings do not establish the desired visual quality, and frame counts cannot certify identity or genuine animation coverage.
+
+**Decision:** support recorded Pillow construction, Blender bakes and master ingestion through explicit offline inputs and pinned toolchains. Source manifests distinguish proofs and candidates. Engineering approval binds the complete dependency digest, including scripts, models, palettes and pose metadata. Partial candidates remain review assets and cannot replace working gameplay clips.
+
+**Alternatives rejected:** a global single-atlas limit, automatic approval from an HD declaration, running arbitrary source commands during compilation, or treating deterministic hashes as aesthetic approval.
+
+**Consequences:** art can produce assets independently while engineering compiles multi-page catalogs. Normal builds need committed exports, not Blender, model downloads or neural matting. The latest handoff audit and unresolved source-pipeline corrections are recorded in [the alignment response](art/engineering-alignment-response.md).

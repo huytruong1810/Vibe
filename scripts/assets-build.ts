@@ -5,16 +5,29 @@ import { z } from 'zod';
 import { format } from 'prettier';
 import { mkdir, readFile, readdir, writeFile, copyFile, rm } from 'node:fs/promises';
 import { resolve, relative, join, basename } from 'node:path';
+import { createHash } from 'node:crypto';
 import { NPC_PROFILES } from '../src/content/definitions';
 import {
   AssetCatalogSchema,
+  ArtApprovalLedgerSchema,
+  ArtApprovalRecordSchema,
+  hasArtApproval,
   type AnimationClip,
   type AssetAppearance,
   type AssetCatalog,
   type Facing,
+  type SourceDigest,
+  type PortraitSet,
 } from '../src/presentation/assets/catalog';
-import { SourceManifestSchema } from '../src/presentation/assets/source';
-import { assetCoverage } from '../src/presentation/assets/coverage';
+import {
+  SourceManifestSchema,
+  sourceFrameAnchor,
+  sourceSubjectDependencies,
+  completePortraitExpressions,
+  canonicalSourceJson,
+  type SourceFrame,
+} from '../src/presentation/assets/source';
+import { assetCoverage, canPublishAppearance } from '../src/presentation/assets/coverage';
 
 const root = process.cwd(),
   cache = resolve(root, '.cache/asset-build'),
@@ -28,6 +41,7 @@ await rm(cache, { recursive: true, force: true });
 await mkdir(join(cache, 'input/bundle{tps}'), { recursive: true });
 await mkdir(output, { recursive: true });
 const json = async <T>(path: string): Promise<T> => JSON.parse(await readFile(path, 'utf8')) as T;
+const checkedPaths = new Set<string>();
 type LegacyFrame = {
   frame: { x: number; y: number; w: number; h: number };
   sourceSize: { w: number; h: number };
@@ -51,11 +65,65 @@ const bindings = await json<Record<'species' | 'npc' | 'origin' | 'item', Record
   'art/source/legacy-bindings.json',
 );
 const source = SourceManifestSchema.parse(await json('art/source/manifest.json'));
+const sourceV2 = source.schemaVersion === 2 ? source : undefined;
+const approvalLedger = ArtApprovalLedgerSchema.parse(await json('docs/art/approvals.json'));
+const sourceDigests: SourceDigest[] = [];
+const sourceFileHashes = new Map<string, string>();
+const subjects: { kind: SourceDigest['subjectKind']; id: string }[] = [
+  ...source.appearances.map((a) => ({ kind: 'appearance' as const, id: a.id })),
+  ...(sourceV2?.portraitSets ?? []).map((s) => ({ kind: 'portrait-set' as const, id: s.id })),
+  ...(sourceV2?.layerSets ?? []).map((s) => ({ kind: 'layer-set' as const, id: s.id })),
+  ...(sourceV2?.recipes ?? []).map((s) => ({ kind: 'recipe' as const, id: s.id })),
+  ...(sourceV2?.effects ?? []).map((s) => ({ kind: 'effect' as const, id: s.id })),
+  ...(sourceV2?.furniture ?? []).map((s) => ({ kind: 'furniture' as const, id: s.id })),
+  ...(sourceV2?.sceneAssets ?? []).map((s) => ({ kind: 'scene' as const, id: s.id })),
+];
+for (const subject of subjects) {
+  const dependencies = sourceSubjectDependencies(source, subject.kind, subject.id);
+  const files: { path: string; sha256: string }[] = [];
+  for (const path of dependencies.paths) {
+    if (!sourceFileHashes.has(path)) {
+      const input = resolve(root, 'art/source', path);
+      await exactPath(input);
+      sourceFileHashes.set(
+        path,
+        createHash('sha256')
+          .update(await readFile(input))
+          .digest('hex'),
+      );
+    }
+    for (const p of sourceV2?.authoringProvenance ?? [])
+      for (const dependency of p.inputs)
+        if (dependency.path === path && dependency.sha256 !== sourceFileHashes.get(path))
+          throw new Error(
+            `Authoring dependency hash changed: ${p.id}/${path}; update provenance and request review`,
+          );
+    files.push({ path, sha256: sourceFileHashes.get(path)! });
+  }
+  sourceDigests.push({
+    subjectKind: subject.kind,
+    subjectId: subject.id,
+    digest: createHash('sha256')
+      .update(
+        canonicalSourceJson({
+          contractVersion: 2,
+          subject,
+          metadata: dependencies.metadata,
+          files,
+        }),
+      )
+      .digest('hex'),
+  });
+}
+const digestFor = (kind: SourceDigest['subjectKind'], id: string) =>
+  sourceDigests.find((d) => d.subjectKind === kind && d.subjectId === id)?.digest;
+const approved = (kind: SourceDigest['subjectKind'], id: string) =>
+  hasArtApproval(kind, id, digestFor(kind, id), approvalLedger.records);
 const appearances: AssetAppearance[] = [],
   clips: AnimationClip[] = [];
 const frameSources = new Map<
   string,
-  { path?: string; legacy?: LegacyFrame; anchor: { x: number; y: number } }
+  { path?: string; legacy?: LegacyFrame; anchor: { x: number; y: number }; source?: SourceFrame }
 >();
 const addFrame = (
   id: string,
@@ -150,8 +218,58 @@ for (const category of ['environment', 'furniture', 'vfx'])
       frameId,
     });
   }
-// Authored bindings replace a legacy appearance atomically, including its complete clip set.
-for (const a of source.appearances) {
+const reviewAppearances: AssetAppearance[] = [],
+  reviewClips: AnimationClip[] = [];
+const sourceGraph = { ...sourceV2, appearances: source.appearances, clips: source.clips };
+const runtimeArtifact = <T extends { id: string; stage: 'proof' | 'candidate' }>(
+  kind: SourceDigest['subjectKind'],
+  artifact: T,
+) => ({
+  ...artifact,
+  stage: (artifact.stage === 'proof'
+    ? 'proof'
+    : approved(kind, artifact.id)
+      ? 'approved'
+      : 'candidate') as 'proof' | 'candidate' | 'approved',
+  sourceDigest: digestFor(kind, artifact.id),
+});
+// Partial actors and proof art stay review-only, preserving their existing gameplay fallback.
+for (const authored of source.appearances) {
+  const a: AssetAppearance = authored;
+  const recipe = sourceV2?.recipes?.find((r) => r.id === a.recipeId);
+  const requiredLayers =
+    recipe?.layers
+      .filter((p) => p.required)
+      .map((p) => sourceV2?.layerSets?.find((l) => l.id === p.layerSetId)) ?? [];
+  const dependenciesApproved =
+    !recipe ||
+    (recipe.stage === 'candidate' &&
+      approved('recipe', recipe.id) &&
+      requiredLayers.every(
+        (layer) =>
+          layer?.stage === 'candidate' &&
+          sourceV2?.appearances.find((a) => a.id === layer.appearanceId)?.stage === 'candidate' &&
+          approved('layer-set', layer.id) &&
+          approved('appearance', layer.appearanceId),
+      ));
+  const provenancePresent =
+    !!a.provenanceId && !!sourceV2?.authoringProvenance?.some((p) => p.id === a.provenanceId);
+  const publish =
+    canPublishAppearance(sourceGraph, a) &&
+    (source.schemaVersion === 1 ||
+      (a.stage === 'candidate' &&
+        approved('appearance', a.id) &&
+        dependenciesApproved &&
+        provenancePresent));
+  if (!publish) {
+    reviewAppearances.push({
+      ...a,
+      stage: a.stage === 'proof' ? 'proof' : 'candidate',
+      sourceDigest: digestFor('appearance', a.id),
+    });
+    reviewClips.push(...source.clips.filter((c) => c.appearanceId === a.id));
+    continue;
+  }
   const index = appearances.findIndex(
     (existing) => existing.kind === a.kind && existing.contentId === a.contentId,
   );
@@ -161,25 +279,32 @@ for (const a of source.appearances) {
       if (clips[i]!.appearanceId === oldId) clips.splice(i, 1);
     appearances.splice(index, 1);
   }
-  appearances.push(a);
+  appearances.push({
+    ...a,
+    ...(source.schemaVersion === 2
+      ? { stage: 'approved' as const, sourceDigest: digestFor('appearance', a.id) }
+      : {}),
+  });
+  clips.push(...source.clips.filter((c) => c.appearanceId === a.id));
 }
-clips.push(...source.clips);
 for (const frame of source.frames) {
   if (frameSources.has(frame.id))
     throw new Error(`Source frame ID collides with legacy frame: ${frame.id}`);
   frameSources.set(frame.id, {
     path: resolve(root, 'art/source', frame.path),
-    anchor: frame.anchor,
+    anchor: sourceFrameAnchor(frame),
+    source: frame,
   });
 }
 const referenced = new Set([
   ...appearances.flatMap((a) => (a.frameId ? [a.frameId] : [])),
   ...clips.flatMap((c) => c.frameIds),
+  ...reviewAppearances.flatMap((a) => (a.frameId ? [a.frameId] : [])),
+  ...reviewClips.flatMap((c) => c.frameIds),
 ]);
 for (const id of frameSources.keys()) if (!referenced.has(id)) frameSources.delete(id);
 for (const id of referenced)
   if (!frameSources.has(id)) throw new Error(`Missing source frame ${id}`);
-const checkedPaths = new Set<string>();
 async function exactPath(path: string): Promise<void> {
   const absolute = resolve(path);
   if (checkedPaths.has(absolute)) return;
@@ -216,6 +341,12 @@ for (const [id, frame] of [...frameSources].sort(([a], [b]) => a.localeCompare(b
       throw new Error(`Unsupported legacy trim; export an untrimmed source instead: ${id}`);
   }
   const { data, info } = await image.png().toBuffer({ resolveWithObject: true });
+  if (
+    frame.source &&
+    'sourceSize' in frame.source &&
+    (info.width !== frame.source.sourceSize.w || info.height !== frame.source.sourceSize.h)
+  )
+    throw new Error(`Declared untrimmed dimensions differ from PNG: ${id}`);
   if (info.width > 2044 || info.height > 2044)
     throw new Error(`Frame exceeds padded 2048 page: ${id}`);
   const stats = await sharp(data).stats();
@@ -290,13 +421,26 @@ const lowByFrame = new Map(
     .flatMap((a) => Object.keys(a.json.frames).map((id) => [id, a] as const)),
 );
 const catalog: AssetCatalog = {
-  schemaVersion: 1,
-  contentVersion: 'hd-contract-1',
+  schemaVersion: 2,
+  contentVersion: 'hd-contract-2',
   pages: [],
   frames: [],
   clips,
   appearances,
   portraits: [],
+  rigs: sourceV2?.rigs ?? [],
+  buildProfiles: sourceV2?.buildProfiles ?? [],
+  layerSets: (sourceV2?.layerSets ?? []).map((a) => runtimeArtifact('layer-set', a)),
+  recipes: (sourceV2?.recipes ?? []).map((a) => runtimeArtifact('recipe', a)),
+  effects: (sourceV2?.effects ?? []).map((a) => runtimeArtifact('effect', a)),
+  furniture: (sourceV2?.furniture ?? []).map((a) => runtimeArtifact('furniture', a)),
+  sceneAssets: (sourceV2?.sceneAssets ?? []).map((a) => runtimeArtifact('scene', a)),
+  portraitSets: [],
+  sourceDigests,
+  approvals: approvalLedger.records,
+  reviewAppearances,
+  reviewClips,
+  authoringProvenance: sourceV2?.authoringProvenance ?? [],
 };
 for (const atlas of atlases.filter((a) => a.resolution === 1)) {
   const pageId = atlas.filename.replace(/\.json$/, ''),
@@ -326,6 +470,13 @@ for (const atlas of atlases.filter((a) => a.resolution === 1)) {
       sourceSize: sizeById.get(id)!,
       trim: f.spriteSourceSize,
       anchor: source.anchor,
+      ...(source.source && 'anchorPx' in source.source
+        ? {
+            anchorPx: source.source.anchorPx,
+            rigId: source.source.rigId,
+            sockets: source.source.sockets,
+          }
+        : {}),
     });
   }
   catalog.pages.push({
@@ -352,7 +503,7 @@ for (const [kind, identities] of Object.entries(bindings))
           hud128: p.hud_128,
         });
     }
-for (const p of source.portraits ?? []) {
+for (const p of source.schemaVersion === 1 ? (source.portraits ?? []) : []) {
   const urls: Record<string, string> = {};
   for (const tier of ['hud96', 'hud128'] as const) {
     const path = resolve(root, 'art/source', p[tier]);
@@ -381,6 +532,79 @@ for (const p of source.portraits ?? []) {
     hud128: urls.hud128!,
   });
 }
+for (const authored of sourceV2?.portraitSets ?? []) {
+  const expressions: PortraitSet['expressions'] = {};
+  for (const [emotion, pair] of Object.entries(authored.expressions)) {
+    if (!pair) continue;
+    const urls: Record<string, string> = {};
+    for (const tier of ['hud96', 'hud128'] as const) {
+      const path = resolve(root, 'art/source', pair[tier]);
+      await exactPath(path);
+      const size = tier === 'hud96' ? 96 : 128,
+        meta = await sharp(path).metadata();
+      if (meta.width !== size || meta.height !== size || !meta.hasAlpha)
+        throw new Error(
+          `Portrait expression must be transparent ${size}×${size}: ${authored.id}/${emotion}`,
+        );
+      const name = `portrait_${authored.id.replace(/[^A-Za-z0-9_-]/g, '_')}_${createHash('sha256').update(authored.id).digest('hex').slice(0, 12)}_${emotion}_${size}.png`;
+      await copyFile(path, join(output, name));
+      urls[tier] = `/assets/generated/${name}`;
+    }
+    expressions[emotion as keyof typeof expressions] = { hud96: urls.hud96!, hud128: urls.hud128! };
+  }
+  const stage =
+    authored.stage === 'proof'
+      ? 'proof'
+      : approved('portrait-set', authored.id) &&
+          completePortraitExpressions(authored) &&
+          authored.provenanceId &&
+          sourceV2?.authoringProvenance?.some((p) => p.id === authored.provenanceId)
+        ? 'approved'
+        : 'candidate';
+  const set: PortraitSet = {
+    ...authored,
+    expressions,
+    stage,
+    sourceDigest: digestFor('portrait-set', authored.id),
+  };
+  catalog.portraitSets!.push(set);
+  if (stage === 'approved' && expressions.neutral) {
+    const index = catalog.portraits.findIndex(
+      (p) => p.kind === authored.kind && p.contentId === authored.contentId,
+    );
+    if (index >= 0) catalog.portraits.splice(index, 1);
+    catalog.portraits.push({
+      kind: authored.kind,
+      contentId: authored.contentId,
+      ...expressions.neutral,
+    });
+  }
+}
+const activeSourceIds = new Set(
+  catalog.appearances.filter((a) => a.stage === 'approved').map((a) => a.id),
+);
+for (const layer of catalog.layerSets ?? [])
+  if (layer.stage === 'approved' && !activeSourceIds.has(layer.appearanceId))
+    layer.stage = 'candidate';
+for (const recipe of catalog.recipes ?? [])
+  if (
+    recipe.stage === 'approved' &&
+    recipe.layers.some(
+      (p) =>
+        p.required &&
+        !catalog.layerSets?.some((l) => l.id === p.layerSetId && l.stage === 'approved'),
+    )
+  )
+    recipe.stage = 'candidate';
+for (const effect of catalog.effects ?? [])
+  if (
+    effect.stage === 'approved' &&
+    !catalog.clips.some((c) => c.id === effect.clipId && activeSourceIds.has(c.appearanceId))
+  )
+    effect.stage = 'candidate';
+for (const artifact of [...(catalog.furniture ?? []), ...(catalog.sceneAssets ?? [])])
+  if (artifact.stage === 'approved' && !activeSourceIds.has(artifact.appearanceId))
+    artifact.stage = 'candidate';
 AssetCatalogSchema.parse(catalog);
 await writeFile(join(output, 'catalog.json'), JSON.stringify(catalog));
 await mkdir('docs/art', { recursive: true });
@@ -398,6 +622,45 @@ await writeFile(
     printWidth: 100,
   }),
 );
+await writeFile(
+  'docs/art/art-approval-record.schema.json',
+  await format(JSON.stringify(z.toJSONSchema(ArtApprovalRecordSchema)), {
+    parser: 'json',
+    printWidth: 100,
+  }),
+);
+await writeFile(
+  'docs/art/candidates.json',
+  await format(
+    JSON.stringify(
+      sourceDigests.map((entry) => {
+        const collection =
+          entry.subjectKind === 'appearance'
+            ? [...catalog.appearances, ...(catalog.reviewAppearances ?? [])]
+            : entry.subjectKind === 'portrait-set'
+              ? catalog.portraitSets
+              : entry.subjectKind === 'layer-set'
+                ? catalog.layerSets
+                : entry.subjectKind === 'recipe'
+                  ? catalog.recipes
+                  : entry.subjectKind === 'effect'
+                    ? catalog.effects
+                    : entry.subjectKind === 'furniture'
+                      ? catalog.furniture
+                      : catalog.sceneAssets;
+        const artifact = collection?.find(
+          (a) => a.id === entry.subjectId && a.sourceDigest === entry.digest,
+        );
+        return {
+          ...entry,
+          approvalMatches: approved(entry.subjectKind, entry.subjectId),
+          runtimeStage: artifact?.stage ?? 'legacy-adapter',
+        };
+      }),
+    ),
+    { parser: 'json', printWidth: 100 },
+  ),
+);
 const report = assetCoverage(catalog);
 await writeFile(
   'docs/art/coverage.json',
@@ -406,10 +669,10 @@ await writeFile(
 await writeFile(
   'docs/art/coverage.md',
   await format(
-    `# Aqualia asset coverage\n\nGenerated by \`npm run assets:build\`; details: [coverage.json](coverage.json).\n\n- Status: **${report.status}**. Structural validity does not establish visual approval.\n- Required actor identities: ${report.requiredAppearances}; native HD declarations: ${report.hdAppearances}.\n- Referenced prototype/runtime frames: ${catalog.frames.length}; animation clips: ${clips.length}; independent full atlas pages: ${catalog.pages.length}.\n- Decoded atlas memory: ${(report.fullTextureBytes / 1048576).toFixed(2)} MiB full / ${(report.halfTextureBytes / 1048576).toFixed(2)} MiB half. PNG transfer bytes are separate.\n- Missing Aqualia sprite identities: ${report.missingIdentities.map((id) => `\`${id}\``).join(', ') || 'none'}.\n- Unmet actor/detail/clip/portrait requirements: ${report.gaps.length}.\n- Missing native environment requirements: ${report.environmentGaps.length}.\n\nExisting prototype humans have idle and three cardinal walk variants, with no complete combat, sleep, needs or defeat set. Prototype creatures have incomplete cardinal-only cycles. No prototype diagonal fallback is credited as authored coverage.\n\nThe first art review requires a native-resolution Aqualia target scene, Aqualia player and Rivallie pose proofs before bulk production. The HD release gate intentionally fails until the full matrix and environment requirements are supplied and approved. Run \`npm run check:assets\` for structural validation and \`npm run check:assets:hd\` for the HD release gate.\n\nMissing environment declarations: ${report.environmentGaps.map((id) => `\`${id}\``).join(', ') || 'none'}.\n`,
+    `# Aqualia asset coverage\n\nGenerated by \`npm run assets:build\`; details: [coverage.json](coverage.json). Status: **${report.status}**. Structural validity is separate from visual approval.\n\n| Scope | Actors | Declared HD | Complete animation | Approved actors | Neutral pairs | Complete expression sets | Approved expression sets |\n| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |\n| Aqualia | ${report.requiredAppearances} | ${report.declaredHdAppearances} | ${report.completeAnimationAppearances} | ${report.approvedAppearances} | ${report.portraitPairs} | ${report.completePortraitSets} | ${report.approvedPortraitSets} |\n| Full world | ${report.fullWorld.requiredAppearances} | ${report.fullWorld.declaredHdAppearances} | ${report.fullWorld.completeAnimationAppearances} | ${report.fullWorld.approvedAppearances} | ${report.fullWorld.portraitPairs} | ${report.fullWorld.completePortraitSets} | ${report.fullWorld.approvedPortraitSets} |\n\n- Referenced frames: ${catalog.frames.length}; active clips: ${clips.length}; review appearances: ${report.reviewAppearanceCount}; independent full pages: ${catalog.pages.length}.\n- Decoded atlas memory: ${(report.fullTextureBytes / 1048576).toFixed(2)} MiB full / ${(report.halfTextureBytes / 1048576).toFixed(2)} MiB half. PNG bytes and residency are distinct measurements.\n- Missing active Aqualia sprite identities: ${report.missingIdentities.map((id) => `\`${id}\``).join(', ') || 'none'}.\n- Unmet Aqualia actor/detail/clip/portrait requirements: ${report.gaps.length}.\n- Unapproved or missing required environment assets: ${report.environmentGaps.length}.\n\nProofs and partial candidates cannot replace working gameplay appearances. An HD declaration, frame count, or successful rebuild is not production approval. The Aqualia release gate is 19 actors; the separate full-world report is 41 actors. Neutral portrait pairs are not nine-expression sets. See [contract v2](contract-v2.md) and [candidate digests](candidates.json).\n\nRun \`npm run check:assets\` for structural validation and \`npm run check:assets:hd\` for the Aqualia HD gate. Multiple 2048-square pages are supported within the 512/256/128 MiB quality-tier residency budgets.\n\nEnvironment gaps: ${report.environmentGaps.map((id) => `\`${id}\``).join(', ') || 'none'}.\n`,
     { parser: 'markdown', printWidth: 100 },
   ),
 );
 console.log(
-  `AssetPack: ${catalog.frames.length} frames, ${catalog.pages.length} full pages, ${clips.length} clips. Slice: ${report.hdAppearances}/${report.requiredAppearances} HD identities; ${report.gaps.length} unmet requirements.`,
+  `AssetPack: ${catalog.frames.length} frames, ${catalog.pages.length} full pages, ${clips.length} active clips. Aqualia: ${report.declaredHdAppearances}/${report.requiredAppearances} declared HD, ${report.completeAnimationAppearances} complete animation, ${report.approvedAppearances} approved; full world ${report.fullWorld.approvedAppearances}/${report.fullWorld.requiredAppearances} approved.`,
 );

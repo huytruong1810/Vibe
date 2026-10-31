@@ -1,10 +1,14 @@
 import type { CommandPayload, RenderSnapshot } from '../../domain/contracts';
 import { NPC_PROFILES } from '../../content/definitions';
+import type { GearSlot } from '../../domain/equipment';
+import { FURNITURE_ACTION_LABELS, nearestInteraction } from './interaction';
 export type Overlay = 'inventory' | 'inspection' | 'journal' | 'map' | 'settings';
 export type UiIntent =
   | { readonly type: 'toggle'; readonly overlay: Overlay }
   | { readonly type: 'use'; readonly slot: 0 | 1 }
   | { readonly type: 'drop'; readonly slot: 0 | 1 }
+  | { readonly type: 'equip'; readonly slot: 0 | 1 }
+  | { readonly type: 'unequip'; readonly slot: GearSlot; readonly drop?: boolean }
   | { readonly type: 'craft' }
   | { readonly type: 'rest' }
   | { readonly type: 'wake' };
@@ -20,7 +24,7 @@ export interface HudViewState {
 /** Pure read model; views receive values, controllers retain commands and lifecycle. */
 export function hudViewState(frame: RenderSnapshot): HudViewState {
   const player = frame.humanNeeds.find((h) => h.id === frame.player.entityId);
-  const npc = frame.npcs.find((n) => Math.hypot(n.x - frame.player.x, n.y - frame.player.y) <= 3);
+  const interaction = nearestInteraction(frame);
   return Object.freeze({
     session: frame.session,
     health: frame.player.hp / frame.player.maxHp,
@@ -41,9 +45,13 @@ export function hudViewState(frame: RenderSnapshot): HudViewState {
         ? 'J strike · K element · Space dash'
         : player?.sleeping
           ? 'Sleeping · wake when rested'
-          : npc
-            ? `E · Talk to ${NPC_PROFILES.find((p) => p.id === npc.profileId)?.name ?? 'villager'}`
-            : 'E · Gather nearby resources',
+          : interaction.kind === 'portal'
+            ? `E · ${interaction.portal.name}${interaction.portal.allowed ? '' : ` · ${interaction.portal.reason ?? 'Entry unavailable'}`}`
+            : interaction.kind === 'furniture'
+              ? `E · ${FURNITURE_ACTION_LABELS[interaction.prop.interaction]}`
+              : interaction.kind === 'npc'
+                ? `E · Talk to ${NPC_PROFILES.find((p) => p.id === interaction.npc.profileId)?.name ?? 'villager'}`
+                : 'E · Gather nearby resources',
     modal: frame.dialogue ? 'dialogue' : frame.paused.includes('menu') ? 'menu' : null,
   });
 }
@@ -51,7 +59,10 @@ export function commandForIntent(intent: UiIntent): CommandPayload | null {
   switch (intent.type) {
     case 'use':
     case 'drop':
+    case 'equip':
       return { type: intent.type, slot: intent.slot };
+    case 'unequip':
+      return { type: 'unequip', slot: intent.slot, ...(intent.drop ? { drop: true } : {}) };
     case 'craft':
       return { type: 'combine' };
     case 'rest':

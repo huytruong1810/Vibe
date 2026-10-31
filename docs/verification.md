@@ -10,6 +10,7 @@ npm run format:check
 npm run test:browser
 npm run benchmark
 npm run benchmark:render
+npm run benchmark:render -- --latency-only
 npm run soak
 npm run test:ollama -- qwen2.5:3b
 ```
@@ -144,3 +145,25 @@ active. See the separate live contention report when reproducing this measuremen
 
 Art PR #2's source proofs were inspected separately. See the [first-proof review](art/first-proof-review.md)
 for actual image dimensions, camera/registration gaps and the next export criteria.
+
+### Live contention run and command latency
+
+The corrected live run at 2026-10-30 18:16 UTC retained 1,000 nonhuman
+creatures, 30 villagers and the player in every case; all three dense cases
+reached 128 detailed creatures. Five HTTP requests (including readiness probes)
+were observed, with at most one transport in flight. In the dense Low window,
+a real request overlapped all 12,969 ms of sampling: frame interval p95 was
+22.2 ms, renderer CPU p95 5.8 ms and HUD p95 3.2 ms. No browser errors occurred.
+The dispersed Low window overlapped 8,947 ms. Other tier windows had no request
+overlap and must not be presented as contention measurements. All cases used
+Intel Iris Xe, framebuffer scale 1 and approximately 41.5-41.9 MiB of tracked
+textures. The run uses prototype art and does not qualify production-HD memory
+or successful model output. HTTP lifetime is not a measurement of backend
+compute time. Raw report: [hd-render-live.json](benchmarks/hd-render-live.json).
+
+The benchmark driver now owns its browser server explicitly and limits graceful
+cleanup to ten seconds before terminating that owned browser. This addresses a
+Windows teardown stall after successful sample collection. The separate
+`--latency-only` mode records command receipt and confirmed snapshot publication
+for twenty pause/resume pairs. These timings exclude physical device input and
+GPU scanout.

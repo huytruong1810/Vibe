@@ -230,6 +230,79 @@ body:has(.hd-game) {
   border: 1px solid #b6c89566;
   border-radius: 12px;
   box-shadow: 0 20px 70px #08201a99;
+  max-height: calc(100dvh - 300px);
+  overflow: auto;
+}
+.hd-game .equipment-help {
+  font-size: 11px;
+  line-height: 1.4;
+  color: #b6c6ad;
+  margin: 6px 0;
+}
+.hd-game .ammunition-status {
+  font-size: 12px;
+  color: #e1c690;
+  margin: 8px 0;
+}
+.hd-game .worn-equipment {
+  margin-top: 18px;
+  border-top: 1px solid #71896a66;
+  padding-top: 14px;
+}
+.hd-game .worn-equipment h3 {
+  font-size: 15px;
+}
+.hd-game .equipment-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+  margin-top: 12px;
+}
+.hd-game .equipment-slot {
+  padding: 10px;
+  border: 1px solid #71896a66;
+  border-radius: 7px;
+  min-width: 0;
+}
+.hd-game .equipment-slot b {
+  display: block;
+  font-size: 12px;
+  margin: 5px 0;
+  overflow-wrap: anywhere;
+}
+.hd-game .equipment-slot .slot-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.hd-game .equipment-slot button {
+  padding: 5px 7px;
+  font-size: 11px;
+}
+.hd-game .conversation-emotion {
+  display: block;
+  text-transform: capitalize;
+  color: #a9c8a4;
+  font-size: 11px;
+}
+.hd-game .conversation-footer {
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.hd-game .map-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.hd-game .map-breadcrumb [aria-current='location'] {
+  color: #ead79c;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.hd-game #map-scene-status {
+  margin-bottom: 12px;
+  font-size: 12px;
 }
 .hd-game .inventory-intro {
   margin-bottom: 16px;

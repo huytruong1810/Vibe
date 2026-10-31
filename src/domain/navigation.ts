@@ -176,7 +176,7 @@ export class NavigationService {
 
 /** Uniform grid, O(n) rebuild and O(cells + local occupancy) queries. */
 export class SpatialIndex {
-  private readonly cells = new Map<number, number[]>();
+  private readonly cells = new Map<string, number[]>();
   private readonly columns: number;
   constructor(
     readonly cellSize = 8,
@@ -187,8 +187,8 @@ export class SpatialIndex {
   clear(): void {
     for (const cell of this.cells.values()) cell.length = 0;
   }
-  insert(id: number, x: number, y: number): void {
-    const key = Math.floor(y / this.cellSize) * this.columns + Math.floor(x / this.cellSize);
+  insert(id: number, x: number, y: number, scene = 0): void {
+    const key = `${scene}:${Math.floor(y / this.cellSize) * this.columns + Math.floor(x / this.cellSize)}`;
     let cell = this.cells.get(key);
     if (!cell) {
       cell = [];
@@ -196,7 +196,7 @@ export class SpatialIndex {
     }
     cell.push(id);
   }
-  query(x: number, y: number, radius: number, limit = 64): number[] {
+  query(x: number, y: number, radius: number, limit = 64, scene = 0): number[] {
     const found: number[] = [];
     for (
       let cy = Math.max(0, Math.floor((y - radius) / this.cellSize));
@@ -208,7 +208,7 @@ export class SpatialIndex {
         cx <= Math.min(this.columns - 1, Math.floor((x + radius) / this.cellSize));
         cx++
       ) {
-        for (const id of this.cells.get(cy * this.columns + cx) ?? []) {
+        for (const id of this.cells.get(`${scene}:${cy * this.columns + cx}`) ?? []) {
           found.push(id);
           if (found.length >= limit) return found;
         }

@@ -76,6 +76,7 @@ The checked-in lockfile is the dependency source of truth. `.npmrc` uses the leg
 - [Architecture, ownership, patterns, and public contracts](docs/architecture.md)
 - [Unified entities, sleep, Nature, predation and save-v3 compatibility](docs/unified_entities.md)
 - [Master roadmap and corrected game rules](docs/master_plan.md)
+- [Full-world presentation, modular equipment, portrait expressions and pocket scenes](docs/full-world-presentation.md)
 - [Foundation, clocks, persistence, and lifecycle](docs/foundation.md)
 - [Phase 1 — world and rendering](docs/phases/01-world.md)
 - [Phase 2 — resources and reactions](docs/phases/02-environment.md)
@@ -100,3 +101,5 @@ All 1,031 initial actors share health, elemental affinity, five needs and combat
 ## HD presentation integration
 
 The [Aqualia HD slice specification](docs/hd-presentation.md) separates runtime readiness from native art approval. Run `npm run assets:build` and `npm run check:assets` to compile/validate the shared catalog. `npm run check:assets:hd` is the stricter visual completion gate. Review assets with `npm run dev` at `http://127.0.0.1:5173/?gallery=1`; this development-only gallery does not require Ollama. The playable game retains its local-model entry check. I opens inventory, F inspection, and L the journal. Current prototype artwork is explicitly labeled and cannot count as approved native HD coverage.
+
+The [full-world production update](docs/full-world-presentation.md#production-method-and-content-scope) now combines reviewed master artwork and Blender pixel bakes with pinned, offline asset ingestion. Art-branch frame counts and prototype atlas measurements remain separate from full animation coverage and native-art approval.
