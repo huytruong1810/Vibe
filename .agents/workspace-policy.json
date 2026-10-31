@@ -40,7 +40,8 @@
     "art/source/forge/gen3d/.venv/",
     "art/source/forge/gen3d/models/",
     "art/source/forge/vendor/",
-    "art/source/forge/gen3d/vendor/"
+    "art/source/forge/gen3d/vendor/",
+    "art/source/world/work/"
   ],
   "forbiddenNamePatterns": [
     "(^|/)\\.DS_Store$",
@@ -85,7 +86,8 @@
       "art/source/pipeline/rebuild.py",
       "art/source/forge/forge.py",
       "art/source/forge/tools/gen_palette.py",
-      "art/source/forge/gen3d/run_shape.py"
+      "art/source/forge/gen3d/run_shape.py",
+      "art/source/world/tools/worldforge.py"
     ]
   },
   "comms": {

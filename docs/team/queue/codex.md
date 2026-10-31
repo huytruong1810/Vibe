@@ -170,7 +170,7 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 
 ### C4 · World contract (WLD-4.4)
 
-- status: in-progress: claude (2026-11-01)
+- status: done (claude, 2026-11-01)
 - goal: one schema that worldforge, the importer and CI all read.
 - work: write `art/source/world/spec/world_schema.json` and an ADR in `docs/engineering/decisions.md` mapping it onto `ChunkStore`.
   - IntGrid layers:
@@ -191,11 +191,11 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
   - The footstep surface (AMB-5) is derived from ground and paths.
   - Pin the LDtk JSON version (1.5.x) and vendor its JSON schema for validation.
 - done when: the schema validates its own example level, and the ADR is linked from `docs/engineering/`
-- evidence:
+- evidence: 2026-11-01 `art/source/world/spec/world_schema.json`, `art/source/world/spec/README.md` (ChunkStore mapping), vendored LDtk 1.5.3 schema
 
 ### C5 · Aqualia region bible and plan: draft for the director
 
-- status: in-progress: claude (2026-11-01), drafted directly in session with the director instead of as a proposal
+- status: candidate (claude, 2026-11-01): committed as doctrine in session; awaiting the director's composition review
 - goal: the WLD-4.1 bible and its machine-readable plan, as proposal `docs/team/proposals/001-aqualia-region-bible.md`, plus a draft `aqualia.plan.json` attached to the proposal.
 - inputs: PIL-1, PIL-5 (T0 = Aqualia village and Riverlands), ART-4.6, ART-13, WLD-3, AMB-1, LIF-4.2 (Reedlight Float lantern boats at dusk), AUD-3.2, AGT-3.1 (story spots framed for a ~12×7-tile sight window), villager hooks in `src/content/villagers.ts`.
 - content:
@@ -221,13 +221,13 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
   - **Unauthored regions**: until the world grows, they're your engineering call (for
     example, NPCs of unauthored regions inactive). Record it in the ADR.
 - done when: the proposal is pushed and the director has been messaged. After the director's record `approvals/proposal-001.md` exists, you move the text to `docs/doctrine/regions/aqualia.md` (link it from the doctrine index) and the plan to `art/source/world/regions/aqualia.plan.json` under DOC-5
-- evidence:
+- evidence: 2026-11-01 `docs/doctrine/regions/aqualia.md`, `art/source/world/regions/aqualia.plan.json`, `worldforge plan check aqualia` exits 0
 
 ### C6 · worldforge, the world-builder skill and the golden village map
 
 - status: open
 - goal: a tool the blender agent can lay out maps with, alone, plus a worked example.
-- inputs: C4, plus an approved C5 (you may start the tool before approval).
+- inputs: C4 and C5 are in place. `worldforge.py` already has `plan check` and `plan render` (claude); extend that file, keep its style and its `check_plan` rules
 - work: `art/source/world/tools/worldforge.py` (uv; add it to `.agents/workspace-policy.json` `tools.entrypoints`; gitignore and approve `art/source/world/work/`). Commands:
   - `doctor`, and `next --region`.
   - `new <region>`: a valid `.ldtk` generated from the schema.

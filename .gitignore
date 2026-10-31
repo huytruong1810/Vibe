@@ -17,6 +17,7 @@ art/source/blender/renders_test/
 # Hearthwild agent harness (machine-local state) and forge scratch
 .agents/state/
 art/source/forge/work/
+art/source/world/work/
 art/source/forge/.venv/
 
 # Sprite Forge vendored third-party inputs and gen3d environment (machine A only)

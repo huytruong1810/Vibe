@@ -51,7 +51,8 @@ endedness comes from living minds (AGT), ecology and player choices, not terrain
   The director may edit any map directly in the LDtk editor. Only the director approves a
   map (L7).
 - **WLD-4.4** The world contract (IntGrid layers and values, entity types and fields) is
-  `art/source/world/spec/world_schema.json`. Worldforge, the engine importer and the CI
+  [`art/source/world/spec/world_schema.json`](../../art/source/world/spec/world_schema.json)
+  (semantics in its [README](../../art/source/world/spec/README.md)). Worldforge, the engine importer and the CI
   validator (WLD-M4) all read it; nothing else defines map semantics.
 - **WLD-4.5** IntGrid layers are the meaning; the engine autotiles from them. Nothing may
   depend on LDtk auto-layer tiles, which only recompute inside the editor.
