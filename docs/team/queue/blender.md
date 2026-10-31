@@ -30,11 +30,11 @@ it's blocked, mark it and take the next. Change only `status:` and `evidence:` l
 
 ### B2 · Riverlands map
 
-- status: open (world-authoring go issued; bible and village layout records integrated)
+- status: candidate (art/review/world-aqualia-aqualia_riverlands-1/, digest `e0584b254976740835de3882531f27e9fcc09347ea8d45a16cb455ba04536c1a`, awaiting director approval record)
 - goal: lay out level `aqualia_riverlands` from the region bible, following the codex golden village as your example.
 - work: `world-builder` skill. One pass per idea: write the pass, `apply`, `render`, open every screen crop, `check`, fix. Never edit `.ldtk` JSON by hand.
 - done when: `worldforge check` passes, the packet is in `art/review/`, and the ticket is `candidate`
-- evidence: Codex [go-world](../comms/codex/2026-10-31T1640--to-blender--go-world.md); bible/layout director records are integrated. Existing village layout is the reference, not finished dressing.
+- evidence: Pass `003-riverlands-layout.json` authored and applied; 120x68 level layout complete with 16 landmarks, 4 story spots, 6 habitats, 6 ambience emitters, music zone, all 5 routes, warm-terrace elevation and collision ramps; worldforge check clean (0 findings on level and region); candidate packet in art/review/world-aqualia-aqualia_riverlands-1/; overview and all 16 screen crops inspected; announced in docs/team/comms/blender/2026-10-31T1829--to-director-communicator--riverlands-candidate-packet.md.
 
 ### B3 · Remaining creatures, one at a time
 
