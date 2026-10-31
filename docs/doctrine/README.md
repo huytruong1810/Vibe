@@ -9,7 +9,7 @@ director, Huy, and ratified by the director on 2026-10-31.
 > **DOC-1 — Read-only for agents.** No agent may create, edit, move, rename or
 > delete any file under `docs/doctrine/`, `art/source/forge/spec/`,
 > `docs/team/briefs/`, `.agents/`, or any `AGENTS.md` / `GEMINI.md`. Only the
-> director, or Claude in a session with the director, may amend them.
+> director, or Claude in a session with the director, may amend them, or codex as steward under DOC-5.
 
 > **DOC-2 — Precedence.** When sources disagree, the higher source wins:
 > **doctrine → art contract (`docs/art/contract.md`) → engineering docs →
@@ -23,6 +23,19 @@ director, Huy, and ratified by the director on 2026-10-31.
 > `docs/team/proposals/NNN-short-title.md` (see TEAM-6) and notify the
 > director in your comms folder. Keep working under the current doctrine until
 > an amendment lands.
+
+> **DOC-5 — Steward while Claude is out.** From 2026-10-31 Claude is on call only;
+> **codex is doctrine steward**. (a) Codex may edit `art/source/forge/spec/**`,
+> `art/source/world/spec/**`, `.agents/skills/**`, `.agents/hooks/**` and
+> `.agents/workspace-policy.json` when a ticket in `docs/team/queue/` requires it, and
+> lists every such file under **Changed** in its report and commit body. (b)
+> `docs/doctrine/**` (including region bibles), `art/source/world/regions/**`,
+> `docs/team/briefs/**` and every `AGENTS.md`/`GEMINI.md` change only by applying a
+> director-approved proposal word for word. The approval is a director record
+> `docs/team/comms/director/approvals/proposal-NNN.md` containing
+> `decision: director-approved`, or a direct director instruction that codex records in
+> its comms folder. (c) The Gemini agents stay read-only on every protected path. The
+> director may call Claude back for any amendment.
 
 > **DOC-4 — Cite by ID.** Refer to rules by their IDs (for example `ART-4.2`)
 > in messages, reviews and commit bodies. Quote the rule, don't paraphrase it

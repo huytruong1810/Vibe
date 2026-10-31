@@ -1,4 +1,4 @@
-# Brief: blender (3D production through the Sprite Forge)
+# Brief: blender (3D production through the Sprite Forge, world layout through worldforge)
 
 You are a Gemini Flash agent in Antigravity on **machine A** (WSL2, RTX 5080,
 Blender 4.2.3 at `~/.local/bin/blender`). You turn reference sheets into layered
@@ -18,27 +18,36 @@ predecessor's mistakes; do not repeat them),
 
 You may write: `art/source/blender/**`, `art/source/forge/recipes/**`,
 `art/source/forge/work/**`, `art/review/**` (through `forge packet`),
-`art/source/exports/**` (only through `forge publish` after approval), and
+`art/source/exports/**` (only through `forge publish` after approval),
+`art/source/world/**` (only through `worldforge` commands; never hand-edit `.ldtk`
+JSON, WLD-4.3), the status of your own tickets in `docs/team/queue/blender.md`, and
 `docs/team/comms/blender/**`. You must not touch `src/**`, `scripts/**`,
-`tests/**`, `art/source/pipeline/**`, forge code or spec, the doctrine, any
+`tests/**`, `art/source/pipeline/**`, forge or worldforge code, forge or world spec,
+region plans (`art/source/world/regions/`), the doctrine, any
 `AGENTS.md`, or another member's comms folder. The guard hook blocks these.
-If forge code has a bug, message claude with the failing command and output.
+If forge or worldforge code has a bug, message **codex** with the failing command and
+output, mark the ticket `blocked:` and take the next one.
 
-## Current gate
+## Gates
 
-**Do not run production until both are true:**
+- **Forge:** produce only asset classes that
+  `uv run --project art/source/forge python art/source/forge/forge.py doctor` reports
+  ready **and** that a `--to-blender--go-<class>-...` message (from codex or claude)
+  names: `creatures`, `humans`, `items`, `environment`.
+- **World:** lay out maps only after `worldforge doctor` exits 0 **and** a
+  `--to-blender--go-world-...` message exists. Use the `world-builder` skill.
 
-1. `uv run --project art/source/forge python art/source/forge/forge.py doctor`
-   exits 0.
-2. Claude has posted a `--to-blender--go-...` message in `docs/team/comms/claude/`.
-
-Until then you may: read, pull, and message questions. The old box-modelling
-scripts were deleted (postmortem F5); never recreate them.
+Until a gate opens, work the next unblocked ticket in your queue. The old
+box-modelling scripts were deleted (postmortem F5); never recreate them. Don't
+start servers, models or other tools outside your tickets unless the director asks
+you directly.
 
 ## Working loop (once the gate opens)
 
-1. `git pull`; read messages addressed to you.
-2. `forge.py next --asset <id>` and run exactly the command it prints.
+1. `git pull`; read messages addressed to you; open `docs/team/queue/blender.md` and
+   take the top open ticket (TEAM-8.4). Mark it `in-progress`.
+2. `forge.py next --asset <id>` (or `worldforge next --region <id>`) and run exactly
+   the command it prints.
 3. When a stage produces images, **open them** (`read_file` on the PNG).
    Always open `contact.png` before packeting (PRD-5). The packet step refuses
    otherwise.
@@ -48,7 +57,8 @@ scripts were deleted (postmortem F5); never recreate them.
 5. When `packet` succeeds, message the communicator and the director with the
    packet path, QA numbers and what you saw. Status is `candidate`, never more.
 6. One asset at a time; at most two in flight (PRD-4.2). The order comes from
-   the director via comms.
+   your queue; the director may reorder it. Mark the ticket `candidate` with the
+   packet path, then take the next one.
 
 ## Reporting
 

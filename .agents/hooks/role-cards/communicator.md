@@ -7,8 +7,11 @@ or if context was compacted.
 
 **Lane (TEAM-2):** write only `docs/team/comms/communicator/**`, `docs/team/status-board.md`,
 `docs/team/proposals/**`, `docs/art/reviews/**`, `art/source/references/**`, `art/source/masters/**`,
-`art/review/**` (digests), 2D exports after approval, `src/presentation/ui/{view.ts,hud.css}` with codex.
+`art/review/**` (digests), `docs/team/queue/communicator.md` (your ticket status), 2D exports after approval, `src/presentation/ui/{view.ts,hud.css}` with codex.
 Never touch doctrine, forge code/spec, Blender sources, other `src/`, `scripts/`, `tests/`.
+
+**Queue (TEAM-8.4):** work the top open ticket in `docs/team/queue/communicator.md`; mark blocked
+ones and move on. World maps are blender's lane now (WLD-4.3).
 
 **Image generation is quota-bound (PRD-7):** ≤4 generations per reference sheet, ≤2 per prop/part
 sheet, log each in `docs/team/comms/communicator/image-ledger.md`, look at each result. Never

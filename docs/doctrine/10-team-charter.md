@@ -2,13 +2,13 @@
 
 ## TEAM-1 Members and roles
 
-| Member         | Who                            | Machine | Role                                                                                                                              |
-| -------------- | ------------------------------ | ------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| `director`     | Huy (human)                    | A       | Vision, approval, merges. The only approver (L7).                                                                                 |
-| `claude`       | Claude (Anthropic)             | A       | Senior game-dev counsel; doctrine author; harness and forge architect.                                                            |
-| `codex`        | Codex Sol 6.1                  | B       | Senior engineer and system designer: simulation, renderer, tooling, tests, engineering docs, art contract.                        |
-| `communicator` | Gemini Flash 3.8 (Antigravity) | B       | Team hub: comms relay, status board, review digests, reference sheets and image generation, 2D art (terrain, UI, VFX, portraits). |
-| `blender`      | Gemini Flash 3.8 (Antigravity) | A       | 3D production through the forge: gen3d, rigging, fitting, baking, environment models.                                             |
+| Member         | Who                            | Machine | Role                                                                                                                                   |
+| -------------- | ------------------------------ | ------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `director`     | Huy (human)                    | A       | Vision, approval, merges. The only approver (L7).                                                                                      |
+| `claude`       | Claude (Anthropic)             | A       | Senior game-dev counsel; doctrine author. On call only from 2026-10-31 (DOC-5).                                                        |
+| `codex`        | Codex Sol 6.1                  | B       | Senior engineer and system designer: simulation, renderer, tooling, tests, engineering docs, art contract.                             |
+| `communicator` | Gemini Flash 3.8 (Antigravity) | B       | Team hub: comms relay, status board, review digests, reference sheets and image generation, 2D art (terrain, UI, VFX, portraits).      |
+| `blender`      | Gemini Flash 3.8 (Antigravity) | A       | 3D production through the forge (gen3d, rigging, fitting, baking, environment models) and world layout through `worldforge` (WLD-4.3). |
 
 Git is the only channel between machines A and B. Anything a member must know
 is committed and pushed.
@@ -17,21 +17,24 @@ is committed and pushed.
 
 | Path                                                                                                         | director/claude                                             | codex                         | communicator                                       | blender                          |
 | ------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------- | ----------------------------- | -------------------------------------------------- | -------------------------------- |
-| `docs/doctrine/**`, `art/source/forge/spec/**`, `.agents/**`, `AGENTS.md`/`GEMINI.md`, `docs/team/briefs/**` | ✅                                                          | ❌                            | ❌                                                 | ❌                               |
+| `docs/doctrine/**`, `art/source/forge/spec/**`, `.agents/**`, `AGENTS.md`/`GEMINI.md`, `docs/team/briefs/**` | ✅                                                          | DOC-5 steward only            | ❌                                                 | ❌                               |
 | `src/**`, `scripts/**`, `tests/**`, `docs/engineering/**`, `docs/operations/**`, `.github/**`                | ✅                                                          | ✅                            | ❌ (except UI-view files below)                    | ❌                               |
 | `src/presentation/ui/view.ts`, `src/presentation/ui/hud.css`                                                 | ✅                                                          | ✅                            | ✅ coordinate with codex first                     | ❌                               |
 | `docs/art/contract.md`                                                                                       | ✅                                                          | ✅ (must conform to doctrine) | ❌                                                 | ❌                               |
-| `art/source/forge/**` (code, except `work/`)                                                                 | ✅                                                          | ✅ on claude's request        | ❌                                                 | ❌                               |
+| `art/source/forge/**` (code, except `work/`), worldforge and tileforge code                                  | ✅                                                          | ✅ owner (DOC-5)              | ❌                                                 | ❌                               |
 | `art/source/forge/work/**` (gitignored)                                                                      | ✅                                                          | ✅                            | ✅                                                 | ✅                               |
 | `art/source/blender/**`, `art/source/forge/recipes/**`                                                       | ✅                                                          | ❌                            | ❌                                                 | ✅                               |
 | `art/source/references/**`, `art/source/masters/**`                                                          | ✅                                                          | ❌                            | ✅                                                 | ❌ (request via comms)           |
-| `art/source/ui/**` (UI kit, fonts), `art/source/audio/**` (scores), `art/source/world/**` (LDtk maps)        | ✅                                                          | ❌                            | ✅ (map layout per WLD-4.3)                        | ❌ (request via comms)           |
+| `art/source/ui/**` (UI kit, fonts), `art/source/audio/**` (scores)                                           | ✅                                                          | ❌                            | ✅                                                 | ❌ (request via comms)           |
+| `art/source/world/spec/**`, `art/source/world/regions/**` (world schema, region bibles' plans)               | ✅                                                          | ❌                            | ❌                                                 | ❌                               |
+| `art/source/world/**` (LDtk maps, passes; through `worldforge` per WLD-4.3)                                  | ✅                                                          | ❌                            | ❌ (request via comms)                             | ✅                               |
 | `art/review/**`                                                                                              | ✅                                                          | ❌                            | ✅ (digests)                                       | ✅ (packets, via forge)          |
 | `art/source/exports/**`                                                                                      | ✅                                                          | ✅                            | ✅ 2D classes                                      | ✅ via `forge publish` only      |
 | `art/source/manifest.json` (single integrator, contract v2)                                                  | ✅                                                          | ✅                            | ✅ **sole integrator**                             | ❌                               |
 | `art/source/staging/<member>/**` (proposed manifest records)                                                 | ✅                                                          | ✅                            | own                                                | own (written by `forge publish`) |
 | `public/assets/generated/**`, generated `docs/art/*.json`/`coverage.md`, `docs/art/approvals.json`           | ✅                                                          | ✅ owner                      | run the compiler to validate; don't commit outputs | same                             |
 | `docs/art/reviews/**`                                                                                        | ✅                                                          | ✅                            | ✅                                                 | ❌                               |
+| `docs/team/queue/<member>.md` (TEAM-8.4)                                                                     | ✅                                                          | ✅ maintains all              | own ticket status                                  | own ticket status                |
 | `docs/team/status-board.md`                                                                                  | ✅                                                          | ❌                            | ✅ (owner)                                         | ❌                               |
 | `docs/team/proposals/**`                                                                                     | ✅                                                          | ✅                            | ✅                                                 | ✅                               |
 | `docs/team/comms/<member>/**`                                                                                | own folder only                                             | own                           | own                                                | own                              |
@@ -45,10 +48,12 @@ Split by **medium and machine**, because only machine A has Blender:
 
 - **blender (machine A):** everything 3D-baked: humans, creatures, garment and
   held-item layers, weapons and their icons and ground views, buildings,
-  interior furniture models, cave and regional props, trees.
+  interior furniture models, cave and regional props, trees, and **world map layout**
+  in LDtk through `worldforge` passes against the region plan (WLD-4.3), since it
+  places the buildings, props and trees it makes.
 - **communicator (machine B):** everything 2D: reference sheets, 9-emotion
   portraits, terrain and transition tiles, shore masks, UI kit extensions, VFX and
-  particle sprites, arrow flight art, music scores (AUD), and scripted world-map passes (WLD-4.3). Also **sole integrator** of `art/source/manifest.json`,
+  particle sprites, arrow flight art and music scores (AUD). Also **sole integrator** of `art/source/manifest.json`,
   reconciling blender's staging records (codex's recommendation).
 - **codex:** schemas, compiler, generated catalogs, `docs/art/approvals.json`
   ledger (transcribing director decisions only, L7).
@@ -113,7 +118,7 @@ used for art.
 
 `docs/team/proposals/NNN-title.md` with: problem (cite the doctrine rule), proposed
 change (exact text), evidence, impact. Any member may write one; only the
-director and Claude act on it.
+director decides. Codex applies approved proposals as steward (DOC-5).
 
 ## TEAM-7 Git rules
 
@@ -138,6 +143,14 @@ director and Claude act on it.
 - **TEAM-8.3** When unsure, the doctrine decides. When the doctrine is silent,
   ask the director in comms and continue only with work that does not depend on
   the answer.
+- **TEAM-8.4 Work queues.** Each member works from `docs/team/queue/<member>.md`,
+  top open ticket first. A ticket has an ID, goal, inputs, **done when** (a command to
+  run or an evidence path) and a status (`open`, `in-progress`, `blocked: <reason>`,
+  `candidate`, `done`). Members change only the status of their own tickets and add a
+  dated evidence line. Codex maintains queue content: it adds tickets, splits them and
+  keeps every queue at least two open tickets ahead. The director may reorder or cancel
+  any ticket. A blocked ticket is marked and skipped; never wait idle for a reply while
+  an unblocked ticket exists.
 
 ## TEAM-9 Workspace hygiene
 

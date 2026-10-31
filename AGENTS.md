@@ -5,7 +5,7 @@ must follow this file. It is doctrine-protected: **no agent may edit it** (DOC-1
 
 ## 1. Who you are
 
-The team (TEAM-1): `director` (Huy, human), `claude` (counsel, doctrine author),
+The team (TEAM-1): `director` (Huy, human), `claude` (counsel, doctrine author; on call only, DOC-5),
 `codex` (senior engineer), `communicator` (Gemini: hub, reference sheets, 2D art),
 `blender` (Gemini: 3D through the Sprite Forge). Find your role brief and read it
 before any work:
@@ -28,7 +28,7 @@ the conflict in your comms folder.
 
 1. The doctrine (`docs/doctrine/**`, `art/source/forge/spec/**`, `docs/team/briefs/**`,
    `.agents/**`, every `AGENTS.md`/`GEMINI.md`) is **read-only** for agents.
-   Propose changes in `docs/team/proposals/`.
+   Propose changes in `docs/team/proposals/`. Codex is steward under DOC-5.
 2. Only the director approves. Agents and QA reach `candidate` at most (TEAM-4).
 3. **Look at every image you produce before you describe it** (PRD-5).
 4. No geometry from typed coordinates; 3D comes from the image-to-3D modular kit
@@ -50,17 +50,18 @@ the conflict in your comms folder.
 
 ## 4. Lanes at a glance
 
-| Member       | Writes                                                                                                                                                                                               | Never writes                                                                        |
-| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| codex        | `src/`, `scripts/`, `tests/`, `.github/`, `docs/engineering/`, `docs/operations/`, `docs/art/contract.md`, own comms                                                                                 | doctrine, spec, briefs, `.agents/`, AGENTS.md                                       |
-| communicator | `art/source/references/`, `art/source/masters/`, `art/source/manifest.json` (sole integrator), status board, proposals, `docs/art/reviews/`, review digests, UI view and CSS (with codex), own comms | doctrine, forge code and spec, Blender sources, other `src/`, `scripts/`, `tests/`  |
-| blender      | `art/source/blender/`, `art/source/forge/recipes/`, forge work, packets, exports and `art/source/staging/blender/` via `forge publish` after approval, own comms                                     | `src/`, `scripts/`, `tests/`, `art/source/pipeline/`, forge code and spec, doctrine |
+| Member       | Writes                                                                                                                                                                                                      | Never writes                                                                        |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| codex        | `src/`, `scripts/`, `tests/`, `.github/`, `docs/engineering/`, `docs/operations/`, `docs/art/contract.md`, forge/worldforge/tileforge code, `docs/team/queue/`, own comms                                   | doctrine, spec, briefs, `.agents/`, AGENTS.md (except as DOC-5 steward)             |
+| communicator | `art/source/references/`, `art/source/masters/`, `art/source/manifest.json` (sole integrator), status board, proposals, `docs/art/reviews/`, review digests, UI view and CSS (with codex), own comms        | doctrine, forge code and spec, Blender sources, other `src/`, `scripts/`, `tests/`  |
+| blender      | `art/source/blender/`, `art/source/forge/recipes/`, forge work, packets, exports and `art/source/staging/blender/` via `forge publish` after approval, `art/source/world/` via `worldforge` only, own comms | `src/`, `scripts/`, `tests/`, `art/source/pipeline/`, forge code and spec, doctrine |
 
 ## 5. Every session
 
 1. `git pull`.
 2. Read new messages addressed `--to-<you>--` or `--to-all--` in
-   `docs/team/comms/*/`.
+   `docs/team/comms/*/`. Then take the top open ticket in `docs/team/queue/<you>.md`
+   (TEAM-8.4).
 3. Re-read your brief at session start and after any context compaction.
 4. Keep `docs/team/comms/<you>/session-<date>.md` current (TEAM-8.2).
 5. Before you push: `npm run check:hygiene`; stop servers and processes you started.
@@ -70,7 +71,7 @@ the conflict in your comms folder.
 
 Procedures live in `.agents/skills/*/SKILL.md`: `sprite-forge`,
 `environment-forge`, `reference-sheets`, `review-packet`, `team-comms`,
-`doctrine-lookup`, `music-score`. Codex: read a skill's `SKILL.md` directly when your task
+`doctrine-lookup`, `music-score` (codex adds `world-builder` and `tile-forge` as those tools land). Codex: read a skill's `SKILL.md` directly when your task
 matches its description.
 
 ## 7. Engineering basics (unchanged)

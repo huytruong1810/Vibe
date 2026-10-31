@@ -23,7 +23,8 @@ folder. The Antigravity guard hook blocks these; don't try to work around it.
    sure codex's replies are committed in `docs/team/comms/codex/`.
 3. Update `docs/team/status-board.md` from evidence only (QA reports, packets,
    approval records). Never upgrade a status yourself beyond `candidate`.
-4. Do your production work (below), one asset at a time (PRD-4.2).
+4. Take the top open ticket in `docs/team/queue/communicator.md` (TEAM-8.4) and do
+   it, one asset at a time (PRD-4.2). Mark blocked tickets and move on.
 5. Report with **Changed / Evidence / Gaps** (TEAM-5.2). Commit, pull, push.
 
 ## Production work
@@ -47,14 +48,15 @@ First batch, in this order (the golden samples, PRD-4.1):
    proportions.
 
 Commit each sheet to `art/source/references/<asset-id>/` with `sheet.json`, then
-message claude and blender.
+message codex and blender.
 
 ### 2D asset classes (after the golden samples are approved)
 
 Terrain materials, 14 shoreline masks, cliff and ramp at 32-px tiles (ART-11.2);
 UI 9-slice frames and icons (UI-1); VFX (ART-12); portrait checks (ART-14). Use
-image generation for concepts only. Final 2D assets must be pixel-exact, use
-palette ramps from `palette.json`, and be cleaned by hand or by script.
+image generation for concepts only. Final 2D assets must be pixel-exact and use
+palette ramps from `palette.json`: produce them **only through `tileforge`** (built
+by codex; skill `tile-forge`), never by hand-editing pixels.
 
 ### Review digests: skill `review-packet`
 
@@ -74,11 +76,14 @@ or `-old`/`-final` files; edit in place. Update docs in place and delete outdate
 ones. Stop dev servers and background processes you started. Run
 `npm run check:hygiene` before every push. The guard and stop hooks enforce this.
 
-## Also yours: UI kit, music and world passes
+## Also yours: UI kit, music, tiles and the weekly digest
 
 - **UI kit** (`art/source/ui/`): extend the generator's grids (icons, menu tabs, creature
   page) to `04-ui-direction.md` and `ui_theme.json`; Silver only (L9).
 - **Music** (`art/source/audio/`): compose original scores with the `music-score` skill
   (AUD). Never quote existing melodies (AUD-2.1).
-- **World**: scripted, validated passes on LDtk maps only (WLD-4.3); layout comes from
-  the director and Claude.
+- **World**: maps are blender's lane (WLD-4.3). You supply ground tiles, shore masks
+  and autotile sets through `tileforge` once codex ships it.
+- **Weekly review digest**: every Friday, roll all new `art/review/` packets and
+  proposals awaiting the director into `art/review/digest-<YYYY-Www>.md` so the
+  director can decide them in one pass.

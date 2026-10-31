@@ -34,15 +34,27 @@ endedness comes from living minds (AGT), ecology and player choices, not terrain
 
 ## WLD-4 Who builds it
 
-- **WLD-4.1** The director and Claude write a **region bible** per area: map sketch,
-  landmarks, routes, story spots and creature habitats.
+- **WLD-4.1** Each area has a director-approved **region bible** (drafted by Claude or by
+  codex as a proposal under DOC-5)
+  (`docs/doctrine/regions/<region>.md`): map sketch, landmarks, routes, story spots and
+  creature habitats, plus a machine-readable **plan**
+  (`art/source/world/regions/<region>.plan.json`) with landmark anchors, zones, routes,
+  a subject for every screen and habitat regions. Bible and plan are doctrine-protected.
 - **WLD-4.2** Ground tiles, autotile rules and decoration sprites come from the
   communicator (2D) and the Blender agent (3D-baked buildings, props, trees), all through
   the doctrine pipelines.
-- **WLD-4.3** Map layout in LDtk is done by a human (the director) or by Claude. Agent
-  edits to map JSON are limited to scripted, validated passes (for example scattering
-  decorations inside a painted region), because layout quality depends on taste agents
-  can't verify.
+- **WLD-4.3** The blender agent lays maps out (codex during worldforge bring-up, for the
+  first golden map), but **only through `worldforge` passes**
+  (`apply` → `render` → look → `check` → `packet`). It never hand-edits `.ldtk` JSON.
+  `worldforge check` fails a map that drifts from its plan, breaks reachability or leaves
+  a screen without a subject, because layout taste is fixed by the plan, not by the agent.
+  The director may edit any map directly in the LDtk editor. Only the director approves a
+  map (L7).
+- **WLD-4.4** The world contract (IntGrid layers and values, entity types and fields) is
+  `art/source/world/spec/world_schema.json`. Worldforge, the engine importer and the CI
+  validator (WLD-M4) all read it; nothing else defines map semantics.
+- **WLD-4.5** IntGrid layers are the meaning; the engine autotiles from them. Nothing may
+  depend on LDtk auto-layer tiles, which only recompute inside the editor.
 
 ## Engineering mandates
 

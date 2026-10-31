@@ -1,6 +1,11 @@
 # Forge troubleshooting (machine A: WSL2, RTX 5080, Blender 4.2.3)
 
-Always finish with `$F doctor`. If something here does not fix it, message claude
+> **Not all rows apply yet (2026-10-31).** `rig`, `fit`, `animate`, `faces`, `items` and
+> `publish`, and the checks `thinFeature` and `faceAnchor`, are not built. `forge.py doctor`
+> lists what is. If a row names a stage or check doctor doesn't report as built, ignore
+> the row and message codex. Codex updates this file when each one lands.
+
+Always finish with `$F doctor`. If something here does not fix it, message codex
 with the exact command and full output. Don't improvise installs.
 
 ## GPU / CUDA

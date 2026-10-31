@@ -81,10 +81,13 @@ the licence before shipping commercially.
 
 ## L6 — One skeleton
 
-Every human uses the **Quaternius Universal Animation Library (UAL)** humanoid
-skeleton (CC0), so the shared animation library applies without retargeting.
-Creatures use a small set of per-class skeleton templates (quadruped,
-mushroom-biped, winged, shelled, serpentine) defined by the forge.
+Every human uses the **Quaternius Universal Animation Library 2 (UAL2)** humanoid
+skeleton (CC0, `Armature`, UE-style bone names) as the master rig, so UAL2 actions
+apply directly. UAL1 actions (locomotion) use Rigify `DEF-` names and reach the master
+rig only through the forge's fixed bone map (`art/source/forge/spec/bone_maps/`); no
+agent retargets by hand. Creatures use a small set of per-class skeleton templates
+(quadruped, mushroom-biped, winged, shelled, serpentine) defined in
+`art/source/forge/spec/skeletons/`, animated by the forge's parametric clip generator.
 
 ## L7 — Director-only approval
 
@@ -98,7 +101,9 @@ approval.
 
 ## L8 — One authored world
 
-New games start in a single hand-composed world built in LDtk (WLD). Procedural world
+New games start in a single hand-composed world built in LDtk (WLD). Composition is
+set by director-approved region bibles and their plan files; the blender agent lays
+maps out only through validated `worldforge` passes against that plan. Procedural world
 generation on new game is retired: it prevents the high-investment, composed landscapes
 the game is judged by (No Name Village, Zenonia 4). Open-endedness comes from living
 minds, ecology and player choice.

@@ -23,8 +23,10 @@ F="uv run --project art/source/forge python art/source/forge/forge.py"
 $F doctor
 ```
 
-It must exit 0 **and** `docs/team/comms/claude/` must contain a
-`--to-blender--go-` message. Otherwise stop: message claude with the doctor output.
+It must report your asset's class ready **and** `docs/team/comms/codex/` or
+`docs/team/comms/claude/` must contain a `--to-blender--go-<class>-` message naming
+that class. Otherwise stop: message codex with the doctor output, mark the ticket
+`blocked:` and take the next one.
 The old box-modelling scripts were deleted; never recreate them.
 
 ## 1. The loop: one asset at a time (PRD-4.2)
@@ -77,7 +79,7 @@ Region accents follow ART-4.6. When unsure, ask the director in comms.
 - Environment problems (CUDA, Blender, uv): see
   [references/troubleshooting.md](references/troubleshooting.md), then `$F doctor`.
 - Stage crashes with a Python traceback in forge code: **don't patch it**. Message
-  claude with the command, the full output and the asset id.
+  codex with the command, the full output and the asset id.
 
 ## Never
 

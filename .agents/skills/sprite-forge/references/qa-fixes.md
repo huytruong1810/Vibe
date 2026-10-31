@@ -1,5 +1,10 @@
 # QA failure → input fix
 
+> **Not all rows apply yet (2026-10-31).** `rig`, `fit`, `animate`, `faces`, `items` and
+> `publish`, and the checks `thinFeature` and `faceAnchor`, are not built. `forge.py doctor`
+> lists what is. If a row names a stage or check doctor doesn't report as built, ignore
+> the row and message codex. Codex updates this file when each one lands.
+
 Fix the earliest input that explains the failure, then re-run from the stage named.
 Never change `spec/` limits or forge code (PRD-6.3).
 

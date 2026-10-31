@@ -1,0 +1,332 @@
+# Queue: codex
+
+Hand-off from Claude: [directive 004](../comms/claude/2026-11-01T0100--to-all--directive-004-handoff.md).
+You are toolsmith and doctrine steward (DOC-5). **Do C1–C3 first**: the blender agent
+has no production work until the creature path exists. After C3 you may reorder
+C4–C12, with a one-line reason in your reply. Keep the other two queues at least two
+open tickets ahead.
+
+Facts collected by Claude's audit on 2026-10-31 (verify before relying on them):
+
+- **Forge** (`art/source/forge/forge.py`):
+  - Stages are `st_<name>(asset) -> str`. Each writes `<stage>_params.json`, checks
+    `core.is_fresh`, runs `core.run_blender(script, args, log)`, parses a tagged log
+    line and calls `core.record(...)`.
+  - `STAGES` is at :30 and `UNBUILT` at :32. `RUNNERS` is at :217. `next_step` is at
+    :222. `all` runs `STAGES[:-2]` (:304). `doctor` fails while `UNBUILT` is non-empty
+    (:281).
+- **`blender/bake.py`** already handles clips:
+  - `clips[].action` drives `arm.animation_data.action` on the first armature
+    (:154-160).
+  - Socket tracks are written from `pose.bones[name].head` (:177-183).
+- **UAL assets** in `art/source/forge/vendor/ual/` (fetched by `gen3d/setup.sh`):
+  - UAL2 `UAL2_Standard.glb`: root and skin `Armature`, 65 UE-style joints
+    (`root, pelvis, spine_01..03, neck_01, Head, clavicle_l/r, upperarm, lowerarm,
+hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
+    walk/jog/idle. The `Mannequin_F` .blend/.glb uses the same `Armature`.
+  - UAL1 `AnimationLibrary_Godot_Standard.glb`: skin `Rig`, 53 Rigify `DEF-` joints,
+    46 actions (`Idle_Loop`, `Walk_Loop`, `Jog_Fwd_Loop`, `Sprint_Loop`, `Hit_*`,
+    `Death01`, `Interact`, `Sword_Attack`, `Roll`, `Sitting_*`, `Swim_*`).
+  - The samplers are LINEAR at about 30 fps.
+- **Canvases** (`spec/render_spec.json:58-134`, in art px, exported at 2×):
+
+  | Canvas                     | Size @ anchor   |
+  | -------------------------- | --------------- |
+  | human.locomotion           | 48×72 @ (24,66) |
+  | human.combat               | 80×80 @ (40,72) |
+  | creature.small             | 40×44 @ (20,34) |
+  | creature.medium (Rivallie) | 56×56 @ (28,44) |
+  | creature.large             | 80×72 @ (40,56) |
+  | layer.face                 | 16×12           |
+  | layer.heldItem             | 32×32           |
+  | icon.item                  | 32×32           |
+
+  The clip matrix is at `:139-239`. The runtime matrix is `CLIP_MATRIX` in
+  `src/presentation/assets/coverage.ts:58-88`.
+
+- **Rivallie** (`art/source/forge/work/rivallie/`) is at QA `draft`:
+  - `orphans` 27: the orphan cleanup in `forgelib/pixelize.py` only fixes a pixel when
+    exactly one neighbour shares its colour.
+  - `valueContrast` 0.085 on grass (needs ≥ 0.12).
+  - The reference sheet mixes poses, so the mesh is a hybrid (communicator M2 redoes
+    the sheet).
+- **World:**
+  - Generation is `src/domain/simulation.ts:187`, which calls `WorldGenerator`
+    (`src/domain/world.ts:339`).
+  - `ChunkStore` is at `world.ts:78`.
+  - Movement rules are at `world.ts:403-436`: step only between equal elevations, or
+    ±1 when either tile is a Ramp.
+  - Settlements are at `src/content/definitions.ts:411-531`, and `ContentRegistry`
+    requires exactly 30 NPCs and 9 settlements (:537).
+  - `SettlementPlanner` is at `world.ts:229-337`. Scenes are `src/domain/scenes.ts`:
+    42 interiors plus caves.
+  - The autotiler is the dual-grid 16-mask `src/presentation/autotiler.ts`.
+
+---
+
+### C1 · Accept the hand-off and sequence it
+
+- status: open
+- goal: confirm DOC-5, TEAM-8.4 and this queue; reply to directives 001–004 with the order you'll take C4–C12 and any conflicts with work you have in flight.
+- inputs: `docs/team/comms/claude/*directive-00{1,2,3,4}*`, `docs/doctrine/README.md` DOC-5
+- done when: `docs/team/comms/codex/<ts>--to-all--re-directive-004.md` exists and is pushed
+- evidence:
+
+### C2 · Forge contract and multi-clip groundwork
+
+- status: open
+- goal: settle the open spec questions, then make the forge handle more than one clip.
+- inputs: `art/source/forge/spec/render_spec.json`, `docs/art/contract.md`, `coverage.ts`
+- work:
+  1. **`render_spec.json`**:
+     - `fps` per clip (the manifest uses 6 for idle; you choose the rest);
+     - `stride` (tiles per cycle) for walk and run;
+     - a `runtime` map from clip to `{state, moveId}` (for example
+       `strike → attack/strike`);
+     - sockets are **bones** named `Socket_Head`, `Socket_Hand.R`, `Socket_Hand.L`,
+       `Socket_Back`, `Socket_Mouth` (creatures), plus `Root`;
+     - `rigId` values: `ual2-humanoid`, `quadruped-v1`, and so on.
+  2. Add `spec/skeletons/quadruped.json`:
+     - bones: root, pelvis, spine_01..03, neck, head, tail_01..04, then for each leg
+       `fl/fr/bl/br`: `upper`, `lower`, `paw`; plus the sockets;
+     - landmark rules;
+     - gait parameters.
+       Then map the 8 species to templates:
+     - rivallie, bramblefang and marshstalker → quadruped (confirm by silhouette);
+     - zephyrit and cindermoth → winged;
+     - steamshell → shelled;
+     - ignicap → mushroom-biped;
+     - mireling → your call.
+  3. Add `spec/bone_maps/ual1_to_ual2.json` (DEF- to UE names) and `spec/clips/humanoid.json`:
+     - for each clip: the source action (UAL2, or UAL1 through the map) and the
+       normalised sample times for the stepped key poses;
+     - combat partitions follow CMB-3, with `phases` exclusive-end as in
+       `contract.md:77-80`.
+  4. Code fixes:
+     - `forgelib/qa.py:69,109,112` picks the "rest clip" from the first entry; make it
+       explicitly `idle` frame 0 (or `rest` before animate exists).
+     - `forge.py:202` turntable reads `pix/rest`; fix it.
+     - `all` = `STAGES[:-2]`: fix it.
+     - `_canvas` per clip: combat clips use `human.combat`.
+     - `bake.py`: add the `materialId` and `alpha` passes.
+     - The `pixelize` orphan cleanup must remove every isolated pixel.
+  5. **`doctor`** prints a readiness table per class (`creatures`, `humans`, `items`,
+     `environment`) instead of one global `UNBUILT` list, and exits 0 when at least one
+     class is ready.
+- done when:
+  - `forge.py all --asset rivallie` still reaches `qa` on machine A (ask blender to run
+    it, see B0);
+  - `qa_report.json` shows `orphans` 0;
+  - doctor prints the class table.
+- evidence:
+
+### C3 · Creature path: rig, animate, faces, publish (golden sample Rivallie)
+
+- status: open
+- goal: Rivallie goes from sheet to a director packet with its full clip matrix; then open the `creatures` gate.
+- inputs: C2, communicator M2 (single-pose Rivallie sheet). Rivallie also runs on the current sheet in the meantime.
+- work:
+  1. **`blender/rig.py`**:
+     - Detect landmarks automatically from mesh cross-sections. Quadrupeds: leg columns
+       from ground-contact clusters, plus head, tail and spine line. Humans in A-pose
+       (PRD-3.1): crown, chin, shoulders, elbows, wrists, pelvis, knees, ankles.
+     - Recipe `landmarks` overrides are the operator's fix-the-input lever.
+     - Fit the template to the landmarks.
+     - Weights: voxel-remesh proxy, then automatic weights, then Data Transfer to the
+       mesh.
+     - Output `rig.blend` and `rig_preview.png` (landmark overlay plus three deform
+       test poses).
+  2. **`blender/animate.py`** and **`blender/gaits.py`** (D5, director's choice):
+     - parametric quadruped clips: idle (1 px breathing rise), walk (4-beat), run
+       (bound with 2 px bob), eat, drink, bathe, work, social, sleep (curl), hit,
+       downed, recovery;
+     - strike and element per CMB-3, all from template parameters;
+     - stepped keys (constant interpolation);
+     - secondary motion one frame late, settling over two (ART-9.2–9.4).
+     - Output `animate.blend` with one action per clip. bake consumes `clips[]`.
+  3. **`faces`**: a palette-indexed decal grammar per ART-8, creature subset first
+     (neutral, warm, fearful, hurt, sleep), in facings s, se, sw, e, w on
+     `Socket_Head`. Implement the `faceAnchor` QA check.
+  4. **`publish`**: define the staging record `art/source/staging/blender/<asset>.json`:
+     - frames, clips, `sourceSize`, `anchorPx`, `sockets`, `rigId`;
+     - provenance per `AuthoringProvenanceSchema` (`src/presentation/assets/catalog.ts:63-118`);
+     - packet sha and approval record path.
+
+     It writes the exact 2× frames to `art/source/exports/<asset>/` only when
+     `docs/team/comms/director/approvals/<slug>--<packet>.md` holds
+     `decision: director-approved`.
+
+  5. Development: you may install Blender 4.2.3 on machine B for CPU-only work on
+     rig/animate/bake (gen3d stays on machine A). For GPU runs, message blender with a
+     `--to-blender--test-` request.
+  6. Update `sprite-forge` (SKILL and references) and `docs/art/forge-pipeline.md` to
+     match what's built. Remove the "not built" banners for what now exists.
+- done when:
+  - Rivallie packet in `art/review/` with all creature clips, anchor drift 0 and
+    idleFlicker ≤ 0.08;
+  - doctor shows `creatures: ready`;
+  - you've posted `docs/team/comms/codex/<ts>--to-blender--go-creatures.md`.
+- evidence:
+
+### C4 · World contract (WLD-4.4)
+
+- status: open
+- goal: one schema that worldforge, the importer and CI all read.
+- work: write `art/source/world/spec/world_schema.json` and an ADR in `docs/engineering/decisions.md` mapping it onto `ChunkStore`.
+  - IntGrid layers:
+    - `ground`: grass, dirt, sand, stone, mud, reedbed
+    - `elevation`: 0, 1, 2
+    - `water`: none, shallow, deep, salt
+    - `paths`: boardwalk, dirt, stone, bridge
+    - `collision`: solid, ramp, protected
+  - Entities: PlayerSpawn, Settlement, Building, Entrance, VillagerAnchor, Service,
+    ResourceNode, Habitat, AmbienceEmitter, LightSource, MusicZone, Landmark, StorySpot,
+    FestivalRoute, Waystone. Their fields:
+    - Building: `sceneId` like `settlement:aqualia:home:N`, footprint, door tile;
+    - Entrance: interior or cave;
+    - VillagerAnchor: `npcId`, plus role `home`, `work`, `square`, `shrine` or
+      `outpost`;
+    - Habitat: species and density;
+    - LightSource: radius and phases.
+  - The footstep surface (AMB-5) is derived from ground and paths.
+  - Pin the LDtk JSON version (1.5.x) and vendor its JSON schema for validation.
+- done when: the schema validates its own example level, and the ADR is linked from `docs/engineering/`
+- evidence:
+
+### C5 · Aqualia region bible and plan: draft for the director
+
+- status: open
+- goal: the WLD-4.1 bible and its machine-readable plan, as proposal `docs/team/proposals/001-aqualia-region-bible.md`, plus a draft `aqualia.plan.json` attached to the proposal.
+- inputs: PIL-1, PIL-5 (T0 = Aqualia village and Riverlands), ART-4.6, ART-13, WLD-3, AMB-1, LIF-4.2 (Reedlight Float lantern boats at dusk), AUD-3.2, AGT-3.1 (story spots framed for a ~12×7-tile sight window), villager hooks in `src/content/villagers.ts`.
+- content:
+  - **Five sections**: map sketch (rendered from the plan, and you look at it),
+    landmarks, routes, story spots, creature habitats.
+  - **Per-screen subjects** on the 30×17-tile screen grid.
+  - **Depth**: three or more depth layers on village screens, and a density gradient.
+  - **Landmarks** drawn from the villagers:
+    - Neris's ferry crossing
+    - Oren's mill and waterwheel
+    - Finn's sluice gate
+    - Caelum's canal works
+    - Lark's painted river bend
+    - Mira's Rivallie nesting grounds
+    - Dara's waystones
+    - Willa's herb wetland
+    - the square with its communal fire, the shrine and the cave mouth
+  - **Routes**: canals and boardwalks (WLD-3.5), the lantern-boat route, and roads to
+    Reedhaven and Tidecross (planned now, authored later).
+  - **Ambience and music zones.**
+  - **Scope**: two levels, `aqualia_village` and `aqualia_riverlands`. Suggested size is
+    about 96×64 tiles each; you decide.
+  - **Unauthored regions**: until the world grows, they're your engineering call (for
+    example, NPCs of unauthored regions inactive). Record it in the ADR.
+- done when: the proposal is pushed and the director has been messaged. After the director's record `approvals/proposal-001.md` exists, you move the text to `docs/doctrine/regions/aqualia.md` (link it from the doctrine index) and the plan to `art/source/world/regions/aqualia.plan.json` under DOC-5
+- evidence:
+
+### C6 · worldforge, the world-builder skill and the golden village map
+
+- status: open
+- goal: a tool the blender agent can lay out maps with, alone, plus a worked example.
+- inputs: C4, plus an approved C5 (you may start the tool before approval).
+- work: `art/source/world/tools/worldforge.py` (uv; add it to `.agents/workspace-policy.json` `tools.entrypoints`; gitignore and approve `art/source/world/work/`). Commands:
+  - `doctor`, and `next --region`.
+  - `new <region>`: a valid `.ldtk` generated from the schema.
+  - `apply <pass.json>`: atomic and validated. Ops:
+    - `paint`: rect, polygon, circle, or spline with width, on an IntGrid layer;
+    - `place`: an entity, checked against the schema;
+    - `scatter`: seeded decoration inside a painted region, with density and minimum
+      spacing.
+  - `render`: an overview with the 30×17 screen grid, plus 960×540 crops per screen.
+    Use real tile and env exports where they exist, key colours otherwise.
+  - `check`: writes `qa_report.json` covering:
+    - schema and required layers;
+    - reachability under the `ChunkStore` movement rules;
+    - every settlement and entrance reachable;
+    - every screen has a subject;
+    - depth and density per zone;
+    - landmarks within tolerance of the plan.
+  - `packet`: `art/review/world-<region>-<n>/` with before and after renders, the passes
+    and the report. It refuses unless the render's sha was marked as viewed (same rule
+    as the forge).
+  - Write `.agents/skills/world-builder/SKILL.md` with the loop, a decision table for
+    every check failure, and `references/region-bible-template.md`.
+  - Add a hook rule so the blender role can't write `*.ldtk` directly; only worldforge
+    writes it.
+  - Lay out `aqualia_village` yourself as the golden sample.
+- done when:
+  - the village packet passes `check`;
+  - a deliberately broken pass (a blocked entrance, a landmark moved off-plan) fails
+    `check`;
+  - you've posted `--to-blender--go-world.md`.
+- evidence:
+
+### C7 · Authored world in the engine (WLD-M1…M4)
+
+- status: open
+- goal: a new game loads the authored LDtk map; procedural world generation is retired.
+- work:
+  - a build-time importer from the schema into `ChunkStore`;
+  - map-placed settlements, entrances, anchors and habitats (WLD-M2);
+  - version bumps (WLD-M3);
+  - CI validation that reads `world_schema.json` (WLD-M4);
+  - update `docs/engineering/full-world-presentation.md` (its canal ban at :5, :85, :99
+    is superseded by WLD-3.5 and L8).
+- done when: `npm run check` passes with tests and soak running on the authored map
+- evidence:
+
+### C8 · Existing P0s from your brief
+
+- status: open
+- goal: the UI kit (UI-M6, L9), the approvals ledger (L7), 2× scale (ART-M1…M3), the in-scene review gallery for `art/review/` packets (PRD-M2) and the `elder` build profile. Interleave them with C4–C7 as you judge best. The gallery is what the director uses to review golden samples, so land it before C3's packet if you can.
+- done when: the acceptance column of each row in `docs/team/briefs/codex.md`
+- evidence:
+
+### C9 · Human path: UAL2 rig, UAL1 retarget, items, fit
+
+- status: open
+- goal: rig and animate the UAL2 mannequin first, then `player-aqualia` and `npc:neris` (communicator M3, M4).
+- work:
+  - `items`: 8 facings × 8 grip angles plus an inventory icon from one mesh (ART-15).
+  - `fit` for garment parts (Surface Deform or Shrinkwrap, weights from the body,
+    hidden faces masked, PRD-1).
+  - Implement the `thinFeature` check.
+  - Update the skills.
+- done when: doctor shows `humans: ready` and `items: ready`, and you've posted `--to-blender--go-humans.md` and `--to-blender--go-items.md`
+- evidence:
+
+### C10 · Environment asset kind
+
+- status: open
+- goal:
+  - a canvas set per recipe;
+  - 1/sin 30° depth stretch (ART-2.3);
+  - base/roof and trunk/canopy layers (ART-11.1);
+  - footprint QA against the recipe (ART-11.4);
+  - contact shadow;
+  - the `lightPool` tag (AMB-3.2).
+- done when: one Aqualia house is packeted, the banner is removed from the `environment-forge` skill, and you've posted `--to-blender--go-environment.md`
+- evidence:
+
+### C11 · tileforge and the tile-forge skill (for the communicator)
+
+- status: open
+- goal: the communicator can make pixel-exact 2D tiles without hand-pixelling.
+- work:
+  - a concept or swatch becomes a 32 px tile quantised to `palette.json` ramps, with at
+    most 4 values per material (ART-11);
+  - seamless-wrap check;
+  - the 14 shore masks and the 16-mask dual-grid set generated from a material pair and
+    an edge profile, matching `autotiler.ts`;
+  - exact 2× export;
+  - a tileset atlas for LDtk and worldforge renders;
+  - QA report and packet;
+  - the `.agents/skills/tile-forge/SKILL.md` skill.
+- done when: the grass↔freshwater set packets and passes QA; you've messaged the communicator
+- evidence:
+
+### C12 · Keep the team fed
+
+- status: open (recurring)
+- goal: every queue has two or more open tickets; split big tickets; turn the brief's backlog (P1–P3) into tickets as each milestone lands; keep skills and docs truthful to the code (a skill must never describe a feature that doesn't exist).
+- done when: never closes; add a dated evidence line each week
+- evidence:

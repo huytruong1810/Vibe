@@ -55,7 +55,7 @@ spend it deliberately.
      "ledger": "docs/team/comms/communicator/image-ledger.md#npc-neris"
    }
    ```
-7. **Message** claude and blender (`team-comms` skill) with the folder path and
+7. **Message** codex and blender (`team-comms` skill) with the folder path and
    what you saw. Status is `draft` until the forge consumes it.
 
 ## Acceptance checklist (look, don't assume)

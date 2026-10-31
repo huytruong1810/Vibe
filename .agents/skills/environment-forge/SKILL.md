@@ -9,6 +9,11 @@ description: >-
 
 # Environment forge (doctrine ART-2.3, ART-11, AMB-3.2)
 
+> **Not available yet.** The `environment` asset kind (depth stretch, base/roof and
+> trunk/canopy layers, footprint QA, contact shadow, `lightPool` tag) is **not built**.
+> Don't run this skill until `forge.py doctor` reports `environment` ready and a
+> `--to-blender--go-environment-` message exists. Codex removes this note when it lands.
+
 Same gate and loop as `sprite-forge` (read it first), with the asset kind
 `environment`:
 

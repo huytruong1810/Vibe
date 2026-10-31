@@ -8,7 +8,7 @@ operator runs stages, looks at the output and fixes the inputs (PRD-1, PRD-6.3).
 > `pixelize`, `qa`, `packet`, `next`, `status` and `doctor` work end to end on machine A
 > (Rivallie bring-up: about 3 minutes from sheet to contact sheet). **Not built yet:**
 > `rig`, `animate`, `faces`, `items`, `publish`. `doctor` reports them, and production
-> stays gated until Claude posts a go message. The agent runbook is the `sprite-forge` skill.
+> stays gated per asset class until codex (toolsmith, DOC-5) posts a `--to-blender--go-<class>-` message. The agent runbook is the `sprite-forge` skill.
 
 ## Why this design
 
