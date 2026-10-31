@@ -94,8 +94,10 @@ export class ChunkStore {
   constructor(
     readonly size: number = CONFIG.worldSize,
     readonly seed = 42,
+    readonly coverage?: Uint8Array,
   ) {
     const n = size * size;
+    if (coverage && coverage.length !== n) throw new RangeError('Invalid world coverage');
     this.biome = new Uint8Array(n);
     this.elevation = new Uint8Array(n);
     this.moisture = new Float32Array(n);
@@ -113,6 +115,10 @@ export class ChunkStore {
     return Math.floor(y) * this.size + Math.floor(x);
   }
   contains(x: number, y: number): boolean {
+    if (this.coverage)
+      return (
+        x >= 0 && y >= 0 && x < this.size && y < this.size && this.coverage[this.index(x, y)] === 1
+      );
     return x >= 1 && y >= 1 && x < this.size - 1 && y < this.size - 1;
   }
   touch(index: number, navigation = false): void {

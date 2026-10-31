@@ -23,6 +23,8 @@
     "assets:build": "tsx scripts/assets-build.ts",
     "check:assets": "tsx scripts/assets-check.ts",
     "check:packets": "tsx scripts/check-packets.ts",
+    "world:build": "tsx scripts/world-build.ts",
+    "check:world": "tsx scripts/world-build.ts --check",
     "check:assets:hd": "tsx scripts/assets-check.ts --require-hd",
     "benchmark:render": "tsx scripts/render-benchmark.ts"
   },

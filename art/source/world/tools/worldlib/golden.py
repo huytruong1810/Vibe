@@ -16,6 +16,7 @@ from .project import (
 )
 from .passes import apply_pass
 from .checks import can_step, reachable
+from .semantics import TERRAIN
 
 
 def example(project, plan):
@@ -56,34 +57,61 @@ def example(project, plan):
         )
 
     initial = [
-        rect("ground", 1, [0, 0, w, h]),
-        rect("elevation", 1, [0, 0, 26, 17]),
-        rect("elevation", 2, [0, 0, 26, 5]),
+        rect("ground", TERRAIN.value("ground", "grass"), [0, 0, w, h]),
+        rect("elevation", TERRAIN.value("elevation", "e1"), [0, 0, 26, 17]),
+        rect("elevation", TERRAIN.value("elevation", "e2"), [0, 0, 26, 5]),
     ]
     for r in target["routes"]:
         if r["kind"] in ("river", "canal"):
-            initial.append(line("water", 1, r["points"], r["width"]))
+            initial.append(
+                line(
+                    "water",
+                    TERRAIN.value("water", "fresh_shallow"),
+                    r["points"],
+                    r["width"],
+                )
+            )
             if r.get("deepWidth"):
-                initial.append(line("water", 2, r["points"], r["deepWidth"]))
+                initial.append(
+                    line(
+                        "water",
+                        TERRAIN.value("water", "fresh_deep"),
+                        r["points"],
+                        r["deepWidth"],
+                    )
+                )
     # The named Hearth Island and its four bridges are explicit in AQ-2/AQ-3.
     island = {"kind": "circle", "center": [44, 41], "radius": 5}
-    initial += [paint("water", 0, island), paint("ground", 2, island)]
+    initial += [
+        paint("water", 0, island),
+        paint("ground", TERRAIN.value("ground", "dirt"), island),
+    ]
     for r in target["routes"]:
         if r["kind"] == "path":
             initial.append(
                 line(
                     "paths",
-                    {"dirt": 1, "stone": 2, "boardwalk": 3, "bridge": 4}[r["surface"]],
+                    TERRAIN.value(
+                        "paths",
+                        {
+                            "dirt": "dirt_path",
+                            "stone": "stone_path",
+                            "boardwalk": "boardwalk",
+                            "bridge": "bridge",
+                        }[r["surface"]],
+                    ),
                     r["points"],
                     2,
                 )
             )
     initial += [
-        line("paths", 4, [[35, 41], [53, 41]], 2),
-        line("paths", 4, [[44, 33], [44, 49]], 2),
+        line("paths", TERRAIN.value("paths", "bridge"), [[35, 41], [53, 41]], 2),
+        line("paths", TERRAIN.value("paths", "bridge"), [[44, 33], [44, 49]], 2),
     ]
     for xy in ([20, 16], [8, 5], [7, 5]):
-        initial.append(rect("collision", 2, [*xy, 1, 1]))
+        initial.append(
+            rect("collision", TERRAIN.value("collision", "ramp"), [*xy, 1, 1])
+        )
     stage(initial)
     lv = next(l for l in project["levels"] if l["identifier"] == name)
     data = {
@@ -91,11 +119,13 @@ def example(project, plan):
     }
     # Preserve water under walk surfaces; represent these crossings explicitly.
     bridges = [
-        rect("paths", 4, [i % w, i // w, 1, 1])
+        rect("paths", TERRAIN.value("paths", "bridge"), [i % w, i // w, 1, 1])
         for i, water in enumerate(data["water"])
-        if water and data["paths"][i] in (1, 2)
+        if water
+        and data["paths"][i]
+        in {TERRAIN.value("paths", name) for name in ("dirt_path", "stone_path")}
     ]
-    stage(bridges or [rect("ground", 1, [0, 0, 1, 1])])
+    stage(bridges or [rect("ground", TERRAIN.value("ground", "grass"), [0, 0, 1, 1])])
     spawn = target["spawn"]["at"]
     placements = [
         place(
@@ -114,7 +144,7 @@ def example(project, plan):
         door = [x + bw // 2, y + bh]
         doors[b["sceneId"]] = door
         placements += [
-            rect("collision", 1, [x, y, bw, bh]),
+            rect("collision", TERRAIN.value("collision", "solid"), [x, y, bw, bh]),
             place(
                 b["sceneId"],
                 "Building",

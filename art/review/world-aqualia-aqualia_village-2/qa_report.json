@@ -1,0 +1,218 @@
+{
+  "dependenciesDigest": "392a66c148b312d221e8aadcb0e824aab63aa4986f9c50974d2586d45fe9ec8f",
+  "findings": [],
+  "limitations": [
+    "Composition and density require director review",
+    "Foreground placeholders are not approved art"
+  ],
+  "measurements": [
+    {
+      "decorPer100Tiles": 0.196,
+      "layers": 3,
+      "level": "aqualia_village",
+      "objects": 18,
+      "screen": [
+        0,
+        0
+      ],
+      "solidFraction": 0.0,
+      "walkableFraction": 0.9941176470588236
+    },
+    {
+      "decorPer100Tiles": 0.196,
+      "layers": 3,
+      "level": "aqualia_village",
+      "objects": 7,
+      "screen": [
+        1,
+        0
+      ],
+      "solidFraction": 0.011764705882352941,
+      "walkableFraction": 0.8294117647058824
+    },
+    {
+      "decorPer100Tiles": 0.196,
+      "layers": 3,
+      "level": "aqualia_village",
+      "objects": 12,
+      "screen": [
+        2,
+        0
+      ],
+      "solidFraction": 0.0392156862745098,
+      "walkableFraction": 0.6333333333333333
+    },
+    {
+      "decorPer100Tiles": 1.569,
+      "layers": 3,
+      "level": "aqualia_village",
+      "objects": 14,
+      "screen": [
+        0,
+        1
+      ],
+      "solidFraction": 0.011764705882352941,
+      "walkableFraction": 0.8509803921568627
+    },
+    {
+      "decorPer100Tiles": 0.196,
+      "layers": 3,
+      "level": "aqualia_village",
+      "objects": 7,
+      "screen": [
+        1,
+        1
+      ],
+      "solidFraction": 0.011764705882352941,
+      "walkableFraction": 0.8450980392156863
+    },
+    {
+      "decorPer100Tiles": 0.196,
+      "layers": 3,
+      "level": "aqualia_village",
+      "objects": 8,
+      "screen": [
+        2,
+        1
+      ],
+      "solidFraction": 0.011764705882352941,
+      "walkableFraction": 0.596078431372549
+    },
+    {
+      "decorPer100Tiles": 1.373,
+      "layers": 3,
+      "level": "aqualia_village",
+      "objects": 31,
+      "screen": [
+        0,
+        2
+      ],
+      "solidFraction": 0.023529411764705882,
+      "walkableFraction": 0.9137254901960784
+    },
+    {
+      "decorPer100Tiles": 0.588,
+      "layers": 3,
+      "level": "aqualia_village",
+      "objects": 21,
+      "screen": [
+        1,
+        2
+      ],
+      "solidFraction": 0.0,
+      "walkableFraction": 0.7784313725490196
+    },
+    {
+      "decorPer100Tiles": 0.196,
+      "layers": 3,
+      "level": "aqualia_village",
+      "objects": 6,
+      "screen": [
+        2,
+        2
+      ],
+      "solidFraction": 0.011764705882352941,
+      "walkableFraction": 0.6784313725490196
+    },
+    {
+      "decorPer100Tiles": 1.373,
+      "layers": 3,
+      "level": "aqualia_village",
+      "objects": 13,
+      "screen": [
+        0,
+        3
+      ],
+      "solidFraction": 0.011764705882352941,
+      "walkableFraction": 0.9686274509803922
+    },
+    {
+      "decorPer100Tiles": 0.196,
+      "layers": 3,
+      "level": "aqualia_village",
+      "objects": 4,
+      "screen": [
+        1,
+        3
+      ],
+      "solidFraction": 0.0,
+      "walkableFraction": 0.8666666666666667
+    },
+    {
+      "decorPer100Tiles": 0.196,
+      "layers": 3,
+      "level": "aqualia_village",
+      "objects": 11,
+      "screen": [
+        2,
+        3
+      ],
+      "solidFraction": 0.023529411764705882,
+      "walkableFraction": 0.6078431372549019
+    },
+    {
+      "decorPer100Tiles": 0.226,
+      "level": "aqualia_village",
+      "plannedDensity": "medium",
+      "solidFraction": 0.0,
+      "walkableFraction": 1.0,
+      "zone": "shrine-hill"
+    },
+    {
+      "decorPer100Tiles": 0.385,
+      "level": "aqualia_village",
+      "plannedDensity": "dense",
+      "solidFraction": 0.021153846153846155,
+      "walkableFraction": 0.8307692307692308,
+      "zone": "canal-quarter"
+    },
+    {
+      "decorPer100Tiles": 1.748,
+      "level": "aqualia_village",
+      "plannedDensity": "dense",
+      "solidFraction": 0.02097902097902098,
+      "walkableFraction": 0.8741258741258742,
+      "zone": "weavers-west"
+    },
+    {
+      "decorPer100Tiles": 1.307,
+      "level": "aqualia_village",
+      "plannedDensity": "medium",
+      "solidFraction": 0.00980392156862745,
+      "walkableFraction": 0.9722222222222222,
+      "zone": "herb-wetland"
+    },
+    {
+      "decorPer100Tiles": 0.174,
+      "level": "aqualia_village",
+      "plannedDensity": "dense",
+      "solidFraction": 0.020833333333333332,
+      "walkableFraction": 0.7899305555555556,
+      "zone": "landing"
+    },
+    {
+      "decorPer100Tiles": 0.0,
+      "level": "aqualia_village",
+      "plannedDensity": "calm",
+      "solidFraction": 0.0,
+      "walkableFraction": 0.3784313725490196,
+      "zone": "the-wend"
+    },
+    {
+      "decorPer100Tiles": 0.0,
+      "level": "aqualia_village",
+      "plannedDensity": "calm",
+      "solidFraction": 0.0,
+      "walkableFraction": 0.9379084967320261,
+      "zone": "east-bank"
+    }
+  ],
+  "planDigest": "b7ddc5c78cabc62a384010129efb0f7a301151b64008e68e7beec8fffcab1560",
+  "projectDigest": "6211d67cd102b0c475261727f1ec16f410e6ad44b9454557be010e4889a3b737",
+  "schemaVersion": 1,
+  "scope": "aqualia_village",
+  "status": "candidate",
+  "unfinishedLevels": [
+    "aqualia_riverlands"
+  ]
+}

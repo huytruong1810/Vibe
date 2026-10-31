@@ -2,7 +2,7 @@
 
 This specification extends the [HD Aqualia milestone](hd-presentation.md) to the whole playable world. Aqualia remains the first style and registration proof. Final full-world acceptance includes all nine settlements, their existing 42 buildings, three cave interiors, 33 human appearances and all eight nonhuman species. The contracts and runtime integrations described below do **not** establish that native art is complete or visually approved. Prototype fallback coverage, candidate production coverage and approved visual coverage must be reported separately.
 
-The reference viewport remains 1920×1080, terrain units are 64 presentation pixels, and human animation frames are approximately 96×144 untrimmed pixels. Movement and combat require eight authored directions. Logical tile coordinates, terrain generation, settlement entrances, collision and essential outdoor routes remain authoritative. In particular, Aqualia's river setting does not authorize drawing new internal canals or changing its fluid/navigation layers.
+The reference viewport remains 1920×1080, terrain units are 64 presentation pixels, and human animation frames are approximately 96×144 untrimmed pixels. Movement and combat require eight authored directions. Under WLD-3.5 and locked decision L8, authored geography follows protected region plans and validated worldforge passes, including Aqualia's canals. Reference paintings do not change collision or navigation. The current playable game retains generated geography until C7 activation; the [candidate compiler](worldforge.md#c7-candidate-compiler-and-domain-loader) does not switch that runtime.
 
 ## Production method and content scope
 
@@ -96,7 +96,7 @@ Forward this production brief with the published contract commit and PR referenc
 >
 > Begin with native 1920×1080 target scenes and player/Rivallie registration and pose proofs before bulk production. Use 64-pixel terrain units, approximately 96×144 untrimmed human frames, eight authored movement/combat directions and shared rig/socket metadata. Do not upscale prototypes or rotate cardinal sprites to manufacture diagonal coverage.
 >
-> Deliver all three capitals and six outposts, the existing 42 buildings and three cave interiors, all 33 human appearance recipes, eight creature species, equipment and move/effect sets. Human portraits need all nine canonical expressions at 96 and 128 pixels: 594 human exports plus 16 creature exports, 610 total. Preserve outdoor geography; do not add canals to Aqualia.
+> Deliver all three capitals and six outposts, the existing 42 buildings and three cave interiors, all 33 human appearance recipes, eight creature species, equipment and move/effect sets. Human portraits need all nine canonical expressions at 96 and 128 pixels: 594 human exports plus 16 creature exports, 610 total. Follow the protected authored-world plan and validated map geometry, including its canals; source artwork cannot independently change traversal.
 >
 > Deliver source PNGs/scripts, registration metadata, complete manifest references, review sheets and gallery captures. Keep proof and candidate stages honest. Do not edit simulation, worker, save logic, generated catalogs or approval records. Missing identities, frames or expressions must be listed explicitly; never substitute another named character. Run the source/asset checks specified by engineering and request review of a concrete, reproducible export set.
 

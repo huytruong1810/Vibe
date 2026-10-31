@@ -288,7 +288,7 @@ def packet(project, plan, name, work, destination, report):
     if destination.exists():
         raise WorldError("Refusing to overwrite a review packet; use a new revision")
     destination.mkdir(parents=True)
-    atomic_write(destination / "hearthwild.ldtk", project)
+    source = {"path": spec()["ldtk"]["project"], "sha256": sha(project)}
     atomic_write(destination / "qa_report.json", report)
     atomic_write(destination / "render.json", manifest)
     for file in manifest["images"]:
@@ -297,17 +297,18 @@ def packet(project, plan, name, work, destination, report):
     passes = WORLD / "passes" / plan["region"]
     shutil.copytree(passes, destination / "passes")
     (destination / "README.md").write_text(
-        f"# {name}: candidate map packet\n\nScope: {name}; other levels remain unfinished.\n\nMap SHA: `{sha(project)}`.\n\nAll screen crops and before/after overviews inspected by the author; director approval is separate.\n\nPreview artwork and foreground placeholders are not approved final art. Density values are measurements, not aesthetic scores.\n",
+        f"# {name}: candidate map packet\n\nScope: {name}; other levels remain unfinished.\n\nMap source: `{source['path']}`; SHA: `{sha(project)}`. The map is referenced, not duplicated. Replay the included passes from worldforge new to reconstruct this digest.\n\nAll screen crops and before/after overviews inspected by the author; director approval is separate.\n\nPreview artwork and foreground placeholders are not approved final art. Density values are measurements, not aesthetic scores.\n",
         encoding="utf-8",
         newline="\n",
     )
     atomic_write(
         destination / "packet.json",
         {
-            "schemaVersion": 1,
+            "schemaVersion": 2,
             "status": "candidate",
             "level": name,
             "sourceDigest": sha(project),
+            "source": source,
             "dependenciesDigest": dependencies(),
             "files": {
                 p.relative_to(destination).as_posix(): sha(p.read_bytes())

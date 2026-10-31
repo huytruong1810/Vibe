@@ -232,3 +232,44 @@ remain unfinished. New games continue using the existing implementation until C7
 The world-builder skill and relevant hooks change under C6's DOC-5 authority;
 doctrine, world schema and protected plan are unchanged. The CLI and acceptance
 evidence are described in [worldforge](worldforge.md).
+
+## ADR 021 — Candidate authored-world compilation
+
+**Status:** accepted engineering approach; map approval remains separate.
+
+**Context:** WLD-4.4 requires the authoring tool, importer and CI to read one map
+contract. C6 supplies a village candidate, but region composition approval,
+Riverlands and runtime integration remain outstanding. Loading that draft as a new
+game would conceal missing content and retain incompatible procedural assumptions.
+
+**Decision:** compile scoped candidate bundles behind explicit offline commands.
+Require official LDtk validation and worldforge QA before atomic output, then use
+a browser-independent domain loader. Normalize entity identities and point fields
+without deriving identity from array positions. Keep presentation materials and
+under-deck water distinct from effective collision/fluid. An optional ChunkStore
+coverage mask supports exact authored coordinates and void while preserving the
+legacy generated-world boundary policy.
+
+Provenance binds semantic source, schema, plan and importer code. Canonical record
+ordering makes editor reordering harmless. Environmental distances use cardinal
+multi-source BFS over coverage, with the formulas and temperature constants in the
+[compiler guide](worldforge.md#c7-candidate-compiler-and-domain-loader).
+
+**Alternatives rejected:** shifting the map to accommodate the legacy border,
+discarding water beneath bridges, spawning resources not present in the map,
+coercing authored buildings into legacy scene assumptions, and silently activating
+an unfinished region. A generic runtime LDtk interpreter would add validation and
+editor-format overhead to browser startup without benefiting gameplay.
+
+**Consequences:** this slice constructs and tests candidate worlds but does not
+switch the playable game. No save/content/world version bump is made yet. C7 stays
+partially implemented until approval, full map readiness, consumer adapters,
+version changes, journeys and authored-world soak are complete.
+
+**C6b follow-up:** published C5/layout records were integrated through normal
+studio-to-art-to-engineering history. Worldforge checks and the golden example
+now derive IntGrid meanings from the protected schema. Packet format 2 references
+the unchanged map by path/digest and retains replay passes, rather than duplicating
+the project. `next` uses exact-digest, layout-scoped director records only for
+operator guidance; it does not write approvals or activate gameplay. See the
+[worldforge guide](worldforge.md). Historical packets and their records stay intact.
