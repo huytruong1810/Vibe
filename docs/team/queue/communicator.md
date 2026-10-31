@@ -19,11 +19,11 @@ lines.
 
 ### M2 · Rivallie reference sheet, single pose
 
-- status: open
+- status: done
 - goal: redo `art/source/references/rivallie/` as a creature sheet with **one all-fours pose** (the master's side pose) in front, left side and back views. The current sheet mixes an upright front and back with an all-fours side, which fused into a hybrid mesh; Claude worked around it with the side view only. Show the cream belly and chest clearly in the side view: today's sprite reads almost all teal. Rearing up is an animation (`social`), not a sheet pose.
 - inputs: the `reference-sheets` skill, the approved Rivallie portrait anatomy (ART-10: rounded otter body, cream belly, aqua crest fins, paddle tail)
 - done when: `sheet.json` and the views are committed, the image ledger is updated, and you've messaged codex and blender
-- evidence:
+- evidence: art/source/references/rivallie/sheet.json, art/source/references/rivallie/{front,left,back}.png, docs/team/comms/communicator/image-ledger.md, docs/team/comms/communicator/2026-10-31T0530--to-blender-codex--rivallie-reference-ready.md
 
 ### M3 · Neris: A-pose sheet plus ferry-pole prop sheet
 

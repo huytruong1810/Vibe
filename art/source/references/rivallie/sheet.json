@@ -1,22 +1,15 @@
 {
   "asset": "rivallie",
   "kind": "creature",
-  "note": "Bring-up sheet cropped from the approved identity master; replace with a PRD-3 creature sheet from the communicator when available.",
-  "identitySources": ["art/source/masters/rivallie_turnaround_master.jpg"],
+  "bodyType": "quadruped",
+  "identitySources": [
+    "public/assets/portraits/creatures/portrait_rivallie_128.png",
+    "art/source/masters/rivallie_turnaround_master.jpg"
+  ],
   "views": {
-    "front": {
-      "source": "art/source/masters/rivallie_turnaround_master.jpg",
-      "crop": [55, 195, 300, 575]
-    },
-    "left": {
-      "source": "art/source/masters/rivallie_turnaround_master.jpg",
-      "crop": [680, 215, 1115, 585],
-      "mirror": true
-    },
-    "back": {
-      "source": "art/source/masters/rivallie_turnaround_master.jpg",
-      "crop": [1062, 190, 1340, 640]
-    }
+    "front": "front.png",
+    "left": "left.png",
+    "back": "back.png"
   },
   "ramps": {
     "body": "teal",
@@ -25,5 +18,6 @@
     "eyes": "hair-ink",
     "nose": "outline-neutral"
   },
-  "generations": 0
+  "generations": 1,
+  "ledger": "docs/team/comms/communicator/image-ledger.md#rivallie"
 }
