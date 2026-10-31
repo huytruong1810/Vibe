@@ -274,7 +274,7 @@ the project. `next` uses exact-digest, layout-scoped director records only for
 operator guidance; it does not write approvals or activate gameplay. See the
 [worldforge guide](worldforge.md). Historical packets and their records stay intact.
 
-## 2026-10-31: tileforge makes terrain tiles from swatches (C11)
+## ADR 022 — tileforge makes terrain tiles from swatches (C11)
 
 **Decision:** terrain tiles (ART-11.2) come from `tileforge`, not from hand pixelling or
 procedural generators:
