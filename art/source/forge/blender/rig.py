@@ -13,10 +13,12 @@ import math
 import os
 import sys
 
-import bmesh
 import bpy
 import numpy as np
 from mathutils import Matrix, Vector
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import riglib  # noqa: E402
 
 argv = sys.argv[sys.argv.index("--") + 1:]
 src, out, P, prev_dir = argv[0], argv[1], json.loads(open(argv[2]).read()), argv[3]
@@ -216,102 +218,12 @@ for spec_ik in T.get("ik", []):
     c.use_tail = True
 
 # ---------------------------------------------------------------- weights: voxel proxy -> mesh
-proxy = body.copy()
-proxy.data = body.data.copy()
-proxy.name = "WeightProxy"
-scene.collection.objects.link(proxy)
-for vg in list(proxy.vertex_groups):
-    proxy.vertex_groups.remove(vg)
-rm = proxy.modifiers.new("vox", "REMESH")
-rm.mode = "VOXEL"
-rm.voxel_size = T["weights"]["proxyVoxelFraction"] * Hh
-bpy.ops.object.select_all(action="DESELECT")
-bpy.context.view_layer.objects.active = proxy
-proxy.select_set(True)
-bpy.ops.object.modifier_apply(modifier="vox")
-proxy.select_set(True)
-arm.select_set(True)
-bpy.context.view_layer.objects.active = arm
-bpy.ops.object.parent_set(type="ARMATURE_AUTO")
-
-deform = [b for b in arm_data.bones if b.use_deform]
-segs = [(b.name, np.array(b.head_local), np.array(b.tail_local)) for b in deform]
-empty = 0
-for v in proxy.data.vertices:
-    if sum(g.weight for g in v.groups) > 1e-6:
-        continue
-    p = np.array(v.co)
-    best, bd = None, 1e9
-    for name, a, b in segs:
-        ab = b - a
-        t = np.clip(np.dot(p - a, ab) / max(np.dot(ab, ab), 1e-9), 0, 1)
-        d = np.linalg.norm(p - (a + t * ab))
-        if d < bd:
-            best, bd = name, d
-    grp = proxy.vertex_groups.get(best) or proxy.vertex_groups.new(name=best)
-    grp.add([v.index], 1.0, "REPLACE")
-    empty += 1
-
-for vg in list(body.vertex_groups):
-    body.vertex_groups.remove(vg)
-dt = body.modifiers.new("weights", "DATA_TRANSFER")
-dt.object = proxy
-dt.use_vert_data = True
-dt.data_types_verts = {"VGROUP_WEIGHTS"}
-dt.vert_mapping = "POLYINTERP_NEAREST"
-dt.layers_vgroup_select_src = "ALL"
-dt.layers_vgroup_select_dst = "NAME"
-bpy.ops.object.select_all(action="DESELECT")
-body.select_set(True)
-bpy.context.view_layer.objects.active = body
-bpy.ops.object.datalayout_transfer(modifier="weights")
-bpy.ops.object.modifier_apply(modifier="weights")
-bpy.ops.object.vertex_group_normalize_all(lock_active=False)
-bpy.ops.object.vertex_group_limit_total(limit=T["weights"]["maxInfluences"])
-bpy.ops.object.vertex_group_normalize_all(lock_active=False)
-unweighted = sum(1 for v in body.data.vertices if sum(g.weight for g in v.groups) < 1e-6)
-bpy.data.objects.remove(proxy, do_unlink=True)
-body.parent = arm
-mod = body.modifiers.new("Armature", "ARMATURE")
-mod.object = arm
+empty, unweighted = riglib.transfer_weights(scene, body, arm, T["weights"]["proxyVoxelFraction"] * Hh, T["weights"]["maxInfluences"])
 bpy.ops.wm.save_as_mainfile(filepath=out)
 
 # ---------------------------------------------------------------- preview renders (PRD-5)
-scene.render.engine = "BLENDER_WORKBENCH"
-scene.display.shading.light = "FLAT"
-scene.display.shading.color_type = "VERTEX"
-scene.render.film_transparent = False
-scene.render.resolution_x = scene.render.resolution_y = 360
-cam_data = bpy.data.cameras.new("pcam")
-cam_data.type = "ORTHO"
-cam_data.ortho_scale = max(L, Hh) * 1.5
-cam = bpy.data.objects.new("pcam", cam_data)
-scene.collection.objects.link(cam)
-scene.camera = cam
-target = Vector((0, (ymin + ymax) / 2, Hh * 0.45))
-
-
-def look(from_dir: Vector):
-    cam.location = target + from_dir.normalized() * 10
-    cam.rotation_euler = (target - cam.location).to_track_quat("-Z", "Y").to_euler()
-
-
-markers = []
-for name, p in lmk.items():
-    bm = bmesh.new()
-    bmesh.ops.create_uvsphere(bm, u_segments=8, v_segments=6, radius=0.018 * L)
-    me = bpy.data.meshes.new(f"lm_{name}")
-    bm.to_mesh(me)
-    bm.free()
-    col = me.color_attributes.new("Col", "FLOAT_COLOR", "POINT")
-    for c in col.data:
-        c.color = (1.0, 0.1, 0.1, 1.0) if not name.startswith("tail") else (1.0, 0.8, 0.1, 1.0)
-    ob = bpy.data.objects.new(f"lm_{name}", me)
-    ob.location = Vector(p)
-    ob.show_in_front = True
-    scene.collection.objects.link(ob)
-    markers.append(ob)
-
+pv = riglib.Preview(scene, max(L, Hh), Vector((0, (ymin + ymax) / 2, Hh * 0.45)), prev_dir)
+pv.add_markers(lmk, 0.018 * L, lambda n: (1.0, 0.1, 0.1, 1.0) if not n.startswith("tail") else (1.0, 0.8, 0.1, 1.0))
 pb = arm.pose.bones
 for b in pb:
     b.rotation_mode = "XYZ"
@@ -334,16 +246,12 @@ shots = [("rest_landmarks_side", {}, {}, SIDE, True), ("rest_landmarks_3q", {}, 
          ("stride", {}, {"ik_fl": (0, -sl, 0.06 * Hh), "ik_br": (0, -sl, 0.06 * Hh), "ik_fr": (0, sl, 0), "ik_bl": (0, sl, 0)}, SIDE, False),
          ("rear_up", {"pelvis": (40, 0, 0)}, {"ik_fl": (0, 0.1 * L, 0.45 * Hh), "ik_fr": (0, 0.1 * L, 0.45 * Hh)}, SIDE, False),
          ("head_turn_tail_sway", {"neck": (0, 0, 30), "head": (-15, 0, 10), "tail_01": (0, 0, 20), "tail_02": (0, 0, 20), "tail_03": (0, 0, 20)}, {}, THREE_Q, False)]
-os.makedirs(prev_dir, exist_ok=True)
+previews = []
 for name, rot, move, view, show in shots:
-    for m in markers:
-        m.hide_render = not show
     pose(rot, move)
-    look(view)
-    scene.render.filepath = os.path.join(prev_dir, f"rig_{name}.png")
-    bpy.ops.render.render(write_still=True)
+    previews.append(pv.shot(name, view, show))
 pose({})
 
 print("RIG", json.dumps({"orient": how, "yawDeg": round(math.degrees(yaw), 1), "landmarks": {k: [round(float(c), 4) for c in v] for k, v in lmk.items()},
                          "proxyFallbackVerts": empty, "unweightedVerts": unweighted, "warnings": warnings,
-                         "heightUnits": round(Hh, 4), "lengthUnits": round(L, 4), "bones": len(arm_data.bones)}))
+                         "heightUnits": round(Hh, 4), "lengthUnits": round(L, 4), "bones": len(arm_data.bones), "previews": previews}))

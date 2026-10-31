@@ -35,3 +35,26 @@ spec (`../spec/`); a recipe never overrides spec numbers.
   when `rig_preview.png` shows a dot off the body, a leg bent the wrong way or a tail
   that doesn't follow the tail.
 - Changing a recipe re-runs only the stages it affects (`forge.py next` tells you).
+
+## Human recipes
+
+```json
+{
+  "asset": "player-aqualia",
+  "kind": "human",
+  "heightArtPx": 58,
+  "ramps": { "skin": "skin-warm", "hair": "hair-teal", "tunic": "teal" },
+  "gen3d": { "views": ["front", "back"] },
+  "rig": { "landmarks": { "wrist_l": [0.42, 0.05, 0.71] } },
+  "clips": { "work": { "segments": [{ "lib": "ual2", "action": "TreeChopping_Loop" }] } }
+}
+```
+
+- Human landmarks you can override: `crown`, `head_base`, `neck_base`, `pelvis`,
+  `spine_01..03`, `clavicle_l/r`, `shoulder_l/r`, `elbow_l/r`, `wrist_l/r`,
+  `hand_end_l/r`, `palm_l/r`, `hip_l/r`, `knee_l/r`, `ankle_l/r`, `ball_l/r`,
+  `toe_l/r`, `face`, `back`. The RIG line in `work/<asset>/logs/rig.log` lists what was
+  detected.
+- `clips.<name>.segments` swaps a clip's source animation for this character (names in
+  `spec/clips/humanoid.json`; libraries `ual1` and `ual2`). Use it for a villager's own
+  work, for example `TreeChopping_Loop` for anyone carrying the hatchet.

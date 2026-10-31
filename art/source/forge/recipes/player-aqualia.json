@@ -1,0 +1,16 @@
+{
+  "asset": "player-aqualia",
+  "kind": "human",
+  "heightArtPx": 58,
+  "ramps": {
+    "skin": "skin-warm",
+    "hair": "hair-teal",
+    "tunic": "teal",
+    "trim": "glass",
+    "undershirt": "cream",
+    "trousers": "navy",
+    "boots": "leather"
+  },
+  "gen3d": { "seed": 1234, "steps": 50, "views": ["front", "back"] },
+  "notes": "Bring-up recipe (claude, C9a validation run). heightArtPx = standard crown 56 + 2 hair. Ramps mapped onto palette.json names: the sheet lists river-blue, charcoal and outline-dark, which don't exist. The sheet is about 6.5-7 heads; L3 asks 4.5-5 (communicator to redraw). Held hatchet waits for codex C9b (items)."
+}

@@ -73,6 +73,8 @@ def asset_kind(asset_id: str) -> str:
     """human | creature | environment, from the id and spec canvases."""
     if asset_id.startswith("env:"):
         return "environment"
+    if asset_id == "selftest-creature":
+        return "creature"
     rs = spec("render_spec")["canvases"]
     for key, c in rs.items():
         if key.startswith("creature.") and asset_id in c.get("species", []):
@@ -83,13 +85,17 @@ def asset_kind(asset_id: str) -> str:
 def canvas_for(asset_id: str, state: str = "idle") -> tuple[str, dict]:
     rs = spec("render_spec")["canvases"]
     kind = asset_kind(asset_id)
+    if asset_id == "selftest-creature":
+        return "creature.medium", rs["creature.medium"]
     if kind == "creature":
         for key, c in rs.items():
             if key.startswith("creature.") and asset_id in c.get("species", []):
                 return key, c
     if kind == "human":
-        key = "human.combat" if state in rs["human.combat"]["states"] else "human.locomotion"
-        return key, rs[key]
+        for key, c in rs.items():  # human.combat, human.ground, ... by the states they list
+            if key.startswith("human.") and key != "human.locomotion" and state in c.get("states", []):
+                return key, c
+        return "human.locomotion", rs["human.locomotion"]
     raise ForgeError(f"No canvas for {asset_id} ({kind}); environment canvases are set per recipe.")
 
 
@@ -154,6 +160,7 @@ def run_blender(script: str, args: list[str], log: Path, timeout: int = 1800) ->
     cmd = [blender_bin(), "-b", "--factory-startup", "-noaudio", "--python-exit-code", "3",
            "-P", str(BLENDER_SCRIPTS / script), "--", *args]
     env = {**os.environ, "PYTHONDONTWRITEBYTECODE": "1", "FORGE_REPO": str(REPO)}
+    log.parent.mkdir(parents=True, exist_ok=True)
     with open(log, "w") as f:
         proc = subprocess.run(cmd, stdout=f, stderr=subprocess.STDOUT, env=env, timeout=timeout)
     if proc.returncode != 0:

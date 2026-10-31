@@ -154,9 +154,11 @@ def _clean_orphans(img: np.ndarray, passes: int = 4) -> np.ndarray:
         if not bad.any():
             break
         for y, x in zip(*np.nonzero(bad)):
-            ys, xs = slice(y - 1, y + 2), slice(x - 1, x + 2)
+            ys, xs = slice(max(y - 1, 0), y + 2), slice(max(x - 1, 0), x + 2)
             nb = flat[ys, xs][a[ys, xs]]
             nb = nb[nb != flat[y, x]]
+            if not len(nb):
+                continue
             vals, cnt = np.unique(nb, return_counts=True)
             v = vals[cnt.argmax()]
             img[y, x, :3] = ((v >> 16) & 255, (v >> 8) & 255, v & 255)

@@ -30,16 +30,16 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
   - The samplers are LINEAR at about 30 fps.
 - **Canvases** (`spec/render_spec.json:58-134`, in art px, exported at 2×):
 
-  | Canvas                     | Size @ anchor   |
-  | -------------------------- | --------------- |
-  | human.locomotion           | 48×72 @ (24,66) |
-  | human.combat               | 80×80 @ (40,72) |
-  | creature.small             | 40×44 @ (20,34) |
-  | creature.medium (Rivallie) | 56×56 @ (28,41) |
-  | creature.large             | 80×72 @ (40,56) |
-  | layer.face                 | 16×12           |
-  | layer.heldItem             | 32×32           |
-  | icon.item                  | 32×32           |
+  | Canvas                     | Size @ anchor                                                             |
+  | -------------------------- | ------------------------------------------------------------------------- |
+  | human.locomotion           | 56×76 @ (28,66); human.combat 80×88 @ (40,72); human.wide 96×88 @ (48,66) |
+  | human.combat               | 80×80 @ (40,72)                                                           |
+  | creature.small             | 40×44 @ (20,34)                                                           |
+  | creature.medium (Rivallie) | 56×56 @ (28,41)                                                           |
+  | creature.large             | 80×72 @ (40,56)                                                           |
+  | layer.face                 | 16×12                                                                     |
+  | layer.heldItem             | 32×32                                                                     |
+  | icon.item                  | 32×32                                                                     |
 
   The clip matrix is at `:139-239`. The runtime matrix is `CLIP_MATRIX` in
   `src/presentation/assets/coverage.ts:58-88`.
@@ -302,9 +302,14 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 
 ### C9a · Human path: UAL2 rig fit, UAL retarget, human clips, forge selftest
 
-- status: in-progress: claude (2026-11-01), on machine A
+- status: done (claude, 2026-11-01)
 - goal: the forge rigs an A-pose human on the UAL2 skeleton, retargets UAL2 and UAL1 actions into all 19 human clips, bakes combat clips on `human.combat`, and has a `forge.py selftest` harness on a mannequin fixture.
-- evidence:
+- evidence: 2026-11-01:
+  - `blender/{rig_humanoid,retarget,riglib,ual_library,fixture_mannequin}.py`
+  - `spec/{skeletons/humanoid.json,bone_maps/ual1_to_ual2.json,clips/humanoid.json}`
+  - human canvases in `render_spec.json` (locomotion 56×76, combat 80×88, new `human.wide` 96×88)
+  - `forge.py selftest` PASS for human and creature
+  - player-aqualia validation run: 19 clips, 952 frames, rig without landmark warnings
 
 ### C9b · Items, fit, human faces
 
@@ -315,6 +320,18 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
   - The `thinFeature` check.
   - Human faces: the full 9 expressions plus blink, sleep and hurt, sharing the C3b grammar.
 - done when: doctor shows `items: ready` and humans with nothing pending; you've posted `--to-blender--go-items`
+- evidence:
+
+### C9c · Human clip polish, per-clip canvases in review export, contract docs
+
+- status: open
+- goal: finish what the C9a validation run (`work/player-aqualia`, `work/selftest-human`) showed.
+- work:
+  1. **`forgelib/review.py` `export_packet`:** register frames per clip canvas. Humans bake combat clips on `human.combat` and lying/bending clips on `human.wide`; `bake/tracks.json` has `canvases[clip]`. Today it uses one canvas.
+  2. **Weak combat reads:** strike (UAL1 Punch_Jab), element (Spell_Simple_Shoot) and bow_shot (a two-handed pistol aim as a stand-in) barely move at 56 px. Add authored pose overlays: bone rotations at given frames, layered after the retarget and declared in `spec/clips/humanoid.json`. Give each one a readable windup, active and recovery (CMB-3, ART-9.2). bow_shot needs a real draw: left arm forward, right hand to the ear, release.
+  3. **eat and drink:** the hand stays at chest height. Pick the Consume window by eye, or add an overlay to bring the hand to the mouth.
+  4. **Contract docs:** update `docs/art/contract.md`, `contract-v2.md` and `docs/engineering/hd-presentation.md` for the human canvases now in `render_spec.json`.
+- done when: in `forge.py selftest --kind human`, the strike, element and bow_shot strips read at 1×; packet review.json frames register on their own canvases; tests green
 - evidence:
 
 ### C10 · Environment asset kind

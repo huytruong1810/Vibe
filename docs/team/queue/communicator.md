@@ -85,3 +85,13 @@ lines.
 - inputs: the `reference-sheets` skill, approved portraits (`public/assets/portraits/creatures/portrait_<species>_128.png`)
 - done when: sheets committed with views and `sheet.json`, ledger updated, and blender notified
 - evidence: art/source/references/{bramblefang,marshstalker}/{sheet.png,front.png,left.png,back.png,sheet.json}, docs/team/comms/communicator/image-ledger.md, docs/team/comms/communicator/2026-10-31T0900--to-blender-codex--bramblefang-reference-ready.md, docs/team/comms/communicator/2026-10-31T1500--to-blender-codex--marshstalker-reference-ready.md
+
+### M11 · Redraw the human sheets at doctrine proportions
+
+- status: open
+- goal: redo `art/source/references/player-aqualia/` and `art/source/references/npc-neris/`. The forge's validation run (claude, 2026-11-01, `art/source/forge/work/player-aqualia/contact.png`) found three problems:
+  1. **Proportions.** The sheets are about 6.5–7 heads tall; L3 and `body_types.json` ask for 4.5–5 heads (head 11–12 art px, crown 55–57 px).
+  2. **No side view.** Front and back only leave the sides of the 3D model uncoloured, which shows as cream streaks on the legs and arms. Add a **left** side view in the same A-pose.
+  3. **Ramp names.** `river-blue`, `charcoal` and `outline-dark` don't exist in `art/source/forge/spec/palette.json`. Use names from that file. Keep to at most 5 ramps per character: player-aqualia came out at 27 colours, and the limit is 24 (ART-4.4).
+- done when: both sheets are committed with front, left and back views at 4.5–5 heads, valid ramp names and an updated ledger, and you've messaged codex and blender
+- evidence:

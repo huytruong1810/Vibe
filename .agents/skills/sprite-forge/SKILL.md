@@ -35,9 +35,10 @@ The old box-modelling scripts were deleted; never recreate them.
 $F next --asset <asset-id>      # prints the exact next command, or BLOCKED: <reason>
 ```
 
-Run exactly what it prints. Repeat. Built order for creatures: `prep → gen3d → clean →
+Run exactly what it prints. Repeat. Built order for creatures and humans: `prep → gen3d → clean →
 texture → rig → animate → bake → pixelize → qa → packet`. (`fit`, `faces` and `items`
-are added by codex; `doctor` lists what exists.)
+are added by codex; `doctor` lists what exists.) Humans need an **A-pose** sheet
+(PRD-3.1) at 4.5–5 heads (L3); their clips come from the UAL animation libraries.
 
 After **every** stage that writes images, open the PNG it names with `read_file` and
 write one line in your session log saying what you saw:
@@ -48,9 +49,23 @@ write one line in your session log saying what you saw:
 - `rig_preview.png`: red dots on the body (head, spine, legs), yellow dots along the
   tail; in the stride, rear-up and head-turn test poses nothing tears, stretches into
   spikes or leaves parts behind.
+  Humans: red dots on the joints (crown, neck, shoulders, elbows, wrists, hips, knees,
+  ankles), blue dots on the face and back; in the arms-up, stride and bend test poses
+  the arms lift from the shoulders and the legs bend at the knees.
 - `contact.png` (after `qa`): rest pose in 8 facings on grey and grass, then one row
   per clip. Also open `art/review/<packet>/clips/<clip>.gif` for walk, run and idle
   after `packet`: legs should step, not slide or swim.
+
+## 1b. Is the forge itself healthy?
+
+```
+$F selftest
+```
+
+Runs the forge on built-in fixtures (a human mannequin and a copy of Rivallie) and
+checks rig weights, landmarks, clip matrix, canvases, margins and anchors. `PASS` means
+the forge works; `FAIL` means message codex with the output. Run it when a stage
+behaves strangely before you change any input.
 
 ## 2. QA and the contact sheet
 

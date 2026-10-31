@@ -4,6 +4,7 @@
 
 Commands:
   doctor                 environment check plus readiness per asset class (creatures, humans, items, environment)
+  selftest [--kind human|creature|all]   run the forge on built-in fixtures and assert its invariants
   status --asset ID      stage table for one asset
   next --asset ID        print the exact next command, or BLOCKED: <reason>
   prep|gen3d|clean|texture|rig|animate|bake|pixelize|qa|packet|publish --asset ID   run one stage
@@ -31,8 +32,8 @@ STAGES = ["prep", "gen3d", "clean", "texture", "rig", "animate", "bake", "pixeli
 # Readiness per asset class (doctor). A class is ready when every stage it needs up to `packet` exists.
 CLASSES = {
     "creatures": {"ready": True, "pending": ["faces (creature subset)", "publish"], "templates": ["quadruped"]},
-    "humans": {"ready": False, "pending": ["UAL2 rig fit", "UAL1 bone map", "humanoid clips", "faces", "fit"], "ticket": "codex C9"},
-    "items": {"ready": False, "pending": ["items stage (8 facings x 8 grips + icon)"], "ticket": "codex C9"},
+    "humans": {"ready": True, "pending": ["faces", "items (held layers)", "fit (garment parts)", "publish"], "templates": ["humanoid"]},
+    "items": {"ready": False, "pending": ["items stage (8 facings x 8 grips + icon)"], "ticket": "codex C9b"},
     "environment": {"ready": False, "pending": ["environment kind: canvas, depth stretch, layers, footprint QA"], "ticket": "codex C10"},
 }
 
@@ -41,7 +42,20 @@ def _rel(p: Path) -> str:
     return str(p.relative_to(REPO))
 
 
+# Built-in recipes for the forge's own fixtures (selftest); never placed in recipes/.
+SELFTEST_RECIPES = {
+    "selftest-human": {"asset": "selftest-human", "kind": "human", "heightArtPx": 56,
+                       "ramps": {"skin": "skin-warm", "shirt": "teal", "pants": "leather", "hair": "hair-teal"}},
+    "selftest-creature": {"asset": "selftest-creature", "kind": "creature", "heightArtPx": 31,
+                          "ramps": {"body": "teal", "belly": "cream", "fins": "glass"}},
+}
+
+
 def _recipe(asset: str) -> dict:
+    if asset == "selftest-creature" and (core.RECIPES / "rivallie.json").exists():
+        return {**SELFTEST_RECIPES[asset], "heightArtPx": load_recipe("rivallie")["heightArtPx"]}  # fixture copies Rivallie's mesh
+    if asset in SELFTEST_RECIPES:
+        return SELFTEST_RECIPES[asset]
     r = load_recipe(asset)
     if r.get("asset") != asset:
         raise ForgeError(f"Recipe asset id '{r.get('asset')}' does not match '{asset}'.")
@@ -130,9 +144,11 @@ def st_texture(asset: str) -> str:
 
 def _template(asset: str) -> dict:
     kind = asset_kind(asset)
+    if kind == "human":
+        return json.loads((core.SPEC_DIR / "skeletons" / "humanoid.json").read_text())
     if kind != "creature":
-        raise ForgeError(f"The {kind} rig is not built yet ({CLASSES['humans']['ticket']}). Production for this class stays gated.")
-    name = slug(asset)
+        raise ForgeError(f"No rig for asset kind '{kind}' ({CLASSES['environment']['ticket']}).")
+    name = "rivallie" if asset == "selftest-creature" else slug(asset)
     for f in sorted((core.SPEC_DIR / "skeletons").glob("*.json")):
         t = json.loads(f.read_text())
         tname = t.get("species", {}).get(name)
@@ -161,30 +177,59 @@ def st_rig(asset: str) -> str:
     t = _template(asset)
     rr = r.get("rig", {})
     pfile = wd / "rig_params.json"
-    pfile.write_text(json.dumps({"template": t, "yawDeg": rr.get("yawDeg"), "landmarks": rr.get("landmarks", {})}))
+    humanoid = t.get("kind") == "humanoid"
+    params = {"template": t, "yawDeg": rr.get("yawDeg"), "landmarks": rr.get("landmarks", {})}
+    if humanoid:
+        params["library"] = str(_ual_library())
+    pfile.write_text(json.dumps(params))
     src, out, pdir = wd / "texture.blend", wd / "rig.blend", wd / "rig_preview"
-    if core.is_fresh(asset, "rig", [src, pfile]):
+    script = "rig_humanoid.py" if humanoid else "rig.py"
+    if core.is_fresh(asset, "rig", [src, pfile, core.BLENDER_SCRIPTS / script]):
         return "fresh (cached)"
     shutil.rmtree(pdir, ignore_errors=True)
-    core.run_blender("rig.py", [str(src), str(out), str(pfile), str(pdir)], wd / "logs" / "rig.log", timeout=1800)
+    core.run_blender(script, [str(src), str(out), str(pfile), str(pdir)], wd / "logs" / "rig.log", timeout=1800)
     info = json.loads([l for l in (wd / "logs" / "rig.log").read_text().splitlines() if l.startswith("RIG ")][-1][4:])
-    names = ["rest_landmarks_side", "rest_landmarks_3q", "stride", "rear_up", "head_turn_tail_sway"]
-    _preview_strip(pdir, names, wd / "rig_preview.png")
-    record(asset, "rig", [src, pfile], [out, wd / "rig_preview.png"], {**info, "rigId": t["rigId"]}, digest_extra=None)
+    _preview_strip(pdir, info["previews"], wd / "rig_preview.png")
+    record(asset, "rig", [src, pfile, core.BLENDER_SCRIPTS / script], [out, wd / "rig_preview.png"], {**info, "rigId": t["rigId"]}, digest_extra=None)
     warn = f"; warnings: {'; '.join(info['warnings'])}" if info["warnings"] else ""
     return (f"{info['bones']} bones, oriented by {info['orient']} ({info['yawDeg']} deg), {info['unweightedVerts']} unweighted verts{warn}; "
             f"LOOK at {_rel(wd / 'rig_preview.png')}: landmarks on the body, no tearing in the test poses")
 
 
+def _ual_library() -> Path:
+    """UAL1 + UAL2 imported once into work/_cache/ual_library.blend, rebuilt when a GLB changes."""
+    hs = json.loads((core.SPEC_DIR / "clips" / "humanoid.json").read_text())["libraries"]
+    glbs = [core.FORGE / hs["ual2"]["glb"], core.FORGE / hs["ual1"]["glb"]]
+    for g in glbs:
+        if not g.exists():
+            raise ForgeError(f"UAL library missing: {_rel(g)}. Run doctor; ask codex to run gen3d/setup.sh.")
+    cache, meta = core.WORK / "_cache" / "ual_library.blend", core.WORK / "_cache" / "ual_library.json"
+    want = [core.sha256_file(g) for g in glbs]
+    if cache.exists() and meta.exists() and json.loads(meta.read_text()).get("glbSha256") == want:
+        return cache
+    cache.parent.mkdir(parents=True, exist_ok=True)
+    core.run_blender("ual_library.py", [str(glbs[0]), str(glbs[1]), str(cache)], core.WORK / "_cache" / "ual_library.log", timeout=1800)
+    meta.write_text(json.dumps({"glbSha256": want}))
+    return cache
+
+
 def _clip_plan(asset: str) -> list[dict]:
     rs = spec("render_spec")
     kind = asset_kind(asset)
+    player = asset.startswith(("player", "selftest-human"))
+    human_src = json.loads((core.SPEC_DIR / "clips" / "humanoid.json").read_text())["clips"] if kind == "human" else {}
+    overrides = (_recipe(asset).get("clips") or {}) if kind == "human" else {}
     out = []
     for name, c in rs["clips"].items():
-        if c.get("playerOnly") or (c.get("humansOnly") and kind != "human"):
+        if (c.get("playerOnly") and not player) or (c.get("humansOnly") and kind != "human"):
             continue
-        out.append({"name": name, "frames": c["frames"], "facings": rs["facings"]["sets"][c["facingSet"]],
-                    "phases": c.get("phases"), "fps": c.get("fps"), "playback": c["playback"], "runtime": c["runtime"]})
+        key, cv = canvas_for(asset, name)
+        clip = {"name": name, "frames": c["frames"], "facings": rs["facings"]["sets"][c["facingSet"]],
+                "phases": c.get("phases"), "fps": c.get("fps"), "playback": c["playback"], "runtime": c["runtime"],
+                "canvas": {"key": key, "size": cv["size"], "anchor": cv["anchor"]}}
+        if kind == "human":
+            clip["segments"] = (overrides.get(name) or human_src[name])["segments"]
+        out.append(clip)
     return out
 
 
@@ -193,14 +238,21 @@ def st_animate(asset: str) -> str:
     t = _template(asset)
     clips = _clip_plan(asset)
     pfile = wd / "animate_params.json"
-    pfile.write_text(json.dumps({"template": t, "clips": clips}))
+    params = {"template": t, "clips": clips}
+    if t.get("kind") == "humanoid":
+        hs = json.loads((core.SPEC_DIR / "clips" / "humanoid.json").read_text())
+        params.update({"library": str(_ual_library()), "libraries": hs["libraries"],
+                       "boneMapUal1": json.loads((core.SPEC_DIR / hs["libraries"]["ual1"]["boneMap"]).read_text())["bones"]})
+    pfile.write_text(json.dumps(params))
     src, out = wd / "rig.blend", wd / "animate.blend"
-    gaits = core.BLENDER_SCRIPTS / "gaits.py"
+    gaits = core.BLENDER_SCRIPTS / ("retarget.py" if t.get("kind") == "humanoid" else "gaits.py")
     if core.is_fresh(asset, "animate", [src, pfile, gaits, core.BLENDER_SCRIPTS / "animate.py"]):
         return "fresh (cached)"
     core.run_blender("animate.py", [str(src), str(out), str(pfile)], wd / "logs" / "animate.log", timeout=1800)
     info = json.loads([l for l in (wd / "logs" / "animate.log").read_text().splitlines() if l.startswith("ANIMATE ")][-1][8:])
-    strides = {k: t["gait"][k]["strideUnits"] for k in ("walk", "run") if "strideUnits" in t["gait"].get(k, {})}
+    rs = spec("render_spec")
+    strides = ({k: t["gait"][k]["strideUnits"] for k in ("walk", "run") if "strideUnits" in t["gait"].get(k, {})} if "gait" in t
+               else {k: rs["clips"][k]["strideTiles"] for k in ("walk", "run")})
     record(asset, "animate", [src, pfile, gaits, core.BLENDER_SCRIPTS / "animate.py"], [out],
            {**info, "plan": clips, "strideTiles": strides, "rigId": t["rigId"]}, digest_extra=None)
     n = sum(len(c["frames"]) * len(c["facings"]) for c in info["clips"])
@@ -212,7 +264,8 @@ def st_bake(asset: str) -> str:
     anim = core.stage_record(asset, "animate")
     if anim:
         src = wd / "animate.blend"
-        clips = [{"name": c["name"], "action": c["action"], "frames": c["frames"], "facings": c["facings"]} for c in anim["extra"]["clips"]]
+        clips = [{"name": c["name"], "action": c["action"], "frames": c["frames"], "facings": c["facings"], "canvas": c.get("canvas")}
+                 for c in anim["extra"]["clips"]]
     else:
         src = wd / "texture.blend"
         clips = [{"name": "rest", "action": None, "frames": [1]}]
@@ -360,6 +413,69 @@ def status(asset: str) -> str:
     return "\n".join(rows)
 
 
+def _selftest_fixture(asset: str) -> None:
+    """texture.blend for a selftest asset: the A-posed UAL2 mannequin, or a copy of Rivallie's textured mesh."""
+    wd = work_dir(asset)
+    out = wd / "texture.blend"
+    if asset == "selftest-creature":
+        src = work_dir("rivallie") / "texture.blend"
+        if not src.exists():
+            raise ForgeError("selftest creature needs art/source/forge/work/rivallie/texture.blend (run rivallie to texture once)")
+        if not out.exists() or core.sha256_file(src) != core.sha256_file(out):
+            shutil.copy2(src, out)
+        return
+    script = core.BLENDER_SCRIPTS / "fixture_mannequin.py"
+    if out.exists() and out.stat().st_mtime > script.stat().st_mtime:
+        return
+    lib, cv, rs = _ual_library(), _canvas(asset), spec("render_spec")
+    glb = wd / "gen3d" / "mesh.glb"
+    glb.parent.mkdir(exist_ok=True)
+    (wd / "logs").mkdir(exist_ok=True)
+    core.run_blender("fixture_mannequin.py", ["glb", str(lib), str(glb)], wd / "logs" / "fixture.log")
+    pfile = wd / "clean_params.json"
+    pfile.write_text(json.dumps({"heightArtPx": _recipe(asset)["heightArtPx"], "canvas": cv["size"], "anchor": cv["anchor"],
+                                 "artPxPerUnit": rs["camera"]["artPixelsPerWorldUnit"], "elevationDeg": rs["camera"]["elevationDeg"]}))
+    core.run_blender("clean.py", [str(glb), str(wd / "clean.blend"), str(pfile)], wd / "logs" / "clean.log")
+    core.run_blender("fixture_mannequin.py", ["finish", str(wd / "clean.blend"), str(out)], wd / "logs" / "fixture.log")
+
+
+def selftest(which: str) -> int:
+    """Run rig -> animate -> bake -> pixelize -> qa on fixtures and assert the structural invariants.
+    Run it after any forge change (codex) or when the forge behaves oddly (agents). Exit 0 = healthy."""
+    kinds = ["human", "creature"] if which == "all" else [which]
+    worst = 0
+    for k in kinds:
+        asset = f"selftest-{k}"
+        wd = work_dir(asset)
+        t0 = time.time()
+        report: dict = {"asset": asset, "at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "asserts": []}
+        try:
+            _selftest_fixture(asset)
+            for st in ("rig", "animate", "bake", "pixelize", "qa"):
+                print(f"  [{asset} {st}] {_run(asset, st).splitlines()[0]}")
+            rig = core.stage_record(asset, "rig")["extra"]
+            qa = {c["check"]: c for c in json.loads((wd / "qa_report.json").read_text())["checks"]}
+            hi = rig["heightUnits"] * 1.05
+            asserts = [
+                ("rig: every vertex weighted", rig["unweightedVerts"] == 0, f"{rig['unweightedVerts']} unweighted"),
+                ("rig: landmarks detected without fallbacks", not rig["warnings"], "; ".join(rig["warnings"]) or "none"),
+                ("rig: landmarks inside the body height", all(-0.02 <= v[2] <= hi for v in rig["landmarks"].values()), "z range ok"),
+            ] + [(f"qa: {c}", qa[c]["pass"], qa[c]["detail"]) for c in ("clipMatrix", "canvas", "margins", "anchorDrift", "orphans", "paletteMembership")]
+            report["asserts"] = [{"assert": a, "pass": bool(ok), "detail": d} for a, ok, d in asserts]
+            report["verdict"] = "pass" if all(ok for _, ok, _ in asserts) else "fail"
+        except ForgeError as e:
+            report["verdict"], report["error"] = ("skipped" if "needs art/source" in str(e) else "fail"), str(e)
+        report["seconds"] = round(time.time() - t0, 1)
+        (wd / "selftest_report.json").write_text(json.dumps(report, indent=1))
+        fails = [a for a in report["asserts"] if not a["pass"]]
+        print(f"selftest {k}: {report['verdict'].upper()} in {report['seconds']}s"
+              + (f"; failed: {'; '.join(a['assert'] + ' (' + a['detail'] + ')' for a in fails)}" if fails else "")
+              + (f"; {report['error']}" if "error" in report else "")
+              + f"; LOOK at {_rel(wd / 'rig_preview.png')} and {_rel(wd / 'contact.png')}")
+        worst = max(worst, 1 if report["verdict"] == "fail" else 0)
+    return worst
+
+
 def doctor() -> int:
     checks = []
 
@@ -417,11 +533,18 @@ def _run(asset: str, st: str) -> str:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("command", choices=["doctor", "status", "next", "all", *STAGES])
+    ap.add_argument("command", choices=["doctor", "selftest", "status", "next", "all", *STAGES])
     ap.add_argument("--asset")
+    ap.add_argument("--kind", choices=["human", "creature", "all"], default="all", help="selftest fixture kind")
     a = ap.parse_args()
     if a.command == "doctor":
         return doctor()
+    if a.command == "selftest":
+        try:
+            return selftest(a.kind)
+        except ForgeError as e:
+            print(f"FORGE ERROR [selftest]: {e}", file=sys.stderr)
+            return 2
     if not a.asset:
         ap.error("--asset is required")
     try:
