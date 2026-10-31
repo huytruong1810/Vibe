@@ -17,12 +17,13 @@ Queues: [codex](queue/codex.md) · [communicator](queue/communicator.md) · [ble
 | 2D identity masters and lineups (`art/source/masters/*`) | **candidate** (identity source, PRD-3.5) | `art/source/masters/` | Communicator derives doctrine-standard reference sheets |
 | Environment exports (terrain, shore masks, cliff, ramp, house, well, waystone, hearth, flora states) | **candidate** (structural only; never director-reviewed at 2×) | `docs/art/coverage.md` | Re-author at 32-px tiles per ART-11 via tileforge (M9) |
 | Golden sample: player Aqualia (1st) | **candidate** (M4 reference; forge bring-up C9a) | `art/source/references/player-aqualia/`, `art/source/forge/recipes/player-aqualia.json` | Blender B4 golden sample after M11 redraw |
-| Golden sample: Rivallie (2nd) | **changes-requested** (M2 packet); **superseded** (original record) | `art/review/2026-10-31-rivallie/`, `docs/team/comms/director/approvals/rivallie--2026-10-31-rivallie-m2.md` | Re-packeted with C3d quality fixes; awaiting Director listening/look |
+| Golden sample: Rivallie (2nd) | **director-approved** (body, clips) | `docs/team/comms/director/approvals/rivallie--2026-10-31-rivallie-c3d.md` | Face layer (C3b) and publish |
 | Golden sample: Neris (3rd) | **candidate** (M3 reference) | `art/source/references/npc-neris/` | Blender B4 golden sample after M11 redraw |
-| Bramblefang candidate packet | **director-approved** | `docs/team/comms/director/approvals/bramblefang--2026-10-31-bramblefang.md` | Publish unblocked by Codex C3b |
+| Bramblefang candidate packet | **director-approved** | `docs/team/comms/director/approvals/bramblefang--2026-10-31-bramblefang-c3d.md` | Publish unblocked by Codex C3b |
 | Marshstalker candidate packet | **director-approved** | `docs/team/comms/director/approvals/marshstalker--2026-10-31-marshstalker.md` | Publish unblocked by Codex C3b |
-| Mireling reference sheet | **candidate** (M10/M11) | `art/source/references/mireling/` | Blender B3 quadruped sequence #3 |
+| Mireling candidate packet | **candidate** (15 clips, 616 frames) | `art/review/2026-10-31-mireling/` | Awaiting Director approval record |
 | Golden village map layout (C6) | **director-approved** (layout scope) | `docs/team/comms/director/approvals/world-aqualia--world-aqualia-aqualia_village-1.md` | Environment dressing and tile sets via C10/C11/M9 |
+| Riverlands map layout (B2) | **candidate** (Pass 003 layout) | `art/review/world-aqualia-aqualia_riverlands-1/` | Awaiting Director layout approval record |
 | Aqualia region bible & plan (C5, Proposal 001) | **director-approved** | `docs/team/comms/director/approvals/proposal-001.md` | Authoring unblocked for Riverlands (B2) |
 
 ## Workstreams
@@ -33,7 +34,7 @@ Queues: [codex](queue/codex.md) · [communicator](queue/communicator.md) · [ble
 | Agent harness (AGENTS.md, hooks, skills, briefs) | claude | **director-approved** (Directive 001–007) | `.agents/`, `AGENTS.md` |
 | Sprite Forge stages | codex + claude | **candidate** (creatures operational; C3d quality fixes landed; C9a human bring-up done; C3b publish in progress) | `docs/art/forge-pipeline.md`, `docs/team/queue/codex.md` |
 | Engineering mandates (2×, layers, paging, …) | codex | **candidate** (contract v2 baseline `a3fc957`, approvals ledger, 9-emotion portraits) | [codex brief](briefs/codex.md) |
-| World pipeline | codex | **candidate** (C4-C6 approved layout, C6b smoke checks, C7 LDtk compiler candidate) | `docs/team/queue/codex.md`, `art/source/world/` |
+| World pipeline | codex + blender | **candidate** (C4-C6 approved village layout, B2 Riverlands layout candidate, C6b/B6 smoke checks, C7 compiler candidate) | `docs/team/queue/codex.md`, `art/source/world/` |
 | Tileforge | codex | **candidate** (C11 delivered; ADR 022; tile-forge skill) | `docs/engineering/tileforge.md`, `docs/team/queue/codex.md` |
 | Creature minds (System 1) | codex | **candidate** (queued C13–C16) | `docs/doctrine/14-creature-minds.md`, `docs/team/comms/claude/2026-11-01T0700--to-all--directive-005-creature-minds.md` |
 | Reference sheets: quadrupeds, humanoids, mannequins | communicator | **candidate** (M10 done, M11 ramps/schemas normalized, redraws in progress) | `art/source/references/` |

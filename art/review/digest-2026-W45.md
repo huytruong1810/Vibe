@@ -37,18 +37,33 @@ This digest compiles all candidate deliverables, proposals, and packets currentl
 - **Key Changes**: Eliminated all pronoun/gender inferences from casting; rationales grounded strictly in age, role, and personality; Mira, Dara, and Finn re-anchored to `src/content/villagers.ts`; Kokoro-82M v0.19 / v1.0 library cited.
 - **Ask**: Approve Proposal 002 Revision 2 as the baseline for voice and syllable blip synthesis.
 
-### 4. Blender B1 / Claude C3d: Rivallie Re-Packeted Golden Sample
-- **Deliverable**: Rivallie golden sample candidate packet re-rendered with C3d quality fixes (eliminated color bleed onto back/flanks, ground-contact lying clips, digest-bound packaging).
+### 4. Blender B3: Mireling Candidate Review Packet
+- **Deliverable**: Golden sample quadruped sprite frames on `creature.medium` canvas (56×56, height 26px, anchor `[28, 41]`).
 - **Evidence**:
-  - Candidate packet: [`art/review/2026-10-31-rivallie/`](file:///c:/Users/htruong/source/repos/Vibe/art/review/2026-10-31-rivallie/)
-  - QA report: 12/12 hard checks passing.
-- **Ask**: Review contact sheet and locomotion GIFs for director approval.
+  - Candidate packet: [`art/review/2026-10-31-mireling/`](file:///c:/Users/htruong/source/repos/Vibe-art/art/review/2026-10-31-mireling/)
+  - Source Digest: `e49ddef2bb67e24f53a7fdc4486767b2819d87575cbbedd6b6419f4fd9839632`
+  - Frame Count: 15 clips, 616 frames total, 8 palette colors.
+  - QA report: 12/12 hard checks passing; margins 4px (threshold $\ge 2\text{px}$); anchor drift 0.000px.
+  - Comms notice: [`docs/team/comms/blender/2026-10-31T1845--to-director-communicator--mireling-packet.md`](file:///c:/Users/htruong/source/repos/Vibe-art/docs/team/comms/blender/2026-10-31T1845--to-director-communicator--mireling-packet.md).
+- **Ask**: Review contact sheet (`contact.png`), turntable (`turntable.gif`), and walk/run clips for Director approval.
+
+### 5. Blender B2: Riverlands Map Layout Candidate Packet
+- **Deliverable**: Topological layout pass `003-riverlands-layout.json` for level `aqualia_riverlands` (120×68 tiles, 16 screens in 4×4 grid).
+- **Evidence**:
+  - Candidate packet: [`art/review/world-aqualia-aqualia_riverlands-1/`](file:///c:/Users/htruong/source/repos/Vibe-art/art/review/world-aqualia-aqualia_riverlands-1/)
+  - Canonical project digest: `e0584b254976740835de3882531f27e9fcc09347ea8d45a16cb455ba04536c1a`
+  - Review Renders: 18 inspected images (`overview.png`, `before-overview.png`, 16 screen crops `screen-0-0.png` through `screen-3-3.png`).
+  - QA Evidence: `worldforge check` reports 0 findings on `aqualia_riverlands` and 0 findings on full-region `aqualia`. All 16 landmarks, 4 story spots, 6 habitats, 6 ambience emitters, warm-terrace elevation, and 5 routes placed.
+  - Comms notice: [`docs/team/comms/blender/2026-10-31T1829--to-director-communicator--riverlands-candidate-packet.md`](file:///c:/Users/htruong/source/repos/Vibe-art/docs/team/comms/blender/2026-10-31T1829--to-director-communicator--riverlands-candidate-packet.md).
+- **Scope Note**: Approval covers layout, routes, landmarks, and collisions only; terrain swatches and environment dressing remain preliminary pending C11/M9 and C10 kits.
+- **Ask**: Review topological layout and landmark placement for Director layout approval.
 
 ---
 
 ## State of Previous Approvals (Director Records)
-- **Bramblefang**: Approved (`docs/team/comms/director/approvals/bramblefang--2026-10-31-bramblefang.md`).
-- **Marshstalker**: Approved (`docs/team/comms/director/approvals/marshstalker--2026-10-31-marshstalker.md`).
+- **Rivallie**: Approved for body/clips (`docs/team/comms/director/approvals/rivallie--2026-10-31-rivallie-c3d.md`, digest `69b6c10d...`).
+- **Bramblefang**: Approved (`docs/team/comms/director/approvals/bramblefang--2026-10-31-bramblefang-c3d.md`, digest `ef40a024...`).
+- **Marshstalker**: Approved (`docs/team/comms/director/approvals/marshstalker--2026-10-31-marshstalker.md`, digest `654b7fa0...`).
 - **Aqualia Region Bible & Plan (C5)**: Approved (`docs/team/comms/director/approvals/proposal-001.md`).
 - **Golden Village Map Layout (Codex C6)**: Approved for layout scope (`docs/team/comms/director/approvals/world-aqualia--world-aqualia-aqualia_village-1.md`).
   - **Packet Spec**: [`art/review/world-aqualia-aqualia_village-1/packet.json`](file:///c:/Users/htruong/source/repos/Vibe-art/art/review/world-aqualia-aqualia_village-1/packet.json)
