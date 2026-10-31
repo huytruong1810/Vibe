@@ -76,3 +76,4 @@ Doctrine constraint: PRD-7.3 (maximum 4 generations per reference sheet, 2 per p
 | :- | :--- | :--- | :--- | :--- | :--- | :--- |
 | 1 | 2026-10-31 10:36 | creature v1 | 3-view quadruped | none | no | 429 RESOURCE_EXHAUSTED on gemini-3.1-flash-image (resets ~14:55 UTC) |
 | 2 | 2026-10-31 14:57 | creature v1 | 3-view quadruped | none | no | 429 RESOURCE_EXHAUSTED on gemini-3.1-flash-image (extended model capacity limit) |
+| 3 | 2026-10-31 15:53 | creature v1 | 3-view quadruped (front, left profile, back) | art/source/references/mireling/sheet.png | yes | passes PRD-3 checklist: single all-fours neutral stance across all 3 views, 4 planted sturdy clawed limbs separated from body, ancient snapping turtle moss-fringed head matching approved portrait, dark carapace with overgrown living moss/fern garden and purple water lilies, plain neutral background, no text labels |
