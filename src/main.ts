@@ -56,9 +56,12 @@ export class GameBootstrap {
       audio: () => this.audio.toggle(),
       select: (id) => this.renderer.select(id),
     });
-    this.rendererReady = this.renderer.initialize(this.hud.gameElement).then(() => {
-      if (this.renderer.catalog) this.hud.setAssets(this.renderer.catalog);
-    });
+    this.rendererReady = document.fonts
+      .load('38px Silver')
+      .then(() => this.renderer.initialize(this.hud.gameElement))
+      .then(() => {
+        if (this.renderer.catalog) this.hud.setAssets(this.renderer.catalog);
+      });
     void this.rendererReady.catch((error) =>
       this.hud.notify(`Unable to initialize WebGL: ${String(error)}`),
     );

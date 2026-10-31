@@ -280,6 +280,8 @@ def st_packet(asset: str) -> str:
     _turntable(wd, pdir / "turntable.gif")
     from forgelib import qa
     gifs = qa.clip_gifs(wd / "pix", _canvas(asset), pdir / "clips")
+    from forgelib.review import export_packet
+    export_packet(wd, pdir, asset, spec("render_spec"), _canvas(asset))
     if (wd / "rig_preview.png").exists():
         shutil.copy2(wd / "rig_preview.png", pdir / "rig_preview.png")
     (pdir / "README.md").write_text(
@@ -287,6 +289,7 @@ def st_packet(asset: str) -> str:
         f"- Contact sheet: `contact.png` (4x: rest pose in 8 facings on grey and grass, then one row per clip; red marks = anchor)\n"
         f"- Turntable: `turntable.gif`\n- Clips: `clips/<clip>.gif` ({len(gifs)} clips, every facing side by side at clip fps, 4x)\n"
         f"- Rig: `rig_preview.png` (landmarks and test poses)\n- QA: `qa_report.json` ({len(report['checks'])} checks)\n"
+        "- In-scene candidate preview: `review.json` with registered 2x frames and socket tracks (development gallery)\n"
         f"- Forge inputs: `art/source/references/{slug(asset)}/`, `art/source/forge/recipes/{slug(asset)}.json`\n\n"
         f"Approval is the director's alone (L7): `docs/team/comms/director/approvals/{slug(asset)}--{pdir.name}.md`.\n")
     return f"packet {_rel(pdir)}; message the communicator and director with what you saw"

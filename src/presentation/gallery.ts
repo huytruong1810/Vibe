@@ -10,6 +10,8 @@ import {
   type Facing,
 } from './assets/catalog';
 import './gallery.css';
+import './ui/theme.css';
+import { mountPacketReview } from './packet-review';
 
 interface Identity {
   readonly kind: 'species' | 'npc' | 'origin' | 'environment' | 'item';
@@ -336,6 +338,7 @@ export async function initializeArtGallery(root: HTMLElement): Promise<() => voi
       </section>
     </main>`;
 
+  const disposePacket = mountPacketReview(root);
   const el = <T extends HTMLElement = HTMLElement>(id: string): T =>
     root.querySelector<T>(`#${id}`)!;
 
@@ -648,7 +651,7 @@ export async function initializeArtGallery(root: HTMLElement): Promise<() => voi
       : 340;
     drawFrame(context, frame, 320, anchorY, scale, bounds);
     if (!frame) {
-      context.font = '18px system-ui';
+      context.font = '38px Silver';
       context.fillStyle = '#e4b183';
       context.textAlign = 'center';
       context.fillText(
@@ -708,7 +711,7 @@ export async function initializeArtGallery(root: HTMLElement): Promise<() => voi
         : 175;
       drawFrame(card.context, cardFrame, 120, cardAnchorY, fit, bounds);
       if (!cardFrame) {
-        card.context.font = '14px system-ui';
+        card.context.font = '38px Silver';
         card.context.fillStyle = '#e4b183';
         card.context.textAlign = 'center';
         card.context.fillText('Not authored', 120, 100);
@@ -919,7 +922,7 @@ export async function initializeArtGallery(root: HTMLElement): Promise<() => voi
       // Height guidelines: 32px, 64px, 96px, 144px
       const guideHeights = [32, 64, 96, 144];
       lineupContext.setLineDash([4, 6]);
-      lineupContext.font = '11px monospace';
+      lineupContext.font = '38px Silver';
       for (const gh of guideHeights) {
         const yPos = groundY - gh * scale;
         if (yPos < 20) continue;
@@ -960,7 +963,7 @@ export async function initializeArtGallery(root: HTMLElement): Promise<() => voi
       } else {
         // Missing placeholder
         lineupContext.fillStyle = '#e4b183';
-        lineupContext.font = '12px system-ui';
+        lineupContext.font = '38px Silver';
         lineupContext.textAlign = 'center';
         lineupContext.fillText('Placeholder', centerX, groundY - 40);
         lineupContext.textAlign = 'left';
@@ -968,12 +971,12 @@ export async function initializeArtGallery(root: HTMLElement): Promise<() => voi
 
       if (showLabels) {
         // Name and badge
-        lineupContext.font = 'bold 12px system-ui';
+        lineupContext.font = '38px Silver';
         lineupContext.fillStyle = isSelected ? '#efcf8b' : '#f0f5ec';
         lineupContext.textAlign = 'center';
         lineupContext.fillText(act.name, centerX, groundY + 22);
 
-        lineupContext.font = '10px system-ui';
+        lineupContext.font = '38px Silver';
         lineupContext.fillStyle = act.isHd ? '#8be0a4' : '#f1cf85';
         lineupContext.fillText(act.isHd ? '★ NATIVE HD' : 'PROTOTYPE', centerX, groundY + 38);
         lineupContext.textAlign = 'left';
@@ -1397,7 +1400,7 @@ export async function initializeArtGallery(root: HTMLElement): Promise<() => voi
 
       // Nametag
       if (showNames && !ent.isCanopy) {
-        sceneContext.font = '11px system-ui';
+        sceneContext.font = '38px Silver';
         sceneContext.fillStyle = isSelected ? '#efcf8b' : '#f0f5ec';
         sceneContext.textAlign = 'center';
         sceneContext.fillText(ent.name, ent.x, ent.y + 14);
@@ -1757,6 +1760,7 @@ export async function initializeArtGallery(root: HTMLElement): Promise<() => voi
   populateIdentities();
 
   const dispose = (): void => {
+    disposePacket();
     disposed = true;
     lifecycle.abort();
     cancelAnimationFrame(animation);

@@ -66,11 +66,11 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 
 ### C1 · Accept the hand-off and sequence it
 
-- status: open
+- status: done
 - goal: confirm DOC-5, TEAM-8.4 and this queue; reply to directives 001–004 with the order you'll take C4–C12 and any conflicts with work you have in flight.
 - inputs: `docs/team/comms/claude/*directive-00{1,2,3,4}*`, `docs/doctrine/README.md` DOC-5
 - done when: `docs/team/comms/codex/<ts>--to-all--re-directive-004.md` exists and is pushed
-- evidence:
+- evidence: 2026-10-31 [C1 acknowledgment](../comms/codex/2026-10-31T1008--to-all--re-directive-004.md), [session/checks](../comms/codex/session-2026-10-31.md); engineering fast-forwarded to 798f7f6; acknowledgment published with this status update.
 
 ### C2 · Forge contract and multi-clip groundwork
 
@@ -295,10 +295,10 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 
 ### C8 · Existing P0s from your brief
 
-- status: open
+- status: in-progress (UI/packet-gallery first)
 - goal: the UI kit (UI-M6, L9), the approvals ledger (L7), 2× scale (ART-M1…M3), the in-scene review gallery for `art/review/` packets (PRD-M2) and the `elder` build profile. Interleave them with C4–C7 as you judge best. The gallery is what the director uses to review golden samples, so land it before C3's packet if you can.
 - done when: the acceptance column of each row in `docs/team/briefs/codex.md`
-- evidence:
+- evidence: [C8 implementation and validation](../comms/codex/2026-10-31T1040--to-all--c8-ui-packet-gallery.md); [ADR 019](../../engineering/decisions.md#adr-019--director-ui-kit-and-isolated-candidate-packet-preview). This slice does not complete the remaining C8 gates.
 
 ### C9a · Human path: UAL2 rig fit, UAL retarget, human clips, forge selftest
 
