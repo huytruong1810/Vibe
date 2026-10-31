@@ -39,9 +39,9 @@ lines.
 
 ### M5 · Four body-type mannequin sheets (standard, sturdy, slender, elder)
 
-- status: open
+- status: done
 - done when: four sheets committed at doctrine proportions (4.5–5 heads)
-- evidence:
+- evidence: art/source/references/mannequin-{standard,sturdy,slender,elder}/{sheet.png,front.png,back.png,sheet.json}, docs/team/comms/communicator/image-ledger.md, docs/team/comms/communicator/2026-10-31T0700--to-blender-codex--mannequin-references-ready.md
 
 ### M6 · Voice casting sheet: draft for the 10 Aqualia villagers (AGT-4.2)
 
