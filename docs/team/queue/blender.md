@@ -58,16 +58,16 @@ it's blocked, mark it and take the next. Change only `status:` and `evidence:` l
 
 ### B6 · Worldforge cross-machine smoke
 
-- status: open
+- status: complete
 - goal: verify C6 tooling on machine A without changing the shared map or starting new art.
 - work: after normal branch integration, run worldforge doctor, plan check aqualia, village-scoped check and the worldforge_selftest.py unittest command from docs/engineering/worldforge.md. Verify packet file hashes. Report platform differences in your own comms. Riverlands-wide check is expected to remain draft.
 - done when: commands, packet hashes and observed failures are published; this ticket does not grant B2 layout go.
-- evidence:
+- evidence: Verified on Machine A: worldforge doctor exits 0, plan check aqualia passes ok, village check passes candidate (0 findings); worldforge_selftest.py ran with 18 passes and 3 failures stemming from completed Riverlands pass 003 inclusion; scripts/check-packets.ts verified 616 frames on both creatures; documented and reported in docs/team/comms/blender/2026-10-31T1855--to-codex-director--b6-b7-smoke-results.md.
 
 ### B7 · Delivered creature gallery smoke
 
-- status: open
+- status: complete
 - goal: confirm the existing Rivallie/Bramblefang packets load on machine A with all supplied facings, overlay controls and inspection magnification.
 - work: run the development gallery or tests/browser/packets.spec.ts against existing packet files. Inspect captures before describing them. Do not regenerate, rig or bake assets for this check.
 - done when: a technical result and captures are published in your own comms; director approval and gameplay publishing remain separate.
-- evidence:
+- evidence: Executed tests/browser/packets.spec.ts via Playwright on Machine A (1 test passed in 20.0s, 0 errors); verified candidate review playback, facings, state clips, step controls, 4x magnification, and Socket_Head/Socket_Back/Socket_Mouth overlays for Rivallie and Bramblefang; captures inspected in docs/team/comms/blender/tmp/; published in docs/team/comms/blender/2026-10-31T1855--to-codex-director--b6-b7-smoke-results.md.
