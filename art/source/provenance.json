@@ -1,2190 +1,1098 @@
 {
-  "generatedAt": "2026-10-30T23:11:53.302973+00:00",
+  "generatedAt": "2026-10-31T02:43:56.137696+00:00",
   "pipeline": "Master Art Pipeline Reboot v2 (Stage 1 & 2)",
   "assets": {
     "art/source/exports/player_aqualia/idle_s_0.png": {
-      "sha256": "82b8984b71c6793f47469420bf165faf778c20e3038da5ab46006edfc1865ebc",
-      "size": 1099,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "83f8a8a6e0f81b6fedb7377c83e35a9130ca2bcb6b2a93e799b947cd57c20514",
+      "size": 10431,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_se_0.png": {
-      "sha256": "904cdcccff3e7e12a87c398b068c0a932cc918045f9f9b1cec246cc4cc069949",
-      "size": 1059,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "7dbe17e8d6d6d25b55ae722add1d92ee26150556a42106479fc68eeeba9c2cca",
+      "size": 10023,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_e_0.png": {
-      "sha256": "f124be7bd510e72372bef5f70e7067b35e778814d866040a2d72ee1256e57d25",
-      "size": 870,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "a57ce815d2c3bb04faec9af673d86e3f67fc2c8ad219812be95d929b8c8a8b53",
+      "size": 7589,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_n_0.png": {
-      "sha256": "ab9e3e614e3fa34924838c6f22479def92934ed47982cbb73bc3b5086ef58a55",
-      "size": 966,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "57617e8e21d1d418aad8b9f317eb5cb9866e7e5ea61a7568d7ae728b84badf55",
+      "size": 10328,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/rivallie/idle_s_0.png": {
-      "sha256": "17358801d4f23296dbcc5b59b7f634d2def2bfad947a4d37f1ae6fe35ab5aff9",
-      "size": 813,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "aa166d5966931fade459fd78af53aaefdf9c946390473909e9f3af0ef6168ad7",
+      "size": 6002,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_se_0.png": {
-      "sha256": "f0c402772eb7bcc3ca611e8213be56ce2db16fbcda89d48e495666a745904955",
-      "size": 978,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "e82d689f6cc8440837e7db3eda54b3556d615a123dcd930ee0d8822f27e0e635",
+      "size": 9608,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_e_0.png": {
-      "sha256": "8f06937d78d2312661fc81c7b2933bc53d2d89d61a979b57d8b344c893a02e66",
-      "size": 1010,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "8e166db87e21b1dd163c5c64ac903320c6594edee4b4010ec15c1e12d444965f",
+      "size": 9062,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_n_0.png": {
-      "sha256": "a904aeb3904847df6cd41146b8f41cc5d4a4fdab1652ea94892a2e2c66bf70ea",
-      "size": 769,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "96b81e340b9ba01067ec2be726609375a722189f83127420cad4cd5f8a594305",
+      "size": 4411,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/environment/ground_grass.png": {
       "sha256": "54aa62ba16dc4376c3574498a8ff5216ec7fee4f71f1a4dea4a34d37cb324e5f",
       "size": 4650,
-      "dimensions": [
-        64,
-        64
-      ],
-      "anchor": [
-        0.5,
-        0.5
-      ]
+      "dimensions": [64, 64],
+      "anchor": [0.5, 0.5]
     },
     "art/source/exports/environment/ground_dirt.png": {
-      "sha256": "4fee8b473910e33a9aa58a60add00310069ba47af2a4842c07338f871acbce99",
+      "sha256": "404fe6fa31c6d3740a8eb802fd085447993b215de58791cbe1d27453e018707e",
       "size": 4865,
-      "dimensions": [
-        64,
-        64
-      ],
-      "anchor": [
-        0.5,
-        0.5
-      ]
+      "dimensions": [64, 64],
+      "anchor": [32, 32]
     },
     "art/source/exports/environment/ground_sand.png": {
-      "sha256": "79976f4d8d08f2bb543c529ea0a5519f4e33dcf73b911c33515d10c3d0d18c75",
-      "size": 2948,
-      "dimensions": [
-        64,
-        64
-      ],
-      "anchor": [
-        0.5,
-        0.5
-      ]
+      "sha256": "603c8f408b480befc2f8202e504954bdf613f2a177cabb3f5c3b225f24b544ff",
+      "size": 2947,
+      "dimensions": [64, 64],
+      "anchor": [32, 32]
     },
     "art/source/exports/environment/ground_freshwater.png": {
-      "sha256": "c0a3ebe999f6da52328f4047550b1ca7aff0f8f9a09e27aabaeb8223dd64f322",
-      "size": 1525,
-      "dimensions": [
-        64,
-        64
-      ],
-      "anchor": [
-        0.5,
-        0.5
-      ]
+      "sha256": "04250e13bc47af5c360cbffc6c1439a4fa350af58482b7fd388829e77f03fa94",
+      "size": 1532,
+      "dimensions": [64, 64],
+      "anchor": [32, 32]
     },
     "art/source/exports/environment/shore_freshwater_mask_1.png": {
-      "sha256": "0aadd3710b019dc50a20d47022183fefb510365488639d0f2b735158e7af8136",
+      "sha256": "0190efa457e0b16c751324fabffed4d56fdd3b55ac6651fdc7e1686a6470f7ba",
       "size": 987,
-      "dimensions": [
-        64,
-        64
-      ],
-      "anchor": [
-        0.5,
-        0.5
-      ]
+      "dimensions": [64, 64],
+      "anchor": [32, 32]
     },
     "art/source/exports/environment/shore_freshwater_mask_2.png": {
-      "sha256": "3a1cd1e25daba6d73a0b9640a290ffc2f6945c7b9fad9d5b89da79e7967f9ad7",
-      "size": 970,
-      "dimensions": [
-        64,
-        64
-      ],
-      "anchor": [
-        0.5,
-        0.5
-      ]
+      "sha256": "1f6b3a094a8bd7910e630967911f46172e3356d4bd72e2a249beb4101bf196d7",
+      "size": 972,
+      "dimensions": [64, 64],
+      "anchor": [32, 32]
     },
     "art/source/exports/environment/shore_freshwater_mask_3.png": {
       "sha256": "90376eeb3706fe236c289412eeeb84b5be4a50739b209ce530a721741263f329",
       "size": 1011,
-      "dimensions": [
-        64,
-        64
-      ],
-      "anchor": [
-        0.5,
-        0.5
-      ]
+      "dimensions": [64, 64],
+      "anchor": [0.5, 0.5]
     },
     "art/source/exports/environment/shore_freshwater_mask_4.png": {
-      "sha256": "3327e892478141d3de189d59455f68d8c5770a4e8311d186433417ab33f83134",
-      "size": 977,
-      "dimensions": [
-        64,
-        64
-      ],
-      "anchor": [
-        0.5,
-        0.5
-      ]
+      "sha256": "9dbc189c419c603130b0a743ad13c7e04e22f67a4ec434d413c1a290fda331ae",
+      "size": 979,
+      "dimensions": [64, 64],
+      "anchor": [32, 32]
     },
     "art/source/exports/environment/shore_freshwater_mask_5.png": {
-      "sha256": "ec85a4b33ff39bf4f0173bfc1931184aa75dd21370a2f76993edf3faac9d52b9",
-      "size": 1301,
-      "dimensions": [
-        64,
-        64
-      ],
-      "anchor": [
-        0.5,
-        0.5
-      ]
+      "sha256": "aa7b92f075b6a6b39c5d74f58c0fd3ad18341628b68770df85c8879df80ce253",
+      "size": 1315,
+      "dimensions": [64, 64],
+      "anchor": [32, 32]
     },
     "art/source/exports/environment/shore_freshwater_mask_6.png": {
-      "sha256": "9d7bec52c3eda7eb924e6856bf6903230ff036f760eb496ed39a411e3689535d",
-      "size": 1663,
-      "dimensions": [
-        64,
-        64
-      ],
-      "anchor": [
-        0.5,
-        0.5
-      ]
+      "sha256": "e0117b0f4f5dc67d20f4e4cb1b4853f250a5b3e1b114e6d00eaf9a5cd13d5048",
+      "size": 1667,
+      "dimensions": [64, 64],
+      "anchor": [32, 32]
     },
     "art/source/exports/environment/shore_freshwater_mask_7.png": {
-      "sha256": "944e60a35434b58059a9f34af00d6e6614f8525fe38396817540df99ef00de8e",
-      "size": 1079,
-      "dimensions": [
-        64,
-        64
-      ],
-      "anchor": [
-        0.5,
-        0.5
-      ]
+      "sha256": "79b092172ff9c05089d4995405391bf655a1b8474ac3bf9e6cadadbb01858912",
+      "size": 1082,
+      "dimensions": [64, 64],
+      "anchor": [32, 32]
     },
     "art/source/exports/environment/shore_freshwater_mask_8.png": {
-      "sha256": "9fddc4d37d54ab4411085277b0134bb3d340dca5711e04c5cfa4982377492a98",
-      "size": 941,
-      "dimensions": [
-        64,
-        64
-      ],
-      "anchor": [
-        0.5,
-        0.5
-      ]
+      "sha256": "0956115d488bfdf9aa1846af1ee16dc6d89404a4f6415f1b4b75c27e51e79977",
+      "size": 951,
+      "dimensions": [64, 64],
+      "anchor": [32, 32]
     },
     "art/source/exports/environment/shore_freshwater_mask_9.png": {
-      "sha256": "ea6b4d423c1a3ac90ee59d9e858596323f2cc79c5e723bc53a9074f01d5017c4",
-      "size": 1640,
-      "dimensions": [
-        64,
-        64
-      ],
-      "anchor": [
-        0.5,
-        0.5
-      ]
+      "sha256": "fcb23b732781e93103f28ee136b7a76781770d612030a16e07e92dae74110e3e",
+      "size": 1637,
+      "dimensions": [64, 64],
+      "anchor": [32, 32]
     },
     "art/source/exports/environment/shore_freshwater_mask_10.png": {
-      "sha256": "10f1efa2f43e537d6dabf91d0973329c24c5b847c6bb1f9a79a1fab4fd6fa7ef",
-      "size": 1267,
-      "dimensions": [
-        64,
-        64
-      ],
-      "anchor": [
-        0.5,
-        0.5
-      ]
+      "sha256": "624a68a6018ddfae2d6d1c9327c914cbd15aa7b725eb85bffa7c275f67e044a7",
+      "size": 1289,
+      "dimensions": [64, 64],
+      "anchor": [32, 32]
     },
     "art/source/exports/environment/shore_freshwater_mask_11.png": {
-      "sha256": "5e88d080fd3d7e410fe20d73e8de75ec6e848cf647aa9a9ae8d3e85130015282",
-      "size": 1083,
-      "dimensions": [
-        64,
-        64
-      ],
-      "anchor": [
-        0.5,
-        0.5
-      ]
+      "sha256": "1402bd8b80a0f4dc51719a288b26180adf4ab3a3fe65be7b13936e696f957bb7",
+      "size": 1088,
+      "dimensions": [64, 64],
+      "anchor": [32, 32]
     },
     "art/source/exports/environment/shore_freshwater_mask_12.png": {
       "sha256": "07e3e50eebc62bf50cf6faa8d941e11c42ff2521e412f4bebdcef85725153d98",
       "size": 1017,
-      "dimensions": [
-        64,
-        64
-      ],
-      "anchor": [
-        0.5,
-        0.5
-      ]
+      "dimensions": [64, 64],
+      "anchor": [0.5, 0.5]
     },
     "art/source/exports/environment/shore_freshwater_mask_13.png": {
-      "sha256": "c73d517a90088a268ea8a0b1d263e2e95276c70b6a4b955142b46f211fa4f61a",
-      "size": 1007,
-      "dimensions": [
-        64,
-        64
-      ],
-      "anchor": [
-        0.5,
-        0.5
-      ]
+      "sha256": "e51cfe357560d9a7aaf6fc2c9df92273bd6331789f81503f22ee723d3405d700",
+      "size": 1001,
+      "dimensions": [64, 64],
+      "anchor": [32, 32]
     },
     "art/source/exports/environment/shore_freshwater_mask_14.png": {
-      "sha256": "e57b62c6a2b22574d56b15ad10cac10621596c322dddf41afda789135281e405",
-      "size": 1070,
-      "dimensions": [
-        64,
-        64
-      ],
-      "anchor": [
-        0.5,
-        0.5
-      ]
+      "sha256": "9ce17587936c34a4f49c9e9003727bc17b2c885c3781436a33986db123bf1820",
+      "size": 1063,
+      "dimensions": [64, 64],
+      "anchor": [32, 32]
     },
     "art/source/exports/environment/cliff_grass.png": {
       "sha256": "116544d3f92e9de296da0734015365547901191fde5a450afb28644c24c23a2f",
       "size": 752,
-      "dimensions": [
-        64,
-        16
-      ],
-      "anchor": [
-        0.5,
-        0.5
-      ]
+      "dimensions": [64, 16],
+      "anchor": [0.5, 0.5]
     },
     "art/source/exports/environment/ramp_grass.png": {
-      "sha256": "83e19ab1042f456bfe0559ef3fc41ec4de443133394c5e5316138777996f1a13",
-      "size": 1451,
-      "dimensions": [
-        64,
-        64
-      ],
-      "anchor": [
-        0.5,
-        0.5
-      ]
+      "sha256": "1e0d43cd0e2eef980f945768202badbd604b59dde5a92a4aabb805fe9ca87411",
+      "size": 1453,
+      "dimensions": [64, 64],
+      "anchor": [32, 32]
     },
     "art/source/exports/environment/tree_oak.png": {
-      "sha256": "275dcebaff81a9a77c959881ab69563c3547b4836df757cfe0e33fbc64119fc0",
-      "size": 882,
-      "dimensions": [
-        128,
-        160
-      ],
-      "anchor": [
-        0.5,
-        0.94
-      ]
+      "sha256": "80c7bd33a5619db27ed708a823760c0551e303d2adf65187e0a2017aa235425d",
+      "size": 3012,
+      "dimensions": [128, 160],
+      "anchor": [64, 120]
     },
     "art/source/exports/environment/canopy_oak.png": {
-      "sha256": "c64919508746d06dcb310b34109793cc4e36261a7f6319c36e24a9466a5165fc",
-      "size": 561,
-      "dimensions": [
-        128,
-        160
-      ],
-      "anchor": [
-        0.5,
-        0.94
-      ]
+      "sha256": "7e46c4b3af74b270f187118f1bea4747c8962c9c17269cb52dc0c3dc9bb62e79",
+      "size": 2424,
+      "dimensions": [128, 160],
+      "anchor": [64, 64]
     },
     "art/source/exports/environment/house_aqualia.png": {
-      "sha256": "32e5c12cd57851444bd985bde22ab91ee056515a1be0d664d0fe424b7a890a7b",
-      "size": 1265,
-      "dimensions": [
-        192,
-        160
-      ],
-      "anchor": [
-        0.5,
-        0.94
-      ]
+      "sha256": "62f8aebf2c9dc0cf85cc0595750c5e996c50a3136b646b1375c3e8ab7a5203fc",
+      "size": 2125,
+      "dimensions": [192, 160],
+      "anchor": [96, 120]
     },
     "art/source/exports/environment/landmark_well.png": {
-      "sha256": "99795cda2284977ebd9a74ee534213799d6b55336ef1aca6de1968adb938501c",
-      "size": 510,
-      "dimensions": [
-        64,
-        80
-      ],
-      "anchor": [
-        0.5,
-        0.925
-      ]
+      "sha256": "9f353e7f64d74e21c6244a814e780722a73bbc3477aeada750ee17136d181140",
+      "size": 601,
+      "dimensions": [64, 80],
+      "anchor": [32, 64]
     },
     "art/source/exports/environment/landmark_waystone.png": {
-      "sha256": "acfa1a4d2fe6705533f8f7b6bd055eefc7676b7f4b51dec4fea42135560bf252",
-      "size": 454,
-      "dimensions": [
-        64,
-        96
-      ],
-      "anchor": [
-        0.5,
-        0.9375
-      ]
+      "sha256": "9237bdd2d2955d6fd9f64d0e52ecda3f0818b61e7abe99286f7d31f116fafdc6",
+      "size": 513,
+      "dimensions": [64, 96],
+      "anchor": [32, 64]
     },
     "art/source/exports/environment/prop_hearth.png": {
-      "sha256": "b3849a883267680138eb6897cd42290cd26a9d2545bd00fcf8dc6f8a197e126b",
-      "size": 350,
-      "dimensions": [
-        64,
-        64
-      ],
-      "anchor": [
-        0.5,
-        0.9
-      ]
+      "sha256": "dcc4feca2bf9a690627195e59689692e8b08161000f068bd2b84d0390912c20d",
+      "size": 376,
+      "dimensions": [64, 64],
+      "anchor": [32, 64]
     },
     "art/source/exports/environment/flora_berries_healthy.png": {
-      "sha256": "75c2018a0449286ae251a7bd6f2308213e1b88a15dbc55f4545261cd8567b4c9",
-      "size": 450,
-      "dimensions": [
-        48,
-        48
-      ],
-      "anchor": [
-        0.5,
-        0.85
-      ]
+      "sha256": "42b67815a7c16847954d6ba2d1a39c4a7bf1140d2dc4aa844ba3555fa5eca6c3",
+      "size": 449,
+      "dimensions": [48, 48],
+      "anchor": [32, 64]
     },
     "art/source/exports/environment/flora_berries_harvested.png": {
       "sha256": "9f4da7eb1d71e5770d5abe26b071fb854aaa916f086b3ca0fbb89c3b1bdc6e8d",
       "size": 297,
-      "dimensions": [
-        48,
-        48
-      ],
-      "anchor": [
-        0.5,
-        0.85
-      ]
+      "dimensions": [48, 48],
+      "anchor": [0.5, 0.85]
     },
     "art/source/exports/environment/flora_berries_burnt.png": {
       "sha256": "82247bb405174b280a7cbdd141c148946996e08db3616a6f4df01303370010fa",
       "size": 337,
-      "dimensions": [
-        48,
-        48
-      ],
-      "anchor": [
-        0.5,
-        0.85
-      ]
+      "dimensions": [48, 48],
+      "anchor": [0.5, 0.85]
     },
     "art/source/exports/environment/flora_reeds_healthy.png": {
-      "sha256": "aceaf883ed68b19d212486c69528e9b8bf23730d00b696626e4693fe6d0d8899",
-      "size": 374,
-      "dimensions": [
-        48,
-        64
-      ],
-      "anchor": [
-        0.5,
-        0.9
-      ]
+      "sha256": "5d8d2e4c43972771a4e16705fe385d28f426952f37a6fed263a1c559e8a8f4f2",
+      "size": 377,
+      "dimensions": [48, 64],
+      "anchor": [32, 64]
     },
     "art/source/exports/environment/flora_reeds_harvested.png": {
-      "sha256": "99ac604bc0c602e654079801c00b91b7af3ca9c44f0c5d5b62c27fb9f8c446ef",
-      "size": 197,
-      "dimensions": [
-        48,
-        64
-      ],
-      "anchor": [
-        0.5,
-        0.9
-      ]
+      "sha256": "0b76d499bdd38226a323f67fe1983601470e4dd8a2f6cb6b9965289dca96b44c",
+      "size": 199,
+      "dimensions": [48, 64],
+      "anchor": [32, 64]
     },
     "art/source/exports/environment/flora_reeds_burnt.png": {
       "sha256": "cfa39c654c90ee1f1a6407e105461feb4b1cdd5dddcc67a4328b883d49ac2802",
       "size": 217,
-      "dimensions": [
-        48,
-        64
-      ],
-      "anchor": [
-        0.5,
-        0.9
-      ]
+      "dimensions": [48, 64],
+      "anchor": [0.5, 0.9]
     },
     "art/source/exports/environment/flora_wheat_healthy.png": {
-      "sha256": "a10092707d7c321ec51c276acf8e0240af50f26c358d12fdf6292b954230a0e8",
-      "size": 356,
-      "dimensions": [
-        48,
-        64
-      ],
-      "anchor": [
-        0.5,
-        0.9
-      ]
+      "sha256": "62e2927a41b6daaa28f2afac7c2c7c854882214e1a29c2c3467b3feb48351b26",
+      "size": 355,
+      "dimensions": [48, 64],
+      "anchor": [32, 64]
     },
     "art/source/exports/environment/flora_wheat_harvested.png": {
       "sha256": "eee18a98c375e0269afc30b0a38a8e684246acf0b5127d146c1d5709f6be8ec1",
       "size": 211,
-      "dimensions": [
-        48,
-        64
-      ],
-      "anchor": [
-        0.5,
-        0.9
-      ]
+      "dimensions": [48, 64],
+      "anchor": [0.5, 0.9]
     },
     "art/source/exports/environment/flora_wheat_burnt.png": {
       "sha256": "1aed851ce0d1853eb6d75318b7a1161f95b347f787d2f987f71dfffa06fa9440",
       "size": 184,
-      "dimensions": [
-        48,
-        64
-      ],
-      "anchor": [
-        0.5,
-        0.9
-      ]
+      "dimensions": [48, 64],
+      "anchor": [0.5, 0.9]
     },
     "art/source/exports/environment/flora_nectar_healthy.png": {
-      "sha256": "bbca157d50cc7fafcc0d1ef2e17923dd5fa4d1522cfbd401739603fa0dfb2c67",
-      "size": 351,
-      "dimensions": [
-        48,
-        48
-      ],
-      "anchor": [
-        0.5,
-        0.85
-      ]
+      "sha256": "97e2618168a448652a0e887e142a4a68383b1634889670163b71833beac4fdc6",
+      "size": 352,
+      "dimensions": [48, 48],
+      "anchor": [32, 64]
     },
     "art/source/exports/environment/flora_nectar_harvested.png": {
       "sha256": "60f233534cbb19c9747aa400ad90268ca813055943571f58418ef1c9c5cbd65b",
       "size": 259,
-      "dimensions": [
-        48,
-        48
-      ],
-      "anchor": [
-        0.5,
-        0.85
-      ]
+      "dimensions": [48, 48],
+      "anchor": [0.5, 0.85]
     },
     "art/source/exports/environment/flora_nectar_burnt.png": {
       "sha256": "4c541195c76f59137c0ddd725b6c313ca2cb2ada65bdbe0b6b811a3e6e68aacd",
       "size": 177,
-      "dimensions": [
-        48,
-        48
-      ],
-      "anchor": [
-        0.5,
-        0.85
-      ]
+      "dimensions": [48, 48],
+      "anchor": [0.5, 0.85]
     },
     "art/source/exports/environment/flora_ashgrass_healthy.png": {
-      "sha256": "ddca92071c48dcd3a6bcc46770db660e38fe90e10486c623dbe3e4540b496284",
-      "size": 295,
-      "dimensions": [
-        48,
-        48
-      ],
-      "anchor": [
-        0.5,
-        0.85
-      ]
+      "sha256": "110f3ca4a7749165a35e6159e4ea4543271545d38904fa566e32da8713d1b282",
+      "size": 297,
+      "dimensions": [48, 48],
+      "anchor": [32, 64]
     },
     "art/source/exports/environment/flora_ashgrass_harvested.png": {
       "sha256": "29512bd9be48179833fa876c8bae5c5dae73db13b7ae81c322dc7b9ba10e4356",
       "size": 174,
-      "dimensions": [
-        48,
-        48
-      ],
-      "anchor": [
-        0.5,
-        0.85
-      ]
+      "dimensions": [48, 48],
+      "anchor": [0.5, 0.85]
     },
     "art/source/exports/environment/flora_ashgrass_burnt.png": {
       "sha256": "3422f5eb8fb465d91a87ba9a9df308239b7984ae33cb6461edbabd72b721f34d",
       "size": 148,
-      "dimensions": [
-        48,
-        48
-      ],
-      "anchor": [
-        0.5,
-        0.85
-      ]
+      "dimensions": [48, 48],
+      "anchor": [0.5, 0.85]
     },
     "art/source/exports/environment/flora_fungi_healthy.png": {
-      "sha256": "ea0255e89c76fa64e956b3c602cb71252748e032214b16dccb2a559fea93c656",
-      "size": 267,
-      "dimensions": [
-        48,
-        48
-      ],
-      "anchor": [
-        0.5,
-        0.85
-      ]
+      "sha256": "4691d5956b17e8f0b28912ce4c5da007146045c08eec10ba42e5695ddcec3b4c",
+      "size": 270,
+      "dimensions": [48, 48],
+      "anchor": [32, 64]
     },
     "art/source/exports/environment/flora_fungi_harvested.png": {
       "sha256": "31367ac435f03e2b8daebe8581b92efa5afd67d89ef1dbd82b4fc449c208674b",
       "size": 187,
-      "dimensions": [
-        48,
-        48
-      ],
-      "anchor": [
-        0.5,
-        0.85
-      ]
+      "dimensions": [48, 48],
+      "anchor": [0.5, 0.85]
     },
     "art/source/exports/environment/flora_fungi_burnt.png": {
       "sha256": "639523e88216fbaaf5524637562ed9dc8a5e091d28060e47c0897815ca57ec73",
       "size": 177,
-      "dimensions": [
-        48,
-        48
-      ],
-      "anchor": [
-        0.5,
-        0.85
-      ]
+      "dimensions": [48, 48],
+      "anchor": [0.5, 0.85]
     },
     "art/source/exports/npcs/neris/idle_s_0.png": {
-      "sha256": "ce13e4522292ee9f073a3d22166cde7ad0c2d88d5e8f93ad0926716a7714fce9",
-      "size": 13752,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "fdcd967024c534ca2e7511fb86699b2ac17762e31b972a6cc5477751564241f1",
+      "size": 13783,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/reed/idle_s_0.png": {
-      "sha256": "72b952f5be08033d23c40699efcc895d02d05731c69a7bae4ab313565b41eaa5",
-      "size": 11024,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "e06e30a967e35ba799f114f249f9fe2ba9fdf7798aa0db3f7e9de170f034e715",
+      "size": 11083,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/willa/idle_s_0.png": {
-      "sha256": "9eedc4ca22482606bba34c99bcad5cff3108475c896138b588cd9dd1bcae2228",
-      "size": 10743,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "eb6ed9403d03380b1ec6d396c26fa2c155cb40beac4868f33378607f483044f1",
+      "size": 10776,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/oren/idle_s_0.png": {
-      "sha256": "750c92fcd5e791292c4bbfc51509504e088ab1b24143468c6ebf3988db50202b",
-      "size": 12320,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "57c8b35529330e07949a2960833f304df391b23c1ae235303055221cb08f1d05",
+      "size": 12337,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/lark/idle_s_0.png": {
-      "sha256": "0aa2a1d9232757562a0af2a7bf423933ddaa832c8eac9e2b3733ba5c923984ca",
-      "size": 11458,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "5e450bd44fc02afd202ad88dc785f5394d256db733ab2b8d304f40037a6dc9b9",
+      "size": 11465,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/dara/idle_s_0.png": {
-      "sha256": "bfa0640019e96e6d52391de7527fce6dd60b8d12549937e0c0b60ae3250d60a7",
-      "size": 11566,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "82a5b1166e79732c93db9f41f0c5f6ad9669c95ffc8b121823f05d2dcb31b4b9",
+      "size": 11548,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/finn/idle_s_0.png": {
-      "sha256": "beaf71dea31a201efbc59d75900d603a0c24df99b9a2a77705d53191f0702d4c",
-      "size": 11361,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "1f6ca5ac0f2c6fa3d9b1424e500f295d50bca5f948c5a9935de1fa59a7b41dfd",
+      "size": 11357,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_s_1.png": {
-      "sha256": "65ce2f94f8a533a0c1ebec82b121f9491e926ebd49e4597d0f490de9c468802d",
-      "size": 1100,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "ad3470cf1671d21522355716a0cb3d8627102bb17f1d46689c46f6a22f556874",
+      "size": 10431,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_s_2.png": {
-      "sha256": "486600041522d7b4a90b472eb4ac66d97e6a33dd50a623022d1a73adbee04c5d",
-      "size": 1098,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "4f1808ed964510a6d97ca5e58c49d820fbd02edb441cb4a785f63ff574665cb5",
+      "size": 10440,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_s_3.png": {
-      "sha256": "486600041522d7b4a90b472eb4ac66d97e6a33dd50a623022d1a73adbee04c5d",
-      "size": 1098,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "4f1808ed964510a6d97ca5e58c49d820fbd02edb441cb4a785f63ff574665cb5",
+      "size": 10440,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_s_4.png": {
-      "sha256": "65ce2f94f8a533a0c1ebec82b121f9491e926ebd49e4597d0f490de9c468802d",
-      "size": 1100,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "ad3470cf1671d21522355716a0cb3d8627102bb17f1d46689c46f6a22f556874",
+      "size": 10431,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_s_5.png": {
-      "sha256": "82b8984b71c6793f47469420bf165faf778c20e3038da5ab46006edfc1865ebc",
-      "size": 1099,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "83f8a8a6e0f81b6fedb7377c83e35a9130ca2bcb6b2a93e799b947cd57c20514",
+      "size": 10431,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_se_1.png": {
-      "sha256": "d63acefb5f42889e3b45bc692c8a7b029be0f6e22fd531cfccb090eb1a73d6e2",
-      "size": 1060,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "622d990732f382fc541fe5a2cc8520cf61e96fc15be47a73fcec0c3b3d4fc353",
+      "size": 10026,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_se_2.png": {
-      "sha256": "22f1946a01a812d3b288a76f52168eb69365002924bdad584dcde8618f485ef8",
-      "size": 1061,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "bb67696d148c5f84efd422110389c52a265b3dc92c30919654f2dc4e68d523bd",
+      "size": 10027,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_se_3.png": {
-      "sha256": "22f1946a01a812d3b288a76f52168eb69365002924bdad584dcde8618f485ef8",
-      "size": 1061,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "bb67696d148c5f84efd422110389c52a265b3dc92c30919654f2dc4e68d523bd",
+      "size": 10027,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_se_4.png": {
-      "sha256": "d63acefb5f42889e3b45bc692c8a7b029be0f6e22fd531cfccb090eb1a73d6e2",
-      "size": 1060,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "622d990732f382fc541fe5a2cc8520cf61e96fc15be47a73fcec0c3b3d4fc353",
+      "size": 10026,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_se_5.png": {
-      "sha256": "904cdcccff3e7e12a87c398b068c0a932cc918045f9f9b1cec246cc4cc069949",
-      "size": 1059,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "7dbe17e8d6d6d25b55ae722add1d92ee26150556a42106479fc68eeeba9c2cca",
+      "size": 10023,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_e_1.png": {
-      "sha256": "6d1304ede9467f05d34ea6d1e86457e6ac4269af4476fb711a8208c607ffd60b",
-      "size": 870,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "c304fa5716b6fba6553a7fe84baf172f67d02a5814f57d752be30613063627c7",
+      "size": 7589,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_e_2.png": {
-      "sha256": "a890f47d8ae77d261c277ee9374a5f458da93e039a07a3f398cd6baf078c5dd8",
-      "size": 874,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "2280bbeb354ced1b6094ca2b56189ded477c4c7696ed4563e600b037dc067136",
+      "size": 7594,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_e_3.png": {
-      "sha256": "a890f47d8ae77d261c277ee9374a5f458da93e039a07a3f398cd6baf078c5dd8",
-      "size": 874,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "2280bbeb354ced1b6094ca2b56189ded477c4c7696ed4563e600b037dc067136",
+      "size": 7594,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_e_4.png": {
-      "sha256": "6d1304ede9467f05d34ea6d1e86457e6ac4269af4476fb711a8208c607ffd60b",
-      "size": 870,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "c304fa5716b6fba6553a7fe84baf172f67d02a5814f57d752be30613063627c7",
+      "size": 7589,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_e_5.png": {
-      "sha256": "f124be7bd510e72372bef5f70e7067b35e778814d866040a2d72ee1256e57d25",
-      "size": 870,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "a57ce815d2c3bb04faec9af673d86e3f67fc2c8ad219812be95d929b8c8a8b53",
+      "size": 7589,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_n_1.png": {
-      "sha256": "2d36e0ad4b7edb17be3c02aee992b87ac6913af341f444ae435e488d691d77f8",
-      "size": 968,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "89ec237bef92e9e2cd62e8e061ae47f3634ee31f9180a6c71106ef7eef61c024",
+      "size": 10332,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_n_2.png": {
-      "sha256": "3c5b067da59643ff8902e3109075289b306d7ff7212bb22c7c62c7f23d4f9133",
-      "size": 970,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "cd0f0249c112f7f5a7727a165fd0d58b6cd88798af707e49c023b5be60bce836",
+      "size": 10331,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_n_3.png": {
-      "sha256": "3c5b067da59643ff8902e3109075289b306d7ff7212bb22c7c62c7f23d4f9133",
-      "size": 970,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "cd0f0249c112f7f5a7727a165fd0d58b6cd88798af707e49c023b5be60bce836",
+      "size": 10331,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_n_4.png": {
-      "sha256": "2d36e0ad4b7edb17be3c02aee992b87ac6913af341f444ae435e488d691d77f8",
-      "size": 968,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "89ec237bef92e9e2cd62e8e061ae47f3634ee31f9180a6c71106ef7eef61c024",
+      "size": 10332,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_n_5.png": {
-      "sha256": "ab9e3e614e3fa34924838c6f22479def92934ed47982cbb73bc3b5086ef58a55",
-      "size": 966,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "57617e8e21d1d418aad8b9f317eb5cb9866e7e5ea61a7568d7ae728b84badf55",
+      "size": 10328,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/rivallie/idle_s_1.png": {
-      "sha256": "73b735dff99a41a75f730b622df826d8e431124efc50a7ab7c4976f817b8d792",
-      "size": 817,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "f3a6be6aa05f8ef7f4ac0e04f228d61fa419f6336e46c1d59d196c70c8833f9c",
+      "size": 6011,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_s_2.png": {
-      "sha256": "73b735dff99a41a75f730b622df826d8e431124efc50a7ab7c4976f817b8d792",
-      "size": 817,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "f3a6be6aa05f8ef7f4ac0e04f228d61fa419f6336e46c1d59d196c70c8833f9c",
+      "size": 6011,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_s_3.png": {
-      "sha256": "17358801d4f23296dbcc5b59b7f634d2def2bfad947a4d37f1ae6fe35ab5aff9",
-      "size": 813,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "aa166d5966931fade459fd78af53aaefdf9c946390473909e9f3af0ef6168ad7",
+      "size": 6002,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_s_4.png": {
-      "sha256": "17358801d4f23296dbcc5b59b7f634d2def2bfad947a4d37f1ae6fe35ab5aff9",
-      "size": 813,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "aa166d5966931fade459fd78af53aaefdf9c946390473909e9f3af0ef6168ad7",
+      "size": 6002,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_s_5.png": {
-      "sha256": "17358801d4f23296dbcc5b59b7f634d2def2bfad947a4d37f1ae6fe35ab5aff9",
-      "size": 813,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "aa166d5966931fade459fd78af53aaefdf9c946390473909e9f3af0ef6168ad7",
+      "size": 6002,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_se_1.png": {
-      "sha256": "c886477b2cd61d8f335305cf3e7bacb170636d0f5af169452a867eb115aa3cbe",
-      "size": 979,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "3d4d5ba635f2a25a91fd658bcb131209379a9085e365cd7c48e7368c56aabc06",
+      "size": 9614,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_se_2.png": {
-      "sha256": "c886477b2cd61d8f335305cf3e7bacb170636d0f5af169452a867eb115aa3cbe",
-      "size": 979,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "3d4d5ba635f2a25a91fd658bcb131209379a9085e365cd7c48e7368c56aabc06",
+      "size": 9614,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_se_3.png": {
-      "sha256": "f0c402772eb7bcc3ca611e8213be56ce2db16fbcda89d48e495666a745904955",
-      "size": 978,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "e82d689f6cc8440837e7db3eda54b3556d615a123dcd930ee0d8822f27e0e635",
+      "size": 9608,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_se_4.png": {
-      "sha256": "f0c402772eb7bcc3ca611e8213be56ce2db16fbcda89d48e495666a745904955",
-      "size": 978,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "e82d689f6cc8440837e7db3eda54b3556d615a123dcd930ee0d8822f27e0e635",
+      "size": 9608,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_se_5.png": {
-      "sha256": "f0c402772eb7bcc3ca611e8213be56ce2db16fbcda89d48e495666a745904955",
-      "size": 978,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "e82d689f6cc8440837e7db3eda54b3556d615a123dcd930ee0d8822f27e0e635",
+      "size": 9608,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_e_1.png": {
-      "sha256": "262610b9e5d9595117b643cbbba12128611cec91191b93127b1ce6edac1d2d77",
-      "size": 1011,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "8bb30084e070b3d5b323de0312e10f328f7d921fbbc65881b60ce41c082934e0",
+      "size": 9065,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_e_2.png": {
-      "sha256": "262610b9e5d9595117b643cbbba12128611cec91191b93127b1ce6edac1d2d77",
-      "size": 1011,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "8bb30084e070b3d5b323de0312e10f328f7d921fbbc65881b60ce41c082934e0",
+      "size": 9065,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_e_3.png": {
-      "sha256": "8f06937d78d2312661fc81c7b2933bc53d2d89d61a979b57d8b344c893a02e66",
-      "size": 1010,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "8e166db87e21b1dd163c5c64ac903320c6594edee4b4010ec15c1e12d444965f",
+      "size": 9062,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_e_4.png": {
-      "sha256": "8f06937d78d2312661fc81c7b2933bc53d2d89d61a979b57d8b344c893a02e66",
-      "size": 1010,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "8e166db87e21b1dd163c5c64ac903320c6594edee4b4010ec15c1e12d444965f",
+      "size": 9062,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_e_5.png": {
-      "sha256": "8f06937d78d2312661fc81c7b2933bc53d2d89d61a979b57d8b344c893a02e66",
-      "size": 1010,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "8e166db87e21b1dd163c5c64ac903320c6594edee4b4010ec15c1e12d444965f",
+      "size": 9062,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_n_1.png": {
-      "sha256": "4212b9c244741ffd47d9d1270da7adb2c71d97b3a2da96181a9d2d8afd987df9",
-      "size": 774,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "5d1e130cbed2f242588d069b8d42480366d8f9003587c69187bb3292cf99df6c",
+      "size": 4413,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_n_2.png": {
-      "sha256": "4212b9c244741ffd47d9d1270da7adb2c71d97b3a2da96181a9d2d8afd987df9",
-      "size": 774,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "5d1e130cbed2f242588d069b8d42480366d8f9003587c69187bb3292cf99df6c",
+      "size": 4413,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_n_3.png": {
-      "sha256": "a904aeb3904847df6cd41146b8f41cc5d4a4fdab1652ea94892a2e2c66bf70ea",
-      "size": 769,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "96b81e340b9ba01067ec2be726609375a722189f83127420cad4cd5f8a594305",
+      "size": 4411,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_n_4.png": {
-      "sha256": "a904aeb3904847df6cd41146b8f41cc5d4a4fdab1652ea94892a2e2c66bf70ea",
-      "size": 769,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "96b81e340b9ba01067ec2be726609375a722189f83127420cad4cd5f8a594305",
+      "size": 4411,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_n_5.png": {
-      "sha256": "a904aeb3904847df6cd41146b8f41cc5d4a4fdab1652ea94892a2e2c66bf70ea",
-      "size": 769,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "96b81e340b9ba01067ec2be726609375a722189f83127420cad4cd5f8a594305",
+      "size": 4411,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/npcs/neris/idle_s_1.png": {
-      "sha256": "3b9b0f5ccb62e911d4f3a03e789ac0ad2a744181ce3cb0c9c14d7c9b8ac957c9",
-      "size": 13752,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "463f2a62a5854816e731bdcd537c172d6f6b503199b47b757577089088ddaede",
+      "size": 13781,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/neris/idle_s_2.png": {
-      "sha256": "920a4302b4bf51cb69a8af666285eb7dadc52028a9c6bba2603c58b468e74c3e",
-      "size": 13751,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "e29732c84f9d1a5bb175c28da2b0773ec4fd7441fb0bea5db382a98021d87869",
+      "size": 13787,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/neris/idle_s_3.png": {
-      "sha256": "920a4302b4bf51cb69a8af666285eb7dadc52028a9c6bba2603c58b468e74c3e",
-      "size": 13751,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "e29732c84f9d1a5bb175c28da2b0773ec4fd7441fb0bea5db382a98021d87869",
+      "size": 13787,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/neris/idle_s_4.png": {
-      "sha256": "3b9b0f5ccb62e911d4f3a03e789ac0ad2a744181ce3cb0c9c14d7c9b8ac957c9",
-      "size": 13752,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "463f2a62a5854816e731bdcd537c172d6f6b503199b47b757577089088ddaede",
+      "size": 13781,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/neris/idle_s_5.png": {
-      "sha256": "ce13e4522292ee9f073a3d22166cde7ad0c2d88d5e8f93ad0926716a7714fce9",
-      "size": 13752,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "fdcd967024c534ca2e7511fb86699b2ac17762e31b972a6cc5477751564241f1",
+      "size": 13783,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/reed/idle_s_1.png": {
-      "sha256": "78a0c9cda90bad173474c852619598bdc1071c7bb472e577768e93ec3c311d92",
-      "size": 11031,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "1bbbc6f4269e1e9dffd37cb85eb44988afd1771b8ed2623d92b0b03b516605ca",
+      "size": 11075,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/reed/idle_s_2.png": {
-      "sha256": "f47e2bee61959c1759826252cc4f078b5692c0bc9131ec5343ccad2db6666697",
-      "size": 11025,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "d0c09d5f4af42ce9323eb453bb1ba2cf63de16e539c62a37e0e0911bc9c23cad",
+      "size": 11075,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/reed/idle_s_3.png": {
-      "sha256": "f47e2bee61959c1759826252cc4f078b5692c0bc9131ec5343ccad2db6666697",
-      "size": 11025,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "d0c09d5f4af42ce9323eb453bb1ba2cf63de16e539c62a37e0e0911bc9c23cad",
+      "size": 11075,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/reed/idle_s_4.png": {
-      "sha256": "78a0c9cda90bad173474c852619598bdc1071c7bb472e577768e93ec3c311d92",
-      "size": 11031,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "1bbbc6f4269e1e9dffd37cb85eb44988afd1771b8ed2623d92b0b03b516605ca",
+      "size": 11075,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/reed/idle_s_5.png": {
-      "sha256": "72b952f5be08033d23c40699efcc895d02d05731c69a7bae4ab313565b41eaa5",
-      "size": 11024,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "e06e30a967e35ba799f114f249f9fe2ba9fdf7798aa0db3f7e9de170f034e715",
+      "size": 11083,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/willa/idle_s_1.png": {
-      "sha256": "1fabb55f9e049d02ccb915bc830bb7b0352ca85ed3fdbcca71a7af329859f0a1",
-      "size": 10748,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "e5955c2b4d5a2859465f406fb964b2f0670c7196b0c40a0d8a230febc3cac0cb",
+      "size": 10778,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/willa/idle_s_2.png": {
-      "sha256": "34db376061f882b517260bc8e2872b46e8d505356363d11a7b19abf2b90477d2",
-      "size": 10747,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "4c656c2179164721f5440749adcb9f02b3c2c41525baeb40ff2fa1caf86dda23",
+      "size": 10781,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/willa/idle_s_3.png": {
-      "sha256": "34db376061f882b517260bc8e2872b46e8d505356363d11a7b19abf2b90477d2",
-      "size": 10747,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "4c656c2179164721f5440749adcb9f02b3c2c41525baeb40ff2fa1caf86dda23",
+      "size": 10781,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/willa/idle_s_4.png": {
-      "sha256": "1fabb55f9e049d02ccb915bc830bb7b0352ca85ed3fdbcca71a7af329859f0a1",
-      "size": 10748,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "e5955c2b4d5a2859465f406fb964b2f0670c7196b0c40a0d8a230febc3cac0cb",
+      "size": 10778,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/willa/idle_s_5.png": {
-      "sha256": "9eedc4ca22482606bba34c99bcad5cff3108475c896138b588cd9dd1bcae2228",
-      "size": 10743,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "eb6ed9403d03380b1ec6d396c26fa2c155cb40beac4868f33378607f483044f1",
+      "size": 10776,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/oren/idle_s_1.png": {
-      "sha256": "3537e8135a19d5fb4d81b40a1af2ba3cd801e1d51e91919c407b79f01468c69c",
-      "size": 12325,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "dbe3ca45eee865c522984c6975d49aa7e0584fa85401b6df84ba47ace3bebdb1",
+      "size": 12344,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/oren/idle_s_2.png": {
-      "sha256": "cb883f0d074fb5a227538b378937269eeb207e8e7dc9016f6682922b499a714f",
-      "size": 12328,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "a6ddb61d8b9d994e71ba941abf3b66d9e5fde1b7881f7be95740e4b63f61736e",
+      "size": 12342,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/oren/idle_s_3.png": {
-      "sha256": "cb883f0d074fb5a227538b378937269eeb207e8e7dc9016f6682922b499a714f",
-      "size": 12328,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "a6ddb61d8b9d994e71ba941abf3b66d9e5fde1b7881f7be95740e4b63f61736e",
+      "size": 12342,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/oren/idle_s_4.png": {
-      "sha256": "3537e8135a19d5fb4d81b40a1af2ba3cd801e1d51e91919c407b79f01468c69c",
-      "size": 12325,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "dbe3ca45eee865c522984c6975d49aa7e0584fa85401b6df84ba47ace3bebdb1",
+      "size": 12344,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/oren/idle_s_5.png": {
-      "sha256": "750c92fcd5e791292c4bbfc51509504e088ab1b24143468c6ebf3988db50202b",
-      "size": 12320,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "57c8b35529330e07949a2960833f304df391b23c1ae235303055221cb08f1d05",
+      "size": 12337,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/lark/idle_s_1.png": {
-      "sha256": "ce0e70fb29592eb0b53126c34dd48b5236162596f8f9a5e5bcb72be9cb6c41ad",
-      "size": 11463,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "68e1c5efb28589898c101d54898ec51544bc56acb5ecb1182e42dec1b04c8136",
+      "size": 11466,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/lark/idle_s_2.png": {
-      "sha256": "225375275ec221cca823b9f39c82b0c7c350b308fa9f2a5ff4c42dd53d5b4007",
-      "size": 11462,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "17ecfe2ceb87269b27ac27bf6c6f7f4f9ab84aca7c676222c065a4496a723f98",
+      "size": 11469,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/lark/idle_s_3.png": {
-      "sha256": "225375275ec221cca823b9f39c82b0c7c350b308fa9f2a5ff4c42dd53d5b4007",
-      "size": 11462,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "17ecfe2ceb87269b27ac27bf6c6f7f4f9ab84aca7c676222c065a4496a723f98",
+      "size": 11469,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/lark/idle_s_4.png": {
-      "sha256": "ce0e70fb29592eb0b53126c34dd48b5236162596f8f9a5e5bcb72be9cb6c41ad",
-      "size": 11463,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "68e1c5efb28589898c101d54898ec51544bc56acb5ecb1182e42dec1b04c8136",
+      "size": 11466,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/lark/idle_s_5.png": {
-      "sha256": "0aa2a1d9232757562a0af2a7bf423933ddaa832c8eac9e2b3733ba5c923984ca",
-      "size": 11458,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "5e450bd44fc02afd202ad88dc785f5394d256db733ab2b8d304f40037a6dc9b9",
+      "size": 11465,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/dara/idle_s_1.png": {
-      "sha256": "aa0f4cd479d673ca12d5e3c0b77ed6143c5ab4e8fc4434c799a47d13e3584dc1",
-      "size": 11569,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "4e8c8d1c5435d2c29626dc9902a36f323f86f5745f6ef5e851b0623c022454da",
+      "size": 11551,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/dara/idle_s_2.png": {
-      "sha256": "4fd77920ad2a4d235ee9f4ff80c02d0b2e2015b693f062df0cb43eb549b3e8be",
-      "size": 11570,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "d77bb0c4ddb9de18272e50402713d8b1b8f1731e748eb0e77dd432391e251d01",
+      "size": 11553,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/dara/idle_s_3.png": {
-      "sha256": "4fd77920ad2a4d235ee9f4ff80c02d0b2e2015b693f062df0cb43eb549b3e8be",
-      "size": 11570,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "d77bb0c4ddb9de18272e50402713d8b1b8f1731e748eb0e77dd432391e251d01",
+      "size": 11553,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/dara/idle_s_4.png": {
-      "sha256": "aa0f4cd479d673ca12d5e3c0b77ed6143c5ab4e8fc4434c799a47d13e3584dc1",
-      "size": 11569,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "4e8c8d1c5435d2c29626dc9902a36f323f86f5745f6ef5e851b0623c022454da",
+      "size": 11551,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/dara/idle_s_5.png": {
-      "sha256": "bfa0640019e96e6d52391de7527fce6dd60b8d12549937e0c0b60ae3250d60a7",
-      "size": 11566,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "82a5b1166e79732c93db9f41f0c5f6ad9669c95ffc8b121823f05d2dcb31b4b9",
+      "size": 11548,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/finn/idle_s_1.png": {
-      "sha256": "8ea0ed0ae11ba7c9a942fe14c6b59b03a1ae3793fd77d3c3d3e0c554c4ac6e75",
-      "size": 11362,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "92c0c582a3c1679a74328ea4d004d3549acc8fb0cdb0c8439ca8a9a67476b8ae",
+      "size": 11361,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/finn/idle_s_2.png": {
-      "sha256": "8468eb98cd08a60d22dd3a0f4df82dc3913459d080a5642f35dee15eaa2caada",
-      "size": 11371,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "040dc3d26779a528c26b7128f61209ad39da24fd1bee182cc7f5225713502361",
+      "size": 11366,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/finn/idle_s_3.png": {
-      "sha256": "8468eb98cd08a60d22dd3a0f4df82dc3913459d080a5642f35dee15eaa2caada",
-      "size": 11371,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "040dc3d26779a528c26b7128f61209ad39da24fd1bee182cc7f5225713502361",
+      "size": 11366,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/finn/idle_s_4.png": {
-      "sha256": "8ea0ed0ae11ba7c9a942fe14c6b59b03a1ae3793fd77d3c3d3e0c554c4ac6e75",
-      "size": 11362,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "92c0c582a3c1679a74328ea4d004d3549acc8fb0cdb0c8439ca8a9a67476b8ae",
+      "size": 11361,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/npcs/finn/idle_s_5.png": {
-      "sha256": "beaf71dea31a201efbc59d75900d603a0c24df99b9a2a77705d53191f0702d4c",
-      "size": 11361,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "1f6ca5ac0f2c6fa3d9b1424e500f295d50bca5f948c5a9935de1fa59a7b41dfd",
+      "size": 11357,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_sw_0.png": {
-      "sha256": "2650e8669f3c117ce98b6b25b36a454483ed26a83ac37378caaf92f0e5dbd8e6",
-      "size": 1089,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "78f7ae481005531fef73310c1fc035b46a657063f79bbc1a2fb1a21c53b2b388",
+      "size": 9976,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_sw_1.png": {
-      "sha256": "d837d2ba1ea03813481ddc80ca7c12a2cd36143dc516840a51691cdd84b64e2d",
-      "size": 1090,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "3e4e3d332df1f3f2a82c429e51af548c1fa074e3986ce2663f6195849d8d6a12",
+      "size": 9979,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_sw_2.png": {
-      "sha256": "6707cfc727b4d1e094b4cdc0be9862b2f907b0a0e8818ccf52a3d1e0fb58a33b",
-      "size": 1090,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "953e20669fecf651945423a1bb576f0c72cfbd4a1a25829d0180ccb2de331d51",
+      "size": 9985,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_sw_3.png": {
-      "sha256": "6707cfc727b4d1e094b4cdc0be9862b2f907b0a0e8818ccf52a3d1e0fb58a33b",
-      "size": 1090,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "953e20669fecf651945423a1bb576f0c72cfbd4a1a25829d0180ccb2de331d51",
+      "size": 9985,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_sw_4.png": {
-      "sha256": "d837d2ba1ea03813481ddc80ca7c12a2cd36143dc516840a51691cdd84b64e2d",
-      "size": 1090,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "3e4e3d332df1f3f2a82c429e51af548c1fa074e3986ce2663f6195849d8d6a12",
+      "size": 9979,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_sw_5.png": {
-      "sha256": "2650e8669f3c117ce98b6b25b36a454483ed26a83ac37378caaf92f0e5dbd8e6",
-      "size": 1089,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "78f7ae481005531fef73310c1fc035b46a657063f79bbc1a2fb1a21c53b2b388",
+      "size": 9976,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_w_0.png": {
-      "sha256": "f3e777e40694a4f960c7018052a7a7344d3d57266802e4f6deb3be47857418c1",
-      "size": 880,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "6bf23e5d15af9155cea5161d4046b4d3970282ee8b59ea8e808e68d45181725e",
+      "size": 7584,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_w_1.png": {
-      "sha256": "696bf3b165b23e0a0762e237e00d1c9eab7daf91815f48a4390b770db69bf570",
-      "size": 882,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "24f9643b5556a262388bb8fc9505805ab1a17daba3444d7d333e77fa37aba663",
+      "size": 7587,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_w_2.png": {
-      "sha256": "59d044d9f7cbc135485e00cfe5907964edeb9076a6570c694185c6151549f79e",
-      "size": 881,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "07f464b350ca26cb17c8f01863a8e9337527a22c350a3e9bc9ed030f3f8f2456",
+      "size": 7592,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_w_3.png": {
-      "sha256": "59d044d9f7cbc135485e00cfe5907964edeb9076a6570c694185c6151549f79e",
-      "size": 881,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "07f464b350ca26cb17c8f01863a8e9337527a22c350a3e9bc9ed030f3f8f2456",
+      "size": 7592,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_w_4.png": {
-      "sha256": "696bf3b165b23e0a0762e237e00d1c9eab7daf91815f48a4390b770db69bf570",
-      "size": 882,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "24f9643b5556a262388bb8fc9505805ab1a17daba3444d7d333e77fa37aba663",
+      "size": 7587,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_w_5.png": {
-      "sha256": "f3e777e40694a4f960c7018052a7a7344d3d57266802e4f6deb3be47857418c1",
-      "size": 880,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "6bf23e5d15af9155cea5161d4046b4d3970282ee8b59ea8e808e68d45181725e",
+      "size": 7584,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/rivallie/idle_sw_0.png": {
-      "sha256": "c0fcf72ec7b73136ebe0e4e283664d7cd54008f64d97a15968e5ff772ebdcc8c",
-      "size": 949,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "734efbb448eae3c79621d12aeab85612991d58e2eb978cb7a9cf94683099ac86",
+      "size": 9567,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_sw_1.png": {
-      "sha256": "f278b27281e66520c60c256aa9b69bbff331b86d2324a6cb10b9e88025c43c7d",
-      "size": 952,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "cfcfdb2563c363920400ec0c8b5b155082acf53b22aec124dcca4c421a177631",
+      "size": 9567,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_sw_2.png": {
-      "sha256": "f278b27281e66520c60c256aa9b69bbff331b86d2324a6cb10b9e88025c43c7d",
-      "size": 952,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "cfcfdb2563c363920400ec0c8b5b155082acf53b22aec124dcca4c421a177631",
+      "size": 9567,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_sw_3.png": {
-      "sha256": "c0fcf72ec7b73136ebe0e4e283664d7cd54008f64d97a15968e5ff772ebdcc8c",
-      "size": 949,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "734efbb448eae3c79621d12aeab85612991d58e2eb978cb7a9cf94683099ac86",
+      "size": 9567,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_sw_4.png": {
-      "sha256": "c0fcf72ec7b73136ebe0e4e283664d7cd54008f64d97a15968e5ff772ebdcc8c",
-      "size": 949,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "734efbb448eae3c79621d12aeab85612991d58e2eb978cb7a9cf94683099ac86",
+      "size": 9567,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_sw_5.png": {
-      "sha256": "c0fcf72ec7b73136ebe0e4e283664d7cd54008f64d97a15968e5ff772ebdcc8c",
-      "size": 949,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "734efbb448eae3c79621d12aeab85612991d58e2eb978cb7a9cf94683099ac86",
+      "size": 9567,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_w_0.png": {
-      "sha256": "832a1b40fae493ccbccb3dacdc827cf798c16015313b4503b6366b02ba237f14",
-      "size": 984,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "82f0fbab037bc734afa7e2d66d550364213c64227f27d44f8848164d6b422927",
+      "size": 9098,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_w_1.png": {
-      "sha256": "2439fe329c35e04b92bb57e0c34dc0cd7c5eea2154d547a02d4066af39c95091",
-      "size": 986,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "b3c73e24c6bd3174bc0563df622b6a46307c56a93b0ac58dd5814110e089ea8e",
+      "size": 9099,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_w_2.png": {
-      "sha256": "2439fe329c35e04b92bb57e0c34dc0cd7c5eea2154d547a02d4066af39c95091",
-      "size": 986,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "b3c73e24c6bd3174bc0563df622b6a46307c56a93b0ac58dd5814110e089ea8e",
+      "size": 9099,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_w_3.png": {
-      "sha256": "832a1b40fae493ccbccb3dacdc827cf798c16015313b4503b6366b02ba237f14",
-      "size": 984,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "82f0fbab037bc734afa7e2d66d550364213c64227f27d44f8848164d6b422927",
+      "size": 9098,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_w_4.png": {
-      "sha256": "832a1b40fae493ccbccb3dacdc827cf798c16015313b4503b6366b02ba237f14",
-      "size": 984,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "82f0fbab037bc734afa7e2d66d550364213c64227f27d44f8848164d6b422927",
+      "size": 9098,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_w_5.png": {
-      "sha256": "832a1b40fae493ccbccb3dacdc827cf798c16015313b4503b6366b02ba237f14",
-      "size": 984,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "82f0fbab037bc734afa7e2d66d550364213c64227f27d44f8848164d6b422927",
+      "size": 9098,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/player_aqualia/idle_ne_0.png": {
-      "sha256": "9b430c88d88eef7dd00683f9fbcf2ba511e9af1bf7e976894c4e33f2bc15d45d",
-      "size": 983,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "43a9d1319b2dbbaa206a749964fe9e592fbb054c97d69d18a8c319973438e55a",
+      "size": 11434,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_ne_1.png": {
-      "sha256": "0fbbd1c81dfbd87b0e04c8fe64ca3454a0809c7dcbe8a8d7a6c76f16c9936fdc",
-      "size": 986,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "bcc206a4bb3f4febd7d82e564967b837e8d195e2435ea3d338e0e2931689cec5",
+      "size": 11437,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_ne_2.png": {
-      "sha256": "5fe22bf546503095a0e68db0a0406a9beef5a401dfd1773236f607aa264653a1",
-      "size": 986,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "f321221ac6468cc5078e8d0ceb6d5b2829fdf4b3d473efee49e2a912917f3759",
+      "size": 11441,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_ne_3.png": {
-      "sha256": "5fe22bf546503095a0e68db0a0406a9beef5a401dfd1773236f607aa264653a1",
-      "size": 986,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "f321221ac6468cc5078e8d0ceb6d5b2829fdf4b3d473efee49e2a912917f3759",
+      "size": 11441,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_ne_4.png": {
-      "sha256": "0fbbd1c81dfbd87b0e04c8fe64ca3454a0809c7dcbe8a8d7a6c76f16c9936fdc",
-      "size": 986,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "bcc206a4bb3f4febd7d82e564967b837e8d195e2435ea3d338e0e2931689cec5",
+      "size": 11437,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_ne_5.png": {
-      "sha256": "9b430c88d88eef7dd00683f9fbcf2ba511e9af1bf7e976894c4e33f2bc15d45d",
-      "size": 983,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "43a9d1319b2dbbaa206a749964fe9e592fbb054c97d69d18a8c319973438e55a",
+      "size": 11434,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_nw_0.png": {
-      "sha256": "f624f3673ebfe768af71329d8a899d399c437d1ddc2b7473e7150eb80271c38a",
-      "size": 950,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "d42281fe33de4c4aa9871ed17bda3d2e2c0a921706d239f6a9f1c8d9f09f6f4e",
+      "size": 11432,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_nw_1.png": {
-      "sha256": "c0245d9bef052fb70d75339696c3024b91d31651d51e49fbeb5c76c89f681332",
-      "size": 951,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "22c889dc2ecd8a6b8e3701115e24becfb4bcf75094fbf722068a0e7aceebddad",
+      "size": 11436,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_nw_2.png": {
-      "sha256": "8995315e1b0f93080c88650297e5a3acaa5c07caa18e64e6fea60c92326ac9ea",
-      "size": 956,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "8fb667926346f4fc811a45128d03e6e4491ca3c83f8346d048127f0c9c6599fa",
+      "size": 11445,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_nw_3.png": {
-      "sha256": "8995315e1b0f93080c88650297e5a3acaa5c07caa18e64e6fea60c92326ac9ea",
-      "size": 956,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "8fb667926346f4fc811a45128d03e6e4491ca3c83f8346d048127f0c9c6599fa",
+      "size": 11445,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_nw_4.png": {
-      "sha256": "c0245d9bef052fb70d75339696c3024b91d31651d51e49fbeb5c76c89f681332",
-      "size": 951,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "22c889dc2ecd8a6b8e3701115e24becfb4bcf75094fbf722068a0e7aceebddad",
+      "size": 11436,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/player_aqualia/idle_nw_5.png": {
-      "sha256": "f624f3673ebfe768af71329d8a899d399c437d1ddc2b7473e7150eb80271c38a",
-      "size": 950,
-      "dimensions": [
-        96,
-        144
-      ],
-      "anchor": [
-        48,
-        132
-      ]
+      "sha256": "d42281fe33de4c4aa9871ed17bda3d2e2c0a921706d239f6a9f1c8d9f09f6f4e",
+      "size": 11432,
+      "dimensions": [96, 144],
+      "anchor": [48, 132]
     },
     "art/source/exports/rivallie/idle_ne_0.png": {
-      "sha256": "e4ff9f7feb00e9c88f1ff4c6047a163d2b7d3d8a33a560ff7b74850b945f8d10",
-      "size": 1056,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "8bf7493659c95a301ebb5cb4582c484363f427cf8cf5d02e728a0c41075395ea",
+      "size": 5706,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_ne_1.png": {
-      "sha256": "94fa46ce553984508d283e7dffe69e1355d65593cd220f50373eafb268c356f2",
-      "size": 1062,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "8aed9bbced00350caabac09f69a3e1a313d8113fa2bc4d16a77d0daf2ed63dab",
+      "size": 5714,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_ne_2.png": {
-      "sha256": "94fa46ce553984508d283e7dffe69e1355d65593cd220f50373eafb268c356f2",
-      "size": 1062,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "8aed9bbced00350caabac09f69a3e1a313d8113fa2bc4d16a77d0daf2ed63dab",
+      "size": 5714,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_ne_3.png": {
-      "sha256": "e4ff9f7feb00e9c88f1ff4c6047a163d2b7d3d8a33a560ff7b74850b945f8d10",
-      "size": 1056,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "8bf7493659c95a301ebb5cb4582c484363f427cf8cf5d02e728a0c41075395ea",
+      "size": 5706,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_ne_4.png": {
-      "sha256": "e4ff9f7feb00e9c88f1ff4c6047a163d2b7d3d8a33a560ff7b74850b945f8d10",
-      "size": 1056,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "8bf7493659c95a301ebb5cb4582c484363f427cf8cf5d02e728a0c41075395ea",
+      "size": 5706,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_ne_5.png": {
-      "sha256": "e4ff9f7feb00e9c88f1ff4c6047a163d2b7d3d8a33a560ff7b74850b945f8d10",
-      "size": 1056,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "8bf7493659c95a301ebb5cb4582c484363f427cf8cf5d02e728a0c41075395ea",
+      "size": 5706,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_nw_0.png": {
-      "sha256": "c747e48949bafb6ebf0f7f175846f4ee5081416a49352c51cff6abeecb7d9038",
-      "size": 1033,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "8ab201db368b7114151f6bd2c258d08bced9815b84e03eb496400b144fe03403",
+      "size": 5759,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_nw_1.png": {
-      "sha256": "9e73e246b1ac31fe805bd45010e1fd52194fb5e690e5eef9efc64938affeca56",
-      "size": 1036,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "640559b218dd7a53a2b3070f76e2e43782d037133973e4a3a14bf214cb4ea2eb",
+      "size": 5763,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_nw_2.png": {
-      "sha256": "9e73e246b1ac31fe805bd45010e1fd52194fb5e690e5eef9efc64938affeca56",
-      "size": 1036,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "640559b218dd7a53a2b3070f76e2e43782d037133973e4a3a14bf214cb4ea2eb",
+      "size": 5763,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_nw_3.png": {
-      "sha256": "c747e48949bafb6ebf0f7f175846f4ee5081416a49352c51cff6abeecb7d9038",
-      "size": 1033,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "8ab201db368b7114151f6bd2c258d08bced9815b84e03eb496400b144fe03403",
+      "size": 5759,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_nw_4.png": {
-      "sha256": "c747e48949bafb6ebf0f7f175846f4ee5081416a49352c51cff6abeecb7d9038",
-      "size": 1033,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "8ab201db368b7114151f6bd2c258d08bced9815b84e03eb496400b144fe03403",
+      "size": 5759,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     },
     "art/source/exports/rivallie/idle_nw_5.png": {
-      "sha256": "c747e48949bafb6ebf0f7f175846f4ee5081416a49352c51cff6abeecb7d9038",
-      "size": 1033,
-      "dimensions": [
-        96,
-        96
-      ],
-      "anchor": [
-        48,
-        86
-      ]
+      "sha256": "8ab201db368b7114151f6bd2c258d08bced9815b84e03eb496400b144fe03403",
+      "size": 5759,
+      "dimensions": [96, 96],
+      "anchor": [48, 86]
     }
   }
 }

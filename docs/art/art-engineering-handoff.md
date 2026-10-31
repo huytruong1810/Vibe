@@ -17,28 +17,32 @@ Our goal is simple: **deliver commercial AAA JRPG-grade pixel art while rigorous
 ## 2. Technical Post-Mortem: What We Tried & Failed
 
 ### Failure 1: Naive Diffusion Cutouts (Early Stage)
+
 - **What was attempted**: Prompting image generators for individual frames and applying basic rectangular crops.
 - **Why it failed**:
-  1. *Mechanical slicing*: In East profile views, Rivallie's wide paddle fan tail was sliced off by rectangular bounding crops.
-  2. *Boundary contact*: Cutouts frequently had pixels touching the canvas boundary, directly violating engineering's $\ge 1\text{px}$ margin check (`assets-check.ts`).
-  3. *Anchor drift*: Because centers were calculated from naive bounding box midpoints rather than true foot ground-contact points, rotating characters between S, SE, E, and N facings caused distracting sliding and hopping.
+  1. _Mechanical slicing_: In East profile views, Rivallie's wide paddle fan tail was sliced off by rectangular bounding crops.
+  2. _Boundary contact_: Cutouts frequently had pixels touching the canvas boundary, directly violating engineering's $\ge 1\text{px}$ margin check (`assets-check.ts`).
+  3. _Anchor drift_: Because centers were calculated from naive bounding box midpoints rather than true foot ground-contact points, rotating characters between S, SE, E, and N facings caused distracting sliding and hopping.
 
 ### Failure 2: Pure Mathematical Pillow Procedural Drawing (Middle Stage)
+
 - **What was attempted**: Completely drawing characters, creatures, and cottages using mathematical formulas, shaded rectangles, Pillow primitives, and signed distance field (SDF) normal shaders.
 - **Why it failed**:
   - While technically satisfying every engineering check (zero margin violations, exact hashes, 100% deterministic), visually the assets looked stiff, flat, and blocky ("programmer art"). They failed the artistic bar for a commercial AAA pixel-art experience.
 
 ### Failure 3: Rectangular Bounding-Box Overlap Bleed
+
 - **What was attempted**: Cropping multi-figure master turnaround sheets into individual sprites using connected component bounding boxes.
 - **Why it failed**:
   - In sheets where figures were positioned closely (e.g. Rivallie East's long paddle tail reaching $x=1095$ while Rivallie North began at $x=1070$), the rectangular bounding box of Rivallie North captured the tail tip of Rivallie East, resulting in a vertical line cut artifact on the left margin.
-  - *Fix*: Applied strict connected component mask isolation (`comp_rgba[~mask_pad, 3] = 0`).
+  - _Fix_: Applied strict connected component mask isolation (`comp_rgba[~mask_pad, 3] = 0`).
 
 ### Failure 4: Discrete Row-Shift Scanline Tearing in Breathing Generators
+
 - **What was attempted**: Forward-shifting rows `y + y_shift` to simulate chest expansion and breathing heave.
 - **Why it failed**:
   - Whenever `y_shift` stepped by 1 (e.g., from $-2$ to $-1$), destination row $y-1$ was skipped, producing 1-pixel wide horizontal transparent slits across the torso.
-  - *Fix*: Implemented continuous inverse mapping with hole-filling interpolation in `art/source/generators/actors/breathing.py`, guaranteeing 0 introduced column or row gaps.
+  - _Fix_: Implemented continuous inverse mapping with hole-filling interpolation in `art/source/generators/actors/breathing.py`, guaranteeing 0 introduced column or row gaps.
 
 ---
 
@@ -79,13 +83,16 @@ To reconcile **commercial AAA aesthetics** with **engineering determinism**, we 
 ```
 
 ### Key Technical Safeguards:
+
 1. **Component Isolation Masking**:
+
    ```python
    comp_rgba = np.array(matted)[ymin_pad:ymax_pad, xmin_pad:xmax_pad].copy()
    mask_pad = (labeled[ymin_pad:ymax_pad, xmin_pad:xmax_pad] == (idx + 1))
    comp_rgba[~mask_pad, 3] = 0  # Zero out pixels belonging to neighboring figures
    cutout = Image.fromarray(comp_rgba)
    ```
+
    Completely prevents adjacent limbs or tails from bleeding into neighboring figure crops.
 
 2. **Zero-Drift Ground Contact Registration**:
@@ -126,5 +133,3 @@ To reconcile **commercial AAA aesthetics** with **engineering determinism**, we 
    - Engineering can run `python art/source/pipeline/rebuild.py --check` at any time to verify that assets on disk match the master pipeline output.
 4. **Interactive Verification**:
    - Engineering can review generated proofs in [`docs/art/handover-context.md`](handover-context.md), [`docs/art/review-gallery.md`](review-gallery.md), or the live gallery at `/gallery.html` (`npm run dev`).
-
-
