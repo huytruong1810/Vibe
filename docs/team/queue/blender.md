@@ -18,7 +18,7 @@ it's blocked, mark it and take the next. Change only `status:` and `evidence:` l
 
 ### B1 · Rivallie on the single-pose sheet
 
-- status: blocked: waiting for the communicator's single-pose Rivallie sheet (M2)
+- status: candidate
 - goal: Claude ran the first Rivallie golden sample on the old sheet, using its side view only (`art/review/2026-10-31-rivallie/`, QA `candidate`). When M2 lands, re-run Rivallie on the new sheet and compare.
 - work:
   1. In `recipes/rivallie.json`, set `gen3d.views` and `texture.views` to every view of the new sheet that shows the same pose.
@@ -26,7 +26,7 @@ it's blocked, mark it and take the next. Change only `status:` and `evidence:` l
   3. Open `gen3d/preview.png` (one creature, one pose), `rig_preview.png` and `contact.png`, and the walk and run GIFs in the packet.
   4. Report what is better or worse than the 2026-10-31 packet: the belly colour, the silhouette, and how the legs step.
 - done when: a new packet exists, the ticket is `candidate`, and you've messaged the director and the communicator with the comparison
-- evidence:
+- evidence: 2026-10-31 re-run on M2 single-pose sheet complete; 15 clips, 616 frames; QA candidate; review packet updated in art/review/2026-10-31-rivallie/
 
 ### B2 · Riverlands map
 
@@ -38,10 +38,10 @@ it's blocked, mark it and take the next. Change only `status:` and `evidence:` l
 
 ### B3 · Remaining creatures, one at a time
 
-- status: blocked: the director must approve a Rivallie golden sample first (PRD-4)
+- status: in_progress (bramblefang candidate; marshstalker/mireling waiting for reference sheets)
 - goal: quadruped species first, in this order: bramblefang, marshstalker, mireling. steamshell (shelled), zephyrit and cindermoth (winged) and ignicap (mushroom-biped) wait for codex templates. Each needs its reference sheet from the communicator (all-fours pose for quadrupeds, same pose in every view).
 - done when: a packet per species, each `candidate`
-- evidence:
+- evidence: 2026-10-31 bramblefang candidate packet generated (art/review/2026-10-31-bramblefang/), 15 clips, 616 frames, 12/12 hard QA checks pass, approved by director (docs/team/comms/director/approvals/bramblefang--2026-10-31-bramblefang.md); marshstalker and mireling pending communicator M10 reference sheets
 
 ### B4 · Golden samples: player-aqualia, then Neris (humans)
 

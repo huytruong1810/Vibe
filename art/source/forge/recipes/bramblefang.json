@@ -1,0 +1,27 @@
+{
+  "asset": "bramblefang",
+  "kind": "creature",
+  "heightArtPx": 42,
+  "ramps": {
+    "pelt": "basalt",
+    "mane": "ember",
+    "fangs": "cream"
+  },
+  "gen3d": {
+    "seed": 1234,
+    "steps": 50,
+    "views": [
+      "front",
+      "left",
+      "back"
+    ]
+  },
+  "notes": "3-view quadruped reference sheet (communicator ticket M10). All 3 views share single standing all-fours pose with charcoal-slate basalt pelt, blazing ember mane, cream saber fangs. creature.large canvas (80x72, anchor 40,56).",
+  "texture": {
+    "views": [
+      "front",
+      "left",
+      "back"
+    ]
+  }
+}
