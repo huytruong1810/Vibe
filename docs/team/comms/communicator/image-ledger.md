@@ -38,24 +38,28 @@ Doctrine constraint: PRD-7.3 (maximum 4 generations per reference sheet, 2 per p
 | # | date (UTC) | template | purpose | result | kept? | why |
 | :- | :--- | :--- | :--- | :--- | :--- | :--- |
 | 1 | 2026-10-31 10:14 | bodytype v1 | standard base mannequin (5 heads) | art/source/references/mannequin-standard/sheet.png | yes | passes PRD-3 checklist: 2-view A-pose front and back, neutral 5-head proportions, featureless matte grey mannequin, empty hands, even lighting, plain grey background, no clothes |
+| 2 | 2026-10-31 18:05 | bodytype v1 | 3-view standard base mannequin (4.5–5 heads, 45° A-pose) | none | no | 429 RESOURCE_EXHAUSTED on gemini-3.1-flash-image (extended model capacity limit) |
 
 ## mannequin-sturdy
 
 | # | date (UTC) | template | purpose | result | kept? | why |
 | :- | :--- | :--- | :--- | :--- | :--- | :--- |
 | 1 | 2026-10-31 10:14 | bodytype v1 | sturdy base mannequin (5 heads) | art/source/references/mannequin-sturdy/sheet.png | yes | passes PRD-3 checklist: 2-view A-pose front and back, robust 5-head proportions with broader chest and limbs, matte grey mannequin, empty hands, even lighting, plain grey background |
+| 2 | 2026-10-31 18:05 | bodytype v1 | 3-view sturdy base mannequin (4.5–5 heads, 45° A-pose) | none | no | 429 RESOURCE_EXHAUSTED on gemini-3.1-flash-image (extended model capacity limit) |
 
 ## mannequin-slender
 
 | # | date (UTC) | template | purpose | result | kept? | why |
 | :- | :--- | :--- | :--- | :--- | :--- | :--- |
 | 1 | 2026-10-31 10:14 | bodytype v1 | slender base mannequin (5 heads) | art/source/references/mannequin-slender/sheet.png | yes | passes PRD-3 checklist: 2-view A-pose front and back, slender 5-head proportions with narrower frame, matte grey mannequin, empty hands, even lighting, plain grey background |
+| 2 | 2026-10-31 18:05 | bodytype v1 | 3-view slender base mannequin (4.5–5 heads, 45° A-pose) | none | no | 429 RESOURCE_EXHAUSTED on gemini-3.1-flash-image (extended model capacity limit) |
 
 ## mannequin-elder
 
 | # | date (UTC) | template | purpose | result | kept? | why |
 | :- | :--- | :--- | :--- | :--- | :--- | :--- |
 | 1 | 2026-10-31 10:15 | bodytype v1 | elder base mannequin (4.5 heads) | art/source/references/mannequin-elder/sheet.png | yes | passes PRD-3 checklist: 2-view A-pose front and back, mature ~4.5-head proportions with softened spine posture, matte grey mannequin, empty hands, even lighting, plain grey background |
+| 2 | 2026-10-31 18:05 | bodytype v1 | 3-view elder base mannequin (4.5 heads, 45° A-pose) | none | no | 429 RESOURCE_EXHAUSTED on gemini-3.1-flash-image (extended model capacity limit) |
 
 ## bramblefang
 

@@ -2,11 +2,11 @@
   "asset": "mannequin:slender",
   "kind": "mannequin",
   "bodyType": "slender",
-  "proportions": "5 heads",
+  "proportions": "4.5-5 heads",
   "views": {
     "front": "front.png",
     "back": "back.png"
   },
-  "generations": 1,
+  "generations": 2,
   "ledger": "docs/team/comms/communicator/image-ledger.md#mannequin-slender"
 }

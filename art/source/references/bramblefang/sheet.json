@@ -12,9 +12,9 @@
     "back": "back.png"
   },
   "ramps": {
-    "pelt": "charcoal",
-    "mane": "amber",
-    "fangs": "ivory",
+    "pelt": "basalt",
+    "mane": "ember",
+    "fangs": "cream",
     "eyes": "gold"
   },
   "generations": 1,

@@ -99,7 +99,7 @@ lines.
 
 ### M11 · Redraw the human sheets; fix ramp names on every sheet
 
-- status: open
+- status: in_progress (palette ramps and metadata schemas normalized; 3-view redraw paused on image model capacity limit)
 - goal: bring every reference sheet up to PRD-3 and L3 (director decision via directive 006).
 - work:
   1. **Human sheets: player-aqualia, npc-neris, and the four mannequins (standard, sturdy, slender, elder).**
@@ -118,7 +118,7 @@ lines.
 
   3. **mireling `sheet.json`:** use the same schema as the other sheets (`asset`, `kind`, `identitySources`, `ramps`, `generations`, `ledger`).
 - done when: every sheet passes these checks, the ledger is updated within quota (PRD-7), and you've messaged codex and blender
-- evidence:
+- evidence: art/source/references/{bramblefang,marshstalker,mireling,player-aqualia,npc-neris,mannequin-*}/sheet.json, docs/team/comms/communicator/image-ledger.md
 
 ### M12 · Relay C6 review evidence
 

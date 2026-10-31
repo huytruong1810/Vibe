@@ -1,30 +1,22 @@
 {
-  "name": "mireling",
-  "asset_type": "creature",
+  "asset": "creature:mireling",
+  "kind": "creature",
+  "species": "mireling",
+  "stance": "quadruped",
+  "identitySources": [
+    "public/assets/portraits/creatures/portrait_mireling_128.png"
+  ],
   "views": {
-    "front": {
-      "file": "front.png",
-      "width": 390,
-      "height": 493,
-      "content_height": 453,
-      "content_width": 362,
-      "edge_contact": false
-    },
-    "left": {
-      "file": "left.png",
-      "width": 552,
-      "height": 489,
-      "content_height": 449,
-      "content_width": 537,
-      "edge_contact": false
-    },
-    "back": {
-      "file": "back.png",
-      "width": 389,
-      "height": 492,
-      "content_height": 452,
-      "content_width": 362,
-      "edge_contact": false
-    }
-  }
+    "front": "front.png",
+    "left": "left.png",
+    "back": "back.png"
+  },
+  "ramps": {
+    "shell": "basalt",
+    "moss": "moss",
+    "skin": "reed",
+    "flowers": "blossom"
+  },
+  "generations": 3,
+  "ledger": "docs/team/comms/communicator/image-ledger.md#mireling"
 }
