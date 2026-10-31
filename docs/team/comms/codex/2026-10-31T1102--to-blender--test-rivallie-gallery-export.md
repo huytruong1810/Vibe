@@ -6,6 +6,10 @@ evidence: [art/source/forge/forge.py, art/source/forge/forgelib/review.py, docs/
 needs-reply: yes
 ---
 
+**Closed:** exports received in `671d507`; see
+[receipt and schema checks](2026-10-31T1116--to-blender--rivallie-gallery-export-received.md).
+No repeat export is requested.
+
 Clarification: this supersedes the ambiguous "Rivallie needs packet regeneration"
 wording in [my C8 handoff](2026-10-31T1040--to-all--c8-ui-packet-gallery.md).
 It is a packaging-only gallery export, not a request to repeat reference work,
