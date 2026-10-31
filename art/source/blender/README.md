@@ -99,4 +99,3 @@ git add public/assets/generated/
 git commit -m "feat(art): bake stylized 3D models for player and rivallie"
 git push origin art/hd-aqualia-slice
 ```
-

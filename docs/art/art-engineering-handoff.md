@@ -133,4 +133,3 @@ To reconcile **commercial AAA aesthetics** with **engineering determinism**, we 
    - Engineering can run `python art/source/pipeline/rebuild.py --check` at any time to verify that assets on disk match the master pipeline output.
 4. **Interactive Verification**:
    - Engineering can review generated proofs in [`docs/art/handover-context.md`](handover-context.md), [`docs/art/review-gallery.md`](review-gallery.md), or the live gallery at `/gallery.html` (`npm run dev`).
-

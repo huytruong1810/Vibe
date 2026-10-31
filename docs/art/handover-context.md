@@ -9,9 +9,10 @@
 
 ## 1. Context & Mission Overview
 
-Welcome to the Hearthwild project. You are stepping in on a dedicated machine equipped with Blender to implement and execute the **3D-to-Pixel-Art pipeline** (*Dead Cells* / Motion Twin technique) for character and creature animations.
+Welcome to the Hearthwild project. You are stepping in on a dedicated machine equipped with Blender to implement and execute the **3D-to-Pixel-Art pipeline** (_Dead Cells_ / Motion Twin technique) for character and creature animations.
 
 ### The Problem We Solved (Post-Mortem):
+
 1. **2D AI Diffusion Limitations**:
    - When generating 2D turnaround sheets with diffusion models, frames look artistically impressive in isolation, but fail catastrophically in continuous 8-way rotations.
    - Characters suffered severe **identity drift** and **volumetric morphing**: Rivallie's volume jumped $+65\%$ between South and South-East, and collapsed $-53\%$ at North. Face shapes, fur tufts, clothing details, and silhouettes morphed continuously during rotation.
@@ -29,14 +30,14 @@ Welcome to the Hearthwild project. You are stepping in on a dedicated machine eq
 
 You must uphold all of the following rules without exception:
 
-| Constraint | Requirement | Why It Exists |
-| :--- | :--- | :--- |
-| **Git Push Rule** | **NEVER force push (`--force`)** | Protects active collaborative branches and PR histories. |
-| **Domain Isolation** | **Never touch simulation domains, worker bridges, or runtime adapters** | Presentation and Art layers must remain completely decoupled from game simulation logic. |
-| **Atlas Budget** | **Must pack into 1 single page ($2048 \times 2048$)** | Decoded texture memory budget is 16 MiB. Current 790 frames use only 3.96 MiB (over 75% headroom remaining). |
-| **Ground Root Anchors** | **Humanoid: $(48, 132)$ on $96 \times 144$<br>Rivallie: $(48, 86)$ on $96 \times 96$** | Fixed integer foot contact point ensures characters never slide or hop when changing facing angles. |
-| **Transparent Margins** | **$\ge 2\text{px}$ transparent padding on all borders** | Engine check (`npm run check:assets`) fails if any non-transparent pixel touches within $1\text{px}$ of the canvas edge. |
-| **Deterministic CI** | `python art/source/pipeline/rebuild.py --check` must pass in < 2s | CI enforces that committed sprites match reproducible source outputs with zero SHA-256 diff. |
+| Constraint              | Requirement                                                                            | Why It Exists                                                                                                            |
+| :---------------------- | :------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------- |
+| **Git Push Rule**       | **NEVER force push (`--force`)**                                                       | Protects active collaborative branches and PR histories.                                                                 |
+| **Domain Isolation**    | **Never touch simulation domains, worker bridges, or runtime adapters**                | Presentation and Art layers must remain completely decoupled from game simulation logic.                                 |
+| **Atlas Budget**        | **Must pack into 1 single page ($2048 \times 2048$)**                                  | Decoded texture memory budget is 16 MiB. Current 790 frames use only 3.96 MiB (over 75% headroom remaining).             |
+| **Ground Root Anchors** | **Humanoid: $(48, 132)$ on $96 \times 144$<br>Rivallie: $(48, 86)$ on $96 \times 96$** | Fixed integer foot contact point ensures characters never slide or hop when changing facing angles.                      |
+| **Transparent Margins** | **$\ge 2\text{px}$ transparent padding on all borders**                                | Engine check (`npm run check:assets`) fails if any non-transparent pixel touches within $1\text{px}$ of the canvas edge. |
+| **Deterministic CI**    | `python art/source/pipeline/rebuild.py --check` must pass in < 2s                      | CI enforces that committed sprites match reproducible source outputs with zero SHA-256 diff.                             |
 
 ---
 
@@ -82,6 +83,7 @@ Vibe/
 ## 4. Technical Specifications for Blender Models
 
 ### A. Player Aqualia (Humanoid)
+
 - **Canvas Size**: $96 \times 144\text{ px}$ (RGBA PNG).
 - **Ground Anchor (Feet contact)**: Exactly $(48, 132)$.
 - **Camera Settings**:
@@ -92,6 +94,7 @@ Vibe/
 - **Root Object Naming**: Name root object `Player` or `Armature`.
 
 ### B. Rivallie (Creature Companion)
+
 - **Canvas Size**: $96 \times 96\text{ px}$ (RGBA PNG).
 - **Ground Anchor (Body/feet contact)**: Exactly $(48, 86)$.
 - **Camera Settings**:
@@ -102,6 +105,7 @@ Vibe/
 - **Root Object Naming**: Name root object `Rivallie` or `Armature`.
 
 ### C. Blender Shading & Render Engine Settings (Configured in `render_pixel_sprites.py`)
+
 - Engine: `BLENDER_WORKBENCH`
 - Shading: `MATCAP` or `TEXTURE`
 - Anti-Aliasing (`render_aa`): `OFF` (Crucial: disables subpixel edge filtering so the render outputs crisp pixel-art silhouettes).
@@ -113,6 +117,7 @@ Vibe/
 ## 5. Standard Operating Procedure (Step-by-Step)
 
 ### Step 1: Clone and Setup Workspace
+
 ```bash
 git clone https://github.com/huytruong1810/Vibe.git
 cd Vibe
@@ -121,12 +126,15 @@ npm install
 ```
 
 ### Step 2: Model or Import in Blender
+
 Create low-poly base meshes with stylized diffuse textures. Place your files in:
 `art/source/blender/models/player_aqualia.blend`  
 `art/source/blender/models/rivallie.blend`
 
 ### Step 3: Headless Bake
+
 Execute the automated turntable rendering script:
+
 ```bash
 # Bake Player 8-directional turnaround
 blender -b art/source/blender/models/player_aqualia.blend -P art/source/blender/render_pixel_sprites.py
@@ -134,16 +142,20 @@ blender -b art/source/blender/models/player_aqualia.blend -P art/source/blender/
 # Bake Rivallie 8-directional turnaround
 blender -b art/source/blender/models/rivallie.blend -P art/source/blender/render_pixel_sprites.py
 ```
+
 This produces 8 frames (`idle_s_0.png`, `idle_se_0.png`, `idle_e_0.png`, `idle_ne_0.png`, `idle_n_0.png`, `idle_nw_0.png`, `idle_w_0.png`, `idle_sw_0.png`) directly into `art/source/exports/{entity}/`.
 
 ### Step 4: Rebuild Asset Catalog & Generate Breathing Cycles
+
 The ingestion pipeline automatically takes the base facing frames, generates continuous 6-frame breathing cycles via inverse-row mapping, updates manifests, and checks for margin/anchor compliance:
+
 ```bash
 python art/source/pipeline/rebuild.py
 python art/source/pipeline/rebuild.py --check
 ```
 
 ### Step 5: Pack Atlas & Run Full Verification Suite
+
 ```bash
 # 1. Compile texture atlas and validate layout
 npm run assets:build
@@ -157,6 +169,7 @@ npm test
 ```
 
 ### Step 6: Commit and Push
+
 ```bash
 git add art/source/blender/models/
 git add art/source/exports/
@@ -164,13 +177,15 @@ git add public/assets/generated/
 git commit -m "feat(art): bake stylized Blender 3D models for player and rivallie"
 git push origin art/hd-aqualia-slice
 ```
-*(Do NOT use `--force`)*.
+
+_(Do NOT use `--force`)_.
 
 ---
 
 ## 6. Summary of Architectural Invariants for Verification
 
 When `npm run check:assets` runs, it enforces:
+
 - Zero transparent margin violations ($0\text{px}$ margin is an instant error).
 - All sprite dimensions match catalog definitions.
 - Single-page atlas constraint (under 16 MiB decoded memory).
@@ -178,4 +193,3 @@ When `npm run check:assets` runs, it enforces:
 - Zero domain leaks into `src/domain/` or `src/engine/`.
 
 You are fully equipped with all scripts, paths, and constraints to deliver clean, AAA pixel art with zero identity drift.
-
