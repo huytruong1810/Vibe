@@ -1,0 +1,28 @@
+{
+  "asset": "mireling",
+  "kind": "creature",
+  "heightArtPx": 26,
+  "ramps": {
+    "shell": "basalt",
+    "moss": "moss",
+    "skin": "reed",
+    "flowers": "blossom"
+  },
+  "gen3d": {
+    "seed": 1234,
+    "steps": 50,
+    "views": [
+      "front",
+      "left",
+      "back"
+    ]
+  },
+  "notes": "3-view quadruped reference sheet (communicator ticket M10/M11). Snapping turtle with basalt carapace, moss garden, reed skin, and blossom water lilies. creature.medium canvas (56x56, anchor 28,41).",
+  "texture": {
+    "views": [
+      "front",
+      "left",
+      "back"
+    ]
+  }
+}
