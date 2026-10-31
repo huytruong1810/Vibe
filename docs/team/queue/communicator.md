@@ -59,10 +59,10 @@ lines.
 
 ### M7 · Aqualia day and night scores
 
-- status: open
+- status: done
 - goal: `art/source/audio/scores/aqualia-day.json` and `aqualia-night.json`, using the `music-score` skill: 6/8, harp and soft pulse, major with a raised 4th (AUD-3.2), quoting bars 1–2 of the motif, with four stems.
 - done when: `render_score.py` exits 0 for both, and the report numbers are in a message to the director
-- evidence:
+- evidence: art/source/audio/scores/aqualia-day.json, art/source/audio/scores/aqualia-night.json, docs/team/comms/communicator/2026-10-31T0800--to-director--aqualia-scores-ready.md
 
 ### M8 · Weekly review digest
 
