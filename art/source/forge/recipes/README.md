@@ -58,3 +58,15 @@ spec (`../spec/`); a recipe never overrides spec numbers.
 - `clips.<name>.segments` swaps a clip's source animation for this character (names in
   `spec/clips/humanoid.json`; libraries `ual1` and `ual2`). Use it for a villager's own
   work, for example `TreeChopping_Loop` for anyone carrying the hatchet.
+
+## Colour inputs (C3d)
+
+- `detailSlots`: ramp slots that are small on purpose (fangs, eyes, a lure). Pixelize
+  merges material regions smaller than 2% of the silhouette into their surroundings, to
+  remove highlight speckles; listed slots are exempt. Example: `"detailSlots": ["fangs"]`.
+- `texture.mirrorSides` (default `true` for creatures, `false` for humans): the left view
+  also paints the right flank. Set it to `false` for an asymmetric creature and provide a
+  `right` view instead.
+- Surfaces no view sees head-on (the top of a back, the underside) take colour from their
+  neighbours, not from the nearest view. Bring in a view that shows a surface if its colour
+  matters.

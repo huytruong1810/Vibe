@@ -687,5 +687,9 @@
   "rigIds": {
     "humanoid": "ual2-humanoid",
     "quadruped": "quadruped-v1"
+  },
+  "pixelize": {
+    "minRegionFraction": 0.02,
+    "note": "Material regions smaller than this fraction of the silhouette take the dominant surrounding ramp (removes highlight speckles, codex C3d). Recipe detailSlots lists slots that are small on purpose (fangs, eyes, lures) and are exempt."
   }
 }

@@ -46,8 +46,51 @@ class RampSet:
 
     def classify(self, albedo8: np.ndarray) -> np.ndarray:
         lab = rgb8_to_oklab(albedo8) * np.array([L_WEIGHT, 1, 1])
-        d = np.linalg.norm(lab[:, :, None, None, :] - self.lab[None, None, :, 1:4, :], axis=-1)  # vs shadow/mid/light
+        # vs shadow..highlight: without the highlight step, a sheet's specular highlight on a dark
+        # ramp lands nearer a pale ramp (teal highlights became cream belly spots, C3d)
+        d = np.linalg.norm(lab[:, :, None, None, :] - self.lab[None, None, :, 1:5, :], axis=-1)
         return d.min(axis=-1).argmin(axis=-1)
+
+
+def _shift(a: np.ndarray, dy: int, dx: int, fill=0) -> np.ndarray:
+    """Shift without wrap-around: pixels pushed past an edge vanish and the gap is `fill`.
+    (A wrapping roll moved bottom-row pixels to the top row and invented outline pixels there.)"""
+    out = np.full_like(a, fill)
+    h, w = a.shape[:2]
+    ys, yd = (slice(0, h - dy), slice(dy, h)) if dy >= 0 else (slice(-dy, h), slice(0, h + dy))
+    xs, xd = (slice(0, w - dx), slice(dx, w)) if dx >= 0 else (slice(-dx, w), slice(0, w + dx))
+    out[yd, xd] = a[ys, xs]
+    return out
+
+
+def _min_regions(labels: np.ndarray, mask: np.ndarray, n: int, min_px: int, exempt: set[int]) -> np.ndarray:
+    """Material regions smaller than `min_px` take the dominant label around them. Projected
+    sheet highlights land closer to a light ramp (cream) than to the body ramp and leave
+    speckle clusters a 3x3 vote can't remove. Slots in `exempt` (fangs, eyes, lures: small on
+    purpose) keep their regions."""
+    out = labels.copy()
+    eight = np.ones((3, 3))
+    for _ in range(2):
+        changed = False
+        for k in range(n):
+            if k in exempt:
+                continue
+            cc, num = ndimage.label((out == k) & mask, structure=eight)
+            if not num:
+                continue
+            sizes = ndimage.sum(np.ones_like(cc), cc, range(1, num + 1))
+            for i, size in enumerate(sizes, start=1):
+                if size >= min_px:
+                    continue
+                region = cc == i
+                ring = ndimage.binary_dilation(region, structure=eight) & ~region & mask
+                if ring.any():
+                    vals, cnt = np.unique(out[ring], return_counts=True)
+                    out[region] = vals[cnt.argmax()]
+                    changed = True
+        if not changed:
+            break
+    return out
 
 
 def _majority(labels: np.ndarray, mask: np.ndarray, n: int) -> np.ndarray:
@@ -58,7 +101,8 @@ def _majority(labels: np.ndarray, mask: np.ndarray, n: int) -> np.ndarray:
     return np.where(mask & ~keep, out, labels)
 
 
-def pixelize_frame(albedo_p: Path, normal_p: Path, depth_p: Path, ramps: RampSet) -> tuple[np.ndarray, dict]:
+def pixelize_frame(albedo_p: Path, normal_p: Path, depth_p: Path, ramps: RampSet,
+                   detail: set[int] | None = None) -> tuple[np.ndarray, dict]:
     rs = spec("render_spec")
     alb = _load16(albedo_p)
     nrm = _load16(normal_p)
@@ -67,6 +111,9 @@ def pixelize_frame(albedo_p: Path, normal_p: Path, depth_p: Path, ramps: RampSet
     h, w = mask.shape
     labels = ramps.classify(_linear_to_srgb8(alb[..., :3]))
     labels = _majority(labels, mask, len(ramps.names))
+    frac = rs.get("pixelize", {}).get("minRegionFraction", 0.0)
+    if frac:
+        labels = _min_regions(labels, mask, len(ramps.names), max(4, int(round(frac * mask.sum()))), detail or set())
 
     n = nrm[..., :3] * 2 - 1
     # smooth normals inside the silhouette: gen3d surfaces are bumpy at this scale
@@ -91,8 +138,8 @@ def pixelize_frame(albedo_p: Path, normal_p: Path, depth_p: Path, ramps: RampSet
     thr = rs["outline"]["interiorDepthJumpWorldUnits"]
     interior = np.zeros_like(mask)
     for dy, dx in ((0, 1), (1, 0), (0, -1), (-1, 0)):
-        nb_depth = np.roll(depth, (dy, dx), axis=(0, 1))
-        nb_mask = np.roll(mask, (dy, dx), axis=(0, 1))
+        nb_depth = _shift(depth, dy, dx)
+        nb_mask = _shift(mask, dy, dx)
         interior |= mask & nb_mask & (depth - nb_depth > thr)
     out[interior, :3] = ramps.rgb[labels[interior], 0]
 
@@ -111,21 +158,21 @@ def pixelize_frame(albedo_p: Path, normal_p: Path, depth_p: Path, ramps: RampSet
     outline = np.zeros((h, w, 4), dtype=np.uint8)
     for (dy, dx), lit in (((0, -1), True), ((-1, 0), True), ((0, 1), False), ((1, 0), False)):
         # neighbour of an outline pixel at offset: outline on the body's left/top edge is top-lit
-        src_mask = np.roll(mask, (dy, dx), axis=(0, 1))
-        src_lab = np.roll(labels, (dy, dx), axis=(0, 1))
+        src_mask = _shift(mask, dy, dx)
+        src_lab = _shift(labels, dy, dx)
         cand = ~mask & src_mask & (outline[..., 3] == 0)
         stepi = 1 if lit and rs["outline"].get("topLitExteriorStep") == "shadow" else 0
         outline[cand, :3] = ramps.rgb[src_lab[cand], stepi]
         outline[cand, 3] = 255
     # pixel-perfect pass: drop L-corner outline pixels (ART-5.4)
     om = outline[..., 3] > 0
-    up, dn = np.roll(om, 1, 0), np.roll(om, -1, 0)
-    lf, rt = np.roll(om, 1, 1), np.roll(om, -1, 1)
+    up, dn = _shift(om, 1, 0), _shift(om, -1, 0)
+    lf, rt = _shift(om, 0, 1), _shift(om, 0, -1)
     corner = om & (((up & rt) | (rt & dn) | (dn & lf) | (lf & up)) & ((up.astype(int) + dn + lf + rt) == 2))
     body_diag = np.zeros_like(om)
     for dy, dx in ((1, 1), (1, -1), (-1, 1), (-1, -1)):
-        body_diag |= np.roll(mask, (dy, dx), axis=(0, 1))
-    body_orth = np.roll(mask, 1, 0) | np.roll(mask, -1, 0) | np.roll(mask, 1, 1) | np.roll(mask, -1, 1)
+        body_diag |= _shift(mask, dy, dx)
+    body_orth = _shift(mask, 1, 0) | _shift(mask, -1, 0) | _shift(mask, 0, 1) | _shift(mask, 0, -1)
     outline[corner & body_diag & ~body_orth] = 0
     final = _clean_orphans(np.where(outline[..., 3:] > 0, outline, out))
 
@@ -143,13 +190,13 @@ def _clean_orphans(img: np.ndarray, passes: int = 4) -> np.ndarray:
     img = img.copy()
     for _ in range(passes):
         a = img[..., 3] > 0
-        interior = a & np.roll(a, 1, 0) & np.roll(a, -1, 0) & np.roll(a, 1, 1) & np.roll(a, -1, 1)
+        interior = a & _shift(a, 1, 0) & _shift(a, -1, 0) & _shift(a, 0, 1) & _shift(a, 0, -1)
         flat = (img[..., 0].astype(np.int64) << 16) | (img[..., 1].astype(np.int64) << 8) | img[..., 2]
         same = np.zeros_like(a)
         for dy in (-1, 0, 1):
             for dx in (-1, 0, 1):
                 if dy or dx:
-                    same |= (np.roll(flat, (dy, dx), (0, 1)) == flat) & np.roll(a, (dy, dx), (0, 1))
+                    same |= (_shift(flat, dy, dx) == flat) & _shift(a, dy, dx)
         bad = interior & ~same
         if not bad.any():
             break
@@ -170,8 +217,9 @@ def upscale2(img: np.ndarray) -> np.ndarray:
     return img.repeat(k, axis=0).repeat(k, axis=1)
 
 
-def run_dir(bake_dir: Path, out_dir: Path, ramps_map: dict[str, str]) -> dict:
+def run_dir(bake_dir: Path, out_dir: Path, ramps_map: dict[str, str], detail_slots: list[str] | None = None) -> dict:
     ramps = RampSet(ramps_map)
+    detail = {ramps.slots.index(sl) for sl in (detail_slots or []) if sl in ramps.slots}
     tracks = json.loads((bake_dir / "tracks.json").read_text())
     summary = {}
     for clip, facings in tracks["clips"].items():
@@ -180,7 +228,7 @@ def run_dir(bake_dir: Path, out_dir: Path, ramps_map: dict[str, str]) -> dict:
         for facing, frames in facings.items():
             for i in range(len(frames)):
                 base = bake_dir / clip / f"{facing}_{i}_"
-                img, info = pixelize_frame(Path(f"{base}albedo.png"), Path(f"{base}normal.png"), Path(f"{base}depth.png"), ramps)
+                img, info = pixelize_frame(Path(f"{base}albedo.png"), Path(f"{base}normal.png"), Path(f"{base}depth.png"), ramps, detail)
                 Image.fromarray(img).save(out_dir / clip / f"{facing}_{i}.png")
                 Image.fromarray(upscale2(img)).save(out_dir / "export" / clip / f"{facing}_{i}.png")
                 summary[f"{clip}/{facing}_{i}"] = info

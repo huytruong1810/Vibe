@@ -374,6 +374,9 @@ body {
   border: 0;
   background-size: 100% 100%;
   padding: 0;
+  /* the kit art carries the key label (J, K, Spc); hide the duplicate text (C8b), aria-label stays */
+  color: transparent;
+  font-size: 0;
 }
 .hd-game .strike-action {
   background-image: url('/assets/generated/ui/button_strike.png');

@@ -19,6 +19,7 @@ from mathutils import Vector
 
 argv = sys.argv[sys.argv.index("--") + 1:]
 src, out, views = argv[0], argv[1], json.loads(open(argv[2]).read())
+mirror = views.pop("_mirrorSides", True)  # bilateral subjects: the left view also paints the right flank
 
 bpy.ops.wm.open_mainfile(filepath=src)
 obj = bpy.data.objects["Body"]
@@ -39,11 +40,16 @@ wsum = np.zeros(n)
 best = np.full(n, -1.0)
 fallback = np.zeros((n, 3))
 
-for name, path in views.items():
+jobs = [(name, path, False) for name, path in views.items()]
+if mirror and "left" in views and "right" not in views:
+    jobs.append(("right", views["left"], True))  # mirrored left profile seen from -X
+for name, path, flip in jobs:
     to_cam, u_axis = VIEW[name]
     img = bpy.data.images.load(path)
     w, h = img.size
     px = np.array(img.pixels[:], dtype=np.float32).reshape(h, w, 4)[::-1]  # top-down
+    if flip:
+        px = px[:, ::-1]
     alpha = px[..., 3] > 0.5
     ys, xs = np.nonzero(alpha)
     x0, x1, y0, y1 = xs.min(), xs.max() + 1, ys.min(), ys.max() + 1
@@ -69,7 +75,31 @@ for name, path in views.items():
     fallback[better] = sample[better]
     bpy.data.images.remove(img)
 
-col = np.where(wsum[:, None] > 1e-6, acc / np.maximum(wsum, 1e-6)[:, None], fallback)
+# a vertex is coloured by a view only if some view sees it fairly head-on (facing >= ~0.35);
+# grazing glances (the top of a back seen edge-on from the front) normalise to full strength
+# and paint the wrong colour, so those vertices take their neighbours' colour instead
+covered = wsum > 0.12
+col = np.where(covered[:, None], acc / np.maximum(wsum, 1e-6)[:, None], 0.0)
+# Surfaces no view sees (the top of a back, the underside) take colour from their seen
+# neighbours across the mesh, ring by ring. The old fallback copied the nearest view's pixel at
+# that height, which painted a front view's cream chest onto a creature's back (C3d).
+edges = np.array([e.vertices[:] for e in mesh.edges])
+known = covered.copy()
+for _ in range(200):
+    if known.all() or not len(edges):
+        break
+    a_, b_ = edges[:, 0], edges[:, 1]
+    s_acc, s_cnt = np.zeros((n, 3)), np.zeros(n)
+    for x_, y_ in ((a_, b_), (b_, a_)):
+        m_ = known[y_] & ~known[x_]
+        np.add.at(s_acc, x_[m_], col[y_[m_]])
+        np.add.at(s_cnt, x_[m_], 1)
+    grow = s_cnt > 0
+    if not grow.any():
+        break
+    col[grow] = s_acc[grow] / s_cnt[grow][:, None]
+    known |= grow
+col = np.where(known[:, None], col, fallback)
 # image pixels are sRGB-encoded; colour attributes are linear
 col = np.where(col <= 0.04045, col / 12.92, ((col + 0.055) / 1.055) ** 2.4)
 attr = mesh.color_attributes.get("Col") or mesh.color_attributes.new("Col", "FLOAT_COLOR", "POINT")
@@ -91,4 +121,4 @@ mesh.materials.clear()
 mesh.materials.append(mat)
 
 bpy.ops.wm.save_as_mainfile(filepath=out, compress=True)
-print("TEXTURE", json.dumps({"vertices": n, "covered": float((wsum > 1e-6).mean()), "views": sorted(views)}))
+print("TEXTURE", json.dumps({"vertices": n, "covered": float(covered.mean()), "views": sorted(name for name, _, _ in jobs)}))

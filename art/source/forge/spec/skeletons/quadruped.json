@@ -291,7 +291,9 @@
       "liftUnits": 0.14
     },
     "secondaryLagFrames": 1,
-    "settleFrames": 2
+    "settleFrames": 2,
+    "lieDropFraction": 0.62,
+    "lieNote": "sleep, downed and recovery put the belly on the ground: the trunk drops this fraction of the hip height while the paws stay planted (C3d)."
   },
   "species": {
     "rivallie": "quadruped",

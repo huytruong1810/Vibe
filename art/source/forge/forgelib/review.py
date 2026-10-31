@@ -19,14 +19,16 @@ def export_packet(wd: Path, output: Path, asset: str, render_spec: dict, canvas:
             continue
         name = folder.name
         definition = render_spec["clips"][name]
+        # humans bake combat and lying clips on their own canvases (C9a); bake records them per clip
+        clip_canvas = tracks.get("canvases", {}).get(name, canvas)
         by_facing = {}
         for path in sorted(folder.glob("*.png"), key=lambda p: (p.stem.rsplit("_", 1)[0], int(p.stem.rsplit("_", 1)[1]))):
             facing, number = path.stem.rsplit("_", 1)
             with Image.open(path) as image:
                 width, height = image.size
-            if [width, height] != [v * 2 for v in canvas["size"]]:
+            if [width, height] != [v * 2 for v in clip_canvas["size"]]:
                 raise ValueError(f"{path}: unexpected review canvas")
-            anchor = [v * 2 for v in canvas["anchor"]]
+            anchor = [v * 2 for v in clip_canvas["anchor"]]
             track = tracks["clips"][name][facing][int(number)]
             sockets = {k: {"x": round(v[0]) * 2, "y": round(v[1]) * 2}
                        for k, v in track.items() if k.startswith("Socket_")}
