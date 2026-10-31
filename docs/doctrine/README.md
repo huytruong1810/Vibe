@@ -43,10 +43,13 @@ director, Huy, and ratified by the director on 2026-10-31.
 | [08-world-and-ambience.md](08-world-and-ambience.md)               | `AMB`  | No Name Village ambience, light, weather, ambient life               |
 | [09-production-doctrine.md](09-production-doctrine.md)             | `PRD`  | Allowed/forbidden methods, golden samples, quality gates             |
 | [10-team-charter.md](10-team-charter.md)                           | `TEAM` | Roles, lanes, comms, status vocabulary, honesty rules                |
+| [11-living-minds.md](11-living-minds.md)                           | `AGT`  | LLM villagers: sight, voice, emotion, paintings, performance budgets |
+| [12-audio-direction.md](12-audio-direction.md)                     | `AUD`  | Music identity, leitmotifs, dynamic stems, score format              |
+| [13-world-building.md](13-world-building.md)                       | `WLD`  | The authored world, LDtk, composition rules                          |
 
 Machine-readable doctrine lives in
 [`art/source/forge/spec/`](../../art/source/forge/spec/): `render_spec.json`,
-`palette.json` and `body_types.json`. Those numbers are the only valid source for
+`palette.json`, `body_types.json` and `ui_theme.json`. Those numbers are the only valid source for
 canvas sizes, anchors, camera, light, bands, outline and QA limits. Prose that
 quotes a number defers to the spec.
 

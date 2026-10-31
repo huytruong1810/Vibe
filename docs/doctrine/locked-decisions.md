@@ -95,3 +95,24 @@ artifact's exact source digest, into engineering's ledger `docs/art/approvals.js
 (contract v2). That ledger promotes candidates to active gameplay. Codex never
 adds a ledger entry without a director record, and no source file self-asserts
 approval.
+
+## L8 — One authored world
+
+New games start in a single hand-composed world built in LDtk (WLD). Procedural world
+generation on new game is retired: it prevents the high-investment, composed landscapes
+the game is judged by (No Name Village, Zenonia 4). Open-endedness comes from living
+minds, ecology and player choice.
+
+## L9 — One font, one UI theme
+
+All text uses **Silver** (Poppy Works, CC BY 4.0) at its native 19 px grid, rendered
+without anti-aliasing (UI-7). The UI theme is navy panels with bevelled gold frames and gem
+corner bosses, defined in `art/source/forge/spec/ui_theme.json` and built by the UI kit
+generator (`art/source/ui/`). Every screen uses these frames, tokens and font.
+
+## L10 — Local AI stack
+
+Villager minds run locally through Ollama with **Gemma 4 26B** as the reference model
+(vision included). Voices use the three tiers in AGT-4 (blips, Kokoro, Chatterbox).
+Generated imagery is limited to asynchronous decorative paintings (AGT-6). Runtime
+combat effects are never diffusion-generated (CMB-9).

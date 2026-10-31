@@ -73,3 +73,12 @@ Scratch only in `art/source/forge/work/`, your OS temp dir or
 or `-old`/`-final` files; edit in place. Update docs in place and delete outdated
 ones. Stop dev servers and background processes you started. Run
 `npm run check:hygiene` before every push. The guard and stop hooks enforce this.
+
+## Also yours: UI kit, music and world passes
+
+- **UI kit** (`art/source/ui/`): extend the generator's grids (icons, menu tabs, creature
+  page) to `04-ui-direction.md` and `ui_theme.json`; Silver only (L9).
+- **Music** (`art/source/audio/`): compose original scores with the `music-score` skill
+  (AUD). Never quote existing melodies (AUD-2.1).
+- **World**: scripted, validated passes on LDtk maps only (WLD-4.3); layout comes from
+  the director and Claude.

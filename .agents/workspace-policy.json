@@ -60,11 +60,7 @@
     " \\(\\d+\\)(\\.[^/]+)?$",
     "(^|/)(test|debug|check|verify|try)_[^/]*\\.(py|js|mjs|ts|png|json|txt)$"
   ],
-  "forbiddenNameExceptions": [
-    "^tests/",
-    "^node_modules/",
-    "^docs/team/comms/[^/]+/tmp/"
-  ],
+  "forbiddenNameExceptions": ["^tests/", "^node_modules/", "^docs/team/comms/[^/]+/tmp/"],
   "largeFileBytes": 8000000,
   "largeFileAllowlist": [
     "^art/source/masters/",
@@ -74,11 +70,7 @@
     "^package-lock\\.json$"
   ],
   "docs": {
-    "roots": [
-      "README.md",
-      "AGENTS.md",
-      "docs/README.md"
-    ],
+    "roots": ["README.md", "AGENTS.md", "docs/README.md"],
     "exemptFromOrphanCheck": [
       "^docs/team/comms/",
       "^docs/team/proposals/",
@@ -87,12 +79,8 @@
     ]
   },
   "tools": {
-    "packageScriptDirs": [
-      "scripts/"
-    ],
-    "pythonRoots": [
-      "art/source/"
-    ],
+    "packageScriptDirs": ["scripts/"],
+    "pythonRoots": ["art/source/"],
     "entrypoints": [
       "art/source/pipeline/rebuild.py",
       "art/source/forge/forge.py",

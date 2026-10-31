@@ -51,6 +51,7 @@ entry lists what we **take** and what we **refuse**.
 | REF-11 | **Coromon / Cassette Beasts** | Modern pixel creature-stat UI: stat radars, type badges, move cards                                                                                           | Party-of-six collection loop                     |
 | REF-12 | **Fields of Mistria**         | Contemporary cozy life-sim character appeal: expressive faces, friendly proportions, readable outfits                                                         | —                                                |
 | REF-13 | **Children of Morta**         | Family-and-village warmth combined with action combat; hand-animated feel on pixel characters                                                                 | Very long unlock grind                           |
+| REF-15 | **Undertale** (music)         | Leitmotif transformation and emotional economy (AUD-2)                                                                                                        | Any melody, progression or arrangement           |
 
 ## REF-14 How to use references
 

@@ -6,6 +6,8 @@ the restraint rule: during action, the play field comes first.
 
 ## UI-1 Visual language
 
+- **UI-1.0 Kit.** The reference implementation is the UI kit (`art/source/ui/`, review
+  composition `kit/hud_mock.png`), with tokens in `art/source/forge/spec/ui_theme.json` (L9).
 - **UI-1.1 Frames.** Panels are deep navy (`navy` ramp) with bronze/gold
   filigree trim (`gold` ramp) as 9-slice pixel frames: corner ornaments 8×8 art
   px, edges tile seamlessly, a 1-px inner bevel lit from the upper left (ART-3.1).
@@ -96,11 +98,12 @@ the restraint rule: during action, the play field comes first.
 
 ## UI-7 Typography
 
-- **UI-7.1** One pixel display font for headings and numbers and one readable
-  pixel or near-pixel font for body text. Candidates must have licences that
-  allow commercial embedding (for example Daniel Linssen's m5x7 / m6x11 with
-  attribution, or Pixel Operator under its SIL OFL). The director picks the pair
-  from a type-specimen proof.
+- **UI-7.1** One font for everything: **Silver** (Poppy Works, CC BY 4.0, credit in the
+  game credits; see `art/source/ui/fonts/LICENSE.md`). Native 19 px em grid, cap height
+  9 px, rendered at 19 art px (38 display px), never anti-aliased (L9). Its large glyph set
+  (Latin, Cyrillic, Greek, CJK, Hangul) keeps localization open. Headings use colour,
+  frames and spacing for hierarchy, never a second typeface. The title-screen logo is
+  bespoke pixel lettering, drawn as art.
 - **UI-7.2** Minimum body text: 16 screen px cap height at 1080p reference.
 
 ## UI-8 Accessibility
@@ -111,10 +114,11 @@ keys, captions for important audio cues.
 
 ## Engineering mandates
 
-| ID    | Mandate                                                                                                 |
-| ----- | ------------------------------------------------------------------------------------------------------- |
-| UI-M1 | The HUD view supports the UI-2 layout regions and the combat dimming rule (UI-2.5).                     |
-| UI-M2 | Damage-number and hit cues are emitted as presentation cues with element and effectiveness data.        |
-| UI-M3 | The dialogue view can swap portrait expressions per line (requires expression tags on dialogue lines).  |
-| UI-M4 | The companion page exposes the CRE stat model once implemented: radar values, temperament, moves, bond. |
-| UI-M5 | 9-slice frame rendering at integer scale for three frame weights.                                       |
+| ID    | Mandate                                                                                                                                                          |
+| ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| UI-M1 | The HUD view supports the UI-2 layout regions and the combat dimming rule (UI-2.5).                                                                              |
+| UI-M2 | Damage-number and hit cues are emitted as presentation cues with element and effectiveness data.                                                                 |
+| UI-M3 | The dialogue view can swap portrait expressions per line (requires expression tags on dialogue lines).                                                           |
+| UI-M4 | The companion page exposes the CRE stat model once implemented: radar values, temperament, moves, bond.                                                          |
+| UI-M5 | 9-slice frame rendering at integer scale for three frame weights.                                                                                                |
+| UI-M6 | Integrate the UI kit first: Silver (subset for runtime), `ui_theme.json` tokens as CSS variables, kit frames as 9-slice border images at 2×. Remove other fonts. |

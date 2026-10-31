@@ -70,7 +70,7 @@ the conflict in your comms folder.
 
 Procedures live in `.agents/skills/*/SKILL.md`: `sprite-forge`,
 `environment-forge`, `reference-sheets`, `review-packet`, `team-comms`,
-`doctrine-lookup`. Codex: read a skill's `SKILL.md` directly when your task
+`doctrine-lookup`, `music-score`. Codex: read a skill's `SKILL.md` directly when your task
 matches its description.
 
 ## 7. Engineering basics (unchanged)

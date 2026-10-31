@@ -25,6 +25,7 @@ is committed and pushed.
 | `art/source/forge/work/**` (gitignored)                                                                      | ✅                                                          | ✅                            | ✅                                                 | ✅                               |
 | `art/source/blender/**`, `art/source/forge/recipes/**`                                                       | ✅                                                          | ❌                            | ❌                                                 | ✅                               |
 | `art/source/references/**`, `art/source/masters/**`                                                          | ✅                                                          | ❌                            | ✅                                                 | ❌ (request via comms)           |
+| `art/source/ui/**` (UI kit, fonts), `art/source/audio/**` (scores), `art/source/world/**` (LDtk maps)        | ✅                                                          | ❌                            | ✅ (map layout per WLD-4.3)                        | ❌ (request via comms)           |
 | `art/review/**`                                                                                              | ✅                                                          | ❌                            | ✅ (digests)                                       | ✅ (packets, via forge)          |
 | `art/source/exports/**`                                                                                      | ✅                                                          | ✅                            | ✅ 2D classes                                      | ✅ via `forge publish` only      |
 | `art/source/manifest.json` (single integrator, contract v2)                                                  | ✅                                                          | ✅                            | ✅ **sole integrator**                             | ❌                               |
@@ -46,8 +47,8 @@ Split by **medium and machine**, because only machine A has Blender:
   held-item layers, weapons and their icons and ground views, buildings,
   interior furniture models, cave and regional props, trees.
 - **communicator (machine B):** everything 2D: reference sheets, 9-emotion
-  portraits, terrain and transition tiles, shore masks, UI views and frames,
-  VFX, arrow flight art. Also **sole integrator** of `art/source/manifest.json`,
+  portraits, terrain and transition tiles, shore masks, UI kit extensions, VFX and
+  particle sprites, arrow flight art, music scores (AUD), and scripted world-map passes (WLD-4.3). Also **sole integrator** of `art/source/manifest.json`,
   reconciling blender's staging records (codex's recommendation).
 - **codex:** schemas, compiler, generated catalogs, `docs/art/approvals.json`
   ledger (transcribing director decisions only, L7).

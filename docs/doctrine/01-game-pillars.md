@@ -10,17 +10,17 @@ Hearthwild is a cozy-but-dangerous action RPG life sim. Every system serves one
 promise: **a small world that feels alive, that you belong to, and that is worth
 defending.**
 
-## PIL-2 The four pillars
+## PIL-2 The five pillars
 
-| ID      | Pillar                             | Primary reference                         | Means in practice                                                                                                                                        |
-| ------- | ---------------------------------- | ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| PIL-2.1 | **A village that breathes**        | No Name Village, Eastward                 | Ambient life on every screen, light that changes with the hour, sound that tells you where you are. Nothing on screen is perfectly still for long (AMB). |
-| PIL-2.2 | **Combat with weight and clarity** | Zenonia 4, CrossCode, Hyper Light Drifter | Snappy combos, readable telegraphs, hit-stop, elemental reactions on terrain. Every hit is felt; every enemy attack is fair (CMB).                       |
-| PIL-2.3 | **Creatures worth knowing**        | Pokémon, Coromon, Cassette Beasts         | Stats, temperaments, moves and growth deep enough for theorycrafting, but driven by _care_, not grinding (CRE).                                          |
-| PIL-2.4 | **Belonging through routine**      | Stardew Valley, Fields of Mistria         | Schedules, gifts, festivals and remembered conversations. Your relationships are the long-term progression (LIF).                                        |
+| ID      | Pillar                             | Primary reference                                   | Means in practice                                                                                                                                                            |
+| ------- | ---------------------------------- | --------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| PIL-2.1 | **A village that breathes**        | No Name Village, Eastward                           | Ambient life on every screen, light that changes with the hour, sound that tells you where you are. Nothing on screen is perfectly still for long (AMB).                     |
+| PIL-2.2 | **Combat with weight and clarity** | Zenonia 4, CrossCode, Hyper Light Drifter           | Snappy combos, readable telegraphs, hit-stop, elemental reactions on terrain. Every hit is felt; every enemy attack is fair (CMB).                                           |
+| PIL-2.3 | **Creatures worth knowing**        | Pokémon, Coromon, Cassette Beasts                   | Stats, temperaments, moves and growth deep enough for theorycrafting, but driven by _care_, not grinding (CRE).                                                              |
+| PIL-2.4 | **Belonging through routine**      | Stardew Valley, Fields of Mistria                   | Schedules, gifts, festivals and remembered conversations. Your relationships are the long-term progression (LIF).                                                            |
+| PIL-2.5 | **Minds that grow with you**       | Generative Agents research, Hearthwild's own system | Villagers who see, remember, speak in their own voice, keep their own days and make things. The world grows open-endedly through them, not through random terrain (AGT, L8). |
 
-When pillars conflict, resolve them in this order: **readability → belonging →
-weight → depth.** A beautiful effect that hides an enemy telegraph is wrong. A
+When pillars conflict, resolve them in this order: **readability → belonging → living minds → weight → depth.** A beautiful effect that hides an enemy telegraph is wrong. A
 deep stat that makes caring for a creature feel like spreadsheet work is wrong.
 
 ## PIL-3 Core loops

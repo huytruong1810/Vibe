@@ -87,12 +87,32 @@ Humans and bonded companions are downed and recover (existing rule). Downed and
 recovery clips must read as clearly different from death. Carrion art is a
 separate, non-animated environment state (existing contract).
 
+## CMB-9 Dynamic move effects (parametric, not generated)
+
+Overworld real-time battles get variety from a **parametric pixel VFX system**: each move
+has an effect recipe (element shape language from ART-6.4, palette ramps, emitter shape,
+particle sprites from an authored library, count, spread, lifetime, trail, impact burst)
+derived from the move's stats and seeded by its ID. New or agent-proposed moves pick
+parameters inside validated bounds, so every move looks distinct and readable at no
+runtime cost.
+
+Runtime image generation is **rejected** for combat effects:
+
+- about 2–10 s latency per image against a 30 Hz fight
+- VRAM conflict with the resident LLM on 16 GB
+- no frame-to-frame coherence for animation
+- off-palette output
+- no guarantee that telegraphs stay readable (CMB-4, ART-12.3)
+
+Image generation stays a concept tool for effect authors (PRD-7).
+
 ## Engineering mandates
 
-| ID     | Mandate                                                                                    |
-| ------ | ------------------------------------------------------------------------------------------ |
-| CMB-M1 | A 3-hit strike chain with per-hit move phases and input buffering inside recovery windows. |
-| CMB-M2 | Dash cancel windows on hits 1 and 2.                                                       |
-| CMB-M3 | Presentation-only hit-stop that never alters simulation tick timing.                       |
-| CMB-M4 | Telegraph cues for qualifying enemy attacks, emitted at windup start.                      |
-| CMB-M5 | Hit cues carry element, effectiveness, material and crit flags for VFX, UI and audio.      |
+| ID     | Mandate                                                                                      |
+| ------ | -------------------------------------------------------------------------------------------- |
+| CMB-M1 | A 3-hit strike chain with per-hit move phases and input buffering inside recovery windows.   |
+| CMB-M2 | Dash cancel windows on hits 1 and 2.                                                         |
+| CMB-M3 | Presentation-only hit-stop that never alters simulation tick timing.                         |
+| CMB-M4 | Telegraph cues for qualifying enemy attacks, emitted at windup start.                        |
+| CMB-M5 | Hit cues carry element, effectiveness, material and crit flags for VFX, UI and audio.        |
+| CMB-M6 | Parametric pixel particle system driven by per-move effect recipes (CMB-9), on the art grid. |
