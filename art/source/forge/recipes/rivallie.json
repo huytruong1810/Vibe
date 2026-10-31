@@ -16,7 +16,7 @@
       "back"
     ]
   },
-  "notes": "Single-pose all-fours reference sheet (communicator ticket M2). Views front, left, back all share the quadruped pose with cream underbelly and throat visible. heightArtPx 31 fits the 56x56 creature.medium canvas.",
+  "notes": "Single-pose all-fours reference sheet (communicator ticket M2). Views front, left, back all share the quadruped pose with cream underbelly and throat visible. heightArtPx tuned to 25px (lowered from 31px) so the elongated otter body and rearing clips maintain >= 2px transparent margins within the 56x56 creature.medium canvas (anchor 28,41).",
   "texture": {
     "views": [
       "front",
