@@ -7,6 +7,6 @@
     "front": "front.png",
     "back": "back.png"
   },
-  "generations": 1,
+  "generations": 2,
   "ledger": "docs/team/comms/communicator/image-ledger.md#mannequin-elder"
 }
