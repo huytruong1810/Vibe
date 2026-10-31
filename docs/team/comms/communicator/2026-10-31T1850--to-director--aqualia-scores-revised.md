@@ -51,3 +51,4 @@ Day and Night are now structurally identical and hot-swappable in-engine:
 
 Previews generated at `art/source/forge/work/audio/aqualia-{day,night}.preview.wav`.
 Ticket M15 is now complete (`status: done`).
+

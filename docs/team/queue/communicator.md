@@ -73,7 +73,7 @@ lines.
 
 ### M9 · Aqualia terrain set through tileforge (long design session)
 
-- status: open (C11 landed 2026-10-31). Do M11 first (it blocks blender's humans), then this. When image generation is out of capacity, work on another ticket (M14, M15, M16, M12, M13) and come back; never substitute concept-master crops or other agents' art as swatches.
+- status: in_progress (scaffolded aqualia-terrain; swatches paused awaiting image generation quota reset per PRD-7)
 - goal: the whole Aqualia ground in palette-locked 32-px tiles (ART-11.2), designed by you, made exact by tileforge: grass, dirt, sand, stone, mud, reedbed, boardwalk; freshwater with its 14 shore masks; dirt-path and stone-path edges; cliff strip and ramp.
 - inputs: `.agents/skills/tile-forge/SKILL.md` (read it fully first); region bible `docs/doctrine/regions/aqualia.md` and ART-13 (teal, sand, warm timber); the concept `art/source/masters/aqualia_canal_settlement_master.jpg` for mood only (its grid lines and props make it unusable as a swatch); the golden sample `art/source/tiles/sets/aqualia-grass-water/` and its packet `art/review/tiles-aqualia-grass-water-1/` (procedural stand-in swatches; beat them).
 - work, one material at a time (PRD-4), each through the skill's loop (swatch, recipe, `all`, look at all three previews, fix inputs, repeat):
@@ -87,7 +87,7 @@ lines.
   8. Packet when the whole set is candidate and reads well on `level.png`. Write `DIGEST.md` in the packet with what you saw and the trade-offs. Message the director. One packet per set; a second set (for example `aqualia-water-deep`) is fine if the first grows too large.
 - never: edit tile PNGs, exports or packets; write director records; change the tool or spec (ask codex).
 - done when: an `art/review/tiles-aqualia-terrain-<n>/` packet is QA candidate with every material above, and the director is messaged
-- evidence:
+- evidence: art/source/tiles/sets/aqualia-terrain/set.json
 
 ### M10 · Quadruped creature reference sheets (bramblefang, marshstalker, mireling)
 
@@ -122,19 +122,19 @@ lines.
 
 ### M12 · Relay C6 review evidence
 
-- status: open
+- status: done
 - goal: add the candidate village packet to the next review digest and relay its C5 composition gate to the director.
 - work: use the Codex C6 handoff and art/review/world-aqualia-aqualia_village-1/packet.json. Distinguish objective QA from visual approval; link only published evidence.
 - done when: digest and relay cite the packet, its preview limitations and the required director decision.
-- evidence:
+- evidence: art/review/digest-2026-W45.md, docs/team/comms/communicator/2026-10-31T1948--to-director--relay-c6-village-evidence.md, art/review/world-aqualia-aqualia_village-1/packet.json
 
 ### M13 · Existing world-preview kit inventory
 
-- status: open
+- status: done
 - goal: identify which existing source/catalog terrain and environment assets can replace the village preview fallbacks when their owning production gates permit.
 - work: report canonical IDs, dimensions, anchors, available layers and approval status in your own comms. Read existing artwork/catalog; do not invent assets, edit generated output or activate candidates.
 - done when: a source-linked inventory and explicit missing-kit list are published for Codex/C10/C11.
-- evidence:
+- evidence: docs/team/comms/communicator/2026-10-31T1950--to-codex--world-preview-kit-inventory.md, art/source/manifest.json, docs/art/coverage.md
 
 ### M14 · Recast proposal 002 (AGT-4.2)
 
