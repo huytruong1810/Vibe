@@ -75,7 +75,7 @@ rules the world already has. Director decision, 2026-11-01 (L11).
   - An intent holds until the next decision.
   - Being hit or seeing a telegraph lets a creature decide early, but never sooner than 2
     ticks after the event.
-  - Creatures react like animals, not like frame-perfect bots.
+  - Creatures react like animals, not like bots with instant reflexes.
 - **CRM-3.5 Model size and runtime.**
   - **Network:** a small feed-forward network, at most 64k parameters, optionally with a
     recurrent memory of at most 64 units.
