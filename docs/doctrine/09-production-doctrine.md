@@ -132,7 +132,11 @@ Antigravity agents can spin up image-generation subagents. They are valuable and
 2. Forge stages complete; QA pass (`candidate`).
 3. Packet in `art/review/<date>-<asset>/` with contact sheet, turntable GIF, QA
    report and an in-scene proof; packet viewed by its author (PRD-5).
-4. Director approval record in `docs/team/comms/director/approvals/`.
+4. Director approval record in `docs/team/comms/director/approvals/`, naming the packet and
+   its `packetDigest` (the `sourceDigest` in the packet's `review.json`). An approval covers
+   exactly those frames. Regenerating the frames makes a new digest that needs a new
+   record; a packaging-only re-run that leaves the digest unchanged keeps the approval.
+   `forge publish` refuses a packet whose digest has no matching `director-approved` record.
 5. `forge publish` writes the exports and a staging record in
    `art/source/staging/blender/`; the communicator integrates it into
    `art/source/manifest.json` as stage `candidate`.

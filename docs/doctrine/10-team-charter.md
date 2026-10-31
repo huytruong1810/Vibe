@@ -42,6 +42,13 @@ is committed and pushed.
 
 Need something outside your lane? Ask the owner through comms (TEAM-3).
 
+**Protected files are never staged or committed by an agent**, even files the agent did
+not write and even when another member asks: `git add`, `commit`, `mv`, `rm`, `restore`
+or `stash` on doctrine, spec, briefs, `.agents/`, `AGENTS.md`/`GEMINI.md` or
+`docs/team/comms/director/**` is denied by the guard. Director records are committed by
+the director, or by Claude or codex on the director's explicit instruction. If one is
+missing from a branch, say so in your comms and continue with unblocked work.
+
 ## TEAM-2a Division of art work (director's decision on codex's two-agent split)
 
 Split by **medium and machine**, because only machine A has Blender:
@@ -62,7 +69,8 @@ Split by **medium and machine**, because only machine A has Blender:
 
 - **TEAM-3.1** Each member writes only in `docs/team/comms/<member>/`. One
   file per message:
-  `YYYY-MM-DDTHHMM--to-<member|all>--<topic-kebab>.md` (UTC).
+  `YYYY-MM-DDTHHMM--to-<member|all>--<topic-kebab>.md`, in real UTC at the time of
+  writing (take it from `date -u`; never back-date or invent a time).
 - **TEAM-3.2** Message format:
   ```markdown
   ---
@@ -89,13 +97,14 @@ Split by **medium and machine**, because only machine A has Blender:
 
 ## TEAM-4 Status vocabulary
 
-| Status              | Who can set it                                | Meaning                                                 |
-| ------------------- | --------------------------------------------- | ------------------------------------------------------- |
-| `draft`             | anyone                                        | Work in progress; may not render                        |
-| `candidate`         | forge QA pass plus author                     | Structurally valid, packet ready, awaiting the director |
-| `changes-requested` | director                                      | Specific revisions listed in the approval folder        |
-| `director-approved` | **director only**                             | Accepted for runtime integration                        |
-| `rejected`          | director (or claude on the director's behalf) | Method or result retired                                |
+| Status              | Who can set it                                | Meaning                                                             |
+| ------------------- | --------------------------------------------- | ------------------------------------------------------------------- |
+| `draft`             | anyone                                        | Work in progress; may not render                                    |
+| `candidate`         | forge QA pass plus author                     | Structurally valid, packet ready, awaiting the director             |
+| `changes-requested` | director                                      | Specific revisions listed in the approval folder                    |
+| `director-approved` | **director only**                             | Accepted for runtime integration                                    |
+| `rejected`          | director (or claude on the director's behalf) | Method or result retired                                            |
+| `superseded`        | director (or claude on the director's behalf) | An earlier record whose packet was regenerated; it approves nothing |
 
 No other status words ("complete", "stable", "done", "final", "AAA") may be
 used for art.

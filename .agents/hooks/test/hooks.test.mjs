@@ -381,3 +381,40 @@ test('stop: litter created during the session must be cleaned up; pre-existing i
   assert.match(out.reason, /litter-name\] art\/review\/frame\.bak/);
   assert.doesNotMatch(out.reason, /old-junk/);
 });
+
+test('agents can never stage or commit protected files, even ones they did not write', () => {
+  const fx = fixtureRepo();
+  mkdirSync(path.join(fx.root, 'docs/team/comms/director/approvals'), { recursive: true });
+  writeFileSync(path.join(fx.root, 'docs/team/comms/director/approvals/a--p.md'), 'decision: x\n');
+  for (const role of ['blender', 'communicator']) {
+    for (const c of [
+      'git add docs/team/comms/director/approvals/a--p.md',
+      'git add -A && git commit -m "records"',
+      'git commit -am "sync"',
+    ])
+      assert.equal(run('guard.mjs', cmd(c), fx, role).decision, 'deny', `${role}: ${c}`);
+  }
+  execFileSync('git', ['add', 'docs/team/comms/director/approvals/a--p.md'], { cwd: fx.root });
+  assert.equal(run('guard.mjs', cmd('git commit -m "x"'), fx, 'blender').decision, 'deny');
+  execFileSync('git', ['reset', '-q'], { cwd: fx.root });
+  writeFileSync(path.join(fx.root, 'notes.md'), 'x\n');
+  assert.equal(run('guard.mjs', cmd('git add notes.md'), fx, 'blender').decision, 'allow');
+});
+
+test('inline scripts are only treated as map writes when they touch world files', () => {
+  const fx = fixtureRepo();
+  assert.equal(
+    run('guard.mjs', cmd('python3 -c "import sys; sys.stdout.write(str(1))"'), fx, 'blender')
+      .decision,
+    'allow',
+  );
+  assert.equal(
+    run(
+      'guard.mjs',
+      cmd("python3 -c \"open('art/source/world/hearthwild.ldtk','w').write('{}')\""),
+      fx,
+      'blender',
+    ).decision,
+    'deny',
+  );
+});

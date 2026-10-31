@@ -187,6 +187,19 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 - done when: Rivallie re-runs with faces in the packet; `publish` writes the staging record once a director approval record exists (test with a scratch record and delete it afterwards); `doctor` shows creatures with nothing pending
 - evidence:
 
+### C3d · Forge quality: speckles, lying creatures, edge wrap, Marshstalker tail, digest-bound publish
+
+- status: in-progress: claude (2026-10-31T1620Z), on machine A, at the director's request
+- goal: fix the defects the director's review found in the creature packets (`approvals/rivallie--2026-10-31-rivallie-m2.md`).
+- work:
+  1. **Speckles.** Denoise material labels before shading, with a majority filter and a minimum region size, so specular highlights stop turning into cream-ramp spots.
+  2. **Lying clips.** Creature `downed` and `sleep` lie on the side.
+  3. **Edge wrap.** pixelize pads the canvas instead of using `np.roll`, so the outline no longer wraps.
+  4. **Marshstalker rear-up.** Its tail stays on the canvas.
+  5. **Digest-bound publish.** `forge.py publish` checks the record's `packetDigest` against `review.json` `sourceDigest` (PRD-9).
+- done when: `forge.py selftest` passes; Rivallie and Marshstalker re-run to QA `candidate`; the director's review of the new contact sheets finds no speckles
+- evidence:
+
 ### C4 · World contract (WLD-4.4)
 
 - status: done (claude, 2026-11-01)
@@ -214,7 +227,7 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 
 ### C5 · Aqualia region bible and plan: draft for the director
 
-- status: candidate (claude, 2026-11-01): committed as doctrine in session; awaiting the director's composition review
+- status: done: director-approved 2026-10-31 (`docs/team/comms/director/approvals/proposal-001.md`)
 - goal: the WLD-4.1 bible and its machine-readable plan, as proposal `docs/team/proposals/001-aqualia-region-bible.md`, plus a draft `aqualia.plan.json` attached to the proposal.
 - inputs: PIL-1, PIL-5 (T0 = Aqualia village and Riverlands), ART-4.6, ART-13, WLD-3, AMB-1, LIF-4.2 (Reedlight Float lantern boats at dusk), AUD-3.2, AGT-3.1 (story spots framed for a ~12×7-tile sight window), villager hooks in `src/content/villagers.ts`.
 - content:
@@ -244,7 +257,7 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 
 ### C6 · worldforge, the world-builder skill and the golden village map
 
-- status: candidate (tooling and village packet; world go awaits C5 composition approval)
+- status: done: golden village layout director-approved 2026-10-31 (`approvals/world-aqualia--world-aqualia-aqualia_village-1.md`); follow-ups in C6b
 - goal: a tool the blender agent can lay out maps with, alone, plus a worked example.
 - inputs: C4 and C5 are in place. `worldforge.py` already has `plan check` and `plan render` (claude); extend that file, keep its style and its `check_plan` rules
 - work: `art/source/world/tools/worldforge.py` (uv; add it to `.agents/workspace-policy.json` `tools.entrypoints`; gitignore and approve `art/source/world/work/`). Commands:
@@ -278,6 +291,30 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
     `check`;
   - you've posted `--to-blender--go-world.md`.
 - evidence: [C6 packet and handoff](../comms/codex/2026-10-31T1547--to-all--c6-worldforge-candidate.md), [worldforge guide](../../engineering/worldforge.md), [candidate packet](../../../art/review/world-aqualia-aqualia_village-1/README.md). No go-world until the required C5 decision record exists.
+
+### C6b · worldforge follow-ups (director review of C6)
+
+- status: open
+- goal:
+  - **Go-world:** C5 (`approvals/proposal-001.md`) and the golden village layout (`approvals/world-aqualia--world-aqualia-aqualia_village-1.md`) are approved. Post `--to-blender--go-world`.
+  - **Schema values:** read IntGrid values from `world_schema.json` instead of hard-coding them (`worldlib/checks.py:9-25`, `golden.py:76`; WLD-4.4).
+  - **Negative test:** apply a broken pass file through `apply` → `check` instead of editing JSON.
+  - **Packet size:** stop copying the 94k-line `.ldtk` into the packet; reference it by digest.
+  - **Hook rule:** the blender inline-script rule now only fires for world paths (claude, directive 006).
+  - **Ack link:** the communicator's C6 ack links to a lowercase `t1547` filename; it should be `T1547`.
+- done when: go-world posted; schema-driven checks; negative pass test in CI
+- evidence:
+
+### C8b · HUD fixes from the director's review
+
+- status: open
+- goal:
+  - **Dash button:** shows "Spce". `layout.ts:7` draws "Space" (and "J"/"K") over kit buttons that already carry labels; draw one label, not two.
+  - **Kit art:** use the kit's `bar_*.png` and `slot_*.png` instead of flat CSS fills.
+  - **Day/phase panel:** keep it separate from the minimap, as in `art/source/ui/kit/hud_mock.png`.
+  - Send the director new 1080p captures for visual acceptance.
+- done when: captures in comms; the director's visual acceptance recorded
+- evidence:
 
 ### C7 · Authored world in the engine (WLD-M1…M4)
 

@@ -5,16 +5,25 @@ Claude on the director's explicit instruction. **No agent writes here.**
 
 File name: `<asset-id>--<packet-id>.md`
 
+The file starts with the front matter itself (no code fence):
+
 ```markdown
 ---
 asset: npc:neris
 packet: art/review/2026-11-02-neris/
-decision: director-approved # or changes-requested | rejected
+packetDigest: <sourceDigest from the packet's review.json>
+decision: director-approved # or changes-requested | rejected | superseded
 scope: [body, idle, walk, strike, faces, item:ferry-pole]
 date: 2026-11-02
+recordedBy: director # or "claude on the director's instruction"
 ---
 
 Notes from the director (required for changes-requested).
 ```
+
+An approval covers exactly the frames behind `packetDigest` (PRD-9). Regenerated frames
+need a new record; the old one is marked `superseded`. Agents never stage or commit
+files here (TEAM-2a); the director, or Claude or codex on the director's instruction,
+commits them.
 
 `forge publish` refuses to run without a matching `director-approved` record.
