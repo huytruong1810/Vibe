@@ -1,39 +1,43 @@
 # Status board
 
 Owner: **communicator** (director and claude may also edit). Vocabulary is TEAM-4
-only. Every row cites evidence. Reset by Claude on the director's instruction on
-2026-10-31; the earlier hub's "AAA / Complete / Stable" labels were withdrawn.
+only (`director-approved`, `changes-requested`, `superseded`, `candidate`, `rejected`).
+Every row cites evidence.
 
 Queues: [codex](queue/codex.md) · [communicator](queue/communicator.md) · [blender](queue/blender.md)
 
 ## Art assets
 
-| Asset                                                                                                                     | Status                                                         | Evidence                                               | Next                                                                           |
-| ------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------ |
-| 3D box-built cast: player origins + 30 villagers (`humanoid_modular_base.blend`, `art/source/exports/npcs/*`, `player_*`) | **rejected** (method retired, PRD-2)                           | `public/assets/generated/bundle.png`; postmortem F5–F7 | Remain as runtime placeholders until approved forge replacements are published |
-| 3D box-built creatures, all 8 species (`creatures.blend`, `art/source/exports/creatures/*`, `rivallie/`)                  | **rejected** (method retired)                                  | same                                                   | Same                                                                           |
-| Modular box rig and sockets (`build_modular_rig.py`)                                                                      | **rejected** (superseded by L6 UAL skeleton)                   | postmortem F5                                          | Move to `art/source/blender/legacy/`                                           |
-| Dialogue portraits, 10 Aqualia villagers + Aqualia/Zephyria origins                                                       | **director-approved** (integration)                            | [portrait review](../art/reviews/portrait-review.md)   | Restyle check against ART-14 once the golden samples set the sprite look       |
-| 2D identity masters and lineups (`art/source/masters/*`)                                                                  | reference (identity source, PRD-3.5)                           | —                                                      | Communicator derives doctrine-standard reference sheets                        |
-| Environment exports (terrain, shore masks, cliff, ramp, house, well, waystone, hearth, flora states)                      | **candidate** (structural only; never director-reviewed at 2×) | `docs/art/coverage.md`                                 | Re-author at 32-px tiles per ART-11 after the golden samples                   |
-| Golden sample: player Aqualia (1st)                                                                                       | reference ready (M4)                                           | `art/source/references/player-aqualia/`                | Blender B4 golden sample                                                      |
-| Golden sample: Rivallie (2nd)                                                                                             | candidate packet + reference M2                                | `art/review/2026-10-31-rivallie/`, `art/source/references/rivallie/` | Blender B1 re-run with M2 reference                                           |
-| Golden sample: Neris (3rd)                                                                                                | reference ready (M3)                                           | `art/source/references/npc-neris/`                     | Blender B4 golden sample                                                      |
-| Quadruped references: bramblefang, marshstalker, mireling                                 | reference ready (M10)                                          | `art/source/references/{bramblefang,marshstalker,mireling}/` | Blender B3 quadruped kit & baking                             |
+| Asset | Status | Evidence | Next |
+| --- | --- | --- | --- |
+| 3D box-built cast: player origins + 30 villagers (`humanoid_modular_base.blend`, `art/source/exports/npcs/*`, `player_*`) | **rejected** (method retired, PRD-2) | `public/assets/generated/bundle.png`; postmortem F5–F7 | Remain as runtime placeholders until approved forge replacements are published |
+| 3D box-built creatures, all 8 species (`creatures.blend`, `art/source/exports/creatures/*`, `rivallie/`) | **rejected** (method retired) | same | Same |
+| Modular box rig and sockets (`build_modular_rig.py`) | **rejected** (superseded by L6 UAL skeleton) | postmortem F5 | Move to `art/source/blender/legacy/` |
+| Dialogue portraits, 10 Aqualia villagers + Aqualia/Zephyria origins | **director-approved** (integration) | [portrait review](../art/reviews/portrait-review.md) | Restyle check against ART-14 once the golden samples set the sprite look |
+| 2D identity masters and lineups (`art/source/masters/*`) | **candidate** (identity source, PRD-3.5) | `art/source/masters/` | Communicator derives doctrine-standard reference sheets |
+| Environment exports (terrain, shore masks, cliff, ramp, house, well, waystone, hearth, flora states) | **candidate** (structural only; never director-reviewed at 2×) | `docs/art/coverage.md` | Re-author at 32-px tiles per ART-11 via tileforge (M9) |
+| Golden sample: player Aqualia (1st) | **candidate** (M4 reference; forge bring-up C9a) | `art/source/references/player-aqualia/`, `art/source/forge/recipes/player-aqualia.json` | Blender B4 golden sample after M11 redraw |
+| Golden sample: Rivallie (2nd) | **director-approved** (body, clips) | `docs/team/comms/director/approvals/rivallie--2026-10-31-rivallie-c3d.md` | Face layer (C3b) and publish |
+| Golden sample: Neris (3rd) | **candidate** (M3 reference) | `art/source/references/npc-neris/` | Blender B4 golden sample after M11 redraw |
+| Bramblefang candidate packet | **director-approved** | `docs/team/comms/director/approvals/bramblefang--2026-10-31-bramblefang-c3d.md` | Publish unblocked by Codex C3b |
+| Marshstalker candidate packet | **director-approved** | `docs/team/comms/director/approvals/marshstalker--2026-10-31-marshstalker.md` | Publish unblocked by Codex C3b |
+| Mireling candidate packet | **candidate** (15 clips, 616 frames) | `art/review/2026-10-31-mireling/` | Awaiting Director approval record |
+| Golden village map layout (C6) | **director-approved** (layout scope) | `docs/team/comms/director/approvals/world-aqualia--world-aqualia-aqualia_village-1.md` | Environment dressing and tile sets via C10/C11/M9 |
+| Riverlands map layout (B2) | **candidate** (Pass 003 layout) | `art/review/world-aqualia-aqualia_riverlands-1/` | Awaiting Director layout approval record |
+| Aqualia region bible & plan (C5, Proposal 001) | **director-approved** | `docs/team/comms/director/approvals/proposal-001.md` | Authoring unblocked for Riverlands (B2) |
 
 ## Workstreams
 
-| Workstream                                                           | Owner             | Status                                                                                                           | Evidence                                                                                                                  |
-| -------------------------------------------------------------------- | ----------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| Doctrine v1                                                          | claude + director | ratified 2026-10-31                                                                                              | `docs/doctrine/`                                                                                                          |
-| Agent harness (AGENTS.md, hooks, skills, briefs)                     | claude            | in place on branch `studio/doctrine-v1`                                                                          | `.agents/`, `AGENTS.md`                                                                                                   |
-| Sprite Forge stages                                                  | codex             | in progress (claude brought up creature half, codex finishes C9/C10)                                              | `docs/art/forge-pipeline.md`, `docs/team/queue/codex.md`                                                                  |
-| Engineering mandates (2×, layers, paging, …)                         | codex             | not started; codex baseline `a3fc957` already provides contract v2 layers, approvals ledger, 9-emotion portraits | [codex brief](briefs/codex.md)                                                                                            |
-| World pipeline                                                       | codex             | in progress (C4–C7)                                                                                              | `docs/team/queue/codex.md`, `art/source/world/`                                                                           |
-| Tileforge                                                            | codex             | queued (C11)                                                                                                     | `docs/team/queue/codex.md`                                                                                                |
-| Creature minds (System 1)                                            | codex             | queued (C13–C16)                                                                                                | `docs/doctrine/14-creature-minds.md`, `docs/team/comms/claude/2026-11-01T0700--to-all--directive-005-creature-minds.md`  |
-| Directive 001 (doctrine adoption, golden-sample order, art division) | claude            | issued 2026-10-31                                                                                                | [directive](comms/claude/2026-10-31T2000--to-all--directive-001-doctrine-adoption.md)                                     |
-| Reference sheets: player-aqualia, rivallie, npc:neris, 4 builds, 3 quadrupeds | communicator      | completed (M2–M5, M10 done)                                                                                      | `art/source/references/`                                                                                                  |
-| Voice casting sheet: 10 Aqualia villagers                            | communicator      | candidate (proposal 002)                                                                                         | `docs/team/proposals/002-aqualia-voice-casting.md`                                                                        |
-| Aqualia day & night scores                                           | communicator      | candidate (M7)                                                                                                   | `art/source/audio/scores/aqualia-{day,night}.json`                                                                        |
-| Weekly review digest                                                 | communicator      | current (2026-W44)                                                                                               | `art/review/digest-2026-W44.md`                                                                                           |
+| Workstream | Owner | Status | Evidence |
+| --- | --- | --- | --- |
+| Doctrine v1 | claude + director | **director-approved** (ratified 2026-10-31) | `docs/doctrine/` |
+| Agent harness (AGENTS.md, hooks, skills, briefs) | claude | **director-approved** (Directive 001–007) | `.agents/`, `AGENTS.md` |
+| Sprite Forge stages | codex + claude | **candidate** (creatures operational; C3d quality fixes landed; C9a human bring-up done; C3b publish in progress) | `docs/art/forge-pipeline.md`, `docs/team/queue/codex.md` |
+| Engineering mandates (2×, layers, paging, …) | codex | **candidate** (contract v2 baseline `a3fc957`, approvals ledger, 9-emotion portraits) | [codex brief](briefs/codex.md) |
+| World pipeline | codex + blender | **candidate** (C4-C6 approved village layout, B2 Riverlands layout candidate, C6b/B6 smoke checks, C7 compiler candidate) | `docs/team/queue/codex.md`, `art/source/world/` |
+| Tileforge | codex | **candidate** (C11 delivered; ADR 022; tile-forge skill) | `docs/engineering/tileforge.md`, `docs/team/queue/codex.md` |
+| Creature minds (System 1) | codex | **candidate** (queued C13–C16) | `docs/doctrine/14-creature-minds.md`, `docs/team/comms/claude/2026-11-01T0700--to-all--directive-005-creature-minds.md` |
+| Reference sheets: quadrupeds, humanoids, mannequins | communicator | **candidate** (M10 done, M11 ramps/schemas normalized, redraws in progress) | `art/source/references/` |
+| Voice casting sheet: 10 Aqualia villagers | communicator | **candidate** (Proposal 002 Revision 2, M14) | `docs/team/proposals/002-aqualia-voice-casting.md` |
+| Aqualia day & night scores | communicator | **candidate** (Revision 2, M15) | `art/source/audio/scores/aqualia-{day,night}.json` |
+| Weekly review digest | communicator | **candidate** (W44 completed, W45 published) | `art/review/digest-2026-W45.md` |

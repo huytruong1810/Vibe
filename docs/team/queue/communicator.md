@@ -73,7 +73,7 @@ lines.
 
 ### M9 · Aqualia terrain set through tileforge (long design session)
 
-- status: open (C11 landed 2026-10-31). Do M11 first (it blocks blender's humans), then this. When image generation is out of capacity, work on another ticket (M14, M15, M16, M12, M13) and come back; never substitute concept-master crops or other agents' art as swatches.
+- status: in_progress (scaffolded aqualia-terrain; swatches paused awaiting image generation quota reset per PRD-7)
 - goal: the whole Aqualia ground in palette-locked 32-px tiles (ART-11.2), designed by you, made exact by tileforge: grass, dirt, sand, stone, mud, reedbed, boardwalk; freshwater with its 14 shore masks; dirt-path and stone-path edges; cliff strip and ramp.
 - inputs: `.agents/skills/tile-forge/SKILL.md` (read it fully first); region bible `docs/doctrine/regions/aqualia.md` and ART-13 (teal, sand, warm timber); the concept `art/source/masters/aqualia_canal_settlement_master.jpg` for mood only (its grid lines and props make it unusable as a swatch); the golden sample `art/source/tiles/sets/aqualia-grass-water/` and its packet `art/review/tiles-aqualia-grass-water-1/` (procedural stand-in swatches; beat them).
 - work, one material at a time (PRD-4), each through the skill's loop (swatch, recipe, `all`, look at all three previews, fix inputs, repeat):
@@ -87,7 +87,7 @@ lines.
   8. Packet when the whole set is candidate and reads well on `level.png`. Write `DIGEST.md` in the packet with what you saw and the trade-offs. Message the director. One packet per set; a second set (for example `aqualia-water-deep`) is fine if the first grows too large.
 - never: edit tile PNGs, exports or packets; write director records; change the tool or spec (ask codex).
 - done when: an `art/review/tiles-aqualia-terrain-<n>/` packet is QA candidate with every material above, and the director is messaged
-- evidence:
+- evidence: art/source/tiles/sets/aqualia-terrain/set.json
 
 ### M10 · Quadruped creature reference sheets (bramblefang, marshstalker, mireling)
 
@@ -122,23 +122,23 @@ lines.
 
 ### M12 · Relay C6 review evidence
 
-- status: open
+- status: done
 - goal: add the candidate village packet to the next review digest and relay its C5 composition gate to the director.
 - work: use the Codex C6 handoff and art/review/world-aqualia-aqualia_village-1/packet.json. Distinguish objective QA from visual approval; link only published evidence.
 - done when: digest and relay cite the packet, its preview limitations and the required director decision.
-- evidence:
+- evidence: art/review/digest-2026-W45.md, docs/team/comms/communicator/2026-10-31T1948--to-director--relay-c6-village-evidence.md, art/review/world-aqualia-aqualia_village-1/packet.json
 
 ### M13 · Existing world-preview kit inventory
 
-- status: open
+- status: done
 - goal: identify which existing source/catalog terrain and environment assets can replace the village preview fallbacks when their owning production gates permit.
 - work: report canonical IDs, dimensions, anchors, available layers and approval status in your own comms. Read existing artwork/catalog; do not invent assets, edit generated output or activate candidates.
 - done when: a source-linked inventory and explicit missing-kit list are published for Codex/C10/C11.
-- evidence:
+- evidence: docs/team/comms/communicator/2026-10-31T1950--to-codex--world-preview-kit-inventory.md, art/source/manifest.json, docs/art/coverage.md
 
 ### M14 · Recast proposal 002 (AGT-4.2)
 
-- status: open
+- status: done
 - goal: a new revision of `docs/team/proposals/002-aqualia-voice-casting.md` that answers the director's changes-requested record `docs/team/comms/director/approvals/proposal-002.md`.
 - work:
   - Cast every voice from age, role and personality only, with a one-line rationale per villager that never mentions pronouns, names or gender.
@@ -146,22 +146,22 @@ lines.
   - Keep the sample lines, blips and prosody fields.
   - Record which Kokoro voice list the IDs come from.
 - done when: the proposal is revised and you've messaged the director with exactly what changed
-- evidence:
+- evidence: docs/team/proposals/002-aqualia-voice-casting.md, docs/team/comms/communicator/2026-10-31T1847--to-director--aqualia-voice-recast-proposal.md
 
 ### M15 · Score revisions (AUD-3, AUD-4.1)
 
-- status: open
+- status: done
 - goal: fix the scores per `docs/team/comms/director/approvals/music--aqualia-day-night.md`.
 - work:
   - quote motif bars 1–2 exactly;
   - fix day bar 6;
   - give night the same tempo, length and four stems as day, with harp and a soft pulse.
 - done when: `render_score.py` exits 0 for both, the report numbers are in a message to the director, and that message says "quotes bars 1–2" only when it does
-- evidence:
+- evidence: art/source/audio/scores/aqualia-day.json, art/source/audio/scores/aqualia-night.json, docs/team/comms/communicator/2026-10-31T1850--to-director--aqualia-scores-revised.md
 
 ### M16 · Correct the status board and write the W45 digest
 
-- status: open
+- status: done
 - goal: the board shows only TEAM-4 words and current evidence.
 - work:
   - Remove "completed", "done", "reference ready" and "current".
@@ -169,4 +169,4 @@ lines.
   - Bring the workstream rows up to date: C6 candidate → approved layout, C9a done by claude, C3d, C9b/C9c.
   - Write `art/review/digest-2026-W45.md` with everything waiting on the director, including C8 HUD visual acceptance and listening to the M15 scores.
 - done when: board and digest are pushed and cite records
-- evidence:
+- evidence: docs/team/status-board.md, art/review/digest-2026-W45.md

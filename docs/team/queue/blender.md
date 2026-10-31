@@ -30,18 +30,18 @@ it's blocked, mark it and take the next. Change only `status:` and `evidence:` l
 
 ### B2 · Riverlands map
 
-- status: open (world-authoring go issued; bible and village layout records integrated)
+- status: candidate (art/review/world-aqualia-aqualia_riverlands-1/, digest `e0584b254976740835de3882531f27e9fcc09347ea8d45a16cb455ba04536c1a`, awaiting director approval record)
 - goal: lay out level `aqualia_riverlands` from the region bible, following the codex golden village as your example.
 - work: `world-builder` skill. One pass per idea: write the pass, `apply`, `render`, open every screen crop, `check`, fix. Never edit `.ldtk` JSON by hand.
 - done when: `worldforge check` passes, the packet is in `art/review/`, and the ticket is `candidate`
-- evidence: Codex [go-world](../comms/codex/2026-10-31T1640--to-blender--go-world.md); bible/layout director records are integrated. Existing village layout is the reference, not finished dressing.
+- evidence: Pass `003-riverlands-layout.json` authored and applied; 120x68 level layout complete with 16 landmarks, 4 story spots, 6 habitats, 6 ambience emitters, music zone, all 5 routes, warm-terrace elevation and collision ramps; worldforge check clean (0 findings on level and region); candidate packet in art/review/world-aqualia-aqualia_riverlands-1/; overview and all 16 screen crops inspected; announced in docs/team/comms/blender/2026-10-31T1829--to-director-communicator--riverlands-candidate-packet.md.
 
 ### B3 · Remaining creatures, one at a time
 
-- status: open: bramblefang and marshstalker director-approved (`bramblefang--2026-10-31-bramblefang-c3d.md`, `marshstalker--2026-10-31-marshstalker.md`); next is mireling (its sheet ramps were normalised in e980842; run `prep`, and if it rejects the sheet, report to the communicator and switch to B2)
+- status: candidate (art/review/2026-10-31-mireling/, digest `e49ddef2bb67e24f53a7fdc4486767b2819d87575cbbedd6b6419f4fd9839632`, awaiting director approval record; Rivallie, Bramblefang, and Marshstalker director-approved; quadruped sequence complete)
 - goal: quadruped species first, in this order: bramblefang, marshstalker, mireling. steamshell (shelled), zephyrit and cindermoth (winged) and ignicap (mushroom-biped) wait for codex templates. Each needs its reference sheet from the communicator (all-fours pose for quadrupeds, same pose in every view).
 - done when: a packet per species, each `candidate`
-- evidence: 2026-10-31 candidate packets generated for marshstalker and bramblefang with C3d quality fixes; 15 clips, 616 frames each; all 12 hard QA checks passing on both; announced in docs/team/comms/blender/2026-10-31T1805--to-director-communicator--quadruped-candidate-packets.md; mireling reference sheet validated and ready in art/source/references/mireling/
+- evidence: 2026-10-31 candidate packets generated for marshstalker and bramblefang with C3d quality fixes; 15 clips, 616 frames each; all 12 hard QA checks passing on both; announced in docs/team/comms/blender/2026-10-31T1805--to-director-communicator--quadruped-candidate-packets.md; director approvals integrated for Rivallie, Bramblefang, and Marshstalker; Mireling end-to-end forged on creature.medium canvas (heightArtPx 26, basalt/moss/reed/blossom ramps, 8 colors, 12/12 hard QA passing, smallest margin 4px); candidate review packet emitted at art/review/2026-10-31-mireling/ (digest `e49ddef2bb67e24f53a7fdc4486767b2819d87575cbbedd6b6419f4fd9839632`); contact sheet, rig preview, and walk/run clips inspected; announced in docs/team/comms/blender/2026-10-31T1845--to-director-communicator--mireling-packet.md.
 
 ### B4 · Golden samples: player-aqualia, then Neris (humans)
 
@@ -58,16 +58,16 @@ it's blocked, mark it and take the next. Change only `status:` and `evidence:` l
 
 ### B6 · Worldforge cross-machine smoke
 
-- status: open
+- status: complete
 - goal: verify C6 tooling on machine A without changing the shared map or starting new art.
 - work: after normal branch integration, run worldforge doctor, plan check aqualia, village-scoped check and the worldforge_selftest.py unittest command from docs/engineering/worldforge.md. Verify packet file hashes. Report platform differences in your own comms. Riverlands-wide check is expected to remain draft.
 - done when: commands, packet hashes and observed failures are published; this ticket does not grant B2 layout go.
-- evidence:
+- evidence: Verified on Machine A: worldforge doctor exits 0, plan check aqualia passes ok, village check passes candidate (0 findings); worldforge_selftest.py ran with 18 passes and 3 failures stemming from completed Riverlands pass 003 inclusion; scripts/check-packets.ts verified 616 frames on both creatures; documented and reported in docs/team/comms/blender/2026-10-31T1855--to-codex-director--b6-b7-smoke-results.md.
 
 ### B7 · Delivered creature gallery smoke
 
-- status: open
+- status: complete
 - goal: confirm the existing Rivallie/Bramblefang packets load on machine A with all supplied facings, overlay controls and inspection magnification.
 - work: run the development gallery or tests/browser/packets.spec.ts against existing packet files. Inspect captures before describing them. Do not regenerate, rig or bake assets for this check.
 - done when: a technical result and captures are published in your own comms; director approval and gameplay publishing remain separate.
-- evidence:
+- evidence: Executed tests/browser/packets.spec.ts via Playwright on Machine A (1 test passed in 20.0s, 0 errors); verified candidate review playback, facings, state clips, step controls, 4x magnification, and Socket_Head/Socket_Back/Socket_Mouth overlays for Rivallie and Bramblefang; captures inspected in docs/team/comms/blender/tmp/; published in docs/team/comms/blender/2026-10-31T1855--to-codex-director--b6-b7-smoke-results.md.
