@@ -109,12 +109,15 @@ test('packet viewer validates frames, offers legacy recovery and stays outside t
   await page.getByRole('button', { name: 'Step', exact: true }).click();
   // Capture the registered fixture, not a claim about Rivallie's visual quality.
   await page.screenshot({ path: 'docs/team/comms/codex/tmp/c8-packet-fixture.png' });
-  await page.getByLabel('Packet directory').fill('2026-10-31-rivallie');
+  await page.route('**/art/review/legacy-packet/review.json', (r) =>
+    r.fulfill({ status: 404, body: 'missing' }),
+  );
+  await page.getByLabel('Packet directory').fill('legacy-packet');
   await page.getByRole('button', { name: 'Load packet', exact: true }).click();
   await expect(page.locator('.packet-review [role=status]')).toContainText('Legacy packet');
   await expect(page.locator('.packet-review a').first()).toHaveAttribute(
     'href',
-    '/art/review/2026-10-31-rivallie/contact.png',
+    '/art/review/legacy-packet/contact.png',
   );
   fixture.frames[0]!.sha256 = '0'.repeat(64);
   await page.getByLabel('Packet directory').fill('test-packet');
@@ -145,7 +148,10 @@ test('obsolete and malformed packet loads cannot replace the current candidate',
     load = page.getByRole('button', { name: 'Load packet', exact: true });
   await input.fill('slow');
   await load.click();
-  await input.fill('2026-10-31-rivallie');
+  await page.route('**/art/review/legacy-packet/review.json', (r) =>
+    r.fulfill({ status: 404, body: 'missing' }),
+  );
+  await input.fill('legacy-packet');
   await load.click();
   await expect(page.locator('.packet-review [role=status]')).toContainText('Legacy packet');
   release();

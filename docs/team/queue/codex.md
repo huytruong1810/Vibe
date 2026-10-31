@@ -244,7 +244,7 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 
 ### C6 · worldforge, the world-builder skill and the golden village map
 
-- status: open
+- status: candidate (tooling and village packet; world go awaits C5 composition approval)
 - goal: a tool the blender agent can lay out maps with, alone, plus a worked example.
 - inputs: C4 and C5 are in place. `worldforge.py` already has `plan check` and `plan render` (claude); extend that file, keep its style and its `check_plan` rules
 - work: `art/source/world/tools/worldforge.py` (uv; add it to `.agents/workspace-policy.json` `tools.entrypoints`; gitignore and approve `art/source/world/work/`). Commands:
@@ -277,7 +277,7 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
   - a deliberately broken pass (a blocked entrance, a landmark moved off-plan) fails
     `check`;
   - you've posted `--to-blender--go-world.md`.
-- evidence:
+- evidence: [C6 packet and handoff](../comms/codex/2026-10-31T1547--to-all--c6-worldforge-candidate.md), [worldforge guide](../../engineering/worldforge.md), [candidate packet](../../../art/review/world-aqualia-aqualia_village-1/README.md). No go-world until the required C5 decision record exists.
 
 ### C7 · Authored world in the engine (WLD-M1…M4)
 

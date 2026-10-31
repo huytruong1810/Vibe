@@ -85,3 +85,19 @@ lines.
 - inputs: the `reference-sheets` skill, approved portraits (`public/assets/portraits/creatures/portrait_<species>_128.png`)
 - done when: sheets committed with views and `sheet.json`, ledger updated, and blender notified
 - evidence: art/source/references/bramblefang/{sheet.png,front.png,left.png,back.png,sheet.json}, docs/team/comms/communicator/image-ledger.md, docs/team/comms/communicator/2026-10-31T0900--to-blender-codex--bramblefang-reference-ready.md
+
+### M11 · Relay C6 review evidence
+
+- status: open
+- goal: add the candidate village packet to the next review digest and relay its C5 composition gate to the director.
+- work: use the Codex C6 handoff and art/review/world-aqualia-aqualia_village-1/packet.json. Distinguish objective QA from visual approval; link only published evidence.
+- done when: digest and relay cite the packet, its preview limitations and the required director decision.
+- evidence:
+
+### M12 · Existing world-preview kit inventory
+
+- status: open
+- goal: identify which existing source/catalog terrain and environment assets can replace the village preview fallbacks when their owning production gates permit.
+- work: report canonical IDs, dimensions, anchors, available layers and approval status in your own comms. Read existing artwork/catalog; do not invent assets, edit generated output or activate candidates.
+- done when: a source-linked inventory and explicit missing-kit list are published for Codex/C10/C11.
+- evidence:

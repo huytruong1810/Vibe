@@ -4,7 +4,7 @@ import { packetBase, ReviewPacketSchema, type ReviewPacket } from './assets/revi
 export function mountPacketReview(root: HTMLElement): () => void {
   const section = document.createElement('details');
   section.className = 'packet-review';
-  section.innerHTML = `<summary>Forge packet · candidate review</summary><form><label>Packet directory <input name="packet" value="2026-10-31-rivallie" required></label><button>Load packet</button></form><p role="status">Candidate preview only. No approval or gameplay activation.</p><div class="packet-controls"><label>Clip <select aria-label="Packet clip"></select></label><button type="button" data-play>Pause</button><button type="button" data-step>Step</button><label><input type="checkbox" data-overlays checked> Anchors and sockets</label></div><canvas width="800" height="360" aria-label="Candidate in-scene preview"></canvas><pre></pre>`;
+  section.innerHTML = `<summary>Forge packet · candidate review</summary><form><label>Packet directory <input name="packet" value="2026-10-31-rivallie" required></label><button>Load packet</button></form><p role="status">Candidate preview only. No approval or gameplay activation.</p><div class="packet-controls"><label>Clip <select aria-label="Packet clip"></select></label><button type="button" data-play>Pause</button><button type="button" data-step>Step</button><label>Preview <select aria-label="Packet magnification"><option value="1">1x world scale</option><option value="2">2x inspection</option><option value="4">4x inspection</option></select></label><label><input type="checkbox" data-overlays checked> Anchors and sockets</label></div><canvas width="800" height="360" aria-label="Candidate in-scene preview"></canvas><pre></pre>`;
   root.querySelector('main')!.prepend(section);
   const query = <T extends HTMLElement>(selector: string) => section.querySelector<T>(selector)!;
   const status = query<HTMLParagraphElement>('[role=status]'),
@@ -37,6 +37,8 @@ export function mountPacketReview(root: HTMLElement): () => void {
     elapsed = 0;
     const clip = packet?.clips.find((c) => c.id === select.value);
     if (!clip || !packet) return;
+    delete status.dataset.clip;
+    status.textContent = `Loading candidate clip ${clip.id}…`;
     const required = clip.frameIds.map((id) => packet!.frames.find((f) => f.id === id)!);
     const bytes = required.reduce((sum, f) => sum + f.sourceSize.w * f.sourceSize.h * 4, 0);
     if (bytes > 32 * 1024 * 1024) throw new Error('Selected clip exceeds 32 MiB review budget');
@@ -67,6 +69,7 @@ export function mountPacketReview(root: HTMLElement): () => void {
       }
       if (signal.aborted || disposed) throw new DOMException('Obsolete packet', 'AbortError');
       images = loaded;
+      status.dataset.clip = clip.id;
       status.textContent = `Candidate ${packet.asset} · ${clip.facing} · ${clip.frameIds.length} frames · ${(bytes / 1048576).toFixed(2)} MiB. Manual preview timing; no simulated combat.`;
     } catch (error) {
       for (const image of loaded.values()) image.close();
@@ -186,13 +189,14 @@ export function mountPacketReview(root: HTMLElement): () => void {
           image = images.get(id);
         if (image) {
           const anchor = frame.anchorPx!,
-            x = 400 - anchor.x,
-            y = 256 - anchor.y;
-          ctx.drawImage(image, x, y);
+            scale = Number(query<HTMLSelectElement>('[aria-label="Packet magnification"]').value),
+            x = 340 - anchor.x * scale,
+            y = 256 - anchor.y * scale;
+          ctx.drawImage(image, x, y, image.width * scale, image.height * scale);
           if (query<HTMLInputElement>('[data-overlays]').checked) {
             ctx.fillStyle = '#ee7d69';
-            ctx.fillRect(394, 254, 12, 4);
-            ctx.fillRect(398, 250, 4, 12);
+            ctx.fillRect(334, 254, 12, 4);
+            ctx.fillRect(338, 250, 4, 12);
             ctx.font = '38px Silver';
             ctx.fillStyle = '#f5ddb0';
             ctx.fillText(
@@ -200,10 +204,11 @@ export function mountPacketReview(root: HTMLElement): () => void {
               12,
               40,
             );
+            let socketRow = 0;
             for (const [name, point] of Object.entries(frame.sockets ?? {})) {
               ctx.fillStyle = '#79bdbe';
-              ctx.fillRect(x + point.x - 2, y + point.y - 2, 4, 4);
-              ctx.fillText(name, x + point.x + 6, y + point.y);
+              ctx.fillRect(x + point.x * scale - 2, y + point.y * scale - 2, 4, 4);
+              ctx.fillText(name, 550, 50 + 38 * socketRow++);
             }
           }
         }

@@ -197,3 +197,38 @@ lockfile. Source PNGs, source UI specifications and the approval ledger remain
 unchanged. Existing generated terrain and placeholder actors remain visible; the
 new frames do not establish visual completion. The first Rivallie packet must be
 regenerated on machine A before its registered in-scene review is possible.
+
+## ADR 020 — offline world authoring and scoped review
+
+**Problem:** plan sketches cannot serve as native maps, and a draft neighboring
+level must not be silently certified by village-only checks. Agents also need a
+safe way to revise placement without direct LDtk writes.
+
+**Decision:** worldforge builds a schema-valid LDtk project and edits it through
+versioned, digest-checked passes. Ordered paint/place/scatter operations operate
+on a cloned project under an exclusive lock; structure and references validate
+before atomic replacement. Placement identities derive from semantic IDs, and
+explicit same-kind replacement preserves them. Native fields are constrained by
+the shared world contract, including canonical item IDs referenced by that contract.
+
+Cardinal traversal fixtures run in Python and TypeScript. Dry-foot service access
+is checked separately from humans' ability to swim. A level-scoped report names
+unfinished neighbors; full-region checks remain red until they are authored.
+Density is measured, not converted into aesthetic acceptance. Foreground preview
+placeholders establish intended composition layers without claiming final art.
+
+Render and inspection receipts bind map, plan, code, font, content and atlas bytes.
+Packet creation requires current QA, viewed images and deterministic pass replay.
+The packet manifest is written last. Hooks deny direct map writes and shell
+bypasses, with a stop-time authoring receipt check. These are workflow protections,
+not a sandbox against a malicious process with arbitrary filesystem access.
+
+**Alternatives rejected:** editing raw LDtk JSON, requiring a complete map after
+every incremental pass, guessing density thresholds, copying candidate art into
+the gameplay catalog, or changing runtime/save contracts during tool bring-up.
+
+**Consequences:** the village is a candidate; Riverlands and runtime integration
+remain unfinished. New games continue using the existing implementation until C7.
+The world-builder skill and relevant hooks change under C6's DOC-5 authority;
+doctrine, world schema and protected plan are unchanged. The CLI and acceptance
+evidence are described in [worldforge](worldforge.md).

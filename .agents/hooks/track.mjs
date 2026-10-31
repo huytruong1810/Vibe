@@ -29,6 +29,8 @@ if (!input.error && rel && /\.(png|gif|jpe?g|webp)$/i.test(rel)) {
     if (path.basename(rel) === 'contact.png') {
       writeFileSync(path.join(path.dirname(abs), 'contact.viewed'), `${hash}\n`);
     }
+    if (rel.startsWith('art/source/world/work/') && rel.endsWith('.png'))
+      writeFileSync(`${abs}.viewed`, `${hash}\n`);
   }
 }
 emit({});
