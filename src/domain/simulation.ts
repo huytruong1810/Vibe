@@ -157,7 +157,9 @@ export class SimulationHost {
   private debugEnabled = false;
   private eventSerial = 0;
   private cueSerial = 0;
-  private readonly presentationCues = new RingBuffer<PresentationCue>(64);
+  private readonly presentationCues = new RingBuffer<PresentationCue & { readonly scene: number }>(
+    64,
+  );
   private readonly presentationPositions = new Map<
     number,
     { x: number; y: number; moving: boolean; tick: number; hp: number; recoveryUntil: number }
@@ -1393,19 +1395,15 @@ export class SimulationHost {
         }
     this.rebuildSpatial();
     for (const event of this.combat.advance(this.tick, this.spatial, now)) {
-      if (
-        event.type === 'hit' ||
-        event.type === 'assault' ||
-        event.type === 'hunt' ||
-        event.type === 'victory'
-      )
+      if (event.type === 'hit' || event.type === 'hunt' || event.type === 'victory')
         this.presentationCues.push({
           sequence: ++this.cueSerial,
           tick: this.tick,
           actor: event.actor ?? 0,
           target: event.target,
-          kind: event.type === 'hit' || event.type === 'assault' ? 'hit' : 'defeat',
+          kind: event.type === 'hit' ? 'hit' : 'defeat',
           strength: event.impact,
+          scene: s.scene[s.require(event.target ?? event.actor ?? 0)]!,
         });
       this.emit(
         event.type,
@@ -1861,7 +1859,9 @@ export class SimulationHost {
           kind: 'arrow' as const,
         })),
       actors,
-      cues: [...this.presentationCues.values()],
+      cues: [...this.presentationCues.values()]
+        .filter((cue) => cue.scene === activeScene)
+        .map(({ scene: _scene, ...cue }) => cue),
       debugEnabled: this.debugEnabled,
       debugPaths: this.debugEnabled
         ? [...this.schedules.debugPaths(this.player), ...this.decisions.debugPaths(this.player)]

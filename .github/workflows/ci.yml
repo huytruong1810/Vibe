@@ -31,7 +31,7 @@ jobs:
                 case "$path" in
                   art/source/legacy-bindings.json|art/source/legacy-portraits.json) source_only=false ;;
                   art/source/*) ;;
-                  docs/art/handoff.md|docs/art/handover-context.md|docs/art/art-engineering-handoff.md) ;;
+                  docs/art/handoff.md|docs/art/handover-context.md|docs/art/art-engineering-handoff.md|docs/art/team-coordination-hub.md) ;;
                   *) source_only=false ;;
                 esac
               done <<< "$changed"

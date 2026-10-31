@@ -77,6 +77,7 @@ The checked-in lockfile is the dependency source of truth. `.npmrc` uses the leg
 - [Unified entities, sleep, Nature, predation and save-v3 compatibility](docs/unified_entities.md)
 - [Master roadmap and corrected game rules](docs/master_plan.md)
 - [Full-world presentation, modular equipment, portrait expressions and pocket scenes](docs/full-world-presentation.md)
+- [Height, mass, recoil, footprints and accessible camera shake](docs/physical-presence.md)
 - [Foundation, clocks, persistence, and lifecycle](docs/foundation.md)
 - [Phase 1 — world and rendering](docs/phases/01-world.md)
 - [Phase 2 — resources and reactions](docs/phases/02-environment.md)

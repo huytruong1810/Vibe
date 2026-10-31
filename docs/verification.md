@@ -1,5 +1,51 @@
 # Verification and measurement record
 
+## Equipment, scenes and physical presence — 2026-10-31
+
+`npm run check` passes **233 tests**, architecture checks, asset validation and the
+production build. Formatting and all **12 Chrome journeys** pass separately. Browser checks cover inventory,
+guard release, dialogue, survival/combat, gallery failures, smaller layouts and an
+interior identity/physique save/load/exit journey. The stricter v4 checks exposed
+abandoned/expired attack records; cleanup and regression tests now prevent them
+from entering checkpoints. Impact cues are scoped to their originating scene and
+social assault events no longer duplicate physical hit feedback.
+
+The [28-day report](benchmarks/physical-presence-soak.json) records **1,209,600
+ordinary ticks and 672 validated checkpoints**, including final restore and
+continued simulation. It ended with 995 wildlife, all eight species and all 31
+humans; population never exceeded 1,000 wildlife. The transient minimum was 732,
+while end-of-day totals remained between 972 and 999. This recovery is evidence
+against permanent collapse for this seed, not proof of a tuned ecology across
+all seeds. The run took 1,133,999 ms and used deterministic inference outages.
+Its gameplay baseline is `41521fe`; the subsequent cue-scoping fix changes only
+disposable presentation snapshots, with a separate cross-scene regression.
+
+The [headless benchmark](benchmarks/physical-presence-simulation.json) measured
+1,031 living entities on an i7-1365U / Node 22.22.3. Dispersed simulation p95 was
+1.451 ms, clustered p95 1.815 ms, and sustained 128-actor combat p95 3.277 ms.
+The combat fixture refills HP, stamina and needs between ordinary ticks to keep
+64 independent pairs active; it is not a natural population outcome. The detailed
+tier reached its 128 cap. Snapshot preparation p95 was 2.730 ms, clone p95
+1.581 ms, and validated checkpoint preparation 101.69 ms for 802,929 bytes.
+Node RSS was 242.2 MiB. These CPU figures exclude browser/GPU and live inference.
+
+The [render report](benchmarks/physical-presence-render.json) used Chrome 155,
+Intel Iris Xe and a 1920×1080 viewport, sampling 180 frames per scene/quality
+window with mocked local inference. Frame-interval p95 ranged from 18.2 to
+19.1 ms; dense Balanced renderer CPU p95 was 2.0 ms and HUD p95 0.8 ms. All
+windows retained 1,000 wildlife and 30 villagers; dense windows reached 128
+detailed creatures and up to 213 actor/prop sprites. Atlas initialization was
+704.6 ms; tracked texture/cache/framebuffer estimates were 41.5–41.9 MiB at
+framebuffer scale 1. No browser errors or measured long tasks occurred.
+
+These are warmed **prototype-art** measurements. Composites were zero bytes in
+this compatibility bundle; the numbers do not qualify production modular outfits,
+complete native scene kits, maximum projectile/VFX saturation or live Ollama
+contention. Earlier live-model measurements below predate this expansion and
+remain separate evidence. The integrated catalog has 683 frames, zero approved
+HD actors and 1,982 unmet Aqualia structural requirements under the expanded
+contract. Art-branch proofs are reviewed separately, not counted as integration.
+
 ## Reproduce
 
 ```sh

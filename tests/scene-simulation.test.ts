@@ -16,6 +16,20 @@ function enterPublicHome(host: SimulationHost) {
 }
 
 describe('scene-aware authoritative simulation', () => {
+  it('does not replay an old-scene impact on the same actor after entering a room', () => {
+    const host = new SimulationHost(42, 1, 0),
+      s = host.entities,
+      npc = host.npcs[10]!,
+      slot = s.require(npc.entityId);
+    s.x[slot] = host.player.x + 1;
+    s.y[slot] = host.player.y;
+    host.equipment.loadout(npc.entityId)!.combat = [null, null];
+    host.combat.pursuits.set(npc.entityId, { target: 0, cause: 'retaliate', until: 100 });
+    host.advance(10);
+    expect(host.frame().cues.some((c) => c.kind === 'hit' && c.target === 0)).toBe(true);
+    enterPublicHome(host);
+    expect(host.frame().cues).toEqual([]);
+  });
   it('cleans abandoned attacks before a checkpoint can persist stale combat', () => {
     const host = new SimulationHost(42, 1, 0),
       combat = host.combat.snapshot();

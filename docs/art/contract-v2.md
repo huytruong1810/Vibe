@@ -156,6 +156,18 @@ and eight species. Neutral portrait availability, complete expression sets and
 approved expression sets are separate counts. A successful prototype build or
 an increased frame count cannot be reported as HD completion.
 
+## Physical presence and art registration
+
+The [physical presence contract](../physical-presence.md) adds per-entity height,
+mass and bounded recoil. These do not authorize stretching approved body art,
+changing sprite anchors or encoding damage in frames. Keep body, garments,
+attachments and equipment on the same pose sample. Supply genuine planted-foot
+contacts and stride metadata; cosmetic footprints and mud lean supplement them.
+Fliers do not leave ground prints. Camera shake is a restrained presentation
+response to committed impacts, disabled by reduced motion; do not bake it into
+sprite frames or scene plates. No new physique fields are required in art
+manifests: authoritative body values belong to simulation state.
+
 ## Packing, quality and CI ownership
 
 The maximum is 2048×2048 **per page**, not one page for the game. One full RGBA

@@ -66,3 +66,25 @@ v2. Submit the Aqualia scene plus player and Rivallie pose proofs for visual rev
 then complete the mandatory motion matrix and identity bindings. Engineering can
 compile and validate candidates while preserving existing gameplay. Approval
 records remain empty until an explicit review approves the exact source digest.
+
+## Coordination hub follow-up
+
+The local coordination hub at art commit `a4b2434` is a useful roster, but its
+ownership and completion claims need the same corrections. Engineering owns the
+validated schemas, atlas compiler and generated runtime catalogs. Art owns
+masters/models, bakes, ingestion inputs, exports and review previews. The page
+limit is still per page; a 790-frame proof bundle fitting one page does not impose
+a single-page production budget. Seven south-facing breathing sets are candidate
+idle proofs, not completed villager animation coverage. Twenty-two static
+portraits do not complete the nine-expression, 33-human programme.
+
+Use engineering contract commit `41521fecbf2ae7aee493eb005822eaff180706d0`
+from `eng/hd-presentation` / draft PR #1. Merge the engineering tip normally before
+using source v2. The runtime now propagates nine dialogue emotions, supports worn
+layers/finite weapons and scene membership, and supplies height/mass and committed
+impact data for physical presentation. Follow [contract v2](contract-v2.md) and
+[physical presence](../physical-presence.md). Actor registration and approved
+anatomy remain stable: do not bake camera shake or gameplay recoil into frames,
+stretch sprites from mass, or change anchors to fake weight. The 18°/22° proposed
+Blender pitches still need a common target-scene review; listing them in a roster
+does not establish visual approval.
