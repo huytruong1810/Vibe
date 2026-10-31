@@ -193,6 +193,28 @@ export function bannedLine(text) {
   return null;
 }
 
+let policyCache;
+function policy() {
+  policyCache ??= JSON.parse(readFileSync(path.join(AGENTS_DIR, 'workspace-policy.json'), 'utf8'));
+  return policyCache;
+}
+
+/** Returns a denial reason when creating rel would litter the workspace (TEAM-9), else null. */
+export function litterDenial(rel) {
+  if (rel === null) return null;
+  const p = policy();
+  const top = rel.split('/')[0];
+  if (!p.rootAllowlist.map((x) => (CASE_INSENSITIVE ? x.toLowerCase() : x)).includes(top)) {
+    return `Creating a new top-level entry "${top}" is not allowed (TEAM-9.2). Put scratch in art/source/forge/work/ or your OS temp dir; put deliverables in your lane folder.`;
+  }
+  const except = (p.forbiddenNameExceptions ?? []).some((r) => new RegExp(r, 'i').test(rel));
+  const hit = p.forbiddenNamePatterns.find((r) => new RegExp(r, 'i').test(rel));
+  if (hit && !except) {
+    return `"${rel}" looks like a scratch, backup or versioned-copy file (TEAM-9.1). Scratch goes to art/source/forge/work/ or your OS temp dir; edit the real file in place instead of making copies.`;
+  }
+  return null;
+}
+
 export function sha256File(file) {
   return createHash('sha256').update(readFileSync(file)).digest('hex');
 }

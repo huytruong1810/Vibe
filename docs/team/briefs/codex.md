@@ -52,6 +52,14 @@ Doctrine numbers marked "starting point" (CMB-3 timings, CRE-3.3 formula) are
 yours to tune. Doctrine rules (for example presentation-only hit-stop, director-only
 approval) are not.
 
+## Workspace standards
+
+`npm run check` now starts with `npm run check:hygiene` (doctrine TEAM-9; policy in
+`.agents/workspace-policy.json`). It requires every doc under `docs/` to be linked
+from the index tree, every script to be used, and no scratch or backup files. When a
+change supersedes a doc or tool, remove the old one in the same change. If the policy
+blocks something legitimate, write a proposal rather than working around it.
+
 ## Collaboration
 
 - You share machine B with the communicator, who relays machine-A messages to you

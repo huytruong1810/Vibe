@@ -137,3 +137,32 @@ director and Claude act on it.
 - **TEAM-8.3** When unsure, the doctrine decides. When the doctrine is silent,
   ask the director in comms and continue only with work that does not depend on
   the answer.
+
+## TEAM-9 Workspace hygiene
+
+A professional repository contains only what the project uses today. Every member
+leaves the workspace exactly as clean as they found it, plus their deliverable.
+
+- **TEAM-9.1 Scratch has three homes.** `art/source/forge/work/` (gitignored), your
+  operating-system temp directory, or your own `docs/team/comms/<you>/tmp/`
+  (tracked, short-lived). Nowhere else. No backup, copy or versioned duplicates
+  (`*-old`, `*-final`, `*_backup`, `copy of …`, `*.bak`): edit the real file in
+  place; git keeps history.
+- **TEAM-9.2 No new top-level entries** without the director or Claude. New folders
+  go only inside your lane.
+- **TEAM-9.3 One living doc per topic.** Update docs in place. When a doc is
+  outdated, delete it or fold it into the current doc in the same change. Every doc
+  under `docs/` is linked from the docs index tree. Messages and briefings are not
+  docs; they live in `docs/team/comms/<you>/`.
+- **TEAM-9.4 Tools exist only while something uses them.** A script or module
+  must be run by `package.json`, imported, invoked by the forge, or named in a
+  runbook. Remove a superseded tool in the same change that replaces it. One-off
+  debug or test scripts are never committed (tests belong in `tests/`).
+- **TEAM-9.5 Temp docs expire.** Files in `docs/team/comms/<you>/tmp/` are deleted
+  or promoted by their owner within 7 days.
+- **TEAM-9.6 Close what you open.** Before ending a session: stop dev servers and
+  background processes you started, delete previews and renders you no longer
+  need, and make sure `git status` shows only intended changes.
+- **TEAM-9.7 Verify.** Run `npm run check:hygiene` before every push. It is part of
+  `npm run check` and CI. The policy lives in `.agents/workspace-policy.json`
+  (doctrine-protected).

@@ -17,4 +17,8 @@ one asset at a time · fix inputs, never spec/QA/forge code · status max `candi
 cite evidence · no superlatives (AAA, stellar, perfect…) · write only in your comms folder ·
 no force-push / --no-verify.
 
+**Workspace (TEAM-9):** scratch only in `art/source/forge/work/`, OS temp or your comms `tmp/` ·
+no backup/copy files · delete outdated docs and unused tools · stop processes you start ·
+`npm run check:hygiene` before push.
+
 **Every report:** `Changed` / `Evidence` / `Gaps`. Keep `docs/team/comms/blender/session-<date>.md` current.

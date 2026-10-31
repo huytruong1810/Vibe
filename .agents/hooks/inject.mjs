@@ -1,7 +1,9 @@
 // SessionStart / PreInvocation: keep the role card and laws in context across long
 // sessions and compactions (TEAM-8). Usage: node hooks/inject.mjs session|invocation
 import { closeSync, openSync, readSync, statSync } from 'node:fs';
+import { checkWorkspace } from '../hygiene/check.mjs';
 import {
+  REPO_ROOT,
   emit,
   gitChangedPaths,
   loadState,
@@ -42,6 +44,13 @@ function newCheckpoints(file) {
 const steps = [];
 if (mode === 'session') {
   s.baseline = gitChangedPaths();
+  try {
+    s.hygieneBaseline = checkWorkspace({ root: REPO_ROOT, mode: 'working', role }).errors.map(
+      (e) => `${e.rule}:${e.path}`,
+    );
+  } catch {
+    s.hygieneBaseline = [];
+  }
   steps.push({
     systemMessage: {
       systemMessage: `${card}\n\nStart: git pull, then read new messages for you in docs/team/comms/*/ (TEAM-3.3).`,

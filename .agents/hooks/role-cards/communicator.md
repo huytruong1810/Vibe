@@ -18,4 +18,8 @@ use generated images as game frames.
 you never approve (director only) · look at every image · cite evidence · no superlatives ·
 write only in your own comms folder · no force-push / --no-verify.
 
+**Workspace (TEAM-9):** scratch only in `art/source/forge/work/`, OS temp or your comms `tmp/` ·
+no backup/copy files · delete outdated docs and unused tools · stop processes you start ·
+`npm run check:hygiene` before push.
+
 **Every report:** `Changed` / `Evidence` / `Gaps`. Keep `docs/team/comms/communicator/session-<date>.md` current.

@@ -1,6 +1,15 @@
 // PreToolUse guard: blocks doctrine edits, out-of-lane writes, banned claims and
 // destructive git (DOC-1, TEAM-2, TEAM-5.3, TEAM-7). Best effort for shell commands.
-import { arg, bannedLine, emit, readRole, readStdin, repoRel, writeDenial } from './lib.mjs';
+import {
+  arg,
+  bannedLine,
+  emit,
+  litterDenial,
+  readRole,
+  readStdin,
+  repoRel,
+  writeDenial,
+} from './lib.mjs';
 
 const READ_ONLY_TOOL =
   /^(read_file|list_dir|list_directory|view_file|view_.*|grep_search|find_by_name|search_.*|codebase_search|manage_task|browser_.*|read_.*|get_.*)$/;
@@ -88,7 +97,7 @@ const target = arg(
   'Destination',
 );
 const rel = repoRel(target);
-const reason = writeDenial(role, rel);
+const reason = writeDenial(role, rel) ?? litterDenial(rel);
 if (reason) deny(reason);
 
 const content = [

@@ -291,3 +291,42 @@ test('stop: report must carry Changed/Evidence/Gaps when files changed', () => {
   );
   assert.match(out.reason, /Changed, Evidence, Gaps/);
 });
+
+test('guard blocks litter names and new top-level entries, allows normal deliverables', () => {
+  const fx = fixtureRepo();
+  for (const p of [
+    'art/review/temp_render.png',
+    'output/frame.png',
+    'docs/team/comms/blender/notes-old.md',
+    'art/source/forge/recipes/neris_backup.json',
+    'art/source/blender/models/rig.blend1',
+    'debug_contact.png',
+  ]) {
+    assert.equal(run('guard.mjs', write(p), fx, 'blender').decision, 'deny', p);
+  }
+  assert.equal(
+    run('guard.mjs', write('art/source/forge/recipes/npc-neris.json'), fx, 'blender').decision,
+    'allow',
+  );
+  assert.equal(
+    run('guard.mjs', write('docs/team/comms/blender/tmp/plan.md'), fx, 'blender').decision,
+    'allow',
+  );
+});
+
+test('stop: litter created during the session must be cleaned up; pre-existing issues are ignored', () => {
+  const fx = fixtureRepo();
+  writeFileSync(path.join(fx.root, 'old-junk.txt'), 'pre-existing');
+  run('inject.mjs', { conversationId: 'c6' }, fx, 'blender', ['session']);
+  mkdirSync(path.join(fx.root, 'art/review'), { recursive: true });
+  writeFileSync(path.join(fx.root, 'art/review/frame.bak'), 'x');
+  const out = run(
+    'stop.mjs',
+    { conversationId: 'c6', terminationReason: 'NO_TOOL_CALL' },
+    fx,
+    'blender',
+  );
+  assert.equal(out.decision, 'continue');
+  assert.match(out.reason, /litter-name\] art\/review\/frame\.bak/);
+  assert.doesNotMatch(out.reason, /old-junk/);
+});

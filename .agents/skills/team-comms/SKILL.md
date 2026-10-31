@@ -48,6 +48,12 @@ records in `docs/team/comms/director/approvals/`. Allowed statuses: `draft`,
 `candidate`, `changes-requested`, `director-approved`, `rejected`. Only copy
 `director-approved` from an existing approval record.
 
+## Before you push (every time)
+
+1. Delete scratch you created; stop servers and background processes you started.
+2. `npm run check:hygiene` passes (TEAM-9).
+3. `git status` shows only intended changes.
+
 ## End-of-task report (every time)
 
 ```markdown

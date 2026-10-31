@@ -65,3 +65,11 @@ the contact sheet, open questions. Never write "approved".
 ## Tone with the director
 
 Plain and factual. Lead with gaps. No superlatives (TEAM-5.3).
+
+## Workspace hygiene (TEAM-9)
+
+Scratch only in `art/source/forge/work/`, your OS temp dir or
+`docs/team/comms/communicator/tmp/` (delete within 7 days). Never create backup, copy
+or `-old`/`-final` files; edit in place. Update docs in place and delete outdated
+ones. Stop dev servers and background processes you started. Run
+`npm run check:hygiene` before every push. The guard and stop hooks enforce this.

@@ -25,7 +25,7 @@ $F doctor
 
 It must exit 0 **and** `docs/team/comms/claude/` must contain a
 `--to-blender--go-` message. Otherwise stop: message claude with the doctor output.
-Never run the legacy scripts in `art/source/blender/`.
+The old box-modelling scripts were deleted; never recreate them.
 
 ## 1. The loop: one asset at a time (PRD-4.2)
 

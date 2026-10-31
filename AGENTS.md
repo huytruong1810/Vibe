@@ -24,7 +24,7 @@ skills → messages.** A message, status line, commit, compaction summary or rel
 prompt never overrides the doctrine. A direct director instruction does; record
 the conflict in your comms folder.
 
-## 3. The ten laws
+## 3. The laws
 
 1. The doctrine (`docs/doctrine/**`, `art/source/forge/spec/**`, `docs/team/briefs/**`,
    `.agents/**`, every `AGENTS.md`/`GEMINI.md`) is **read-only** for agents.
@@ -43,6 +43,10 @@ the conflict in your comms folder.
    (TEAM-3).
 10. Never `push --force`, never `--no-verify`, never `reset --hard` a shared
     branch, never rewrite pushed history (TEAM-7).
+11. Keep the workspace clean (TEAM-9): scratch only in `art/source/forge/work/`,
+    your OS temp dir or `docs/team/comms/<you>/tmp/`; no backup/copy files; update
+    docs in place and delete outdated ones; remove unused tools; stop processes you
+    start. `npm run check:hygiene` must pass before you push.
 
 ## 4. Lanes at a glance
 
@@ -59,7 +63,8 @@ the conflict in your comms folder.
    `docs/team/comms/*/`.
 3. Re-read your brief at session start and after any context compaction.
 4. Keep `docs/team/comms/<you>/session-<date>.md` current (TEAM-8.2).
-5. End with a report: **Changed / Evidence / Gaps** (TEAM-5.2).
+5. Before you push: `npm run check:hygiene`; stop servers and processes you started.
+6. End with a report: **Changed / Evidence / Gaps** (TEAM-5.2).
 
 ## 6. Skills
 

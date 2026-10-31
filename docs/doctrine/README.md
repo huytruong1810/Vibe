@@ -57,7 +57,7 @@ would need to apply them to unforeseen cases, and ends with **Engineering
 mandates**. A mandate says _what_ the game must do, never _how_. Codex designs
 the implementation and records it in `docs/engineering/`.
 
-## The ten laws (memorize these)
+## The laws (memorize these)
 
 1. The doctrine is read-only for agents (DOC-1).
 2. Approval belongs to the director alone. QA and agents can only reach
@@ -73,3 +73,5 @@ the implementation and records it in `docs/engineering/`.
 9. Write messages and temp docs only in your own `docs/team/comms/<you>/`
    folder (TEAM-3).
 10. Never force-push, never `--no-verify`, never rewrite shared history (TEAM-7).
+11. Leave the workspace as clean as you found it: scratch only in approved
+    places, no stale docs or unused tools, close what you open (TEAM-9).

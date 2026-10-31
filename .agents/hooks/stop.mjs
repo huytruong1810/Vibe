@@ -2,6 +2,7 @@
 // and the Changed/Evidence/Gaps report (TEAM-2, PRD-5, TEAM-5). Each issue blocks once.
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
+import { checkWorkspace } from '../hygiene/check.mjs';
 import {
   REPO_ROOT,
   bannedLine,
@@ -77,7 +78,29 @@ if (existsSync(work)) {
   }
 }
 
-// 4. Final report format and wording (TEAM-5.2, TEAM-5.3), when the session changed files.
+// 4. Workspace hygiene: anything new this session that litters the repo (TEAM-9).
+try {
+  const before = new Set(session.hygieneBaseline ?? []);
+  const fresh = checkWorkspace({ root: REPO_ROOT, mode: 'working', role }).errors.filter(
+    (e) => !before.has(`${e.rule}:${e.path}`),
+  );
+  if (fresh.length) {
+    issues.push({
+      key: `hygiene:${fresh
+        .map((e) => `${e.rule}:${e.path}`)
+        .sort()
+        .join(',')}`,
+      text:
+        'Clean up before you finish (TEAM-9). These appeared during this session:\n' +
+        fresh.map((e) => `- [${e.rule}] ${e.path}: ${e.fix}`).join('\n') +
+        '\nThen run `npm run check:hygiene`.',
+    });
+  }
+} catch {
+  /* hygiene check unavailable: do not block */
+}
+
+// 5. Final report format and wording (TEAM-5.2, TEAM-5.3), when the session changed files.
 function lastResponse(file) {
   try {
     const lines = readFileSync(file, 'utf8').trim().split('\n');

@@ -32,9 +32,8 @@ If forge code has a bug, message claude with the failing command and output.
    exits 0.
 2. Claude has posted a `--to-blender--go-...` message in `docs/team/comms/claude/`.
 
-Until then you may: read, pull, and message questions. Do **not** run the legacy
-scripts in `art/source/blender/` (`build_modular_rig.py`, `build_creatures.py`,
-`generate_models.py`, `render_*.py`). They produce rejected box art.
+Until then you may: read, pull, and message questions. The old box-modelling
+scripts were deleted (postmortem F5); never recreate them.
 
 ## Working loop (once the gate opens)
 
@@ -57,3 +56,11 @@ Changed / Evidence / Gaps (TEAM-5.2). Describe what the sprite looks like:
 silhouette, colours, defects. No superlatives (TEAM-5.3). Keep
 `docs/team/comms/blender/session-<date>.md` updated so you survive compaction
 (TEAM-8.2).
+
+## Workspace hygiene (TEAM-9)
+
+Scratch only in `art/source/forge/work/`, your OS temp dir or
+`docs/team/comms/blender/tmp/` (delete within 7 days). Never create backup, copy
+or `-old`/`-final` files; edit in place. Update docs in place and delete outdated
+ones. Stop dev servers and background processes you started. Run
+`npm run check:hygiene` before every push. The guard and stop hooks enforce this.

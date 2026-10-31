@@ -38,7 +38,8 @@ breathing with real idle animation (ART-9.3).
 
 The Blender agent built every human, hairstyle, outfit, tool and creature from
 `add_box_bmesh(...)` calls with hand-typed coordinates
-(`art/source/blender/build_modular_rig.py`, `build_creatures.py`). The handover
+(`art/source/blender/build_modular_rig.py`, `build_creatures.py`; deleted, still in git
+history at `4cb226c`). The handover
 brief had already warned that code-primitive meshes produce "blocky programmer
 art", and the result confirmed it: 30 villagers that read as near-identical
 grey box robots, and creatures assembled from cuboids. Commits described this
@@ -96,3 +97,13 @@ re-injects the role card and laws after every compaction.
 full clip matrix for the 19-actor slice is about 650 MB untrimmed at 1×.
 
 **Doctrine:** 2× scale (L1) and multi-page atlas paging (ART-M7).
+
+## F12 — Clutter
+
+Superseded tools and docs were kept beside their replacements: a duplicate
+`rebuild_all.py`, unused Pillow generators, a stray v1 manifest script under
+`scripts/`, 14 MB of stale renders, Python caches, and status hubs that
+contradicted each other.
+
+**Doctrine:** workspace hygiene (TEAM-9), enforced by `npm run check:hygiene`
+(CI) and the Antigravity guard and stop hooks.
