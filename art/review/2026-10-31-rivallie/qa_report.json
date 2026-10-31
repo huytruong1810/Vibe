@@ -15,7 +15,7 @@
    "rule": "spec canvases",
    "pass": true,
    "hard": true,
-   "detail": "frame sizes [(56, 56)], expected (56, 56)"
+   "detail": "every frame on its clip's spec canvas"
   },
   {
    "check": "margins",
@@ -36,14 +36,14 @@
    "rule": "ART-6.1",
    "pass": true,
    "hard": true,
-   "detail": "tallest extent above anchor in idle 31px (target 31 +/- 2, outline adds 1)"
+   "detail": "tallest extent above anchor in idle 25px (target 25 +/- 2, outline adds 1)"
   },
   {
    "check": "facingSilhouetteRatio",
    "rule": "ART-7",
    "pass": true,
    "hard": true,
-   "detail": "area / median per facing {'e': 1.12, 'n': 0.92, 'ne': 0.99, 'nw': 1.28, 's': 0.72, 'se': 0.98, 'sw': 1.01, 'w': 1.32}"
+   "detail": "area / median per facing {'e': 1.15, 'n': 0.77, 'ne': 1.04, 'nw': 1.03, 's': 0.57, 'se': 0.95, 'sw': 0.97, 'w': 1.15}"
   },
   {
    "check": "paletteMembership",
@@ -78,7 +78,7 @@
    "rule": "ART-9.3",
    "pass": true,
    "hard": false,
-   "detail": "max changed fraction between frames 0.050"
+   "detail": "max changed fraction between frames 0.051"
   },
   {
    "check": "valueContrast",
@@ -92,7 +92,7 @@
    "rule": "PRD-3.5",
    "pass": true,
    "hard": true,
-   "detail": "hue/chroma distance to reference 0.044"
+   "detail": "hue/chroma distance to reference 0.027"
   },
   {
    "check": "castDistinctness",
