@@ -20,6 +20,30 @@ export interface HudViewState {
   readonly prompt: string;
   readonly sleeping: boolean;
   readonly modal: 'dialogue' | 'menu' | null;
+  readonly time: Readonly<{
+    day: string;
+    phase: 'Dawn' | 'Day' | 'Dusk' | 'Night';
+    clock: string;
+    weather: string;
+  }>;
+}
+export function hudTime(
+  frame: Pick<RenderSnapshot, 'day' | 'hour' | 'calendar' | 'weather'>,
+): HudViewState['time'] {
+  const hour = ((frame.hour % 24) + 24) % 24;
+  return Object.freeze({
+    day: `Day ${frame.day + 1}`,
+    phase:
+      hour >= 5 && hour < 9
+        ? 'Dawn'
+        : hour >= 9 && hour < 17
+          ? 'Day'
+          : hour >= 17 && hour < 21
+            ? 'Dusk'
+            : 'Night',
+    clock: frame.calendar,
+    weather: frame.weather.kind,
+  });
 }
 /** Pure read model; views receive values, controllers retain commands and lifecycle. */
 export function hudViewState(frame: RenderSnapshot): HudViewState {
@@ -27,6 +51,7 @@ export function hudViewState(frame: RenderSnapshot): HudViewState {
   const interaction = nearestInteraction(frame);
   return Object.freeze({
     session: frame.session,
+    time: hudTime(frame),
     health: frame.player.hp / frame.player.maxHp,
     stamina: frame.player.stamina / 100,
     sleeping: player?.sleeping ?? false,

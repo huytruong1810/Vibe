@@ -273,3 +273,28 @@ the unchanged map by path/digest and retains replay passes, rather than duplicat
 the project. `next` uses exact-digest, layout-scoped director records only for
 operator guidance; it does not write approvals or activate gameplay. See the
 [worldforge guide](worldforge.md). Historical packets and their records stay intact.
+
+## ADR 023 — Kit pixels with authoritative HUD values
+
+**Status:** implemented engineering approach; visual acceptance pending.
+
+**Context:** C8b requires the provided bar/slot artwork and a separate day/phase
+card. Bar PNGs already contain partial example fills, so stretching them would
+misrepresent health and needs. Replacing live controls would also lose focus.
+
+**Decision:** compile native fill strips from the source exports, use the source
+frame borders without their centers, and clip repeated strips with two-pixel
+endpoints. Keep exact accessible values and one meter updater after DOM patching.
+Use stable keyed hand/equipment controls and common slot art without inventing
+rarity. Build immutable time labels from existing snapshots; preserve clock/weather
+in the separate responsive time card and dim only the minimap during combat.
+
+**Alternatives rejected:** showing baked example fills as current values, repainting
+source assets, scaling textures horizontally, introducing a UI wall clock or worker
+schema, and manufacturing item rarity. The targeted UI build avoids unrelated
+atlas regeneration while retaining reproducibility checks.
+
+**Consequences:** the change is presentation-only; worker, save and gameplay rules
+remain unchanged. Native dimensions and DOM focus require browser verification
+in addition to pixel/compiler tests. Visual acceptance remains director-owned.
+See [C8b presentation details](hd-presentation.md#c8b-kit-meters-slots-and-time-card).

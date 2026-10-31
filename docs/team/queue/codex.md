@@ -307,14 +307,14 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 
 ### C8b · HUD fixes from the director's review
 
-- status: open
+- status: candidate / awaiting director visual acceptance
 - goal:
   - **Done (claude):** the dash button text is hidden on the kit buttons (`theme.css`); the aria-labels stay. Previously: `layout.ts:7` draws "Space" (and "J"/"K") over kit buttons that already carry labels; draw one label, not two.
   - **Kit art:** use the kit's `bar_*.png` and `slot_*.png` instead of flat CSS fills.
   - **Day/phase panel:** keep it separate from the minimap, as in `art/source/ui/kit/hud_mock.png`.
   - Send the director new 1080p captures for visual acceptance.
 - done when: captures in comms; the director's visual acceptance recorded
-- evidence:
+- evidence: [C8b implementation and inspected captures](../comms/codex/2026-10-31T1834--to-director--c8b-hud-candidate.md); 294 unit tests / 22 suites, full 18 browser journeys and final two C8b checks pass. No gameplay activation or source-art changes.
 
 ### C7 · Authored world in the engine (WLD-M1…M4)
 

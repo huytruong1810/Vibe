@@ -109,3 +109,51 @@ Validation: `npm run check`, `npm run test:browser`, and
 Browser packet tests use an explicitly synthetic fixture; that fixture is not
 Rivallie art evidence. Remaining C8 gates include full 2× draw qualification,
 approval-record transcription when director records exist, and elder integration.
+
+## C8b kit meters, slots and time card
+
+The supplied bar images contain example fills. Runtime values use their authored
+frames and losslessly extracted fill strips, not the baked examples. Run
+`npm run ui:build` to rebuild only the UI bundle; this avoids repacking the world
+atlas. Source artwork stays under communicator ownership and is unchanged.
+
+The compiler crops at `(4,4)` in 2x export pixels. HP/stamina strips are 16x10;
+XP/need strips are 2x4. These repeat at native size beneath a clipped mask, inside
+four-pixel nine-slice borders with a navy empty interior. HP/stamina frames remain
+168x18, XP 168x12, and compact companion needs 32x12. Larger need rows repeat the
+same texture. UI build manifest v2 records source/output hashes and dimensions.
+This is independent of the asset-catalog and save schema versions.
+
+The [meter helper](../../src/presentation/ui/meters.ts) clamps values and rounds
+visible widths down to two display pixels. Accessibility values retain the actual
+bounded fraction. A single refresh after DOM patching measures content widths;
+hidden-panel meters update when revealed. The old percentage-width writers are
+removed. No scaling transform stretches the artwork or its fill segments.
+
+Quick hands use native 60x60 common slot faces. Carried/worn cards reuse their
+eight-pixel border slices. There is no rarity classification in current item data,
+so other rarity frames are not assigned. Finite charges appear beside the slot
+face and in its accessible name; the inventory keeps full names, charge counts
+and action rows. Current item icons remain prototype colour representations.
+Exactly two carried slots and six worn slots remain; no item state changes here.
+
+The [HUD read model](../../src/presentation/ui/state.ts) adds immutable `time`
+labels from existing snapshot day/hour/calendar/weather fields. Day is one-based
+for display. Presentation-only phases are Dawn 05:00–09:00, Day 09:00–17:00,
+Dusk 17:00–21:00, Night otherwise. These labels do not redefine lighting or AI.
+No wall clock, timer, worker field, save field or version change is introduced.
+
+The time card and circular minimap are siblings, side-by-side at 1080p and stacked
+at smaller desktop widths. The selected larger card retains exact clock and weather
+alongside day/phase. Only the minimap and toasts dim in combat; time stays readable.
+The needs drawer and compact companion row have separate vertical space; opening
+needs preserves the previous behavior of hiding the companion card. Inventory is
+scrollable at small desktop sizes, retaining keyboard access and focused controls.
+Save/settings controls are clear of the action cluster. Claude's hidden duplicate
+button labels and their accessible names are preserved.
+
+Verification covers source/crop equality, two-pixel blocks, deterministic hashes,
+zero/partial/full masks, time boundaries/pause/restore, UI-independent save outcomes,
+and desktop browser journeys with occupied slots, companion needs and real duels.
+Review captures are linked from the Codex handoff. C8b remains candidate until the
+director records visual acceptance; placeholder world artwork is not approved by it.

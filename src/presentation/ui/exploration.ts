@@ -2,6 +2,9 @@ import type { RenderSnapshot } from '../../domain/contracts';
 import type { AppearanceResolver } from '../assets/catalog';
 import { ITEMS } from '../../content/definitions';
 import { patchView } from './patch';
+import { meterMarkup, setMeter } from './meters';
+import { hudTime } from './state';
+import { escapeHtml } from './view';
 
 export function experienceFraction(experience: number, level: number): number {
   if (level >= 50) return 1;
@@ -31,9 +34,14 @@ export function updateExploration(
       medallion.append(img);
     } else medallion.textContent = '?';
   }
-  el('player-xp').style.width =
-    `${100 * experienceFraction(frame.player.experience, frame.player.level)}%`;
-  el('hud-weather').textContent = frame.weather.kind;
+  setMeter(el('health-track'), frame.player.hp / frame.player.maxHp);
+  setMeter(el('stamina-track'), frame.player.stamina / 100);
+  setMeter(el('xp-track'), experienceFraction(frame.player.experience, frame.player.level));
+  const time = hudTime(frame);
+  el('hud-day').textContent = time.day;
+  el('hud-phase').textContent = time.phase;
+  el('clock').textContent = time.clock;
+  el('hud-weather').textContent = time.weather;
   const combat =
     frame.duel !== null ||
     frame.threats.some(
@@ -61,52 +69,63 @@ export function updateExploration(
   const companion = el('companion-hud');
   companion.hidden = !partner;
   if (partner) {
-    // Names originate in authored content; use text nodes, not model-controlled markup.
-    companion.replaceChildren();
     const portrait = appearance?.portrait('species', partner.species);
-    if (portrait) {
-      const img = new Image();
-      img.src = portrait.hud96;
-      img.alt = partner.name;
-      img.className = 'companion-portrait';
-      companion.append(img);
-    }
-    const title = document.createElement('div');
-    title.textContent = `${partner.name} · ${Math.ceil(partner.hp)}/${partner.maxHp}`;
-    companion.append(title);
-    for (const [label, value] of [
-      ['Food', partner.food],
-      ['Water', partner.water],
-      ['Play', partner.recreation],
-      ['Clean', partner.cleanliness],
-      ['Rest', partner.rest],
-    ] as const) {
-      const row = document.createElement('div');
-      row.className = 'need';
-      const text = document.createElement('span');
-      text.textContent = label;
-      const track = document.createElement('div');
-      track.className = 'meter';
-      const bar = document.createElement('i');
-      bar.style.width = `${Math.max(0, Math.min(1, value)) * 100}%`;
-      track.append(bar);
-      row.append(text, track);
-      companion.append(row);
-    }
+    patchView(
+      companion,
+      `${portrait ? `<img data-key="partner:portrait" src="${escapeHtml(portrait.hud96)}" alt="${escapeHtml(partner.name)}" class="companion-portrait"/>` : ''}<div class="companion-body" data-key="partner:body"><div class="companion-title">${escapeHtml(partner.name)} · ${Math.ceil(partner.hp)}/${partner.maxHp}</div><div class="companion-needs">${(
+        [
+          ['Food', partner.food],
+          ['Water', partner.water],
+          ['Play', partner.recreation],
+          ['Clean', partner.cleanliness],
+          ['Rest', partner.rest],
+        ] as const
+      )
+        .map(([label, value]) => meterMarkup(label, value, true))
+        .join('')}</div></div>`,
+    );
   }
   // Item names are assigned below using textContent, keeping markup independent of content.
   patchView(
     el('quick-slots'),
-    '<button data-action="use" data-id="0" data-key="quick:0"></button><button data-action="use" data-id="1" data-key="quick:1"></button>',
+    [0, 1]
+      .map(
+        (i) =>
+          `<button data-action="use" data-id="${i}" data-key="quick:${i}"><span class="slot-face" aria-hidden="true"><i class="quick-icon"></i><span class="quick-charges"></span></span><span class="quick-label"></span></button>`,
+      )
+      .join(''),
   );
   frame.inventory.forEach((item, i) => {
-    el('quick-slots').children[i]!.textContent = `${i + 1} ${item ? ITEMS[item.id].name : 'Empty'}`;
+    const button = el('quick-slots').children[i]! as HTMLButtonElement;
+    const text = `${i + 1} ${item ? ITEMS[item.id].name : 'Empty'}${item?.charges !== undefined ? ` · ${item.charges} left` : ''}`;
+    button.querySelector('.quick-label')!.textContent =
+      `${i + 1} ${item ? ITEMS[item.id].name : 'Empty'}`;
+    button.querySelector('.quick-charges')!.textContent =
+      item?.charges !== undefined ? String(item.charges) : '';
+    button.setAttribute('aria-label', `Carried slot ${text}`);
+    button.title = text;
+    const icon = button.querySelector<HTMLElement>('.quick-icon')!;
+    icon.className = `quick-icon${item ? ' item-pixel' : ''}`;
+    icon.textContent = item ? '' : '+';
+    if (item)
+      icon.style.setProperty('--item', `#${ITEMS[item.id].color.toString(16).padStart(6, '0')}`);
   });
   const canvas = el('hud-minimap') as HTMLCanvasElement,
     ctx = canvas.getContext('2d')!;
   ctx.imageSmoothingEnabled = false;
-  ctx.clearRect(0, 0, 160, 160);
-  if (map) ctx.drawImage(map, frame.player.x - 32, frame.player.y - 32, 64, 64, 0, 0, 160, 160);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  if (map)
+    ctx.drawImage(
+      map,
+      frame.player.x - 32,
+      frame.player.y - 32,
+      64,
+      64,
+      0,
+      0,
+      canvas.width,
+      canvas.height,
+    );
   ctx.fillStyle = '#f5ddb0';
-  ctx.fillRect(76, 76, 8, 8);
+  ctx.fillRect(canvas.width / 2 - 4, canvas.height / 2 - 4, 8, 8);
 }
