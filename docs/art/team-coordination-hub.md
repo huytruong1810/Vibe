@@ -100,3 +100,4 @@ Every asset delivered into the repository must pass this 4-step verification seq
 4. **Gate 4: Engine Integration (Engineering Agent)**
    - Run `npm run check:architecture` (0 domain leaks).
    - Run `npm test` (all 133 tests green).
+
