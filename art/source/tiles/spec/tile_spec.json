@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "doctrine": ["ART-11.2", "ART-11.3", "ART-7.3", "WLD-4.2", "PRD-5", "PRD-9"],
+  "tilePx": 32,
+  "exportScale": 2,
+  "elevationStepPx": 8,
+  "maxValuesPerMaterial": 4,
+  "dualGrid": {
+    "bits": { "NW": 1, "NE": 2, "SW": 4, "SE": 8 },
+    "runtime": "src/presentation/autotiler.ts",
+    "drawnMasks": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+    "fullMask": 15,
+    "offset": "half a tile up and left of the primary grid, as renderer.drawChunk draws overlays"
+  },
+  "variantPick": "variant = fmix32(cellHash(x, y)) % (1 + variants); cellHash is renderer.ts's (imul(x + 13, 73856093) ^ imul(y + 7, 19349663)) >>> 0 and fmix32 is MurmurHash3's finaliser; raw cellHash modulo a power of two repeats diagonally",
+  "runtimeConsumed": [
+    "ground_grass",
+    "ground_dirt",
+    "ground_sand",
+    "ground_freshwater",
+    "cliff_grass",
+    "ramp_grass",
+    "shore_freshwater_mask_{1..14}"
+  ],
+  "qa": {
+    "seamRatioMax": 1.35,
+    "orphanFractionMax": 0.01,
+    "proportionTolerance": 0.1,
+    "lowFrequencyMax": 0.02,
+    "edgeContinuityRowsMax": 1,
+    "pairContrastMin": 0.06,
+    "actorContrastMin": 0.12,
+    "variantBorderPx": 2
+  },
+  "actorReferenceRamps": ["teal.mid", "foliage.mid", "basalt.mid", "skin-warm.mid", "timber.mid"]
+}

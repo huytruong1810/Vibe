@@ -418,3 +418,17 @@ test('inline scripts are only treated as map writes when they touch world files'
     'deny',
   );
 });
+
+test('tileforge lanes: communicator owns tile recipes and swatches, never the tool or its spec', () => {
+  const fx = fixtureRepo();
+  const decide = (path, role) => run('guard.mjs', write(path), fx, role).decision;
+  assert.equal(decide('art/source/tiles/sets/aqualia-terrain/set.json', 'communicator'), 'allow');
+  assert.equal(
+    decide('art/source/tiles/sets/aqualia-terrain/swatches/grass.png', 'communicator'),
+    'allow',
+  );
+  assert.equal(decide('art/source/tiles/tools/tilelib/material.py', 'communicator'), 'deny');
+  assert.equal(decide('art/source/tiles/spec/tile_spec.json', 'communicator'), 'deny');
+  assert.equal(decide('art/source/tiles/spec/tile_spec.json', 'blender'), 'deny');
+  assert.equal(decide('art/source/tiles/sets/aqualia-terrain/set.json', 'blender'), 'deny');
+});

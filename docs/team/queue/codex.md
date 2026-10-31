@@ -386,7 +386,7 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 
 ### C11 · tileforge and the tile-forge skill (for the communicator)
 
-- status: open
+- status: done (claude, 2026-10-31, at the director's request): golden sample packeted, QA candidate; maintenance is yours (DOC-5)
 - goal: the communicator can make pixel-exact 2D tiles without hand-pixelling.
 - work:
   - a concept or swatch becomes a 32 px tile quantised to `palette.json` ramps, with at
@@ -399,6 +399,20 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
   - QA report and packet;
   - the `.agents/skills/tile-forge/SKILL.md` skill.
 - done when: the grass↔freshwater set packets and passes QA; you've messaged the communicator
+- evidence: `art/source/tiles/tools/tileforge.py` + `tilelib/`; spec `art/source/tiles/spec/` (protected); `tileforge.py selftest` PASS (golden synthetic set, packet, lit-tile, edited-mask, bad-ramp negatives); golden packet `art/review/tiles-aqualia-grass-water-1/` (23 tiles, QA candidate, digest ce4cf070…); skill `.agents/skills/tile-forge/SKILL.md`; docs `docs/engineering/tileforge.md`; guard lanes + test (19/19); `rebuild.py` skips tileforge-published exports
+
+### C11b · Terrain tiles in the renderer and worldforge renders
+
+- status: open
+- goal: the game and worldforge draw what tileforge publishes, with the same composition as tileforge's previews.
+- inputs: `docs/engineering/tileforge.md` (runtime contract), `art/source/tiles/tools/tilelib/preview.py` (`TileSet.compose`, `variant_of`), `src/presentation/renderer.ts` `drawChunk`
+- work:
+  1. Ground variants: when `<runtimeId>_v<k>` appearances exist, pick with `fmix32(cellHash(x, y)) % (1 + variants)` (`tile_spec.json` `variantPick`); test that the pick matches `variant_of` for a fixed grid.
+  2. Overlay families beyond freshwater: draw dual-grid tiles for any material whose `<id>_mask_{1..14}` appearances exist (dirt and stone paths, sand shore, reedbed); keep the rectangle fallback only when art is missing.
+  3. Ground materials from the authored map: draw `ground_<surface>` for stone and mud too (C7 importer surfaces), not only grass, dirt and sand by biome.
+  4. worldforge `draw_level`: compose ground and overlays through tileforge's `TileSet.compose` (or the published exports) so blender's map renders show real ground and shores; keep `render` deterministic and the packet receipts valid.
+  5. Atlas budget: report the added terrain pages in `coverage.md`.
+- done when: with the golden set published to a scratch exports dir, a 1080p capture of the village shows the tileforge water and shores and grass variants; worldforge village render uses them; tests green
 - evidence:
 
 ### C13 · Creature movement layer and brain interface (CRM-M1, CRM-M2)

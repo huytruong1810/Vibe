@@ -42,7 +42,7 @@ const DESTRUCTIVE_GIT = [
 ];
 
 const PROTECTED_TOKENS =
-  /docs[\\/]+doctrine|forge[\\/]+spec|team[\\/]+briefs|\.agents[\\/]+(?!state\b)|(^|[\s"'\\/])(AGENTS|GEMINI)\.md|comms[\\/]+director/i;
+  /docs[\\/]+doctrine|forge[\\/]+spec|tiles[\\/]+spec|team[\\/]+briefs|\.agents[\\/]+(?!state\b)|(^|[\s"'\\/])(AGENTS|GEMINI)\.md|comms[\\/]+director/i;
 const WRITE_OPS =
   /(^|[^<>&0-9])>>?(?!&)|\btee\b|\bsed\b[^\n|;]*\s-i|\brm\b|\bmv\b|\bcp\b|\btruncate\b|\bdd\b|\bpython3?\b[^\n|;]*\s-c\b|\bnode\b[^\n|;]*\s-e\b|\bperl\b[^\n|;]*\s-[a-z]*[pi]|\bpatch\b|\bgit\b[^\n;&|]*\b(apply|checkout|restore|rm|mv|stash|add|commit)\b|Set-Content|Add-Content|Out-File|Remove-Item|Move-Item|Copy-Item|New-Item|\bdel\b|\bcopy\b|\bmove\b|\bren\b/i;
 

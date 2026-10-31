@@ -1,0 +1,160 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Hearthwild tile set recipe (art/source/tiles/sets/<set>/set.json)",
+  "type": "object",
+  "required": ["set", "region", "materials"],
+  "additionalProperties": false,
+  "$defs": {
+    "colourRef": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*\\.(deep|shadow|mid|light|highlight)$",
+      "description": "<ramp>.<step> from art/source/forge/spec/palette.json"
+    },
+    "runtimeId": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+    "band": {
+      "type": "object",
+      "required": ["px", "value"],
+      "additionalProperties": false,
+      "properties": {
+        "px": { "type": "number", "exclusiveMinimum": 0, "maximum": 8 },
+        "value": { "$ref": "#/$defs/colourRef" },
+        "dither": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "2x2 ordered dither density against the next layer (ART-11.3: water and large surfaces only)"
+        }
+      }
+    },
+    "binding": {
+      "type": "object",
+      "required": ["layer", "values"],
+      "additionalProperties": false,
+      "properties": {
+        "layer": { "enum": ["ground", "water", "paths"] },
+        "values": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+      }
+    }
+  },
+  "properties": {
+    "set": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+    "region": { "type": "string" },
+    "notes": { "type": "string" },
+    "materials": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "swatch", "values"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+          "runtimeId": { "$ref": "#/$defs/runtimeId" },
+          "binds": { "$ref": "#/$defs/binding" },
+          "swatch": { "type": "string", "description": "path relative to the set folder" },
+          "swatchTilePx": {
+            "type": "number",
+            "minimum": 8,
+            "description": "swatch pixels that make one 32-px tile (default 128)"
+          },
+          "values": {
+            "type": "array",
+            "items": { "$ref": "#/$defs/colourRef" },
+            "minItems": 2,
+            "maxItems": 4
+          },
+          "proportions": { "type": "array", "items": { "type": "number", "minimum": 0 } },
+          "variants": { "type": "integer", "minimum": 0, "maximum": 7 },
+          "flatten": {
+            "type": "number",
+            "minimum": 0,
+            "description": "extra high-pass radius in art px for swatches with strong uneven lighting (default 0 = off; tile-length lighting waves are always removed)"
+          },
+          "cluster": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 3,
+            "description": "pre-quantise blur in art px; larger gives bigger pixel clusters (default 0.7)"
+          },
+          "wrap": { "enum": ["xy", "x"] },
+          "heightPx": { "type": "integer", "minimum": 4, "maximum": 32 },
+          "rows": {
+            "type": "object",
+            "patternProperties": { "^-?[0-9]+$": { "$ref": "#/$defs/colourRef" } },
+            "additionalProperties": false,
+            "description": "strips only: force a row to a value (0 = top lip, -1 = bottom)"
+          },
+          "window": {
+            "type": "array",
+            "items": { "type": "integer", "minimum": 0 },
+            "minItems": 2,
+            "maxItems": 2,
+            "description": "force the base window's top-left in art px instead of searching"
+          },
+          "seed": { "type": "integer" }
+        }
+      }
+    },
+    "overlays": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "material", "edge"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+          "material": { "type": "string" },
+          "under": {
+            "type": "string",
+            "description": "optional base material: fills transparent pixels to make an opaque 16-mask pair set"
+          },
+          "binds": { "$ref": "#/$defs/binding" },
+          "runtimeIdTemplate": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*\\{mask\\}[a-z0-9_]*$"
+          },
+          "edge": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "noise": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 4,
+                "description": "shoreline wobble in art px (default 1.2; above ~2 the coast turns ragged)"
+              },
+              "noiseScale": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 8,
+                "description": "wobble feature size in art px (default 4)"
+              },
+              "seed": { "type": "integer" },
+              "inside": { "type": "array", "items": { "$ref": "#/$defs/band" } },
+              "outside": { "type": "array", "items": { "$ref": "#/$defs/band" } }
+            }
+          }
+        }
+      }
+    },
+    "pairs": {
+      "type": "array",
+      "items": { "type": "array", "items": { "type": "string" }, "minItems": 2, "maxItems": 2 },
+      "description": "materials that meet on the map and must stay distinguishable"
+    },
+    "preview": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "level": { "type": "string" },
+        "rect": {
+          "type": "array",
+          "items": { "type": "integer", "minimum": 0 },
+          "minItems": 4,
+          "maxItems": 4,
+          "description": "x, y, w, h in tiles"
+        }
+      }
+    }
+  }
+}
