@@ -21,13 +21,13 @@ by design.
 
 ## PRD-2 Allowed and forbidden methods
 
-| Allowed | Forbidden |
-| --- | --- |
-| Image-to-3D from doctrine-standard reference sheets (L5) | Building meshes from typed vertex or box coordinates (`add_box_bmesh`, `primitive_cube_add` chains) for production assets |
-| Calibration and proxy primitives inside forge scripts (selftest cube, voxel proxies for weighting) | Hand-tuning palette, light or outline per asset outside the spec |
-| Kit recombination of approved parts and palette ramps | Upscaling prototype or 1× frames and calling them native |
-| 2D painting for the ART-15 classes (terrain, UI, VFX, portraits) | Image-generated sprite frames or turnarounds used as game frames (they drift between views) |
-| Image generation for reference sheets, portraits, concept and mood art (PRD-7) | Editing forge code or spec to make QA pass |
+| Allowed                                                                                            | Forbidden                                                                                                                 |
+| -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| Image-to-3D from doctrine-standard reference sheets (L5)                                           | Building meshes from typed vertex or box coordinates (`add_box_bmesh`, `primitive_cube_add` chains) for production assets |
+| Calibration and proxy primitives inside forge scripts (selftest cube, voxel proxies for weighting) | Hand-tuning palette, light or outline per asset outside the spec                                                          |
+| Kit recombination of approved parts and palette ramps                                              | Upscaling prototype or 1× frames and calling them native                                                                  |
+| 2D painting for the ART-15 classes (terrain, UI, VFX, portraits)                                   | Image-generated sprite frames or turnarounds used as game frames (they drift between views)                               |
+| Image generation for reference sheets, portraits, concept and mood art (PRD-7)                     | Editing forge code or spec to make QA pass                                                                                |
 
 ## PRD-3 Reference-sheet standard
 
@@ -133,12 +133,16 @@ Antigravity agents can spin up image-generation subagents. They are valuable and
 3. Packet in `art/review/<date>-<asset>/` with contact sheet, turntable GIF, QA
    report and an in-scene proof; packet viewed by its author (PRD-5).
 4. Director approval record in `docs/team/comms/director/approvals/`.
-5. `forge publish` run; `npm run assets:build` and `npm run check:assets` pass.
-6. Status board updated with evidence links.
+5. `forge publish` writes the exports and a staging record in
+   `art/source/staging/blender/`; the communicator integrates it into
+   `art/source/manifest.json` as stage `candidate`.
+6. Codex transcribes the director record into `docs/art/approvals.json`
+   (digest-bound, L7), runs the compiler and commits the generated outputs.
+7. `npm run check:assets` passes; status board updated with evidence links.
 
 ## Engineering mandates
 
-| ID | Mandate |
-| --- | --- |
+| ID     | Mandate                                                                                                                                                       |
+| ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | PRD-M1 | The asset build accepts the forge's layered outputs (body clips, face atlas, item angle sets, socket-track metadata) once the art contract is updated for L4. |
-| PRD-M2 | The gallery can show packet assets in scene at 2× (L1) for director review. |
+| PRD-M2 | The gallery can show packet assets in scene at 2× (L1) for director review.                                                                                   |

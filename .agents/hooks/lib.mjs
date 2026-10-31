@@ -9,7 +9,9 @@ import { fileURLToPath } from 'node:url';
 export const HOOKS_DIR = path.dirname(fileURLToPath(import.meta.url));
 export const AGENTS_DIR = path.dirname(HOOKS_DIR);
 export const REPO_ROOT = path.resolve(process.env.HEARTHWILD_REPO_ROOT ?? path.dirname(AGENTS_DIR));
-export const STATE_DIR = path.resolve(process.env.HEARTHWILD_STATE_DIR ?? path.join(AGENTS_DIR, 'state'));
+export const STATE_DIR = path.resolve(
+  process.env.HEARTHWILD_STATE_DIR ?? path.join(AGENTS_DIR, 'state'),
+);
 export const ROLES = ['blender', 'communicator'];
 const CASE_INSENSITIVE = process.platform === 'win32';
 
@@ -106,6 +108,7 @@ export const PROTECTED = [
   'GEMINI.md',
   '**/GEMINI.md',
   'docs/team/comms/director/**',
+  'docs/art/approvals.json',
 ];
 const PROTECTED_EXCEPTIONS = ['.agents/state/**'];
 
@@ -116,6 +119,8 @@ export const GENERATED = [
   'docs/art/coverage.md',
   'docs/art/asset-catalog.schema.json',
   'docs/art/source-manifest.schema.json',
+  'docs/art/art-approval-record.schema.json',
+  'docs/art/candidates.json',
 ];
 
 export const LANES = {
@@ -124,6 +129,7 @@ export const LANES = {
     'art/source/forge/recipes/**',
     'art/source/forge/work/**',
     'art/review/**',
+    'art/source/staging/blender/**',
     'docs/team/comms/blender/**',
     'docs/team/proposals/**',
   ],
@@ -137,13 +143,14 @@ export const LANES = {
     'art/review/**',
     'art/source/exports/**',
     'art/source/manifest.json',
+    'art/source/staging/communicator/**',
     'src/presentation/ui/view.ts',
     'src/presentation/ui/hud.css',
   ],
 };
 // Paths a role changes only through forge commands, never by direct file edits.
 export const VIA_TOOL_ONLY = {
-  blender: ['art/source/exports/**', 'art/source/manifest.json'],
+  blender: ['art/source/exports/**'],
   communicator: [],
 };
 
@@ -192,7 +199,10 @@ export function sha256File(file) {
 
 export function gitChangedPaths() {
   try {
-    const out = execFileSync('git', ['status', '--porcelain', '-uall'], { cwd: REPO_ROOT, encoding: 'utf8' });
+    const out = execFileSync('git', ['status', '--porcelain', '-uall'], {
+      cwd: REPO_ROOT,
+      encoding: 'utf8',
+    });
     return out
       .split('\n')
       .filter(Boolean)

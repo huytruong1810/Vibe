@@ -9,10 +9,11 @@ File name: `<asset-id>--<packet-id>.md`
 ---
 asset: npc:neris
 packet: art/review/2026-11-02-neris/
-decision: director-approved   # or changes-requested | rejected
+decision: director-approved # or changes-requested | rejected
 scope: [body, idle, walk, strike, faces, item:ferry-pole]
 date: 2026-11-02
 ---
+
 Notes from the director (required for changes-requested).
 ```
 

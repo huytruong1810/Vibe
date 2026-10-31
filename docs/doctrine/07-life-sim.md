@@ -69,10 +69,10 @@ hours that match schedules.
 
 ## Engineering mandates
 
-| ID | Mandate |
-| --- | --- |
-| LIF-M1 | Heart presentation (10 steps) over the existing affinity values. |
+| ID     | Mandate                                                                         |
+| ------ | ------------------------------------------------------------------------------- |
+| LIF-M1 | Heart presentation (10 steps) over the existing affinity values.                |
 | LIF-M2 | Per-villager gift taste tables in content data, plus journal discovery records. |
-| LIF-M3 | Birthday and festival calendar entries, with festival schedule overrides. |
-| LIF-M4 | Heart-event skeleton format with grounding validation. |
-| LIF-M5 | Expression tags on villager reactions (feeds the ART-8 face layer). |
+| LIF-M3 | Birthday and festival calendar entries, with festival schedule overrides.       |
+| LIF-M4 | Heart-event skeleton format with grounding validation.                          |
+| LIF-M5 | Expression tags on villager reactions (feeds the ART-8 face layer).             |

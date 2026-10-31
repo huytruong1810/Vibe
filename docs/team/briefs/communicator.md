@@ -29,31 +29,35 @@ folder. The Antigravity guard hook blocks these; don't try to work around it.
 ## Production work
 
 ### Reference sheets (highest priority): skill `reference-sheets`
+
 You have image-generation subagents. They are **quota-bound** (PRD-7): at most
 4 generations per sheet, log every generation in
 `docs/team/comms/communicator/image-ledger.md`, and look at every result before
 keeping it (PRD-5).
 
 First batch, in this order (the golden samples, PRD-4.1):
+
 1. `rivallie`: creature sheet (front, left side, back), from the approved
    Rivallie portrait anatomy (ART-10).
 2. `npc:neris`: A-pose human sheet at 4.5–5 heads (front plus back), ferry keeper,
    from her master and portrait; her ferry pole as a separate prop sheet.
 3. `player-aqualia`: A-pose sheet (front plus back); teal hair, poncho; the
    hatchet as a separate prop sheet (the first tool a player crafts).
-4. The four body-type mannequin sheets (average, broad, slim, elder) at doctrine
+4. The four body-type mannequin sheets (standard, sturdy, slender, elder) at doctrine
    proportions.
 
 Commit each sheet to `art/source/references/<asset-id>/` with `sheet.json`, then
 message claude and blender.
 
 ### 2D asset classes (after the golden samples are approved)
+
 Terrain materials, 14 shoreline masks, cliff and ramp at 32-px tiles (ART-11.2);
 UI 9-slice frames and icons (UI-1); VFX (ART-12); portrait checks (ART-14). Use
 image generation for concepts only. Final 2D assets must be pixel-exact, use
 palette ramps from `palette.json`, and be cleaned by hand or by script.
 
 ### Review digests: skill `review-packet`
+
 When blender produces a forge packet, write a one-page digest for the director
 in `art/review/<packet>/DIGEST.md`: what the asset is, QA numbers, what you saw in
 the contact sheet, open questions. Never write "approved".

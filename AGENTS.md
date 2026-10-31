@@ -46,11 +46,11 @@ the conflict in your comms folder.
 
 ## 4. Lanes at a glance
 
-| Member | Writes | Never writes |
-| --- | --- | --- |
-| codex | `src/`, `scripts/`, `tests/`, `.github/`, `docs/engineering/`, `docs/operations/`, `docs/art/contract.md`, own comms | doctrine, spec, briefs, `.agents/`, AGENTS.md |
-| communicator | `art/source/references/`, `art/source/masters/`, status board, proposals, `docs/art/reviews/`, review digests, UI view and CSS (with codex), own comms | doctrine, forge code and spec, Blender sources, other `src/`, `scripts/`, `tests/` |
-| blender | `art/source/blender/`, `art/source/forge/recipes/`, forge work, packets, exports via `forge publish` after approval, own comms | `src/`, `scripts/`, `tests/`, `art/source/pipeline/`, forge code and spec, doctrine |
+| Member       | Writes                                                                                                                                                                                               | Never writes                                                                        |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| codex        | `src/`, `scripts/`, `tests/`, `.github/`, `docs/engineering/`, `docs/operations/`, `docs/art/contract.md`, own comms                                                                                 | doctrine, spec, briefs, `.agents/`, AGENTS.md                                       |
+| communicator | `art/source/references/`, `art/source/masters/`, `art/source/manifest.json` (sole integrator), status board, proposals, `docs/art/reviews/`, review digests, UI view and CSS (with codex), own comms | doctrine, forge code and spec, Blender sources, other `src/`, `scripts/`, `tests/`  |
+| blender      | `art/source/blender/`, `art/source/forge/recipes/`, forge work, packets, exports and `art/source/staging/blender/` via `forge publish` after approval, own comms                                     | `src/`, `scripts/`, `tests/`, `art/source/pipeline/`, forge code and spec, doctrine |
 
 ## 5. Every session
 
@@ -73,4 +73,5 @@ matches its description.
 Node 22.12+. `npm ci`; `npm run check` (types, boundaries, tests, build);
 `npm run assets:build` and `npm run check:assets` after any art change;
 `npm run check:assets:hd` is the intentional visual gate and must not be weakened.
+Art agents run the compiler to validate but leave generated outputs (`public/assets/generated/`, generated `docs/art/*`) and `docs/art/approvals.json` to codex.
 Python art tooling runs through `uv` (`uv run --project art/source/forge …`).

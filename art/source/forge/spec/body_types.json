@@ -2,28 +2,77 @@
   "schemaVersion": 1,
   "doctrine": ["L3", "L6", "ART-6"],
   "skeleton": "quaternius-ual-humanoid",
-  "headsTall": { "min": 4.5, "max": 5.0 },
-  "headHeightArtPx": { "min": 11, "max": 12 },
+  "headsTall": {
+    "min": 4.5,
+    "max": 5.0
+  },
+  "headHeightArtPx": {
+    "min": 11,
+    "max": 12
+  },
   "hairAndHeadwearMaxExtraArtPx": 6,
   "minFeatureWidthArtPx": 2,
   "bodyTypes": {
-    "average": { "crownHeightArtPx": 56, "shoulderWidthArtPx": 16, "notes": "Default adult build." },
-    "broad": { "crownHeightArtPx": 57, "shoulderWidthArtPx": 20, "notes": "Heavy-set laborers and smiths; wider torso and hands." },
-    "slim": { "crownHeightArtPx": 55, "shoulderWidthArtPx": 14, "notes": "Narrow frame; longer limbs read." },
-    "elder": { "crownHeightArtPx": 52, "shoulderWidthArtPx": 15, "notes": "Slight stoop, lowered head carriage; same skeleton with a posture offset." }
+    "standard": {
+      "crownHeightArtPx": 56,
+      "shoulderWidthArtPx": 16,
+      "notes": "Default adult build."
+    },
+    "sturdy": {
+      "crownHeightArtPx": 57,
+      "shoulderWidthArtPx": 20,
+      "notes": "Heavy-set laborers and smiths; wider torso and hands."
+    },
+    "slender": {
+      "crownHeightArtPx": 55,
+      "shoulderWidthArtPx": 14,
+      "notes": "Narrow frame; longer limbs read."
+    },
+    "elder": {
+      "crownHeightArtPx": 52,
+      "shoulderWidthArtPx": 15,
+      "notes": "Posture variant (stoop, lowered head) authored on the standard or slender build; contract v2 BuildProfile to be agreed with codex."
+    }
   },
   "aqualiaCast": {
-    "player-aqualia": { "bodyType": "slim", "skin": "skin-porcelain", "hair": "hair-teal", "accents": ["teal", "navy", "sand"] },
-    "npc:caelum": { "bodyType": "average", "partner": "rivallie" },
-    "npc:marina": { "bodyType": "slim" },
-    "npc:neris": { "bodyType": "elder" },
-    "npc:reed": { "bodyType": "average" },
-    "npc:willa": { "bodyType": "slim" },
-    "npc:oren": { "bodyType": "broad" },
-    "npc:mira": { "bodyType": "slim" },
-    "npc:lark": { "bodyType": "slim" },
-    "npc:dara": { "bodyType": "average" },
-    "npc:finn": { "bodyType": "average" }
+    "player-aqualia": {
+      "bodyType": "slender",
+      "skin": "skin-porcelain",
+      "hair": "hair-teal",
+      "accents": ["teal", "navy", "sand"]
+    },
+    "npc:caelum": {
+      "bodyType": "standard",
+      "partner": "rivallie"
+    },
+    "npc:marina": {
+      "bodyType": "slender"
+    },
+    "npc:neris": {
+      "bodyType": "elder"
+    },
+    "npc:reed": {
+      "bodyType": "standard"
+    },
+    "npc:willa": {
+      "bodyType": "slender"
+    },
+    "npc:oren": {
+      "bodyType": "sturdy"
+    },
+    "npc:mira": {
+      "bodyType": "slender"
+    },
+    "npc:lark": {
+      "bodyType": "slender"
+    },
+    "npc:dara": {
+      "bodyType": "standard"
+    },
+    "npc:finn": {
+      "bodyType": "standard"
+    }
   },
-  "castNote": "Body-type assignments are starting points from age and role; full recipes (parts, ramps, props) live in art/source/forge/recipes/ and are authored per asset by the blender lane, then approved by the director."
+  "castNote": "Body-type assignments are starting points from age and role; full recipes (parts, ramps, props) live in art/source/forge/recipes/ and are authored per asset by the blender lane, then approved by the director.",
+  "buildProfileNames": "Matches asset contract v2 BuildProfile names (slender/standard/sturdy). Never infer build from pronouns."
 }

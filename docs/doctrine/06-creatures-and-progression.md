@@ -17,14 +17,14 @@ visibly stronger and happier because they cared for it.
 
 ## CRE-2 Six stats
 
-| Stat | Abbrev | Role | Exists today |
-| --- | --- | --- | --- |
-| Vitality | HP | Max HP | yes (`hp`) |
-| Might | ATK | Physical strike damage | yes (`attack`) |
-| Guard | DEF | Physical damage taken | yes (`defense`) |
-| Attunement | ELM | Element move damage and terrain-reaction strength | **new** |
-| Resonance | RES | Element damage taken | **new** |
-| Swiftness | SPD | Move speed and attack cadence | yes (`speed`) |
+| Stat       | Abbrev | Role                                              | Exists today    |
+| ---------- | ------ | ------------------------------------------------- | --------------- |
+| Vitality   | HP     | Max HP                                            | yes (`hp`)      |
+| Might      | ATK    | Physical strike damage                            | yes (`attack`)  |
+| Guard      | DEF    | Physical damage taken                             | yes (`defense`) |
+| Attunement | ELM    | Element move damage and terrain-reaction strength | **new**         |
+| Resonance  | RES    | Element damage taken                              | **new**         |
+| Swiftness  | SPD    | Move speed and attack cadence                     | yes (`speed`)   |
 
 Each species has six **base stats** that define its identity: Steamshell is a
 Guard/Resonance wall, Bramblefang a Might/Swiftness hunter, Cindermoth a fragile
@@ -40,14 +40,14 @@ is strictly better.
 - **CRE-3.2 Conditioning (EV analogue):** earned through **care activities**,
   not kills. Total cap 120 points, at most 40 per stat:
 
-| Care activity | Conditions |
-| --- | --- |
-| Walking together (distance) | Swiftness |
-| Play and recreation | Might |
-| Feeding preferred diet foods | Vitality |
-| Bathing in the species' bath type | Resonance |
-| Sparring or agreed duels | Guard (and Might on wins) |
-| Element exposure (swimming, warm forges, windy ridges, matching the element) | Attunement |
+| Care activity                                                                | Conditions                |
+| ---------------------------------------------------------------------------- | ------------------------- |
+| Walking together (distance)                                                  | Swiftness                 |
+| Play and recreation                                                          | Might                     |
+| Feeding preferred diet foods                                                 | Vitality                  |
+| Bathing in the species' bath type                                            | Resonance                 |
+| Sparring or agreed duels                                                     | Guard (and Might on wins) |
+| Element exposure (swimming, warm forges, windy ridges, matching the element) | Attunement                |
 
 - **CRE-3.3 Suggested formula** (Pokémon-shaped, for engineering to tune):
   `stat = floor((2·base + potential + floor(cond/4)) · level / 100) + 5`, and
@@ -100,11 +100,11 @@ base stats, temperament (after 3 seconds of observation) and an estimated
 
 ## Engineering mandates
 
-| ID | Mandate |
-| --- | --- |
-| CRE-M1 | Add Attunement and Resonance base stats to species definitions; keep the existing four. |
+| ID     | Mandate                                                                                                             |
+| ------ | ------------------------------------------------------------------------------------------------------------------- |
+| CRE-M1 | Add Attunement and Resonance base stats to species definitions; keep the existing four.                             |
 | CRE-M2 | Per-individual potential (seeded, deterministic) and conditioning ledger with caps; care events award conditioning. |
-| CRE-M3 | Temperament with stat modifiers and favourite/disliked care activity. |
-| CRE-M4 | Four-slot move loadout per partner, learnable by level and bond milestone. |
-| CRE-M5 | Player-facing rename of behavioural "Nature" to "Disposition". Internal identifiers may stay. |
-| CRE-M6 | Save migration for all of the above (save version bump per existing policy). |
+| CRE-M3 | Temperament with stat modifiers and favourite/disliked care activity.                                               |
+| CRE-M4 | Four-slot move loadout per partner, learnable by level and bond milestone.                                          |
+| CRE-M5 | Player-facing rename of behavioural "Nature" to "Disposition". Internal identifiers may stay.                       |
+| CRE-M6 | Save migration for all of the above (save version bump per existing policy).                                        |

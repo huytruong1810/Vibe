@@ -30,19 +30,19 @@ director, Huy, and ratified by the director on 2026-10-31.
 
 ## Index
 
-| File | Prefix | Covers |
-| --- | --- | --- |
-| [locked-decisions.md](locked-decisions.md) | `L` | Irreversible production decisions and their rationale |
-| [01-game-pillars.md](01-game-pillars.md) | `PIL` | Player fantasy, pillars, core loops, scope tiers |
-| [02-references.md](02-references.md) | `REF` | Reference titles: what we take, what we refuse |
-| [03-art-bible.md](03-art-bible.md) | `ART` | Pixel scale, camera, light, palette, outline, proportions, animation |
-| [04-ui-direction.md](04-ui-direction.md) | `UI` | Zenonia-style HUD, menus, dialogue, creature page, fonts |
-| [05-combat-direction.md](05-combat-direction.md) | `CMB` | Zenonia-style human combat feel and animation timing |
-| [06-creatures-and-progression.md](06-creatures-and-progression.md) | `CRE` | Pokémon-depth creature stats, temperament, moves, ascension |
-| [07-life-sim.md](07-life-sim.md) | `LIF` | Stardew-style relationships, gifts, festivals, calendar |
-| [08-world-and-ambience.md](08-world-and-ambience.md) | `AMB` | No Name Village ambience, light, weather, ambient life |
-| [09-production-doctrine.md](09-production-doctrine.md) | `PRD` | Allowed/forbidden methods, golden samples, quality gates |
-| [10-team-charter.md](10-team-charter.md) | `TEAM` | Roles, lanes, comms, status vocabulary, honesty rules |
+| File                                                               | Prefix | Covers                                                               |
+| ------------------------------------------------------------------ | ------ | -------------------------------------------------------------------- |
+| [locked-decisions.md](locked-decisions.md)                         | `L`    | Irreversible production decisions and their rationale                |
+| [01-game-pillars.md](01-game-pillars.md)                           | `PIL`  | Player fantasy, pillars, core loops, scope tiers                     |
+| [02-references.md](02-references.md)                               | `REF`  | Reference titles: what we take, what we refuse                       |
+| [03-art-bible.md](03-art-bible.md)                                 | `ART`  | Pixel scale, camera, light, palette, outline, proportions, animation |
+| [04-ui-direction.md](04-ui-direction.md)                           | `UI`   | Zenonia-style HUD, menus, dialogue, creature page, fonts             |
+| [05-combat-direction.md](05-combat-direction.md)                   | `CMB`  | Zenonia-style human combat feel and animation timing                 |
+| [06-creatures-and-progression.md](06-creatures-and-progression.md) | `CRE`  | Pokémon-depth creature stats, temperament, moves, ascension          |
+| [07-life-sim.md](07-life-sim.md)                                   | `LIF`  | Stardew-style relationships, gifts, festivals, calendar              |
+| [08-world-and-ambience.md](08-world-and-ambience.md)               | `AMB`  | No Name Village ambience, light, weather, ambient life               |
+| [09-production-doctrine.md](09-production-doctrine.md)             | `PRD`  | Allowed/forbidden methods, golden samples, quality gates             |
+| [10-team-charter.md](10-team-charter.md)                           | `TEAM` | Roles, lanes, comms, status vocabulary, honesty rules                |
 
 Machine-readable doctrine lives in
 [`art/source/forge/spec/`](../../art/source/forge/spec/): `render_spec.json`,
@@ -54,7 +54,7 @@ quotes a number defers to the spec.
 
 Every doctrine doc states rules with IDs, gives the reasoning a professional
 would need to apply them to unforeseen cases, and ends with **Engineering
-mandates**. A mandate says *what* the game must do, never *how*. Codex designs
+mandates**. A mandate says _what_ the game must do, never _how_. Codex designs
 the implementation and records it in `docs/engineering/`.
 
 ## The ten laws (memorize these)

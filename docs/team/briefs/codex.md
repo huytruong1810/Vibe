@@ -1,7 +1,7 @@
 # Brief: codex (senior engineer and system designer)
 
 You are trusted with all simulation, rendering, tooling, testing and engineering
-documentation. The doctrine tells you *what* the game must be; you decide *how*.
+documentation. The doctrine tells you _what_ the game must be; you decide _how_.
 This brief is doctrine-protected (DOC-1). Write to `docs/team/comms/codex/`.
 
 ## Your lane (TEAM-2)
@@ -16,8 +16,11 @@ request. You never edit `docs/doctrine/**`, `art/source/forge/spec/**`,
 
 - Docs were restructured. Your docs moved, with **content unchanged, links
   rewritten**: `docs/engineering/{master-plan, architecture, foundation,
-  unified-entities, decisions, hd-presentation}.md`, `docs/engineering/phases/`,
+unified-entities, decisions, hd-presentation}.md`, `docs/engineering/phases/`,
   `docs/operations/{operations, verification}.md`, `docs/operations/benchmarks/`.
+  Your newer `full-world-presentation.md` and `physical-presence.md` now live in
+  `docs/engineering/`; `docs/art/contract-v2.md` and the other `docs/art/` files
+  stayed. Links were rewritten; `scripts/assets-build.ts` output paths are untouched.
   Generated `docs/art/coverage.*` and `docs/art/*.schema.json` did **not** move.
 - A link in `master-plan.md` to `docs/archive/master_plan_original.md` was
   already broken (that folder is gitignored). Fix or remove it at your discretion.
@@ -30,19 +33,20 @@ request. You never edit `docs/doctrine/**`, `art/source/forge/spec/**`,
 Design each one, record an ADR in `docs/engineering/decisions.md`, and report
 in your comms folder with test evidence. Priorities:
 
-| Pri | IDs | Mandate | Acceptance |
-| --- | --- | --- | --- |
-| P0 | ART-M1, ART-M2, ART-M3 | 2× pixel scale: world rendered to a 960×540 target, integer nearest upscale, sprite positions snapped to the art grid, contract frame sizes and anchors halved to the spec (`art/source/forge/spec/render_spec.json`) | Gallery and game show tiles at 32 art px displayed at 64 screen px; no filtering; existing gameplay tests green; contract updated |
-| P0 | ART-M8 | Record the WorldProjection elevation-step height in art pixels in the contract and tell Claude | Value in the contract; message to claude |
-| P0 | PRD-M2 | Gallery can load an `art/review/<packet>/` and show it in scene at 2× with anchors | Director can review golden samples in scene |
-| P1 | ART-M4, PRD-M1 | Layered actor compositor: shadow → body → face decal at head track → held items at hand tracks with grip-angle bucket and in-front flag; asset build accepts forge layer outputs | A forge golden sample composites correctly in all 8 facings with a swapped expression and a swapped held item, no rebake |
-| P1 | ART-M7 | Multi-page atlas paging streamed by region | Full slice clip matrix fits the Balanced budget |
-| P1 | ART-M5, ART-M6, AMB-M3 | Runtime grading per time phase plus additive light pools; roof and canopy fade | Dawn/day/dusk/night proof captures |
-| P2 | CMB-M1…M5 | 3-hit chain, dash cancels, presentation-only hit-stop, telegraph cues, rich hit cues | Deterministic soak unchanged; browser journey shows the chain |
-| P2 | UI-M1…M5 | Zenonia-style HUD regions, combat dimming, expression tags, 9-slice frames | Screenshot proofs against `04-ui-direction.md` |
-| P2 | AMB-M1, AMB-M2, AMB-M4, AMB-M5 | Ambient emitters, wind field, weather presentation, footsteps | Proof captures per biome |
-| P3 | CRE-M1…M6 | Six-stat model, potential, conditioning, temperament, 4-move loadout, "Disposition" label, save migration | Unit tests; migration fixture |
-| P3 | LIF-M1…M5, PIL-M1…M3 | Hearts, gift tastes, calendar and festivals, heart-event skeletons, feedback-latency rule | Unit and browser tests |
+| Pri | IDs                            | Mandate                                                                                                                                                                                                                                                        | Acceptance                                                                                                               |
+| --- | ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| P0  | L7                             | Transcribe director approval records (`docs/team/comms/director/approvals/`) into `docs/art/approvals.json`, digest-bound. Never add an entry without a director record                                                                                        | Ledger entries cite the record path                                                                                      |
+| P0  | ART-M1, ART-M2, ART-M3         | 2× pixel scale **without changing contract canvases**: art arrives pre-upscaled 2× (human 96×144 at (48,132), Rivallie 96×96 at (48,86)); no filtering; draw positions snapped to even display px; optional `check:assets` rejection of non-uniform 2×2 blocks | Tiles, sprites and UI never show single-display-pixel detail; tests green                                                |
+| P0  | PRD-M2                         | Gallery can load an `art/review/<packet>/` (forge outputs, contract v2 records) in scene with anchors and sockets                                                                                                                                              | Director reviews golden samples in scene                                                                                 |
+| P0  | BuildProfile                   | Agree on the `elder` posture build alongside slender/standard/sturdy (`art/source/forge/spec/body_types.json`)                                                                                                                                                 | Contract lists the profiles                                                                                              |
+| P1  | ART-M4, PRD-M1                 | Extend your v2 compositor for L4: runtime garment layers only for swappable slots, face layer on the head socket (9 emotions plus blink, sleep, hurt), held layers with grip-angle bucket and in-front flag from forge socket tracks                           | A forge golden sample composites correctly in all 8 facings with a swapped expression and a swapped held item, no rebake |
+| P1  | ART-M7                         | Multi-page atlas paging streamed by region                                                                                                                                                                                                                     | Full slice clip matrix fits the Balanced budget                                                                          |
+| P1  | ART-M5, ART-M6, AMB-M3         | Runtime grading per time phase plus additive light pools; roof and canopy fade                                                                                                                                                                                 | Dawn/day/dusk/night proof captures                                                                                       |
+| P2  | CMB-M1…M5                      | 3-hit chain, dash cancels, presentation-only hit-stop, telegraph cues, rich hit cues                                                                                                                                                                           | Deterministic soak unchanged; browser journey shows the chain                                                            |
+| P2  | UI-M1…M5                       | Zenonia-style HUD regions, combat dimming, expression tags, 9-slice frames                                                                                                                                                                                     | Screenshot proofs against `04-ui-direction.md`                                                                           |
+| P2  | AMB-M1, AMB-M2, AMB-M4, AMB-M5 | Ambient emitters, wind field, weather presentation, footsteps                                                                                                                                                                                                  | Proof captures per biome                                                                                                 |
+| P3  | CRE-M1…M6                      | Six-stat model, potential, conditioning, temperament, 4-move loadout, "Disposition" label, save migration                                                                                                                                                      | Unit tests; migration fixture                                                                                            |
+| P3  | LIF-M1…M5, PIL-M1…M3           | Hearts, gift tastes, calendar and festivals, heart-event skeletons, feedback-latency rule                                                                                                                                                                      | Unit and browser tests                                                                                                   |
 
 Doctrine numbers marked "starting point" (CMB-3 timings, CRE-3.3 formula) are
 yours to tune. Doctrine rules (for example presentation-only hit-stop, director-only

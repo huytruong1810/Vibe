@@ -14,7 +14,7 @@ item. Basic combat is innate; tools occupy hands; origin bonuses are passive
 
 ## CMB-2 The strike combo (Zenonia chain)
 
-- **CMB-2.1** J chains up to **3 hits** when pressed within each hit's
+- **CMB-2.1** (T1 proposal) J chains up to **3 hits** when pressed within each hit's
   recovery window: hit 1 a quick jab, hit 2 a wider sweep, hit 3 a heavier finisher
   with knockback. Missing the window resets to hit 1.
 - **CMB-2.2** Each hit is a separate authoritative move phase (windup, active,
@@ -23,16 +23,22 @@ item. Basic combat is innate; tools occupy hands; origin bonuses are passive
 - **CMB-2.3** Movement input during recovery steers the next hit's direction
   (8-way). Dash can cancel the recovery of hits 1 and 2, but not hit 3.
 
-## CMB-3 Timing guide for animation (at 30 Hz simulation)
+## CMB-3 Timing (engineering move registry, 30 Hz)
 
-| Phase | Jab | Sweep | Finisher | Element skill |
-| --- | --- | --- | --- | --- |
-| Windup (anticipation) | 3 ticks | 4 ticks | 6 ticks | 6–9 ticks |
-| Active | 2 ticks | 3 ticks | 3 ticks | per skill |
-| Recovery | 5 ticks | 6 ticks | 10 ticks | 8–12 ticks |
+| Move                                            | Windup / active / recovery ticks | Art clip                                            |
+| ----------------------------------------------- | -------------------------------- | --------------------------------------------------- |
+| Innate strike                                   | 4 / 2 / 9                        | `strike`, 12 frames × 8 facings                     |
+| Element                                         | 7 / 3 / 16                       | `element`, 12 × 8                                   |
+| Sword slash (humans)                            | 6 / 3 / 12                       | `sword_slash`, 12 × 8                               |
+| Spear thrust (humans)                           | 8 / 2 / 14                       | `spear_thrust`, 12 × 8                              |
+| Bow shot (humans; left hand holds, right draws) | 12 / 1 / 12                      | `bow_shot`, 12 × 8; arrows have separate flight art |
 
-These are starting values for feel. The authoritative numbers live in the move
-registry and are tuned by engineering. Art always maps to the registry's ranges.
+The registry is authoritative and engineering tunes it. Twelve art frames don't
+mean twelve ticks: art maps onto the registry's exclusive-end phase ranges. Pose
+anticipation on windup frames, the clearest silhouette on the first active frame,
+and follow-through over recovery. The 3-hit chain in CMB-2 is a T1 proposal
+layered on these moves (each chain hit reuses a registry move with its own clip
+variant).
 
 ## CMB-4 Telegraphs and fairness
 
@@ -83,10 +89,10 @@ separate, non-animated environment state (existing contract).
 
 ## Engineering mandates
 
-| ID | Mandate |
-| --- | --- |
+| ID     | Mandate                                                                                    |
+| ------ | ------------------------------------------------------------------------------------------ |
 | CMB-M1 | A 3-hit strike chain with per-hit move phases and input buffering inside recovery windows. |
-| CMB-M2 | Dash cancel windows on hits 1 and 2. |
-| CMB-M3 | Presentation-only hit-stop that never alters simulation tick timing. |
-| CMB-M4 | Telegraph cues for qualifying enemy attacks, emitted at windup start. |
-| CMB-M5 | Hit cues carry element, effectiveness, material and crit flags for VFX, UI and audio. |
+| CMB-M2 | Dash cancel windows on hits 1 and 2.                                                       |
+| CMB-M3 | Presentation-only hit-stop that never alters simulation tick timing.                       |
+| CMB-M4 | Telegraph cues for qualifying enemy attacks, emitted at windup start.                      |
+| CMB-M5 | Hit cues carry element, effectiveness, material and crit flags for VFX, UI and audio.      |

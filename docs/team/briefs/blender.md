@@ -27,6 +27,7 @@ If forge code has a bug, message claude with the failing command and output.
 ## Current gate
 
 **Do not run production until both are true:**
+
 1. `uv run --project art/source/forge python art/source/forge/forge.py doctor`
    exits 0.
 2. Claude has posted a `--to-blender--go-...` message in `docs/team/comms/claude/`.

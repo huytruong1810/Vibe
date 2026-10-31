@@ -4,7 +4,7 @@
 **Author**: 2D Art Designer & Ingestion Pipeline Lead (Antigravity), on behalf of the Development Team  
 **Engineering Reference Baseline**: Commit `a3fc957c43467796a69a8ec57a0d03727def83d2` on `origin/eng/hd-presentation` ([Draft PR #1](https://github.com/huytruong1810/Vibe/pull/1))  
 **Art Pipeline Branch**: `art/hd-aqualia-slice` ([Draft PR #2](https://github.com/huytruong1810/Vibe/pull/2))  
-**Date**: October 31, 2026  
+**Date**: October 31, 2026
 
 ---
 
@@ -13,8 +13,9 @@
 Welcome to **Hearthwild**, an HD 2D top-down commercial JRPG developed in TypeScript (PixiJS/WebGL/Canvas) and Python, designed around a deep deterministic simulation architecture, modular physical presence, and rich environmental storytelling.
 
 ### Game Identity & Technical Tenets
+
 - **Presentation**: Top-down $3/4$ perspective, $1920 \times 1080$ viewport, $64 \times 64\text{ px}$ world tiles, 16 display pixels per elevation step.
-- **Visual Aesthetic**: Commercial AAA-grade pixel art (evoking *Octopath Traveler*, *Sea of Stars*, *Dead Cells*), combining authentic low-poly 3D orthographic turntable baking with hand-tuned pixel art palettes and lighting.
+- **Visual Aesthetic**: Commercial AAA-grade pixel art (evoking _Octopath Traveler_, _Sea of Stars_, _Dead Cells_), combining authentic low-poly 3D orthographic turntable baking with hand-tuned pixel art palettes and lighting.
 - **Physical Feedback**: Height and mass are authoritative simulation values driving recoil, camera shake, and soft-surface footprints. Art frames do **not** bake camera shake or recoil displacements into sprites.
 - **Strict Architecture**: Zero simulation leaks. Presentation layers never modify `src/domain/` or simulation worker state.
 
@@ -69,17 +70,21 @@ Our project operates across a 5-member team structure:
 The Codex Engineering Agent has finalized and published the engineering baseline at commit `a3fc957c` ([documented in `docs/art/team-production-message.md`](file:///c:/Users/htruong/source/repos/Vibe/docs/art/team-production-message.md)). All production must adhere to these rules:
 
 ### A. Asset Contract v2 (`docs/art/contract-v2.md`)
+
 - **Staging Lifecycle**: All source assets declare stage as `proof` or `candidate`. Source files **cannot** self-assert `approved`.
 - **Engineering Ledger**: Promotion to active gameplay is gated by engineering's `docs/art/approvals.json` (currently empty).
 - **Graceful Gameplay Fallback**: Proof-stage or incomplete sets (e.g. idle-only submissions) are isolated into `reviewAppearances` and `reviewClips`. The active game continues running working legacy locomotion, combat, and sleep animations until complete replacement sets are approved.
 
 ### B. Texture Atlas & Memory Budgets (Corrected)
+
 - **Atlas Dimensions**: $2048 \times 2048\text{ px}$ per page.
 - **Multi-Page Architecture**: Multiple pages are fully supported.
 - **Resident Memory Budgets**: High: **512 MiB**, Balanced: **256 MiB**, Low: **128 MiB**. The previously mentioned 16 MiB refers to decoded footprint of a single $2048^2$ RGBA page, not a whole-game ceiling.
 
 ### C. Suggested Two-Agent Art Division
+
 Engineering has recommended splitting art authoring into two concurrent streams:
+
 - **Agent A (Actors, Gear & Portraits)**: Humanoid/creature rigs, pose tables, body/hair/face/clothing layers, attachment sockets, weapons, and 9-expression portraits. Sole integrator of `art/source/manifest.json`.
 - **Agent B (Environment, Furniture, VFX & UI)**: Regional tiles, 42 building interiors, 3 regional caves, furniture art, spell effects, and UI views. Submits records via a separate staging file for Agent A to reconcile.
 
@@ -88,8 +93,9 @@ Engineering has recommended splitting art authoring into two concurrent streams:
 ## 4. Production Evolution & Current Asset Inventory
 
 ### The Breakthrough: From 2D Diffusion Drift to Blender 3D Orthographic Baking
+
 1. **The Problem**: 2D diffusion turnaround sheets looked impressive in isolation, but continuous 360° rotation revealed severe **volumetric morphing and identity drift** (creature volume jumped $+65\%$ in SE and collapsed $-53\%$ in N; face and clothing details warped).
-2. **The 3D Solution**: Adopting the *Dead Cells* / Motion Twin technique—modeling stylized low-poly base meshes in Blender, rendering headlessly via orthographic camera with Workbench shading, MATCAP/Texture, and Anti-Aliasing `OFF` for crisp pixel-art silhouettes.
+2. **The 3D Solution**: Adopting the _Dead Cells_ / Motion Twin technique—modeling stylized low-poly base meshes in Blender, rendering headlessly via orthographic camera with Workbench shading, MATCAP/Texture, and Anti-Aliasing `OFF` for crisp pixel-art silhouettes.
 3. **Latest Blender Delivery (Commit `b63e7e9`)**:
    - Master modular humanoid rig with hairstyles, faction robes, and handheld tools for all 30 villagers and 3 player origins.
    - All **8 distinct creature species** modeled and rendered across 8 facings $\times$ 6 breathing frames (384 frames total):
@@ -97,6 +103,7 @@ Engineering has recommended splitting art authoring into two concurrent streams:
    - Complete 8-way turnarounds packed and verified in the reviewer gallery at `http://localhost:5173/?gallery=1`.
 
 ### Full Target Production Scope
+
 - **41 Total Appearances**: 3 player origins (Aqualia, Zephyria, Pyria), 30 canonical villagers, 8 creature species.
 - **Actor Motion Matrix**:
   - Idle: 6 frames $\times$ 8 facings.
@@ -115,13 +122,13 @@ Engineering has recommended splitting art authoring into two concurrent streams:
 
 ## 5. Technical Safeguards & Invariants
 
-| Specification | Standard | Enforced By |
-| :--- | :--- | :--- |
-| **Standard Human Root** | Canvas $96 \times 144\text{ px}$, Ground contact anchor at **$(48, 132)$** | `scripts/assets-check.ts` |
-| **Rivallie Ground Root** | Canvas $96 \times 96\text{ px}$, Ground contact anchor at **$(48, 86)$** | `scripts/assets-check.ts` |
-| **Border Padding** | Minimum **$\ge 2\text{px}$** transparent padding on all edges | `scripts/assets-check.ts` |
-| **Combat Simulation** | 30 ticks/second deadlines (Innate: 4/2/9, Element: 7/3/16, Sword: 6/3/12, Spear: 8/2/14, Bow: 12/1/12) | Authoritative simulation |
-| **Git Safety** | **Never force push (`--force`)** | Team convention |
+| Specification            | Standard                                                                                               | Enforced By               |
+| :----------------------- | :----------------------------------------------------------------------------------------------------- | :------------------------ |
+| **Standard Human Root**  | Canvas $96 \times 144\text{ px}$, Ground contact anchor at **$(48, 132)$**                             | `scripts/assets-check.ts` |
+| **Rivallie Ground Root** | Canvas $96 \times 96\text{ px}$, Ground contact anchor at **$(48, 86)$**                               | `scripts/assets-check.ts` |
+| **Border Padding**       | Minimum **$\ge 2\text{px}$** transparent padding on all edges                                          | `scripts/assets-check.ts` |
+| **Combat Simulation**    | 30 ticks/second deadlines (Innate: 4/2/9, Element: 7/3/16, Sword: 6/3/12, Spear: 8/2/14, Bow: 12/1/12) | Authoritative simulation  |
+| **Git Safety**           | **Never force push (`--force`)**                                                                       | Team convention           |
 
 ---
 

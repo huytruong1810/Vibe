@@ -57,7 +57,7 @@ ORTHOGRAPHIC, EVEN SOFT LIGHTING FROM THE UPPER LEFT, PLAIN FLAT LIGHT GREY BACK
 ## bodytype v1
 
 ```
-Neutral human base mannequin, {BODY TYPE: average | broad | slim | elder} build, smooth simple surfaces,
+Neutral human base mannequin, {BUILD: standard | sturdy | slender | elder} build, smooth simple surfaces,
 minimal anatomy, plain mid-grey matte material, bald, no clothing details, mitten-like hands, simple feet.
 TWO VIEWS SIDE BY SIDE: FRONT AND BACK, A-POSE, ARMS ABOUT 45 DEGREES OUT, PALMS IN, LEGS SLIGHTLY APART.
 STYLIZED PROPORTIONS ABOUT {5 | 5 | 5 | 4.5} HEADS TALL.

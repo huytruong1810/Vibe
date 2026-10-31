@@ -1,7 +1,15 @@
 // SessionStart / PreInvocation: keep the role card and laws in context across long
 // sessions and compactions (TEAM-8). Usage: node hooks/inject.mjs session|invocation
 import { closeSync, openSync, readSync, statSync } from 'node:fs';
-import { emit, gitChangedPaths, loadState, readRole, readStdin, roleCard, saveState } from './lib.mjs';
+import {
+  emit,
+  gitChangedPaths,
+  loadState,
+  readRole,
+  readStdin,
+  roleCard,
+  saveState,
+} from './lib.mjs';
 
 const REMINDER_EVERY = 25;
 const mode = process.argv[2] ?? 'invocation';

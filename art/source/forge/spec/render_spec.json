@@ -5,7 +5,9 @@
     "screenPixelsPerArtPixel": 2,
     "nativeResolution": [960, 540],
     "referenceViewport": [1920, 1080],
-    "artPixelsPerTile": 32
+    "artPixelsPerTile": 32,
+    "exportScale": 2,
+    "exportNote": "Forge exports exact 2x nearest-neighbour upscales to contract v2 display canvases; every exported 2x2 block is uniform (L1)."
   },
   "camera": {
     "type": "ORTHO",
@@ -14,12 +16,21 @@
     "artPixelsPerWorldUnit": 32,
     "environmentDepthStretch": 2.0,
     "actorDepthStretch": 1.0,
-    "elevationStepArtPixels": null,
-    "elevationStepNote": "Pending ART-M8: codex records the WorldProjection elevation-step height; forge calibration cube must match the 32x8 cliff strip."
+    "elevationStepArtPixels": 8,
+    "elevationStepNote": "Engineering baseline: 16 display px per elevation step = 8 art px (ART-M8 resolved)."
   },
   "facings": {
     "order": ["s", "se", "e", "ne", "n", "nw", "w", "sw"],
-    "zRotationDeg": { "s": 0, "se": 45, "e": 90, "ne": 135, "n": 180, "nw": 225, "w": 270, "sw": 315 },
+    "zRotationDeg": {
+      "s": 0,
+      "se": 45,
+      "e": 90,
+      "ne": 135,
+      "n": 180,
+      "nw": 225,
+      "w": 270,
+      "sw": 315
+    },
     "faceDecalFacings": ["s", "se", "sw", "e", "w"]
   },
   "light": {
@@ -45,56 +56,233 @@
     "pixelPerfectLines": true
   },
   "canvases": {
-    "human.locomotion": { "size": [48, 72], "anchor": [24, 68], "states": ["idle", "walk", "run", "guard", "hit", "eat", "drink", "bathe", "work", "social", "sleep", "downed", "recovery"] },
-    "human.combat": { "size": [80, 80], "anchor": [40, 72], "states": ["strike", "element", "dash"] },
-    "creature.small": { "size": [40, 40], "anchor": [20, 36], "species": ["ignicap", "zephyrit", "cindermoth"] },
-    "creature.medium": { "size": [48, 48], "anchor": [24, 43], "species": ["rivallie", "mireling"] },
-    "creature.large": { "size": [72, 56], "anchor": [36, 51], "species": ["steamshell", "bramblefang", "marshstalker"] },
-    "layer.face": { "size": [16, 12], "anchor": [8, 6] },
-    "layer.heldItem": { "size": [32, 32], "anchor": [16, 16], "gripAngleBuckets": 8 },
-    "icon.item": { "size": [32, 32], "anchor": [16, 16] },
-    "environment": { "widthMultipleOf": 32, "anchor": "footprint-bottom-center" }
+    "human.locomotion": {
+      "size": [48, 72],
+      "anchor": [24, 66],
+      "states": [
+        "idle",
+        "walk",
+        "run",
+        "guard",
+        "hit",
+        "eat",
+        "drink",
+        "bathe",
+        "work",
+        "social",
+        "sleep",
+        "downed",
+        "recovery"
+      ],
+      "display": {
+        "size": [96, 144],
+        "anchor": [48, 132]
+      }
+    },
+    "human.combat": {
+      "size": [80, 80],
+      "anchor": [40, 72],
+      "states": ["strike", "element", "sword_slash", "spear_thrust", "bow_shot", "dash"],
+      "display": {
+        "size": [160, 160],
+        "anchor": [80, 144]
+      }
+    },
+    "creature.small": {
+      "size": [40, 40],
+      "anchor": [20, 36],
+      "species": ["ignicap", "zephyrit", "cindermoth"],
+      "display": {
+        "size": [80, 80],
+        "anchor": [40, 72]
+      }
+    },
+    "creature.medium": {
+      "size": [48, 48],
+      "anchor": [24, 43],
+      "species": ["rivallie", "mireling"],
+      "display": {
+        "size": [96, 96],
+        "anchor": [48, 86]
+      }
+    },
+    "creature.large": {
+      "size": [72, 56],
+      "anchor": [36, 51],
+      "species": ["steamshell", "bramblefang", "marshstalker"],
+      "display": {
+        "size": [144, 112],
+        "anchor": [72, 102]
+      }
+    },
+    "layer.face": {
+      "size": [16, 12],
+      "anchor": [8, 6]
+    },
+    "layer.heldItem": {
+      "size": [32, 32],
+      "anchor": [16, 16],
+      "gripAngleBuckets": 8
+    },
+    "icon.item": {
+      "size": [32, 32],
+      "anchor": [16, 16]
+    },
+    "environment": {
+      "widthMultipleOf": 32,
+      "anchor": "footprint-bottom-center"
+    }
   },
-  "marginsArtPixels": { "min": 2 },
+  "marginsArtPixels": {
+    "min": 2
+  },
   "clips": {
-    "idle": { "frames": 6, "facings": 8, "playback": "loop" },
-    "walk": { "frames": 8, "facings": 8, "playback": "distance" },
-    "run": { "frames": 8, "facings": 8, "playback": "distance" },
-    "strike": { "frames": 12, "facings": 8, "playback": "combat" },
-    "element": { "frames": 12, "facings": 8, "playback": "combat" },
-    "guard": { "frames": 4, "facings": 8, "playback": "once" },
-    "hit": { "frames": 4, "facings": 8, "playback": "once" },
-    "dash": { "frames": 6, "facings": 8, "playback": "once", "playerOnly": true },
-    "eat": { "frames": 6, "facings": 4, "playback": "loop" },
-    "drink": { "frames": 6, "facings": 4, "playback": "loop" },
-    "bathe": { "frames": 6, "facings": 4, "playback": "loop" },
-    "work": { "frames": 6, "facings": 4, "playback": "loop" },
-    "social": { "frames": 6, "facings": 4, "playback": "loop" },
-    "sleep": { "frames": 4, "facings": 4, "playback": "loop" },
-    "downed": { "frames": 6, "facings": 4, "playback": "once" },
-    "recovery": { "frames": 6, "facings": 4, "playback": "once" }
+    "idle": {
+      "frames": 6,
+      "facings": 8,
+      "playback": "loop"
+    },
+    "walk": {
+      "frames": 8,
+      "facings": 8,
+      "playback": "distance"
+    },
+    "run": {
+      "frames": 8,
+      "facings": 8,
+      "playback": "distance"
+    },
+    "strike": {
+      "frames": 12,
+      "facings": 8,
+      "playback": "combat"
+    },
+    "element": {
+      "frames": 12,
+      "facings": 8,
+      "playback": "combat"
+    },
+    "guard": {
+      "frames": 4,
+      "facings": 8,
+      "playback": "once"
+    },
+    "hit": {
+      "frames": 4,
+      "facings": 8,
+      "playback": "once"
+    },
+    "dash": {
+      "frames": 6,
+      "facings": 8,
+      "playback": "once",
+      "playerOnly": true
+    },
+    "eat": {
+      "frames": 6,
+      "facings": 4,
+      "playback": "loop"
+    },
+    "drink": {
+      "frames": 6,
+      "facings": 4,
+      "playback": "loop"
+    },
+    "bathe": {
+      "frames": 6,
+      "facings": 4,
+      "playback": "loop"
+    },
+    "work": {
+      "frames": 6,
+      "facings": 4,
+      "playback": "loop"
+    },
+    "social": {
+      "frames": 6,
+      "facings": 4,
+      "playback": "loop"
+    },
+    "sleep": {
+      "frames": 4,
+      "facings": 4,
+      "playback": "loop"
+    },
+    "downed": {
+      "frames": 6,
+      "facings": 4,
+      "playback": "once"
+    },
+    "recovery": {
+      "frames": 6,
+      "facings": 4,
+      "playback": "once"
+    },
+    "sword_slash": {
+      "frames": 12,
+      "facings": 8,
+      "playback": "combat",
+      "humansOnly": true
+    },
+    "spear_thrust": {
+      "frames": 12,
+      "facings": 8,
+      "playback": "combat",
+      "humansOnly": true
+    },
+    "bow_shot": {
+      "frames": 12,
+      "facings": 8,
+      "playback": "combat",
+      "humansOnly": true
+    }
   },
   "expressions": {
-    "human": ["neutral", "happy", "sad", "angry", "surprised", "blink", "sleep", "hurt"],
-    "creature": ["neutral", "happy", "hurt", "sleep"]
+    "human": [
+      "neutral",
+      "warm",
+      "thoughtful",
+      "curious",
+      "concerned",
+      "amused",
+      "angry",
+      "sad",
+      "fearful",
+      "blink",
+      "sleep",
+      "hurt"
+    ],
+    "creature": ["neutral", "warm", "fearful", "hurt", "sleep"]
   },
   "bake": {
     "engine": "CYCLES",
     "samples": 1,
     "pixelFilterWidth": 0.01,
     "passes": ["albedo", "normal", "depth", "materialId", "alpha"],
-    "exportSocketTracks": ["Socket_Head", "Socket_Hand.R", "Socket_Hand.L", "Root"]
+    "exportSocketTracks": ["Socket_Head", "Socket_Hand.R", "Socket_Hand.L", "Socket_Back", "Root"]
   },
   "qa": {
     "anchorDriftMaxPx": 0,
     "heightToleranceArtPx": 2,
-    "facingSilhouetteAreaRatio": { "min": 0.55, "max": 1.8 },
+    "facingSilhouetteAreaRatio": {
+      "min": 0.55,
+      "max": 1.8
+    },
     "orphanPixelsMax": 0,
     "idleFlickerMaxChangedFraction": 0.08,
-    "castDistinctness": { "minPaletteHistogramDistance": 0.25, "maxSilhouetteIoU": 0.9 },
-    "referenceFidelity": { "maxDominantColorDeltaEOk": 0.08 },
-    "valueContrast": { "minDeltaLOk": 0.12, "against": ["ground_grass", "ground_dirt", "ground_sand", "ground_freshwater"] },
+    "castDistinctness": {
+      "minPaletteHistogramDistance": 0.25,
+      "maxSilhouetteIoU": 0.9
+    },
+    "referenceFidelity": {
+      "maxDominantColorDeltaEOk": 0.08
+    },
+    "valueContrast": {
+      "minDeltaLOk": 0.12,
+      "against": ["ground_grass", "ground_dirt", "ground_sand", "ground_freshwater"]
+    },
     "contactSheetScale": 4,
-    "maxStatus": "candidate"
+    "maxStatus": "candidate",
+    "exportUniform2x2Blocks": true
   }
 }

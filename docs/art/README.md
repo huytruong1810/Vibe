@@ -8,14 +8,14 @@ this folder (DOC-2).
 
 ## What lives here
 
-| File | Owner | Purpose |
-| --- | --- | --- |
-| [contract.md](contract.md) | codex | Runtime art contract: catalog schema, identities, clip matrix, packing, budgets. **Pending update to 2× scale and layered sprites** (doctrine ART-M3, ART-M4, PRD-M1). Until codex lands it, the spec's 2× numbers govern new art; the contract's 1× numbers describe the current runtime. |
-| [forge-pipeline.md](forge-pipeline.md) | claude | How the Sprite Forge turns reference sheets into layered pixel sprites, stage by stage. |
-| [review-gallery.md](review-gallery.md) | codex | The development gallery (`/?gallery=1`) for frame, facing and anchor review. |
-| [reviews/](reviews/) | director, codex, communicator | Formal review records (first proofs, portraits, golden samples). |
-| [history/postmortem.md](history/postmortem.md) | claude | Every failed approach so far and the lesson the doctrine took from it. |
-| `coverage.json`, `coverage.md`, `*.schema.json` | generated | Written by `npm run assets:build`. Never edit by hand; paths are fixed by scripts and CI. |
+| File                                            | Owner                         | Purpose                                                                                                                                                                                                         |
+| ----------------------------------------------- | ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [contract.md](contract.md)                      | codex                         | Runtime art contract v1 plus [contract-v2.md](contract-v2.md) (layers, rigs, sockets, provenance, approvals ledger). Display canvases stay as published; doctrine 2× art is exported pre-upscaled to them (L1). |
+| [forge-pipeline.md](forge-pipeline.md)          | claude                        | How the Sprite Forge turns reference sheets into layered pixel sprites, stage by stage.                                                                                                                         |
+| [review-gallery.md](review-gallery.md)          | codex                         | The development gallery (`/?gallery=1`) for frame, facing and anchor review.                                                                                                                                    |
+| [reviews/](reviews/)                            | director, codex, communicator | Formal review records (first proofs, portraits, golden samples).                                                                                                                                                |
+| [history/postmortem.md](history/postmortem.md)  | claude                        | Every failed approach so far and the lesson the doctrine took from it.                                                                                                                                          |
+| `coverage.json`, `coverage.md`, `*.schema.json` | generated                     | Written by `npm run assets:build`. Never edit by hand; paths are fixed by scripts and CI.                                                                                                                       |
 
 ## Rules that bite most often
 

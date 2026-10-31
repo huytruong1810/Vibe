@@ -20,7 +20,7 @@ well.
 
 ## Data model
 
-- **Body types** (`spec/body_types.json`): average, broad, slim, elder. Each is
+- **Body types** (`spec/body_types.json`): standard, sturdy, slender, elder. Each is
   one mesh rigged to the Quaternius UAL skeleton and approved once.
 - **Parts:** hair, headwear, top, bottom, outerwear, footwear, prop. Each is a
   mesh from image-to-3D, fitted to every body type it supports.
@@ -30,21 +30,21 @@ well.
 
 ## Stages
 
-| # | Stage | What it does | Output |
-| --- | --- | --- | --- |
-| 1 | `prep` | Validates a reference sheet against PRD-3 | `work/<asset>/prep.json` |
-| 2 | `gen3d` | Runs Hunyuan3D-2mv or TRELLIS locally (RTX 5080, sm_120 build) on the sheet | raw `.glb` plus seed and hash |
-| 3 | `clean` | Scales to the spec height, sets feet origin, faces −Y, merges, decimates to 8–15k tris, keeps albedo only | clean mesh |
-| 4 | `rig` | Fits the UAL skeleton by A-pose landmarks; computes weights on a voxel proxy and transfers them to the mesh; adds socket empties | rigged body |
-| 5 | `fit` | Fits parts onto a body type (Surface Deform / Shrinkwrap), transfers weights from the body, masks hidden body faces | dressed character |
-| 6 | `animate` | Applies the shared clip library (constant interpolation, exact frame counts, windup/active/recovery partitions) | actions |
-| 7 | `bake` | Cycles at 1 spp and 0.01 px filter. Per facing and frame: albedo, normal, depth, material ID, alpha passes, plus socket tracks (head, hands, root) | EXR passes plus `tracks.json` |
-| 8 | `pixelize` | Banded N·L mapped to palette ramps (OKLab), selective outline, orphan and jaggy cleanup, anchor assertion | body frames (PNG) |
-| 9 | `faces` | Renders the face grammar per facing and expression, recoloured from the recipe's ramps | face layer atlas |
-| 10 | `items` | Renders each prop for 8 facings × 8 grip angles, plus its inventory icon from the same mesh | item layers and icon |
-| 11 | `qa` | All spec QA checks; writes the report and a 4× contact sheet | `qa_report.json`, `contact.png` |
-| 12 | `packet` | Assembles the director review packet; requires that the contact sheet was viewed | `art/review/<date>-<asset>/` |
-| 13 | `publish` | Requires a director approval record; copies frames to `art/source/exports/`, runs `rebuild.py` and `npm run assets:build` | runtime source frames |
+| #   | Stage      | What it does                                                                                                                                       | Output                          |
+| --- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- |
+| 1   | `prep`     | Validates a reference sheet against PRD-3                                                                                                          | `work/<asset>/prep.json`        |
+| 2   | `gen3d`    | Runs Hunyuan3D-2mv or TRELLIS locally (RTX 5080, sm_120 build) on the sheet                                                                        | raw `.glb` plus seed and hash   |
+| 3   | `clean`    | Scales to the spec height, sets feet origin, faces −Y, merges, decimates to 8–15k tris, keeps albedo only                                          | clean mesh                      |
+| 4   | `rig`      | Fits the UAL skeleton by A-pose landmarks; computes weights on a voxel proxy and transfers them to the mesh; adds socket empties                   | rigged body                     |
+| 5   | `fit`      | Fits parts onto a body type (Surface Deform / Shrinkwrap), transfers weights from the body, masks hidden body faces                                | dressed character               |
+| 6   | `animate`  | Applies the shared clip library (constant interpolation, exact frame counts, windup/active/recovery partitions)                                    | actions                         |
+| 7   | `bake`     | Cycles at 1 spp and 0.01 px filter. Per facing and frame: albedo, normal, depth, material ID, alpha passes, plus socket tracks (head, hands, root) | EXR passes plus `tracks.json`   |
+| 8   | `pixelize` | Banded N·L mapped to palette ramps (OKLab), selective outline, orphan and jaggy cleanup, anchor assertion                                          | body frames (PNG)               |
+| 9   | `faces`    | Renders the face grammar per facing and expression, recoloured from the recipe's ramps                                                             | face layer atlas                |
+| 10  | `items`    | Renders each prop for 8 facings × 8 grip angles, plus its inventory icon from the same mesh                                                        | item layers and icon            |
+| 11  | `qa`       | All spec QA checks; writes the report and a 4× contact sheet                                                                                       | `qa_report.json`, `contact.png` |
+| 12  | `packet`   | Assembles the director review packet; requires that the contact sheet was viewed                                                                   | `art/review/<date>-<asset>/`    |
+| 13  | `publish`  | Requires a director approval record; copies frames to `art/source/exports/`, runs `rebuild.py` and `npm run assets:build`                          | runtime source frames           |
 
 `forge.py next --asset <id>` prints the exact next command for an asset, or the
 reason it is blocked.

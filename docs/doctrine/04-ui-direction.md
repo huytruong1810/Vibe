@@ -111,10 +111,10 @@ keys, captions for important audio cues.
 
 ## Engineering mandates
 
-| ID | Mandate |
-| --- | --- |
-| UI-M1 | The HUD view supports the UI-2 layout regions and the combat dimming rule (UI-2.5). |
-| UI-M2 | Damage-number and hit cues are emitted as presentation cues with element and effectiveness data. |
-| UI-M3 | The dialogue view can swap portrait expressions per line (requires expression tags on dialogue lines). |
+| ID    | Mandate                                                                                                 |
+| ----- | ------------------------------------------------------------------------------------------------------- |
+| UI-M1 | The HUD view supports the UI-2 layout regions and the combat dimming rule (UI-2.5).                     |
+| UI-M2 | Damage-number and hit cues are emitted as presentation cues with element and effectiveness data.        |
+| UI-M3 | The dialogue view can swap portrait expressions per line (requires expression tags on dialogue lines).  |
 | UI-M4 | The companion page exposes the CRE stat model once implemented: radar values, temperament, moves, bond. |
-| UI-M5 | 9-slice frame rendering at integer scale for three frame weights. |
+| UI-M5 | 9-slice frame rendering at integer scale for three frame weights.                                       |

@@ -19,9 +19,14 @@ per-frame cleanup surface, and makes the full clip matrix about four times
 larger in memory (about 650 MB untrimmed for the 19-actor slice at 1×, against
 about 160 MB at 2×).
 
-Consequence: the contract's "approximately 96×144" human frames become 48×72
-art-pixel frames. All exact canvases and anchors live in
-`art/source/forge/spec/render_spec.json`.
+Consequence, reconciled with asset contract v2: art is **authored** at art-pixel
+resolution and **exported** with exact 2× nearest-neighbour upscaling to the
+contract's display canvases. A human is authored at 48×72 with anchor (24,66) and
+exported at 96×144 with anchor (48,132), exactly the contract's human rig. Rivallie
+is authored at 48×48 with anchor (24,43) and exported at 96×96 with anchor (48,86).
+One elevation step is 16 display px, which is 8 art px. Every exported pixel is
+part of a uniform 2×2 block; a lone display pixel is a mixel defect. All exact
+canvases and anchors live in `art/source/forge/spec/render_spec.json`.
 
 ## L2 — One camera for every 3D-baked asset
 
@@ -52,7 +57,14 @@ Character sheets are regenerated at doctrine proportions (PRD-3).
 
 Expressions and any carried tool therefore cost no rebake. Gear is reusable
 across characters because outfits and props are separate 3D parts in a shared
-kit. A full runtime paper doll for clothing is out of scope for v1.
+kit.
+
+Reconciled with engineering's equipment system (six worn slots: head, torso,
+hands, legs, feet, back) and contract v2 `LayerSet`s: a garment slot that
+gameplay can change at runtime (the player's equipment, and any villager slot
+engineering makes equippable) is exported as a **runtime garment layer** on the
+shared rig. Slots that never change for an actor stay baked into its body layer.
+Face and held layers are always runtime layers.
 
 ## L5 — Image-to-3D modular kit
 
@@ -77,6 +89,9 @@ mushroom-biped, winged, shelled, serpentine) defined by the forge.
 ## L7 — Director-only approval
 
 Only the director moves an asset to `director-approved`. Automated QA and agents
-can reach `candidate` at most. Runtime exports under `art/source/exports/`
-change only after an approval record exists in
-`docs/team/comms/director/approvals/`.
+can reach `candidate` at most. The director's decision is recorded in
+`docs/team/comms/director/approvals/`. Codex then transcribes it, bound to the
+artifact's exact source digest, into engineering's ledger `docs/art/approvals.json`
+(contract v2). That ledger promotes candidates to active gameplay. Codex never
+adds a ledger entry without a director record, and no source file self-asserts
+approval.

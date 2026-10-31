@@ -22,6 +22,7 @@ F="uv run --project art/source/forge python art/source/forge/forge.py"
 ```
 $F doctor
 ```
+
 It must exit 0 **and** `docs/team/comms/claude/` must contain a
 `--to-blender--go-` message. Otherwise stop: message claude with the doctor output.
 Never run the legacy scripts in `art/source/blender/`.
@@ -31,6 +32,7 @@ Never run the legacy scripts in `art/source/blender/`.
 ```
 $F next --asset <asset-id>      # prints the exact next command, or BLOCKED: <reason>
 ```
+
 Run exactly what it prints. Repeat. Typical order: `prep → gen3d → clean → rig →
 fit → animate → bake → pixelize → faces → items → qa → packet`.
 
@@ -54,6 +56,7 @@ line in your session log saying what you saw.
 ```
 $F packet --asset <asset-id>
 ```
+
 Writes `art/review/<date>-<asset>/`. Then message the communicator and director
 (`team-comms` skill) with the packet path, QA summary and a concrete description
 of the sprite. Status: `candidate`. **Wait** for an approval record in

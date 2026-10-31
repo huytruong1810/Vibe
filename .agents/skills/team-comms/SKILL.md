@@ -30,10 +30,11 @@ Path: `docs/team/comms/<you>/YYYY-MM-DDTHHMM--to-<member|all>--<topic>.md` (UTC)
 ---
 from: <you>
 to: <member|all>
-re: <topic-kebab>          # same topic as the thread you answer
+re: <topic-kebab> # same topic as the thread you answer
 evidence: [<paths>]
 needs-reply: yes|no
 ---
+
 What happened. What you saw (describe images concretely). What you need, from whom, by when.
 ```
 

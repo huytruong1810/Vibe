@@ -2,41 +2,16 @@
   "schemaVersion": 1,
   "doctrine": "ART-4",
   "generator": "art/source/forge/tools/gen_palette.py",
-  "steps": [
-    "deep",
-    "shadow",
-    "mid",
-    "light",
-    "highlight"
-  ],
+  "steps": ["deep", "shadow", "mid", "light", "highlight"],
   "rules": {
     "maxColorsActor": 24,
     "maxColorsCreature": 20,
     "maxColorsEnvironment": 32,
-    "forbidden": [
-      "#000000",
-      "#ffffff"
-    ],
+    "forbidden": ["#000000", "#ffffff"],
     "regionAccents": {
-      "aqualia": [
-        "teal",
-        "navy",
-        "reed",
-        "timber",
-        "sand"
-      ],
-      "pyrador": [
-        "ember",
-        "ochre",
-        "basalt",
-        "glass"
-      ],
-      "zephyria": [
-        "sky",
-        "cream",
-        "sage",
-        "sail"
-      ]
+      "aqualia": ["teal", "navy", "reed", "timber", "sand"],
+      "pyrador": ["ember", "ochre", "basalt", "glass"],
+      "zephyria": ["sky", "cream", "sage", "sail"]
     }
   },
   "ramps": {

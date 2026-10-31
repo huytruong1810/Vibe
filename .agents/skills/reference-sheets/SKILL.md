@@ -22,7 +22,7 @@ spend it deliberately.
 
 ## Steps
 
-1. **Collect identity.** Open the identity sources and *look at them*
+1. **Collect identity.** Open the identity sources and _look at them_
    (`read_file` on the images): the approved portrait
    (`public/assets/generated/portrait_<kind>_<id>_128.png`), the master or
    lineup in `art/source/masters/`, and the character's profile (role,
@@ -44,7 +44,10 @@ spend it deliberately.
      "asset": "npc:neris",
      "kind": "human",
      "bodyType": "elder",
-     "identitySources": ["public/assets/generated/portrait_npc_npc_neris_128.png", "art/source/masters/aqualia_villagers_lineup_a.jpg"],
+     "identitySources": [
+       "public/assets/generated/portrait_npc_npc_neris_128.png",
+       "art/source/masters/aqualia_villagers_lineup_a.jpg"
+     ],
      "views": { "front": "front.png", "back": "back.png" },
      "props": { "ferry-pole": "prop-ferry-pole.png" },
      "ramps": { "skin": "skin-warm", "hair": "hair-silver", "coat": "navy", "trim": "teal" },
@@ -71,6 +74,7 @@ spend it deliberately.
 
 ```markdown
 ## npc-neris
+
 | # | date (UTC) | template | purpose | result | kept? | why |
 | 1 | 2026-11-01 14:05 | human-apose v1 | front+back | refs/npc-neris/gen1.png | no | holding pole (fused prop) |
 | 2 | 2026-11-01 14:12 | human-apose v1 | front+back | refs/npc-neris/gen2.png | yes | passes checklist |

@@ -34,7 +34,10 @@ const changed = gitChangedPaths().filter((p) => !baseline.has(p));
 const bad = changed.map((p) => [p, changeDenial(role, p)]).filter(([, why]) => why);
 if (bad.length) {
   issues.push({
-    key: `lane:${bad.map(([p]) => p).sort().join(',')}`,
+    key: `lane:${bad
+      .map(([p]) => p)
+      .sort()
+      .join(',')}`,
     text:
       'These working-tree changes are outside your lane or protected:\n' +
       bad.map(([p, why]) => `- ${p}: ${why}`).join('\n') +
@@ -46,7 +49,9 @@ if (bad.length) {
 // 2. Exports changed without an approval record (L7).
 if (changed.some((p) => p.startsWith('art/source/exports/'))) {
   const dir = path.join(REPO_ROOT, 'docs/team/comms/director/approvals');
-  const approvals = existsSync(dir) ? readdirSync(dir).filter((f) => f.endsWith('.md') && f !== 'README.md') : [];
+  const approvals = existsSync(dir)
+    ? readdirSync(dir).filter((f) => f.endsWith('.md') && f !== 'README.md')
+    : [];
   if (!approvals.length) {
     issues.push({
       key: 'exports-without-approval',
@@ -78,7 +83,8 @@ function lastResponse(file) {
     const lines = readFileSync(file, 'utf8').trim().split('\n');
     for (let i = lines.length - 1; i >= 0; i--) {
       const o = JSON.parse(lines[i]);
-      if (o.type === 'PLANNER_RESPONSE' && typeof o.content === 'string' && o.content.trim()) return o.content;
+      if (o.type === 'PLANNER_RESPONSE' && typeof o.content === 'string' && o.content.trim())
+        return o.content;
     }
   } catch {
     /* transcript unavailable */
@@ -87,7 +93,9 @@ function lastResponse(file) {
 }
 const reply = lastResponse(input.transcriptPath);
 if (reply !== null && changed.length) {
-  const missing = ['Changed', 'Evidence', 'Gaps'].filter((h) => !new RegExp(`\\b${h}\\b`, 'i').test(reply));
+  const missing = ['Changed', 'Evidence', 'Gaps'].filter(
+    (h) => !new RegExp(`\\b${h}\\b`, 'i').test(reply),
+  );
   if (missing.length) {
     issues.push({
       key: `report:${changed.length}`,
@@ -96,7 +104,10 @@ if (reply !== null && changed.length) {
   }
   const line = bannedLine(reply);
   if (line) {
-    issues.push({ key: `banned:${line}`, text: `Your reply uses a banned superlative (TEAM-5.3): "${line}". Rewrite it factually.` });
+    issues.push({
+      key: `banned:${line}`,
+      text: `Your reply uses a banned superlative (TEAM-5.3): "${line}". Rewrite it factually.`,
+    });
   }
 }
 
@@ -105,7 +116,10 @@ if (fresh.length) {
   session.stopRaised = [...raised, ...fresh.map((i) => i.key)];
   sessions[conv] = session;
   saveState('sessions.json', sessions);
-  emit({ decision: 'continue', reason: `[Hearthwild stop check]\n${fresh.map((i) => i.text).join('\n\n')}` });
+  emit({
+    decision: 'continue',
+    reason: `[Hearthwild stop check]\n${fresh.map((i) => i.text).join('\n\n')}`,
+  });
 } else {
   emit({});
 }
