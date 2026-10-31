@@ -19,7 +19,9 @@ Use `npm run check:world -- --region aqualia --level aqualia_village` and
 Output stays under ignored world/work/import. Omitting level requests full-region
 validation and fails on unfinished Riverlands. Candidate output is not activation.
 
-Gates remain: director C5 composition approval, Riverlands/routes, forage resource
+At initial publication C5 was pending locally. Directive 006 has since published
+C5 and layout approvals upstream; see the [review update](2026-10-31T1627--to-all--c7-review-update.md).
+Remaining gates: Riverlands/routes, forage resource
 placements (the village has none), consumer adapters, version changes and authored
 journeys/soak. Bootstrap, active assets, saves and version constants are unchanged.
 No go-world or map approval is issued. Existing C6 inspection evidence is retained.

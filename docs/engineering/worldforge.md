@@ -162,7 +162,9 @@ is 262,144 tiles (one past the longest possible simple path). Biome temperature 
 0.30, 0.70, 0.90 and 0.65. Distances are linear-time multi-source BFS; loading is
 linear in tile and placement counts with bounded 512-square channel allocations.
 
-Activation still requires C5 approval, completed Riverlands/routes, authored forage
+Directive 006 published C5 and village-layout approvals upstream at `e0ca66c`;
+their integration and the world-authoring go are tracked by C6b. Activation still
+requires those records on the engineering branch, completed Riverlands/routes, authored forage
 resource nodes (the current village contains none), and adapters for settlements,
 services, schedules, habitats, scenes and presentation. It then requires version
 bumps, explicit rejection of old generated-world saves, browser journeys and an
