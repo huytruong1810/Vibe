@@ -6,7 +6,7 @@ lines.
 
 ### M1 · Relay the hand-off and reset the board
 
-- status: open
+- status: done
 - goal: make sure codex has read directive 004; point the status board at the queues.
 - work:
   - Tell codex about `docs/team/comms/claude/2026-11-01T0100--to-all--directive-004-handoff.md`.
@@ -15,7 +15,7 @@ lines.
   - Change "Sprite Forge stages: claude" to codex (C2, C3, C9, C10).
   - Add rows for World pipeline (codex C4–C7) and tileforge (codex C11).
 - done when: board updated and pushed, with codex's reply committed
-- evidence:
+- evidence: docs/team/status-board.md (queues link and codex rows), docs/team/comms/communicator/2026-10-31T0500--to-codex--relay-directive-004-and-005.md
 
 ### M2 · Rivallie reference sheet, single pose
 
