@@ -4,6 +4,7 @@ from collections import deque
 import math
 from .project import entities, fields, layers, sha, spec, validate_structure, WorldError
 from .passes import inside
+from .semantics import TERRAIN
 
 
 def can_step(data, width, height, start, end, water=True, lava=False):
@@ -12,16 +13,20 @@ def can_step(data, width, height, start, end, water=True, lava=False):
     if not 0 <= x < width or not 0 <= y < height:
         return False
     a, b = ay * width + ax, y * width + x
-    if data["collision"][b] == 1:
+    if data["collision"][b] == TERRAIN.solid:
         return False
     # Boardwalk/bridge are walk surfaces above the stored water layer.
-    if data["water"][b] and data["paths"][b] not in (3, 4) and not water:
+    if data["water"][b] and data["paths"][b] not in TERRAIN.decks and not water:
         return False
-    delta = abs(data["elevation"][b] - data["elevation"][a])
+    delta = abs(
+        TERRAIN.heights[data["elevation"][b]] - TERRAIN.heights[data["elevation"][a]]
+    )
     return (
         delta == 0
         or delta == 1
-        and (data["collision"][a] == 2 or data["collision"][b] == 2)
+        and (
+            data["collision"][a] == TERRAIN.ramp or data["collision"][b] == TERRAIN.ramp
+        )
     )
 
 
@@ -154,7 +159,7 @@ def check(project, plan, selected=None):
                         3,
                     ),
                     "solidFraction": sum(
-                        data["collision"][y * w + x] == 1
+                        data["collision"][y * w + x] == TERRAIN.solid
                         for y in range(y0, min(y0 + 17, h))
                         for x in range(x0, min(x0 + 30, w))
                     )
@@ -205,7 +210,7 @@ def check(project, plan, selected=None):
             ew, eh = e["width"] // 32, e["height"] // 32
             footprint = {(a, b) for a in range(x, x + ew) for b in range(y, y + eh)}
             if occupied & footprint or any(
-                data["collision"][b * w + a] != 1 for a, b in footprint
+                data["collision"][b * w + a] != TERRAIN.solid for a, b in footprint
             ):
                 error(
                     "footprint",
@@ -257,7 +262,8 @@ def check(project, plan, selected=None):
         for e in by_kind("Decor"):
             if (
                 fields(e)["blocks"]
-                and data["collision"][e["__grid"][1] * w + e["__grid"][0]] != 1
+                and data["collision"][e["__grid"][1] * w + e["__grid"][0]]
+                != TERRAIN.solid
             ):
                 error(
                     "collision",
@@ -280,7 +286,11 @@ def check(project, plan, selected=None):
                         [x, y],
                     )
         for i, water in enumerate(data["water"]):
-            if water and data["paths"][i] not in (0, 3, 4):
+            if (
+                water
+                and data["paths"][i] != 0
+                and data["paths"][i] not in TERRAIN.decks
+            ):
                 error(
                     "crossing",
                     name,
@@ -304,7 +314,7 @@ def check(project, plan, selected=None):
                     "plannedDensity": zone["density"],
                     "decorPer100Tiles": round(100 * decor / max(1, len(tiles)), 3),
                     "solidFraction": sum(
-                        data["collision"][y * w + x] == 1 for x, y in tiles
+                        data["collision"][y * w + x] == TERRAIN.solid for x, y in tiles
                     )
                     / max(1, len(tiles)),
                     "walkableFraction": sum(
@@ -332,8 +342,8 @@ def check(project, plan, selected=None):
                     bi = (y - right["worldY"] // 32) * bw
                     if a["paths"]["intGridCsv"][ai] or b["paths"]["intGridCsv"][bi]:
                         delta = abs(
-                            a["elevation"]["intGridCsv"][ai]
-                            - b["elevation"]["intGridCsv"][bi]
+                            TERRAIN.heights[a["elevation"]["intGridCsv"][ai]]
+                            - TERRAIN.heights[b["elevation"]["intGridCsv"][bi]]
                         )
                         if (
                             not (
@@ -343,14 +353,14 @@ def check(project, plan, selected=None):
                             or not (
                                 delta == 0
                                 or delta == 1
-                                and 2
+                                and TERRAIN.ramp
                                 in (
                                     a["collision"]["intGridCsv"][ai],
                                     b["collision"]["intGridCsv"][bi],
                                 )
                             )
-                            or a["collision"]["intGridCsv"][ai] == 1
-                            or b["collision"]["intGridCsv"][bi] == 1
+                            or a["collision"]["intGridCsv"][ai] == TERRAIN.solid
+                            or b["collision"]["intGridCsv"][bi] == TERRAIN.solid
                         ):
                             error(
                                 "seam",

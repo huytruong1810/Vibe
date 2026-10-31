@@ -95,6 +95,24 @@ the corresponding QA/render/inspection evidence. `packet.json` is written last a
 binds the included files; a partially written folder is not a complete packet.
 No packet or inspection receipt modifies director approvals or gameplay artwork.
 
+C6b reads collision flags, deck membership and elevation values from the shared
+contract through `TerrainSemantics`; the example pass uses named content lookups.
+Zero remains the contract's empty value. Re-numbering test fixtures verifies that
+walkability does not depend on today's numeric IDs. A negative integration test
+writes a blocking pass, runs CLI `apply` then `check`, and repairs it through a
+second pass without touching the shared project.
+
+New world packets use manifest format 2. `source` records the canonical LDtk path
+and SHA-256; the large project is not copied into each packet. The included pass
+sequence reconstructs the same source digest. Historical format-1 packets remain
+unchanged. Packaging revisions preserve the map digest; they do not expand the
+approved layout scope to dressing or production artwork.
+
+`next` reads protected director records for an exact source digest, asset and
+layout scope. When that layout already has approval and QA passes, it directs the
+author to unfinished levels instead of requesting a repeat layout export. This is
+operator guidance, never an approval writer or a runtime activation permission.
+
 ## Verification
 
 ```text
@@ -162,9 +180,9 @@ is 262,144 tiles (one past the longest possible simple path). Biome temperature 
 0.30, 0.70, 0.90 and 0.65. Distances are linear-time multi-source BFS; loading is
 linear in tile and placement counts with bounded 512-square channel allocations.
 
-Directive 006 published C5 and village-layout approvals upstream at `e0ca66c`;
-their integration and the world-authoring go are tracked by C6b. Activation still
-requires those records on the engineering branch, completed Riverlands/routes, authored forage
+Directive 006's C5 and village-layout records were integrated from `e0ca66c` via
+normal merge history. C6b opens the world-authoring lane. Runtime activation still
+requires completed Riverlands/routes, authored forage
 resource nodes (the current village contains none), and adapters for settlements,
 services, schedules, habitats, scenes and presentation. It then requires version
 bumps, explicit rejection of old generated-world saves, browser journeys and an

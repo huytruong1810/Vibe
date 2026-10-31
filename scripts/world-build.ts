@@ -21,6 +21,7 @@ const importerSources = [
   'art/source/world/tools/worldlib/cli.py',
   'art/source/world/tools/worldlib/project.py',
   'art/source/world/tools/worldlib/checks.py',
+  'art/source/world/tools/worldlib/semantics.py',
   'art/source/world/tools/worldlib/passes.py',
   'art/source/world/tools/worldlib/review.py',
 ];

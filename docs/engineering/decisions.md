@@ -265,3 +265,11 @@ editor-format overhead to browser startup without benefiting gameplay.
 switch the playable game. No save/content/world version bump is made yet. C7 stays
 partially implemented until approval, full map readiness, consumer adapters,
 version changes, journeys and authored-world soak are complete.
+
+**C6b follow-up:** published C5/layout records were integrated through normal
+studio-to-art-to-engineering history. Worldforge checks and the golden example
+now derive IntGrid meanings from the protected schema. Packet format 2 references
+the unchanged map by path/digest and retains replay passes, rather than duplicating
+the project. `next` uses exact-digest, layout-scoped director records only for
+operator guidance; it does not write approvals or activate gameplay. See the
+[worldforge guide](worldforge.md). Historical packets and their records stay intact.

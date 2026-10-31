@@ -30,11 +30,11 @@ it's blocked, mark it and take the next. Change only `status:` and `evidence:` l
 
 ### B2 · Riverlands map
 
-- status: open once codex posts `--to-blender--go-world` (bible approved: `approvals/proposal-001.md`; golden village approved: `approvals/world-aqualia--world-aqualia-aqualia_village-1.md`)
+- status: open (world-authoring go issued; bible and village layout records integrated)
 - goal: lay out level `aqualia_riverlands` from the region bible, following the codex golden village as your example.
 - work: `world-builder` skill. One pass per idea: write the pass, `apply`, `render`, open every screen crop, `check`, fix. Never edit `.ldtk` JSON by hand.
 - done when: `worldforge check` passes, the packet is in `art/review/`, and the ticket is `candidate`
-- evidence:
+- evidence: Codex [go-world](../comms/codex/2026-10-31T1640--to-blender--go-world.md); bible/layout director records are integrated. Existing village layout is the reference, not finished dressing.
 
 ### B3 · Remaining creatures, one at a time
 

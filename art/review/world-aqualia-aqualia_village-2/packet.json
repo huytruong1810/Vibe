@@ -1,0 +1,32 @@
+{
+  "dependenciesDigest": "392a66c148b312d221e8aadcb0e824aab63aa4986f9c50974d2586d45fe9ec8f",
+  "files": {
+    "README.md": "eda0f686b00d263f3db5a0d452ca990d81b42fc84b3c0e313e0c7ead0011a7a9",
+    "before-overview.png": "8575c7602caedbbfa66facd56af4b2935c93db7e362a86c2bc7a9afb03b2f824",
+    "overview.png": "eb5dc4826ae9e32fb6c1855275b9c441104b1840894527fe72643b47f26e2861",
+    "passes/001-village.json": "c2d00c0c317979cbe5e2914d8946cd1a3432fac7377934a3934a95c1c9470001",
+    "passes/002-village-details.json": "3b9d419c95ec91e0fdcf5f8f86ec58d75fbbc6dff4962493175a19accda4a143",
+    "qa_report.json": "1ccbb78ba83e326a9425f0706ea2160847c4dcda96eab46ae0872bfd8d13e6dd",
+    "render.json": "850eb660b110d03205d1c3cee002e3170c93a46c240d7a85a01c4ed74ca358fb",
+    "screen-0-0.png": "1a5bc9d4064bc33f3fe37caf6e8fcb544a830f5f365267d43d5c1bd8a973bbc4",
+    "screen-0-1.png": "ceba6d52989659e9bb7bc820feb70daadf5ce7dcaed3d1f108f207dfeaec9407",
+    "screen-0-2.png": "4062d7f7f1dab9b9c4aee8f36f7303b4ef274195e633ca66414e1635eea3975b",
+    "screen-0-3.png": "84e18dbafffe8bf230310752cc748b25cb2c39931aa84180a8087f15fae0c9f3",
+    "screen-1-0.png": "7ecaaa4f8801b3220d00cbcc07699a9fe7bde79b99a7f009e4b2f91d81d62182",
+    "screen-1-1.png": "518e66025fa90da3b78b1778a8427b0c23011299598c4d68f03910aa35109bfc",
+    "screen-1-2.png": "af208cb2fee56ca14e052817945945c6738c1cf5c7cb679def9c7da990bada27",
+    "screen-1-3.png": "df973b58d31fc0264ad1a719733ab20f17a6cf086ff303c9400d0487beebd4d1",
+    "screen-2-0.png": "c5b99e0e597c0dbd0438d2b608ef9db7b06ef82f2089c03354509fe91a14b9a1",
+    "screen-2-1.png": "1e0577891bf16f18adf86556012ce13d000f464fce43212d4002d585bcebda85",
+    "screen-2-2.png": "d92277e72b37daab275906fa141341f15b9bfd8f687b8251933b7ea67068a795",
+    "screen-2-3.png": "0891727184270d2eee98b8ec56fda19e356bd908a7855227385e8b8975372350"
+  },
+  "level": "aqualia_village",
+  "schemaVersion": 2,
+  "source": {
+    "path": "art/source/world/hearthwild.ldtk",
+    "sha256": "6211d67cd102b0c475261727f1ec16f410e6ad44b9454557be010e4889a3b737"
+  },
+  "sourceDigest": "6211d67cd102b0c475261727f1ec16f410e6ad44b9454557be010e4889a3b737",
+  "status": "candidate"
+}

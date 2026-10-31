@@ -24,6 +24,33 @@ from .checks import check
 from .review import render, packet, draw_level, PreviewArt, dependencies, require_viewed
 
 
+def layout_approval(project, level):
+    """Operator guidance only: existing director records, exact source digest.
+
+    Never writes approvals or authorizes artwork, runtime activation or new geometry.
+    """
+    for path in sorted(
+        (REPO / "docs/team/comms/director/approvals").glob("world-*.md")
+    ):
+        text = path.read_text(encoding="utf-8")
+        if not text.startswith("---\n"):
+            continue
+        header = text.split("---", 2)[1]
+        metadata = dict(
+            line.split(":", 1) for line in header.splitlines() if ":" in line
+        )
+        metadata = {key.strip(): val.strip() for key, val in metadata.items()}
+        scope = [s.strip() for s in metadata.get("scope", "").strip("[]").split(",")]
+        if (
+            metadata.get("asset") == f"world:{level}"
+            and metadata.get("decision") == "director-approved"
+            and metadata.get("packetDigest") == sha(project)
+            and "layout" in scope
+        ):
+            return path.relative_to(REPO).as_posix()
+    return None
+
+
 def main(argv):
     parser = argparse.ArgumentParser(
         description="Worldforge: validated LDtk authoring and candidate review"
@@ -58,7 +85,7 @@ def main(argv):
                         "ldtkSchema": "1.5.3",
                         "planProblems": problems,
                         "commands": ["new", "apply", "render", "check", "packet"],
-                        "runtimeImporter": "C7; not implemented here",
+                        "runtimeImporter": "C7 candidate compiler/loader; new-game activation pending",
                     }
                 )
             )
@@ -150,6 +177,16 @@ def main(argv):
             print(packet(project, plan, level, work, output, report))
         else:
             report = check(project, plan, level)
+            approval = layout_approval(project, level)
+            if approval and not report["findings"]:
+                unfinished = (
+                    ", ".join(report.get("unfinishedLevels", []))
+                    or "remaining dressing passes"
+                )
+                print(
+                    f"NEXT: continue {unfinished}; current village layout has exact-digest approval at {approval}. No repeat layout export required; artwork and runtime activation remain separate."
+                )
+                return 0
             published = None
             for path in sorted(
                 (REPO / "art/review").glob(f"world-{region}-{level}-*/packet.json")

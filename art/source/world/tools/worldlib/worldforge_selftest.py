@@ -35,12 +35,172 @@ class Authoring(unittest.TestCase):
         # Isolate recognition from unrelated atlas rebuilds; stale dependency
         # rejection is tested separately by the packet receipt tests.
         with redirect_stdout(output), patch(
+            "worldlib.cli.layout_approval", return_value=None
+        ), patch(
             "worldlib.cli.dependencies", return_value=recorded["dependenciesDigest"]
         ):
             self.assertEqual(
                 main(["next", "--region", "aqualia", "--level", "aqualia_village"]), 0
             )
         self.assertIn("director review", output.getvalue())
+
+    def test_layout_approval_is_digest_and_scope_bound(self):
+        from worldlib.cli import layout_approval, main
+        from unittest.mock import patch
+        from contextlib import redirect_stdout
+        import io
+
+        self.assertIsNotNone(layout_approval(self.authored, "aqualia_village"))
+        modified = copy.deepcopy(self.authored)
+        modified["nextUid"] += 1
+        self.assertIsNone(layout_approval(modified, "aqualia_village"))
+        self.assertIsNone(layout_approval(self.authored, "aqualia_riverlands"))
+        output = io.StringIO()
+        with redirect_stdout(output):
+            self.assertEqual(
+                main(["next", "--region", "aqualia", "--level", "aqualia_village"]), 0
+            )
+        self.assertIn("continue aqualia_riverlands", output.getvalue())
+        self.assertIn("No repeat layout export", output.getvalue())
+
+    def test_semantics_follow_renumbered_contract_values(self):
+        from worldlib.semantics import TerrainSemantics
+        from unittest.mock import patch
+
+        document = copy.deepcopy(spec())
+        for layer in document["layers"]:
+            for v in layer.get("values", []):
+                v["value"] += 40
+        rules = TerrainSemantics(document)
+        data = {k: [0] * 4 for k in ("collision", "paths", "water", "elevation")}
+        data["water"][1] = rules.value("water", "fresh_shallow")
+        data["paths"][1] = rules.value("paths", "bridge")
+        with patch("worldlib.checks.TERRAIN", rules):
+            self.assertTrue(can_step(data, 2, 2, (0, 0), (1, 0), False))
+            data["paths"][1] = 0
+            self.assertFalse(can_step(data, 2, 2, (0, 0), (1, 0), False))
+            data["water"][1] = 0
+            data["elevation"][1] = rules.value("elevation", "e1")
+            data["collision"][1] = rules.ramp
+            self.assertTrue(can_step(data, 2, 2, (0, 0), (1, 0), False))
+            data["collision"][1] = rules.solid
+            self.assertFalse(can_step(data, 2, 2, (0, 0), (1, 0), False))
+
+    def test_named_example_reproduces_the_committed_first_pass(self):
+        from worldlib.golden import example
+        from unittest.mock import patch
+
+        with tempfile.TemporaryDirectory() as tmp, patch(
+            "worldlib.golden.WORLD", Path(tmp)
+        ):
+            path = example(copy.deepcopy(self.empty), self.plan)
+            self.assertEqual(
+                read(path), read(WORLD / "passes/aqualia/001-village.json")
+            )
+
+    def test_broken_pass_through_cli_apply_then_check_and_repair(self):
+        from worldlib.cli import main
+        from worldlib.semantics import TERRAIN
+        from unittest.mock import patch
+        from contextlib import redirect_stdout
+        import io
+
+        before = PROJECT.read_bytes()
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            project, edits = root / "hearthwild.ldtk", root / "passes/aqualia"
+            atomic_write(project, self.authored)
+            atomic_write(root / "regions/aqualia.plan.json", self.plan)
+            building = next(
+                e
+                for e in entities(self.authored["levels"][0])
+                if e["__identifier"] == "Building"
+            )
+            door = fields(building)["door"]
+            x, y = door["cx"], door["cy"]
+            original = layers(self.authored["levels"][0])["collision"]["intGridCsv"][
+                y * 90 + x
+            ]
+            with patch.multiple(
+                "worldlib.cli", PROJECT=project, WORLD=root, WORK=root / "work"
+            ), redirect_stdout(io.StringIO()):
+                for name, value, expected in [
+                    ("block-door", TERRAIN.solid, 1),
+                    ("repair-door", original, 0),
+                ]:
+                    path = edits / f"{name}.json"
+                    edit = self.edit(
+                        read(project),
+                        [
+                            {
+                                "op": "paint",
+                                "layer": "collision",
+                                "value": value,
+                                "shape": {"kind": "rect", "rect": [x, y, 1, 1]},
+                            }
+                        ],
+                    )
+                    edit["id"] = name
+                    atomic_write(path, edit)
+                    self.assertEqual(main(["apply", str(path)]), 0)
+                    self.assertEqual(
+                        main(
+                            [
+                                "check",
+                                "--region",
+                                "aqualia",
+                                "--level",
+                                "aqualia_village",
+                            ]
+                        ),
+                        expected,
+                    )
+                    report = read(root / "work/aqualia/aqualia_village/qa_report.json")
+                    if expected:
+                        self.assertIn("door", {f["code"] for f in report["findings"]})
+            self.assertEqual(sha(read(project)), sha(self.authored))
+        self.assertEqual(PROJECT.read_bytes(), before)
+
+    def test_compact_packet_references_map_without_copying_it(self):
+        from worldlib.review import dependencies
+        from unittest.mock import patch
+
+        dependency = dependencies()
+        report = check(self.authored, self.plan, "aqualia_village")
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            work = root / "work"
+            work.mkdir()
+            # Synthetic receipt fixture, not a claimed visual inspection.
+            for name in ("overview.png", "before-overview.png"):
+                (work / name).write_bytes(b"receipt fixture")
+                (work / (name + ".viewed")).write_text(sha(b"receipt fixture"))
+            atomic_write(
+                work / "render.json",
+                {
+                    "projectDigest": sha(self.authored),
+                    "planDigest": sha(self.plan),
+                    "dependenciesDigest": dependency,
+                    "images": {"overview.png": sha(b"receipt fixture")},
+                },
+            )
+            with patch("worldlib.review.REPO", root), patch(
+                "worldlib.review.dependencies", return_value=dependency
+            ):
+                target = root / "art/review/selftest"
+                packet(
+                    self.authored, self.plan, "aqualia_village", work, target, report
+                )
+            manifest = read(target / "packet.json")
+            self.assertEqual(manifest["schemaVersion"], 2)
+            self.assertEqual(
+                manifest["source"],
+                {"path": spec()["ldtk"]["project"], "sha256": sha(self.authored)},
+            )
+            self.assertEqual(manifest["sourceDigest"], sha(self.authored))
+            self.assertFalse((target / "hearthwild.ldtk").exists())
+            for name, digest in manifest["files"].items():
+                self.assertEqual(sha((target / name).read_bytes()), digest)
 
     @classmethod
     def setUpClass(cls):

@@ -294,7 +294,7 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 
 ### C6b · worldforge follow-ups (director review of C6)
 
-- status: open
+- status: done (engineering checks and world-authoring go; communicator owns ack typo correction)
 - goal:
   - **Go-world:** C5 (`approvals/proposal-001.md`) and the golden village layout (`approvals/world-aqualia--world-aqualia-aqualia_village-1.md`) are approved. Post `--to-blender--go-world`.
   - **Schema values:** read IntGrid values from `world_schema.json` instead of hard-coding them (`worldlib/checks.py:9-25`, `golden.py:76`; WLD-4.4).
@@ -303,7 +303,7 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
   - **Hook rule:** the blender inline-script rule now only fires for world paths (claude, directive 006).
   - **Ack link:** the communicator's C6 ack links to a lowercase `t1547` filename; it should be `T1547`.
 - done when: go-world posted; schema-driven checks; negative pass test in CI
-- evidence:
+- evidence: [go-world](../comms/codex/2026-10-31T1640--to-blender--go-world.md), [compact packet](../../../art/review/world-aqualia-aqualia_village-2/README.md), [authoring guide](../../engineering/worldforge.md), [session/checks](../comms/codex/session-2026-10-31.md). 21 worldforge tests, 18 integrated hook tests, 1 forge exporter test and `npm run check` pass. Ack casing correction relayed through [owner comms](../comms/codex/2026-10-31T1640--to-communicator--c6-ack-link.md), without editing another member's message.
 
 ### C8b · HUD fixes from the director's review
 
@@ -448,4 +448,4 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 - status: open (recurring)
 - goal: every queue has two or more open tickets; split big tickets; turn the brief's backlog (P1–P3) into tickets as each milestone lands; keep skills and docs truthful to the code (a skill must never describe a feature that doesn't exist).
 - done when: never closes; add a dated evidence line each week
-- evidence:
+- evidence: 2026-10-31: B2 is opened by [go-world](../comms/codex/2026-10-31T1640--to-blender--go-world.md); B6/B7 remain actionable. Communicator has M12/M13 review/kit work and M14–M16 follow-ups; [ack correction](../comms/codex/2026-10-31T1640--to-communicator--c6-ack-link.md) is relayed to its owner. No duplicate tickets added.
