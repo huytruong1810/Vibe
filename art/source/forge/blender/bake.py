@@ -65,12 +65,23 @@ except Exception:
 elev = math.radians(P.get("elevationDeg", 30))
 cam_data = bpy.data.cameras.new("ForgeCam")
 cam_data.type = "ORTHO"
-maxdim = max(W, H)
-cam_data.ortho_scale = maxdim / P.get("artPxPerUnit", 32)
 cam_data.sensor_fit = "AUTO"
-cam_data.shift_x = -(AX - W / 2) / maxdim
-cam_data.shift_y = (AY - H / 2) / maxdim
 cam_data.clip_start, cam_data.clip_end = 0.1, 100
+
+
+def set_canvas(size, anchor):
+    """Resolution and camera shift so the root lands on the anchor pixel of this canvas."""
+    global W, H, AX, AY
+    W, H = size
+    AX, AY = anchor
+    scene.render.resolution_x, scene.render.resolution_y = W, H
+    maxdim = max(W, H)
+    cam_data.ortho_scale = maxdim / P.get("artPxPerUnit", 32)
+    cam_data.shift_x = -(AX - W / 2) / maxdim
+    cam_data.shift_y = (AY - H / 2) / maxdim
+
+
+set_canvas(P["canvas"], P["anchor"])
 cam = bpy.data.objects.new("ForgeCam", cam_data)
 scene.collection.objects.link(cam)
 view_dir = Vector((0, math.cos(elev), -math.sin(elev)))
@@ -153,8 +164,11 @@ for o in roots:
     o.parent = pivot
 arm = next((o for o in scene.objects if o.type == "ARMATURE"), None)
 
-tracks = {"canvas": [W, H], "anchor": [AX, AY], "clips": {}}
+tracks = {"canvas": [W, H], "anchor": [AX, AY], "clips": {}, "canvases": {}}
 for clip in P["clips"]:
+    cv = clip.get("canvas") or {"size": P["canvas"], "anchor": P["anchor"]}
+    set_canvas(cv["size"], cv["anchor"])
+    tracks["canvases"][clip["name"]] = {"size": list(cv["size"]), "anchor": list(cv["anchor"])}
     if arm and clip.get("action"):
         arm.animation_data_create()
         arm.animation_data.action = bpy.data.actions[clip["action"]]

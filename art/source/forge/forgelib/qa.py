@@ -36,6 +36,13 @@ def _check(results: list, key: str, rule: str, ok: bool, detail: str, hard: bool
     results.append({"check": key, "rule": rule, "pass": bool(ok), "hard": hard, "detail": detail})
 
 
+def clip_canvases(bake_dir: Path, canvas: dict) -> dict:
+    """Canvas per clip from tracks.json (humans bake combat clips on human.combat); default canvas otherwise."""
+    tp = bake_dir / "tracks.json"
+    out = json.loads(tp.read_text()).get("canvases", {}) if tp.exists() else {}
+    return {"_default": {"size": canvas["size"], "anchor": canvas["anchor"]}, **out}
+
+
 def rest_clip_of(frames: dict) -> str:
     """The clip that stands for the asset at rest: idle once animate exists, else the rest bake."""
     return "idle" if "idle" in frames else "rest" if "rest" in frames else next(iter(frames))
@@ -66,20 +73,24 @@ def run(asset_id: str, pix_dir: Path, bake_dir: Path, ramps_map: dict, canvas: d
         _check(results, "clipMatrix", "render_spec clips", not bad and not extra,
                f"{len(plan)} clips as specified" if not bad and not extra else "; ".join(bad + [f"unexpected clips {extra}"] if extra else bad))
 
-    sizes = {im.shape[:2] for im in imgs.values()}
-    _check(results, "canvas", "spec canvases", sizes == {(H, W)}, f"frame sizes {sorted(sizes)}, expected {(H, W)}")
+    cvs = clip_canvases(bake_dir, canvas)
+    cv_of = lambda c: cvs.get(c, cvs["_default"])  # noqa: E731
+    bad_size = sorted({f"{c}: {im.shape[1]}x{im.shape[0]}" for (c, _, _), im in imgs.items()
+                       if tuple(im.shape[:2]) != (cv_of(c)["size"][1], cv_of(c)["size"][0])})
+    _check(results, "canvas", "spec canvases", not bad_size,
+           "every frame on its clip's spec canvas" if not bad_size else f"wrong sizes {bad_size[:6]}")
 
     m = rs["marginsArtPixels"]["min"]
     worst = min(min(np.nonzero(im[..., 3])[1].min(), np.nonzero(im[..., 3])[0].min(),
-                    W - 1 - np.nonzero(im[..., 3])[1].max(), H - 1 - np.nonzero(im[..., 3])[0].max())
+                    im.shape[1] - 1 - np.nonzero(im[..., 3])[1].max(), im.shape[0] - 1 - np.nonzero(im[..., 3])[0].max())
                 for im in imgs.values() if im[..., 3].any())
     _check(results, "margins", "contract margins", worst >= m, f"smallest transparent margin {worst}px (need >= {m})")
 
-    drift = max(abs(e["root"][0] - AX) + abs(e["root"][1] - AY)
-                for fs in tracks["clips"].values() for es in fs.values() for e in es)
+    drift = max(abs(e["root"][0] - cv_of(c)["anchor"][0]) + abs(e["root"][1] - cv_of(c)["anchor"][1])
+                for c, fs in tracks["clips"].items() for es in fs.values() for e in es)
     _check(results, "anchorDrift", "L2", drift <= q["anchorDriftMaxPx"] + 0.01, f"max root drift {drift:.3f}px")
 
-    tops = [AY - np.nonzero(im[..., 3])[0].min() for (c, _, i), im in imgs.items() if c == rest_clip and i == 0 and im[..., 3].any()]
+    tops = [cv_of(c)["anchor"][1] - np.nonzero(im[..., 3])[0].min() for (c, _, i), im in imgs.items() if c == rest_clip and i == 0 and im[..., 3].any()]
     tall = max(tops)
     _check(results, "height", "ART-6.1", abs(tall - height_target) <= q["heightToleranceArtPx"] + 1,
            f"tallest extent above anchor in {rest_clip} {tall}px (target {height_target} +/- {q['heightToleranceArtPx']}, outline adds 1)")
@@ -151,6 +162,8 @@ def run(asset_id: str, pix_dir: Path, bake_dir: Path, ramps_map: dict, canvas: d
                  "rampShares": _ramp_shares(south, ramps)}
     worst_pair = None
     for other in WORK.glob("*/qa_signature.json"):
+        if other.parent.name.startswith("selftest-"):
+            continue  # forge fixtures are not cast members
         o = json.loads(other.read_text())
         if o["asset"] == asset_id or o["kind"] != kind:
             continue
@@ -187,8 +200,10 @@ def contact_sheet(asset_id: str, pix_dir: Path, canvas: dict, report: dict, refe
     reference beside it. Per-clip motion is judged from the packet's clip GIFs."""
     scale = spec("render_spec")["qa"]["contactSheetScale"]
     frames = _frames(pix_dir)
-    W, H = canvas["size"]
-    AX, AY = canvas["anchor"]
+    cvs = clip_canvases(pix_dir.parent / "bake", canvas)
+    cv_of = lambda c: cvs.get(c, cvs["_default"])  # noqa: E731
+    W = max(cv_of(c)["size"][0] for c in frames)
+    H = max(cv_of(c)["size"][1] for c in frames)
     rest = rest_clip_of(frames)
     grass_p = REPO / "art/source/exports/environment/ground_grass.png"
     grass = Image.open(grass_p).convert("RGBA").resize((32, 32), Image.NEAREST) if grass_p.exists() else None
@@ -207,14 +222,19 @@ def contact_sheet(asset_id: str, pix_dir: Path, canvas: dict, report: dict, refe
     d.text((pad, 1), f"{asset_id}  status={report['status']}  colours={report['colors']}  clips={len(frames)}", fill=(220, 220, 220, 255))
 
     def tile(p: Path, bg: str) -> Image.Image:
+        """Frame on its own canvas, bottom-centred in the cell so anchors line up across canvases."""
+        clip = p.parent.name
+        cw, ch = cv_of(clip)["size"]
+        ax, ay = cv_of(clip)["anchor"]
         t = Image.new("RGBA", (W, H), (110, 114, 128, 255))
         if bg == "grass" and grass:
             for gy in range(0, H, 32):
                 for gx in range(0, W, 32):
                     t.alpha_composite(grass, (gx, gy))
-        t.alpha_composite(Image.open(p).convert("RGBA"))
+        ox, oy = (W - cw) // 2, H - ch
+        t.alpha_composite(Image.open(p).convert("RGBA"), (ox, oy))
         if bg == "grey":
-            ImageDraw.Draw(t).point([(AX - 2, AY), (AX + 1, AY), (AX, AY + 1)], fill=(255, 40, 40, 255))
+            ImageDraw.Draw(t).point([(ox + ax - 2, oy + ay), (ox + ax + 1, oy + ay), (ox + ax, oy + ay + 1)], fill=(255, 40, 40, 255))
         return t
 
     y = head
@@ -245,12 +265,12 @@ def clip_gifs(pix_dir: Path, canvas: dict, out_dir: Path) -> list[Path]:
     rs = spec("render_spec")
     scale = rs["qa"]["contactSheetScale"]
     frames = _frames(pix_dir)
-    W, H = canvas["size"]
     out_dir.mkdir(parents=True, exist_ok=True)
     made = []
     for c, fs in frames.items():
         facings = [f for f in ORDER if f in fs]
         n = max(len(v) for v in fs.values())
+        W, H = Image.open(next(iter(fs.values()))[0]).size
         fps = (rs["clips"].get(c) or {}).get("fps") or 12
         imgs = []
         for i in range(n):

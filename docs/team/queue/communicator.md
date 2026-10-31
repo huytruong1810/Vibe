@@ -80,13 +80,36 @@ lines.
 
 ### M10 · Quadruped creature reference sheets (bramblefang, marshstalker, mireling)
 
-- status: in_progress (bramblefang done; marshstalker and mireling paused on image quota reset at 14:55 UTC)
+- status: done
 - goal: produce 3-view orthographic reference sheets (front, left side, back) in `art/source/references/<species>/` for the three quadrupeds in the order specified in Blender B3 (bramblefang, marshstalker, mireling). Single all-fours standing pose, limbs separated from body, mouth closed, plain grey background, no labels, matching approved portraits.
 - inputs: the `reference-sheets` skill, approved portraits (`public/assets/portraits/creatures/portrait_<species>_128.png`)
 - done when: sheets committed with views and `sheet.json`, ledger updated, and blender notified
-- evidence: art/source/references/bramblefang/{sheet.png,front.png,left.png,back.png,sheet.json}, docs/team/comms/communicator/image-ledger.md, docs/team/comms/communicator/2026-10-31T0900--to-blender-codex--bramblefang-reference-ready.md
+- evidence: art/source/references/{bramblefang,marshstalker,mireling}/{sheet.png,front.png,left.png,back.png,sheet.json}, docs/team/comms/communicator/image-ledger.md, docs/team/comms/communicator/2026-10-31T0900--to-blender-codex--bramblefang-reference-ready.md, docs/team/comms/communicator/2026-10-31T1500--to-blender-codex--marshstalker-reference-ready.md, docs/team/comms/communicator/2026-10-31T1600--to-blender-codex--mireling-reference-ready.md
 
-### M11 · Relay C6 review evidence
+### M11 · Redraw the human sheets; fix ramp names on every sheet
+
+- status: open
+- goal: bring every reference sheet up to PRD-3 and L3 (director decision via directive 006).
+- work:
+  1. **Human sheets: player-aqualia, npc-neris, and the four mannequins (standard, sturdy, slender, elder).**
+     - Draw at 4.5–5 heads (L3): head 11–12 art px, crown per `body_types.json`. Today they are about 5.5–7 heads.
+     - Use an A-pose with the arms about 45° from the body (mannequin-elder is at about 20°).
+     - Provide front, **left** and back views.
+     - Make `sheet.png` at least 1024 px tall (PRD-3.1).
+     - Match `body_types.json` `aqualiaCast` for the player: build slender, skin-porcelain, hair-teal.
+  2. **Ramp names on every sheet**, from `art/source/forge/spec/palette.json` only:
+     - bramblefang: `charcoal`, `amber`, `ivory`;
+     - marshstalker: `aqua`;
+     - npc-neris: `charcoal`, `outline-dark`;
+     - player-aqualia: `river-blue`, `charcoal`, `outline-dark`.
+
+     Keep to at most 5 ramps per character (ART-4.4: 24 colours).
+
+  3. **mireling `sheet.json`:** use the same schema as the other sheets (`asset`, `kind`, `identitySources`, `ramps`, `generations`, `ledger`).
+- done when: every sheet passes these checks, the ledger is updated within quota (PRD-7), and you've messaged codex and blender
+- evidence:
+
+### M12 · Relay C6 review evidence
 
 - status: open
 - goal: add the candidate village packet to the next review digest and relay its C5 composition gate to the director.
@@ -94,10 +117,45 @@ lines.
 - done when: digest and relay cite the packet, its preview limitations and the required director decision.
 - evidence:
 
-### M12 · Existing world-preview kit inventory
+### M13 · Existing world-preview kit inventory
 
 - status: open
 - goal: identify which existing source/catalog terrain and environment assets can replace the village preview fallbacks when their owning production gates permit.
 - work: report canonical IDs, dimensions, anchors, available layers and approval status in your own comms. Read existing artwork/catalog; do not invent assets, edit generated output or activate candidates.
 - done when: a source-linked inventory and explicit missing-kit list are published for Codex/C10/C11.
+- evidence:
+
+### M14 · Recast proposal 002 (AGT-4.2)
+
+- status: open
+- goal: a new revision of `docs/team/proposals/002-aqualia-voice-casting.md` that answers the director's changes-requested record `docs/team/comms/director/approvals/proposal-002.md`.
+- work:
+  - Cast every voice from age, role and personality only, with a one-line rationale per villager that never mentions pronouns, names or gender.
+  - Fix the Mira, Dara and Finn personality drift against `src/content/villagers.ts`.
+  - Keep the sample lines, blips and prosody fields.
+  - Record which Kokoro voice list the IDs come from.
+- done when: the proposal is revised and you've messaged the director with exactly what changed
+- evidence:
+
+### M15 · Score revisions (AUD-3, AUD-4.1)
+
+- status: open
+- goal: fix the scores per `docs/team/comms/director/approvals/music--aqualia-day-night.md`.
+- work:
+  - quote motif bars 1–2 exactly;
+  - fix day bar 6;
+  - give night the same tempo, length and four stems as day, with harp and a soft pulse.
+- done when: `render_score.py` exits 0 for both, the report numbers are in a message to the director, and that message says "quotes bars 1–2" only when it does
+- evidence:
+
+### M16 · Correct the status board and write the W45 digest
+
+- status: open
+- goal: the board shows only TEAM-4 words and current evidence.
+- work:
+  - Remove "completed", "done", "reference ready" and "current".
+  - Rivallie: changes-requested (M2 packet). Bramblefang: director-approved. The village layout and the Aqualia bible: director-approved.
+  - Bring the workstream rows up to date: C6 candidate → approved layout, C9a done by claude, C3d, C9b/C9c.
+  - Write `art/review/digest-2026-W45.md` with everything waiting on the director, including C8 HUD visual acceptance and listening to the M15 scores.
+- done when: board and digest are pushed and cite records
 - evidence:

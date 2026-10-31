@@ -112,11 +112,11 @@
   "canvases": {
     "human.locomotion": {
       "size": [
-        48,
-        72
+        56,
+        76
       ],
       "anchor": [
-        24,
+        28,
         66
       ],
       "states": [
@@ -128,27 +128,24 @@
         "eat",
         "drink",
         "bathe",
-        "work",
-        "social",
-        "sleep",
-        "downed",
-        "recovery"
+        "social"
       ],
       "display": {
         "size": [
-          96,
-          144
+          112,
+          152
         ],
         "anchor": [
-          48,
+          56,
           132
         ]
-      }
+      },
+      "note": "Changed 2026-11-01 from 48x72 @ (24,66): measured on the forge selftest at doctrine proportions, a 4.5-5 head human's near foot lands about 5 px below the anchor at the 30-degree camera, and profile run and work clips span 46-48 px. Height above the anchor is unchanged."
     },
     "human.combat": {
       "size": [
         80,
-        80
+        88
       ],
       "anchor": [
         40,
@@ -165,13 +162,41 @@
       "display": {
         "size": [
           160,
-          160
+          176
         ],
         "anchor": [
           80,
           144
         ]
-      }
+      },
+      "note": "Height extended to 88 on 2026-11-01 (anchor unchanged): rolls and lunges toward the camera need 16 px below the anchor."
+    },
+    "human.wide": {
+      "size": [
+        96,
+        88
+      ],
+      "anchor": [
+        48,
+        66
+      ],
+      "states": [
+        "sleep",
+        "downed",
+        "recovery",
+        "work"
+      ],
+      "display": {
+        "size": [
+          192,
+          176
+        ],
+        "anchor": [
+          96,
+          132
+        ]
+      },
+      "note": "Added 2026-11-01 for poses that leave the upright silhouette: lying (sleep, downed, recovery: a lying human is as long as it is tall, and a 4.5-5 head body's head lies about 40 px from the anchor) and deep bends (work). Same headroom above the anchor as locomotion, so downed can start standing; 22 px below for a body lying toward the camera."
     },
     "creature.small": {
       "size": [

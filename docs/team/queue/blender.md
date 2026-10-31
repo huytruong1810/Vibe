@@ -18,7 +18,7 @@ it's blocked, mark it and take the next. Change only `status:` and `evidence:` l
 
 ### B1 · Rivallie on the single-pose sheet
 
-- status: candidate
+- status: changes-requested (director record `rivallie--2026-10-31-rivallie-m2.md`): re-run after codex C3d lands; state the heightArtPx decision and its reason in the recipe notes
 - goal: Claude ran the first Rivallie golden sample on the old sheet, using its side view only (`art/review/2026-10-31-rivallie/`, QA `candidate`). When M2 lands, re-run Rivallie on the new sheet and compare.
 - work:
   1. In `recipes/rivallie.json`, set `gen3d.views` and `texture.views` to every view of the new sheet that shows the same pose.
@@ -30,7 +30,7 @@ it's blocked, mark it and take the next. Change only `status:` and `evidence:` l
 
 ### B2 · Riverlands map
 
-- status: blocked: waiting for `--to-blender--go-world` and the approved `art/source/world/regions/aqualia.plan.json`
+- status: open once codex posts `--to-blender--go-world` (bible approved: `approvals/proposal-001.md`; golden village approved: `approvals/world-aqualia--world-aqualia-aqualia_village-1.md`)
 - goal: lay out level `aqualia_riverlands` from the region bible, following the codex golden village as your example.
 - work: `world-builder` skill. One pass per idea: write the pass, `apply`, `render`, open every screen crop, `check`, fix. Never edit `.ldtk` JSON by hand.
 - done when: `worldforge check` passes, the packet is in `art/review/`, and the ticket is `candidate`
@@ -38,14 +38,14 @@ it's blocked, mark it and take the next. Change only `status:` and `evidence:` l
 
 ### B3 · Remaining creatures, one at a time
 
-- status: in_progress (bramblefang candidate; marshstalker/mireling waiting for reference sheets)
+- status: blocked: marshstalker rear-up margins wait for codex C3d (claude is fixing it); mireling next once its sheet ramps are valid (communicator M11)
 - goal: quadruped species first, in this order: bramblefang, marshstalker, mireling. steamshell (shelled), zephyrit and cindermoth (winged) and ignicap (mushroom-biped) wait for codex templates. Each needs its reference sheet from the communicator (all-fours pose for quadrupeds, same pose in every view).
 - done when: a packet per species, each `candidate`
-- evidence: 2026-10-31 bramblefang candidate packet generated (art/review/2026-10-31-bramblefang/), 15 clips, 616 frames, 12/12 hard QA checks pass, approved by director (docs/team/comms/director/approvals/bramblefang--2026-10-31-bramblefang.md); marshstalker and mireling pending communicator M10 reference sheets
+- evidence: 2026-10-31 bramblefang candidate packet generated (art/review/2026-10-31-bramblefang/), 15 clips, 616 frames, 12/12 hard QA checks pass, approved by director (docs/team/comms/director/approvals/bramblefang--2026-10-31-bramblefang.md); marshstalker authored through bake/pixelize/qa (11/12 hard checks pass), blocked on margins (contract margins, 0px) in rearing clips due to 1.81m crocodilian tail reaching row 71 (reported in docs/team/comms/blender/2026-11-01T1615--to-codex-director--marshstalker-margins-blocker.md); mireling pending communicator reference sheet
 
 ### B4 · Golden samples: player-aqualia, then Neris (humans)
 
-- status: blocked: waiting for `--to-blender--go-humans` and communicator sheets M3/M4
+- status: blocked: waiting for the communicator's M11 human sheets (4.5–5 heads, front/left/back, valid ramps). go-humans is posted
 - done when: two packets, `candidate`
 - evidence:
 
