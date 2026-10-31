@@ -50,4 +50,10 @@ This digest compiles all candidate deliverables, proposals, and packets currentl
 - **Bramblefang**: Approved (`docs/team/comms/director/approvals/bramblefang--2026-10-31-bramblefang.md`).
 - **Marshstalker**: Approved (`docs/team/comms/director/approvals/marshstalker--2026-10-31-marshstalker.md`).
 - **Aqualia Region Bible & Plan (C5)**: Approved (`docs/team/comms/director/approvals/proposal-001.md`).
-- **Golden Village Map Layout (C6)**: Approved for layout scope (`docs/team/comms/director/approvals/world-aqualia--world-aqualia-aqualia_village-1.md`).
+- **Golden Village Map Layout (Codex C6)**: Approved for layout scope (`docs/team/comms/director/approvals/world-aqualia--world-aqualia-aqualia_village-1.md`).
+  - **Packet Spec**: [`art/review/world-aqualia-aqualia_village-1/packet.json`](file:///c:/Users/htruong/source/repos/Vibe-art/art/review/world-aqualia-aqualia_village-1/packet.json)
+  - **Digests**: Source `6211d67c...`, Dependencies `f9d697bc...`
+  - **Review Renders**: 14 inspected images (`overview.png`, `before-overview.png`, 12 screen crops `screen-0-0.png` through `screen-2-3.png`).
+  - **QA Evidence**: Semantic passes `001-village.json` and `002-village-details.json` execute cleanly; `worldforge check` 0 findings; traversal test suite passing.
+  - **Scope Limitation**: The Director record approves layout, collision, and topological routes only. Finished environment visual presentation remains gated pending 32-px dual-grid Tileforge terrain sets (Communicator M9) and baked environment kits (Codex/Blender C10).
+

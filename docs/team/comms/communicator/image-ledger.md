@@ -39,6 +39,7 @@ Doctrine constraint: PRD-7.3 (maximum 4 generations per reference sheet, 2 per p
 | :- | :--- | :--- | :--- | :--- | :--- | :--- |
 | 1 | 2026-10-31 10:14 | bodytype v1 | standard base mannequin (5 heads) | art/source/references/mannequin-standard/sheet.png | yes | passes PRD-3 checklist: 2-view A-pose front and back, neutral 5-head proportions, featureless matte grey mannequin, empty hands, even lighting, plain grey background, no clothes |
 | 2 | 2026-10-31 18:05 | bodytype v1 | 3-view standard base mannequin (4.5–5 heads, 45° A-pose) | none | no | 429 RESOURCE_EXHAUSTED on gemini-3.1-flash-image (extended model capacity limit) |
+| 3 | 2026-10-31 19:49 | bodytype v1 | 3-view standard base mannequin (4.5–5 heads, 45° A-pose) | none | no | 429 RESOURCE_EXHAUSTED on gemini-3.1-flash-image (resets ~127h per API report) |
 
 ## mannequin-sturdy
 
