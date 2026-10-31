@@ -281,7 +281,7 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 
 ### C7 · Authored world in the engine (WLD-M1…M4)
 
-- status: open
+- status: partial (candidate compiler/loader slice; runtime activation remains gated)
 - goal: a new game loads the authored LDtk map; procedural world generation is retired.
 - work:
   - a build-time importer from the schema into `ChunkStore`;
@@ -291,7 +291,7 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
   - update `docs/engineering/full-world-presentation.md` (its canal ban at :5, :85, :99
     is superseded by WLD-3.5 and L8).
 - done when: `npm run check` passes with tests and soak running on the authored map
-- evidence:
+- evidence: [candidate importer handoff](../comms/codex/2026-10-31T1614--to-all--c7-candidate-importer.md), [compiler/loader guide](../../engineering/worldforge.md#c7-candidate-compiler-and-domain-loader), [ADR 021](../../engineering/decisions.md#adr-021--candidate-authored-world-compilation). Runtime activation, Riverlands, forage placement and C5 approval remain outstanding; no authored-world soak is claimed.
 
 ### C8 · Existing P0s from your brief
 
