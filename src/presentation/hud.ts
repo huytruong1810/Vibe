@@ -16,9 +16,11 @@ import type {
   RenderSnapshot,
   TerrainView,
 } from '../domain/contracts';
-import { BIOME_COLORS, BIOME_NAMES, nearestSettlement } from '../domain/world';
+import { BIOME_COLORS, BIOME_NAMES, nearestSettlement, TileFlag } from '../domain/world';
 import type { InferenceUsage, ModelInfo } from '../adapters/inference';
 import type { Quality } from './renderer';
+import { GARMENT_SLOTS, type GearSlot } from '../domain/equipment';
+import { latestNpcEmotion } from './ui/dialogue';
 
 const percent = (n: number): number => Math.round(Math.max(0, Math.min(1, n)) * 100);
 const meter = (label: string, value: number, color = 'sage'): string =>
@@ -53,6 +55,10 @@ export class HudPresenter {
   private dialogSignature = '';
   private toastTimer: ReturnType<typeof setTimeout> | null = null;
   private mapBackground: HTMLCanvasElement | null = null;
+  private worldMapBackground: HTMLCanvasElement | null = null;
+  private worldMapPlayer: { x: number; y: number } | null = null;
+  private mapLayer: 'world' | 'local' = 'local';
+  private mapScene = '';
   private readonly handlers: HudHandlers;
   private appearance: AppearanceResolver | null = null;
   private viewState: HudViewState | null = null;
@@ -111,6 +117,14 @@ export class HudPresenter {
       if (file) void this.run(() => this.handlers.import(file), 'Journey imported.');
     });
     this.el('map-button').addEventListener('click', () => this.openMenu('map-dialog'));
+    this.el('map-world-layer').addEventListener('click', () => {
+      this.mapLayer = 'world';
+      this.drawMap();
+    });
+    this.el('map-local-layer').addEventListener('click', () => {
+      this.mapLayer = 'local';
+      this.drawMap();
+    });
     this.el('settings-button').addEventListener('click', () => this.openMenu('settings-dialog'));
     this.el('inventory-button').addEventListener('click', () =>
       this.intent({ type: 'toggle', overlay: 'inventory' }),
@@ -182,6 +196,32 @@ export class HudPresenter {
           this.command({ type: 'battle', npcId }),
         );
     });
+    this.el('dialogue-invite').addEventListener('click', () => {
+      const npcId = this.frame?.dialogue?.npcId;
+      if (npcId) void this.command({ type: 'invite', npcId });
+    });
+    this.el('inventory-panel').addEventListener('keydown', (event) => {
+      if (event.ctrlKey || event.metaKey || event.altKey || event.repeat) return;
+      const target = event.target as HTMLElement;
+      const carried = target.closest<HTMLElement>('[data-carry-slot]');
+      const worn = target.closest<HTMLElement>('[data-gear-slot]');
+      const key = event.key.toLowerCase();
+      let intent: UiIntent | null = null;
+      if (carried && key === 'e')
+        intent = { type: 'equip', slot: Number(carried.dataset.carrySlot) as 0 | 1 };
+      else if (carried && key === 'delete')
+        intent = { type: 'drop', slot: Number(carried.dataset.carrySlot) as 0 | 1 };
+      else if (worn && (key === 'u' || key === 'delete'))
+        intent = {
+          type: 'unequip',
+          slot: worn.dataset.gearSlot as GearSlot,
+          ...(key === 'delete' ? { drop: true } : {}),
+        };
+      if (!intent) return;
+      event.preventDefault();
+      event.stopPropagation();
+      this.intent(intent);
+    });
     this.el('audio-button').addEventListener(
       'click',
       () =>
@@ -234,7 +274,14 @@ export class HudPresenter {
         void this.command({ type: 'resume', token: 'menu' }).then(() =>
           this.command({ type: 'travel', settlementId: button.dataset.settlement! }),
         );
-      } else if (action === 'use' || action === 'drop')
+      } else if (action === 'equip') this.intent({ type: 'equip', slot: id as 0 | 1 });
+      else if (action === 'unequip')
+        this.intent({
+          type: 'unequip',
+          slot: button.dataset.slot as GearSlot,
+          ...(button.dataset.drop === 'true' ? { drop: true } : {}),
+        });
+      else if (action === 'use' || action === 'drop')
         void this.command({ type: action, slot: id as 0 | 1 });
       else if (action === 'gather') void this.command({ type: 'harvest' });
       else if (action === 'reaction')
@@ -363,7 +410,19 @@ export class HudPresenter {
       prototypeActors?: number;
     },
   ): void {
+    if (this.frame?.session !== frame.session) {
+      this.worldMapBackground = null;
+      this.worldMapPlayer = null;
+    }
     this.frame = frame;
+    if (frame.scene.id !== this.mapScene) {
+      this.mapScene = frame.scene.id;
+      this.mapLayer = 'local';
+    }
+    if (frame.scene.outside && this.mapBackground) {
+      this.worldMapBackground = this.mapBackground;
+      this.worldMapPlayer = { x: frame.player.x, y: frame.player.y };
+    }
     this.viewState = hudViewState(frame);
     this.el('interaction-prompt').textContent = this.viewState.prompt;
     this.setHtml(
@@ -377,9 +436,13 @@ export class HudPresenter {
       ? Math.floor(frame.player.y) * this.terrain.size + Math.floor(frame.player.x)
       : 0;
     const biome = this.terrain?.biome[i] ?? 0;
-    const name = distance < 25 ? settlement.name : BIOME_NAMES[biome];
+    const name = frame.scene.outside
+      ? distance < 25
+        ? settlement.name
+        : BIOME_NAMES[biome]
+      : (frame.scene.name ?? 'Interior');
     this.el('location-title').innerHTML =
-      `${escapeHtml(name)} <span>${distance < 25 ? ['among the mountain paths', 'and the riverlands', 'where the sea meets sky'][settlement.village] : 'beyond the village paths'}</span>`;
+      `${escapeHtml(name)} <span>${!frame.scene.outside ? 'inside the elemental wilds' : distance < 25 ? ['among the mountain paths', 'and the riverlands', 'where the sea meets sky'][settlement.village] : 'beyond the village paths'}</span>`;
     this.el('season-label').textContent =
       `${['Spring', 'Summer', 'Autumn', 'Winter'][frame.season]}, day ${frame.day + 1}`;
     this.el('clock').textContent = frame.calendar.toUpperCase();
@@ -415,7 +478,7 @@ export class HudPresenter {
       ? `${human.forcedRest ? 'Exhausted · resting until 50%' : 'Sleeping'} · world at ${frame.timeScale}×`
       : human.rest < 0.2
         ? 'You feel tired. Find a safe place to rest.'
-        : `Human · ${human.elements.join(' / ')} · ${human.nature.join(', ')}`;
+        : `Human · ${human.elements.join(' / ')} · ${human.heightMeters.toFixed(2)} m ? ${human.massKg.toFixed(1)} kg ? ${human.nature.join(', ')}`;
     this.el<HTMLButtonElement>('sleep-button').disabled = human.sleeping;
     this.el<HTMLButtonElement>('wake-button').disabled = !human.sleeping || human.forcedRest;
     this.el<HTMLButtonElement>('accelerate-button').disabled =
@@ -430,10 +493,20 @@ export class HudPresenter {
     const html = frame.inventory
       .map(
         (item, i) =>
-          `<div class="hand-slot ${item ? 'filled' : ''}"><span class="slot-number">0${i + 1} <span>${i === 0 ? 'LEFT' : 'RIGHT'} HAND</span></span><div class="slot-item">${item ? `<span class="item-pixel" style="--item:#${ITEMS[item.id].color.toString(16)}"></span><b>${escapeHtml(ITEMS[item.id].name)}</b>` : '<span class="empty-hand">+</span><span>Room for a discovery</span>'}</div>${item ? `<div class="slot-actions"><button data-action="use" data-id="${i}">Use</button><button data-action="drop" data-id="${i}">Drop</button></div>` : ''}</div>`,
+          `<div class="hand-slot ${item ? 'filled' : ''}" data-key="carry:${i}" data-carry-slot="${i}" tabindex="0" role="group" aria-label="Carried slot ${i + 1}: ${item ? escapeHtml(ITEMS[item.id].name) : 'empty'}"><span class="slot-number">0${i + 1} <span>${i === 0 ? 'LEFT' : 'RIGHT'} HAND</span></span><div class="slot-item">${item ? `<span class="item-pixel" style="--item:#${ITEMS[item.id].color.toString(16)}"></span><b>${escapeHtml(ITEMS[item.id].name)}</b>${item.charges !== undefined ? `<small>${item.charges} charges remaining</small>` : ''}` : '<span class="empty-hand">+</span><span>Room for a discovery</span>'}</div>${item ? `<div class="slot-actions"><button data-action="use" data-id="${i}">Use</button>${ITEMS[item.id].garment ? `<button data-action="equip" data-id="${i}" aria-label="Equip ${escapeHtml(ITEMS[item.id].name)}">Equip</button>` : ''}<button data-action="drop" data-id="${i}">Drop</button></div>` : ''}</div>`,
       )
       .join('');
     this.setHtml('inventory', html);
+    this.setHtml(
+      'equipment',
+      GARMENT_SLOTS.map((slot) => {
+        const item = frame.equipment.worn[slot];
+        const name = item ? ITEMS[item.id].name : 'Empty';
+        return `<div class="equipment-slot" data-key="gear:${slot}" data-gear-slot="${slot}" tabindex="0" role="group" aria-label="Worn ${slot}: ${escapeHtml(name)}"><span class="slot-number">${slot.toUpperCase()}</span><b>${escapeHtml(name)}</b>${item ? `<div class="slot-actions"><button data-key="unequip:${slot}" data-action="unequip" data-slot="${slot}" aria-label="Unequip ${escapeHtml(name)}">Unequip</button><button data-key="drop-worn:${slot}" data-action="unequip" data-slot="${slot}" data-drop="true" aria-label="Drop worn ${escapeHtml(name)}">Drop</button></div>` : ''}</div>`;
+      }).join(''),
+    );
+    this.el('ammunition-status').textContent =
+      `Ammunition: ${frame.equipment.ammo} · finite charges in carried slot 2`;
     this.el<HTMLButtonElement>('combine-button').disabled =
       !frame.inventory[0] || !frame.inventory[1] || frame.paused.length > 0;
   }
@@ -557,9 +630,9 @@ export class HudPresenter {
       html += `<h4 class="list-heading">NEARBY IN THE WILD</h4><div class="creature-list">${nearby.map((c) => `<button data-action="select" data-id="${c.id}"><span class="creature-dot" style="background:#${SPECIES.find((s) => s.id === c.species)!.color.toString(16)}"></span><span>${c.name}<small>${c.elements.join(' · ')}</small></span><span>↗</span></button>`).join('') || '<p class="muted">No creatures in sight. Wander a little farther.</p>'}</div>`;
     } else {
       const nearby = frame.npcs
-        .map((npc, index) => ({
+        .map((npc) => ({
           npc,
-          index,
+          index: NPC_PROFILES.findIndex((p) => p.id === npc.profileId),
           distance: Math.hypot(npc.x - frame.player.x, npc.y - frame.player.y),
         }))
         .sort((a, b) => a.distance - b.distance)
@@ -602,14 +675,28 @@ export class HudPresenter {
     this.el('conversation-name').textContent = profile.name;
     this.el('conversation-role').textContent =
       `${profile.role} · ${VILLAGES[profile.village]!.name}`;
-    const portrait = this.appearance?.portrait('npc', profile.id);
+    const emotion = latestNpcEmotion(conversation.lines);
+    const portrait = this.appearance?.portrait('npc', profile.id, emotion);
+    this.el('portrait').dataset.emotion = emotion;
+    this.el('portrait').dataset.portraitEmotion = portrait?.resolvedEmotion ?? 'neutral';
+    this.el('portrait').setAttribute(
+      'title',
+      portrait
+        ? `${profile.name} · ${portrait.resolvedEmotion ?? 'neutral'} portrait expression`
+        : `${profile.name} · portrait pending`,
+    );
+    this.el('conversation-emotion').textContent = emotion;
     this.setHtml(
       'portrait',
       portrait
-        ? `<img src="${escapeHtml(portrait.hud128)}" width="96" height="96" alt="${escapeHtml(profile.name)} portrait"/>`
-        : `<span aria-label="${escapeHtml(profile.name)} · portrait pending">${escapeHtml(profile.name[0]!)}</span>`,
+        ? `<img data-key="portrait:${escapeHtml(profile.id)}" src="${escapeHtml(portrait.hud128)}" width="96" height="96" alt="${escapeHtml(profile.name)} portrait"/>`
+        : `<span data-key="portrait-pending:${escapeHtml(profile.id)}" aria-label="${escapeHtml(profile.name)} · portrait pending">${escapeHtml(profile.name[0]!)}</span>`,
     );
-    const signature = `${conversation.lines.length}:${conversation.pendingJob}`;
+    const signature = JSON.stringify([
+      conversation.npcId,
+      conversation.lines,
+      conversation.pendingJob,
+    ]);
     if (signature !== this.dialogSignature) {
       this.el('conversation-lines').innerHTML =
         conversation.lines
@@ -628,9 +715,11 @@ export class HudPresenter {
     this.el<HTMLButtonElement>('send-dialogue').disabled = !!conversation.pendingJob;
     this.el<HTMLInputElement>('dialogue-input').disabled = !!conversation.pendingJob;
     this.el<HTMLButtonElement>('dialogue-battle').hidden = profile.partner === null;
+    this.el<HTMLButtonElement>('dialogue-invite').disabled = conversation.invitePending === true;
     const staged = this.el('staged-note');
-    staged.hidden = conversation.staged.length === 0;
-    staged.textContent = `${conversation.staged.length} offer(s) will be checked and carried out when you finish talking.`;
+    const offers = conversation.staged.length + (conversation.invitePending ? 1 : 0);
+    staged.hidden = offers === 0;
+    staged.textContent = `${offers} offer(s)${conversation.invitePending ? ', including your visit request,' : ''} will be checked and carried out when you finish talking.`;
   }
   private setHtml(id: string, html: string): void {
     const el = this.el(id);
@@ -655,6 +744,9 @@ export class HudPresenter {
         return true;
       }
     return false;
+  }
+  openInventory(): void {
+    if (this.el('inventory-panel').hidden) this.intent({ type: 'toggle', overlay: 'inventory' });
   }
   intent(intent: UiIntent): void {
     const command = commandForIntent(intent);
@@ -715,8 +807,85 @@ export class HudPresenter {
   private drawMap(): void {
     const canvas = this.el<HTMLCanvasElement>('world-map'),
       context = canvas.getContext('2d')!;
-    if (!this.mapBackground) return;
-    context.drawImage(this.mapBackground, 0, 0);
+    const frame = this.frame;
+    if (!frame) return;
+    const local = !frame.scene.outside && this.mapLayer === 'local';
+    this.el('map-title').textContent = local
+      ? (frame.scene.name ?? 'Interior')
+      : 'The elemental wilds';
+    this.el('map-local-layer').textContent = frame.scene.outside
+      ? 'Overworld'
+      : (frame.scene.name ?? 'Interior');
+    this.el('map-local-layer').setAttribute(
+      'aria-current',
+      local || frame.scene.outside ? 'location' : 'false',
+    );
+    this.el('map-world-layer').setAttribute('aria-current', !local ? 'location' : 'false');
+    this.el('map-scene-status').textContent = frame.scene.outside
+      ? 'World / Overworld'
+      : `World / ${frame.scene.name ?? 'Interior'}${local ? '' : ' · last observed outdoor context'}`;
+    this.el('settlement-list').hidden = !frame.scene.outside;
+    this.el('map-guidance').textContent = local
+      ? 'Current-scene terrain, walls, props and doorways. Explore on foot; the map does not move you.'
+      : !frame.scene.outside
+        ? this.worldMapBackground
+          ? 'World context from your last outdoor view. Return through a doorway to travel.'
+          : 'World terrain is unavailable until you return outdoors. Settlement markers show authored world locations.'
+        : 'Roads connect three villages and six outposts. At a settlement waystone, travel to any other settlement.';
+    canvas.setAttribute(
+      'aria-label',
+      local ? `Local map of ${frame.scene.name ?? 'Interior'}` : 'Map of villages and outposts',
+    );
+    context.fillStyle = '#233d36';
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    if (local && this.terrain) {
+      const margin = 32;
+      const scale = Math.min(
+        (canvas.width - margin * 2) / frame.scene.width,
+        (canvas.height - margin * 2) / frame.scene.height,
+      );
+      const originX = (canvas.width - frame.scene.width * scale) / 2;
+      const originY = (canvas.height - frame.scene.height * scale) / 2;
+      context.imageSmoothingEnabled = false;
+      for (let y = 0; y < frame.scene.height; y++)
+        for (let x = 0; x < frame.scene.width; x++) {
+          const at = y * this.terrain.size + x;
+          context.fillStyle =
+            this.terrain.flags[at]! & TileFlag.Solid
+              ? '#142b27'
+              : this.terrain.fluid[at]
+                ? '#689d9d'
+                : '#9caa86';
+          context.fillRect(originX + x * scale, originY + y * scale, scale, scale);
+        }
+      for (const prop of frame.scene.props) {
+        context.fillStyle = prop.layer === 'ground' ? '#adbb95' : '#53694f';
+        context.fillRect(originX + prop.x * scale - 3, originY + prop.y * scale - 3, 6, 6);
+      }
+      context.font = '12px system-ui';
+      context.textAlign = 'center';
+      for (const portal of frame.scene.portals) {
+        const x = originX + portal.x * scale,
+          y = originY + portal.y * scale;
+        context.fillStyle = portal.allowed ? '#a9dfc9' : '#c18e79';
+        context.fillRect(x - 5, y - 5, 10, 10);
+        context.fillStyle = '#f2ead3';
+        context.fillText(portal.name, x, y - 12);
+      }
+      context.fillStyle = '#fff1be';
+      context.beginPath();
+      context.arc(
+        originX + frame.player.x * scale,
+        originY + frame.player.y * scale,
+        5,
+        0,
+        Math.PI * 2,
+      );
+      context.fill();
+      return;
+    }
+    const background = frame.scene.outside ? this.mapBackground : this.worldMapBackground;
+    if (background) context.drawImage(background, 0, 0, canvas.width, canvas.height);
     context.font = '11px monospace';
     context.textAlign = 'center';
     for (const s of SETTLEMENTS) {
@@ -730,15 +899,16 @@ export class HudPresenter {
       context.fillStyle = '#f2e9c9';
       context.fillText(s.name, s.x, s.y - 10);
     }
-    if (this.frame) {
+    const player = frame.scene.outside ? frame.player : this.worldMapPlayer;
+    if (player) {
       context.fillStyle = '#fff1be';
       context.beginPath();
-      context.arc(this.frame.player.x, this.frame.player.y, 4, 0, Math.PI * 2);
+      context.arc(player.x, player.y, 4, 0, Math.PI * 2);
       context.fill();
       context.strokeStyle = '#355046';
       context.lineWidth = 2;
       context.stroke();
-      for (const marker of this.frame.markers) {
+      for (const marker of frame.markers) {
         context.strokeStyle = '#f0d49a';
         context.strokeRect(marker.x - 3, marker.y - 3, 6, 6);
       }

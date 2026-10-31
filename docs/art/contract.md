@@ -1,4 +1,14 @@
-# Hearthwild Aqualia art contract, version 1
+# Hearthwild Aqualia art contract, version 2
+
+The executable v2 additions are documented in [contract-v2.md](contract-v2.md).
+Version 1 remains an explicit compatibility adapter. The authoring medium is open:
+painted or generated masters, deterministic Pillow ingestion, and Blender pixel
+bakes are supported when their inputs, toolchain versions and dependencies are
+recorded. No particular authoring tool establishes artistic approval.
+
+Each texture page is capped at 2048×2048. Multiple independent pages are supported
+within the 512/256/128 MiB High/Balanced/Low resident texture budgets. A single
+2048² RGBA page costs 16 MiB; it is not a global single-page or 16 MiB limit.
 
 This is the shared production boundary for the HD Aqualia milestone. The reference
 viewport is 1920×1080; one logical terrain tile occupies 64 presentation pixels.
@@ -81,16 +91,17 @@ dash is player-only. Cardinal sets may use four authored directions. Eight-way
 sets require real diagonal artwork. Mirroring or rotating a cardinal pose does
 not count as a new authored diagonal.
 
-| State                               | Frames per facing | Facings | Playback     |
-| ----------------------------------- | ----------------: | ------- | ------------ |
-| idle                                |                 6 | 8       | loop         |
-| walk / run                          |            8 each | 8       | distance     |
-| attack / strike and element moves   |       12 per move | 8       | combat       |
-| guard / hit                         |            4 each | 8       | once         |
-| player dash                         |                 6 | 8       | once         |
-| eat / drink / bathe / work / social |            6 each | 4       | loop or once |
-| sleep                               |                 4 | 4       | loop         |
-| downed / recovery                   |            6 each | 4       | once         |
+| State                                       | Frames per facing | Facings | Playback     |
+| ------------------------------------------- | ----------------: | ------- | ------------ |
+| idle                                        |                 6 | 8       | loop         |
+| walk / run                                  |            8 each | 8       | distance     |
+| attack / strike and element moves           |       12 per move | 8       | combat       |
+| human sword_slash / spear_thrust / bow_shot |       12 per move | 8       | combat       |
+| guard / hit                                 |            4 each | 8       | once         |
+| player dash                                 |                 6 | 8       | once         |
+| eat / drink / bathe / work / social         |            6 each | 4       | loop or once |
+| sleep                                       |                 4 | 4       | loop         |
+| downed / recovery                           |            6 each | 4       | once         |
 
 Keep protected downed/recovery visibly distinct from wildlife carrion. Corpses do
 not sleep, recover HP or animate as living actors. Carrion food quantities remain

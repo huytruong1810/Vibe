@@ -7,38 +7,55 @@ import type { GameSave } from '../src/domain/save-schema';
  * Default requests are mocked; --live-model measures the installed local model. */
 const liveAt = process.argv.indexOf('--live-model');
 const liveModel = liveAt < 0 ? null : process.argv[liveAt + 1];
+const latencyOnly = process.argv.includes('--latency-only');
 if (liveAt >= 0 && !liveModel) throw Error('Pass an installed model after --live-model');
 const sampleCount = liveModel ? 600 : 180;
+console.error('Starting benchmark preview.');
 const server = spawn(
   process.execPath,
   ['node_modules/vite/bin/vite.js', '--host', '127.0.0.1', '--port', '4174', '--strictPort'],
   {
     windowsHide: true,
-    stdio: 'ignore',
+    stdio: ['ignore', 'pipe', 'pipe'],
     env: { ...process.env },
   },
 );
 const base = 'http://127.0.0.1:4174';
+let previewOutput = '';
+server.stdout?.on('data', (data: Buffer) => {
+  previewOutput = (previewOutput + data.toString()).slice(-2000);
+});
+server.stderr?.on('data', (data: Buffer) => {
+  previewOutput = (previewOutput + data.toString()).slice(-2000);
+});
 let browser: Awaited<ReturnType<typeof chromium.launch>> | null = null;
+let browserServer: Awaited<ReturnType<typeof chromium.launchServer>> | null = null;
 try {
   let ready = false;
-  for (let n = 0; n < 100; n++) {
+  const previewDeadline = performance.now() + 30_000;
+  while (performance.now() < previewDeadline) {
     try {
-      if ((await fetch(base)).ok) {
+      if ((await fetch(base, { signal: AbortSignal.timeout(5000) })).ok) {
         ready = true;
         break;
       }
     } catch {
       /* startup */
     }
-    if (server.exitCode !== null) throw Error('Benchmark preview could not start on port 4174');
+    if (server.exitCode !== null)
+      throw Error(`Benchmark preview could not start on port 4174: ${previewOutput}`);
     await new Promise((resolve) => setTimeout(resolve, 100));
   }
-  if (!ready) throw Error('Benchmark preview timed out');
-  browser = await chromium.launch({
+  if (!ready) throw Error(`Benchmark preview timed out: ${previewOutput}`);
+  console.error('Benchmark preview ready; launching owned browser.');
+  browserServer = await chromium.launchServer({
+    host: '127.0.0.1',
     channel: process.platform === 'win32' ? 'chrome' : undefined,
     args: process.env.CI ? ['--enable-unsafe-swiftshader'] : [],
   });
+  browser = await chromium.connect(browserServer.wsEndpoint());
+  if (server.exitCode !== null) throw Error(`Owned benchmark preview stopped: ${previewOutput}`);
+  console.error('Benchmark browser connected.');
   const page = await browser.newPage({ viewport: { width: 1920, height: 1080 } });
   const failures: string[] = [];
   page.on('pageerror', (e) => failures.push(e.message));
@@ -69,7 +86,7 @@ try {
                   content: JSON.stringify({
                     ready: true,
                     dialogue: 'Benchmark fallback',
-                    emotion: 'calm',
+                    emotion: 'neutral',
                     action: { type: 'NONE' },
                   }),
                 },
@@ -85,91 +102,80 @@ try {
   await page
     .locator('#setup-dialog')
     .waitFor({ state: 'hidden', timeout: liveModel ? 90000 : 30000 });
-  if (liveModel) {
-    // A fresh 08:00 world has no planner eligible in this short sample. Seed a
-    // validated later-morning fixture; ordinary ticks and scheduler budgets still execute.
-    const mature = await page.evaluate(() =>
-      (
-        window as unknown as { __hearthwild: { checkpoint(): Promise<GameSave> } }
-      ).__hearthwild.checkpoint(),
-    );
-    mature.elapsedSeconds = Math.max(650, mature.elapsedSeconds);
-    for (const npc of mature.npcs) npc.lastPlan = 0;
-    await page.getByRole('button', { name: 'Settings', exact: true }).click();
-    const beforeImportSession1 = await page.evaluate(
-      () =>
-        (
-          window as unknown as { __hearthwild: { frame(): { session: string } } }
-        ).__hearthwild.frame().session,
-    );
-    await page.locator('#import-input').setInputFiles({
-      name: 'mature-benchmark.json',
-      mimeType: 'application/json',
-      buffer: Buffer.from(JSON.stringify(mature)),
+  console.error('Benchmark world ready.');
+  if (latencyOnly) {
+    console.error('Measuring twenty pause/resume pairs.');
+    const latency = await page.evaluate(async () => {
+      const api = (
+        window as unknown as {
+          __hearthwild: {
+            command(command: unknown): Promise<{ ok: boolean; message: string }>;
+            frame(): { paused: string[] };
+          };
+        }
+      ).__hearthwild;
+      const samples: { type: string; receiptMs: number; publishedMs: number }[] = [];
+      for (let n = 0; n < 20; n++)
+        for (const type of ['pause', 'resume'] as const) {
+          const started = performance.now();
+          const result = await Promise.race([
+            api.command({ type, token: 'menu' }),
+            new Promise<never>((_, reject) =>
+              setTimeout(() => reject(Error('Command receipt timed out')), 5000),
+            ),
+          ]);
+          const receiptMs = performance.now() - started;
+          if (!result.ok) throw Error(result.message);
+          while (api.frame().paused.includes('menu') !== (type === 'pause')) {
+            if (performance.now() - started > 5000) throw Error('Pause publication timed out');
+            await new Promise<void>((resolve) => setTimeout(resolve, 0));
+          }
+          samples.push({ type, receiptMs, publishedMs: performance.now() - started });
+        }
+      return samples;
     });
-    await page.waitForFunction(
-      (previous) =>
-        (
-          window as unknown as { __hearthwild: { frame(): { session: string } } }
-        ).__hearthwild.frame().session !== previous,
-      beforeImportSession1,
-      { timeout: liveModel ? 90000 : 30000 },
-    );
-    await page.waitForFunction(() =>
-      document.querySelector('#toast')?.textContent?.includes('imported'),
-    );
-    await page.getByRole('button', { name: 'Close settings' }).click();
-  }
-  type Stats = {
-    fps: number;
-    renderMs: number;
-    hudMs: number;
-    loadMs: number;
-    textureBytes: number;
-    gpu: string;
-    assetError: string;
-    framebufferScale: number;
-    atlasBytes: number;
-    cacheBytes: number;
-  };
-  const samples: unknown[] = [];
-  for (const dense of [false, true]) {
-    if (dense) {
-      const save = await page.evaluate(() =>
+    const report = {
+      recordedAt: new Date().toISOString(),
+      browser: browser.version(),
+      inference: liveModel ?? 'mocked local requests',
+      samples: latency,
+      failures,
+      limitations:
+        'Main-thread command submission to worker receipt and confirmed render snapshot, polled through browser tasks. Excludes physical keyboard/device latency and GPU scanout. Separate from rendering throughput and real-model contention.',
+    };
+    await mkdir('artifacts', { recursive: true });
+    await writeFile('artifacts/input-latency.json', JSON.stringify(report, null, 2) + '\n');
+    console.log(JSON.stringify(report, null, 2));
+    if (failures.length) throw Error('Browser errors during latency benchmark');
+  } else {
+    if (liveModel) {
+      // A fresh 08:00 world has no planner eligible in this short sample. Seed a
+      // validated later-morning fixture; ordinary ticks and scheduler budgets still execute.
+      const mature = await page.evaluate(() =>
         (
           window as unknown as { __hearthwild: { checkpoint(): Promise<GameSave> } }
         ).__hearthwild.checkpoint(),
       );
-      const player = save.entities.records.find((e) => e.id === 0)!;
-      const groups = Array.from({ length: 8 }, (_, species) =>
-        save.entities.records.filter((e) => e.species === species),
-      );
-      const wildlife = Array.from(
-        { length: 128 },
-        (_, i) => groups[i % 8]![Math.floor(i / 8)]!,
-      ).filter(Boolean);
-      wildlife.forEach((e, i) => {
-        e.x = player.x + ((i % 12) - 6) * 0.3;
-        e.y = player.y + (Math.floor(i / 12) - 5) * 0.3;
-      });
+      mature.elapsedSeconds = Math.max(650, mature.elapsedSeconds);
+      for (const npc of mature.npcs) npc.lastPlan = 0;
       await page.getByRole('button', { name: 'Settings', exact: true }).click();
-      const beforeImportSession2 = await page.evaluate(
+      const beforeImportSession1 = await page.evaluate(
         () =>
           (
             window as unknown as { __hearthwild: { frame(): { session: string } } }
           ).__hearthwild.frame().session,
       );
       await page.locator('#import-input').setInputFiles({
-        name: 'benchmark.json',
+        name: 'mature-benchmark.json',
         mimeType: 'application/json',
-        buffer: Buffer.from(JSON.stringify(save)),
+        buffer: Buffer.from(JSON.stringify(mature)),
       });
       await page.waitForFunction(
         (previous) =>
           (
             window as unknown as { __hearthwild: { frame(): { session: string } } }
           ).__hearthwild.frame().session !== previous,
-        beforeImportSession2,
+        beforeImportSession1,
         { timeout: liveModel ? 90000 : 30000 },
       );
       await page.waitForFunction(() =>
@@ -177,132 +183,211 @@ try {
       );
       await page.getByRole('button', { name: 'Close settings' }).click();
     }
-    for (const quality of ['high', 'medium', 'low']) {
-      await page.getByRole('button', { name: 'Settings', exact: true }).click();
-      await page.getByLabel('Visual quality').selectOption(quality);
-      await page.getByRole('button', { name: 'Close settings' }).click();
-      await page.waitForTimeout(1500);
-      const sampleStart = performance.now();
-      const metrics = await page.evaluate(async (count) => {
-        const api = (
-          window as unknown as {
-            __hearthwild: {
-              stats(): Stats;
-              frame(): {
-                performance: { population: number; detailed: number; stepMs: number };
-                npcs: unknown[];
-              };
-            };
-          }
-        ).__hearthwild;
-        const durations: number[] = [],
-          cpu: number[] = [],
-          hud: number[] = [],
-          simulation: number[] = [],
-          ui: number[] = [];
-        const observer = new PerformanceObserver((list) => {
-          for (const e of list.getEntries()) ui.push(e.duration);
+    type Stats = {
+      fps: number;
+      renderMs: number;
+      hudMs: number;
+      loadMs: number;
+      textureBytes: number;
+      gpu: string;
+      assetError: string;
+      framebufferScale: number;
+      atlasBytes: number;
+      cacheBytes: number;
+    };
+    const samples: unknown[] = [];
+    for (const dense of [false, true]) {
+      if (dense) {
+        const save = await page.evaluate(() =>
+          (
+            window as unknown as { __hearthwild: { checkpoint(): Promise<GameSave> } }
+          ).__hearthwild.checkpoint(),
+        );
+        const player = save.entities.records.find((e) => e.id === 0)!;
+        const groups = Array.from({ length: 8 }, (_, species) =>
+          save.entities.records.filter((e) => e.species === species),
+        );
+        const wildlife = Array.from(
+          { length: 128 },
+          (_, i) => groups[i % 8]![Math.floor(i / 8)]!,
+        ).filter(Boolean);
+        wildlife.forEach((e, i) => {
+          e.scene = player.scene;
+          e.x = player.x + ((i % 12) - 6) * 0.3;
+          e.y = player.y + (Math.floor(i / 12) - 5) * 0.3;
         });
-        try {
-          observer.observe({ type: 'longtask', buffered: false });
-        } catch {
-          /* unsupported */
-        }
-        let previous = performance.now();
-        for (let n = 0; n < count; n++) {
-          await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
-          const now = performance.now();
-          durations.push(now - previous);
-          previous = now;
-          cpu.push(api.stats().renderMs);
-          hud.push(api.stats().hudMs);
-          simulation.push(api.frame().performance.stepMs);
-        }
-        observer.disconnect();
-        const frame = api.frame();
-        return {
-          durations,
-          cpu,
-          hud,
-          simulation,
-          longTasks: { count: ui.length, totalMs: ui.reduce((a, b) => a + b, 0) },
-          stats: api.stats(),
-          villagers: frame.npcs.length,
-          creatures: frame.performance.population,
-          detailed: frame.performance.detailed,
-        };
-      }, sampleCount);
-      const sampleEnd = performance.now();
-      const { durations, cpu, hud, simulation, ...context } = metrics;
-      const summary = (a: number[]) => {
-        a.sort((x, y) => x - y);
-        return {
-          median: a[Math.floor(a.length / 2)] ?? 0,
-          p95: a[Math.floor(a.length * 0.95)] ?? 0,
-          max: a.at(-1) ?? 0,
-        };
-      };
-      samples.push({
-        dense,
-        quality,
-        sampleStart,
-        sampleEnd,
-        ...context,
-        frameIntervalMs: summary(durations),
-        renderCpuMs: summary(cpu),
-        hudUpdateMs: summary(hud),
-        simulationMs: summary(simulation),
-      });
-      if (metrics.stats.assetError) throw Error(metrics.stats.assetError);
-    }
-  }
-  await mkdir('artifacts', { recursive: true });
-  await page.screenshot({ path: 'artifacts/hd-aqualia-prototype.png' });
-  const report = {
-    recordedAt: new Date().toISOString(),
-    browser: browser.version(),
-    viewport: { width: 1920, height: 1080 },
-    inference: liveModel
-      ? `live local Ollama ${liveModel}; natural budgeted background planning`
-      : 'mocked local requests; no scripted live Ollama inference',
-    sampleCount,
-    requests: requests.map((r) => ({ start: r.start, end: r.end })),
-    samples: samples.map((sample) => {
-      const data = sample as { sampleStart: number; sampleEnd: number };
-      return {
-        ...data,
-        inferenceOverlapMs: (() => {
-          const spans = requests
-            .map(
-              (r) =>
-                [
-                  Math.max(data.sampleStart, r.start),
-                  Math.min(data.sampleEnd, r.end ?? data.sampleEnd),
-                ] as const,
-            )
-            .filter(([a, b]) => b > a)
-            .sort((a, b) => a[0] - b[0]);
-          let total = 0,
-            end = -Infinity;
-          for (const [a, b] of spans) {
-            total += Math.max(0, b - Math.max(a, end));
-            end = Math.max(end, b);
+        await page.getByRole('button', { name: 'Settings', exact: true }).click();
+        const beforeImportSession2 = await page.evaluate(
+          () =>
+            (
+              window as unknown as { __hearthwild: { frame(): { session: string } } }
+            ).__hearthwild.frame().session,
+        );
+        await page.locator('#import-input').setInputFiles({
+          name: 'benchmark.json',
+          mimeType: 'application/json',
+          buffer: Buffer.from(JSON.stringify(save)),
+        });
+        await page.waitForFunction(
+          (previous) =>
+            (
+              window as unknown as { __hearthwild: { frame(): { session: string } } }
+            ).__hearthwild.frame().session !== previous,
+          beforeImportSession2,
+          { timeout: liveModel ? 90000 : 30000 },
+        );
+        await page.waitForFunction(() =>
+          document.querySelector('#toast')?.textContent?.includes('imported'),
+        );
+        await page.getByRole('button', { name: 'Close settings' }).click();
+      }
+      for (const quality of ['high', 'medium', 'low']) {
+        await page.getByRole('button', { name: 'Settings', exact: true }).click();
+        await page.getByLabel('Visual quality').selectOption(quality);
+        await page.getByRole('button', { name: 'Close settings' }).click();
+        await page.waitForTimeout(1500);
+        const sampleStart = performance.now();
+        const metrics = await page.evaluate(async (count) => {
+          const api = (
+            window as unknown as {
+              __hearthwild: {
+                stats(): Stats;
+                frame(): {
+                  performance: { population: number; detailed: number; stepMs: number };
+                  npcs: unknown[];
+                };
+              };
+            }
+          ).__hearthwild;
+          const durations: number[] = [],
+            cpu: number[] = [],
+            hud: number[] = [],
+            simulation: number[] = [],
+            ui: number[] = [];
+          const observer = new PerformanceObserver((list) => {
+            for (const e of list.getEntries()) ui.push(e.duration);
+          });
+          try {
+            observer.observe({ type: 'longtask', buffered: false });
+          } catch {
+            /* unsupported */
           }
-          return total;
-        })(),
-      };
-    }),
-    failures,
-    limitations:
-      'Fixed rAF sample count per scene/tier, warmed prototype assets; CPU render preparation is not GPU draw timing. Tracked texture estimates exclude driver/geometry/fonts. HD production residency and sustained minimum hardware performance require requalification with approved source art.',
-  };
-  await writeFile(
-    liveModel ? 'artifacts/render-benchmark-live.json' : 'artifacts/render-benchmark.json',
-    JSON.stringify(report, null, 2) + '\n',
-  );
-  console.log(JSON.stringify(report, null, 2));
-  if (failures.length) throw Error('Browser errors during render benchmark');
+          let previous = performance.now();
+          for (let n = 0; n < count; n++) {
+            await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+            const now = performance.now();
+            durations.push(now - previous);
+            previous = now;
+            cpu.push(api.stats().renderMs);
+            hud.push(api.stats().hudMs);
+            simulation.push(api.frame().performance.stepMs);
+          }
+          observer.disconnect();
+          const frame = api.frame();
+          return {
+            durations,
+            cpu,
+            hud,
+            simulation,
+            longTasks: { count: ui.length, totalMs: ui.reduce((a, b) => a + b, 0) },
+            stats: api.stats(),
+            villagers: frame.npcs.length,
+            creatures: frame.performance.population,
+            detailed: frame.performance.detailed,
+          };
+        }, sampleCount);
+        const sampleEnd = performance.now();
+        const { durations, cpu, hud, simulation, ...context } = metrics;
+        const summary = (a: number[]) => {
+          a.sort((x, y) => x - y);
+          return {
+            median: a[Math.floor(a.length / 2)] ?? 0,
+            p95: a[Math.floor(a.length * 0.95)] ?? 0,
+            max: a.at(-1) ?? 0,
+          };
+        };
+        samples.push({
+          dense,
+          quality,
+          sampleStart,
+          sampleEnd,
+          ...context,
+          frameIntervalMs: summary(durations),
+          renderCpuMs: summary(cpu),
+          hudUpdateMs: summary(hud),
+          simulationMs: summary(simulation),
+        });
+        if (metrics.stats.assetError) throw Error(metrics.stats.assetError);
+      }
+    }
+    await mkdir('artifacts', { recursive: true });
+    await page.screenshot({ path: 'artifacts/hd-aqualia-prototype.png' });
+    const report = {
+      recordedAt: new Date().toISOString(),
+      browser: browser.version(),
+      viewport: { width: 1920, height: 1080 },
+      inference: liveModel
+        ? `live local Ollama ${liveModel}; natural budgeted background planning`
+        : 'mocked local requests; no scripted live Ollama inference',
+      sampleCount,
+      requests: requests.map((r) => ({ start: r.start, end: r.end })),
+      samples: samples.map((sample) => {
+        const data = sample as { sampleStart: number; sampleEnd: number };
+        return {
+          ...data,
+          inferenceOverlapMs: (() => {
+            const spans = requests
+              .map(
+                (r) =>
+                  [
+                    Math.max(data.sampleStart, r.start),
+                    Math.min(data.sampleEnd, r.end ?? data.sampleEnd),
+                  ] as const,
+              )
+              .filter(([a, b]) => b > a)
+              .sort((a, b) => a[0] - b[0]);
+            let total = 0,
+              end = -Infinity;
+            for (const [a, b] of spans) {
+              total += Math.max(0, b - Math.max(a, end));
+              end = Math.max(end, b);
+            }
+            return total;
+          })(),
+        };
+      }),
+      failures,
+      limitations:
+        'Fixed rAF sample count per scene/tier, warmed prototype assets; CPU render preparation is not GPU draw timing. Tracked texture estimates exclude driver/geometry/fonts. HD production residency and sustained minimum hardware performance require requalification with approved source art.',
+    };
+    await writeFile(
+      liveModel ? 'artifacts/render-benchmark-live.json' : 'artifacts/render-benchmark.json',
+      JSON.stringify(report, null, 2) + '\n',
+    );
+    console.log(JSON.stringify(report, null, 2));
+    if (failures.length) throw Error('Browser errors during render benchmark');
+  }
+} catch (error) {
+  console.error('Benchmark failed before cleanup:', error);
+  throw error;
 } finally {
-  await browser?.close();
   server.kill();
+  let deadline: ReturnType<typeof setTimeout> | undefined;
+  try {
+    if (browserServer) {
+      // Own the spawned browser explicitly: stalled graceful cleanup must not
+      // leave a benchmark browser or preview running indefinitely.
+      await Promise.race([
+        (async () => {
+          await browser?.close();
+          await browserServer!.close();
+        })(),
+        new Promise<never>((_, reject) => {
+          deadline = setTimeout(() => reject(Error('Browser cleanup exceeded 10 seconds')), 10_000);
+        }),
+      ]).catch(async () => browserServer!.kill());
+    }
+  } finally {
+    if (deadline) clearTimeout(deadline);
+  }
 }

@@ -1,7 +1,13 @@
 import { readFile, readdir } from 'node:fs/promises';
 import { resolve, join } from 'node:path';
 import sharp from 'sharp';
-import { AssetCatalogSchema } from '../src/presentation/assets/catalog';
+import { createHash } from 'node:crypto';
+import { AssetCatalogSchema, ArtApprovalLedgerSchema } from '../src/presentation/assets/catalog';
+import {
+  SourceManifestSchema,
+  sourceSubjectDependencies,
+  canonicalSourceJson,
+} from '../src/presentation/assets/source';
 import { assetCoverage } from '../src/presentation/assets/coverage';
 import { ITEMS, NPC_PROFILES, SPECIES, VILLAGES } from '../src/content/definitions';
 
@@ -37,6 +43,62 @@ type Atlas = {
 const catalog = AssetCatalogSchema.parse(
   JSON.parse(await readFile('public/assets/generated/catalog.json', 'utf8')),
 );
+const source = SourceManifestSchema.parse(
+  JSON.parse(await readFile('art/source/manifest.json', 'utf8')),
+);
+const ledger = ArtApprovalLedgerSchema.parse(
+  JSON.parse(await readFile('docs/art/approvals.json', 'utf8')),
+);
+if (catalog.schemaVersion === 2) {
+  if (canonicalSourceJson(catalog.approvals ?? []) !== canonicalSourceJson(ledger.records))
+    throw new Error('Runtime art approvals differ from engineering ledger; rebuild assets');
+  const expectedCount =
+    source.appearances.length +
+    (source.schemaVersion === 2
+      ? (source.layerSets?.length ?? 0) +
+        (source.recipes?.length ?? 0) +
+        (source.portraitSets?.length ?? 0) +
+        (source.effects?.length ?? 0) +
+        (source.furniture?.length ?? 0) +
+        (source.sceneAssets?.length ?? 0)
+      : 0);
+  if ((catalog.sourceDigests?.length ?? 0) !== expectedCount)
+    throw new Error('Runtime source digest index is incomplete; rebuild assets');
+  const hashes = new Map<string, string>();
+  for (const d of catalog.sourceDigests ?? []) {
+    const dependencies = sourceSubjectDependencies(source, d.subjectKind, d.subjectId),
+      files: { path: string; sha256: string }[] = [];
+    for (const path of dependencies.paths) {
+      if (!hashes.has(path))
+        hashes.set(
+          path,
+          createHash('sha256')
+            .update(await readFile(resolve('art/source', path)))
+            .digest('hex'),
+        );
+      if (source.schemaVersion === 2)
+        for (const p of source.authoringProvenance ?? [])
+          for (const input of p.inputs)
+            if (input.path === path && input.sha256 !== hashes.get(path))
+              throw new Error(`Stale authoring dependency hash: ${p.id}/${path}`);
+      files.push({ path, sha256: hashes.get(path)! });
+    }
+    const digest = createHash('sha256')
+      .update(
+        canonicalSourceJson({
+          contractVersion: 2,
+          subject: { kind: d.subjectKind, id: d.subjectId },
+          metadata: dependencies.metadata,
+          files,
+        }),
+      )
+      .digest('hex');
+    if (digest !== d.digest)
+      throw new Error(
+        `Stale source digest: ${d.subjectKind}/${d.subjectId}; rebuild and review changed sources`,
+      );
+  }
+}
 const atlasByUrl = new Map<string, Atlas>();
 for (const page of catalog.pages)
   for (const variant of page.variants) {
@@ -130,11 +192,38 @@ for (const portrait of catalog.portraits)
     if (meta.width !== size || meta.height !== size || !meta.hasAlpha)
       throw new Error(`Wrong portrait tier: ${portrait[key]}`);
   }
+for (const set of catalog.portraitSets ?? [])
+  for (const [emotion, pair] of Object.entries(set.expressions)) {
+    if (!pair) continue;
+    for (const [tier, size] of [
+      ['hud96', 96],
+      ['hud128', 128],
+    ] as const) {
+      const path = await file(pair[tier]),
+        meta = await sharp(path).metadata(),
+        stats = await sharp(path).stats();
+      if (
+        meta.width !== size ||
+        meta.height !== size ||
+        !meta.hasAlpha ||
+        stats.channels[3]?.min !== 0 ||
+        !(stats.channels[3]?.max ?? 0)
+      )
+        throw new Error(
+          `Portrait expression needs a transparent ${size}×${size} cutout: ${set.id}/${emotion}/${tier}`,
+        );
+    }
+  }
 const coverage = assetCoverage(catalog);
 console.log(
-  `Asset validation passed: ${catalog.frames.length} frames; ${catalog.pages.length} full pages; decoded ${(coverage.fullTextureBytes / 1048576).toFixed(2)} MiB full / ${(coverage.halfTextureBytes / 1048576).toFixed(2)} MiB half. HD coverage ${coverage.hdAppearances}/${coverage.requiredAppearances}; ${coverage.gaps.length} gaps.`,
+  `Asset validation passed: ${catalog.frames.length} frames; ${catalog.pages.length} full pages; decoded ${(coverage.fullTextureBytes / 1048576).toFixed(2)} MiB full / ${(coverage.halfTextureBytes / 1048576).toFixed(2)} MiB half. Aqualia declared HD ${coverage.declaredHdAppearances}/${coverage.requiredAppearances}, complete animation ${coverage.completeAnimationAppearances}, approved ${coverage.approvedAppearances}; full world ${coverage.fullWorld.approvedAppearances}/${coverage.fullWorld.requiredAppearances} approved; ${coverage.gaps.length} slice gaps.`,
 );
 if (process.argv.includes('--require-hd') && coverage.status !== 'hd-ready')
   throw new Error(
     `HD slice incomplete: ${coverage.gaps.length} requirements, missing identities ${coverage.missingIdentities.join(', ')}. See docs/art/coverage.json.`,
   );
+if (
+  process.argv.includes('--require-full-world') &&
+  (coverage.fullWorld.approvedAppearances !== 41 || coverage.fullWorld.approvedPortraitSets !== 41)
+)
+  throw new Error('Full-world art production incomplete; see coverage.fullWorld');

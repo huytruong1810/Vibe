@@ -135,7 +135,7 @@ describe('HD projection, poses and animation boundaries', () => {
     q.configure('low');
     expect(q.textureBudget).toBe(128 * 1024 ** 2);
   });
-  it('keeps snapshots and rendering frequency out of authoritative save-v3 outcomes', () => {
+  it('keeps snapshots and rendering frequency out of authoritative save-v4 outcomes', () => {
     const a = new SimulationHost(42, 1, 40, 'same'),
       b = new SimulationHost(42, 1, 40, 'same');
     for (let i = 0; i < 90; i++) {
@@ -148,7 +148,7 @@ describe('HD projection, poses and animation boundaries', () => {
     expect(frame.actors.find((e) => e.id === 0)?.appearanceId).toBe('aqualia');
     expect(frame.actors.find((e) => e.appearanceKind === 'npc')?.appearanceId).toMatch(/^npc:/);
     expect(frame.actors.every((e) => Number.isSafeInteger(e.id))).toBe(true);
-    expect(a.snapshot().version).toBe(3);
+    expect(a.snapshot().version).toBe(4);
     expect(a.snapshot()).not.toHaveProperty('cues');
     a.dispose();
     b.dispose();

@@ -7,7 +7,7 @@ import {
   type SpeciesId,
 } from '../content/definitions';
 import { BinaryHeap } from './core';
-import { TwoSlotInventory } from './inventory';
+import { TwoSlotInventory, type ItemInstance } from './inventory';
 import { ChunkStore, Fluid, SurfaceRules, TileFlag } from './world';
 import { CONFIG, distanceSquared, type WorldPosition } from './values';
 
@@ -15,6 +15,8 @@ export interface GroundDrop extends WorldPosition {
   readonly id: number;
   readonly item: ItemId;
   readonly originSpecies?: readonly SpeciesId[];
+  readonly instance?: string;
+  readonly charges?: number;
 }
 export interface Carrion extends WorldPosition {
   readonly sourceId: number;
@@ -47,6 +49,7 @@ export class ResourceStore {
       fungi: 8,
       water: 12,
       fiber: 4,
+      'arrow-bundle': 2,
     },
   }));
   private serial = 0;
@@ -69,7 +72,18 @@ export class ResourceStore {
       item,
       x: position.x,
       y: position.y,
+      scene: position.scene ?? 0,
       ...(originSpecies?.length ? { originSpecies: [...originSpecies] } : {}),
+    });
+    return true;
+  }
+  dropItem(item: ItemInstance, position: WorldPosition): boolean {
+    if (!this.drop(item.id, position, item.originSpecies)) return false;
+    const previous = this.drops.pop()!;
+    this.drops.push({
+      ...previous,
+      instance: item.instance,
+      ...(item.charges !== undefined ? { charges: item.charges } : {}),
     });
     return true;
   }
@@ -112,6 +126,16 @@ export class ResourceStore {
         if (source && source.score < 48 ** 2 && this.consume(source.index, now))
           supply.stock[item] = (supply.stock[item] ?? 0) + 1;
       }
+    // Settlement fletching uses the same flint + reeds recipe as player crafting.
+    // No stock replenishes merely because an equipped archer ran out.
+    for (const supply of this.supplies) {
+      if ((supply.stock['arrow-bundle'] ?? 0) >= 2 || (supply.stock.reeds ?? 0) < 1) continue;
+      const source = locator.find(supply, ['flint'], -101, now, 1)[0];
+      if (source && source.score < 48 ** 2 && this.consume(source.index, now)) {
+        supply.stock.reeds!--;
+        supply.stock['arrow-bundle'] = (supply.stock['arrow-bundle'] ?? 0) + 1;
+      }
+    }
     for (let i = this.carrion.length - 1; i >= 0; i--)
       if (this.carrion[i]!.expiresAt <= now || this.carrion[i]!.remaining <= 0)
         this.carrion.splice(i, 1);
@@ -201,7 +225,16 @@ export class HarvestSystem {
     const ground = this.store.drops.findIndex((d) => distanceSquared(d, position) <= 3.2);
     if (ground >= 0) {
       const drop = this.store.drops[ground]!;
-      if (!inventory.add(drop.item, drop.originSpecies))
+      if (
+        !(drop.instance
+          ? inventory.insert({
+              id: drop.item,
+              instance: drop.instance,
+              ...(drop.originSpecies ? { originSpecies: drop.originSpecies } : {}),
+              ...(drop.charges !== undefined ? { charges: drop.charges } : {}),
+            })
+          : inventory.add(drop.item, drop.originSpecies))
+      )
         return { ok: false, message: 'Both hands are full. Drop, use, or combine an item first.' };
       this.store.drops.splice(ground, 1);
       return { ok: true, message: `Picked up ${ITEMS[drop.item].name}.` };

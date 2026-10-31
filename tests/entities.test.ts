@@ -467,15 +467,15 @@ describe('nature, social attacks and predation', () => {
   });
 });
 
-describe('save v3 compatibility', () => {
+describe('save v4 compatibility', () => {
   const legacy = JSON.parse(
     readFileSync(new URL('./fixtures/v2-save.json', import.meta.url), 'utf8'),
   ) as Record<string, unknown>;
   it('migrates a real v2 checkpoint retaining progress, bonds, terrain and memories', () => {
     const migrated = migrateSave(legacy),
       p = migrated.entities.records.find((e) => e.id === 0)!;
-    expect(migrated.version).toBe(3);
-    expect(migrated.contentVersion).toBe(2);
+    expect(migrated.version).toBe(4);
+    expect(migrated.contentVersion).toBe(3);
     expect(migrated.generatorVersion).toBe(1);
     expect(p.hp).toBe(73);
     expect(p.experience).toBe(25);

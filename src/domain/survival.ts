@@ -34,6 +34,7 @@ export class SurvivalController {
     private readonly locator: ResourceLocator,
     private readonly navigation: NavigationService,
     private readonly homeFor: (id: number) => WorldPosition | undefined = () => undefined,
+    private readonly movementFor: (id: number) => number = () => 1,
   ) {}
 
   decide(i: number, now: number, scheduledRest = false): boolean {
@@ -205,7 +206,11 @@ export class SurvivalController {
       distance = Math.hypot(goal.x - s.x[i]!, goal.y - s.y[i]!);
     const step = Math.min(
       distance,
-      dt * s.definition(i).speed * WellbeingPolicy.speed(s.wellbeing(i)),
+      dt *
+        s.definition(i).speed *
+        WellbeingPolicy.speed(s.wellbeing(i)) *
+        s.movementFactor(i) *
+        this.movementFor(id),
     );
     const p = moveOnTerrain(
       this.world,
@@ -251,9 +256,18 @@ export class SurvivalController {
       for (const id of map.keys()) if (this.s.slot(id) === undefined) map.delete(id);
   }
   clear(): void {
+    for (const id of this.tasks.keys()) this.cancel(id);
     this.tasks.clear();
     this.paths.clear();
     this.failedUntil.clear();
+  }
+  cancel(id: number): void {
+    const task = this.tasks.get(id);
+    if (task?.source !== undefined) this.locator.release(task.source, id);
+    this.tasks.delete(id);
+    this.paths.delete(id);
+    this.failedUntil.delete(id);
+    this.navigation.cancel(`survival:${id}`);
   }
 }
 
@@ -272,13 +286,15 @@ export class EcologyService {
     private readonly world: ChunkStore,
     private readonly resources: ResourceStore,
     private readonly random: SeededRandom,
+    private readonly resourcesFor?: (scene: number) => ResourceStore,
+    private readonly onBirth?: (slot: number) => void,
   ) {}
   resolveDeaths(now: number): void {
     for (let i = 0; i < this.s.count; i++)
       if (this.s.alive[i] && this.s.hp[i]! <= 0 && !this.s.protected(i) && !this.s.downed[i]) {
         const id = this.s.id(i),
           species = this.s.species[i]!;
-        this.resources.addCarrion({
+        (this.resourcesFor?.(this.s.scene[i]!) ?? this.resources).addCarrion({
           sourceId: id,
           species: this.s.definition(i).id,
           ...this.s.position(i),
@@ -332,7 +348,7 @@ export class EcologyService {
       let neighbors = 0,
         prey = 0;
       for (let i = 0; i < this.s.count; i++)
-        if (this.s.alive[i] && distanceSquared(this.s.position(i), { x, y }) < 16 ** 2) {
+        if (this.s.alive[i] && distanceSquared(this.s.position(i), { x, y, scene: 0 }) < 16 ** 2) {
           if (this.s.species[i] === species) neighbors++;
           if (
             !this.s.protected(i) &&
@@ -346,7 +362,8 @@ export class EcologyService {
         (definition.prey?.length ? prey < 2 : !this.foodNearby(x, y, definition.diet))
       )
         continue;
-      this.s.spawn(species, x + 0.5, y + 0.5);
+      const newborn = this.s.spawn(species, x + 0.5, y + 0.5);
+      this.onBirth?.(newborn);
       this.replacements.splice(vacancy, 1);
       this.births++;
       break;

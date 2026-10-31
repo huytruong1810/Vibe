@@ -8,10 +8,31 @@ import type { Carrion, SettlementSupply } from './resources';
 import type { Building, WorldDelta } from './world';
 import type { DebugPath, NpcId, WorldPosition } from './values';
 import type { WeatherState } from './core';
+import type { DialogueEmotion } from './dialogue';
+import type { EquipmentView } from './equipment';
+import type { ScenePresentation, ProjectilePresentation } from './presentation-contract';
 
 const npc = z.enum(NPC_PROFILES.map((n) => n.id) as [NpcId, ...NpcId[]]);
 const slot = z.union([z.literal(0), z.literal(1)]);
 export const CommandPayloadSchema = z.discriminatedUnion('type', [
+  z.object({ type: z.literal('furniture'), propId: z.string().min(1).max(200) }).strict(),
+  z.object({ type: z.literal('equip'), slot }).strict(),
+  z
+    .object({
+      type: z.literal('unequip'),
+      slot: z.enum(['head', 'torso', 'hands', 'legs', 'feet', 'back']),
+      drop: z.boolean().optional(),
+    })
+    .strict(),
+  z.object({ type: z.literal('guard'), active: z.boolean() }).strict(),
+  z
+    .object({
+      type: z.literal('enterPortal'),
+      portalId: z.string().min(1).max(200),
+      expectedScene: z.string().min(1).max(200),
+    })
+    .strict(),
+  z.object({ type: z.literal('invite'), npcId: npc }).strict(),
   z.object({ type: z.literal('sleep') }).strict(),
   z.object({ type: z.literal('wake') }).strict(),
   z
@@ -89,11 +110,18 @@ export interface CommandResult {
 export interface DialogueState {
   readonly npcId: NpcId;
   readonly revision: number;
-  readonly lines: { speaker: 'player' | 'npc' | 'system'; text: string }[];
+  readonly lines: {
+    speaker: 'player' | 'npc' | 'system';
+    text: string;
+    emotion?: DialogueEmotion;
+  }[];
+  invitePending?: boolean;
   readonly staged: AgentAction[];
   pendingJob: string | null;
 }
 export interface CreatureView {
+  readonly heightMeters: number;
+  readonly massKg: number;
   readonly kind: 'human' | 'nonhuman';
   readonly rest: number;
   readonly sleeping: boolean;
@@ -133,6 +161,9 @@ export interface PerformanceView {
   readonly inferencePending: number;
 }
 export interface RenderSnapshot {
+  readonly equipment: EquipmentView;
+  readonly scene: ScenePresentation;
+  readonly projectiles: readonly ProjectilePresentation[];
   readonly actors: readonly import('./presentation-contract').ActorPresentation[];
   readonly cues: readonly import('./presentation-contract').PresentationCue[];
   readonly ids: Uint32Array;
@@ -176,6 +207,8 @@ export interface RenderSnapshot {
   readonly performance: PerformanceView;
 }
 export interface HumanView {
+  readonly heightMeters: number;
+  readonly massKg: number;
   readonly id: number;
   readonly hp: number;
   readonly maxHp: number;
@@ -210,7 +243,7 @@ export type ToWorker =
   | { type: 'dispose' };
 export type FromWorker =
   | { type: 'ready'; terrain: TerrainView; frame: RenderSnapshot }
-  | { type: 'frame'; frame: RenderSnapshot }
+  | { type: 'frame'; frame: RenderSnapshot; terrain?: TerrainView }
   | { type: 'result'; result: CommandResult }
   | { type: 'checkpoint'; requestId: string; snapshot: unknown }
   | { type: 'restored'; requestId: string; terrain: TerrainView; frame: RenderSnapshot }

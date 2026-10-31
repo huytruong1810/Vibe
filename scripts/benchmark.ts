@@ -44,7 +44,8 @@ const saveStarted = performance.now(),
 // A second scenario measures the actual detailed-tier cap instead of assuming a dispersed world exercises it.
 let placed = 0;
 for (let i = 0; i < host.creatures.count && placed < 128; i++)
-  if (host.creatures.owner[i] === -1) {
+  if (host.creatures.alive[i] && host.creatures.owner[i] === -1) {
+    host.creatures.scene[i] = host.entities.scene[host.entities.require(0)]!;
     host.creatures.x[i] = host.player.x + ((placed % 12) - 6) * 0.4;
     host.creatures.y[i] = host.player.y + (Math.floor(placed / 12) - 5) * 0.4;
     host.creatures.targetX[i] = host.creatures.x[i]!;
@@ -59,6 +60,36 @@ for (let i = 0; i < Math.min(samples, 1500); i++) {
   host.step();
   dense.push(performance.now() - before);
   denseMaximumDetailed = Math.max(denseMaximumDetailed, host.tiers.detailed.length);
+}
+// Controlled tactical load: 64 independent pairs keep 128 living actors fighting.
+// Refill between ticks so this measures sustained work rather than a brief mass defeat.
+const fighters = [...host.entities.slots()]
+  .filter((i) => !host.entities.protected(i))
+  .slice(0, 128);
+for (let n = 0; n < fighters.length; n++) {
+  const i = fighters[n]!;
+  host.entities.scene[i] = 0;
+  host.entities.x[i] = host.player.x + (n % 12) * 0.1;
+  host.entities.y[i] = host.player.y + Math.floor(n / 12) * 0.1;
+}
+const activeCombat: number[] = [];
+for (let n = 0; n < Math.min(samples, 1500); n++) {
+  for (let index = 0; index < fighters.length; index++) {
+    const i = fighters[index]!,
+      target = fighters[index % 2 ? index - 1 : index + 1];
+    host.entities.hp[i] = host.entities.maxHp(i);
+    host.entities.stamina[i] = 100;
+    host.entities.food[i] = host.entities.water[i] = host.entities.rest[i] = 1;
+    if (target !== undefined)
+      host.combat.pursuits.set(host.entities.id(i), {
+        target: host.entities.id(target),
+        cause: 'territory',
+        until: host.tick + 90,
+      });
+  }
+  const before = performance.now();
+  host.step();
+  activeCombat.push(performance.now() - before);
 }
 const report = {
   recordedAt: new Date().toISOString(),
@@ -81,6 +112,10 @@ const report = {
   maximumPaths,
   denseSimulation: summarize(dense),
   denseMaximumDetailed,
+  activeCombat: summarize(activeCombat),
+  activeCombatActors: fighters.length,
+  activeCombatFixture:
+    '64 paired territorial encounters; needs, stamina and HP refill between ordinary ticks; no rendering or inference.',
   checkpointMs: +saveMs.toFixed(2),
   checkpointBytes: Buffer.byteLength(serialized),
   nodeRssMiB: +(process.memoryUsage().rss / 2 ** 20).toFixed(1),

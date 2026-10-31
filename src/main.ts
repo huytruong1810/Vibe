@@ -6,6 +6,7 @@ import type { CommandPayload, RenderSnapshot } from './domain/contracts';
 import { AudioDirector } from './presentation/audio';
 import { HudPresenter } from './presentation/hud';
 import { WorldRenderer } from './presentation/renderer';
+import { nearestInteraction, PortalEntryController } from './presentation/ui/interaction';
 
 /** Composition root: the only module that knows all browser adapters. */
 export class GameBootstrap {
@@ -20,12 +21,19 @@ export class GameBootstrap {
   private frame: RenderSnapshot | null = null;
   private readonly keys = new Set<string>();
   private movementSignature = '';
+  private guardActive = false;
+  private readonly portals: PortalEntryController;
   private lastEventId = '';
   private connectedModel = '';
   private connectedEndpoint = '';
   private hudMs = 0;
   private readonly autoSave: ReturnType<typeof setInterval>;
   constructor(root: HTMLElement) {
+    this.portals = new PortalEntryController(
+      () => this.frame,
+      (ids) => this.renderer.prepareScene(ids),
+      (command) => this.bridge.send(command),
+    );
     this.hud = new HudPresenter(root, {
       send: (command) => this.bridge.send(command),
       enter: (options) => this.enter(options),
@@ -59,8 +67,9 @@ export class GameBootstrap {
       if (terrain) {
         this.renderer.setTerrain(terrain);
         this.hud.setTerrain(terrain);
-        this.inference?.reset(frame.session);
+        if (this.frame?.session !== frame.session) this.inference?.reset(frame.session);
         this.keys.clear();
+        this.updateGuard();
         this.movementSignature = '';
         if ((document.getElementById('debug') as HTMLInputElement).checked)
           void this.bridge
@@ -71,6 +80,7 @@ export class GameBootstrap {
       this.renderer.apply(frame);
       const hudStarted = performance.now();
       this.hud.update(frame, this.inference?.usage ?? null, this.renderer.stats);
+      this.updateGuard();
       this.hudMs = performance.now() - hudStarted;
       this.inference?.setBackgroundDeferred(frame.timeScale > 1);
       for (const job of frame.jobs) this.inference?.enqueue(job);
@@ -190,14 +200,17 @@ export class GameBootstrap {
       this.keys.add(key);
       this.updateMovement();
       if (key === 'e') {
-        const frame = this.frame;
-        const nearest = [...frame.npcs].sort(
-          (a, b) =>
-            Math.hypot(a.x - frame.player.x, a.y - frame.player.y) -
-            Math.hypot(b.x - frame.player.x, b.y - frame.player.y),
-        )[0];
-        if (nearest && Math.hypot(nearest.x - frame.player.x, nearest.y - frame.player.y) <= 3)
-          this.send({ type: 'interact', npcId: nearest.profileId });
+        const interaction = nearestInteraction(this.frame);
+        if (interaction.kind === 'portal') {
+          if (interaction.portal.allowed) void this.enterPortal(interaction.portal.id);
+          else
+            this.hud.notify(
+              interaction.portal.reason ?? 'That doorway is not currently accessible.',
+            );
+        } else if (interaction.kind === 'furniture')
+          void this.useFurniture(interaction.prop.id, interaction.prop.interaction === 'equip');
+        else if (interaction.kind === 'npc')
+          this.send({ type: 'interact', npcId: interaction.npc.profileId });
         else this.send({ type: 'harvest' });
       }
       if (key === 'r') this.send({ type: 'harvest' });
@@ -207,6 +220,7 @@ export class GameBootstrap {
       if (key === 'j' || key === 'k')
         this.send({ type: 'attack', kind: key === 'j' ? 'strike' : 'element' });
       if (key === ' ') this.send({ type: 'dash' });
+      if (key === 'g') this.updateGuard();
       if (key === 'm') this.hud.openMenu('map-dialog');
       if (key === 'i') this.hud.intent({ type: 'toggle', overlay: 'inventory' });
       if (key === 'f') this.hud.intent({ type: 'toggle', overlay: 'inspection' });
@@ -216,14 +230,17 @@ export class GameBootstrap {
     window.addEventListener('keyup', (event) => {
       this.keys.delete(event.key.toLowerCase());
       this.updateMovement();
+      this.updateGuard();
     });
     window.addEventListener('blur', () => {
       this.keys.clear();
       this.updateMovement();
+      this.updateGuard();
     });
     document.addEventListener('visibilitychange', () => {
       this.keys.clear();
       this.updateMovement();
+      this.updateGuard();
       if (this.frame) this.send({ type: document.hidden ? 'pause' : 'resume', token: 'hidden' });
     });
     this.hud.gameElement.addEventListener('click', (event) => {
@@ -271,9 +288,45 @@ export class GameBootstrap {
     this.movementSignature = signature;
     void this.bridge.send({ type: 'move', x, y }).catch((error) => this.hud.notify(String(error)));
   }
+  private updateGuard(): void {
+    if (!this.frame) return;
+    const active = this.keys.has('g') && !this.hud.inputBlocked && this.frame.paused.length === 0;
+    if (active === this.guardActive) return;
+    this.guardActive = active;
+    this.send({ type: 'guard', active });
+  }
+  private async enterPortal(portalId: string): Promise<void> {
+    try {
+      const result = await this.portals.enter(portalId);
+      if (result === 'stale')
+        this.hud.notify(
+          'The doorway changed while preparing the scene. Approach it and try again.',
+        );
+      else if (result === 'unavailable')
+        this.hud.notify('That doorway is not currently accessible.');
+    } catch (error) {
+      this.hud.notify(
+        `Could not prepare the destination: ${error instanceof Error ? error.message : String(error)}`,
+      );
+    }
+  }
+  private async useFurniture(propId: string, openEquipment: boolean): Promise<void> {
+    const before = this.frame;
+    if (!before) return;
+    const result = await this.hud.command({ type: 'furniture', propId });
+    if (
+      result.ok &&
+      openEquipment &&
+      this.frame?.session === before.session &&
+      this.frame.scene.id === before.scene.id &&
+      !this.hud.inputBlocked
+    )
+      this.hud.openInventory();
+  }
   dispose(): void {
     clearInterval(this.autoSave);
     this.inference?.dispose();
+    this.portals.dispose();
     this.bridge.dispose();
     this.audio.dispose();
     this.hud.dispose();
