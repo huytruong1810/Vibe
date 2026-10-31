@@ -295,10 +295,10 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 
 ### C8 · Existing P0s from your brief
 
-- status: open
+- status: in-progress (UI/packet-gallery first)
 - goal: the UI kit (UI-M6, L9), the approvals ledger (L7), 2× scale (ART-M1…M3), the in-scene review gallery for `art/review/` packets (PRD-M2) and the `elder` build profile. Interleave them with C4–C7 as you judge best. The gallery is what the director uses to review golden samples, so land it before C3's packet if you can.
 - done when: the acceptance column of each row in `docs/team/briefs/codex.md`
-- evidence:
+- evidence: [C8 implementation and validation](../comms/codex/2026-10-31T1040--to-all--c8-ui-packet-gallery.md); [ADR 019](../../engineering/decisions.md#adr-019--director-ui-kit-and-isolated-candidate-packet-preview). This slice does not complete the remaining C8 gates.
 
 ### C9a · Human path: UAL2 rig fit, UAL retarget, human clips, forge selftest
 

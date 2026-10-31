@@ -11,13 +11,38 @@
   padding: clamp(16px, 3vw, 40px);
   background: var(--gallery-bg);
   color: var(--gallery-ink);
-  font:
-    15px/1.5 system-ui,
-    -apple-system,
-    sans-serif;
+  font: 38px/42px Silver;
 }
 .art-gallery * {
   box-sizing: border-box;
+}
+.packet-review {
+  background: var(--ui-panel);
+  color: var(--ui-text);
+  border: 16px solid transparent;
+  border-image: url('/assets/generated/ui/frame_standard.png') 16 fill / 16px / 0 repeat;
+  margin-bottom: 24px;
+  padding: 8px;
+}
+.packet-review form,
+.packet-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.packet-review canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+}
+.packet-review pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font: 38px/42px Silver;
+}
+.packet-review :is(input, select) {
+  max-width: 100%;
 }
 .art-gallery h1,
 .art-gallery h2,
@@ -26,9 +51,7 @@
   margin: 0 0 12px;
 }
 .art-gallery h1 {
-  font:
-    500 clamp(24px, 3.5vw, 38px)/1.2 Georgia,
-    serif;
+  font: 38px/42px Silver;
 }
 .art-gallery h2 {
   font-size: 18px;
@@ -440,7 +463,7 @@
 .art-item-id {
   font-size: 11px;
   color: #8da498;
-  font-family: monospace;
+  font-family: Silver;
 }
 
 /* Flora Lifecycle Table */

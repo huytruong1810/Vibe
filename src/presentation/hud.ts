@@ -21,6 +21,7 @@ import type { InferenceUsage, ModelInfo } from '../adapters/inference';
 import type { Quality } from './renderer';
 import { GARMENT_SLOTS, type GearSlot } from '../domain/equipment';
 import { latestNpcEmotion } from './ui/dialogue';
+import { updateExploration } from './ui/exploration';
 
 const percent = (n: number): number => Math.round(Math.max(0, Math.min(1, n)) * 100);
 const meter = (label: string, value: number, color = 'sage'): string =>
@@ -90,6 +91,13 @@ export class HudPresenter {
     return document.getElementById(id) as T;
   }
   private bind(): void {
+    for (const button of document.querySelectorAll<HTMLButtonElement>('[data-combat]'))
+      button.addEventListener('click', () => {
+        const kind = button.dataset.combat;
+        if (kind === 'dash') void this.command({ type: 'dash' });
+        else if (kind === 'strike' || kind === 'element')
+          void this.command({ type: 'attack', kind });
+      });
     this.el('setup-form').addEventListener('submit', (event) => {
       event.preventDefault();
       void this.enter(false);
@@ -484,6 +492,7 @@ export class HudPresenter {
     this.el<HTMLButtonElement>('accelerate-button').disabled =
       !human.sleeping || frame.paused.length > 0;
     this.renderInventory();
+    updateExploration(frame, this.appearance, this.mapBackground);
     this.renderPanel();
     this.renderConversation();
     if (this.el<HTMLDialogElement>('map-dialog').open) this.drawMap();
@@ -862,7 +871,7 @@ export class HudPresenter {
         context.fillStyle = prop.layer === 'ground' ? '#adbb95' : '#53694f';
         context.fillRect(originX + prop.x * scale - 3, originY + prop.y * scale - 3, 6, 6);
       }
-      context.font = '12px system-ui';
+      context.font = '38px Silver';
       context.textAlign = 'center';
       for (const portal of frame.scene.portals) {
         const x = originX + portal.x * scale,
@@ -886,7 +895,7 @@ export class HudPresenter {
     }
     const background = frame.scene.outside ? this.mapBackground : this.worldMapBackground;
     if (background) context.drawImage(background, 0, 0, canvas.width, canvas.height);
-    context.font = '11px monospace';
+    context.font = '38px Silver';
     context.textAlign = 'center';
     for (const s of SETTLEMENTS) {
       context.fillStyle = '#243f36';

@@ -1,6 +1,7 @@
 import { AssetPack } from '@assetpack/core';
 import { texturePacker } from '@assetpack/core/texture-packer';
 import sharp from 'sharp';
+import { buildUi } from './ui-build';
 import { z } from 'zod';
 import { format } from 'prettier';
 import { mkdir, readFile, readdir, writeFile, copyFile, rm } from 'node:fs/promises';
@@ -676,3 +677,4 @@ await writeFile(
 console.log(
   `AssetPack: ${catalog.frames.length} frames, ${catalog.pages.length} full pages, ${clips.length} active clips. Aqualia: ${report.declaredHdAppearances}/${report.requiredAppearances} declared HD, ${report.completeAnimationAppearances} complete animation, ${report.approvedAppearances} approved; full world ${report.fullWorld.approvedAppearances}/${report.fullWorld.requiredAppearances} approved.`,
 );
+await buildUi();

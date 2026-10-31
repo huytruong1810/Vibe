@@ -57,7 +57,9 @@ test('art review reports an unreadable atlas page without substituting artwork',
 test('review controls and native board fit a smaller desktop viewport', async ({ page }) => {
   await page.setViewportSize({ width: 1024, height: 768 });
   await page.goto('/?gallery=1');
-  await expect(page.getByRole('heading', { name: 'Native 1080p review board' })).toBeVisible();
+  await page.locator('#tab-staging').click();
+  await expect(page.getByLabel('Native 1920 by 1080 scene staging board')).toBeVisible();
+  await page.locator('#tab-inspector').click();
   await page.getByLabel('Asset group').focus();
   await expect(page.getByLabel('Asset group')).toBeFocused();
   await page.keyboard.press('Tab');
@@ -86,9 +88,9 @@ test('environment and item frames retain static bounds without inventing directi
   await page.getByLabel('Identity', { exact: true }).selectOption('environment:tree_oak');
   await expect(page.locator('#art-frame-label')).toContainText('Static frame');
   await expect(page.locator('#art-frame')).toHaveAttribute('aria-busy', 'false');
-  await expect(page.locator('#art-status')).toContainText('prototype export');
-  await expect(page.locator('#art-metadata')).toContainText('38 × 52 pixels');
-  await expect(page.locator('#art-metadata')).toContainText('0.5, 0.5 (normalized)');
+  await expect(page.locator('#art-status')).toContainText('visual approval is separate');
+  await expect(page.locator('#art-metadata')).toContainText('128 × 160 pixels');
+  await expect(page.locator('#art-metadata')).toContainText('0.5, 0.94 (normalized)');
   await expect(page.getByRole('heading', { name: 'Static asset registration' })).toBeVisible();
   await expect(page.getByLabel('Static asset comparison').locator('figure:visible')).toHaveCount(1);
   await expect(page.getByLabel('Facing', { exact: true })).toBeDisabled();

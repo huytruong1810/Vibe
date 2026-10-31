@@ -370,6 +370,8 @@ test('human food, accelerated sleep, emergency waking, retaliation and predation
   await page.locator('#inventory').getByRole('button', { name: 'Use', exact: true }).click();
   await expect.poll(async () => body(await checkpoint(page)).food).toBeGreaterThan(0.5);
   const beforePantry = body(await checkpoint(page)).food;
+  await page.getByRole('button', { name: 'Close inventory' }).click();
+  await page.locator('.physiology-panel summary').click();
   await page.getByRole('button', { name: 'Eat at pantry', exact: true }).click();
   await expect
     .poll(async () => body(await checkpoint(page)).food)

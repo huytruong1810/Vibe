@@ -163,3 +163,37 @@ These records explain why the implementation differs from the original draft. St
 **Alternatives rejected:** a global single-atlas limit, automatic approval from an HD declaration, running arbitrary source commands during compilation, or treating deterministic hashes as aesthetic approval.
 
 **Consequences:** art can produce assets independently while engineering compiles multi-page catalogs. Normal builds need committed exports, not Blender, model downloads or neural matting. The latest handoff audit and unresolved source-pipeline corrections are recorded in [the alignment response](../art/engineering-alignment-response.md).
+
+## ADR 019 — director UI kit and isolated candidate packet preview
+
+**Problem:** the legacy HUD used mixed fonts and green panels, while forge packets
+contained only contact sheets and GIFs. Loading candidate frames into the gameplay
+catalog would bypass the separation between review and director approval.
+
+**Decision:** compile Silver and the tracked 2× kit from the machine-readable UI
+specification. FontTools 4.61.1 produces a 26,428-byte WOFF2 core; the original
+Silver font supplies remaining Unicode glyphs within the same family. Generated
+CSS tokens resolve palette ramps. Existing stable DOM IDs and command handlers
+remain the integration boundary; corner HUD updates consume disposable snapshots.
+The renderer waits for Silver before creating labels. Font rendering still needs
+visual review on each target browser; CSS smoothing hints are not a portable
+rasterizer guarantee.
+
+Forge `packet` now exports candidate-only `review.json`, untrimmed 2× PNG frames,
+integer anchors, per-frame sockets, clip contracts and QA checks. The development
+viewer validates shared v2 frame/clip definitions, local paths, image digests and
+actual dimensions. It decodes one selected clip within 32 MiB, cancels obsolete
+loads, and disposes bitmaps. Playback is a manual art preview, not a combat timing
+simulation. Existing packets without the manifest remain artifact links with an
+explicit regeneration notice. Candidate viewing cannot write approvals or mutate
+the gameplay catalog.
+
+**Alternatives rejected:** a second font for dialogue, automatic conversion of
+contact sheets into runtime frames, candidate activation through the gallery, and
+rewriting the simulation to support a UI change.
+
+**Consequences:** `assets:build` additionally requires Python plus uv and the forge
+lockfile. Source PNGs, source UI specifications and the approval ledger remain
+unchanged. Existing generated terrain and placeholder actors remain visible; the
+new frames do not establish visual completion. The first Rivallie packet must be
+regenerated on machine A before its registered in-scene review is possible.

@@ -1,5 +1,5 @@
 :root {
-  font-family: 'DM Sans', system-ui, sans-serif;
+  font-family: Silver;
   color: #e7e8d8;
   background: #162e27;
   font-synthesis: none;
@@ -98,13 +98,13 @@ button:hover:not(:disabled) {
   display: flex;
   gap: 11px;
   align-items: center;
-  font-family: 'Libre Caslon Display', Georgia, serif;
+  font-family: Silver;
   font-size: 39px;
   letter-spacing: -1.8px;
 }
 .brand small {
   display: block;
-  font-family: 'DM Sans', system-ui;
+  font-family: Silver;
   font-size: 8px;
   letter-spacing: 2.1px;
   color: var(--muted);
@@ -196,14 +196,14 @@ button:hover:not(:disabled) {
   margin: 0 7px;
 }
 h1 {
-  font-family: 'Libre Caslon Display', Georgia, serif;
+  font-family: Silver;
   font-weight: 400;
   font-size: 36px;
   letter-spacing: -0.7px;
   margin-top: 7px;
 }
 h1 span {
-  font-family: 'DM Sans', system-ui;
+  font-family: Silver;
   font-size: 12px;
   letter-spacing: 0;
   color: var(--muted);
@@ -378,7 +378,7 @@ h1 span {
   gap: 4px;
 }
 kbd {
-  font-family: inherit;
+  font-family: Silver;
   font-size: 8px;
   background: #2a4133;
   border: 1px solid #4f6147;
@@ -400,7 +400,7 @@ kbd {
   min-width: 170px;
 }
 .inventory-intro h2 {
-  font-family: 'Libre Caslon Display', Georgia, serif;
+  font-family: Silver;
   font-size: 27px;
   font-weight: 400;
   line-height: 1.02;
@@ -430,7 +430,7 @@ kbd {
   border-color: #677355;
 }
 .slot-number {
-  font-family: Georgia, serif;
+  font-family: Silver;
   font-size: 14px;
   color: var(--gold);
   display: flex;
@@ -438,7 +438,7 @@ kbd {
   align-items: center;
 }
 .slot-number span {
-  font-family: 'DM Sans', system-ui;
+  font-family: Silver;
   font-size: 7px;
   letter-spacing: 1.5px;
   color: var(--muted);
@@ -553,12 +553,12 @@ kbd {
   align-items: center;
 }
 .chapter-mark {
-  font-family: Georgia, serif;
+  font-family: Silver;
   color: #82936b;
   font-size: 18px;
 }
 .field-panel > h2 {
-  font-family: 'Libre Caslon Display', Georgia, serif;
+  font-family: Silver;
   font-size: 37px;
   font-weight: 400;
   line-height: 1.05;
@@ -613,12 +613,12 @@ kbd {
   position: absolute;
   right: 0;
   top: 16px;
-  font-family: 'Libre Caslon Display', Georgia, serif;
+  font-family: Silver;
   font-size: 70px;
   color: #71875b2f;
 }
 .journal-intro h3 {
-  font-family: 'Libre Caslon Display', Georgia, serif;
+  font-family: Silver;
   font-size: 26px;
   font-weight: 400;
   margin: 8px 0;
@@ -837,7 +837,7 @@ kbd {
   gap: 5px;
 }
 .creature-title h3 {
-  font-family: 'Libre Caslon Display', Georgia, serif;
+  font-family: Silver;
   font-size: 31px;
   font-weight: 400;
   margin-top: 4px;
@@ -989,7 +989,7 @@ kbd {
   height: 40px;
   background: #727f61;
   color: #eae3bd;
-  font-family: Georgia, serif;
+  font-family: Silver;
   font-size: 21px;
   flex-shrink: 0;
 }
@@ -1068,7 +1068,7 @@ dialog::backdrop {
   position: absolute;
   left: 30px;
   top: 50px;
-  font-family: 'Libre Caslon Display', Georgia, serif;
+  font-family: Silver;
   font-size: 48px;
   line-height: 1;
   color: #304e3b;
@@ -1110,7 +1110,7 @@ dialog::backdrop {
   padding: 36px;
 }
 .setup-content h2 {
-  font-family: 'Libre Caslon Display', Georgia, serif;
+  font-family: Silver;
   font-size: 42px;
   font-weight: 400;
   line-height: 1.04;
@@ -1229,14 +1229,14 @@ select {
   background: #748c64;
   display: grid;
   place-items: center;
-  font-family: Georgia, serif;
+  font-family: Silver;
   font-size: 34px;
 }
 .conversation-heading > div {
   flex: 1;
 }
 .conversation-heading h2 {
-  font-family: 'Libre Caslon Display', Georgia, serif;
+  font-family: Silver;
   font-size: 32px;
   font-weight: 400;
   margin: 4px 0;
@@ -1346,7 +1346,7 @@ select {
   margin-bottom: 25px;
 }
 .modal-heading h2 {
-  font-family: 'Libre Caslon Display', Georgia, serif;
+  font-family: Silver;
   font-size: 36px;
   font-weight: 400;
   margin-top: 8px;
@@ -1471,7 +1471,7 @@ select {
   font-weight: 500;
 }
 .debug-stats {
-  font-family: monospace;
+  font-family: Silver;
   font-size: 10px;
   white-space: pre-wrap;
   line-height: 1.8;

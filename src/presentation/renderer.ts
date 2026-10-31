@@ -258,8 +258,8 @@ export class WorldRenderer {
   private preparedSession = '';
   private prepareRequest: AbortController | null = null;
   private readonly labelStyle = new TextStyle({
-    fontFamily: 'monospace',
-    fontSize: 26,
+    fontFamily: 'Silver',
+    fontSize: 38,
     fill: 0xf1e9c9,
     stroke: { color: 0x355047, width: 5 },
     align: 'center',

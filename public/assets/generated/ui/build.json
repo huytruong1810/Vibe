@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "fontTools": "4.61.1",
+  "fontSha256": "5bbbcd90b9f3ed71f8e15816fc114cbfefe9dfa29e5aacab31fe3f49fe1d1c89",
+  "subsetSha256": "6ac8b89593799ef22464f9c1ea5dd9b45bf673015bb86fab231312ce77ce0418",
+  "files": [
+    "bar_hp.png",
+    "bar_need.png",
+    "bar_stamina.png",
+    "bar_xp.png",
+    "button_dash.png",
+    "button_element.png",
+    "button_strike.png",
+    "frame_ornate.png",
+    "frame_standard.png",
+    "frame_thin.png",
+    "medallion_companion.png",
+    "medallion_player.png",
+    "minimap_ring.png",
+    "slot_common.png",
+    "slot_epic.png",
+    "slot_fine.png",
+    "slot_mythic.png",
+    "slot_rare.png"
+  ]
+}

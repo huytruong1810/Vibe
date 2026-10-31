@@ -63,3 +63,49 @@ Ollama contention are separate qualifications; do not infer either from a Node t
 See [verification](../operations/verification.md) for measurements and limitations. Approved source
 art, complete animation coverage, visual review and measured hardware evidence are
 required before declaring the HD slice complete.
+
+## Director UI and candidate packet integration (C8)
+
+The director doctrine supersedes earlier art-process and visual assumptions in
+this historical implementation guide. [ADR 019](decisions.md#adr-019--director-ui-kit-and-isolated-candidate-packet-preview)
+records the current UI and review boundaries.
+
+`npm run assets:build` also compiles the tracked UI kit into
+`public/assets/generated/ui/`. Install `uv==0.13.6` with Python, then use the
+forge lockfile; no font authoring occurs in the browser. For a UI-only rebuild,
+run `npx tsx scripts/ui-build.ts`. Silver is the sole family, with a WOFF2 core
+and original-font fallback. The settings credits retain the required attribution.
+The UI theme derives colors from `ui_theme.json` and `palette.json`; standard,
+ornate and thin frames use the supplied 2× exports as border images.
+
+The corner HUD includes a player medallion, health/stamina/XP, local terrain
+minimap, time/weather, attack/dash controls and exactly two carried-item shortcuts.
+Needs/rest live in an expandable drawer. Inventory and inspection retain their
+stable IDs, keyboard actions and focus-preserving updates. Action availability
+is a presentation hint; the authoritative command validator still decides.
+Companion needs appear only when a player bond exists. Nonessential HUD dims
+when the snapshot reports player combat. UI controls use 38 display pixels;
+smaller desktops wrap or scroll rather than adding another typeface.
+
+Open `/?gallery=1` in development and expand **Forge packet · candidate review**.
+Enter the directory name beneath `art/review/` (not a URL or filesystem path).
+New packets export `review.json` from:
+
+```text
+uv run --project art/source/forge python art/source/forge/forge.py packet --asset rivallie
+```
+
+The existing candidate QA and viewed-contact-sheet gates still apply. No new
+Blender bake is necessary when current exported frames and tracks remain valid.
+The exporter copies `pix/export/<clip>/<facing>_<index>.png` and reads
+`bake/tracks.json`; socket samples are rounded to art pixels then scaled by two.
+It rejects absent frames/tracks instead of inferring registration from GIFs.
+The viewer exposes clips/facings, play/pause, stepping, root/socket overlays and
+QA results on a 64-pixel reference grid. Combat preview uses the clip's art FPS;
+it does not claim authoritative phase timing. There is no approval control.
+
+Validation: `npm run check`, `npm run test:browser`, and
+`python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p test_review.py`.
+Browser packet tests use an explicitly synthetic fixture; that fixture is not
+Rivallie art evidence. Remaining C8 gates include full 2× draw qualification,
+approval-record transcription when director records exist, and elder integration.
