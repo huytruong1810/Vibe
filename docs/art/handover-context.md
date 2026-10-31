@@ -48,9 +48,12 @@ Vibe/
 ├── art/
 │   ├── source/
 │   │   ├── blender/
-│   │   │   ├── README.md                      # Operational manual for Blender rendering
-│   │   │   ├── render_pixel_sprites.py        # Headless batch renderer (bpy script)
+│   │   │   ├── README.md                      # Operational manual for Blender rendering & modular rig
+│   │   │   ├── build_modular_rig.py           # Procedural master rig & attachment generator
+│   │   │   ├── render_modular_cast.py         # Modular cast batch renderer (8 facings x idle/walk)
+│   │   │   ├── render_pixel_sprites.py        # Standalone model renderer (single-file models)
 │   │   │   └── models/                        # Place .blend source files here
+│   │   │       ├── humanoid_modular_base.blend# Master humanoid rig with swappable modular attachments
 │   │   │       ├── player_aqualia.blend       # Humanoid model (Player)
 │   │   │       └── rivallie.blend             # Creature companion model
 │   │   ├── exports/                           # Staging folder where baked frames land

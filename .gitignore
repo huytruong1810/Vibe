@@ -11,3 +11,5 @@ docs/archive/
 __pycache__/
 *.py[cod]
 *.blend1
+art/source/blender/renders_modular/
+art/source/blender/renders_test/
