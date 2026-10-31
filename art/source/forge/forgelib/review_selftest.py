@@ -1,4 +1,4 @@
-"""Run with uv run --project art/source/forge python -m unittest discover -s art/source/forge/forgelib -p test_review.py."""
+"""Run with uv run --project art/source/forge python -m unittest discover -s art/source/forge/forgelib -p review_selftest.py."""
 import json
 import tempfile
 import unittest

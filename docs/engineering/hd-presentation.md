@@ -105,7 +105,7 @@ QA results on a 64-pixel reference grid. Combat preview uses the clip's art FPS;
 it does not claim authoritative phase timing. There is no approval control.
 
 Validation: `npm run check`, `npm run test:browser`, and
-`python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p test_review.py`.
+`python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p review_selftest.py`.
 Browser packet tests use an explicitly synthetic fixture; that fixture is not
 Rivallie art evidence. Remaining C8 gates include full 2× draw qualification,
 approval-record transcription when director records exist, and elder integration.
