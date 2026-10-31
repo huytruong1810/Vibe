@@ -45,7 +45,7 @@ lines.
 
 ### M6 · Voice casting sheet: draft for the 10 Aqualia villagers (AGT-4.2)
 
-- status: open
+- status: done
 - goal: write proposal `docs/team/proposals/002-aqualia-voice-casting.md`. For each villager in `src/content/villagers.ts`:
   - engine voice ID or blend;
   - pitch offset, rate and timbre notes;
@@ -55,7 +55,7 @@ lines.
   Base the casting on age, role and personality. **Never infer gender from pronouns or names** (AGT-4.2).
 
 - done when: the proposal is pushed and the director has been messaged
-- evidence:
+- evidence: docs/team/proposals/002-aqualia-voice-casting.md, docs/team/comms/communicator/2026-10-31T0730--to-director--aqualia-voice-casting-proposal.md
 
 ### M7 · Aqualia day and night scores
 
