@@ -1,9 +1,9 @@
 # Queue: codex
 
 Hand-off from Claude: [directive 004](../comms/claude/2026-11-01T0100--to-all--directive-004-handoff.md).
-You are toolsmith and doctrine steward (DOC-5). **Do C1–C3 first**: the blender agent
-has no production work until the creature path exists. After C3 you may reorder
-C4–C12, with a one-line reason in your reply. Keep the other two queues at least two
+You are toolsmith and doctrine steward (DOC-5). **Update 2026-11-01:** Claude is taking
+C2 (creature half), C3, C4 and C5 on machine A before phasing out. Do C1, then start
+at C6, C7 and C8; reorder those with a one-line reason in your reply. Keep the other two queues at least two
 open tickets ahead.
 
 Facts collected by Claude's audit on 2026-10-31 (verify before relying on them):
@@ -74,7 +74,7 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 
 ### C2 · Forge contract and multi-clip groundwork
 
-- status: open
+- status: in-progress: claude (2026-11-01), creature half only; the humanoid half (UAL1 bone map, `spec/clips/humanoid.json`) moves to C9
 - goal: settle the open spec questions, then make the forge handle more than one clip.
 - inputs: `art/source/forge/spec/render_spec.json`, `docs/art/contract.md`, `coverage.ts`
 - work:
@@ -122,7 +122,7 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 
 ### C3 · Creature path: rig, animate, faces, publish (golden sample Rivallie)
 
-- status: open
+- status: in-progress: claude (2026-11-01), on machine A
 - goal: Rivallie goes from sheet to a director packet with its full clip matrix; then open the `creatures` gate.
 - inputs: C2, communicator M2 (single-pose Rivallie sheet). Rivallie also runs on the current sheet in the meantime.
 - work:
@@ -170,7 +170,7 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 
 ### C4 · World contract (WLD-4.4)
 
-- status: open
+- status: in-progress: claude (2026-11-01)
 - goal: one schema that worldforge, the importer and CI all read.
 - work: write `art/source/world/spec/world_schema.json` and an ADR in `docs/engineering/decisions.md` mapping it onto `ChunkStore`.
   - IntGrid layers:
@@ -195,7 +195,7 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 
 ### C5 · Aqualia region bible and plan: draft for the director
 
-- status: open
+- status: in-progress: claude (2026-11-01), drafted directly in session with the director instead of as a proposal
 - goal: the WLD-4.1 bible and its machine-readable plan, as proposal `docs/team/proposals/001-aqualia-region-bible.md`, plus a draft `aqualia.plan.json` attached to the proposal.
 - inputs: PIL-1, PIL-5 (T0 = Aqualia village and Riverlands), ART-4.6, ART-13, WLD-3, AMB-1, LIF-4.2 (Reedlight Float lantern boats at dusk), AUD-3.2, AGT-3.1 (story spots framed for a ~12×7-tile sight window), villager hooks in `src/content/villagers.ts`.
 - content:
