@@ -79,7 +79,8 @@ variant).
 
 The partner fights in real time beside the player using its equipped moves
 (CRE-5) and its wellbeing multiplier. The player can give one contextual command
-(focus target, regroup). Commands are a T1 proposal.
+(focus target, regroup). Commands are a T1 proposal. Its decisions come from the shared
+creature brain with the partner flag set, and the HUD shows its current intent (CRM-5).
 
 ## CMB-8 Defeat and recovery
 

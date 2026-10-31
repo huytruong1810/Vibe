@@ -122,3 +122,11 @@ Villager minds run locally through Ollama with **Gemma 4 26B** as the reference 
 (vision included). Voices use the three tiers in AGT-4 (blips, Kokoro, Chatterbox).
 Generated imagery is limited to asynchronous decorative paintings (AGT-6). Runtime
 combat effects are never diffusion-generated (CMB-9).
+
+## L11 — Creature minds are System 1
+
+Creatures in combat are driven by a small learned policy (one shared network,
+deterministic CPU inference, frozen weights per release) on top of scripted flocking and
+predation movement, under a scripted combat director that guarantees fairness (CRM).
+Language models never run in the creature combat loop: hundreds of decisions per second
+with reproducible saves rule them out. Villagers stay "System 2" (AGT, L10).

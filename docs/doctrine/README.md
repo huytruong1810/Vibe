@@ -43,23 +43,24 @@ director, Huy, and ratified by the director on 2026-10-31.
 
 ## Index
 
-| File                                                               | Prefix | Covers                                                                  |
-| ------------------------------------------------------------------ | ------ | ----------------------------------------------------------------------- |
-| [locked-decisions.md](locked-decisions.md)                         | `L`    | Irreversible production decisions and their rationale                   |
-| [01-game-pillars.md](01-game-pillars.md)                           | `PIL`  | Player fantasy, pillars, core loops, scope tiers                        |
-| [02-references.md](02-references.md)                               | `REF`  | Reference titles: what we take, what we refuse                          |
-| [03-art-bible.md](03-art-bible.md)                                 | `ART`  | Pixel scale, camera, light, palette, outline, proportions, animation    |
-| [04-ui-direction.md](04-ui-direction.md)                           | `UI`   | Zenonia-style HUD, menus, dialogue, creature page, fonts                |
-| [05-combat-direction.md](05-combat-direction.md)                   | `CMB`  | Zenonia-style human combat feel and animation timing                    |
-| [06-creatures-and-progression.md](06-creatures-and-progression.md) | `CRE`  | Pokémon-depth creature stats, temperament, moves, ascension             |
-| [07-life-sim.md](07-life-sim.md)                                   | `LIF`  | Stardew-style relationships, gifts, festivals, calendar                 |
-| [08-world-and-ambience.md](08-world-and-ambience.md)               | `AMB`  | No Name Village ambience, light, weather, ambient life                  |
-| [09-production-doctrine.md](09-production-doctrine.md)             | `PRD`  | Allowed/forbidden methods, golden samples, quality gates                |
-| [10-team-charter.md](10-team-charter.md)                           | `TEAM` | Roles, lanes, comms, status vocabulary, honesty rules                   |
-| [11-living-minds.md](11-living-minds.md)                           | `AGT`  | LLM villagers: sight, voice, emotion, paintings, performance budgets    |
-| [12-audio-direction.md](12-audio-direction.md)                     | `AUD`  | Music identity, leitmotifs, dynamic stems, score format                 |
-| [13-world-building.md](13-world-building.md)                       | `WLD`  | The authored world, LDtk, composition rules                             |
-| [regions/aqualia.md](regions/aqualia.md)                           | `AQ`   | Aqualia region bible: landmarks, routes, story spots, habitats, screens |
+| File                                                               | Prefix | Covers                                                                      |
+| ------------------------------------------------------------------ | ------ | --------------------------------------------------------------------------- |
+| [locked-decisions.md](locked-decisions.md)                         | `L`    | Irreversible production decisions and their rationale                       |
+| [01-game-pillars.md](01-game-pillars.md)                           | `PIL`  | Player fantasy, pillars, core loops, scope tiers                            |
+| [02-references.md](02-references.md)                               | `REF`  | Reference titles: what we take, what we refuse                              |
+| [03-art-bible.md](03-art-bible.md)                                 | `ART`  | Pixel scale, camera, light, palette, outline, proportions, animation        |
+| [04-ui-direction.md](04-ui-direction.md)                           | `UI`   | Zenonia-style HUD, menus, dialogue, creature page, fonts                    |
+| [05-combat-direction.md](05-combat-direction.md)                   | `CMB`  | Zenonia-style human combat feel and animation timing                        |
+| [06-creatures-and-progression.md](06-creatures-and-progression.md) | `CRE`  | Pokémon-depth creature stats, temperament, moves, ascension                 |
+| [07-life-sim.md](07-life-sim.md)                                   | `LIF`  | Stardew-style relationships, gifts, festivals, calendar                     |
+| [08-world-and-ambience.md](08-world-and-ambience.md)               | `AMB`  | No Name Village ambience, light, weather, ambient life                      |
+| [09-production-doctrine.md](09-production-doctrine.md)             | `PRD`  | Allowed/forbidden methods, golden samples, quality gates                    |
+| [10-team-charter.md](10-team-charter.md)                           | `TEAM` | Roles, lanes, comms, status vocabulary, honesty rules                       |
+| [11-living-minds.md](11-living-minds.md)                           | `AGT`  | LLM villagers: sight, voice, emotion, paintings, performance budgets        |
+| [12-audio-direction.md](12-audio-direction.md)                     | `AUD`  | Music identity, leitmotifs, dynamic stems, score format                     |
+| [13-world-building.md](13-world-building.md)                       | `WLD`  | The authored world, LDtk, composition rules                                 |
+| [14-creature-minds.md](14-creature-minds.md)                       | `CRM`  | System 1 creature brains, flocking and predation, combat director, training |
+| [regions/aqualia.md](regions/aqualia.md)                           | `AQ`   | Aqualia region bible: landmarks, routes, story spots, habitats, screens     |
 
 Machine-readable doctrine lives in
 [`art/source/forge/spec/`](../../art/source/forge/spec/): `render_spec.json`,

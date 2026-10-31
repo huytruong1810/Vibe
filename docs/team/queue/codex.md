@@ -343,6 +343,48 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 - done when: the grass↔freshwater set packets and passes QA; you've messaged the communicator
 - evidence:
 
+### C13 · Creature movement layer and brain interface (CRM-M1, CRM-M2)
+
+- status: open
+- goal: creatures flock, hunt and flee by scripted movement, and a scripted utility brain drives combat through the fixed observation and intent interface that the learned brain will later plug into.
+- inputs: `docs/doctrine/14-creature-minds.md` CRM-1…CRM-3, CRM-6.1, CRM-8; the existing predation and disposition code in `src/domain/` (creatures, combat, simulation); `Habitat` regions (C7).
+- work:
+  - per-species flocking weights and predation pursuit/evasion;
+  - the observation vector and the masked intent space as a versioned schema;
+  - decisions staggered every 3–6 ticks, with a reaction delay;
+  - LOD by distance (CRM-8.2);
+  - an ADR in `docs/engineering/decisions.md`.
+- done when: deterministic soak unchanged; benchmark shows 150 creatures within CRM-8.1 for movement and the scripted brain; unit tests for masking and reaction delay
+- evidence:
+
+### C14 · Combat director and partner intent (CRM-M3)
+
+- status: open
+- goal: attack tokens (2 melee and 1 ranged/element against the player to start), a readiness ring, no off-screen attacks, difficulty knobs, and the partner's intent icon in the HUD.
+- done when: a browser journey with 20 hostiles shows at most the token count attacking at once; partner icon visible; tests green
+- evidence:
+
+### C15 · Headless training bridge (CRM-M4)
+
+- status: open
+- goal: the deterministic Node simulation exposed as a multi-agent environment to PufferLib or CleanRL. Pin the versions; Python tooling runs through `uv` like the forge. The pipeline is imitation of the C13 scripted brain, then PPO with shared parameters. Training runs record seed, config, data hash and weight hash (CRM-7.3).
+- inputs: C13. Training can run on machine A's GPU; ask blender to run long jobs through `--to-blender--test-` if needed.
+- done when: an imitation-trained policy matches the scripted brain's intent choices on a held-out set to a threshold you set and record
+- evidence:
+
+### C16 · Learned System 1 policy v1 (CRM-M5…M7)
+
+- status: open
+- goal: ship the learned brain behind the scripted/learned switch:
+  - deterministic CPU inference (float32 or int8);
+  - weights as versioned content with a save hash;
+  - memory counters;
+  - species identity tests in CI (CRM-6.4);
+  - debug overlay and observation inspector;
+  - a model card.
+- done when: 150 creatures in combat within CRM-8.1; species tests green; a save replays to identical decisions; the director reviews a capture of a 20-creature fight (scripted vs learned side by side)
+- evidence:
+
 ### C12 · Keep the team fed
 
 - status: open (recurring)
