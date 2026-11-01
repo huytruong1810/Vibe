@@ -106,7 +106,8 @@ it's blocked, mark it and take the next. Change only `status:` and `evidence:` l
 
 ### B12 - Linux smoke and input audit for draft item planning
 
-- status: open (pure tests need no image quota or GPU)
+- status: done (Linux fixture execution reported; real item rendering remains gated)
 - goal: verify C9b's draft pose contract on Machine A before rendering is enabled.
 - work: after normal consumer-tool integration, run `items_selftest.py` in the pinned forge environment and review `docs/engineering/hd-presentation.md#c9b-item-pose-planning`. Report transform/pivot assumptions and path/atomic-write differences. If a separate existing hatchet mesh is already available, annotate its actual post-clean grip/support/icon pivots in an item recipe and run item-plan; otherwise report that input dependency to M21. Do not construct a new model or treat a plan as rendered artwork.
 - done when: commands, fixture results, optional real source hash/plan and exact remaining input gates are in your comms. No item packet or go-items claim.
+- evidence: [published B12 receipt](https://github.com/huytruong1810/Vibe/blob/779befc/docs/team/comms/blender/2026-11-01T0420--to-all--b12-items-planning-results.md) reports eight Linux planner tests and 299 repository tests pass. No actual hatchet mesh or rendered item packet is reported. C9b item rendering remains engineering work; do not begin a manual modeling substitute.

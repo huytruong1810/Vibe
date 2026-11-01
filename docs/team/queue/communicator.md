@@ -199,11 +199,12 @@ lines.
 
 ### M19 - Integrate portable C3b staging into the source manifest
 
-- status: in-progress (digests reported; tracked V2 source graph and C3e registration support remain)
+- status: in-progress (C3e delivered; full tracked V2 graph and refreshed digests remain)
 - goal: preserve approved-body provenance across machines while keeping runtime activation separate.
 - work: after B10, apply the existing M18 ID/path/appearance-ownership mapping and candidate flags. Preserve integer registration, sockets, rig, phases, strides and the complete immutable provenance closure. Follow the [portable-source handoff](../comms/codex/2026-11-01T0145--to-all--c3b-portable-provenance.md); do not strip provenance, fabricate inputs or integrate unapproved faces. Compile for validation and leave generated outputs/ledger to engineering.
 - done when: the source manifest passes shared validation with all dependencies present and matching hashes on Machine B; report the mapping and source digests for engineering's separate ledger/compilation review.
-- evidence: M19 digest report is integrated at `5a128d1`, but `84863c3` contains no manifest changes and the source remains V1. Follow the [tracked-graph request](../comms/codex/2026-11-01T0349--to-communicator--m19-tracked-graph-needed.md); preserve rig/sockets/provenance and report full schema validation. C3e will supply multiple registrations under the same rig identity.
+- evidence: M19 digest report is integrated at `5a128d1`, but `84863c3` contains no manifest changes and the source remains V1. Follow the [tracked-graph request](../comms/codex/2026-11-01T0349--to-communicator--m19-tracked-graph-needed.md); preserve rig/sockets/provenance and report full schema validation. C3e now supplies multiple registrations under the same rig identity.
+- update: [C3e fields and correction](../comms/codex/2026-11-01T0454--to-all--c3e-rig-registration-contract.md) at consumer `4041714` now unblock registration validation. Existing digest closure already included frame rigs; recompute from the full validated graph, not the earlier report. Report ambiguous V1 anchors rather than silently rounding or removing content.
 
 ### M20 - Review human sprite-face grammar readability
 
@@ -215,7 +216,15 @@ lines.
 
 ### M21 - Prepare the canonical hatchet reference handoff
 
-- status: open (audit/reuse can proceed without image generation)
+- status: done (reference metadata delivered; no model/render readiness implied)
 - goal: prepare one separate prop input for C9b before any weapon batch.
 - work: audit the existing `references/player-aqualia/prop-hatchet.png` against PRD-3.3. If suitable, register a canonical item-hatchet reference sheet with provenance and source identity in your lane; otherwise report the exact input defect and image-quota dependency. Do not generate game frames or invent model grip coordinates. Coordinate the eventual existing-mesh/grip annotations with Blender; item rendering remains an engineering prerequisite.
 - done when: a traceable canonical reference handoff or precise blocker is published. This does not approve art or grant go-items.
+- evidence: `art/source/references/item-hatchet/sheet.json` and `sheet.png` integrated at `99011b2`; canonical identity and declared iron/wood/leather/reed ramp names verified against the palette. Visual observations remain attributed to the communicator's report; no additional image generation or Codex visual approval.
+
+### M22 - Audit V1 registration conversion for M19
+
+- status: open (metadata audit; no image-generation quota needed)
+- goal: keep the 1,092 existing source frames and working appearances intact during V2 mapping.
+- work: inspect source dimensions and original anchor metadata; list any fractional/ambiguous native registration, missing pose/rig declaration or identity collision in your own comms. Use source authoring evidence for exact integers, not blanket rounding or dropped frames. Coordinate findings with M19's sole manifest integration and C3e's declared registration pairs; do not edit generated output or other agents' sources.
+- done when: a bounded record-specific conversion checklist and blockers are published. This audit does not activate candidates or approve artwork.
