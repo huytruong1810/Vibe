@@ -81,9 +81,10 @@ and walkable fraction. It is not an invented aesthetic score or approval gate.
 Depth evidence may include labeled foreground placeholders until C10 art exists.
 The rendered images expose collision and elevation, rather than concealing them.
 
-The example authors only the 90-by-68 village. The 120-by-68 Riverlands remains
-unfinished. Village checks explicitly list that exclusion; full-region checks
-must fail until the second level and boundary routes are authored.
+The example authors only the 90-by-68 village. By itself it leaves the 120-by-68
+Riverlands unfinished, and full-region QA must reject that draft. The subsequent
+`003-riverlands-layout.json` supplies a separate region candidate. Scoped village
+checks still exclude Riverlands; they do not certify it.
 
 The 30-by-17 screen grid spans 960-by-544 art pixels. Reference viewport crops are
 960-by-540, so the last four vertical pixels fall outside each viewport. Actual
@@ -136,9 +137,22 @@ npm run world:build -- --region aqualia --level aqualia_village
 ```
 
 Both commands first run the pinned official-schema validation and worldforge QA.
-Omitting `--level` requests full-region validation, which currently fails because
-Riverlands is unfinished. A scoped success excludes Riverlands explicitly; it is
-neither map approval nor permission to activate it in the playable game.
+Omitting `--level` requests full-region validation. The received Riverlands pass
+now permits candidate compilation of both levels (219 placements). A deliberately
+unfinished region still fails QA. A scoped success excludes Riverlands explicitly;
+neither success is map approval or permission to activate the playable game.
+
+For read-only validation of a fixture or other candidate, use
+`check:world -- --region aqualia --project <file.ldtk>` or
+`worldforge.py check --region aqualia --project <file.ldtk>`. Alternate projects
+cannot be built to the canonical output. Their QA receipts are isolated under
+`world/work/validation/<project-digest>/<scope>/`; canonical map/inspection receipts
+are not overwritten. Other authoring commands do not accept this override.
+
+Regression tests replay the first two explicit passes for historical village-only
+approval and unfinished-region cases, while a separate round-trip test replays
+all current passes against the live project. Importer rejection uses a temporary
+copy with Riverlands deliberately cleared, independent of the artists' progress.
 
 The build writes canonical JSON atomically under ignored
 `art/source/world/work/import/`. Check mode validates in memory without replacing
@@ -182,7 +196,7 @@ linear in tile and placement counts with bounded 512-square channel allocations.
 
 Directive 006's C5 and village-layout records were integrated from `e0ca66c` via
 normal merge history. C6b opens the world-authoring lane. Runtime activation still
-requires completed Riverlands/routes, authored forage
+requires reviewed Riverlands/routes, authored forage
 resource nodes (the current village contains none), and adapters for settlements,
 services, schedules, habitats, scenes and presentation. It then requires version
 bumps, explicit rejection of old generated-world saves, browser journeys and an

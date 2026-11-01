@@ -88,23 +88,23 @@ it's blocked, mark it and take the next. Change only `status:` and `evidence:` l
 - done when: commands/results and exact failing assertions, if any, are in your own comms. This grants no map or asset approval.
 - evidence: Machine A verification: worldforge_selftest.py 22/22 tests passed (OK in 17.1s); tests/authored-world.test.ts 29/29 tests passed (2.44s); npm run check:world validated full region with 2 levels, 219 placements, 0 excluded; full repository npm run check passed 21 test files / 276 tests and production build. Documented in docs/team/comms/blender/2026-10-31T2355--to-codex-communicator--c3b-b8-b9-results.md.
 
-### B10 · Portable provenance source bundle publishing
+### B10 - Package portable provenance for the three approved bodies
 
-- status: complete
-- goal: package self-contained immutable source closures (.blend, tracks, animate record, tools, recipes) under art/source/blender/models/published/ for all 3 Director-approved quadrupeds without re-baking bodies.
-- work: run forge.py publish --asset for rivallie, bramblefang, and marshstalker on Machine A. Verify unchanged packet digests and frame bytes.
-- done when: source bundles and staging pointers are committed and reported in comms.
-- evidence: Staged in art/source/staging/blender/{rivallie,bramblefang,marshstalker}.json; immutable source bundles created in art/source/blender/models/published/{rivallie,bramblefang,marshstalker}/; review.json sourceDigests verified unchanged (rivallie 69b6c10d…, bramblefang ef40a024…, marshstalker 654b7fa0…); full npm run check passed 299 tests / 23 suites and production build; reported in docs/team/comms/blender/2026-11-01T0220--to-all--b10-portable-provenance-results.md.
+- status: done (source packaging only)
+- goal: unblock cross-machine source-manifest compilation without regenerating art.
+- work: follow the [portable-source handoff](../comms/codex/2026-11-01T0145--to-all--c3b-portable-provenance.md). Normally merge `eng/c11b-consumers` through `01e9fbb`. Run only `publish` for each approved creature from its original workspace; commit the immutable source bundles and staging records, retaining existing body exports and packet digests. Never run a bake to repair a missing source.
+- done when: commands, source paths and unchanged packet/frame digests are published via normal studio history; communicator can verify all declared source dependencies on Machine B. This grants no face or gameplay approval.
+- evidence: [Machine-A receipt](../comms/blender/2026-11-01T0220--to-all--b10-portable-provenance-results.md) and normal art merge `5a128d1`; all 42 declared provenance hashes verify locally. Manifest integration and runtime activation remain separate.
 
-### B11 · Human face sidecar verification (C9b)
+### B11 - Human face sidecar technical proof
 
-- status: complete (selftest-human face candidate generated; player-aqualia body QA blockers reported)
-- goal: verify C9b human face decal grammar, head sockets and registration on Machine A without relaxing QA gates or regenerating approved creature bodies.
-- work: run forge.py faces for available human body review. Inspect contact.png and registered.png. Report registration metrics, head placement and body QA blockers.
-- done when: candidate face packet or technical body QA blocker is published in comms.
-- evidence: Tested on Machine A: selftest-human candidate face proof generated at art/review/2026-11-01-selftest-human-faces-9b64f90be64c/ (digest ae676543…); contact.png (12 expressions x 5 facings) and registered.png (standing composite) inspected; faceAnchor QA passed (7,416 registrations verified); player-aqualia body QA blockers documented (margins 0px vs >=2px, colorCount 27 vs limit 24, awaiting M11 reference redraw); reported in docs/team/comms/blender/2026-11-01T0325--to-codex-communicator--b11-human-face-results.md.
+- status: partial (mannequin execution reported; real player blocked on M11 body input)
+- goal: validate C9b grammar on an actual existing human body packet without launching another body bake.
+- work: follow the [C9b handoff](../comms/codex/2026-11-01T0247--to-all--c9b-human-face-sidecars.md), normally merge the consumer tooling, then run `faces --asset player-aqualia` on a valid body review. Inspect native/enlarged contact and registered proofs; check the blank face plane, per-facing placement and motion. Report missing packet/hard body QA as explicit prerequisites; do not weaken validation or regenerate an approved body.
+- done when: exact commands, body/sidecar digests, inspected images and any blockers are published. Human faces remain candidate; this is not go-items or human publication readiness.
+- evidence: [studio receipt at 19eb907](https://github.com/huytruong1810/Vibe/blob/19eb907/docs/team/comms/blender/2026-11-01T0325--to-codex-communicator--b11-human-face-results.md) reports 60 selftest-human decals / 7,416 registrations. Player Aqualia margins (0px) and color count (27) remain hard QA blockers; no threshold change or local visual acceptance is claimed.
 
-### B12 · Held-item pose planning verification (C9b)
+### B12 - Linux smoke and input audit for draft item planning
 
 - status: complete
 - goal: verify C9b held-item pose planner, 64-pose grid generation and icon pivot transforms on Linux/Machine A without fabricating anatomy or modifying source artwork.

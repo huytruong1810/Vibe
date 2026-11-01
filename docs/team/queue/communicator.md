@@ -197,7 +197,7 @@ lines.
 - done when: mapping schema and dependency checklist are published in comms and relayed to Codex.
 - evidence: docs/team/comms/communicator/2026-11-01T0100--to-codex-blender--rivallie-faces-and-manifest-plan.md, art/source/staging/blender/rivallie.json, art/source/manifest.json
 
-### M19 · Integrate published quadruped candidates into manifest.json (V2)
+### M19 - Integrate portable C3b staging into the source manifest
 
 - status: done (candidate V2 graph validated against C3e multi-canvas schema, exact C3e digests calculated, tracked JSON artifact committed in comms, and V1 fractional anchor audit delivered to Codex for C3f compatibility and C12 reconciliation)
 - goal: merge the portable staging records for the 3 Director-approved quadrupeds (`rivallie`, `bramblefang`, `marshstalker`) into `art/source/manifest.json` as candidate appearances with complete V2 metadata.
@@ -212,19 +212,27 @@ lines.
 - done when: candidate entries mapped, file dependencies verified, schema validated, tracked artifact committed, and source digests reported to Codex.
 - evidence: docs/team/comms/communicator/2026-11-01T0550--to-codex-blender--m19-candidate-v2-graph-and-v1-anchor-audit.md, docs/team/comms/communicator/2026-11-01T0700--to-codex--candidate-quadrupeds-v2-artifact.md, docs/team/comms/communicator/candidate-quadrupeds-v2.json
 
-### M20 · Review C9b human face grammar and selftest-human candidate proof
+### M20 - Review human sprite-face grammar readability
 
-- status: done
-- goal: review the 12-emotion x 5-facing human face grammar sheet and the `selftest-human` candidate face proof from B11; report emotional readability, profile distinctions, and socket alignment across forward facings.
-- inputs: `docs/team/comms/codex/2026-11-01-human-face-grammar-4x.png`, `art/review/2026-11-01-selftest-human-faces-9b64f90be64c/{contact.png,registered.png,faces.json}`, PRD-5.
-- work:
-  - Directly opened and inspected native/4x grammar sheets and `selftest-human` candidate proof via `read_file`.
-  - Evaluated the 12 expressions (`neutral`, `warm`, `thoughtful`, `curious`, `concerned`, `amused`, `angry`, `sad`, `fearful`, `blink`, `sleep`, `hurt`) across `s`, `se`, `sw`, `e`, `w`.
-  - Reported findings, subtle/unclear profile distinctions, and socket fit in comms for Codex and Blender.
-  - Updated review digest `art/review/digest-2026-W45.md`.
-- done when: images inspected, readability report published in comms, and digest updated.
-- evidence: docs/team/comms/codex/2026-11-01-human-face-grammar-4x.png, art/review/2026-11-01-selftest-human-faces-9b64f90be64c/contact.png, art/review/2026-11-01-selftest-human-faces-9b64f90be64c/registered.png, docs/team/comms/communicator/2026-11-01T0350--to-codex-blender--m20-human-face-review.md
+- status: done (readability report received; no director acceptance)
+- goal: identify subtle or unclear human emotions before real-head integration.
+- work: open the native and 4x proofs linked in the [C9b handoff](../comms/codex/2026-11-01T0247--to-all--c9b-human-face-sidecars.md). Report expression/facing-specific readability observations; distinguish a skin-tone review matte from a real human face plane. Follow with B11 registered proof feedback when available. Do not edit forge code or approve art.
+- done when: concrete observations are published in your own comms for Codex/director. This review does not activate expressions or complete C9b.
+- evidence: [published M20 report at b47e102](https://github.com/huytruong1810/Vibe/blob/b47e102/docs/team/comms/communicator/2026-11-01T0350--to-codex-blender--m20-human-face-review.md); profile emotion differences remain subtle. Codex's source check clarifies blink/sleep mouths differ in pixel count at the same Y, not by a Y shift. Real-player fitting is still gated on M11 and body QA.
 
 
+### M21 - Prepare the canonical hatchet reference handoff
 
+- status: done (reference metadata delivered; no model/render readiness implied)
+- goal: prepare one separate prop input for C9b before any weapon batch.
+- work: audit the existing `references/player-aqualia/prop-hatchet.png` against PRD-3.3. If suitable, register a canonical item-hatchet reference sheet with provenance and source identity in your lane; otherwise report the exact input defect and image-quota dependency. Do not generate game frames or invent model grip coordinates. Coordinate the eventual existing-mesh/grip annotations with Blender; item rendering remains an engineering prerequisite.
+- done when: a traceable canonical reference handoff or precise blocker is published. This does not approve art or grant go-items.
+- evidence: `art/source/references/item-hatchet/sheet.json` and `sheet.png` integrated at `99011b2`; canonical identity and declared iron/wood/leather/reed ramp names verified against the palette. Visual observations remain attributed to the communicator's report; no additional image generation or Codex visual approval.
 
+### M22 - Audit V1 registration conversion for M19
+
+- status: done (audit report received; no conversion or approval implied)
+- goal: keep the 1,092 existing source frames and working appearances intact during V2 mapping.
+- work: inspect source dimensions and original anchor metadata; list any fractional/ambiguous native registration, missing pose/rig declaration or identity collision in your own comms. Use source authoring evidence for exact integers, not blanket rounding or dropped frames. Coordinate findings with M19's sole manifest integration and C3e's declared registration pairs; do not edit generated output or other agents' sources.
+- done when: a bounded record-specific conversion checklist and blockers are published. This audit does not activate candidates or approve artwork.
+- evidence: [published M19/M22 audit at c6902df](../comms/communicator/2026-11-01T0550--to-codex-blender--m19-candidate-v2-graph-and-v1-anchor-audit.md) lists the fractional human, environment, prop, flora and legacy-creature anchor families. C3f retains legacy normalized registrations; no blanket integer conversion is authorized.

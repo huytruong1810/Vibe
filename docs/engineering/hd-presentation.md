@@ -109,3 +109,266 @@ Validation: `npm run check`, `npm run test:browser`, and
 Browser packet tests use an explicitly synthetic fixture; that fixture is not
 Rivallie art evidence. Remaining C8 gates include full 2× draw qualification,
 approval-record transcription when director records exist, and elder integration.
+
+## C8b kit meters, slots and time card
+
+The supplied bar images contain example fills. Runtime values use their authored
+frames and losslessly extracted fill strips, not the baked examples. Run
+`npm run ui:build` to rebuild only the UI bundle; this avoids repacking the world
+atlas. Source artwork stays under communicator ownership and is unchanged.
+
+The compiler crops at `(4,4)` in 2x export pixels. HP/stamina strips are 16x10;
+XP/need strips are 2x4. These repeat at native size beneath a clipped mask, inside
+four-pixel nine-slice borders with a navy empty interior. HP/stamina frames remain
+168x18, XP 168x12, and compact companion needs 32x12. Larger need rows repeat the
+same texture. UI build manifest v2 records source/output hashes and dimensions.
+This is independent of the asset-catalog and save schema versions.
+
+The [meter helper](../../src/presentation/ui/meters.ts) clamps values and rounds
+visible widths down to two display pixels. Accessibility values retain the actual
+bounded fraction. A single refresh after DOM patching measures content widths;
+hidden-panel meters update when revealed. The old percentage-width writers are
+removed. No scaling transform stretches the artwork or its fill segments.
+
+Quick hands use native 60x60 common slot faces. Carried/worn cards reuse their
+eight-pixel border slices. There is no rarity classification in current item data,
+so other rarity frames are not assigned. Finite charges appear beside the slot
+face and in its accessible name; the inventory keeps full names, charge counts
+and action rows. Current item icons remain prototype colour representations.
+Exactly two carried slots and six worn slots remain; no item state changes here.
+
+The [HUD read model](../../src/presentation/ui/state.ts) adds immutable `time`
+labels from existing snapshot day/hour/calendar/weather fields. Day is one-based
+for display. Presentation-only phases are Dawn 05:00–09:00, Day 09:00–17:00,
+Dusk 17:00–21:00, Night otherwise. These labels do not redefine lighting or AI.
+No wall clock, timer, worker field, save field or version change is introduced.
+
+The time card and circular minimap are siblings, side-by-side at 1080p and stacked
+at smaller desktop widths. The selected larger card retains exact clock and weather
+alongside day/phase. Only the minimap and toasts dim in combat; time stays readable.
+The needs drawer and compact companion row have separate vertical space; opening
+needs preserves the previous behavior of hiding the companion card. Inventory is
+scrollable at small desktop sizes, retaining keyboard access and focused controls.
+Save/settings controls are clear of the action cluster. Claude's hidden duplicate
+button labels and their accessible names are preserved.
+
+Verification covers source/crop equality, two-pixel blocks, deterministic hashes,
+zero/partial/full masks, time boundaries/pause/restore, UI-independent save outcomes,
+and desktop browser journeys with occupied slots, companion needs and real duels.
+Review captures are linked from the Codex handoff. C8b remains candidate until the
+director records visual acceptance; placeholder world artwork is not approved by it.
+
+## C3b creature publication and face sidecars
+
+The forge's creature `publish` stage consumes an existing body/clip director record
+and original machine-A workspace. It validates frame hashes, clip references,
+integer registration, actual RGBA dimensions, hard QA and the approval's asset,
+scope, path and digest. Reconstructing a temporary review from the original bake
+also detects edited metadata with an unchanged digest label. It never overwrites
+the approved packet or creates an approval record.
+
+Exports live in `art/source/exports/<asset>/<body-digest>/`; the staging pointer is
+`art/source/staging/blender/<asset>.json`. Frames retain source size, integer root,
+sockets and rig identity. Clips retain timing/runtime/move metadata; distance
+strides come from the actual animate record rather than generic defaults. Provenance
+uses the shared generated AuthoringProvenance contract and pins the original blend,
+tracks, relevant publication scripts, animate record and Blender 4.2.x. Original
+model bytes must still match their stage record. Publication copies the exact model,
+tracks, animate record, scripts, specification, recipe, palette and dependency lock
+into `art/source/blender/models/published/<asset>/<closure-digest>/`. The closure digest
+includes each relative filename, role and SHA-256. Provenance references these
+immutable copies, never machine-local scratch or mutable live tooling. Existing
+bundles are verified on retry; changed bytes are rejected rather than repaired.
+Original sources and copied bytes are checked again before committing the pointer.
+Content-addressed sources and exports precede an atomic staging-record replacement;
+a failed pointer write retains the previous record and can leave unreferenced
+immutable directories. Only sources bound to the approved body packet are copied.
+
+The communicator integrates staging into the source manifest (TEAM-2a), translating
+frame IDs/paths and canonical species bindings without losing registration or
+provenance. Staging is not automatically ingested or activated by the compiler.
+Commit the complete source-bundle directory together with staging and exports, so
+Machine B and CI can verify provenance without Blender, the original workspace or
+network access. Internal historical paths inside the copied animate record remain
+audit metadata; the compiler resolves only declared provenance input paths.
+Do not strip provenance to work around missing dependencies. Older staging records
+that reference `forge/work/` need a packaging-only `forge publish --asset <asset>`
+on Machine A from the unchanged original workspace and approved packet. No rebake
+or replacement approval is required when the body packet digest stays unchanged
+(PRD-9). The manifest source digest changes with corrected provenance; it still
+requires normal engineering ledger review before runtime activation. Missing sources
+must not be fabricated or replaced with a fresh bake of an approved asset.
+
+`faces --asset rivallie` creates a separate `art/review/*-faces-*/` candidate from the
+existing body review. It draws palette-indexed ART-8 grammar on the 16x12 art-pixel
+decal canvas and exports nearest-neighbor 32x24 PNGs: neutral, warm, fearful, hurt,
+sleep in s/se/sw/e/w. Back facings intentionally have no decal. Its `faceAnchor`
+check binds Socket_Head registration and decal ink bounds across supplied frames;
+contact and standing registered previews support visual review. Bounds alone do
+not establish anatomical fit, occlusion or emotion readability during movement.
+
+Face candidates bind their body manifest/digest and have their own source digest.
+Body/clip approval excludes faces; adding faces never changes the approved body
+packet or activates a runtime face layer. Human expressions use the C9b sidecar
+below; runtime composition remains separate. Machine-B unit tests use fake approvals only in temporary
+repositories; production publish and moving face review still require machine A.
+
+### C9b human face sidecars
+
+`forge.py faces --asset player-aqualia` now supports an existing valid human body
+review without launching Blender or changing the body. It emits 60 transparent
+32x24 decals: twelve rows (`neutral`, `warm`, `thoughtful`, `curious`, `concerned`,
+`amused`, `angry`, `sad`, `fearful`, `blink`, `sleep`, `hurt`) across s/se/sw/e/w.
+No back-facing decal is manufactured. Features are authored at 16x12 and exported
+as uniform nearest-neighbor 2x2 blocks, sharing the creature registration checks.
+Every expression is checked against every forward-facing body's per-frame head
+socket and actual canvas, including combat and wide clips. Missing/off-grid or
+out-of-bounds registrations produce draft status; input/body validation still
+rejects malformed packets or failed hard body QA.
+
+Optional recipe `face` contains only `eyeRamp`, `inkRamp`, `highlightRamp` using
+existing palette ramp names. These recolor palette indices without changing shape;
+unknown fields/ramps are rejected. Recipe, grammar, palette, specification and body
+manifest participate in the CLI sidecar revision. The face report binds body
+manifest hash and digest; body data remains immutable. Recoloring is authoring-time
+only in this slice; runtime emotion selection/composition is not activated.
+
+The contact sheet uses a warm-skin review matte, not an identity illustration.
+Inspect its native size and enlarged view, then inspect `registered.png` on the
+real body's standing frames on Machine A. Bounds and unique frame hashes do not
+establish anatomical fit or understandable emotions during motion. Retained
+engineering [native](../team/comms/codex/2026-11-01-human-face-grammar.png) and
+[4x](../team/comms/codex/2026-11-01-human-face-grammar-4x.png) proofs are grammar
+fixtures; they do not substitute for a real-human review or director decision.
+
+Run `human_faces_selftest.py` through the forge's pinned uv environment alongside
+`finish_selftest.py` and `review_selftest.py`. C9b remains partial: item/8-grip
+rendering, garment fit/material masks, thin-feature QA and human publication are
+pending. `items: ready` and `go-items` are deliberately not issued.
+
+### C9b item pose planning
+
+`forge.py item-plan --asset item:hatchet` validates an existing source mesh and
+writes only `work/item-hatchet/item_plan.json`. This is a draft geometry-transform
+contract, not an item renderer, mesh generator, QA packet or readiness grant.
+Item IDs now have their own forge kind; `all` and body stages explicitly refuse
+them while the item pipeline remains unfinished.
+
+The normal recipe must declare matching `asset` and `kind: "item"`. Its `item`
+object requires `model` (a relative `.blend` path under `art/source`), `grip`
+(three finite model-space coordinates), `socket` (`Socket_Hand.R` or `.L`) and
+`iconPivot` (three explicitly authored coordinates). Optional `supportGrip` adds
+the second grip. Unknown fields, missing files, escaping paths, invalid sockets
+or nonfinite/bool coordinates fail before replacing any prior plan. This command
+checks source existence/hash; Blender must later validate the model's contents.
+
+The plan contains 64 held poses (eight facings by eight grip buckets) plus one
+three-quarter icon from the same source mesh. Canvas/anchor and camera values
+come from the existing protected render specification. Grip buckets are clockwise
+screen angles from up. Each rigid transform first yaws the existing mesh to its
+facing, then rotates around the fixed orthographic view axis; it translates the
+authored grip to the root. It neither scales nor mirrors anatomy or rotates
+finished bitmaps. Support-grip coordinates undergo that same transform. The icon
+uses its explicit pivot; it is not stretched from an inventory PNG.
+
+Canonical output binds source hash, settings, generator hash and the relevant
+camera/facing/canvas contract. A temporary sibling file is installed atomically
+only after rechecking the source hash; malformed input, storage failure and a
+changed source retain the previous plan. Shared fixtures test projected angles in
+every facing, rigid transforms, both hand sockets, deterministic bytes and failure
+behavior. The planner does not promise that a spear fits the held-item canvas:
+real rendering, transparent margins, feature thickness, silhouette/occlusion and
+any required canvas extensions remain explicit C9b integration work. No
+production `go-items` message is available yet. The technical renderer below can
+consume a plan against an already existing, separately textured model.
+
+### C9b item rendering and silhouette QA
+
+`forge.py items --asset item:hatchet` validates the same recipe as `item-plan`,
+requires Blender 4.2.x, then renders 64 held poses and one icon. Input must be a
+separate static prop mesh with its `Col` vertex colors, not a human armature. No
+production geometry is constructed, rescaled to fit, or taken from a human body.
+`bake.py` uses the existing calibrated camera and albedo/normal/depth writer. Only
+item jobs select the planned rigid matrix; body jobs keep their original path.
+Root registration is projected from the actual transformed source pivot. An
+optional support grip is projected and exported on the same even-pixel grid.
+
+The stage invokes the existing pixelizer and verifies all 65 native/export pairs,
+exact 2x blocks, actual canvas sizes, transparent margins, root drift,
+primary/support grip bounds, palette membership and the aggregate color budget.
+`thinFeature` examines raw albedo silhouettes before outlines can hide narrow
+geometry: opaque 2x2 blocks support their pixels, connected unsupported runs of
+at least two pixels fail, isolated unsupported islands fail, and a one-pixel cap
+attached to a supported body is allowed. Connected-component tables make this
+diagnostic linear in pixel count. This is a silhouette-spur detector, not proof
+that every internal strap/material detail or every facing reads at the required
+width. Those limitations require inspection and future material-mask validation.
+
+Owned persistent state is an immutable generation at
+`work/<asset>/item-renders/<inputsDigest>/` and the final `items.json` pointer.
+The digest binds model bytes, the full render/QA specification, material/detail
+slots, tool sources, dependency lock and Blender version. The review separately
+binds frame metadata, QA results and every generated file hash. Cache hits verify
+the generation and existing pointer; corrupt bundles fail instead of being repaired.
+Verified cache hits preserve pointer bytes and timestamp.
+
+`render_items` accepts an explicit baker adapter for CPU tests. It copies and hashes
+a self-contained model snapshot before Blender reads it, avoiding a live-file race.
+Its lifecycle is validate → temporary snapshot → bake → pixelize → inspect → hash → recheck inputs
+→ install generation → atomic pointer replacement. Invalid inputs, a failed bake,
+missing passes, source changes or storage errors preserve the previous pointer.
+A failed final pointer write can leave an unreferenced immutable generation.
+Per-pose image work is O(pixels), with bounded 65-pose metadata and a contact sheet
+sized from the largest frame; enlarged canvases are not cropped to a fixed cell.
+
+The output `item-review.json` is a technical review format, not an animation catalog
+or approved publication. It retains facing, grip bucket/degrees, integer anchors,
+primary/support sockets and source hashes without pretending that grip rotations
+are a gameplay animation clip. Source generation from the canonical three-quarter
+reference, item gallery/publish adapters, body angle/occlusion tracks and runtime
+composition remain C9b/C8 integration work. `items: ready` and `go-items` remain off.
+
+`forge.py selftest --kind item` creates a PRD-2 calibration-only cuboid and runs
+the real renderer. It does not create a hatchet or other production source.
+The CPU suite uses fake passes solely to test transactions and QA; it cannot prove
+the Blender integration or artistic quality. Machine B currently has no Blender
+4.2 binary, so the actual calibration contact/QA must be inspected on Machine A.
+The protected sprite-forge runbook remains unchanged; this guide does not override
+its production gate or authorize item asset production.
+
+### C3e explicit rig registrations
+
+`RigDefinition` keeps its existing default `canvas`, `anchorPx` and `socketIds`.
+Optional `registrations` adds one to 64 exact `{canvas, anchorPx}` pairs. The
+default is implicit and must not be repeated. Pairs are identified by their integer
+dimensions and anchor, so no extra frame identifier or skeleton alias is needed.
+Anchors must remain inside their canvas. All frame sockets must be declared on the
+rig and remain within the actual frame, irrespective of which pair it uses.
+
+For the received quadrupeds, keep `quadruped-v1`: default 112x112 at (56,82), with
+160x144 at (80,112) added to `registrations`. These values come from the unchanged
+staging records. No frame/socket stripping or pose resizing is required. Human
+combat/wide frames can likewise declare their actual per-clip registrations on
+the same rig. Required non-held layers must use the same registration for each
+matched body pose; a valid alternative registration is not interchangeable with
+the correct body pose. Existing single-registration catalogs remain compatible.
+
+The compositor resolves the body's current registration for bounds, root and
+socket anchoring. Prototype display scale continues to use the rig's default
+canvas height, so a larger action canvas does not shrink the anatomy. Texture
+leases and composite memory bounds remain unchanged; no new atlas is loaded by
+declaring registration metadata alone. `rigRegistration` performs bounded lookup
+without allocating a registration array in the presentation loop.
+
+Correction to the earlier M19 diagnosis: frame rigs already participated in source
+digest closure through a final metadata pass. C3e preserves this behavior and makes
+the dependency explicit while visiting frames. It does not introduce a new missing
+dependency fix. Regression tests cover unlayered actors and registration edits.
+Changing a shared rig's registration metadata changes its dependent source digests;
+compute digests only after the complete V2 graph passes validation.
+
+`npm run assets:schemas` uses the same writer as `assets:build` and regenerates the
+three shared JSON Schemas without packing textures. Run it before consuming new
+fields in the Python publisher or the source manifest. The source manifest remains
+the communicator's integration artifact; the tested 1,848-frame V2 graph in
+`assets-v2.test.ts` is a fixture, not a committed production manifest or approval.

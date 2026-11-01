@@ -288,3 +288,147 @@ procedural generators:
 
 **Consequences:** the renderer and worldforge renders must consume variants and overlay
 families (C11b). See the [tileforge guide](tileforge.md).
+
+## ADR 023 — Kit pixels with authoritative HUD values
+
+**Status:** implemented engineering approach; visual acceptance pending.
+
+**Context:** C8b requires the provided bar/slot artwork and a separate day/phase
+card. Bar PNGs already contain partial example fills, so stretching them would
+misrepresent health and needs. Replacing live controls would also lose focus.
+
+**Decision:** compile native fill strips from the source exports, use the source
+frame borders without their centers, and clip repeated strips with two-pixel
+endpoints. Keep exact accessible values and one meter updater after DOM patching.
+Use stable keyed hand/equipment controls and common slot art without inventing
+rarity. Build immutable time labels from existing snapshots; preserve clock/weather
+in the separate responsive time card and dim only the minimap during combat.
+
+**Alternatives rejected:** showing baked example fills as current values, repainting
+source assets, scaling textures horizontally, introducing a UI wall clock or worker
+schema, and manufacturing item rarity. The targeted UI build avoids unrelated
+atlas regeneration while retaining reproducibility checks.
+
+**Consequences:** the change is presentation-only; worker, save and gameplay rules
+remain unchanged. Native dimensions and DOM focus require browser verification
+in addition to pixel/compiler tests. Visual acceptance remains director-owned.
+See [C8b presentation details](hd-presentation.md#c8b-kit-meters-slots-and-time-card).
+
+## ADR 024 — Scope-bound creature publication without body regeneration
+
+**Decision:** C3b publishes the existing approved body packet through a validation
+and atomic staging boundary. Reconstruct its review from original source artifacts
+to bind metadata as well as bytes. Preserve actual per-species locomotion stride.
+Keep faces in independent candidate sidecars bound to the body manifest; body/clip
+approval never grants face approval. Do not insert faces into the linear body stage
+chain, which would invalidate approved bodies merely to add a decal.
+
+**Consequences:** source artifacts and their compatible pinned specification remain
+necessary on machine A. A missing or changed source is an explicit blocker, not
+permission to generate a replacement for an approved packet. The communicator owns
+manifest integration and Codex owns compilation/ledger transcription. Publication
+does not activate an appearance. See [C3b contracts](hd-presentation.md#c3b-creature-publication-and-face-sidecars).
+
+**Cross-machine closure correction (2026-11-01):** publish snapshots all provenance
+inputs, including the actual stage-verified model, under a content-addressed
+`art/source/blender/models/published/` directory. Keep model and bake metadata rather than
+reducing provenance to references or omitting it. Pin copies of scripts/specs too:
+later tool edits must not invalidate already published source bytes on CI.
+This adds approved source packaging, not a body rebake or artwork approval. The
+existing shared schema and compiler hash checks remain unchanged. Packaging changes
+alter manifest source digests and must follow the normal integration/ledger route.
+
+## ADR 025 — Isolated map validation and historical regression fixtures
+
+**Decision:** tests about the original village approval and unfinished Riverlands
+replay a pinned two-pass fixture. A separate test still replays every current pass
+against the canonical project. Importer negatives validate a temporary intentionally
+unfinished copy, never an assumption that the live art project must remain draft.
+
+Alternate-project validation is read-only and check-only, with project-digest/scoped
+QA receipts outside the canonical review directory. Builds still use the canonical
+map. Source/plan race checks, official schema validation, composition gates and
+exact-digest approvals remain unchanged.
+
+**Consequences:** legitimate map progress does not invalidate historical tests or
+their approvals, and fixture checks cannot overwrite current inspection receipts.
+Full-region candidate QA can succeed after Riverlands authoring without granting
+runtime activation. See [worldforge validation](worldforge.md#c7-candidate-compiler-and-domain-loader).
+
+## ADR 026 — Shared terrain composition with isolated candidate fixtures
+
+**Decision:** match tileforge's unsigned coordinate hash in runtime presentation,
+resolve registered material/mask families through a cached index, and reuse
+`TileSet.compose` for worldforge instead of maintaining a separate full-tile painter.
+Keep authored ground distinct from effective surfaces and fluid overlays. Bind
+review receipts to tile-tool dependencies as well as the catalog and map.
+
+Use the official packer in scratch space to test candidate terrain through the live
+renderer. Prototype routing exists only in the browser fixture; it cannot grant
+production approval or activate an authored map. Refresh page-cost coverage through
+a shared reporting function without repacking unrelated atlases.
+
+**Consequences:** variants and masks have reproducible cross-language tests and
+bounded missing-art fallbacks. Scene/coverage wiring remains C7 activation work,
+and native terrain design remains M9. See the [C11b contract](tileforge.md#c11b-consumers-and-isolated-proof).
+
+## ADR 027 — Human expressions as independent, body-bound sidecars
+
+**Decision:** extend the existing palette-indexed face grammar with twelve human
+expressions and explicit forward-facing feature tables. Reuse per-frame socket and
+canvas validation rather than introducing another body animation clock. Bind the
+sidecar to the existing body manifest and keep it outside body stage invalidation.
+Optional recipe palette ramps recolor features; they do not create model anatomy.
+
+**Consequences:** expression experiments cannot invalidate approved body frames.
+The existing creature grammar remains compatible. The human feature matrix can be
+tested on Machine B, but real-head placement, motion and readability still require
+Machine-A inspection and the director's separate acceptance. This increment adds
+no runtime face activation, item/fit readiness or new art approval. See the
+[C9b sidecar contract](hd-presentation.md#c9b-human-face-sidecars).
+
+## ADR 028 — Explicit held-item mesh pose plans before rendering
+
+**Decision:** validate the source mesh and authored grip/pivot annotations before
+running 64 held-item renders. Define grip buckets in screen space: turn the mesh
+to its facing, then roll around the fixed camera view direction. Model-local pitch
+would give the same bucket a different projected angle as the actor turns.
+Keep transforms rigid and bind the draft output to source/tool/contract hashes.
+
+**Consequences:** tests can establish registration math and rollback without a
+GPU, fabricated artwork or unreviewed source geometry. Rendering and actual visual
+QA remain required; a pose plan cannot grant item readiness or extend a canvas.
+The item kind refuses the humanoid body pipeline until its own stages are built.
+See the [item-planning contract](hd-presentation.md#c9b-item-pose-planning).
+
+## ADR 029 — A skeleton identity can declare multiple exact registrations
+
+**Decision:** retain the default rig canvas/root for backward compatibility and
+add a bounded optional list of exact alternate canvas/root pairs. Validate every
+frame against one pair and all sockets against that frame. Align required layered
+poses to the body's registration and use its current root/bounds when composing.
+Do not rename skeletons, discard sockets or stretch artwork to satisfy a registry.
+
+**Consequences:** real medium/large quadrupeds and human combat/wide frames can
+preserve their existing rig identities. Default prototype scale remains stable.
+The existing frame-to-rig digest dependency is retained and explicitly tested;
+earlier messages incorrectly diagnosed it as missing. Shared metadata edits still
+invalidate dependent source digests. Generate schemas separately from atlas
+packing, and require a complete validated source graph before ledger transcription.
+See the [C3e contract](hd-presentation.md#c3e-explicit-rig-registrations).
+
+## ADR 030 — Item generation is a transaction over an existing mesh
+
+**Decision:** execute the validated 65-pose plan through the shared calibrated
+Blender pass writer and existing pixelizer. Keep item transforms separate from
+body animation, derive root/support registration from the mesh pose, inspect raw
+silhouettes before outlining and install an immutable hashed generation before
+replacing its stage pointer. Inject the baker for transaction tests.
+
+**Consequences:** failures cannot replace a valid pointer with partial output,
+and item work cannot invalidate approved body stages. CPU fixtures and analytical
+projection tests establish bounds/rollback and geometry math, not a successful
+real Blender run. A calibration proxy is allowed under PRD-2; it cannot become
+production art. Silhouette thickness QA has explicit internal-material/readability
+limits. Source generation, publication and runtime item selection remain separate
+gates. See [item rendering](hd-presentation.md#c9b-item-rendering-and-silhouette-qa).

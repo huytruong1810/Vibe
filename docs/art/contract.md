@@ -6,6 +6,12 @@ painted or generated masters, deterministic Pillow ingestion, and Blender pixel
 bakes are supported when their inputs, toolchain versions and dependencies are
 recorded. No particular authoring tool establishes artistic approval.
 
+V2 rigs retain their default `canvas`/`anchorPx` and may declare additional exact
+pairs in `registrations`. A frame must match one pair; its skeleton `rigId` does
+not change merely because combat, reclining poses or species use a larger canvas.
+Duplicate/undeclared pairs and out-of-bounds sockets are rejected. See the
+[registration contract](../engineering/hd-presentation.md#c3e-explicit-rig-registrations).
+
 Each texture page is capped at 2048×2048. Multiple independent pages are supported
 within the 512/256/128 MiB High/Balanced/Low resident texture budgets. A single
 2048² RGBA page costs 16 MiB; it is not a global single-page or 16 MiB limit.

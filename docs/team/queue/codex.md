@@ -170,7 +170,7 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 
 ### C3b · Creature faces and publish
 
-- status: open
+- status: partial (portable sources received; manifest integration and director face acceptance remain)
 - goal: finish the creature class. Then `doctor` lists nothing pending for creatures, and approved creature packets can be published.
 - inputs: the Rivallie packet `art/review/2026-10-31-rivallie/`, `bake/tracks.json` (Socket_Head per frame), ART-8, `render_spec.expressions`, `catalog.ts` `AuthoringProvenanceSchema`.
 - work:
@@ -185,7 +185,17 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
      - Copy the exact 2× frames from `pix/export/` into `art/source/exports/<asset>/`, gated on the approval file (`st_publish` already checks it).
   3. In `forge.py` `CLASSES`, remove these two from creatures' `pending`. Update the `sprite-forge` skill and the `qa-fixes.md` banner.
 - done when: Rivallie re-runs with faces in the packet; `publish` writes the staging record once a director approval record exists (test with a scratch record and delete it afterwards); `doctor` shows creatures with nothing pending
-- evidence:
+- evidence: [C3b tool handoff](../comms/codex/2026-10-31T2146--to-blender--c3b-publish-and-faces.md); [registered face candidate](../../../art/review/2026-10-31-rivallie-faces-145faf106c4e/faces.json); 16 finishing and two packet-export tests pass. Body approval excludes faces; no approved packet is rerun.
+
+- distribution: source-only branch `eng/c3b-c7-tools` at `f037e2e` / draft PR #3 avoids the protected runbook merge delta. [Guarded handoff](../comms/codex/2026-10-31T2346--to-blender--c3b-source-only-handoff.md); [machine-A execution report](../comms/blender/2026-10-31T2355--to-codex-communicator--c3b-b8-b9-results.md) is integrated, with 1,848 staged frame hashes verified locally. [Portable-source correction](../comms/codex/2026-11-01T0145--to-all--c3b-portable-provenance.md) at engineering `9dd81ee`, consumer `01e9fbb` / PR #4: 21 publication and two review-export tests pass. B10 packaging is delivered; M19 source integration and separate face acceptance remain; no new artwork approval.
+
+### C3e - Rig registration variants and source-closure verification
+
+- status: done (technical contract; M19 production source integration remains separate)
+- goal: accept the actual per-size/per-clip registrations of one skeleton identity without dropping metadata or weakening validation.
+- work: add backward-compatible explicit canvas/anchor registrations to the shared rig contract; validate frames against a declared registration and all socket bounds. Preserve and test existing frame-to-rig digest metadata, regenerate shared JSON Schemas independently of atlas packing and test multi-canvas human/creature fixtures, unknown registrations and digest invalidation. Coordinate the complete V2 source graph with communicator M19 before ledger reconciliation.
+- done when: the real staged registration pairs can coexist under quadruped-v1 in a validated candidate graph, changed rig metadata changes the source digest, existing single-canvas catalogs still validate and all relevant tests pass. No artwork approval or silent source-map activation.
+- evidence: [C3e implementation and correction](../comms/codex/2026-11-01T0454--to-all--c3e-rig-registration-contract.md), [contract](../../engineering/hd-presentation.md#c3e-explicit-rig-registrations), [ADR 029](../../engineering/decisions.md#adr-029--a-skeleton-identity-can-declare-multiple-exact-registrations); engineering `033d0db`, consumer `4041714`. All 1,848 staged frames validate; 305 engineering tests / 38 Python tests pass. Browser run: 18 passed, one setup timeout; unchanged isolated retry passed. Earlier missing-digest-edge diagnosis was incorrect: a final pass already pinned frame rigs. Source integration/digests/ledger remain M19 follow-up, not approval granted by this ticket.
 
 ### C3d · Forge quality: speckles, lying creatures, edge wrap, Marshstalker tail, digest-bound publish
 
@@ -307,14 +317,14 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 
 ### C8b · HUD fixes from the director's review
 
-- status: open
+- status: candidate / awaiting director visual acceptance
 - goal:
   - **Done (claude):** the dash button text is hidden on the kit buttons (`theme.css`); the aria-labels stay. Previously: `layout.ts:7` draws "Space" (and "J"/"K") over kit buttons that already carry labels; draw one label, not two.
   - **Kit art:** use the kit's `bar_*.png` and `slot_*.png` instead of flat CSS fills.
   - **Day/phase panel:** keep it separate from the minimap, as in `art/source/ui/kit/hud_mock.png`.
   - Send the director new 1080p captures for visual acceptance.
 - done when: captures in comms; the director's visual acceptance recorded
-- evidence:
+- evidence: [C8b implementation and inspected captures](../comms/codex/2026-10-31T1834--to-director--c8b-hud-candidate.md); 294 unit tests / 22 suites, full 18 browser journeys and final two C8b checks pass. No gameplay activation or source-art changes.
 
 ### C7 · Authored world in the engine (WLD-M1…M4)
 
@@ -328,7 +338,9 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
   - update `docs/engineering/full-world-presentation.md` (its canal ban at :5, :85, :99
     is superseded by WLD-3.5 and L8).
 - done when: `npm run check` passes with tests and soak running on the authored map
-- evidence: [candidate importer handoff](../comms/codex/2026-10-31T1614--to-all--c7-candidate-importer.md), [compiler/loader guide](../../engineering/worldforge.md#c7-candidate-compiler-and-domain-loader), [ADR 021](../../engineering/decisions.md#adr-021--candidate-authored-world-compilation). Runtime activation, Riverlands and forage placement remain outstanding; no authored-world soak is claimed. C5/layout records are now published upstream: [directive 006 receipt](../comms/codex/2026-10-31T1627--to-all--c7-review-update.md).
+- evidence: [candidate importer handoff](../comms/codex/2026-10-31T1614--to-all--c7-candidate-importer.md), [compiler/loader guide](../../engineering/worldforge.md#c7-candidate-compiler-and-domain-loader), [ADR 021](../../engineering/decisions.md#adr-021--candidate-authored-world-compilation). Runtime activation, Riverlands visual approval and forage placement remain outstanding; no authored-world soak is claimed. C5/layout records are now published upstream: [directive 006 receipt](../comms/codex/2026-10-31T1627--to-all--c7-review-update.md).
+
+- follow-up: Riverlands history is integrated and full-region candidate validation now passes (two levels / 219 placements). Historical approval/draft tests use pinned fixtures; alternate-project QA is read-only and isolated. See [fixture repair](../comms/codex/2026-10-31T2248--to-all--c7-fixtures-and-art-followups.md). C7 activation remains separate.
 
 ### C8 · Existing P0s from your brief
 
@@ -348,16 +360,27 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
   - `forge.py selftest` PASS for human and creature
   - player-aqualia validation run: 19 clips, 952 frames, rig without landmark warnings
 
+### C3f - Legacy-safe source ingestion for M19
+
+- status: open (next engineering prerequisite for whole-source M19 integration)
+- goal: retain original V1 normalized registrations and identity behavior while accepting native V2 candidate records with integer registrations.
+- work: design an explicit versioned compatibility boundary; preserve all existing source frames, appearances and normalized anchors without rounding. Keep native PixelPointSchema integer-strict. Test exact rendering registration, identity/fallback resolution, source dependency closure and collisions. Coordinate the actual tracked native graph with M19 before source compilation or ledger reconciliation.
+- done when: mixed-source ingestion validates without dropping or shifting legacy content, deterministic compiler/tests pass, and candidate/approval boundaries remain explicit. This is not permission to activate art or transcribe preliminary reported digests.
+- evidence: [M19 audit and follow-up](../comms/codex/2026-11-01T0612--to-communicator--m19-compatibility-next.md); communicator reports 1,070 fractional registrations among 1,092 V1 frames. Actual candidate JSON is still requested.
+
 ### C9b · Items, fit, human faces
 
-- status: open (after C9a)
+- status: in-progress (human face sidecars and technical item renderer delivered; real Blender calibration, integration and fit pending)
 - goal: the remaining human-class stages.
   - `items`: 8 facings × 8 grip angles plus an inventory icon from one mesh (ART-15), registered to `Socket_Hand.*`.
   - `fit`: garment parts (Surface Deform or Shrinkwrap, weights from the body, hidden body faces masked, PRD-1).
   - The `thinFeature` check.
   - Human faces: the full 9 expressions plus blink, sleep and hurt, sharing the C3b grammar.
 - done when: doctor shows `items: ready` and humans with nothing pending; you've posted `--to-blender--go-items`
-- evidence:
+- evidence: [human-face sidecar increment](../comms/codex/2026-11-01T0247--to-all--c9b-human-face-sidecars.md), [contract](../../engineering/hd-presentation.md#c9b-human-face-sidecars), [ADR 027](../../engineering/decisions.md#adr-027--human-expressions-as-independent-body-bound-sidecars); engineering `fb621e8`, consumer `4d879bc`. Seven human-face tests, 21 publication and two exporter tests pass, plus 299 engineering tests. Native/4x grammar proofs inspected; real-human fitting/motion and director acceptance remain separate. No items-ready or completed C9b claim.
+
+- follow-up: engineering `3430546` adds a draft 64-held-pose-plus-icon planner, explicit screen-space grip convention, source/contract/tool pins and atomic writes; eight planner tests and all 38 forge Python tests pass. Item rendering/QA remains unfinished. See [item contract](../../engineering/hd-presentation.md#c9b-item-pose-planning), [ADR 028](../../engineering/decisions.md#adr-028--explicit-held-item-mesh-pose-plans-before-rendering). C3e is now delivered; resume item rendering while M19 integrates its source graph.
+- renderer: engineering `7586e49`, consumer `0575294` deliver rigid-mesh baking, source snapshots, projected sockets, immutable hashed output and atomic items.json replacement. All 49 forge tests pass locally and independently in the consumer checkout; all 305 engineering tests/types/assets/build pass. [B13 request](../comms/codex/2026-11-01T0612--to-blender--test-item-renderer.md) covers the real Blender cuboid calibration, unverified here because Blender 4.2 is unavailable. Source prep, gallery/publish adapters, runtime angle/occlusion tracks, garment fit and human publication remain pending; no go-items. Automatic review rejected the optional protected sprite-forge runbook amendment; it remains unchanged, with commands documented in the engineering guide instead.
 
 ### C9c · Human clip polish, per-clip canvases in review export, contract docs
 
@@ -403,7 +426,7 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 
 ### C11b · Terrain tiles in the renderer and worldforge renders
 
-- status: open
+- status: candidate (implementation and isolated golden proof; native M9 approval remains separate)
 - goal: the game and worldforge draw what tileforge publishes, with the same composition as tileforge's previews.
 - inputs: `docs/engineering/tileforge.md` (runtime contract), `art/source/tiles/tools/tilelib/preview.py` (`TileSet.compose`, `variant_of`), `src/presentation/renderer.ts` `drawChunk`
 - work:
@@ -413,7 +436,7 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
   4. worldforge `draw_level`: compose ground and overlays through tileforge's `TileSet.compose` (or the published exports) so blender's map renders show real ground and shores; keep `render` deterministic and the packet receipts valid.
   5. Atlas budget: report the added terrain pages in `coverage.md`.
 - done when: with the golden set published to a scratch exports dir, a 1080p capture of the village shows the tileforge water and shores and grass variants; worldforge village render uses them; tests green
-- evidence:
+- evidence: [C11b handoff](../comms/codex/2026-11-01T0107--to-all--c11b-terrain-integration.md), [consumer contract](../../engineering/tileforge.md#c11b-consumers-and-isolated-proof), [ADR 026](../../engineering/decisions.md#adr-026--shared-terrain-composition-with-isolated-candidate-fixtures). Runtime and offline proofs remain explicit fixtures, not art approval or C7 activation.
 
 ### C13 · Creature movement layer and brain interface (CRM-M1, CRM-M2)
 
@@ -463,3 +486,4 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 - goal: every queue has two or more open tickets; split big tickets; turn the brief's backlog (P1–P3) into tickets as each milestone lands; keep skills and docs truthful to the code (a skill must never describe a feature that doesn't exist).
 - done when: never closes; add a dated evidence line each week
 - evidence: 2026-10-31: B2 is opened by [go-world](../comms/codex/2026-10-31T1640--to-blender--go-world.md); B6/B7 remain actionable. Communicator has M12/M13 review/kit work and M14–M16 follow-ups; [ack correction](../comms/codex/2026-10-31T1640--to-communicator--c6-ack-link.md) is relayed to its owner. No duplicate tickets added.
+- update 2026-11-01: B13 offers technical item calibration while real source prep stays gated. M19 requests the actual native candidate JSON as a review artifact; M22's audit is received and C3f is the whole-source compatibility prerequisite. Existing B2/B3/B4 and M9/M11 remain available subject to their explicit input gates. No invented approvals or protected-file workarounds.
