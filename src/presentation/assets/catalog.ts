@@ -200,9 +200,15 @@ export const AssetAppearanceSchema = z
   })
   .strict();
 
-export const RigDefinitionSchema = z
-  .object({ id: Id, canvas: Size, anchorPx: PixelPointSchema, socketIds: z.array(Id) })
+export const RigRegistrationSchema = z
+  .object({ canvas: Size, anchorPx: PixelPointSchema })
   .strict();
+export type RigRegistration = z.infer<typeof RigRegistrationSchema>;
+export const RigDefinitionSchema = RigRegistrationSchema.extend({
+  id: Id,
+  socketIds: z.array(Id),
+  registrations: z.array(RigRegistrationSchema).min(1).max(64).optional(),
+}).strict();
 export const BuildProfileSchema = z
   .object({ id: Id, rigId: Id, label: z.string().min(1).max(100) })
   .strict();
@@ -645,6 +651,31 @@ export interface AssetGraph {
   furniture?: readonly FurnitureDefinition[];
   sceneAssets?: readonly SceneAsset[];
 }
+/** Default registration remains compatible; alternates must be explicitly authored. */
+export function rigRegistration(
+  rig: RigDefinition,
+  frame: Pick<GraphFrame, 'sourceSize' | 'anchorPx' | 'anchor'>,
+): RigRegistration | undefined {
+  if (!frame.sourceSize) return undefined;
+  if (matchesRegistration(rig, frame)) return rig;
+  if (rig.registrations)
+    for (const registration of rig.registrations)
+      if (matchesRegistration(registration, frame)) return registration;
+  return undefined;
+}
+function matchesRegistration(
+  r: RigRegistration,
+  frame: Pick<GraphFrame, 'sourceSize' | 'anchorPx' | 'anchor'>,
+): boolean {
+  return (
+    r.canvas.w === frame.sourceSize?.w &&
+    r.canvas.h === frame.sourceSize?.h &&
+    (frame.anchorPx
+      ? r.anchorPx.x === frame.anchorPx.x && r.anchorPx.y === frame.anchorPx.y
+      : r.anchorPx.x / r.canvas.w === frame.anchor?.x &&
+        r.anchorPx.y / r.canvas.h === frame.anchor?.y)
+  );
+}
 /** Shared structural reference validation for author inputs and normalized runtime bundles. */
 export function validateV2Graph(graph: AssetGraph, issue: (message: string) => void): void {
   for (const [label, collection] of [
@@ -677,8 +708,17 @@ export function validateV2Graph(graph: AssetGraph, issue: (message: string) => v
       ]),
     ].map((id) => frames.get(id));
   for (const r of rigs.values()) {
-    if (r.anchorPx.x > r.canvas.w || r.anchorPx.y > r.canvas.h)
-      issue(`Rig anchor outside canvas: ${r.id}`);
+    const seen = new Set<string>();
+    for (const registration of [r, ...(r.registrations ?? [])]) {
+      if (
+        registration.anchorPx.x > registration.canvas.w ||
+        registration.anchorPx.y > registration.canvas.h
+      )
+        issue(`Rig anchor outside canvas: ${r.id}`);
+      const key = `${registration.canvas.w}:${registration.canvas.h}:${registration.anchorPx.x}:${registration.anchorPx.y}`;
+      if (seen.has(key)) issue(`Duplicate rig registration: ${r.id}/${key}`);
+      seen.add(key);
+    }
     if (new Set(r.socketIds).size !== r.socketIds.length) issue(`Duplicate rig socket: ${r.id}`);
   }
   for (const p of profiles.values())
@@ -686,10 +726,7 @@ export function validateV2Graph(graph: AssetGraph, issue: (message: string) => v
   for (const f of frames.values()) {
     const rig = f.rigId ? rigs.get(f.rigId) : undefined;
     if (f.rigId && !rig) issue(`Missing frame rig: ${f.id}`);
-    if (rig && f.sourceSize && (rig.canvas.w !== f.sourceSize.w || rig.canvas.h !== f.sourceSize.h))
-      issue(`Frame/rig canvas mismatch: ${f.id}`);
-    if (rig && f.anchorPx && (rig.anchorPx.x !== f.anchorPx.x || rig.anchorPx.y !== f.anchorPx.y))
-      issue(`Frame/rig anchor mismatch: ${f.id}`);
+    if (rig && !rigRegistration(rig, f)) issue(`Undeclared frame/rig registration: ${f.id}`);
     for (const [id, p] of Object.entries(f.sockets ?? {})) {
       if (!rig || !rig.socketIds.includes(id)) issue(`Undeclared frame socket: ${f.id}/${id}`);
       if (!f.sourceSize || p.x > f.sourceSize.w || p.y > f.sourceSize.h)
@@ -711,20 +748,9 @@ export function validateV2Graph(graph: AssetGraph, issue: (message: string) => v
       issue(`Duplicate layer build profile: ${layer.id}`);
     if (appearance && rig && layer.slot !== 'held')
       for (const f of appearanceFrames(appearance)) {
-        if (!f?.sourceSize || f.sourceSize.w !== rig.canvas.w || f.sourceSize.h !== rig.canvas.h)
-          issue(`Layer canvas incompatible with rig: ${layer.id}`);
-        let anchor = f?.anchor;
-        try {
-          if (f?.anchorPx && f.sourceSize) anchor = normalizedAnchor(f.anchorPx, f.sourceSize);
-        } catch {
-          issue(`Invalid layer pixel anchor: ${layer.id}`);
-        }
-        if (
-          !anchor ||
-          anchor.x !== rig.anchorPx.x / rig.canvas.w ||
-          anchor.y !== rig.anchorPx.y / rig.canvas.h
-        )
-          issue(`Layer anchor incompatible with rig: ${layer.id}`);
+        if (!f || !rigRegistration(rig, f))
+          issue(`Layer registration incompatible with rig: ${layer.id}`);
+        if (f?.rigId && f.rigId !== rig.id) issue(`Layer frame rig mismatch: ${layer.id}/${f.id}`);
       }
   }
   for (const recipe of recipes.values()) {
@@ -775,6 +801,21 @@ export function validateV2Graph(graph: AssetGraph, issue: (message: string) => v
                 );
             if (baseClip && overlayClip && baseClip.frameIds.length !== overlayClip.frameIds.length)
               issue(`Required layer pose cadence mismatch: ${recipe.id}/${layer.id}/${clipId}`);
+            if (baseClip && overlayClip && layer.slot !== 'held')
+              for (let i = 0; i < baseClip.frameIds.length; i++) {
+                const baseFrame = frames.get(baseClip.frameIds[i]!),
+                  overlayFrame = frames.get(overlayClip.frameIds[i] ?? '');
+                const baseRegistration = rig && baseFrame && rigRegistration(rig, baseFrame),
+                  overlayRegistration = rig && overlayFrame && rigRegistration(rig, overlayFrame);
+                if (
+                  baseRegistration &&
+                  overlayRegistration &&
+                  baseRegistration !== overlayRegistration
+                )
+                  issue(
+                    `Required layer pose registration mismatch: ${recipe.id}/${layer.id}/${clipId}/${i}`,
+                  );
+              }
           }
       }
       if (part.socketId && body[0]) {

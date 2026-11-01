@@ -276,7 +276,10 @@ export function sourceSubjectDependencies(
   };
   const frame = (frameId: string) => {
     const f = source.frames.find((f) => f.id === frameId);
-    if (add(`frame:${frameId}`, f)) paths.add(f!.path);
+    if (add(`frame:${frameId}`, f)) {
+      paths.add(f!.path);
+      if (f && 'rigId' in f && f.rigId) rig(f.rigId);
+    }
   };
   const rig = (rigId: string) => {
     add(
@@ -342,16 +345,6 @@ export function sourceSubjectDependencies(
     add(`scene:${id}`, s);
     appearance(s!.appearanceId);
   }
-  // A frame's own rig/socket declaration also participates, even for unlayered actors.
-  for (const entry of [...metadata.values()])
-    if (
-      entry &&
-      typeof entry === 'object' &&
-      'path' in entry &&
-      'rigId' in entry &&
-      typeof entry.rigId === 'string'
-    )
-      rig(entry.rigId);
   return {
     metadata: [...metadata]
       .sort(([a], [b]) => a.localeCompare(b))

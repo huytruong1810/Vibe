@@ -1,9 +1,9 @@
 import { writeCoverageReport } from './lib/coverage-report';
+import { writeAssetSchemas } from './lib/asset-schemas';
 import { AssetPack } from '@assetpack/core';
 import { texturePacker } from '@assetpack/core/texture-packer';
 import sharp from 'sharp';
 import { buildUi } from './ui-build';
-import { z } from 'zod';
 import { format } from 'prettier';
 import { mkdir, readFile, readdir, writeFile, copyFile, rm } from 'node:fs/promises';
 import { resolve, relative, join, basename } from 'node:path';
@@ -12,7 +12,6 @@ import { NPC_PROFILES } from '../src/content/definitions';
 import {
   AssetCatalogSchema,
   ArtApprovalLedgerSchema,
-  ArtApprovalRecordSchema,
   hasArtApproval,
   type AnimationClip,
   type AssetAppearance,
@@ -609,28 +608,7 @@ for (const artifact of [...(catalog.furniture ?? []), ...(catalog.sceneAssets ??
     artifact.stage = 'candidate';
 AssetCatalogSchema.parse(catalog);
 await writeFile(join(output, 'catalog.json'), JSON.stringify(catalog));
-await mkdir('docs/art', { recursive: true });
-await writeFile(
-  'docs/art/asset-catalog.schema.json',
-  await format(JSON.stringify(z.toJSONSchema(AssetCatalogSchema)), {
-    parser: 'json',
-    printWidth: 100,
-  }),
-);
-await writeFile(
-  'docs/art/source-manifest.schema.json',
-  await format(JSON.stringify(z.toJSONSchema(SourceManifestSchema)), {
-    parser: 'json',
-    printWidth: 100,
-  }),
-);
-await writeFile(
-  'docs/art/art-approval-record.schema.json',
-  await format(JSON.stringify(z.toJSONSchema(ArtApprovalRecordSchema)), {
-    parser: 'json',
-    printWidth: 100,
-  }),
-);
+await writeAssetSchemas();
 await writeFile(
   'docs/art/candidates.json',
   await format(
