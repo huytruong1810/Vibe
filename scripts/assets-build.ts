@@ -43,6 +43,9 @@ if (
 await rm(cache, { recursive: true, force: true });
 await mkdir(join(cache, 'input/bundle{tps}'), { recursive: true });
 await mkdir(output, { recursive: true });
+// Atlas page count varies with content; remove pages from earlier builds so none go stale.
+for (const name of await readdir(output))
+  if (/^bundle(-\d+)?(@0\.5x)?\.(json|png)$/.test(name)) await rm(join(output, name));
 const json = async <T>(path: string): Promise<T> => JSON.parse(await readFile(path, 'utf8')) as T;
 const checkedPaths = new Set<string>();
 type LegacyFrame = {
@@ -377,7 +380,7 @@ await new AssetPack({
         autodetectAnimations: false,
         sharpOptions: { resize: { kernel: 'nearest' } },
       },
-      resolutionOptions: { resolutions: { full: 1, half: 0.5 }, maximumTextureSize: 2048 },
+      resolutionOptions: { resolutions: { full: 1, half: 0.5 }, maximumTextureSize: 2044 }, // padding is added past this; pages stay ≤ 2048
     }),
   ],
 }).run();

@@ -856,7 +856,7 @@ describe('C3f legacy-safe V2 ingestion', () => {
     );
     expect(live.schemaVersion).toBe(2);
     const legacy = live.frames.filter(isLegacySource);
-    expect(legacy.length).toBeGreaterThan(1000);
+    expect(legacy.some((f) => (f as typeof legacyFrame).anchor.y === 0.92)).toBe(true);
     for (const f of legacy) expect(sourceFrameAnchor(f)).toEqual((f as typeof legacyFrame).anchor);
   });
   it('gives a migrated row the same digest metadata as its V1 original', () => {

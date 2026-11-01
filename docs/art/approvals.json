@@ -1,4 +1,35 @@
 {
   "schemaVersion": 1,
-  "records": []
+  "records": [
+    {
+      "id": "species-rivallie-c3d-body",
+      "subjectKind": "appearance",
+      "subjectId": "species:rivallie",
+      "sourceDigest": "081a7f661d34b4d8738f2262fad74f6a11d9212833862d9dff0466d2e79a8611",
+      "decision": "approved",
+      "approvedBy": "director (recorded by claude on the director's instruction)",
+      "approvedAt": "2026-10-31T18:30:00Z",
+      "notes": "Body and clips only (faces not approved). Director record docs/team/comms/director/approvals/rivallie--2026-10-31-rivallie-c3d.md binds forge packet 69b6c10d650efacf33c0681f635d1098cfaff666b21bbc03f187f30a7c5b3744; all 616 manifest frames verified byte-identical to that packet's frames on 2026-11-01."
+    },
+    {
+      "id": "species-bramblefang-c3d-body",
+      "subjectKind": "appearance",
+      "subjectId": "species:bramblefang",
+      "sourceDigest": "f731cfbaf1a3fee932e783aa983345c4ae54a51cc6a4886ed9ac97af367889ca",
+      "decision": "approved",
+      "approvedBy": "director (recorded by claude on the director's instruction)",
+      "approvedAt": "2026-10-31T18:30:00Z",
+      "notes": "Body and clips only (faces not approved). Director record docs/team/comms/director/approvals/bramblefang--2026-10-31-bramblefang-c3d.md binds forge packet ef40a024ed16fa6126a23bace25b464a7da81ecb66a7dcd45d8fdbeacc77c535; all 616 manifest frames verified byte-identical to that packet's frames on 2026-11-01."
+    },
+    {
+      "id": "species-marshstalker-c3d-body",
+      "subjectKind": "appearance",
+      "subjectId": "species:marshstalker",
+      "sourceDigest": "3e88e7fb5a77ae1f45c0c469c3d4bf293a3a408e32042160c898d4d1fc09e567",
+      "decision": "approved",
+      "approvedBy": "director (recorded by claude on the director's instruction)",
+      "approvedAt": "2026-10-31T18:30:00Z",
+      "notes": "Body and clips only (faces not approved). Director record docs/team/comms/director/approvals/marshstalker--2026-10-31-marshstalker.md binds forge packet 654b7fa0bdc29d2a83e334cae46d1531544d892045e8e9cb6c73b8b92f79d99d; all 616 manifest frames verified byte-identical to that packet's frames on 2026-11-01."
+    }
+  ]
 }
