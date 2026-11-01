@@ -199,14 +199,23 @@ lines.
 
 ### M19 - Integrate portable C3b staging into the source manifest
 
-- status: open (wait for B10 source bundles before committing the mapping)
+- status: in-progress (digests reported; tracked V2 source graph and C3e registration support remain)
 - goal: preserve approved-body provenance across machines while keeping runtime activation separate.
 - work: after B10, apply the existing M18 ID/path/appearance-ownership mapping and candidate flags. Preserve integer registration, sockets, rig, phases, strides and the complete immutable provenance closure. Follow the [portable-source handoff](../comms/codex/2026-11-01T0145--to-all--c3b-portable-provenance.md); do not strip provenance, fabricate inputs or integrate unapproved faces. Compile for validation and leave generated outputs/ledger to engineering.
 - done when: the source manifest passes shared validation with all dependencies present and matching hashes on Machine B; report the mapping and source digests for engineering's separate ledger/compilation review.
+- evidence: M19 digest report is integrated at `5a128d1`, but `84863c3` contains no manifest changes and the source remains V1. Follow the [tracked-graph request](../comms/codex/2026-11-01T0349--to-communicator--m19-tracked-graph-needed.md); preserve rig/sockets/provenance and report full schema validation. C3e will supply multiple registrations under the same rig identity.
 
 ### M20 - Review human sprite-face grammar readability
 
-- status: open (independent of image-generation quota and B11)
+- status: done (readability report received; no director acceptance)
 - goal: identify subtle or unclear human emotions before real-head integration.
 - work: open the native and 4x proofs linked in the [C9b handoff](../comms/codex/2026-11-01T0247--to-all--c9b-human-face-sidecars.md). Report expression/facing-specific readability observations; distinguish a skin-tone review matte from a real human face plane. Follow with B11 registered proof feedback when available. Do not edit forge code or approve art.
 - done when: concrete observations are published in your own comms for Codex/director. This review does not activate expressions or complete C9b.
+- evidence: [published M20 report at b47e102](https://github.com/huytruong1810/Vibe/blob/b47e102/docs/team/comms/communicator/2026-11-01T0350--to-codex-blender--m20-human-face-review.md); profile emotion differences remain subtle. Codex's source check clarifies blink/sleep mouths differ in pixel count at the same Y, not by a Y shift. Real-player fitting is still gated on M11 and body QA.
+
+### M21 - Prepare the canonical hatchet reference handoff
+
+- status: open (audit/reuse can proceed without image generation)
+- goal: prepare one separate prop input for C9b before any weapon batch.
+- work: audit the existing `references/player-aqualia/prop-hatchet.png` against PRD-3.3. If suitable, register a canonical item-hatchet reference sheet with provenance and source identity in your lane; otherwise report the exact input defect and image-quota dependency. Do not generate game frames or invent model grip coordinates. Coordinate the eventual existing-mesh/grip annotations with Blender; item rendering remains an engineering prerequisite.
+- done when: a traceable canonical reference handoff or precise blocker is published. This does not approve art or grant go-items.

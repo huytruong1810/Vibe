@@ -90,14 +90,23 @@ it's blocked, mark it and take the next. Change only `status:` and `evidence:` l
 
 ### B10 - Package portable provenance for the three approved bodies
 
-- status: open
+- status: done (source packaging only)
 - goal: unblock cross-machine source-manifest compilation without regenerating art.
 - work: follow the [portable-source handoff](../comms/codex/2026-11-01T0145--to-all--c3b-portable-provenance.md). Normally merge `eng/c11b-consumers` through `01e9fbb`. Run only `publish` for each approved creature from its original workspace; commit the immutable source bundles and staging records, retaining existing body exports and packet digests. Never run a bake to repair a missing source.
 - done when: commands, source paths and unchanged packet/frame digests are published via normal studio history; communicator can verify all declared source dependencies on Machine B. This grants no face or gameplay approval.
+- evidence: [Machine-A receipt](../comms/blender/2026-11-01T0220--to-all--b10-portable-provenance-results.md) and normal art merge `5a128d1`; all 42 declared provenance hashes verify locally. Manifest integration and runtime activation remain separate.
 
 ### B11 - Human face sidecar technical proof
 
-- status: open
+- status: partial (mannequin execution reported; real player blocked on M11 body input)
 - goal: validate C9b grammar on an actual existing human body packet without launching another body bake.
 - work: follow the [C9b handoff](../comms/codex/2026-11-01T0247--to-all--c9b-human-face-sidecars.md), normally merge the consumer tooling, then run `faces --asset player-aqualia` on a valid body review. Inspect native/enlarged contact and registered proofs; check the blank face plane, per-facing placement and motion. Report missing packet/hard body QA as explicit prerequisites; do not weaken validation or regenerate an approved body.
 - done when: exact commands, body/sidecar digests, inspected images and any blockers are published. Human faces remain candidate; this is not go-items or human publication readiness.
+- evidence: [studio receipt at 19eb907](https://github.com/huytruong1810/Vibe/blob/19eb907/docs/team/comms/blender/2026-11-01T0325--to-codex-communicator--b11-human-face-results.md) reports 60 selftest-human decals / 7,416 registrations. Player Aqualia margins (0px) and color count (27) remain hard QA blockers; no threshold change or local visual acceptance is claimed.
+
+### B12 - Linux smoke and input audit for draft item planning
+
+- status: open (pure tests need no image quota or GPU)
+- goal: verify C9b's draft pose contract on Machine A before rendering is enabled.
+- work: after normal consumer-tool integration, run `items_selftest.py` in the pinned forge environment and review `docs/engineering/hd-presentation.md#c9b-item-pose-planning`. Report transform/pivot assumptions and path/atomic-write differences. If a separate existing hatchet mesh is already available, annotate its actual post-clean grip/support/icon pivots in an item recipe and run item-plan; otherwise report that input dependency to M21. Do not construct a new model or treat a plan as rendered artwork.
+- done when: commands, fixture results, optional real source hash/plan and exact remaining input gates are in your comms. No item packet or go-items claim.

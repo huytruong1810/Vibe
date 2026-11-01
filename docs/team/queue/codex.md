@@ -189,6 +189,14 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 
 - distribution: source-only branch `eng/c3b-c7-tools` at `f037e2e` / draft PR #3 avoids the protected runbook merge delta. [Guarded handoff](../comms/codex/2026-10-31T2346--to-blender--c3b-source-only-handoff.md); [machine-A execution report](../comms/blender/2026-10-31T2355--to-codex-communicator--c3b-b8-b9-results.md) is integrated, with 1,848 staged frame hashes verified locally. [Portable-source correction](../comms/codex/2026-11-01T0145--to-all--c3b-portable-provenance.md) at engineering `9dd81ee`, consumer `01e9fbb` / PR #4: 21 publication and two review-export tests pass. B10 repackaging and M19 integration remain; no new artwork approval.
 
+### C3e - Rig registration variants and complete source closure
+
+- status: open (next engineering prerequisite for M19)
+- goal: accept the actual per-size/per-clip registrations of one skeleton identity without dropping metadata or weakening validation.
+- work: add backward-compatible explicit canvas/anchor registrations to the shared rig contract; validate frames against a declared registration and all socket bounds. Include frame-to-rig metadata in sourceSubjectDependencies, regenerate shared JSON Schemas independently of atlas packing and test multi-canvas human/creature fixtures, unknown registrations and digest invalidation. Coordinate the complete V2 source graph with communicator M19 before ledger reconciliation.
+- done when: the real staged registration pairs can coexist under quadruped-v1 in a validated candidate graph, changed rig metadata changes the source digest, existing single-canvas catalogs still validate and all relevant tests pass. No artwork approval or silent source-map activation.
+- evidence: [M19 receipt and prerequisite](../comms/codex/2026-11-01T0349--to-communicator--m19-tracked-graph-needed.md). This tooling gap is next before further item rendering because it blocks integrating already approved body packets.
+
 ### C3d · Forge quality: speckles, lying creatures, edge wrap, Marshstalker tail, digest-bound publish
 
 - status: done (claude, 2026-10-31T1636Z)
@@ -362,6 +370,8 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
   - Human faces: the full 9 expressions plus blink, sleep and hurt, sharing the C3b grammar.
 - done when: doctor shows `items: ready` and humans with nothing pending; you've posted `--to-blender--go-items`
 - evidence: [human-face sidecar increment](../comms/codex/2026-11-01T0247--to-all--c9b-human-face-sidecars.md), [contract](../../engineering/hd-presentation.md#c9b-human-face-sidecars), [ADR 027](../../engineering/decisions.md#adr-027--human-expressions-as-independent-body-bound-sidecars); engineering `fb621e8`, consumer `4d879bc`. Seven human-face tests, 21 publication and two exporter tests pass, plus 299 engineering tests. Native/4x grammar proofs inspected; real-human fitting/motion and director acceptance remain separate. No items-ready or completed C9b claim.
+
+- follow-up: engineering `3430546` adds a draft 64-held-pose-plus-icon planner, explicit screen-space grip convention, source/contract/tool pins and atomic writes; eight planner tests and all 38 forge Python tests pass. Item rendering/QA remains unfinished. See [item contract](../../engineering/hd-presentation.md#c9b-item-pose-planning), [ADR 028](../../engineering/decisions.md#adr-028--explicit-held-item-mesh-pose-plans-before-rendering). C3e is the newly identified M19 prerequisite and takes the next slot.
 
 ### C9c · Human clip polish, per-clip canvases in review export, contract docs
 
