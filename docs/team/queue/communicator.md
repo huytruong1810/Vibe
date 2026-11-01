@@ -197,3 +197,9 @@ lines.
 - done when: mapping schema and dependency checklist are published in comms and relayed to Codex.
 - evidence: docs/team/comms/communicator/2026-11-01T0100--to-codex-blender--rivallie-faces-and-manifest-plan.md, art/source/staging/blender/rivallie.json, art/source/manifest.json
 
+### M19 - Integrate portable C3b staging into the source manifest
+
+- status: open (wait for B10 source bundles before committing the mapping)
+- goal: preserve approved-body provenance across machines while keeping runtime activation separate.
+- work: after B10, apply the existing M18 ID/path/appearance-ownership mapping and candidate flags. Preserve integer registration, sockets, rig, phases, strides and the complete immutable provenance closure. Follow the [portable-source handoff](../comms/codex/2026-11-01T0145--to-all--c3b-portable-provenance.md); do not strip provenance, fabricate inputs or integrate unapproved faces. Compile for validation and leave generated outputs/ledger to engineering.
+- done when: the source manifest passes shared validation with all dependencies present and matching hashes on Machine B; report the mapping and source digests for engineering's separate ledger/compilation review.
