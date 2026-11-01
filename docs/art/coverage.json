@@ -8313,5 +8313,6 @@
   },
   "reviewAppearanceCount": 41,
   "fullTextureBytes": 15695844,
-  "halfTextureBytes": 8339328
+  "halfTextureBytes": 8339328,
+  "terrain": { "pageIds": ["bundle"], "fullTextureBytes": 15695844, "halfTextureBytes": 8339328 }
 }

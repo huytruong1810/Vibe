@@ -232,6 +232,11 @@ export interface TerrainView {
   readonly flags: Uint8Array;
   readonly resource: Uint16Array;
   readonly quantity: Uint16Array;
+  /** Optional authored presentation channel; legacy/procedural transports omit it. */
+  readonly surface?: Uint8Array;
+  readonly surfaceNames?: readonly string[];
+  readonly ground?: Uint8Array;
+  readonly groundNames?: readonly string[];
   readonly buildings: readonly Building[];
 }
 export type ToWorker =

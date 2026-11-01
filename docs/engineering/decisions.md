@@ -345,3 +345,20 @@ exact-digest approvals remain unchanged.
 their approvals, and fixture checks cannot overwrite current inspection receipts.
 Full-region candidate QA can succeed after Riverlands authoring without granting
 runtime activation. See [worldforge validation](worldforge.md#c7-candidate-compiler-and-domain-loader).
+
+## ADR 026 — Shared terrain composition with isolated candidate fixtures
+
+**Decision:** match tileforge's unsigned coordinate hash in runtime presentation,
+resolve registered material/mask families through a cached index, and reuse
+`TileSet.compose` for worldforge instead of maintaining a separate full-tile painter.
+Keep authored ground distinct from effective surfaces and fluid overlays. Bind
+review receipts to tile-tool dependencies as well as the catalog and map.
+
+Use the official packer in scratch space to test candidate terrain through the live
+renderer. Prototype routing exists only in the browser fixture; it cannot grant
+production approval or activate an authored map. Refresh page-cost coverage through
+a shared reporting function without repacking unrelated atlases.
+
+**Consequences:** variants and masks have reproducible cross-language tests and
+bounded missing-art fallbacks. Scene/coverage wiring remains C7 activation work,
+and native terrain design remains M9. See the [C11b contract](tileforge.md#c11b-consumers-and-isolated-proof).

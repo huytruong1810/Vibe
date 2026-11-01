@@ -1,4 +1,5 @@
 import { NPC_PROFILES, SPECIES, VILLAGES } from '../../content/definitions';
+import { terrainTextureBudget } from '../terrain-art';
 import { DIALOGUE_EMOTIONS } from '../../domain/dialogue';
 import {
   FACINGS,
@@ -28,6 +29,7 @@ export interface ScopeCoverage {
   readonly gaps: readonly CoverageGap[];
 }
 export interface CoverageReport extends ScopeCoverage {
+  readonly terrain: ReturnType<typeof terrainTextureBudget>;
   readonly status: 'prototype-only' | 'hd-ready';
   readonly hdAppearances: number;
   readonly fullTextureBytes: number;
@@ -325,5 +327,6 @@ export function assetCoverage(catalog: AssetCatalog): CoverageReport {
     reviewAppearanceCount: catalog.reviewAppearances?.length ?? 0,
     fullTextureBytes: decodedTextureBytes(catalog, 1),
     halfTextureBytes: decodedTextureBytes(catalog, 0.5),
+    terrain: terrainTextureBudget(catalog),
   };
 }

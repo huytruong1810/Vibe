@@ -21,6 +21,8 @@
     "check:hygiene": "node .agents/hygiene/check.mjs --ci",
     "check": "npm run check:hygiene && npm run typecheck && npm run check:architecture && npm run check:assets && npm test && vite build",
     "assets:build": "tsx scripts/assets-build.ts",
+    "assets:coverage": "tsx scripts/assets-coverage.ts",
+    "terrain:proof": "tsx scripts/terrain-proof.ts",
     "ui:build": "tsx scripts/ui-build.ts",
     "check:assets": "tsx scripts/assets-check.ts",
     "check:packets": "tsx scripts/check-packets.ts",

@@ -23,6 +23,7 @@ import { CameraShake, FootprintTrail } from './motion-feedback';
 import { clamp } from '../domain/values';
 import { PixelArt } from './art';
 import { DualGridAutotiler } from './autotiler';
+import { TerrainArtIndex, authoredGroundMaterial } from './terrain-art';
 import {
   AnimationController,
   PoseResolver,
@@ -230,6 +231,7 @@ export class WorldRenderer {
   private readonly actionEffects = new Set<string>();
   private readonly authoredEffects = new Map<string, AuthoredEffect>();
   private terrain: TerrainView | null = null;
+  private terrainArt = new TerrainArtIndex([]);
   private frame: RenderSnapshot | null = null;
   private lastPropsTile = '';
   private selected: number | null = null;
@@ -359,6 +361,17 @@ export class WorldRenderer {
       const catalog = this.assets.catalog;
       if (catalog) {
         this.resolver = new AppearanceResolver(catalog);
+        this.terrainArt = new TerrainArtIndex(
+          catalog.appearances
+            .filter(
+              (a) =>
+                a.kind === 'environment' &&
+                a.stage !== 'proof' &&
+                a.stage !== 'candidate' &&
+                /^(ground_|shore_|path_|reedbed)/.test(a.contentId),
+            )
+            .map((a) => a.contentId),
+        );
         for (const f of catalog.frames) this.frames.set(f.id, f);
       }
       await this.loadVisibleAssets([]);
@@ -404,6 +417,7 @@ export class WorldRenderer {
     ]);
     if (this.scene.floorContentId) contentIds.add(this.scene.floorContentId);
     if (this.scene.outside) {
+      for (const id of this.terrainArt.contentIds) contentIds.add(id);
       for (const id of [
         'ground_grass',
         'ground_dirt',
@@ -833,15 +847,21 @@ export class WorldRenderer {
           flags = t.flags[i]!,
           px = dx * TILE,
           py = dy * TILE;
-        const material = !this.scene.outside
+        const authoredSurface = t.surface && t.surfaceNames?.[t.surface[i]!];
+        const authoredGround = t.ground && t.groundNames?.[t.ground[i]!];
+        const authoredMaterial = authoredGroundMaterial(authoredGround, authoredSurface);
+        const baseMaterial = !this.scene.outside
           ? this.scene.floorContentId
-          : flags & TileFlag.Road
-            ? 'ground_dirt'
-            : t.biome[i] === Biome.Beach
-              ? 'ground_sand'
-              : [Biome.Riverlands, Biome.Meadows, Biome.Forest].includes(t.biome[i]!)
-                ? 'ground_grass'
-                : undefined;
+          : authoredMaterial
+            ? authoredMaterial
+            : flags & TileFlag.Road
+              ? 'ground_dirt'
+              : t.biome[i] === Biome.Beach
+                ? 'ground_sand'
+                : [Biome.Riverlands, Biome.Meadows, Biome.Forest].includes(t.biome[i]!)
+                  ? 'ground_grass'
+                  : undefined;
+        const material = baseMaterial && this.terrainArt.material(baseMaterial, x, y);
         const groundArt = material && this.drawCatalogTexture(g, material, px, py, TILE, TILE);
         if (!groundArt)
           g.rect(px, py, TILE, TILE).fill(
@@ -904,20 +924,69 @@ export class WorldRenderer {
       }
     const grid = { size: t.size, index: (x: number, y: number) => y * t.size + x };
     const overlays = [
-      { matches: (i: number) => t.fluid[i] === 4, color: 0x6b8670, material: undefined },
-      { matches: (i: number) => t.fluid[i] === 1, color: 0x6ca6a0, material: 'ground_freshwater' },
-      { matches: (i: number) => t.fluid[i] === 2, color: 0x689da2, material: undefined },
-      { matches: (i: number) => t.fluid[i] === 3, color: 0xc98558, material: undefined },
+      ...(['sand', 'stone', 'mud', 'reedbed'] as const)
+        .filter((surface) => this.terrainArt.hasMasks(`ground_${surface}`, 'ground'))
+        .map((surface) => ({
+          matches: (i: number) =>
+            t.ground
+              ? t.groundNames?.[t.ground[i]!] === surface
+              : t.surface
+                ? t.surfaceNames?.[t.surface[i]!] === surface
+                : surface === 'sand' && t.biome[i] === Biome.Beach,
+          color: surface === 'sand' ? 0xd1c69c : 0x8d9396,
+          material: `ground_${surface}`,
+          layer: 'ground' as const,
+        })),
+      {
+        matches: (i: number) => t.fluid[i] === 4,
+        color: 0x6b8670,
+        material: 'ground_mud',
+        layer: 'water' as const,
+      },
+      {
+        matches: (i: number) => t.fluid[i] === 1,
+        color: 0x6ca6a0,
+        material: 'ground_freshwater',
+        layer: 'water' as const,
+      },
+      {
+        matches: (i: number) => t.fluid[i] === 2,
+        color: 0x689da2,
+        material: 'ground_saltwater',
+        layer: 'water' as const,
+      },
+      {
+        matches: (i: number) => t.fluid[i] === 3,
+        color: 0xc98558,
+        material: 'ground_lava',
+        layer: 'water' as const,
+      },
       {
         matches: (i: number) => (t.flags[i]! & TileFlag.Ice) !== 0,
         color: 0xb3d2cf,
-        material: undefined,
+        material: 'ground_ice',
+        layer: 'water' as const,
       },
       {
-        matches: (i: number) => (t.flags[i]! & TileFlag.Road) !== 0,
+        matches: (i: number) =>
+          (t.flags[i]! & TileFlag.Road) !== 0 &&
+          (!t.surface ||
+            !t.surfaceNames ||
+            (t.surfaceNames[t.surface[i]!] !== 'stone' &&
+              t.surfaceNames[t.surface[i]!] !== 'boardwalk')),
         color: 0xc5b78c,
         material: 'ground_dirt',
+        layer: 'paths' as const,
       },
+      ...(['stone', 'boardwalk'] as const).map((surface) => ({
+        matches: (i: number) =>
+          (t.flags[i]! & TileFlag.Road) !== 0 &&
+          !!t.surface &&
+          t.surfaceNames?.[t.surface[i]!] === surface,
+        color: surface === 'stone' ? 0x8d9396 : 0x9a6b3f,
+        material: `ground_${surface}`,
+        layer: 'paths' as const,
+      })),
     ];
     const overlayRect = (
       x: number,
@@ -942,12 +1011,13 @@ export class WorldRenderer {
             overlay.matches,
           );
           if (mask === 0) continue;
-          const textureId =
-            mask === 15
-              ? overlay.material
-              : overlay.material === 'ground_freshwater'
-                ? `shore_freshwater_mask_${mask}`
-                : undefined;
+          const textureId = this.terrainArt.mask(
+            overlay.material,
+            overlay.layer,
+            mask,
+            chunk.cx * REGION + x - 1,
+            chunk.cy * REGION + y - 1,
+          );
           if (
             textureId &&
             this.drawCatalogTexture(

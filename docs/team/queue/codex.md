@@ -407,7 +407,7 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 
 ### C11b · Terrain tiles in the renderer and worldforge renders
 
-- status: open
+- status: candidate (implementation and isolated golden proof; native M9 approval remains separate)
 - goal: the game and worldforge draw what tileforge publishes, with the same composition as tileforge's previews.
 - inputs: `docs/engineering/tileforge.md` (runtime contract), `art/source/tiles/tools/tilelib/preview.py` (`TileSet.compose`, `variant_of`), `src/presentation/renderer.ts` `drawChunk`
 - work:
@@ -417,7 +417,7 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
   4. worldforge `draw_level`: compose ground and overlays through tileforge's `TileSet.compose` (or the published exports) so blender's map renders show real ground and shores; keep `render` deterministic and the packet receipts valid.
   5. Atlas budget: report the added terrain pages in `coverage.md`.
 - done when: with the golden set published to a scratch exports dir, a 1080p capture of the village shows the tileforge water and shores and grass variants; worldforge village render uses them; tests green
-- evidence:
+- evidence: [C11b handoff](../comms/codex/2026-11-01T0107--to-all--c11b-terrain-integration.md), [consumer contract](../../engineering/tileforge.md#c11b-consumers-and-isolated-proof), [ADR 026](../../engineering/decisions.md#adr-026--shared-terrain-composition-with-isolated-candidate-fixtures). Runtime and offline proofs remain explicit fixtures, not art approval or C7 activation.
 
 ### C13 · Creature movement layer and brain interface (CRM-M1, CRM-M2)
 
