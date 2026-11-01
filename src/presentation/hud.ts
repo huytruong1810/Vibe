@@ -22,10 +22,10 @@ import type { Quality } from './renderer';
 import { GARMENT_SLOTS, type GearSlot } from '../domain/equipment';
 import { latestNpcEmotion } from './ui/dialogue';
 import { updateExploration } from './ui/exploration';
+import { meterMarkup, refreshMeters } from './ui/meters';
 
 const percent = (n: number): number => Math.round(Math.max(0, Math.min(1, n)) * 100);
-const meter = (label: string, value: number, color = 'sage'): string =>
-  `<div class="need"><span>${label}</span><div class="meter ${color}"><i style="width:${percent(value)}%"></i></div><small>${percent(value)}%</small></div>`;
+const meter = (label: string, value: number, _color = 'sage'): string => meterMarkup(label, value);
 
 export interface HudHandlers {
   send(command: CommandPayload): Promise<CommandResult>;
@@ -453,13 +453,6 @@ export class HudPresenter {
       `${escapeHtml(name)} <span>${!frame.scene.outside ? 'inside the elemental wilds' : distance < 25 ? ['among the mountain paths', 'and the riverlands', 'where the sea meets sky'][settlement.village] : 'beyond the village paths'}</span>`;
     this.el('season-label').textContent =
       `${['Spring', 'Summer', 'Autumn', 'Winter'][frame.season]}, day ${frame.day + 1}`;
-    this.el('clock').textContent = frame.calendar.toUpperCase();
-    const hp = percent(frame.player.hp / frame.player.maxHp),
-      stamina = percent(frame.player.stamina / 100);
-    this.el('player-health').style.width = `${hp}%`;
-    this.el('player-stamina').style.width = `${stamina}%`;
-    this.el('health-track').setAttribute('aria-valuenow', String(hp));
-    this.el('stamina-track').setAttribute('aria-valuenow', String(stamina));
     this.el('player-level').textContent = `LV ${frame.player.level}`;
     this.el('world-status').innerHTML =
       `<i></i> ${frame.paused.length ? 'A MOMENT OF STILLNESS' : 'A WORLD IN MOTION'}`;
@@ -496,6 +489,7 @@ export class HudPresenter {
     this.renderPanel();
     this.renderConversation();
     if (this.el<HTMLDialogElement>('map-dialog').open) this.drawMap();
+    refreshMeters();
   }
   private renderInventory(): void {
     const frame = this.frame!;

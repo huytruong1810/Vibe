@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { SimulationHost } from '../src/domain/simulation';
+import { hudViewState } from '../src/presentation/ui/state';
+import { meterPixels } from '../src/presentation/ui/meters';
+import { terrainVariant } from '../src/presentation/terrain-art';
 import type { ActorPresentation } from '../src/domain/presentation-contract';
 import {
   AnimationController,
@@ -141,7 +144,12 @@ describe('HD projection, poses and animation boundaries', () => {
     for (let i = 0; i < 90; i++) {
       a.step();
       b.step();
-      if (i % 3 === 0) a.frame();
+      if (i % 3 === 0) {
+        const view = hudViewState(a.frame());
+        meterPixels(view.health, 160);
+        terrainVariant(i, i + 1, 4);
+        expect(view.time.day).toBe('Day 1');
+      }
     }
     expect(a.snapshot()).toEqual(b.snapshot());
     const frame = a.frame();

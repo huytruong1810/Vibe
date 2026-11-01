@@ -61,7 +61,7 @@ class TileSet:
     def overlay(self, oid, mask):
         return self.img.get(f"tiles/{oid}_mask_{mask}.png")
 
-    def compose(self, ground, overlays, fallback=None):
+    def compose(self, ground, overlays, fallback=None, origin=(0, 0)):
         """ground: 2-D array of material ids (or None); overlays: [(overlay id, bool cells)]."""
         h, w = ground.shape
         n = self.n
@@ -70,7 +70,7 @@ class TileSet:
             for x in range(w):
                 mid = ground[y, x]
                 if mid:
-                    canvas.alpha_composite(self.material(mid, x, y), (x * n + n // 2, y * n + n // 2))
+                    canvas.alpha_composite(self.material(mid, x + origin[0], y + origin[1]), (x * n + n // 2, y * n + n // 2))
                 elif fallback is not None and fallback[y][x]:
                     canvas.paste(fallback[y][x], (x * n + n // 2, y * n + n // 2, x * n + n + n // 2, y * n + n + n // 2))
         for oid, cells in overlays:
@@ -80,7 +80,7 @@ class TileSet:
                     mask = dual_mask(cells, x, y)
                     if not mask:
                         continue
-                    tile = self.material(mat) if mask == 15 else self.overlay(oid, mask)
+                    tile = self.material(mat, x + origin[0] - 1, y + origin[1] - 1) if mask == 15 else self.overlay(oid, mask)
                     canvas.alpha_composite(tile, (x * n, y * n))
         return canvas.crop((n // 2, n // 2, n // 2 + w * n, n // 2 + h * n))
 
