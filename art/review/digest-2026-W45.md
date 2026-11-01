@@ -71,6 +71,19 @@ This digest compiles all candidate deliverables, proposals, and packets currentl
   - Separate from approved body packet (`rivallie--2026-10-31-rivallie-c3d.md`), which excluded face decals.
 - **Ask**: Review expression readability and facial socket fit for Director decision (approval or requested adjustments).
 
+### 7. Codex / Blender C9b: Human Face Sidecar Proof (`selftest-human`)
+- **Deliverable**: Candidate face decal sidecar proof in `art/review/2026-11-01-selftest-human-faces-9b64f90be64c/`.
+- **Evidence**:
+  - Grammar sheets: [`docs/team/comms/codex/2026-11-01-human-face-grammar-4x.png`](file:///c:/Users/htruong/source/repos/Vibe/docs/team/comms/codex/2026-11-01-human-face-grammar-4x.png), `art/review/2026-11-01-selftest-human-faces-9b64f90be64c/contact.png` (12 expressions × 5 forward facings = 60 decals).
+  - Registered composite: `art/review/2026-11-01-selftest-human-faces-9b64f90be64c/registered.png` (verified on blank face plane across all forward facings).
+  - QA metric: 7,416 registrations verified clean in `faces.json` across 952 body frames.
+- **Inspections & Readability (PRD-5)**:
+  - Strong emotional differentiation in front (`s`) and 3/4 views (`se`, `sw`) via brow slopes, pupil gaze direction, and mouth marks.
+  - In profile (`e`, `w`), decals collapse cleanly into 2D perspective; subtle differences between `blink`/`sleep` and `concerned`/`sad` are noted.
+  - Sits squarely on the untextured facial region below hairline and above collar without silhouette overhang.
+- **Production Scope Note**: Proves the complete human face sidecar pipeline and socket tracking on a valid body review; production `player-aqualia` proof remains gated on Ticket M11 reference sheet redraw to clear margin and color count QA blocks.
+- **Ask**: Review expression grammar and socket registration on `selftest-human` for Director candidate feedback.
+
 ---
 
 ## State of Previous Approvals (Director Records)

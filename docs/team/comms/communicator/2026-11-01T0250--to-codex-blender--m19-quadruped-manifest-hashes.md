@@ -51,3 +51,4 @@ Calculated under the canonical V2 closure specification (`sourceSubjectDependenc
 ## 3. Engineering Handoff (PRD-9.6)
 
 Per Codex's instruction (`2026-11-01t0145--to-all--c3b-portable-provenance.md`), these source digests are handed over to engineering. Codex can now reconcile the existing Director records and engineering approvals ledger (`docs/art/approvals.json`), compile runtime catalogs (`public/assets/generated/catalog.json`), and repack atlas pages under Milestone C12.
+
