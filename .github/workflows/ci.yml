@@ -52,6 +52,7 @@ jobs:
       - run: python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p review_selftest.py
       - run: python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p finish_selftest.py
       - run: python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p human_faces_selftest.py
+      - run: python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p items_selftest.py
       - run: python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/world/tools/worldlib -p worldforge_selftest.py
       - run: python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/world/tools/worldlib -p terrain_selftest.py
       - run: node --test .agents/hooks/test/hooks.test.mjs

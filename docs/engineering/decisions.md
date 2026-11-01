@@ -386,3 +386,17 @@ tested on Machine B, but real-head placement, motion and readability still requi
 Machine-A inspection and the director's separate acceptance. This increment adds
 no runtime face activation, item/fit readiness or new art approval. See the
 [C9b sidecar contract](hd-presentation.md#c9b-human-face-sidecars).
+
+## ADR 028 — Explicit held-item mesh pose plans before rendering
+
+**Decision:** validate the source mesh and authored grip/pivot annotations before
+running 64 held-item renders. Define grip buckets in screen space: turn the mesh
+to its facing, then roll around the fixed camera view direction. Model-local pitch
+would give the same bucket a different projected angle as the actor turns.
+Keep transforms rigid and bind the draft output to source/tool/contract hashes.
+
+**Consequences:** tests can establish registration math and rollback without a
+GPU, fabricated artwork or unreviewed source geometry. Rendering and actual visual
+QA remain required; a pose plan cannot grant item readiness or extend a canvas.
+The item kind refuses the humanoid body pipeline until its own stages are built.
+See the [item-planning contract](hd-presentation.md#c9b-item-pose-planning).

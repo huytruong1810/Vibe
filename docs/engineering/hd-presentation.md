@@ -245,3 +245,38 @@ Run `human_faces_selftest.py` through the forge's pinned uv environment alongsid
 `finish_selftest.py` and `review_selftest.py`. C9b remains partial: item/8-grip
 rendering, garment fit/material masks, thin-feature QA and human publication are
 pending. `items: ready` and `go-items` are deliberately not issued.
+
+### C9b item pose planning
+
+`forge.py item-plan --asset item:hatchet` validates an existing source mesh and
+writes only `work/item-hatchet/item_plan.json`. This is a draft geometry-transform
+contract, not an item renderer, mesh generator, QA packet or readiness grant.
+Item IDs now have their own forge kind; `all` and body stages explicitly refuse
+them while the item pipeline remains unfinished.
+
+The normal recipe must declare matching `asset` and `kind: "item"`. Its `item`
+object requires `model` (a relative `.blend` path under `art/source`), `grip`
+(three finite model-space coordinates), `socket` (`Socket_Hand.R` or `.L`) and
+`iconPivot` (three explicitly authored coordinates). Optional `supportGrip` adds
+the second grip. Unknown fields, missing files, escaping paths, invalid sockets
+or nonfinite/bool coordinates fail before replacing any prior plan. This command
+checks source existence/hash; Blender must later validate the model's contents.
+
+The plan contains 64 held poses (eight facings by eight grip buckets) plus one
+three-quarter icon from the same source mesh. Canvas/anchor and camera values
+come from the existing protected render specification. Grip buckets are clockwise
+screen angles from up. Each rigid transform first yaws the existing mesh to its
+facing, then rotates around the fixed orthographic view axis; it translates the
+authored grip to the root. It neither scales nor mirrors anatomy or rotates
+finished bitmaps. Support-grip coordinates undergo that same transform. The icon
+uses its explicit pivot; it is not stretched from an inventory PNG.
+
+Canonical output binds source hash, settings, generator hash and the relevant
+camera/facing/canvas contract. A temporary sibling file is installed atomically
+only after rechecking the source hash; malformed input, storage failure and a
+changed source retain the previous plan. Shared fixtures test projected angles in
+every facing, rigid transforms, both hand sockets, deterministic bytes and failure
+behavior. The planner does not promise that a spear fits the held-item canvas:
+real rendering, transparent margins, feature thickness, silhouette/occlusion and
+any required canvas extensions remain explicit C9b integration work. No `items`
+render stage or `go-items` message is available yet.

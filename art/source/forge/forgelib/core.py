@@ -70,7 +70,9 @@ def load_recipe(asset_id: str) -> dict:
 
 
 def asset_kind(asset_id: str) -> str:
-    """human | creature | environment, from the id and spec canvases."""
+    """human | creature | item | environment, from the id and spec canvases."""
+    if asset_id.startswith("item:"):
+        return "item"
     if asset_id.startswith("env:"):
         return "environment"
     if asset_id == "selftest-creature":
@@ -96,6 +98,8 @@ def canvas_for(asset_id: str, state: str = "idle") -> tuple[str, dict]:
             if key.startswith("human.") and key != "human.locomotion" and state in c.get("states", []):
                 return key, c
         return "human.locomotion", rs["human.locomotion"]
+    if kind == "item":
+        return "layer.heldItem", rs["layer.heldItem"]
     raise ForgeError(f"No canvas for {asset_id} ({kind}); environment canvases are set per recipe.")
 
 
