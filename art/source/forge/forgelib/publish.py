@@ -34,6 +34,54 @@ def approval_metadata(record: Path) -> dict:
     return {k.strip(): v.strip() for k, v in (row.split(":", 1) for row in rows if ":" in row)}
 
 
+def source_bundle(repo: Path, wd: Path, asset: str, inputs: list[tuple[Path, str]]) -> tuple[Path, list[dict], list[tuple[Path, str, str]]]:
+    """Plan a self-contained immutable closure; no scratch paths reach the compiler.
+
+    Keep exact model, tracks, stage record and tool bytes, rather than replacing
+    the model with a reference or binding old publications to mutable live tools.
+    The source filename participates in the digest to prevent role/path aliasing.
+    """
+    rows = []
+    scratch_names = {wd / "animate.blend": "model/animate.blend",
+                     wd / "bake/tracks.json": "bake/tracks.json",
+                     wd / "animate.json": "pose/animate.json"}
+    for path, role in inputs:
+        if not path.is_file() or not path.resolve().is_relative_to(repo / "art/source"):
+            raise ForgeError(f"Missing source artifact: {path}")
+        name = scratch_names.get(path, path.relative_to(repo / "art/source").as_posix())
+        rows.append((path, name, sha(path), role))
+    rows.sort(key=lambda row: row[1])
+    if len({row[1] for row in rows}) != len(rows):
+        raise ForgeError("Duplicate publication source path")
+    digest = hashlib.sha256(json.dumps(
+        [{"path": name, "sha256": digest, "role": role} for _, name, digest, role in rows],
+        sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+    target = repo / "art/source/blender/models/published" / asset / digest
+    provenance = [{"path": (target / name).relative_to(repo / "art/source").as_posix(),
+                   "sha256": digest, "role": role} for _, name, digest, role in rows]
+    return target, provenance, [(path, name, digest) for path, name, digest, _ in rows]
+
+
+def install_sources(target: Path, rows: list[tuple[Path, str, str]]) -> None:
+    """Copy once, verify on every retry, never repair mutated immutable sources."""
+    if target.exists():
+        for _, name, digest in rows:
+            path = within(target, name)
+            if not path.is_file() or sha(path) != digest:
+                raise ForgeError("Existing immutable source bundle has changed")
+        return
+    target.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(dir=target.parent, prefix="publish-sources-") as tmp:
+        candidate = Path(tmp) / "sources"
+        for source, name, digest in rows:
+            destination = within(candidate, name)
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(source, destination)
+            if sha(destination) != digest:
+                raise ForgeError("Source changed while copying; publication cancelled")
+        os.replace(candidate, target)
+
+
 def validate_packet(packet: Path, asset: str) -> dict:
     manifest = json.loads((packet / "review.json").read_text())
     if manifest.get("asset") != asset or manifest.get("status") != "candidate":
@@ -120,12 +168,9 @@ def publish_body(repo: Path, wd: Path, packet: Path, approval: Path, asset: str,
     inputs.extend([(repo / "art/source/forge/spec/palette.json", "palette"),
                    (repo / f"art/source/forge/recipes/{asset}.json", "pose-config"),
                    (repo / "art/source/forge/uv.lock", "dependency-lock")])
-    for path, _ in inputs:
-        if not path.is_file() or not path.resolve().is_relative_to(repo / "art/source"):
-            raise ForgeError(f"Missing source artifact: {path}")
+    bundle, provenance_inputs, bundle_rows = source_bundle(repo, wd, asset, inputs)
     provenance = {"id": f"forge-{asset}", "method": "blender-bake",
-                  "inputs": [{"path": p.relative_to(repo / "art/source").as_posix(),
-                              "sha256": sha(p), "role": role} for p, role in inputs],
+                  "inputs": provenance_inputs,
                   "toolchain": [{"name": "blender", "version": blender_version}],
                   "command": f"uv run --project art/source/forge python art/source/forge/forge.py publish --asset {asset}"}
     # Use the generated shared TypeScript contract, not an independently invented shape.
@@ -145,6 +190,7 @@ def publish_body(repo: Path, wd: Path, packet: Path, approval: Path, asset: str,
               "authoringProvenance": provenance}
     staging = repo / "art/source/staging/blender" / f"{asset}.json"
     payload = json.dumps(record, sort_keys=True, indent=2) + "\n"
+    install_sources(bundle, bundle_rows)
     # A content-addressed destination must never silently overwrite earlier exports.
     if export.exists():
         for frame in manifest["frames"]:
@@ -162,6 +208,7 @@ def publish_body(repo: Path, wd: Path, packet: Path, approval: Path, asset: str,
                     raise ForgeError("Frame changed while copying; publication cancelled")
             os.replace(candidate, export)
     guards = [(approval, record["approvalSha256"]), (packet / "review.json", record["packetSha256"])]
+    guards.extend((path, digest) for path, _, digest in bundle_rows)
     guards.extend((repo / "art/source" / p["path"], p["sha256"]) for p in provenance["inputs"])
     if any(sha(path) != digest for path, digest in guards):
         raise ForgeError("Publication inputs changed before commit; previous staging retained")

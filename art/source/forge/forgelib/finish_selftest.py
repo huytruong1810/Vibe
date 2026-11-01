@@ -1,6 +1,7 @@
 """C3b boundary tests; fake approvals exist only inside an OS temporary repository."""
 import copy
 import json
+import shutil
 import sys
 import tempfile
 import unittest
@@ -74,6 +75,68 @@ class FinishingTest(unittest.TestCase):
         for frame in record["frames"]:
             self.assertEqual(sha(self.repo / "art/source" / frame["file"]), frame["sha256"])
             self.assertEqual(frame["rigId"], "quadruped-v1")
+
+    def test_provenance_closure_survives_missing_machine_a_workspace(self):
+        record = json.loads(self.publish().read_text())
+        provenance = record["authoringProvenance"]
+        shutil.rmtree(self.wd)
+        self.assertFalse(self.wd.exists())
+        for dependency in provenance["inputs"]:
+            self.assertTrue(dependency["path"].startswith("blender/models/published/rivallie/"))
+            self.assertNotIn("/work/", dependency["path"])
+            self.assertEqual(sha(self.repo / "art/source" / dependency["path"]), dependency["sha256"])
+        model = next(p for p in provenance["inputs"] if p["role"] == "model")
+        self.assertEqual((self.repo / "art/source" / model["path"]).read_bytes(),
+                         b"synthetic test model, never a production source")
+        from jsonschema import Draft202012Validator
+        schema = json.loads((self.repo / "docs/art/source-manifest.schema.json").read_text())
+        Draft202012Validator(schema["oneOf"][1]["properties"]["authoringProvenance"]["items"]).validate(provenance)
+
+    def test_live_tool_edit_does_not_invalidate_published_source_bytes(self):
+        path = self.publish()
+        old = json.loads(path.read_text())
+        tool = self.repo / "art/source/forge/forgelib/publish.py"
+        tool.write_text("# changed publisher, same packet bytes\n")
+        new = json.loads(self.publish().read_text())
+        self.assertEqual(old["packetDigest"], new["packetDigest"])
+        self.assertEqual(old["frames"], new["frames"])
+        self.assertNotEqual(old["authoringProvenance"], new["authoringProvenance"])
+        for dependency in old["authoringProvenance"]["inputs"]:
+            self.assertEqual(sha(self.repo / "art/source" / dependency["path"]), dependency["sha256"])
+
+    def test_mutated_source_bundle_refuses_republication_without_repair(self):
+        path = self.publish()
+        before = path.read_bytes()
+        dependency = json.loads(before)["authoringProvenance"]["inputs"][0]
+        source = self.repo / "art/source" / dependency["path"]
+        source.write_bytes(b"mutated published source")
+        with self.assertRaisesRegex(core.ForgeError, "immutable source bundle"):
+            self.publish()
+        self.assertEqual(before, path.read_bytes())
+        self.assertEqual(source.read_bytes(), b"mutated published source")
+
+    def test_source_copy_corruption_does_not_publish_pointer(self):
+        original = shutil.copyfile
+        def corrupt(src, dst):
+            result = original(src, dst)
+            if "sources" in Path(dst).parts:
+                Path(dst).write_bytes(b"corrupted source copy")
+            return result
+        with patch("forgelib.publish.shutil.copyfile", side_effect=corrupt):
+            with self.assertRaisesRegex(core.ForgeError, "Source changed while copying"):
+                self.publish()
+        self.assertFalse((self.repo / "art/source/staging").exists())
+        self.assertFalse((self.repo / "art/source/exports").exists())
+
+    def test_source_bundle_install_failure_preserves_previous_pointer(self):
+        path = self.publish()
+        before = path.read_bytes()
+        (self.repo / "art/source/forge/forgelib/publish.py").write_text("# new tool bytes\n")
+        with patch("forgelib.publish.os.replace", side_effect=OSError("source storage failure")):
+            with self.assertRaises(OSError):
+                self.publish()
+        self.assertEqual(path.read_bytes(), before)
+        self.assertFalse(list((self.repo / "art/source/blender/models/published/rivallie").glob("publish-sources-*")))
 
     def test_rejects_approval_scope_asset_and_digest_without_changes(self):
         original = self.approval.read_text()
