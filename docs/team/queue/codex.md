@@ -400,7 +400,7 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 
 ### C10 · Environment asset kind
 
-- status: open
+- status: done (claude, 2026-11-01): environment kind built; doctor READY; selftest --kind environment PASS on a calibration house. A real golden building waits for the M23 house sheet (front + side views). Runtime roof/canopy fade is engine follow-up
 - goal:
   - a canvas set per recipe;
   - 1/sin 30° depth stretch (ART-2.3);

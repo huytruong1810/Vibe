@@ -336,6 +336,29 @@ the Blender integration or artistic quality. Machine B currently has no Blender
 The protected sprite-forge runbook remains unchanged; this guide does not override
 its production gate or authorize item asset production.
 
+### C10 environment kind (claude, 2026-11-01)
+
+`env:<id>` assets run `prep → gen3d → clean → texture → layout → bake → pixelize → qa →
+packet → publish` (`forgelib/environment.py`, `blender/env_layout.py`).
+
+- **layout** scales the textured model uniformly so its ground contact (the lowest 4% of
+  its height) is `footprint[0]` tiles wide (1 tile = 1 world unit = 32 art px). It grounds
+  and centres it, and splits faces above `split.aboveFraction` of the height into the
+  `roof`/`canopy` layer (ART-11.1). It computes one canvas for all layers: width a
+  multiple of 32, anchor at the footprint's south-edge centre.
+- **bake** reuses `bake.py`'s explicit pose path, one render per layer: matrix `diag(1, 2, 1)` is
+  the 1/sin 30° world-Y depth stretch (ART-2.3), and the translation puts the anchor point on the
+  world origin, which `set_canvas` projects to the anchor pixel.
+- **pixelize** per layer (with `rampShift`), plus an optional `shadow` layer: a footprint
+  ellipse in `outline-neutral` deep at alpha 96 (ART-3.4).
+- **qa**: footprint depth within 0.35 tile (ART-11.4), width multiple of 32, margins,
+  palette membership, 32-colour budget (ART-4.4), exact 2x blocks.
+- **packet/publish**: `review.json` lists every layer with its hash, the footprint and
+  `lightPools` (AMB-3.2); `publish_env` mirrors body publication.
+- `forge.py selftest --kind environment` runs a PRD-2 calibration house (box and prism roof,
+  never art) and asserts base and roof on a shared canvas, the roof above the base, and every QA
+  check. Runtime use (roof fade when actors stand under it) is engine work for the catalog.
+
 ### C9b item source, packet and publication (claude, 2026-11-01)
 
 Held items now run end to end: `prep → gen3d → clean → texture → orient → items →

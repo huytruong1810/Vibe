@@ -4,7 +4,7 @@
 
 Commands:
   doctor                 environment check plus readiness per asset class (creatures, humans, items, environment)
-  selftest [--kind human|creature|item|all]   run built-in calibration fixtures and assert invariants
+  selftest [--kind human|creature|item|environment|all]   run built-in calibration fixtures and assert invariants
   status --asset ID      stage table for one asset
   next --asset ID        print the exact next command, or BLOCKED: <reason>
   prep|gen3d|clean|texture|rig|animate|bake|pixelize|qa|packet|publish --asset ID   run one stage
@@ -35,16 +35,19 @@ CMD = "uv run --project art/source/forge python art/source/forge/forge.py"
 STAGES = ["prep", "gen3d", "clean", "texture", "rig", "animate", "bake", "pixelize", "qa", "packet", "publish"]
 # Held items (C9b): a prop sheet becomes a canonical source model, then 64 held poses + icon.
 ITEM_STAGES = ["prep", "gen3d", "clean", "texture", "orient", "items", "packet", "publish"]
+# Environment (C10): buildings, large props, trees. One static view, base + roof/canopy layers.
+ENV_STAGES = ["prep", "gen3d", "clean", "texture", "layout", "bake", "pixelize", "qa", "packet", "publish"]
 
 
 def stages_for(asset: str) -> list[str]:
-    return ITEM_STAGES if asset_kind(asset) == "item" else STAGES
+    kind = asset_kind(asset)
+    return ITEM_STAGES if kind == "item" else ENV_STAGES if kind == "environment" else STAGES
 # Readiness per asset class (doctor). A class is ready when every stage it needs up to `packet` exists.
 CLASSES = {
     "creatures": {"ready": True, "pending": [], "templates": ["quadruped"]},
     "humans": {"ready": True, "pending": ["fit (modular garment parts; outfits baked from the sheet need none)"], "templates": ["humanoid"]},
     "items": {"ready": True, "pending": [], "templates": ["held-item"]},
-    "environment": {"ready": False, "pending": ["environment kind: canvas, depth stretch, layers, footprint QA"], "ticket": "codex C10"},
+    "environment": {"ready": True, "pending": [], "templates": ["building", "tree", "large-prop"]},
 }
 
 
@@ -58,6 +61,10 @@ SELFTEST_RECIPES = {
                        "ramps": {"skin": "skin-warm", "shirt": "teal", "pants": "leather", "hair": "hair-teal"}},
     "selftest-creature": {"asset": "selftest-creature", "kind": "creature", "heightArtPx": 31,
                           "ramps": {"body": "teal", "belly": "cream", "fins": "glass"}},
+    "env:selftest-house": {"asset": "env:selftest-house", "kind": "environment",
+                           "ramps": {"walls": "timber", "roof": "teal"},
+                           "environment": {"footprint": [2, 2], "split": {"layer": "roof", "aboveFraction": 0.55},
+                                           "lightPools": [{"x": 0, "y": -20, "radiusTiles": 2}]}},
 }
 
 
@@ -118,9 +125,12 @@ def st_gen3d(asset: str) -> str:
 
 
 def st_clean(asset: str) -> str:
-    r, wd, cv = _recipe(asset), work_dir(asset), _canvas(asset)
+    r, wd = _recipe(asset), work_dir(asset)
+    # Environment canvases come from layout (footprint); clean only needs a neutral scale.
+    cv = {"size": [4096, 4096], "anchor": [2048, 3800]} if asset_kind(asset) == "environment" else _canvas(asset)
     rs = spec("render_spec")
-    height = r["orient"]["lengthArtPx"] if asset_kind(asset) == "item" else r["heightArtPx"]
+    height = (r["orient"]["lengthArtPx"] if asset_kind(asset) == "item"
+              else 512 if asset_kind(asset) == "environment" else r["heightArtPx"])
     params = {"heightArtPx": height, "canvas": cv["size"], "anchor": cv["anchor"],
               "artPxPerUnit": rs["camera"]["artPixelsPerWorldUnit"], "elevationDeg": rs["camera"]["elevationDeg"],
               "targetFaces": r.get("targetFaces", 14000)}
@@ -403,6 +413,14 @@ def _blender_version() -> str:
 
 
 def st_publish(asset: str) -> str:
+    if asset_kind(asset) == "environment":
+        found = approval_for(asset)
+        if not found:
+            raise ForgeError(f"No director-approved record matches the current environment packet of {asset} (L7, PRD-9).")
+        from forgelib.publish import publish_env
+        path = publish_env(REPO, work_dir(asset), found[1], found[0], asset, _blender_version())
+        record(asset, "publish", [found[0], found[1] / "review.json"], [path], {"scope": "layers"})
+        return f"staged {_rel(path)}"
     if asset_kind(asset) == "item":
         found = approval_for(asset)
         if not found:
@@ -488,6 +506,118 @@ def st_orient(asset: str) -> str:
     record(asset, "orient", inputs, [out, wd / "orient_preview.png"], info, digest_extra=None)
     return (f"reach {info['reachArtPx']} art px of {reach}; head up, blade forward; "
             f"LOOK at {_rel(wd / 'orient_preview.png')} (flip with orient.flipHead/flipForward)")
+
+
+# ---------------------------------------------------------------- environment (C10)
+def _env(asset: str) -> dict:
+    from forgelib import environment
+    return environment.validate(_recipe(asset))
+
+
+def _layout(asset: str) -> dict:
+    rec = core.stage_record(asset, "layout")
+    if not rec:
+        raise ForgeError(f"Run layout first ({CMD} layout --asset {asset})")
+    return rec["extra"]
+
+
+def st_layout(asset: str) -> str:
+    env, wd, rs = _env(asset), work_dir(asset), spec("render_spec")
+    params = {"footprint": env["footprint"], "split": env.get("split"), "artPxPerUnit": rs["camera"]["artPixelsPerWorldUnit"],
+              "elevationDeg": rs["camera"]["elevationDeg"], "depthStretch": rs["camera"]["environmentDepthStretch"],
+              "marginPx": rs["marginsArtPixels"]["min"], "widthMultipleOf": rs["canvases"]["environment"]["widthMultipleOf"]}
+    pfile = wd / "layout_params.json"
+    pfile.write_text(json.dumps(params, sort_keys=True))
+    src, script = wd / "texture.blend", core.BLENDER_SCRIPTS / "env_layout.py"
+    inputs = [src, pfile, script]
+    if core.is_fresh(asset, "layout", inputs):
+        return "fresh (cached)"
+    out = wd / "layout"
+    shutil.rmtree(out, ignore_errors=True)
+    log = wd / "logs" / "layout.log"
+    core.run_blender("env_layout.py", [str(src), str(out), str(pfile)], log)
+    line = [l for l in log.read_text().splitlines() if l.startswith("ENV_LAYOUT ")]
+    if not line:
+        raise ForgeError(f"layout failed; see {_rel(log)}")
+    info = json.loads(line[-1][len("ENV_LAYOUT "):])
+    core.run_blender("preview.py", [str(out / "layout_full.blend"), str(wd / "layout_preview.png")], wd / "logs" / "layout_preview.log")
+    record(asset, "layout", inputs, [out / f"{l}.blend" for l in info["layers"]] + [wd / "layout_preview.png"], info, digest_extra=None)
+    return (f"layers {', '.join(info['layers'])}; canvas {info['canvas']['size']}; ground contact "
+            f"{info['contactDepthTiles']} tiles deep vs footprint {env['footprint'][1]}; LOOK at {_rel(wd / 'layout_preview.png')}")
+
+
+def st_env_bake(asset: str) -> str:
+    from forgelib import environment
+    wd, rs, lay = work_dir(asset), spec("render_spec"), _layout(asset)
+    blends = [wd / "layout" / f"{l}.blend" for l in lay["layers"]]
+    inputs = [*blends, wd / "layout.json", core.BLENDER_SCRIPTS / "bake.py", core.FORGE / "forgelib/environment.py"]
+    if core.is_fresh(asset, "bake", inputs):
+        return "fresh (cached)"
+    shutil.rmtree(wd / "bake", ignore_errors=True)
+    for layer, blend in zip(lay["layers"], blends):
+        pfile = wd / f"bake_{layer}_params.json"
+        pfile.write_text(json.dumps(environment.bake_parameters(lay, rs, layer)))
+        core.run_blender("bake.py", [str(blend), str(wd / "bake" / layer), str(pfile)], wd / "logs" / f"bake_{layer}.log")
+    record(asset, "bake", inputs, sorted((wd / "bake").rglob("*.png")), {"layers": lay["layers"]})
+    return f"{len(lay['layers'])} layers on one {lay['canvas']['size']} canvas, depth stretch {rs['camera']['environmentDepthStretch']}"
+
+
+def st_env_pixelize(asset: str) -> str:
+    from forgelib import environment
+    r, wd, rs, lay, env = _recipe(asset), work_dir(asset), spec("render_spec"), _layout(asset), _env(asset)
+    bake_files = sorted((wd / "bake").rglob("*.png"))
+    extra = {"ramps": r["ramps"], "rampShift": r.get("rampShift", {}), "shadow": env.get("contactShadow", True)}
+    code = [core.FORGE / "forgelib/pixelize.py", core.FORGE / "forgelib/environment.py", core.SPEC_DIR / "palette.json"]
+    if core.is_fresh(asset, "pixelize", bake_files + code, extra):
+        return "fresh (cached)"
+    shutil.rmtree(wd / "pix", ignore_errors=True)
+    layers = environment.pixelize_layers(wd / "bake", wd / "pix", r["ramps"], r.get("rampShift"), lay, rs,
+                                         extra["shadow"], r.get("detailSlots"))
+    record(asset, "pixelize", bake_files + code, sorted((wd / "pix").rglob("*.png")), {**extra, "layers": layers})
+    return f"layers {', '.join(layers)}"
+
+
+def st_env_qa(asset: str) -> str:
+    from forgelib import environment
+    wd, rs = work_dir(asset), spec("render_spec")
+    layers = core.stage_record(asset, "pixelize")["extra"]["layers"]
+    report = environment.qa(asset, wd / "pix", _layout(asset), rs, spec("palette"), layers)
+    (wd / "qa_report.json").write_text(json.dumps(report, indent=1))
+    environment.contact_sheet(wd / "pix", layers, wd / "contact.png")
+    record(asset, "qa", [wd / "pix" / l / "s_0.png" for l in layers], [wd / "qa_report.json", wd / "contact.png"],
+           {"status": report["status"]})
+    failed = [c["check"] for c in report["checks"] if not c["pass"]]
+    return f"{report['status']}" + (f"; failing: {', '.join(failed)}" if failed else "") + f"; LOOK at {_rel(wd / 'contact.png')}"
+
+
+def st_env_packet(asset: str) -> str:
+    from forgelib import environment
+    wd = work_dir(asset)
+    report = json.loads((wd / "qa_report.json").read_text())
+    if report["status"] != "candidate":
+        raise ForgeError("QA status is draft: fix inputs (footprint, split, ramps) first")
+    marker = wd / "contact.viewed"
+    if not marker.exists() or marker.read_text().strip() != core.sha256_file(wd / "contact.png"):
+        raise ForgeError(f"Open {_rel(wd / 'contact.png')} with read_file first (PRD-5) and write its sha256 to {_rel(marker)}")
+    layers = core.stage_record(asset, "pixelize")["extra"]["layers"]
+    review = environment.review(asset, wd / "pix", _layout(asset), report, _env(asset), layers)
+    pdir = REPO / "art" / "review" / f"{time.strftime('%Y-%m-%d', time.gmtime())}-{slug(asset)}"
+    shutil.rmtree(pdir, ignore_errors=True)
+    (pdir / "frames").mkdir(parents=True)
+    for layer in layers:
+        shutil.copy2(wd / "pix" / "export" / layer / "s_0.png", pdir / "frames" / f"{layer}.png")
+    for name in ("contact.png", "qa_report.json", "layout_preview.png"):
+        if (wd / name).exists():
+            shutil.copy2(wd / name, pdir / name)
+    (pdir / "review.json").write_text(json.dumps(review, sort_keys=True, indent=1))
+    (pdir / "README.md").write_text(
+        f"# {asset}: environment review packet (status: candidate)\n\n"
+        "- Contact sheet: `contact.png` (composed on grey, composed on grass, then each layer alone; 3x)\n"
+        f"- Layers: `frames/<layer>.png` at 2x ({', '.join(layers)}); one shared canvas and anchor (footprint south-edge centre)\n"
+        f"- Footprint {review['footprint']} tiles; light pools {review['lightPools']}\n- QA: `qa_report.json`\n\n"
+        f"Approval record: `docs/team/comms/director/approvals/{slug(asset)}--{pdir.name}.md` (scope: [{', '.join(layers)}]).\n")
+    record(asset, "packet", [wd / "qa_report.json", *[pdir / "frames" / f"{l}.png" for l in layers]], [pdir / "review.json"], {"packet": _rel(pdir)})
+    return f"packet {_rel(pdir)}; message --to-claude-- with what you saw"
 
 
 def _item_config(asset: str) -> dict:
@@ -585,7 +715,8 @@ def st_item_packet(asset: str) -> str:
 
 RUNNERS = {"prep": st_prep, "gen3d": st_gen3d, "clean": st_clean, "texture": st_texture, "rig": st_rig, "animate": st_animate, "bake": st_bake,
            "pixelize": st_pixelize, "qa": st_qa, "packet": lambda a: (st_item_packet if asset_kind(a) == "item" else st_packet)(a),
-           "publish": st_publish, "orient": st_orient, "items": st_items}
+           "publish": st_publish, "orient": st_orient, "items": st_items, "layout": st_layout}
+ENV_RUNNERS = {"bake": st_env_bake, "pixelize": st_env_pixelize, "qa": st_env_qa, "packet": st_env_packet}
 
 
 # ---------------------------------------------------------------- next / status / doctor
@@ -616,7 +747,35 @@ def _next_item(asset: str) -> str:
     return "nothing to do"
 
 
+def _next_env(asset: str) -> str:
+    try:
+        core.load_sheet(asset)
+    except ForgeError as e:
+        return f"BLOCKED: {e}"
+    if not (core.RECIPES / f"{slug(asset)}.json").exists():
+        return f"BLOCKED: write the recipe art/source/forge/recipes/{slug(asset)}.json (environment-forge skill)."
+    if approval_for(asset):
+        return "environment staged" if core.stage_record(asset, "publish") else f"{CMD} publish --asset {asset}"
+    for st in ENV_STAGES:
+        rec = core.stage_record(asset, st)
+        if st == "qa" and rec and rec["extra"].get("status") != "candidate":
+            return f"BLOCKED: QA is draft. Fix inputs per qa_report.json (footprint, split, ramps), then re-run from the changed stage"
+        if st == "packet" and not rec:
+            marker = work_dir(asset) / "contact.viewed"
+            contact = work_dir(asset) / "contact.png"
+            if not marker.exists() or marker.read_text().strip() != core.sha256_file(contact):
+                return f"OPEN {_rel(contact)} with read_file, write its sha256 to {_rel(marker)}, then: {CMD} packet --asset {asset}"
+            return f"{CMD} packet --asset {asset}"
+        if st == "publish":
+            return "BLOCKED: waiting for an approval record. Message --to-claude-- with the packet path."
+        if not rec:
+            return f"{CMD} {st} --asset {asset}"
+    return "nothing to do"
+
+
 def next_step(asset: str) -> str:
+    if asset_kind(asset) == "environment":
+        return _next_env(asset)
     if asset_kind(asset) == "item":
         return _next_item(asset)
     # Approved bodies must not be sent back through prep merely because this machine
@@ -695,11 +854,39 @@ def _selftest_fixture(asset: str) -> None:
     core.run_blender("fixture_mannequin.py", ["finish", str(wd / "clean.blend"), str(out)], wd / "logs" / "fixture.log")
 
 
+def selftest_environment() -> int:
+    """PRD-2 calibration house through layout -> bake -> pixelize -> qa (C10 mechanics, not art)."""
+    asset = "env:selftest-house"
+    wd = work_dir(asset)
+    out = wd / "texture.blend"
+    script = core.BLENDER_SCRIPTS / "fixture_env.py"
+    if not core.is_fresh(asset, "texture", [script]):
+        core.run_blender("fixture_env.py", [str(out)], wd / "logs" / "fixture.log")
+        record(asset, "texture", [script], [out], {"fixture": True})
+    for st in ("layout", "bake", "pixelize", "qa"):
+        print(f"  [{asset} {st}] {_run(asset, st).splitlines()[0]}")
+    lay = _layout(asset)
+    qa = {c["check"]: c for c in json.loads((wd / "qa_report.json").read_text())["checks"]}
+    from PIL import Image
+    roof = Image.open(wd / "pix" / "roof" / "s_0.png")
+    base = Image.open(wd / "pix" / "base" / "s_0.png")
+    asserts = [("layers base + roof", lay["layers"] == ["base", "roof"], str(lay["layers"])),
+               ("shared canvas", roof.size == base.size == tuple(lay["canvas"]["size"]), f"{base.size} {roof.size}"),
+               ("roof sits above the base", roof.getbbox()[1] < base.getbbox()[1], f"{roof.getbbox()} {base.getbbox()}")]
+    asserts += [(f"qa: {c}", qa[c]["pass"], qa[c]["detail"]) for c in qa]
+    fails = [f"{a} ({d})" for a, ok, d in asserts if not ok]
+    print(f"selftest environment: {'PASS' if not fails else 'FAIL'}" + (f"; failed: {'; '.join(fails)}" if fails else "")
+          + f"; LOOK at {_rel(wd / 'contact.png')}; not artwork")
+    return 1 if fails else 0
+
+
 def selftest(which: str) -> int:
     """Run rig -> animate -> bake -> pixelize -> qa on fixtures and assert the structural invariants.
     Run it after any forge change (codex) or when the forge behaves oddly (agents). Exit 0 = healthy."""
     if which == "item":
         return selftest_item()
+    if which == "environment":
+        return selftest_environment()
     kinds = ["human", "creature"] if which == "all" else [which]
     worst = 0
     for k in kinds:
@@ -731,7 +918,7 @@ def selftest(which: str) -> int:
               + (f"; {report['error']}" if "error" in report else "")
               + f"; LOOK at {_rel(wd / 'rig_preview.png')} and {_rel(wd / 'contact.png')}")
         worst = max(worst, 1 if report["verdict"] == "fail" else 0)
-    return max(worst, selftest_item()) if which == "all" else worst
+    return max(worst, selftest_item(), selftest_environment()) if which == "all" else worst
 
 
 def selftest_item() -> int:
@@ -806,7 +993,8 @@ def _invalidate_after(asset: str, stage: str) -> None:
 
 def _run(asset: str, st: str) -> str:
     before = (core.stage_record(asset, st) or {}).get("outputs")
-    msg = RUNNERS[st](asset)
+    runner = ENV_RUNNERS.get(st) if asset_kind(asset) == "environment" else None
+    msg = (runner or RUNNERS[st])(asset)
     after = (core.stage_record(asset, st) or {}).get("outputs")
     if msg != "fresh (cached)" and st not in ("packet", "publish") and before != after:
         _invalidate_after(asset, st)  # only when the stage's outputs really changed
@@ -815,9 +1003,9 @@ def _run(asset: str, st: str) -> str:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("command", choices=["doctor", "selftest", "status", "next", "all", "faces", "item-plan", "items", "orient", *STAGES])
+    ap.add_argument("command", choices=["doctor", "selftest", "status", "next", "all", "faces", "item-plan", "items", "orient", "layout", *STAGES])
     ap.add_argument("--asset")
-    ap.add_argument("--kind", choices=["human", "creature", "item", "all"], default="all", help="selftest fixture kind")
+    ap.add_argument("--kind", choices=["human", "creature", "item", "environment", "all"], default="all", help="selftest fixture kind")
     a = ap.parse_args()
     if a.command == "doctor":
         return doctor()
@@ -834,6 +1022,10 @@ def main() -> int:
             raise ForgeError(f"Items use {', '.join(ITEM_STAGES)} (plus item-plan); {a.command} is a body stage")
         if a.command == "orient" and asset_kind(a.asset) != "item":
             raise ForgeError("orient is the held-item source stage")
+        if asset_kind(a.asset) == "environment" and a.command not in (*ENV_STAGES, "next", "status", "all"):
+            raise ForgeError(f"Environment assets use {', '.join(ENV_STAGES)}")
+        if a.command == "layout" and asset_kind(a.asset) != "environment":
+            raise ForgeError("layout is the environment stage")
         if a.command == "next":
             print(next_step(a.asset))
         elif a.command == "status":
@@ -842,7 +1034,7 @@ def main() -> int:
             print(st_faces(a.asset))
         elif a.command == "item-plan":
             print(st_item_plan(a.asset))
-        elif a.command in ("items", "orient"):
+        elif a.command in ("items", "orient", "layout"):
             print(f"[{a.command}] {_run(a.asset, a.command)}")
             print("next:", next_step(a.asset))
         elif a.command == "all":
