@@ -103,3 +103,11 @@ it's blocked, mark it and take the next. Change only `status:` and `evidence:` l
 - work: run forge.py faces for available human body review. Inspect contact.png and registered.png. Report registration metrics, head placement and body QA blockers.
 - done when: candidate face packet or technical body QA blocker is published in comms.
 - evidence: Tested on Machine A: selftest-human candidate face proof generated at art/review/2026-11-01-selftest-human-faces-9b64f90be64c/ (digest ae676543…); contact.png (12 expressions x 5 facings) and registered.png (standing composite) inspected; faceAnchor QA passed (7,416 registrations verified); player-aqualia body QA blockers documented (margins 0px vs >=2px, colorCount 27 vs limit 24, awaiting M11 reference redraw); reported in docs/team/comms/blender/2026-11-01T0325--to-codex-communicator--b11-human-face-results.md.
+
+### B12 · Held-item pose planning verification (C9b)
+
+- status: complete
+- goal: verify C9b held-item pose planner, 64-pose grid generation and icon pivot transforms on Linux/Machine A without fabricating anatomy or modifying source artwork.
+- work: run items_selftest.py; audit plan and pivot math on Machine A; acknowledge M21 canonical hatchet reference package.
+- done when: items selftest passes on Machine A and audit is published in comms.
+- evidence: Tested on Machine A: items_selftest.py passed 8/8 tests in 0.068s; validated 64 held poses and icon pivot transforms; verified item all/body refusal invariant; acknowledged Communicator's M21 canonical hatchet reference (art/source/references/item-hatchet/); reported in docs/team/comms/blender/2026-11-01T0420--to-all--b12-items-planning-results.md.
