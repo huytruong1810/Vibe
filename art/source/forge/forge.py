@@ -42,7 +42,7 @@ def stages_for(asset: str) -> list[str]:
 # Readiness per asset class (doctor). A class is ready when every stage it needs up to `packet` exists.
 CLASSES = {
     "creatures": {"ready": True, "pending": [], "templates": ["quadruped"]},
-    "humans": {"ready": True, "pending": ["items (held layers)", "fit (garment parts)", "publish"], "templates": ["humanoid"]},
+    "humans": {"ready": True, "pending": ["fit (modular garment parts; outfits baked from the sheet need none)"], "templates": ["humanoid"]},
     "items": {"ready": True, "pending": [], "templates": ["held-item"]},
     "environment": {"ready": False, "pending": ["environment kind: canvas, depth stretch, layers, footprint QA"], "ticket": "codex C10"},
 }
@@ -412,8 +412,8 @@ def st_publish(asset: str) -> str:
         path = publish_item(REPO, wd, found[1], found[0], asset, _item_config(asset), _blender_version())
         record(asset, "publish", [found[0], found[1] / "review.json"], [path], {"scope": ["held-item", "icon"]})
         return f"staged {_rel(path)}; runtime composition reads it from the source manifest"
-    if asset_kind(asset) != "creature":
-        raise ForgeError("Human publication remains C9b; C3b supports creatures only.")
+    if asset_kind(asset) not in ("creature", "human"):
+        raise ForgeError(f"No body publication for {asset_kind(asset)} assets")
     found = approval_for(asset)
     if not found:
         raise ForgeError(f"No director-approved record in {_rel(core.APPROVALS)} whose packetDigest matches the current "
