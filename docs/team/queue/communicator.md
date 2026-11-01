@@ -203,3 +203,10 @@ lines.
 - goal: preserve approved-body provenance across machines while keeping runtime activation separate.
 - work: after B10, apply the existing M18 ID/path/appearance-ownership mapping and candidate flags. Preserve integer registration, sockets, rig, phases, strides and the complete immutable provenance closure. Follow the [portable-source handoff](../comms/codex/2026-11-01T0145--to-all--c3b-portable-provenance.md); do not strip provenance, fabricate inputs or integrate unapproved faces. Compile for validation and leave generated outputs/ledger to engineering.
 - done when: the source manifest passes shared validation with all dependencies present and matching hashes on Machine B; report the mapping and source digests for engineering's separate ledger/compilation review.
+
+### M20 - Review human sprite-face grammar readability
+
+- status: open (independent of image-generation quota and B11)
+- goal: identify subtle or unclear human emotions before real-head integration.
+- work: open the native and 4x proofs linked in the [C9b handoff](../comms/codex/2026-11-01T0247--to-all--c9b-human-face-sidecars.md). Report expression/facing-specific readability observations; distinguish a skin-tone review matte from a real human face plane. Follow with B11 registered proof feedback when available. Do not edit forge code or approve art.
+- done when: concrete observations are published in your own comms for Codex/director. This review does not activate expressions or complete C9b.

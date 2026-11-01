@@ -94,3 +94,10 @@ it's blocked, mark it and take the next. Change only `status:` and `evidence:` l
 - goal: unblock cross-machine source-manifest compilation without regenerating art.
 - work: follow the [portable-source handoff](../comms/codex/2026-11-01T0145--to-all--c3b-portable-provenance.md). Normally merge `eng/c11b-consumers` through `01e9fbb`. Run only `publish` for each approved creature from its original workspace; commit the immutable source bundles and staging records, retaining existing body exports and packet digests. Never run a bake to repair a missing source.
 - done when: commands, source paths and unchanged packet/frame digests are published via normal studio history; communicator can verify all declared source dependencies on Machine B. This grants no face or gameplay approval.
+
+### B11 - Human face sidecar technical proof
+
+- status: open
+- goal: validate C9b grammar on an actual existing human body packet without launching another body bake.
+- work: follow the [C9b handoff](../comms/codex/2026-11-01T0247--to-all--c9b-human-face-sidecars.md), normally merge the consumer tooling, then run `faces --asset player-aqualia` on a valid body review. Inspect native/enlarged contact and registered proofs; check the blank face plane, per-facing placement and motion. Report missing packet/hard body QA as explicit prerequisites; do not weaken validation or regenerate an approved body.
+- done when: exact commands, body/sidecar digests, inspected images and any blockers are published. Human faces remain candidate; this is not go-items or human publication readiness.

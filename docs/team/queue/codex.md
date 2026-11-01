@@ -354,14 +354,14 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 
 ### C9b · Items, fit, human faces
 
-- status: open (after C9a)
+- status: in-progress (human face sidecars candidate; remaining item/fit stages pending)
 - goal: the remaining human-class stages.
   - `items`: 8 facings × 8 grip angles plus an inventory icon from one mesh (ART-15), registered to `Socket_Hand.*`.
   - `fit`: garment parts (Surface Deform or Shrinkwrap, weights from the body, hidden body faces masked, PRD-1).
   - The `thinFeature` check.
   - Human faces: the full 9 expressions plus blink, sleep and hurt, sharing the C3b grammar.
 - done when: doctor shows `items: ready` and humans with nothing pending; you've posted `--to-blender--go-items`
-- evidence:
+- evidence: [human-face sidecar increment](../comms/codex/2026-11-01T0247--to-all--c9b-human-face-sidecars.md), [contract](../../engineering/hd-presentation.md#c9b-human-face-sidecars), [ADR 027](../../engineering/decisions.md#adr-027--human-expressions-as-independent-body-bound-sidecars); engineering `fb621e8`, consumer `4d879bc`. Seven human-face tests, 21 publication and two exporter tests pass, plus 299 engineering tests. Native/4x grammar proofs inspected; real-human fitting/motion and director acceptance remain separate. No items-ready or completed C9b claim.
 
 ### C9c · Human clip polish, per-clip canvases in review export, contract docs
 
