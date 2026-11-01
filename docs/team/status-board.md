@@ -17,10 +17,11 @@ Queues: [codex](queue/codex.md) · [communicator](queue/communicator.md) · [ble
 | 2D identity masters and lineups (`art/source/masters/*`) | **candidate** (identity source, PRD-3.5) | `art/source/masters/` | Communicator derives doctrine-standard reference sheets |
 | Environment exports (terrain, shore masks, cliff, ramp, house, well, waystone, hearth, flora states) | **candidate** (structural only; never director-reviewed at 2×) | `docs/art/coverage.md` | Re-author at 32-px tiles per ART-11 via tileforge (M9) |
 | Golden sample: player Aqualia (1st) | **candidate** (M4 reference; forge bring-up C9a) | `art/source/references/player-aqualia/`, `art/source/forge/recipes/player-aqualia.json` | Blender B4 golden sample after M11 redraw |
-| Golden sample: Rivallie (2nd) | **director-approved** (body, clips) | `docs/team/comms/director/approvals/rivallie--2026-10-31-rivallie-c3d.md` | Face layer (C3b) and publish |
+| Golden sample: Rivallie (2nd) | **director-approved** (body, clips) | `docs/team/comms/director/approvals/rivallie--2026-10-31-rivallie-c3d.md` | Published to exports/staging (B8); Face layer candidate sidecar in review (M17); Manifest integration planned (M18) |
+| Rivallie candidate faces sidecar | **candidate** (5 expressions, 5 forward facings) | `art/review/2026-11-01-rivallie-faces-d749a4350126/` | Awaiting Director decision |
 | Golden sample: Neris (3rd) | **candidate** (M3 reference) | `art/source/references/npc-neris/` | Blender B4 golden sample after M11 redraw |
-| Bramblefang candidate packet | **director-approved** | `docs/team/comms/director/approvals/bramblefang--2026-10-31-bramblefang-c3d.md` | Publish unblocked by Codex C3b |
-| Marshstalker candidate packet | **director-approved** | `docs/team/comms/director/approvals/marshstalker--2026-10-31-marshstalker.md` | Publish unblocked by Codex C3b |
+| Bramblefang candidate packet | **director-approved** | `docs/team/comms/director/approvals/bramblefang--2026-10-31-bramblefang-c3d.md` | Published to exports/staging (B8); Manifest integration planned (M18) |
+| Marshstalker candidate packet | **director-approved** | `docs/team/comms/director/approvals/marshstalker--2026-10-31-marshstalker.md` | Published to exports/staging (B8); Manifest integration planned (M18) |
 | Mireling candidate packet | **candidate** (15 clips, 616 frames) | `art/review/2026-10-31-mireling/` | Awaiting Director approval record |
 | Golden village map layout (C6) | **director-approved** (layout scope) | `docs/team/comms/director/approvals/world-aqualia--world-aqualia-aqualia_village-1.md` | Environment dressing and tile sets via C10/C11/M9 |
 | Riverlands map layout (B2) | **candidate** (Pass 003 layout) | `art/review/world-aqualia-aqualia_riverlands-1/` | Awaiting Director layout approval record |
@@ -32,7 +33,7 @@ Queues: [codex](queue/codex.md) · [communicator](queue/communicator.md) · [ble
 | --- | --- | --- | --- |
 | Doctrine v1 | claude + director | **director-approved** (ratified 2026-10-31) | `docs/doctrine/` |
 | Agent harness (AGENTS.md, hooks, skills, briefs) | claude | **director-approved** (Directive 001–007) | `.agents/`, `AGENTS.md` |
-| Sprite Forge stages | codex + claude | **candidate** (creatures operational; C3d quality fixes landed; C9a human bring-up done; C3b publish in progress) | `docs/art/forge-pipeline.md`, `docs/team/queue/codex.md` |
+| Sprite Forge stages | codex + claude | **candidate** (creatures operational; C3d quality fixes landed; C9a human bring-up done; B8 creature publication complete; B9 smoke verified) | `docs/art/forge-pipeline.md`, `docs/team/queue/codex.md`, `art/source/staging/blender/` |
 | Engineering mandates (2×, layers, paging, …) | codex | **candidate** (contract v2 baseline `a3fc957`, approvals ledger, 9-emotion portraits) | [codex brief](briefs/codex.md) |
 | World pipeline | codex + blender | **candidate** (C4-C6 approved village layout, B2 Riverlands layout candidate, C6b/B6 smoke checks, C7 compiler candidate) | `docs/team/queue/codex.md`, `art/source/world/` |
 | Tileforge | codex | **candidate** (C11 delivered; ADR 022; tile-forge skill) | `docs/engineering/tileforge.md`, `docs/team/queue/codex.md` |
