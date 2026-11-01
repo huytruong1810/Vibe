@@ -400,3 +400,19 @@ GPU, fabricated artwork or unreviewed source geometry. Rendering and actual visu
 QA remain required; a pose plan cannot grant item readiness or extend a canvas.
 The item kind refuses the humanoid body pipeline until its own stages are built.
 See the [item-planning contract](hd-presentation.md#c9b-item-pose-planning).
+
+## ADR 029 — A skeleton identity can declare multiple exact registrations
+
+**Decision:** retain the default rig canvas/root for backward compatibility and
+add a bounded optional list of exact alternate canvas/root pairs. Validate every
+frame against one pair and all sockets against that frame. Align required layered
+poses to the body's registration and use its current root/bounds when composing.
+Do not rename skeletons, discard sockets or stretch artwork to satisfy a registry.
+
+**Consequences:** real medium/large quadrupeds and human combat/wide frames can
+preserve their existing rig identities. Default prototype scale remains stable.
+The existing frame-to-rig digest dependency is retained and explicitly tested;
+earlier messages incorrectly diagnosed it as missing. Shared metadata edits still
+invalidate dependent source digests. Generate schemas separately from atlas
+packing, and require a complete validated source graph before ledger transcription.
+See the [C3e contract](hd-presentation.md#c3e-explicit-rig-registrations).

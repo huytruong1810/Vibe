@@ -280,3 +280,40 @@ behavior. The planner does not promise that a spear fits the held-item canvas:
 real rendering, transparent margins, feature thickness, silhouette/occlusion and
 any required canvas extensions remain explicit C9b integration work. No `items`
 render stage or `go-items` message is available yet.
+
+### C3e explicit rig registrations
+
+`RigDefinition` keeps its existing default `canvas`, `anchorPx` and `socketIds`.
+Optional `registrations` adds one to 64 exact `{canvas, anchorPx}` pairs. The
+default is implicit and must not be repeated. Pairs are identified by their integer
+dimensions and anchor, so no extra frame identifier or skeleton alias is needed.
+Anchors must remain inside their canvas. All frame sockets must be declared on the
+rig and remain within the actual frame, irrespective of which pair it uses.
+
+For the received quadrupeds, keep `quadruped-v1`: default 112x112 at (56,82), with
+160x144 at (80,112) added to `registrations`. These values come from the unchanged
+staging records. No frame/socket stripping or pose resizing is required. Human
+combat/wide frames can likewise declare their actual per-clip registrations on
+the same rig. Required non-held layers must use the same registration for each
+matched body pose; a valid alternative registration is not interchangeable with
+the correct body pose. Existing single-registration catalogs remain compatible.
+
+The compositor resolves the body's current registration for bounds, root and
+socket anchoring. Prototype display scale continues to use the rig's default
+canvas height, so a larger action canvas does not shrink the anatomy. Texture
+leases and composite memory bounds remain unchanged; no new atlas is loaded by
+declaring registration metadata alone. `rigRegistration` performs bounded lookup
+without allocating a registration array in the presentation loop.
+
+Correction to the earlier M19 diagnosis: frame rigs already participated in source
+digest closure through a final metadata pass. C3e preserves this behavior and makes
+the dependency explicit while visiting frames. It does not introduce a new missing
+dependency fix. Regression tests cover unlayered actors and registration edits.
+Changing a shared rig's registration metadata changes its dependent source digests;
+compute digests only after the complete V2 graph passes validation.
+
+`npm run assets:schemas` uses the same writer as `assets:build` and regenerates the
+three shared JSON Schemas without packing textures. Run it before consuming new
+fields in the Python publisher or the source manifest. The source manifest remains
+the communicator's integration artifact; the tested 1,848-frame V2 graph in
+`assets-v2.test.ts` is a fixture, not a committed production manifest or approval.

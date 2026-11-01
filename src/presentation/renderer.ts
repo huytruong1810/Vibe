@@ -37,6 +37,7 @@ import { CameraController, HD_PROFILE, WorldProjection } from './projection';
 import { QualitySettings, TEXTURE_BUDGETS, type Quality } from './quality';
 import {
   AppearanceResolver,
+  rigRegistration,
   type AssetCatalog,
   type AssetAppearance,
   type AssetFrame,
@@ -1482,6 +1483,8 @@ export class WorldRenderer {
   ): boolean {
     if (!selection.complete) return false;
     const { rig, recipe } = selection;
+    const registration = rigRegistration(rig, bodyFrame);
+    if (!registration) return false;
     const layers: { texture: Texture; frame: AssetFrame; target: { x: number; y: number } }[] = [];
     for (const layer of selection.layers) {
       const id = layerFrameId(layer.clip, sample),
@@ -1494,14 +1497,14 @@ export class WorldRenderer {
         if (layer.definition.required) return false;
         continue;
       }
-      layers.push({ texture, frame, target: socket ?? rig.anchorPx });
+      layers.push({ texture, frame, target: socket ?? registration.anchorPx });
     }
     if (!layers.length) return false;
-    const bounds = compositeBounds(rig.canvas, layers);
+    const bounds = compositeBounds(registration.canvas, layers);
     e.socketPositions = new Map(
       layers.flatMap((layer) => Object.entries(layerSockets(layer.frame, layer.target))),
     );
-    e.socketAnchor = rig.anchorPx;
+    e.socketAnchor = registration.anchorPx;
     const key = compositeKey(
       e.actor,
       recipe.id,
@@ -1548,8 +1551,8 @@ export class WorldRenderer {
     }
     e.body.texture = e.composite.value;
     e.body.anchor.set(
-      (rig.anchorPx.x - bounds.x) / bounds.w,
-      (rig.anchorPx.y - bounds.y) / bounds.h,
+      (registration.anchorPx.x - bounds.x) / bounds.w,
+      (registration.anchorPx.y - bounds.y) / bounds.h,
     );
     e.body.scale.set(
       e.appearance?.quality === 'hd'
