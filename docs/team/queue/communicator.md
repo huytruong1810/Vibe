@@ -199,17 +199,18 @@ lines.
 
 ### M19 · Integrate published quadruped candidates into manifest.json (V2)
 
-- status: done (candidate V2 graph validated against C3e multi-canvas schema, exact C3e digests calculated, and V1 fractional anchor audit delivered to Codex for C12 catalog/ledger reconciliation)
+- status: done (candidate V2 graph validated against C3e multi-canvas schema, exact C3e digests calculated, tracked JSON artifact committed in comms, and V1 fractional anchor audit delivered to Codex for C3f compatibility and C12 reconciliation)
 - goal: merge the portable staging records for the 3 Director-approved quadrupeds (`rivallie`, `bramblefang`, `marshstalker`) into `art/source/manifest.json` as candidate appearances with complete V2 metadata.
-- inputs: `art/source/staging/blender/*.json`, `art/source/blender/models/published/**`, `SourceManifestSchema` (V2), Codex handoffs `2026-11-01t0145--to-all--c3b-portable-provenance.md` and `2026-11-01T0454--to-all--c3e-rig-registration-contract.md`.
+- inputs: `art/source/staging/blender/*.json`, `art/source/blender/models/published/**`, `SourceManifestSchema` (V2), Codex handoffs `2026-11-01t0145--to-all--c3b-portable-provenance.md`, `2026-11-01T0454--to-all--c3e-rig-registration-contract.md`, and `2026-11-01T0612--to-communicator--m19-compatibility-next.md`.
 - work:
   - Mapped all 1,848 candidate frames and 264 clips into candidate V2 schema with `quadruped-v1` multi-canvas rig registration variants (112×112 default, 160×144 registration variant).
   - Validated complete candidate graph against `SourceManifestSchema`: PASS (0 errors, 0 warnings).
+  - Generated and committed tracked review artifact `docs/team/comms/communicator/candidate-quadrupeds-v2.json`.
   - Recalculated exact canonical C3e source digests with `rig:quadruped-v1` dependency edge: `species:rivallie` (`2d9d2a85...`), `species:bramblefang` (`dee3cba6...`), `species:marshstalker` (`e1aed0cd...`).
-  - Audited all 1,092 existing V1 frames in `manifest.json`: documented that 1,070 frames yield fractional pixel anchors requiring explicit engineering rounding or legacy preservation during C12 atlas repacking.
-  - Delivered graph mapping, exact C3e digests, and fractional anchor audit to Codex in comms.
-- done when: candidate entries mapped, file dependencies verified, schema validated, and source digests reported to Codex.
-- evidence: docs/team/comms/communicator/2026-11-01T0550--to-codex-blender--m19-candidate-v2-graph-and-v1-anchor-audit.md, tests/assets-v2.test.ts, art/source/staging/blender/*.json
+  - Audited all 1,092 existing V1 frames in `manifest.json`: documented that 1,070 frames yield fractional pixel anchors requiring explicit engineering rounding or legacy preservation during C3f compatibility ingestion.
+  - Delivered graph mapping, exact C3e digests, tracked JSON artifact, and fractional anchor audit to Codex in comms.
+- done when: candidate entries mapped, file dependencies verified, schema validated, tracked artifact committed, and source digests reported to Codex.
+- evidence: docs/team/comms/communicator/2026-11-01T0550--to-codex-blender--m19-candidate-v2-graph-and-v1-anchor-audit.md, docs/team/comms/communicator/2026-11-01T0700--to-codex--candidate-quadrupeds-v2-artifact.md, docs/team/comms/communicator/candidate-quadrupeds-v2.json
 
 ### M20 · Review C9b human face grammar and selftest-human candidate proof
 
