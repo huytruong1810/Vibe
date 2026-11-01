@@ -1,0 +1,695 @@
+{
+  "schemaVersion": 1,
+  "doctrine": [
+    "L1",
+    "L2",
+    "L4",
+    "ART-1",
+    "ART-2",
+    "ART-3",
+    "ART-5",
+    "ART-6",
+    "ART-7",
+    "ART-8"
+  ],
+  "pixelScale": {
+    "screenPixelsPerArtPixel": 2,
+    "nativeResolution": [
+      960,
+      540
+    ],
+    "referenceViewport": [
+      1920,
+      1080
+    ],
+    "artPixelsPerTile": 32,
+    "exportScale": 2,
+    "exportNote": "Forge exports exact 2x nearest-neighbour upscales to contract v2 display canvases; every exported 2x2 block is uniform (L1)."
+  },
+  "camera": {
+    "type": "ORTHO",
+    "elevationDeg": 30.0,
+    "lookToward": "north",
+    "artPixelsPerWorldUnit": 32,
+    "environmentDepthStretch": 2.0,
+    "actorDepthStretch": 1.0,
+    "elevationStepArtPixels": 8,
+    "elevationStepNote": "Engineering baseline: 16 display px per elevation step = 8 art px (ART-M8 resolved)."
+  },
+  "facings": {
+    "order": [
+      "s",
+      "se",
+      "e",
+      "ne",
+      "n",
+      "nw",
+      "w",
+      "sw"
+    ],
+    "zRotationDeg": {
+      "s": 0,
+      "se": 45,
+      "e": 90,
+      "ne": 135,
+      "n": 180,
+      "nw": 225,
+      "w": 270,
+      "sw": 315
+    },
+    "faceDecalFacings": [
+      "s",
+      "se",
+      "sw",
+      "e",
+      "w"
+    ],
+    "sets": {
+      "all8": [
+        "s",
+        "se",
+        "e",
+        "ne",
+        "n",
+        "nw",
+        "w",
+        "sw"
+      ],
+      "cardinals": [
+        "n",
+        "e",
+        "s",
+        "w"
+      ]
+    }
+  },
+  "light": {
+    "keyDirectionWorld": [
+      -0.5,
+      -0.45,
+      0.74
+    ],
+    "keyDirectionNote": "Vector TOWARD the light in world space (model faces -Y toward the viewer): west, toward the viewer, above. Reads as screen upper-left; front-facing surfaces land in the mid band, tops and left faces in light (ART-3.1).",
+    "ambient": 0.18,
+    "bands": {
+      "shadowBelow": 0.2,
+      "lightAbove": 0.62,
+      "highlightAbove": 0.9,
+      "highlightOnlyOnGlossy": true
+    }
+  },
+  "outline": {
+    "widthArtPixels": 1,
+    "mode": "selective",
+    "exteriorStep": "deep",
+    "topLitExteriorStep": "shadow",
+    "topLitQuadrant": "upper-left",
+    "interiorDepthJumpWorldUnits": 0.12,
+    "interiorStepFrom": "farther-material",
+    "removeOrphans": true,
+    "pixelPerfectLines": true
+  },
+  "canvases": {
+    "human.locomotion": {
+      "size": [
+        56,
+        76
+      ],
+      "anchor": [
+        28,
+        66
+      ],
+      "states": [
+        "idle",
+        "walk",
+        "run",
+        "guard",
+        "hit",
+        "eat",
+        "drink",
+        "bathe",
+        "social"
+      ],
+      "display": {
+        "size": [
+          112,
+          152
+        ],
+        "anchor": [
+          56,
+          132
+        ]
+      },
+      "note": "Changed 2026-11-01 from 48x72 @ (24,66): measured on the forge selftest at doctrine proportions, a 4.5-5 head human's near foot lands about 5 px below the anchor at the 30-degree camera, and profile run and work clips span 46-48 px. Height above the anchor is unchanged."
+    },
+    "human.combat": {
+      "size": [
+        80,
+        88
+      ],
+      "anchor": [
+        40,
+        72
+      ],
+      "states": [
+        "strike",
+        "element",
+        "sword_slash",
+        "spear_thrust",
+        "bow_shot",
+        "dash"
+      ],
+      "display": {
+        "size": [
+          160,
+          176
+        ],
+        "anchor": [
+          80,
+          144
+        ]
+      },
+      "note": "Height extended to 88 on 2026-11-01 (anchor unchanged): rolls and lunges toward the camera need 16 px below the anchor."
+    },
+    "human.wide": {
+      "size": [
+        96,
+        88
+      ],
+      "anchor": [
+        48,
+        66
+      ],
+      "states": [
+        "sleep",
+        "downed",
+        "recovery",
+        "work"
+      ],
+      "display": {
+        "size": [
+          192,
+          176
+        ],
+        "anchor": [
+          96,
+          132
+        ]
+      },
+      "note": "Added 2026-11-01 for poses that leave the upright silhouette: lying (sleep, downed, recovery: a lying human is as long as it is tall, and a 4.5-5 head body's head lies about 40 px from the anchor) and deep bends (work). Same headroom above the anchor as locomotion, so downed can start standing; 22 px below for a body lying toward the camera."
+    },
+    "creature.small": {
+      "size": [
+        40,
+        44
+      ],
+      "anchor": [
+        20,
+        34
+      ],
+      "species": [
+        "ignicap",
+        "zephyrit",
+        "cindermoth"
+      ],
+      "display": {
+        "size": [
+          80,
+          88
+        ],
+        "anchor": [
+          40,
+          68
+        ]
+      }
+    },
+    "creature.medium": {
+      "size": [
+        56,
+        56
+      ],
+      "anchor": [
+        28,
+        41
+      ],
+      "species": [
+        "rivallie",
+        "mireling"
+      ],
+      "display": {
+        "size": [
+          112,
+          112
+        ],
+        "anchor": [
+          56,
+          82
+        ]
+      },
+      "note": "Anchor raised from (28,44) on 2026-11-01: long-bodied creatures (Rivallie's tail toward the camera in the n facing, lying clips) need 14 px below the anchor; the rear-up clips still keep 2 px above."
+    },
+    "creature.large": {
+      "size": [
+        80,
+        72
+      ],
+      "anchor": [
+        40,
+        56
+      ],
+      "species": [
+        "steamshell",
+        "bramblefang",
+        "marshstalker"
+      ],
+      "display": {
+        "size": [
+          160,
+          144
+        ],
+        "anchor": [
+          80,
+          112
+        ]
+      }
+    },
+    "layer.face": {
+      "size": [
+        16,
+        12
+      ],
+      "anchor": [
+        8,
+        6
+      ]
+    },
+    "layer.heldItem": {
+      "size": [
+        32,
+        32
+      ],
+      "anchor": [
+        16,
+        16
+      ],
+      "gripAngleBuckets": 8
+    },
+    "icon.item": {
+      "size": [
+        32,
+        32
+      ],
+      "anchor": [
+        16,
+        16
+      ]
+    },
+    "environment": {
+      "widthMultipleOf": 32,
+      "anchor": "footprint-bottom-center"
+    }
+  },
+  "marginsArtPixels": {
+    "min": 2
+  },
+  "clips": {
+    "idle": {
+      "frames": 6,
+      "facings": 8,
+      "playback": "loop",
+      "fps": 6,
+      "runtime": {
+        "state": "idle"
+      },
+      "facingSet": "all8"
+    },
+    "walk": {
+      "frames": 8,
+      "facings": 8,
+      "playback": "distance",
+      "fps": 10,
+      "runtime": {
+        "state": "walk"
+      },
+      "strideTiles": 1.0,
+      "facingSet": "all8"
+    },
+    "run": {
+      "frames": 8,
+      "facings": 8,
+      "playback": "distance",
+      "fps": 12,
+      "runtime": {
+        "state": "run"
+      },
+      "strideTiles": 2.0,
+      "facingSet": "all8"
+    },
+    "strike": {
+      "frames": 12,
+      "facings": 8,
+      "playback": "combat",
+      "phases": {
+        "windup": [
+          0,
+          3
+        ],
+        "active": [
+          3,
+          5
+        ],
+        "recovery": [
+          5,
+          12
+        ]
+      },
+      "fps": null,
+      "runtime": {
+        "state": "attack",
+        "moveId": "strike"
+      },
+      "ticks": {
+        "windup": 4,
+        "active": 2,
+        "recovery": 9
+      },
+      "facingSet": "all8"
+    },
+    "element": {
+      "frames": 12,
+      "facings": 8,
+      "playback": "combat",
+      "phases": {
+        "windup": [
+          0,
+          3
+        ],
+        "active": [
+          3,
+          5
+        ],
+        "recovery": [
+          5,
+          12
+        ]
+      },
+      "fps": null,
+      "runtime": {
+        "state": "attack",
+        "moveId": "element"
+      },
+      "ticks": {
+        "windup": 7,
+        "active": 3,
+        "recovery": 16
+      },
+      "facingSet": "all8"
+    },
+    "guard": {
+      "frames": 4,
+      "facings": 8,
+      "playback": "once",
+      "fps": 8,
+      "runtime": {
+        "state": "guard"
+      },
+      "facingSet": "all8"
+    },
+    "hit": {
+      "frames": 4,
+      "facings": 8,
+      "playback": "once",
+      "fps": 12,
+      "runtime": {
+        "state": "hit"
+      },
+      "facingSet": "all8"
+    },
+    "dash": {
+      "frames": 6,
+      "facings": 8,
+      "playback": "once",
+      "playerOnly": true,
+      "fps": 15,
+      "runtime": {
+        "state": "dash"
+      },
+      "facingSet": "all8"
+    },
+    "eat": {
+      "frames": 6,
+      "facings": 4,
+      "playback": "loop",
+      "fps": 6,
+      "runtime": {
+        "state": "eat"
+      },
+      "facingSet": "cardinals"
+    },
+    "drink": {
+      "frames": 6,
+      "facings": 4,
+      "playback": "loop",
+      "fps": 6,
+      "runtime": {
+        "state": "drink"
+      },
+      "facingSet": "cardinals"
+    },
+    "bathe": {
+      "frames": 6,
+      "facings": 4,
+      "playback": "loop",
+      "fps": 6,
+      "runtime": {
+        "state": "bathe"
+      },
+      "facingSet": "cardinals"
+    },
+    "work": {
+      "frames": 6,
+      "facings": 4,
+      "playback": "loop",
+      "fps": 6,
+      "runtime": {
+        "state": "work"
+      },
+      "facingSet": "cardinals"
+    },
+    "social": {
+      "frames": 6,
+      "facings": 4,
+      "playback": "loop",
+      "fps": 6,
+      "runtime": {
+        "state": "social"
+      },
+      "facingSet": "cardinals"
+    },
+    "sleep": {
+      "frames": 4,
+      "facings": 4,
+      "playback": "loop",
+      "fps": 3,
+      "runtime": {
+        "state": "sleep"
+      },
+      "facingSet": "cardinals"
+    },
+    "downed": {
+      "frames": 6,
+      "facings": 4,
+      "playback": "once",
+      "fps": 8,
+      "runtime": {
+        "state": "downed"
+      },
+      "facingSet": "cardinals"
+    },
+    "recovery": {
+      "frames": 6,
+      "facings": 4,
+      "playback": "once",
+      "fps": 8,
+      "runtime": {
+        "state": "recovery"
+      },
+      "facingSet": "cardinals"
+    },
+    "sword_slash": {
+      "frames": 12,
+      "facings": 8,
+      "playback": "combat",
+      "humansOnly": true,
+      "phases": {
+        "windup": [
+          0,
+          3
+        ],
+        "active": [
+          3,
+          5
+        ],
+        "recovery": [
+          5,
+          12
+        ]
+      },
+      "fps": null,
+      "runtime": {
+        "state": "attack",
+        "moveId": "sword_slash"
+      },
+      "ticks": {
+        "windup": 6,
+        "active": 3,
+        "recovery": 12
+      },
+      "facingSet": "all8"
+    },
+    "spear_thrust": {
+      "frames": 12,
+      "facings": 8,
+      "playback": "combat",
+      "humansOnly": true,
+      "phases": {
+        "windup": [
+          0,
+          4
+        ],
+        "active": [
+          4,
+          5
+        ],
+        "recovery": [
+          5,
+          12
+        ]
+      },
+      "fps": null,
+      "runtime": {
+        "state": "attack",
+        "moveId": "spear_thrust"
+      },
+      "ticks": {
+        "windup": 8,
+        "active": 2,
+        "recovery": 14
+      },
+      "facingSet": "all8"
+    },
+    "bow_shot": {
+      "frames": 12,
+      "facings": 8,
+      "playback": "combat",
+      "humansOnly": true,
+      "phases": {
+        "windup": [
+          0,
+          6
+        ],
+        "active": [
+          6,
+          7
+        ],
+        "recovery": [
+          7,
+          12
+        ]
+      },
+      "fps": null,
+      "runtime": {
+        "state": "attack",
+        "moveId": "bow_shot"
+      },
+      "ticks": {
+        "windup": 12,
+        "active": 1,
+        "recovery": 12
+      },
+      "facingSet": "all8"
+    }
+  },
+  "expressions": {
+    "human": [
+      "neutral",
+      "warm",
+      "thoughtful",
+      "curious",
+      "concerned",
+      "amused",
+      "angry",
+      "sad",
+      "fearful",
+      "blink",
+      "sleep",
+      "hurt"
+    ],
+    "creature": [
+      "neutral",
+      "warm",
+      "fearful",
+      "hurt",
+      "sleep"
+    ]
+  },
+  "bake": {
+    "engine": "CYCLES",
+    "samples": 1,
+    "pixelFilterWidth": 0.01,
+    "passes": [
+      "albedo",
+      "normal",
+      "depth"
+    ],
+    "exportSocketTracks": [
+      "Socket_Head",
+      "Socket_Hand.R",
+      "Socket_Hand.L",
+      "Socket_Back",
+      "Socket_Mouth",
+      "Root"
+    ],
+    "passesNote": "Alpha is carried in every pass's alpha channel. A materialId pass is added with the fit stage (garment parts), when one frame holds more than one material.",
+    "socketsNote": "Sockets are armature bones named Socket_* (rig stage); bake projects each bone head per frame. Creatures carry Socket_Head, Socket_Back and Socket_Mouth; humans add the hands."
+  },
+  "qa": {
+    "anchorDriftMaxPx": 0,
+    "heightToleranceArtPx": 2,
+    "facingSilhouetteAreaRatio": {
+      "min": 0.55,
+      "max": 1.8
+    },
+    "orphanPixelsMax": 0,
+    "idleFlickerMaxChangedFraction": 0.08,
+    "castDistinctness": {
+      "minPaletteHistogramDistance": 0.25,
+      "maxSilhouetteIoU": 0.9
+    },
+    "referenceFidelity": {
+      "maxDominantColorDeltaEOk": 0.08
+    },
+    "valueContrast": {
+      "minDeltaLOk": 0.12,
+      "against": [
+        "ground_grass",
+        "ground_dirt",
+        "ground_sand",
+        "ground_freshwater"
+      ]
+    },
+    "contactSheetScale": 4,
+    "maxStatus": "candidate",
+    "exportUniform2x2Blocks": true
+  },
+  "canvasNote": "Creature canvases leave room below the root: at 30 deg elevation a long body's front projects below the feet in s/n facings. These supersede the contract's proposed 96x96 Rivallie proof canvas (contract v2 asks for anatomy-specific creature canvases).",
+  "clipNotes": "fps applies to loop/once/distance playback; combat clips are timed by the engineering move registry (CMB-3) and map onto exclusive-end frame phases derived from the doctrine ticks. strideTiles = ground covered per walk/run cycle at playback fps (contract.md stride); the default for humans. Creature templates set their own (skeletons/<t>.json gait.<clip>.strideUnits; 1 unit = 1 tile) and the forge records the value per asset. facingSet cardinals = n,e,s,w only. runtime = the engine's AnimationState and moveId (src/presentation/assets/coverage.ts CLIP_MATRIX).",
+  "rigIds": {
+    "humanoid": "ual2-humanoid",
+    "quadruped": "quadruped-v1"
+  },
+  "pixelize": {
+    "minRegionFraction": 0.02,
+    "note": "Material regions smaller than this fraction of the silhouette take the dominant surrounding ramp (removes highlight speckles, codex C3d). Recipe detailSlots lists slots that are small on purpose (fangs, eyes, lures) and are exempt."
+  }
+}

@@ -87,3 +87,11 @@ it's blocked, mark it and take the next. Change only `status:` and `evidence:` l
 - work: after normal engineering integration, run the 22-test worldforge suite, the 29-test authored-world Vitest suite and `npm run check:world -- --region aqualia`. Historical tests use pinned village fixtures; full-region candidate compilation should now include both levels. Do not change the live map or refresh inspection receipts to make tests pass.
 - done when: commands/results and exact failing assertions, if any, are in your own comms. This grants no map or asset approval.
 - evidence: Machine A verification: worldforge_selftest.py 22/22 tests passed (OK in 17.1s); tests/authored-world.test.ts 29/29 tests passed (2.44s); npm run check:world validated full region with 2 levels, 219 placements, 0 excluded; full repository npm run check passed 21 test files / 276 tests and production build. Documented in docs/team/comms/blender/2026-10-31T2355--to-codex-communicator--c3b-b8-b9-results.md.
+
+### B10 · Portable provenance source bundle publishing
+
+- status: complete
+- goal: package self-contained immutable source closures (.blend, tracks, animate record, tools, recipes) under art/source/blender/models/published/ for all 3 Director-approved quadrupeds without re-baking bodies.
+- work: run forge.py publish --asset for rivallie, bramblefang, and marshstalker on Machine A. Verify unchanged packet digests and frame bytes.
+- done when: source bundles and staging pointers are committed and reported in comms.
+- evidence: Staged in art/source/staging/blender/{rivallie,bramblefang,marshstalker}.json; immutable source bundles created in art/source/blender/models/published/{rivallie,bramblefang,marshstalker}/; review.json sourceDigests verified unchanged (rivallie 69b6c10d…, bramblefang ef40a024…, marshstalker 654b7fa0…); full npm run check passed 299 tests / 23 suites and production build; reported in docs/team/comms/blender/2026-11-01T0220--to-all--b10-portable-provenance-results.md.
