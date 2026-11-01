@@ -7,74 +7,74 @@
     "id": "forge-rivallie",
     "inputs": [
       {
-        "path": "forge/work/rivallie/animate.blend",
-        "role": "model",
-        "sha256": "4b70089e7ec5d9a28aa12a89a707aad449bef8bb9fd3bd7427824c8748bb8c4a"
-      },
-      {
-        "path": "forge/forge.py",
-        "role": "script",
-        "sha256": "88904de253fe29497eafba1be0d3e4057ff96e76dbe83103ece5094fd72e3ee0"
-      },
-      {
-        "path": "forge/forgelib/publish.py",
-        "role": "script",
-        "sha256": "392a40aca0401e288d414614382c325ec3b9975acb8433a36a79206a5f010710"
-      },
-      {
-        "path": "forge/forgelib/review.py",
-        "role": "script",
-        "sha256": "3a43647256d7ebb96b6f01c201cb706537fe2cadcee11dfce953cdb850404257"
-      },
-      {
-        "path": "forge/work/rivallie/bake/tracks.json",
+        "path": "blender/models/published/rivallie/38adaec66fb5f1e1c4a5cdeb3642418e0c1ec42f3ed3e9b7f008b86972a679f7/bake/tracks.json",
         "role": "bake",
         "sha256": "be755060848a2516ad2bb50965e4daa5dc484440ffb740d9bb2acfc861ce5fb7"
       },
       {
-        "path": "forge/work/rivallie/animate.json",
-        "role": "pose-config",
-        "sha256": "258ef3b232e35d6e3040cb1bd75f028f38e3d06156ffaa6a274d4761f1727b16"
-      },
-      {
-        "path": "forge/spec/render_spec.json",
-        "role": "pose-config",
-        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
-      },
-      {
-        "path": "forge/blender/bake.py",
-        "role": "script",
-        "sha256": "25e7ca86635f1d2c2590f0927387cfc9d09abdf83e8607dd8dbf53709aedcc36"
-      },
-      {
-        "path": "forge/blender/animate.py",
+        "path": "blender/models/published/rivallie/38adaec66fb5f1e1c4a5cdeb3642418e0c1ec42f3ed3e9b7f008b86972a679f7/forge/blender/animate.py",
         "role": "script",
         "sha256": "5993b977be421705be73ff9e901924775f7a2c3faa088d1a22459ee46cfaac79"
       },
       {
-        "path": "forge/blender/gaits.py",
+        "path": "blender/models/published/rivallie/38adaec66fb5f1e1c4a5cdeb3642418e0c1ec42f3ed3e9b7f008b86972a679f7/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "25e7ca86635f1d2c2590f0927387cfc9d09abdf83e8607dd8dbf53709aedcc36"
+      },
+      {
+        "path": "blender/models/published/rivallie/38adaec66fb5f1e1c4a5cdeb3642418e0c1ec42f3ed3e9b7f008b86972a679f7/forge/blender/gaits.py",
         "role": "script",
         "sha256": "0ef46aab7353ba0ca71fecdbce2d74723632e31e6773fb6849e89d4d8f53944c"
       },
       {
-        "path": "forge/forgelib/pixelize.py",
+        "path": "blender/models/published/rivallie/38adaec66fb5f1e1c4a5cdeb3642418e0c1ec42f3ed3e9b7f008b86972a679f7/forge/forge.py",
+        "role": "script",
+        "sha256": "88904de253fe29497eafba1be0d3e4057ff96e76dbe83103ece5094fd72e3ee0"
+      },
+      {
+        "path": "blender/models/published/rivallie/38adaec66fb5f1e1c4a5cdeb3642418e0c1ec42f3ed3e9b7f008b86972a679f7/forge/forgelib/pixelize.py",
         "role": "script",
         "sha256": "7f93c3eeb1091ff5aa8281ee67c4d0f5f900dda6994c614f1c9658b61663fe6c"
       },
       {
-        "path": "forge/spec/palette.json",
-        "role": "palette",
-        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+        "path": "blender/models/published/rivallie/38adaec66fb5f1e1c4a5cdeb3642418e0c1ec42f3ed3e9b7f008b86972a679f7/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "139c202c4399ede0bbe6d0364749625b13455623d5d5ceb789035017521637f0"
       },
       {
-        "path": "forge/recipes/rivallie.json",
+        "path": "blender/models/published/rivallie/38adaec66fb5f1e1c4a5cdeb3642418e0c1ec42f3ed3e9b7f008b86972a679f7/forge/forgelib/review.py",
+        "role": "script",
+        "sha256": "3a43647256d7ebb96b6f01c201cb706537fe2cadcee11dfce953cdb850404257"
+      },
+      {
+        "path": "blender/models/published/rivallie/38adaec66fb5f1e1c4a5cdeb3642418e0c1ec42f3ed3e9b7f008b86972a679f7/forge/recipes/rivallie.json",
         "role": "pose-config",
         "sha256": "b46810231b72eb89c8450a77995db6c2a056d48a09ba5c1fb765f826fca4ad55"
       },
       {
-        "path": "forge/uv.lock",
+        "path": "blender/models/published/rivallie/38adaec66fb5f1e1c4a5cdeb3642418e0c1ec42f3ed3e9b7f008b86972a679f7/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/rivallie/38adaec66fb5f1e1c4a5cdeb3642418e0c1ec42f3ed3e9b7f008b86972a679f7/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/rivallie/38adaec66fb5f1e1c4a5cdeb3642418e0c1ec42f3ed3e9b7f008b86972a679f7/forge/uv.lock",
         "role": "dependency-lock",
         "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/rivallie/38adaec66fb5f1e1c4a5cdeb3642418e0c1ec42f3ed3e9b7f008b86972a679f7/model/animate.blend",
+        "role": "model",
+        "sha256": "4b70089e7ec5d9a28aa12a89a707aad449bef8bb9fd3bd7427824c8748bb8c4a"
+      },
+      {
+        "path": "blender/models/published/rivallie/38adaec66fb5f1e1c4a5cdeb3642418e0c1ec42f3ed3e9b7f008b86972a679f7/pose/animate.json",
+        "role": "pose-config",
+        "sha256": "258ef3b232e35d6e3040cb1bd75f028f38e3d06156ffaa6a274d4761f1727b16"
       }
     ],
     "method": "blender-bake",
