@@ -8,7 +8,7 @@ Commands:
   status --asset ID      stage table for one asset
   next --asset ID        print the exact next command, or BLOCKED: <reason>
   prep|gen3d|clean|texture|rig|animate|bake|pixelize|qa|packet|publish --asset ID   run one stage
-  faces --asset ID       separate creature decal candidate; never re-bakes an approved body
+  faces --asset ID       separate human/creature decal candidate; never re-bakes a body
   all --asset ID         run every runnable stage in order (stops at the first block)
 """
 
@@ -33,7 +33,7 @@ STAGES = ["prep", "gen3d", "clean", "texture", "rig", "animate", "bake", "pixeli
 # Readiness per asset class (doctor). A class is ready when every stage it needs up to `packet` exists.
 CLASSES = {
     "creatures": {"ready": True, "pending": [], "templates": ["quadruped"]},
-    "humans": {"ready": True, "pending": ["faces", "items (held layers)", "fit (garment parts)", "publish"], "templates": ["humanoid"]},
+    "humans": {"ready": True, "pending": ["items (held layers)", "fit (garment parts)", "publish"], "templates": ["humanoid"]},
     "items": {"ready": False, "pending": ["items stage (8 facings x 8 grips + icon)"], "ticket": "codex C9b"},
     "environment": {"ready": False, "pending": ["environment kind: canvas, depth stretch, layers, footprint QA"], "ticket": "codex C10"},
 }
@@ -402,8 +402,9 @@ def st_publish(asset: str) -> str:
 
 def st_faces(asset: str) -> str:
     """Sidecar workflow: do not insert faces into the approved body's stage chain."""
-    if asset_kind(asset) != "creature":
-        raise ForgeError("Human expression grammar remains C9b")
+    kind = asset_kind(asset)
+    if kind not in ("human", "creature"):
+        raise ForgeError("Faces require a human or creature body packet")
     from forgelib.faces import build_faces
     found = approval_for(asset)
     packets = sorted(core.REVIEW.glob(f"*-{slug(asset)}/review.json"))
@@ -411,10 +412,18 @@ def st_faces(asset: str) -> str:
         raise ForgeError("Faces need an existing body review packet with head sockets")
     packet = found[1] if found else packets[-1].parent
     code = core.FORGE / "forgelib/faces.py"
-    revision = core.digest([code, packet / "review.json", core.SPEC_DIR / "palette.json", core.SPEC_DIR / "render_spec.json"])[:12]
+    inputs = [code, packet / "review.json", core.SPEC_DIR / "palette.json", core.SPEC_DIR / "render_spec.json"]
+    recipe = core.RECIPES / f"{slug(asset)}.json"
+    if kind == "human" and recipe.is_file():
+        inputs.append(recipe)
+    revision = core.digest(inputs)[:12]
     output = core.REVIEW / f"{time.strftime('%Y-%m-%d', time.gmtime())}-{slug(asset)}-faces-{revision}"
-    report = build_faces(packet, output, asset, spec("render_spec"), spec("palette"))
-    record(asset, "faces", [code, packet / "review.json"], [output / "faces.json", output / "contact.png"],
+    report = build_faces(packet, output, asset, spec("render_spec"), spec("palette"),
+                         kind=kind, face=_recipe(asset).get("face") if kind == "human" else None)
+    outputs = [output / "faces.json", output / "contact.png"]
+    if (output / "registered.png").is_file():
+        outputs.append(output / "registered.png")
+    record(asset, "faces", inputs, outputs,
            {"status": report["status"], "scope": ["faces"]})
     return f"{report['status']}: {_rel(output)}; OPEN contact.png and registered.png; request a separate faces decision"
 
