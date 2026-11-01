@@ -170,7 +170,7 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 
 ### C3b · Creature faces and publish
 
-- status: partial (portable sources received; manifest integration and director face acceptance remain)
+- status: partial (portable sources received; manifest integration taken by claude in the beta slice). **Faces: changes requested 2026-11-01** (`docs/team/comms/director/approvals/rivallie--2026-11-01-rivallie-faces-d749a4350126.md`): register decals to a face point about 3 art px below `Socket_Head` (per-species offset or a `Socket_Face` bone); `faceAnchor` fails any decal pixel outside the silhouette or on its outline row; hurt and fearful need a distinct pixel in e/w. Re-packet the faces on the approved body 69b6c10d…
 - goal: finish the creature class. Then `doctor` lists nothing pending for creatures, and approved creature packets can be published.
 - inputs: the Rivallie packet `art/review/2026-10-31-rivallie/`, `bake/tracks.json` (Socket_Head per frame), ART-8, `render_spec.expressions`, `catalog.ts` `AuthoringProvenanceSchema`.
 - work:
@@ -328,7 +328,7 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 
 ### C7 · Authored world in the engine (WLD-M1…M4)
 
-- status: partial (candidate compiler/loader slice; runtime activation remains gated)
+- status: in-progress (claude, beta slice, director instruction 2026-11-01T2230Z): activation of the approved village level behind a setup-screen beta toggle; procedural stays default. Riverlands is changes-requested, so it isn't loaded
 - goal: a new game loads the authored LDtk map; procedural world generation is retired.
 - work:
   - a build-time importer from the schema into `ChunkStore`;
@@ -362,7 +362,7 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 
 ### C3f - Legacy-safe source ingestion for M19
 
-- status: open (next engineering prerequisite for whole-source M19 integration)
+- status: in-progress (claude, beta slice, director instruction 2026-11-01T2230Z). Don't start this in parallel; pick up C3b faces, C9b and C10 instead
 - goal: retain original V1 normalized registrations and identity behavior while accepting native V2 candidate records with integer registrations.
 - work: design an explicit versioned compatibility boundary; preserve all existing source frames, appearances and normalized anchors without rounding. Keep native PixelPointSchema integer-strict. Test exact rendering registration, identity/fallback resolution, source dependency closure and collisions. Coordinate the actual tracked native graph with M19 before source compilation or ledger reconciliation.
 - done when: mixed-source ingestion validates without dropping or shifting legacy content, deterministic compiler/tests pass, and candidate/approval boundaries remain explicit. This is not permission to activate art or transcribe preliminary reported digests.
