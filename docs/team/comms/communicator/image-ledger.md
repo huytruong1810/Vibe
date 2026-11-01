@@ -27,11 +27,11 @@ Doctrine constraint: PRD-7.3 (maximum 4 generations per reference sheet, 2 per p
 | :- | :--- | :--- | :--- | :--- | :--- | :--- |
 | 1 | 2026-10-31 10:08 | human-apose v1 | front + back A-pose | art/source/references/player-aqualia/sheet.png | yes | passes PRD-3 checklist: 2-view A-pose at 5 heads tall, young adult standard ranger build, wavy dark teal hair with shell pin, neck water markings, river tunic with teal wave trim, dark trousers, boots, empty hands |
 
-## prop-hatchet
+## prop-hatchet / item-hatchet
 
 | # | date (UTC) | template | purpose | result | kept? | why |
 | :- | :--- | :--- | :--- | :--- | :--- | :--- |
-| 1 | 2026-10-31 10:08 | prop v1 | crafted canal hatchet | art/source/references/player-aqualia/prop-hatchet.png | yes | passes PRD-3 checklist: 3/4 view, carved ash handle, leather grip wrap, bronze-tinted wedge blade with cord lashing, clean grey background, no hands, no text |
+| 1 | 2026-10-31 10:08 | prop v1 | crafted canal hatchet | art/source/references/player-aqualia/prop-hatchet.png | yes | passes PRD-3 checklist: 3/4 view, carved ash handle, leather grip wrap, bronze-tinted wedge blade with cord lashing, clean grey background, no hands, no text. Reused as canonical reference in art/source/references/item-hatchet/ (ticket M21). |
 
 ## mannequin-standard
 
