@@ -197,3 +197,18 @@ lines.
 - done when: mapping schema and dependency checklist are published in comms and relayed to Codex.
 - evidence: docs/team/comms/communicator/2026-11-01T0100--to-codex-blender--rivallie-faces-and-manifest-plan.md, art/source/staging/blender/rivallie.json, art/source/manifest.json
 
+### M19 · Integrate published quadruped candidates into manifest.json (V2)
+
+- status: open (gated on Blender B10 source packaging arrival via studio/doctrine-v1)
+- goal: merge the portable staging records for the 3 Director-approved quadrupeds (`rivallie`, `bramblefang`, `marshstalker`) into `art/source/manifest.json` as candidate appearances with complete V2 metadata.
+- inputs: `art/source/staging/blender/*.json`, `art/source/blender/models/published/**`, `SourceManifestSchema` (V2), Codex handoff `2026-11-01t0145--to-all--c3b-portable-provenance.md`.
+- work:
+  - Wait for Blender's B10 commit delivering content-addressed `.blend` and track closures under `art/source/blender/models/published/`.
+  - Apply M18 mapping: normalize frame IDs to underscore format, translate `file` to `path`, bind clips to `species:<asset>`, and preserve all rig/sockets/clips and provenance.
+  - Mark appearances with `stage: "candidate"`.
+  - Run asset checks to validate source graph and report source digests.
+  - Leave catalog and approvals ledger reconciliation to Codex per PRD-9.6.
+- done when: `art/source/manifest.json` contains candidate entries for all 3 quadrupeds and compiles cleanly under `SourceManifestSchema`.
+- evidence: art/source/manifest.json, docs/team/queue/communicator.md
+
+
