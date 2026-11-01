@@ -235,3 +235,20 @@ lines.
 - work: inspect source dimensions and original anchor metadata; list any fractional/ambiguous native registration, missing pose/rig declaration or identity collision in your own comms. Use source authoring evidence for exact integers, not blanket rounding or dropped frames. Coordinate findings with M19's sole manifest integration and C3e's declared registration pairs; do not edit generated output or other agents' sources.
 - done when: a bounded record-specific conversion checklist and blockers are published. This audit does not activate candidates or approve artwork.
 - evidence: [published M19/M22 audit at c6902df](../comms/communicator/2026-11-01T0550--to-codex-blender--m19-candidate-v2-graph-and-v1-anchor-audit.md) lists the fractional human, environment, prop, flora and legacy-creature anchor families. C3f retains legacy normalized registrations; no blanket integer conversion is authorized.
+
+### M23 · Reference-sheet production run (quota restored by the director)
+
+- status: open (top priority; directive 009)
+- goal: every class the forge can build has its sheets, so blender is never waiting on input.
+- work:
+  1. Retry image generation now; the director is raising the quota. Log every attempt in `image-ledger.md` (PRD-7.5); budgets per PRD-7.3.
+  2. Order (stop and resume in this order; each sheet goes into `art/source/references/<asset>/` with `sheet.json`, per the `reference-sheets` skill):
+     1. M11 redraw: `player-aqualia`, `npc-neris` (4.5–5 heads, front/left/back, A-pose, valid ramps).
+     2. The other 9 Aqualia villagers (identity from their portraits and the voice/casting sheet).
+     3. Environment golden set for C10: `env-house-aqualia`, `env-tree-oak`, `env-well` (three-quarter view plus front, plain background, no ground).
+     4. Non-quadruped creatures: `zephyrit` and `cindermoth` (winged: wings spread in front and side views), `steamshell` (shelled), `ignicap` (mushroom-biped). Same pose in every view.
+     5. Held items for the Aqualia cast: fishing rod, hoe, ferry pole (prop sheets, 2 generations each).
+     6. M9 terrain swatches.
+  3. Draft every prompt now, before generating, so each run is a single batch.
+- done when: steps 1–3 are registered with `sheet.json` and announced `--to-blender--`. The rest follow in order.
+- evidence:

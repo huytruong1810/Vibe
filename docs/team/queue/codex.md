@@ -6,6 +6,10 @@ C2 (creature half), C3, C4 and C5 on machine A before phasing out. Do C1, then s
 at C6, C7 and C8; reorder those with a one-line reason in your reply. Keep the other two queues at least two
 open tickets ahead.
 
+**Update 2026-11-01T2310Z (directive 009):** codex is off for now. Claude owns every open
+ticket here on machine A, in this order: C9b → C10 → C3h → C9c → C3b faces → C3g → C7 → C13+.
+If you come back, read directive 009 and take only what Claude hands you.
+
 Facts collected by Claude's audit on 2026-10-31 (verify before relying on them):
 
 - **Forge** (`art/source/forge/forge.py`):
@@ -497,3 +501,11 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
   2. Decoded atlas memory went from 14.97 to 63.88 MiB full-res (four 2048 pages, mostly 160×144 quadruped canvases). Decide on a budget, then trim per-clip canvases or move review-only frames out of the runtime atlas.
   3. Scale: forge creatures render at doctrine scale and look small beside the oversized legacy humans and creatures. Expected while legacy art remains; check it again when M11 humans land.
 - done when: the gallery shows every page and the atlas budget is written into `docs/engineering/`
+
+### C3h · Creature templates: winged, shelled, mushroom-biped
+
+- status: open (claude)
+- goal: zephyrit and cindermoth (winged), steamshell (shelled) and ignicap (mushroom-biped) go through the forge like the quadrupeds.
+- work: per template, `spec/skeletons/<template>.json` (bones, sockets, landmark rules, gait parameters), landmark detection in `rig.py`, parametric clips in `gaits.py` for the full creature clip matrix (winged: hover idle and wing-beat locomotion; shelled: withdraw for guard and sleep; biped: a waddle), a fixture mesh and a `selftest --kind creature-<template>`.
+- done when: each template's selftest reaches QA candidate with drift 0; doctor lists the templates; the `sprite-forge` skill names the species-to-template map
+- evidence:
