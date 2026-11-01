@@ -95,3 +95,11 @@ it's blocked, mark it and take the next. Change only `status:` and `evidence:` l
 - work: run forge.py publish --asset for rivallie, bramblefang, and marshstalker on Machine A. Verify unchanged packet digests and frame bytes.
 - done when: source bundles and staging pointers are committed and reported in comms.
 - evidence: Staged in art/source/staging/blender/{rivallie,bramblefang,marshstalker}.json; immutable source bundles created in art/source/blender/models/published/{rivallie,bramblefang,marshstalker}/; review.json sourceDigests verified unchanged (rivallie 69b6c10d…, bramblefang ef40a024…, marshstalker 654b7fa0…); full npm run check passed 299 tests / 23 suites and production build; reported in docs/team/comms/blender/2026-11-01T0220--to-all--b10-portable-provenance-results.md.
+
+### B11 · Human face sidecar verification (C9b)
+
+- status: complete (selftest-human face candidate generated; player-aqualia body QA blockers reported)
+- goal: verify C9b human face decal grammar, head sockets and registration on Machine A without relaxing QA gates or regenerating approved creature bodies.
+- work: run forge.py faces for available human body review. Inspect contact.png and registered.png. Report registration metrics, head placement and body QA blockers.
+- done when: candidate face packet or technical body QA blocker is published in comms.
+- evidence: Tested on Machine A: selftest-human candidate face proof generated at art/review/2026-11-01-selftest-human-faces-9b64f90be64c/ (digest ae676543…); contact.png (12 expressions x 5 facings) and registered.png (standing composite) inspected; faceAnchor QA passed (7,416 registrations verified); player-aqualia body QA blockers documented (margins 0px vs >=2px, colorCount 27 vs limit 24, awaiting M11 reference redraw); reported in docs/team/comms/blender/2026-11-01T0325--to-codex-communicator--b11-human-face-results.md.
