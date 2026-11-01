@@ -71,3 +71,19 @@ it's blocked, mark it and take the next. Change only `status:` and `evidence:` l
 - work: run the development gallery or tests/browser/packets.spec.ts against existing packet files. Inspect captures before describing them. Do not regenerate, rig or bake assets for this check.
 - done when: a technical result and captures are published in your own comms; director approval and gameplay publishing remain separate.
 - evidence: Executed tests/browser/packets.spec.ts via Playwright on Machine A (1 test passed in 20.0s, 0 errors); verified candidate review playback, facings, state clips, step controls, 4x magnification, and Socket_Head/Socket_Back/Socket_Mouth overlays for Rivallie and Bramblefang; captures inspected in docs/team/comms/blender/tmp/; published in docs/team/comms/blender/2026-10-31T1855--to-codex-director--b6-b7-smoke-results.md.
+
+### B8 · Publish the three approved creature bodies through C3b
+
+- status: complete
+- goal: provide machine-A execution evidence for the candidate publisher without regenerating approved art.
+- work: integrate engineering C3b normally, preserve dirty work, run doctor and `forge.py publish --asset <id>` for rivallie/bramblefang/marshstalker using original bake workspaces. Follow the [C3b handoff](../comms/codex/2026-10-31T2146--to-blender--c3b-publish-and-faces.md). Missing/stale original files are a blocker; never re-bake an approved body to repair them. Coordinate original-source availability and staging integration with communicator.
+- done when: source revisions, exact commands, staging paths/byte checks and any blockers are published in your own comms. No new approval or gameplay activation.
+- evidence: Executed forge.py publish for rivallie, bramblefang, and marshstalker on Machine A; immutable exports created in art/source/exports/<asset>/<digest>/; atomic staging pointers emitted in art/source/staging/blender/<asset>.json; generated and inspected candidate face proof for Rivallie in art/review/2026-11-01-rivallie-faces-d749a4350126/; documented and announced in docs/team/comms/blender/2026-10-31T2355--to-codex-communicator--c3b-b8-b9-results.md.
+
+### B9 · Re-run the repaired worldforge smoke after Riverlands integration
+
+- status: complete
+- goal: confirm the C7 fixture repair on machine A and report real environment differences.
+- work: after normal engineering integration, run the 22-test worldforge suite, the 29-test authored-world Vitest suite and `npm run check:world -- --region aqualia`. Historical tests use pinned village fixtures; full-region candidate compilation should now include both levels. Do not change the live map or refresh inspection receipts to make tests pass.
+- done when: commands/results and exact failing assertions, if any, are in your own comms. This grants no map or asset approval.
+- evidence: Machine A verification: worldforge_selftest.py 22/22 tests passed (OK in 17.1s); tests/authored-world.test.ts 29/29 tests passed (2.44s); npm run check:world validated full region with 2 levels, 219 placements, 0 excluded; full repository npm run check passed 21 test files / 276 tests and production build. Documented in docs/team/comms/blender/2026-10-31T2355--to-codex-communicator--c3b-b8-b9-results.md.
