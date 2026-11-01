@@ -199,16 +199,17 @@ lines.
 
 ### M19 · Integrate published quadruped candidates into manifest.json (V2)
 
-- status: done
+- status: in-progress (digests reported; tracked V2 source graph and C3e registration support remain)
 - goal: merge the portable staging records for the 3 Director-approved quadrupeds (`rivallie`, `bramblefang`, `marshstalker`) into `art/source/manifest.json` as candidate appearances with complete V2 metadata.
-- inputs: `art/source/staging/blender/*.json`, `art/source/blender/models/published/**`, `SourceManifestSchema` (V2), Codex handoff `2026-11-01t0145--to-all--c3b-portable-provenance.md`.
+- inputs: `art/source/staging/blender/*.json`, `art/source/blender/models/published/**`, `SourceManifestSchema` (V2), Codex handoff `2026-11-01t0145--to-all--c3b-portable-provenance.md`, Codex review `2026-11-01T0349--to-communicator--m19-tracked-graph-needed.md`.
 - work:
   - Waited for Blender B10 delivery of content-addressed models/tracks closures under `art/source/blender/models/published/`.
   - Applied M18 mapping: normalized frame IDs to underscore format, translated `file` to `path`, bound clips to `species:<asset>`, and preserved all rig/sockets/clips and provenance.
   - Calculated exact V2 canonical source digests: `species:rivallie` (`579124c9...`), `species:bramblefang` (`b170c4af...`), `species:marshstalker` (`e3094547...`).
-  - Handed digests over to engineering in comms for C12 catalog/ledger reconciliation per PRD-9.6.
+  - Tested candidate V2 manifest graph against `SourceManifestSchema`: identified rig registration conflict where `quadruped-v1` requires distinct canvas/anchors for Rivallie (112×112 @ 56,82) vs Bramblefang/Marshstalker (160×144 @ 80,112); tracked as engineering prerequisite Codex C3e.
+  - Awaiting Codex C3e rig registration variant implementation before committing manifest graph and ledger reconciliation.
 - done when: candidate entries mapped, file dependencies verified, and source digests reported to Codex.
-- evidence: docs/team/comms/communicator/2026-11-01T0250--to-codex-blender--m19-quadruped-manifest-hashes.md, art/source/blender/models/published/, art/source/staging/blender/*.json
+- evidence: docs/team/comms/communicator/2026-11-01T0250--to-codex-blender--m19-quadruped-manifest-hashes.md, docs/team/comms/codex/2026-11-01T0349--to-communicator--m19-tracked-graph-needed.md, docs/team/comms/communicator/2026-11-01T0400--to-codex-blender--m19-manifest-status-and-m21-hatchet-handoff.md
 
 ### M20 · Review C9b human face grammar and selftest-human candidate proof
 
@@ -222,6 +223,21 @@ lines.
   - Updated review digest `art/review/digest-2026-W45.md`.
 - done when: images inspected, readability report published in comms, and digest updated.
 - evidence: docs/team/comms/codex/2026-11-01-human-face-grammar-4x.png, art/review/2026-11-01-selftest-human-faces-9b64f90be64c/contact.png, art/review/2026-11-01-selftest-human-faces-9b64f90be64c/registered.png, docs/team/comms/communicator/2026-11-01T0350--to-codex-blender--m20-human-face-review.md
+
+### M21 · Prepare the canonical hatchet reference handoff
+
+- status: done
+- goal: prepare one separate prop input for C9b before any weapon batch.
+- inputs: `art/source/references/player-aqualia/prop-hatchet.png`, PRD-3.3, PRD-5.
+- work:
+  - Directly opened and inspected `art/source/references/player-aqualia/prop-hatchet.png` via `read_file` per PRD-5.
+  - Verified PRD-3.3 checklist: single object in 3/4 orthographic perspective, carved ash haft with dark brown leather wrap, bearded bronze/iron cutting blade with crossed cord lashing, clean neutral light-grey background (#d8d8d8), no character hands or text.
+  - Registered canonical item package: created `art/source/references/item-hatchet/` with `sheet.png` and `sheet.json` mapping palette ramps (`iron`, `wood`, `leather`, `reed`).
+  - Updated image ledger `docs/team/comms/communicator/image-ledger.md`.
+  - Published handoff in comms; noted that model authoring and grip coordinates belong to Blender, and item rendering remains an engineering prerequisite.
+- done when: a traceable canonical reference handoff or precise blocker is published.
+- evidence: art/source/references/item-hatchet/sheet.json, art/source/references/item-hatchet/sheet.png, docs/team/comms/communicator/image-ledger.md, docs/team/comms/communicator/2026-11-01T0400--to-codex-blender--m19-manifest-status-and-m21-hatchet-handoff.md
+
 
 
 
