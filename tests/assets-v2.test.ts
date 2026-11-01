@@ -24,10 +24,15 @@ import {
 } from '../src/presentation/assets/catalog';
 import {
   SourceManifestSchema,
+  type SourceFrameV2,
+  type SourceAppearanceV2,
   canonicalSourceJson,
   sourceSubjectDependencies,
   completePortraitExpressions,
   type SourceManifestV2,
+  type SourceManifest,
+  sourceFrameAnchor,
+  isLegacySource,
 } from '../src/presentation/assets/source';
 import { assetCoverage, canPublishAppearance } from '../src/presentation/assets/coverage';
 import { compositeBounds, layerRegistration } from '../src/presentation/compositor';
@@ -108,7 +113,7 @@ describe('explicit rig registrations', () => {
   it('rejects undeclared mixed pairs, duplicate registrations, missing rigs and outside sockets', () => {
     const changes: ((s: SourceManifestV2) => void)[] = [
       (s) => {
-        s.frames[0]!.anchorPx.x++;
+        (s.frames[0] as SourceFrameV2).anchorPx.x++;
       },
       (s) => {
         s.rigs![0]!.registrations!.push({
@@ -123,7 +128,7 @@ describe('explicit rig registrations', () => {
         s.rigs = [];
       },
       (s) => {
-        const frame = s.frames[0]!;
+        const frame = s.frames[0] as SourceFrameV2;
         frame.sockets![Object.keys(frame.sockets!)[0]!]!.x = 1000;
       },
     ];
@@ -149,7 +154,7 @@ describe('explicit rig registrations', () => {
     const s = source();
     s.rigs![0]!.registrations = [{ canvas: { w: 192, h: 176 }, anchorPx: { x: 96, y: 132 } }];
     for (const kind of ['body', 'hair']) {
-      const frame = structuredClone(s.frames.find((f) => f.id === `${kind}0`)!);
+      const frame = structuredClone(s.frames.find((f) => f.id === `${kind}0`)! as SourceFrameV2);
       frame.id = `${kind}_wide`;
       frame.path = `exports/${frame.id}.png`;
       frame.sourceSize = { w: 192, h: 176 };
@@ -472,7 +477,7 @@ describe('v2 source boundaries', () => {
     expect(AssetCatalogSchema.safeParse(c).success).toBe(false);
     for (const x of [-1, 0.5, 97]) {
       const s = source();
-      s.frames[0]!.anchorPx.x = x;
+      (s.frames[0] as SourceFrameV2).anchorPx.x = x;
       expect(SourceManifestSchema.safeParse(s).success).toBe(false);
     }
   });
@@ -520,16 +525,16 @@ describe('v2 source boundaries', () => {
   it('rejects incompatible layer canvas, registration, cadence and recursive recipes', () => {
     const changes: ((s: SourceManifestV2) => void)[] = [
       (s) => {
-        s.frames[1]!.sourceSize.w = 100;
+        (s.frames[1] as SourceFrameV2).sourceSize.w = 100;
       },
       (s) => {
-        s.frames[1]!.anchorPx.x = 47;
+        (s.frames[1] as SourceFrameV2).anchorPx.x = 47;
       },
       (s) => {
         s.clips[1]!.frameIds = ['hair0', 'hair0'];
       },
       (s) => {
-        s.appearances[0]!.recipeId = 'human-aqualia';
+        (s.appearances[0] as SourceAppearanceV2).recipeId = 'human-aqualia';
       },
       (s) => {
         s.recipes![0]!.layers[0]!.required = false;
@@ -544,10 +549,10 @@ describe('v2 source boundaries', () => {
   it('validates action sockets and canonical equipment selectors', () => {
     const changes: ((s: SourceManifestV2) => void)[] = [
       (s) => {
-        s.frames[0]!.sockets = { imaginary: { x: 1, y: 1 } };
+        (s.frames[0] as SourceFrameV2).sockets = { imaginary: { x: 1, y: 1 } };
       },
       (s) => {
-        s.frames[0]!.sockets = {};
+        (s.frames[0] as SourceFrameV2).sockets = {};
       },
       (s) => {
         s.recipes![0]!.layers[2]!.socketId = 'missing';
@@ -748,7 +753,7 @@ describe('art approval and provenance', () => {
     expect(AuthoringProvenanceSchema.safeParse(unpinned).success).toBe(false);
     const s = source();
     s.authoringProvenance = [blend];
-    s.appearances[0]!.provenanceId = 'blend';
+    (s.appearances[0] as SourceAppearanceV2).provenanceId = 'blend';
     const payload = sourceSubjectDependencies(s, 'appearance', 'aqualia-hd');
     expect(payload.paths).toEqual(expect.arrayContaining(blend.inputs.map((i) => i.path)));
     const c = runtime(),
@@ -768,7 +773,7 @@ describe('art approval and provenance', () => {
     const hash = (value: unknown) =>
       createHash('sha256').update(canonicalSourceJson(value)).digest('hex');
     const digest = hash(before);
-    s.frames[0]!.sockets!.hand_r!.x++;
+    (s.frames[0] as SourceFrameV2).sockets!.hand_r!.x++;
     expect(hash(sourceSubjectDependencies(s, 'appearance', 'aqualia-hd'))).not.toBe(digest);
     expect(
       hash({
@@ -814,5 +819,89 @@ describe('nine-expression portrait sets', () => {
       hud128: '/assets/angry128.png',
       resolvedEmotion: 'angry',
     });
+  });
+});
+
+describe('C3f legacy-safe V2 ingestion', () => {
+  const legacyFrame = {
+    id: 'npc_old_idle_s_0',
+    path: 'exports/npcs/old.png',
+    anchor: { x: 0.5, y: 0.92 },
+    legacy: true as const,
+  };
+  const legacyAppearance = {
+    id: 'npc:old',
+    kind: 'environment' as const,
+    contentId: 'old',
+    quality: 'hd' as const,
+    clipIds: [],
+    frameId: legacyFrame.id,
+    legacy: true as const,
+  };
+  const mixed = (): SourceManifestV2 => {
+    const s = source();
+    s.frames.push(structuredClone(legacyFrame));
+    s.appearances.push(structuredClone(legacyAppearance));
+    return s;
+  };
+  it('accepts V1 rows beside native rows and keeps fractional anchors exactly', () => {
+    const parsed = SourceManifestSchema.parse(mixed());
+    const frame = parsed.frames.find((f) => f.id === legacyFrame.id)!;
+    expect(sourceFrameAnchor(frame)).toEqual({ x: 0.5, y: 0.92 });
+    expect(isLegacySource(frame)).toBe(true);
+  });
+  it('keeps the live manifest V2 with every V1 frame anchor unrounded', () => {
+    const live = SourceManifestSchema.parse(
+      JSON.parse(readFileSync('art/source/manifest.json', 'utf8')),
+    );
+    expect(live.schemaVersion).toBe(2);
+    const legacy = live.frames.filter(isLegacySource);
+    expect(legacy.length).toBeGreaterThan(1000);
+    for (const f of legacy) expect(sourceFrameAnchor(f)).toEqual((f as typeof legacyFrame).anchor);
+  });
+  it('gives a migrated row the same digest metadata as its V1 original', () => {
+    const v2 = mixed();
+    const v1: SourceManifest = {
+      schemaVersion: 1,
+      frames: [{ id: legacyFrame.id, path: legacyFrame.path, anchor: legacyFrame.anchor }],
+      appearances: [
+        {
+          id: legacyAppearance.id,
+          kind: legacyAppearance.kind,
+          contentId: legacyAppearance.contentId,
+          quality: legacyAppearance.quality,
+          clipIds: [],
+          frameId: legacyFrame.id,
+        },
+      ],
+      clips: [],
+    };
+    expect(
+      canonicalSourceJson(sourceSubjectDependencies(v2, 'appearance', legacyAppearance.id)),
+    ).toBe(canonicalSourceJson(sourceSubjectDependencies(v1, 'appearance', legacyAppearance.id)));
+  });
+  it('keeps native rows integer-strict and the two row kinds separate', () => {
+    const changes: ((s: SourceManifestV2) => void)[] = [
+      (s) => {
+        (s.frames[0] as SourceFrameV2).anchorPx.y = 132.48;
+      },
+      (s) => {
+        (s.frames.at(-1) as unknown as Record<string, unknown>).anchorPx = { x: 48, y: 132 };
+      },
+      (s) => {
+        (s.frames.at(-1) as unknown as Record<string, unknown>).stage = 'candidate';
+      },
+      (s) => {
+        (s.appearances.at(-1) as unknown as Record<string, unknown>).frameId = 'body0';
+      },
+      (s) => {
+        (s.appearances.at(-1) as unknown as Record<string, unknown>).legacy = false;
+      },
+    ];
+    for (const change of changes) {
+      const s = mixed();
+      change(s);
+      expect(SourceManifestSchema.safeParse(s).success).toBe(false);
+    }
   });
 });

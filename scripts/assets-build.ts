@@ -23,6 +23,8 @@ import {
 import {
   SourceManifestSchema,
   sourceFrameAnchor,
+  sourceStage,
+  isLegacySource,
   sourceSubjectDependencies,
   completePortraitExpressions,
   canonicalSourceJson,
@@ -236,7 +238,9 @@ const runtimeArtifact = <T extends { id: string; stage: 'proof' | 'candidate' }>
 });
 // Partial actors and proof art stay review-only, preserving their existing gameplay fallback.
 for (const authored of source.appearances) {
-  const a: AssetAppearance = authored;
+  // C3f: legacy rows inside a V2 manifest keep exact V1 behaviour (no approval gate, no stage).
+  const legacyRow = source.schemaVersion === 1 || isLegacySource(authored);
+  const { legacy: _legacy, ...a } = authored as AssetAppearance & { legacy?: true };
   const recipe = sourceV2?.recipes?.find((r) => r.id === a.recipeId);
   const requiredLayers =
     recipe?.layers
@@ -249,7 +253,8 @@ for (const authored of source.appearances) {
       requiredLayers.every(
         (layer) =>
           layer?.stage === 'candidate' &&
-          sourceV2?.appearances.find((a) => a.id === layer.appearanceId)?.stage === 'candidate' &&
+          sourceStage(sourceV2?.appearances.find((a) => a.id === layer.appearanceId)) ===
+            'candidate' &&
           approved('layer-set', layer.id) &&
           approved('appearance', layer.appearanceId),
       ));
@@ -257,7 +262,7 @@ for (const authored of source.appearances) {
     !!a.provenanceId && !!sourceV2?.authoringProvenance?.some((p) => p.id === a.provenanceId);
   const publish =
     canPublishAppearance(sourceGraph, a) &&
-    (source.schemaVersion === 1 ||
+    (legacyRow ||
       (a.stage === 'candidate' &&
         approved('appearance', a.id) &&
         dependenciesApproved &&
@@ -282,7 +287,7 @@ for (const authored of source.appearances) {
   }
   appearances.push({
     ...a,
-    ...(source.schemaVersion === 2
+    ...(!legacyRow
       ? { stage: 'approved' as const, sourceDigest: digestFor('appearance', a.id) }
       : {}),
   });
@@ -504,7 +509,7 @@ for (const [kind, identities] of Object.entries(bindings))
           hud128: p.hud_128,
         });
     }
-for (const p of source.schemaVersion === 1 ? (source.portraits ?? []) : []) {
+for (const p of source.portraits ?? []) {
   const urls: Record<string, string> = {};
   for (const tier of ['hud96', 'hud128'] as const) {
     const path = resolve(root, 'art/source', p[tier]);

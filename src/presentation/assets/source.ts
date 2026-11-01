@@ -55,6 +55,17 @@ const SourceAppearanceV1Schema = AssetAppearanceSchema.omit({
   recipeId: true,
   provenanceId: true,
 });
+/**
+ * C3f: V1 rows carried inside a V2 manifest, unchanged. Normalized anchors are kept exactly
+ * (never rounded to pixels) and the rows keep V1 runtime behaviour (no approval gate).
+ * Native V2 rows stay integer-strict.
+ */
+export const SourceFrameLegacySchema = SourceFrameV1Schema.extend({
+  legacy: z.literal(true),
+}).strict();
+export const SourceAppearanceLegacySchema = SourceAppearanceV1Schema.extend({
+  legacy: z.literal(true),
+}).strict();
 export const SourceAppearanceV2Schema = AssetAppearanceSchema.omit({ sourceDigest: true })
   .extend({ stage: SourceArtStageSchema })
   .strict();
@@ -113,9 +124,11 @@ const V1 = z
 const V2 = z
   .object({
     schemaVersion: z.literal(2),
-    frames: z.array(SourceFrameV2Schema),
-    appearances: z.array(SourceAppearanceV2Schema),
+    frames: z.array(z.union([SourceFrameV2Schema, SourceFrameLegacySchema])),
+    appearances: z.array(z.union([SourceAppearanceV2Schema, SourceAppearanceLegacySchema])),
     clips: z.array(AnimationClipSchema),
+    /** Legacy V1 portrait pairs; native portraits use `portraitSets`. */
+    portraits: z.array(SourcePortraitPair).optional(),
     rigs: z.array(RigDefinitionSchema).optional(),
     buildProfiles: z.array(BuildProfileSchema).optional(),
     layerSets: z.array(SourceLayerSet).optional(),
@@ -176,15 +189,22 @@ export const SourceManifestSchema = z
       for (const id of c.frameIds)
         if (!frames.has(id)) issue(`Missing source clip frame: ${c.id}/${id}`);
     }
-    if (source.schemaVersion === 1) {
-      const pairs = new Set<string>();
-      for (const p of source.portraits ?? []) {
-        const key = `${p.kind}:${p.contentId}`;
-        if (pairs.has(key)) issue(`Duplicate source portrait: ${key}`);
-        pairs.add(key);
-        if (!canonical[p.kind]?.has(p.contentId)) issue(`Unknown source portrait identity: ${key}`);
-      }
-    } else {
+    const pairs = new Set<string>();
+    for (const p of source.portraits ?? []) {
+      const key = `${p.kind}:${p.contentId}`;
+      if (pairs.has(key)) issue(`Duplicate source portrait: ${key}`);
+      pairs.add(key);
+      if (!canonical[p.kind]?.has(p.contentId)) issue(`Unknown source portrait identity: ${key}`);
+    }
+    if (source.schemaVersion === 2) {
+      for (const a of source.appearances)
+        if (isLegacySource(a))
+          for (const id of [
+            ...(a.frameId ? [a.frameId] : []),
+            ...a.clipIds.flatMap((c) => clips.get(c)?.frameIds ?? []),
+          ])
+            if (frames.get(id) && !isLegacySource(frames.get(id)!))
+              issue(`Legacy appearance references a native V2 frame: ${a.id}/${id}`);
       validateV2Graph(source, issue);
       const provenanceIds = new Set<string>();
       for (const p of source.authoringProvenance ?? []) {
@@ -192,7 +212,11 @@ export const SourceManifestSchema = z
         provenanceIds.add(p.id);
       }
       for (const artifact of [...source.appearances, ...(source.portraitSets ?? [])])
-        if (artifact.provenanceId && !provenanceIds.has(artifact.provenanceId))
+        if (
+          'provenanceId' in artifact &&
+          artifact.provenanceId &&
+          !provenanceIds.has(artifact.provenanceId)
+        )
           issue(`Missing source authoring provenance: ${artifact.id}`);
       const setIds = new Set<string>(),
         setBindings = new Set<string>();
@@ -206,7 +230,7 @@ export const SourceManifestSchema = z
           issue(`Unknown source portrait-set identity: ${set.id}`);
       }
       for (const a of source.appearances) {
-        if (a.stage !== 'candidate') continue;
+        if (!('stage' in a) || a.stage !== 'candidate') continue;
         const ids = [
           ...(a.frameId ? [a.frameId] : []),
           ...a.clipIds.flatMap((id) => clips.get(id)?.frameIds ?? []),
@@ -222,6 +246,16 @@ export const SourceManifestSchema = z
 export type SourceManifest = z.infer<typeof SourceManifestSchema>;
 export type SourceManifestV2 = Extract<SourceManifest, { schemaVersion: 2 }>;
 export type SourceFrame = SourceManifest['frames'][number];
+export type SourceAppearance = SourceManifest['appearances'][number];
+export type SourceFrameV2 = z.infer<typeof SourceFrameV2Schema>;
+export type SourceAppearanceV2 = z.infer<typeof SourceAppearanceV2Schema>;
+export function sourceStage(a: SourceAppearance | undefined): 'proof' | 'candidate' | undefined {
+  return a && 'stage' in a ? a.stage : undefined;
+}
+/** True for V1-compatible rows carried in a V2 manifest (C3f). */
+export function isLegacySource(row: object): boolean {
+  return 'legacy' in row && (row as { legacy?: unknown }).legacy === true;
+}
 export function sourceFrameAnchor(frame: SourceFrame): { x: number; y: number } {
   return 'anchorPx' in frame ? normalizedAnchor(frame.anchorPx, frame.sourceSize) : frame.anchor;
 }
@@ -266,6 +300,11 @@ export function sourceSubjectDependencies(
   const add = (key: string, value: unknown): boolean => {
     if (metadata.has(key)) return false;
     if (!value) throw new Error(`Missing source digest dependency: ${key}`);
+    // The C3f storage marker is not identity: a migrated V1 row keeps its V1 digest.
+    if (typeof value === 'object' && isLegacySource(value)) {
+      const { legacy: _legacy, ...row } = value as { legacy?: true };
+      value = row;
+    }
     metadata.set(key, value);
     return true;
   };
