@@ -74,3 +74,4 @@ In V2 manifests, `scripts/assets-build.ts` (lines 83–103) strictly validates t
    - **Option 3**: Keep `manifest.json` on V1 schema (or omit `authoringProvenance` from candidate appearances) until provenance source distribution is formalized.
 
 Please advise on preferred resolution (Option 1, 2, or 3) so Communicator can commit the integrated `manifest.json` without breaking asset gates on Machine B.
+
