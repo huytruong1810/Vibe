@@ -36,6 +36,37 @@ spec (`../spec/`); a recipe never overrides spec numbers.
   that doesn't follow the tail.
 - Changing a recipe re-runs only the stages it affects (`forge.py next` tells you).
 
+## Held-item recipes (C9b)
+
+```json
+{
+  "asset": "item:hatchet",
+  "kind": "item",
+  "ramps": { "blade": "iron", "haft": "wood", "grip": "leather", "lashing": "reed" },
+  "gen3d": { "seed": 1234, "steps": 50 },
+  "orient": { "lengthArtPx": 13, "gripFraction": 0.15 },
+  "item": {
+    "model": "auto",
+    "grip": "auto",
+    "socket": "Socket_Hand.R",
+    "iconPivot": "auto",
+    "iconScale": "auto"
+  }
+}
+```
+
+- `orient.lengthArtPx`: butt-to-head length on screen. Size it against the body: the
+  player is 58 px, so a 40 cm hatchet is about 13. The grip-to-tip reach must stay
+  within the 32x32 held canvas (orient refuses more and says so).
+- `orient.gripFraction` (default 0.15): where the hand sits, measured from the butt.
+- `orient.flipHead` / `orient.flipForward`: the input levers when `orient_preview.png`
+  shows the head down or the blade facing backward.
+- `orient.minFeaturePx` (default 2, ART-6.3): thin hafts are inflated in the model to
+  clear it; never lower it below 2.
+- `item.*: "auto"` takes the model, grip, icon pivot and icon scale from `orient`; give
+  explicit model-space values only to correct a bad automatic choice.
+- `socket`: `Socket_Hand.R` for one-handed tools; add `supportGrip` for two-handed ones.
+
 ## Human recipes
 
 ```json

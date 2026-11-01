@@ -128,6 +128,18 @@ class ItemPlanTest(unittest.TestCase):
         self.assertEqual(before, self.out.read_bytes())
         self.assertFalse(list(self.out.parent.glob(".item-plan-*")))
 
+    def test_icon_scale_is_uniform_and_icon_only(self):
+        config = {**self.config, "iconScale": 2}
+        plan = item_pose_plan(self.repo, "item:hatchet", config, self.rs)
+        icon = plan["poses"][-1]
+        self.assertEqual((icon["view"], icon["scale"], icon["gripBucket"]), ("icon", 2.0, 1))
+        for value in transform_point(icon, config["iconPivot"]):
+            self.assertAlmostEqual(value, 0, places=10)
+        self.assertTrue(all("scale" not in p for p in plan["poses"][:-1]))
+        for bad in (0.5, 5, float("nan"), True):
+            with self.assertRaises(core.ForgeError):
+                item_pose_plan(self.repo, "item:hatchet", {**self.config, "iconScale": bad}, self.rs)
+
     def test_cli_writes_draft_and_never_runs_blender(self):
         import forge
         with patch.object(forge, "REPO", self.repo), \
@@ -138,10 +150,16 @@ class ItemPlanTest(unittest.TestCase):
             self.assertIn("65 mesh poses", forge.st_item_plan("item:hatchet"))
         self.assertEqual(core.asset_kind("item:hatchet"), "item")
         self.assertEqual(core.canvas_for("item:hatchet")[0], "layer.heldItem")
-        self.assertIn("BLOCKED", forge.next_step("item:hatchet"))
-        with patch.object(sys, "argv", ["forge.py", "all", "--asset", "item:hatchet"]), \
-             patch.object(forge, "_run", side_effect=AssertionError("must not run body stages")):
-            self.assertEqual(forge.main(), 2)
+        with patch.object(core, "load_sheet", side_effect=core.ForgeError("no prop sheet")):
+            self.assertIn("BLOCKED", forge.next_step("item:hatchet"))
+            ran = []
+            with patch.object(sys, "argv", ["forge.py", "all", "--asset", "item:hatchet"]), \
+                 patch.object(forge, "approval_for", return_value=None), \
+                 patch.object(forge, "_run", side_effect=lambda asset, st: ran.append(st) or "ok"):
+                self.assertEqual(forge.main(), 0)
+        # Items run their own source chain through render; never a body stage.
+        self.assertEqual(ran, ["prep", "gen3d", "clean", "texture", "orient", "items"])
+        self.assertFalse({"rig", "animate", "bake", "pixelize", "qa"} & set(ran))
 
 
 if __name__ == "__main__":

@@ -374,7 +374,7 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 
 ### C9b · Items, fit, human faces
 
-- status: in-progress (human face sidecars and technical item renderer delivered; real Blender calibration, integration and fit pending)
+- status: in-progress (claude). **Items done 2026-11-01:** source prep, orient, icon scale, packet and publish; doctor `items: READY`; golden `art/review/2026-11-01-item-hatchet/`. Open: `fit` (garments), human `publish`, runtime held-layer composition
 - goal: the remaining human-class stages.
   - `items`: 8 facings × 8 grip angles plus an inventory icon from one mesh (ART-15), registered to `Socket_Hand.*`.
   - `fit`: garment parts (Surface Deform or Shrinkwrap, weights from the body, hidden body faces masked, PRD-1).

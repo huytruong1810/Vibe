@@ -24,13 +24,16 @@ def point(value: object, name: str) -> tuple[float, float, float]:
 
 
 def transform_point(pose: dict, value: tuple[float, float, float]) -> tuple[float, float, float]:
-    """Rigid model-to-pose transform. Scale stays one; the authored mesh is not resized."""
-    return tuple(round(sum(row[i] * value[i] for i in range(3)) + offset, 12)
+    """Model-to-pose transform. Held poses are rigid (scale one); only the inventory icon
+    may carry a uniform `scale` so it fills its slot. Rotation rows stay orthonormal."""
+    scale = pose.get("scale", 1.0)
+    return tuple(round(scale * sum(row[i] * value[i] for i in range(3)) + offset, 12)
                  for row, offset in zip(pose["rotation"], pose["translation"]))
 
 
 def _pose(identifier: str, facing: str, yaw: float, bucket: int, buckets: int,
-          grip: tuple, support: tuple | None, canvas: dict, view: str, elevation: float) -> dict:
+          grip: tuple, support: tuple | None, canvas: dict, view: str, elevation: float,
+          scale: float = 1.0) -> dict:
     # Canonical model: Z up, -Y forward. Turn to its authored facing, then rotate
     # around the fixed camera view axis. Buckets are clockwise SCREEN angles from
     # up, identical across facings. Rotating around model Y instead would change
@@ -44,10 +47,12 @@ def _pose(identifier: str, facing: str, yaw: float, bucket: int, buckets: int,
     turn = ((cy, -sy, 0), (sy, cy, 0), (0, 0, 1))
     rotation = [[sum(roll[i][k] * turn[k][j] for k in range(3)) for j in range(3)] for i in range(3)]
     rotation = [[0.0 if abs(v) < 1e-12 else round(v, 12) for v in row] for row in rotation]
-    translation = [-sum(row[i] * grip[i] for i in range(3)) for row in rotation]
+    translation = [-scale * sum(row[i] * grip[i] for i in range(3)) for row in rotation]
     pose = {"id": identifier, "view": view, "facing": facing, "gripBucket": bucket,
             "gripDegrees": 360 * bucket / buckets, "rotation": rotation,
             "translation": translation, "canvas": canvas}
+    if view == "icon":
+        pose["scale"] = scale
     if support is not None:
         pose["supportGrip"] = list(transform_point(pose, support))
     return pose
@@ -57,8 +62,8 @@ def item_pose_plan(repo: Path, asset: str, config: dict, render_spec: dict) -> d
     """Validate all inputs before producing the deterministic 64-pose + icon plan."""
     if not re.fullmatch(r"item:[a-z][a-z0-9-]*", asset):
         raise ForgeError("Item asset must use item:<slug> identity")
-    if not isinstance(config, dict) or set(config) - {"model", "grip", "supportGrip", "socket", "iconPivot"}:
-        raise ForgeError("Unknown item field; expected model, grip, supportGrip, socket, iconPivot")
+    if not isinstance(config, dict) or set(config) - {"model", "grip", "supportGrip", "socket", "iconPivot", "iconScale"}:
+        raise ForgeError("Unknown item field; expected model, grip, supportGrip, socket, iconPivot, iconScale")
     if not {"model", "grip", "socket", "iconPivot"} <= config.keys():
         raise ForgeError("Item needs model, grip, socket and an explicitly authored iconPivot")
     name = config["model"]
@@ -74,6 +79,9 @@ def item_pose_plan(repo: Path, asset: str, config: dict, render_spec: dict) -> d
     grip = point(config["grip"], "grip")
     icon_pivot = point(config["iconPivot"], "iconPivot")
     support = point(config["supportGrip"], "supportGrip") if "supportGrip" in config else None
+    icon_scale = config.get("iconScale", 1.0)
+    if type(icon_scale) not in (int, float) or not math.isfinite(icon_scale) or not 1 <= icon_scale <= 4:
+        raise ForgeError("iconScale must be a finite number from 1 to 4 (the icon fills its slot; held poses never scale)")
     held = render_spec["canvases"]["layer.heldItem"]
     icon = render_spec["canvases"]["icon.item"]
     buckets = held["gripAngleBuckets"]
@@ -97,8 +105,9 @@ def item_pose_plan(repo: Path, asset: str, config: dict, render_spec: dict) -> d
     poses = [_pose(f"{slug}-held-{f}-{b}", f, yaw[f], b, buckets, grip, support,
                    {"size": held["size"], "anchor": held["anchor"]}, "held", elevation)
              for f in facings for b in range(buckets)]
-    poses.append(_pose(f"{slug}-icon", "se", yaw["se"], 0, buckets, icon_pivot, None,
-                       {"size": icon["size"], "anchor": icon["anchor"]}, "icon", elevation))
+    # Inventory icon: same mesh, se facing, the classic 45-degree tilt (bucket 1), scaled to its slot.
+    poses.append(_pose(f"{slug}-icon", "se", yaw["se"], 1, buckets, icon_pivot, None,
+                       {"size": icon["size"], "anchor": icon["anchor"]}, "icon", elevation, float(icon_scale)))
     contract = {"camera": render_spec["camera"], "pixelScale": render_spec["pixelScale"],
                 "facings": render_spec["facings"], "held": held, "icon": icon}
     return {"schemaVersion": 1, "kind": "item-pose-plan", "status": "draft", "asset": asset,
@@ -107,7 +116,7 @@ def item_pose_plan(repo: Path, asset: str, config: dict, render_spec: dict) -> d
             "generatorDigest": file_sha(Path(__file__)), "socket": config["socket"],
             "gripConvention": "clockwise-screen-from-up-after-facing-yaw",
             "poses": poses, "notes": ["Transforms existing source mesh only; no scale or mirrored bitmap.",
-            "Icon uses the same mesh and authored icon pivot.",
+            "Icon uses the same mesh and authored icon pivot, tilted 45 degrees, with its own uniform iconScale.",
             "Rendering, clipping/thin-feature QA, occlusion and approval remain separate gates."]}
 
 

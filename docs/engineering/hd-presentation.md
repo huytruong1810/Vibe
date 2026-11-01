@@ -336,6 +336,36 @@ the Blender integration or artistic quality. Machine B currently has no Blender
 The protected sprite-forge runbook remains unchanged; this guide does not override
 its production gate or authorize item asset production.
 
+### C9b item source, packet and publication (claude, 2026-11-01)
+
+Held items now run end to end: `prep → gen3d → clean → texture → orient → items →
+packet → publish` (`forge.py all --asset item:<id>` runs through `items`).
+
+- **Source.** A prop sheet is one object in three-quarter view (PRD-3.3); prep feeds it
+  to gen3d and texture as their single front view. `orient` (`blender/item_orient.py`,
+  maths in `forgelib/item_orient.py`) finds the haft as the longest principal axis, the
+  head as the wider end (+Z), the working edge as the head's farthest perpendicular
+  point (−Y), puts the grip on the haft axis at `gripFraction` from the butt (origin),
+  and scales uniformly to `lengthArtPx`. It never mirrors. Thin hafts are inflated
+  along normals to 1.25× the ART-6.3 minimum. The recipe's `item` block takes
+  `"auto"` for model, grip, icon pivot and icon scale.
+- **Icon.** The planner's icon pose is the se facing at grip bucket 1 (45°) with its own
+  uniform `scale` (`iconScale`, 1–4). It is computed by orient so the diagonal item fills
+  the 32×32 slot. Held poses stay rigid with scale one; rotation rows stay orthonormal and
+  `transform_point` and `bake.py` apply the icon scale.
+- **Packet.** The renderer's `item-review.json` becomes the packet's `review.json`; its
+  `sourceDigest` covers frame metadata, QA and every file hash, so an approval binds
+  exactly what was reviewed. Approval scope is `[held-item, icon]`.
+- **Publish.** `publish_item` mirrors body publication: digest-bound approval,
+  immutable `exports/item-<id>/<digest>/`, a self-contained source bundle (model,
+  orient record and params, recipe, spec, tools, lock), and an atomic staging record
+  `staging/blender/item-<id>.json`. Tested with a scratch approval (published, then
+  removed), and refused for a wrong scope and a wrong digest.
+- **Still open:** runtime composition of held layers on bodies (needs hand-socket body
+  frames, i.e. new humans) and the manifest/catalog item layer. Golden sample:
+  `art/review/2026-11-01-item-hatchet/`.
+- Tests: `item_orient_selftest.py` (5), `items_selftest.py` (9), `forge.py selftest --kind item`.
+
 ### C3e explicit rig registrations
 
 `RigDefinition` keeps its existing default `canvas`, `anchorPx` and `socketIds`.

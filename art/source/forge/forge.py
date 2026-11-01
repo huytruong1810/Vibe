@@ -11,6 +11,7 @@ Commands:
   faces --asset ID       separate human/creature decal candidate; never re-bakes a body
   item-plan --asset item:ID  validate an existing model and write the draft 8x8 grip/icon pose plan
   items --asset item:ID      render a separate existing prop through all 65 poses and QA
+  Items run prep|gen3d|clean|texture|orient|items|packet|publish (all runs through items).
   all --asset ID         run every runnable stage in order (stops at the first block)
 """
 
@@ -32,11 +33,17 @@ from forgelib.core import REPO, ForgeError, asset_kind, canvas_for, load_recipe,
 
 CMD = "uv run --project art/source/forge python art/source/forge/forge.py"
 STAGES = ["prep", "gen3d", "clean", "texture", "rig", "animate", "bake", "pixelize", "qa", "packet", "publish"]
+# Held items (C9b): a prop sheet becomes a canonical source model, then 64 held poses + icon.
+ITEM_STAGES = ["prep", "gen3d", "clean", "texture", "orient", "items", "packet", "publish"]
+
+
+def stages_for(asset: str) -> list[str]:
+    return ITEM_STAGES if asset_kind(asset) == "item" else STAGES
 # Readiness per asset class (doctor). A class is ready when every stage it needs up to `packet` exists.
 CLASSES = {
     "creatures": {"ready": True, "pending": [], "templates": ["quadruped"]},
     "humans": {"ready": True, "pending": ["items (held layers)", "fit (garment parts)", "publish"], "templates": ["humanoid"]},
-    "items": {"ready": False, "pending": ["render/QA built; source-prep, gallery/publication and runtime integration pending"], "ticket": "codex C9b"},
+    "items": {"ready": True, "pending": [], "templates": ["held-item"]},
     "environment": {"ready": False, "pending": ["environment kind: canvas, depth stretch, layers, footprint QA"], "ticket": "codex C10"},
 }
 
@@ -113,7 +120,8 @@ def st_gen3d(asset: str) -> str:
 def st_clean(asset: str) -> str:
     r, wd, cv = _recipe(asset), work_dir(asset), _canvas(asset)
     rs = spec("render_spec")
-    params = {"heightArtPx": r["heightArtPx"], "canvas": cv["size"], "anchor": cv["anchor"],
+    height = r["orient"]["lengthArtPx"] if asset_kind(asset) == "item" else r["heightArtPx"]
+    params = {"heightArtPx": height, "canvas": cv["size"], "anchor": cv["anchor"],
               "artPxPerUnit": rs["camera"]["artPixelsPerWorldUnit"], "elevationDeg": rs["camera"]["elevationDeg"],
               "targetFaces": r.get("targetFaces", 14000)}
     pfile = wd / "clean_params.json"
@@ -393,6 +401,15 @@ def _blender_version() -> str:
 
 
 def st_publish(asset: str) -> str:
+    if asset_kind(asset) == "item":
+        found = approval_for(asset)
+        if not found:
+            raise ForgeError(f"No director-approved record matches the current item packet of {asset} (L7, PRD-9).")
+        from forgelib.publish import publish_item
+        wd = work_dir(asset)
+        path = publish_item(REPO, wd, found[1], found[0], asset, _item_config(asset), _blender_version())
+        record(asset, "publish", [found[0], found[1] / "review.json"], [path], {"scope": ["held-item", "icon"]})
+        return f"staged {_rel(path)}; runtime composition reads it from the source manifest"
     if asset_kind(asset) != "creature":
         raise ForgeError("Human publication remains C9b; C3b supports creatures only.")
     found = approval_for(asset)
@@ -434,6 +451,61 @@ def st_faces(asset: str) -> str:
     return f"{report['status']}: {_rel(output)}; OPEN contact.png and registered.png; request a separate faces decision"
 
 
+ORIENT_FIELDS = {"lengthArtPx", "gripFraction", "flipHead", "flipForward", "minFeaturePx"}
+
+
+def st_orient(asset: str) -> str:
+    """Item source model: the textured prop, rigidly oriented and scaled (forgelib/item_orient.py)."""
+    if asset_kind(asset) != "item":
+        raise ForgeError("orient is the held-item source stage; bodies use rig")
+    r, wd = _recipe(asset), work_dir(asset)
+    o = r.get("orient")
+    if not isinstance(o, dict) or "lengthArtPx" not in o or set(o) - ORIENT_FIELDS:
+        raise ForgeError(f"Item recipe needs orient: {{lengthArtPx, [gripFraction, flipHead, flipForward]}} ({sorted(ORIENT_FIELDS)})")
+    rs = spec("render_spec")
+    held = rs["canvases"]["layer.heldItem"]
+    margin = rs["marginsArtPixels"]["min"]
+    reach = min(held["anchor"][0], held["size"][0] - held["anchor"][0], held["anchor"][1], held["size"][1] - held["anchor"][1]) - margin
+    icon = rs["canvases"]["icon.item"]["size"]
+    params = {**o, "artPxPerUnit": rs["camera"]["artPixelsPerWorldUnit"], "maxReachArtPx": reach,
+              "iconSizePx": min(icon), "marginPx": margin}
+    pfile = wd / "orient_params.json"
+    pfile.write_text(json.dumps(params, sort_keys=True))
+    src, out = wd / "texture.blend", wd / "item_model.blend"
+    script = core.BLENDER_SCRIPTS / "item_orient.py"
+    inputs = [src, pfile, script, core.FORGE / "forgelib/item_orient.py"]
+    if core.is_fresh(asset, "orient", inputs):
+        return "fresh (cached)"
+    log = wd / "logs" / "orient.log"
+    core.run_blender("item_orient.py", [str(src), str(out), str(pfile)], log)
+    line = [l for l in log.read_text().splitlines() if l.startswith("ITEM_ORIENT ")]
+    if not line:
+        raise ForgeError(f"orient failed; see {_rel(log)}")
+    info = json.loads(line[-1][len("ITEM_ORIENT "):])
+    core.run_blender("preview.py", [str(out), str(wd / "orient_preview.png")], wd / "logs" / "orient_preview.log")
+    record(asset, "orient", inputs, [out, wd / "orient_preview.png"], info, digest_extra=None)
+    return (f"reach {info['reachArtPx']} art px of {reach}; head up, blade forward; "
+            f"LOOK at {_rel(wd / 'orient_preview.png')} (flip with orient.flipHead/flipForward)")
+
+
+def _item_config(asset: str) -> dict:
+    """Recipe item block with `model`, `grip` and `iconPivot` filled from orient when "auto"."""
+    r = _recipe(asset)
+    if r.get("kind") != "item":
+        raise ForgeError("Item recipe must declare kind: item")
+    config = dict(r.get("item") or {})
+    rec = core.stage_record(asset, "orient")
+    needs = config.get("model", "auto") == "auto" or "auto" in (config.get("grip"), config.get("iconPivot"), config.get("iconScale"))
+    if needs and not rec:
+        raise ForgeError(f"Run orient first ({CMD} orient --asset {asset}); the recipe asks for auto values")
+    if config.get("model", "auto") == "auto":
+        config["model"] = (work_dir(asset) / "item_model.blend").relative_to(REPO / "art/source").as_posix()
+    for key in ("grip", "iconPivot", "iconScale"):
+        if config.get(key) == "auto":
+            config[key] = rec["extra"][key]
+    return config
+
+
 def st_item_plan(asset: str) -> str:
     from forgelib.items import item_pose_plan, write_item_plan
     if asset_kind(asset) != "item":
@@ -442,7 +514,7 @@ def st_item_plan(asset: str) -> str:
     if recipe.get("kind") != "item":
         raise ForgeError("Item recipe must declare kind: item")
     # Validate the asset/model before work_dir can create any path from this ID.
-    config = recipe.get("item")
+    config = _item_config(asset)
     item_pose_plan(REPO, asset, config, spec("render_spec"))
     path = work_dir(asset) / "item_plan.json"
     plan = write_item_plan(REPO, asset, config, spec("render_spec"), path)
@@ -458,21 +530,93 @@ def st_items(asset: str) -> str:
     recipe = _recipe(asset)
     if recipe.get("kind") != "item":
         raise ForgeError("Item recipe must declare kind: item")
-    item_pose_plan(REPO, asset, recipe.get("item"), spec("render_spec"))
-    directory = render_items(REPO, work_dir(asset), asset, recipe["item"], recipe["ramps"],
+    config = _item_config(asset)
+    item_pose_plan(REPO, asset, config, spec("render_spec"))
+    directory = render_items(REPO, work_dir(asset), asset, config, recipe["ramps"],
                              spec("render_spec"), _blender_version(), detail_slots=recipe.get("detailSlots"))
     review = json.loads((directory / "item-review.json").read_text())
-    return f"{review['status']}: {_rel(directory)}; OPEN contact.png and qa_report.json; no item approval or gameplay activation"
+    return (f"{review['status']}: {_rel(directory)}; OPEN contact.png (rows = grip buckets, columns = facings, "
+            f"last row = icon) and qa_report.json, then packet")
+
+
+def _item_generation(asset: str) -> Path:
+    rec = core.stage_record(asset, "items")
+    if not rec:
+        raise ForgeError(f"Run items first ({CMD} items --asset {asset})")
+    return REPO / rec["extra"]["directory"]
+
+
+def st_item_packet(asset: str) -> str:
+    gen = _item_generation(asset)
+    review = json.loads((gen / "item-review.json").read_text())
+    if review["status"] != "candidate":
+        raise ForgeError("Item QA status is draft: fix inputs per qa_report.json (orient levers, recipe ramps, lengthArtPx)")
+    wd = work_dir(asset)
+    marker = wd / "contact.viewed"
+    if not marker.exists() or marker.read_text().strip() != core.sha256_file(gen / "contact.png"):
+        raise ForgeError(f"Open {_rel(gen / 'contact.png')} with read_file first (PRD-5), then write its sha256 to "
+                         f"{_rel(marker)}; the packet needs a viewed contact sheet.")
+    pdir = REPO / "art" / "review" / f"{time.strftime('%Y-%m-%d', time.gmtime())}-{slug(asset)}"
+    if pdir.exists():
+        shutil.rmtree(pdir)
+    for f in review["files"]:
+        if f["path"] in ("source.blend",) or f["path"].startswith("bake/"):
+            continue  # sources travel with publish; the packet is what the reviewer looks at
+        target = pdir / f["path"]
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(gen / f["path"], target)
+        if core.sha256_file(target) != f["sha256"]:
+            raise ForgeError("Generation file changed while packeting")
+    shutil.copy2(gen / "item-review.json", pdir / "review.json")
+    if (wd / "orient_preview.png").exists():
+        shutil.copy2(wd / "orient_preview.png", pdir / "orient_preview.png")
+    (pdir / "README.md").write_text(
+        f"# {asset}: held-item review packet (status: candidate)\n\n"
+        "- Contact sheet: `contact.png` (rows = grip buckets 0-7, clockwise from up; columns = facings; last row = inventory icon)\n"
+        "- Source model: `orient_preview.png` (canonical pose: head up, working edge forward)\n"
+        f"- QA: `qa_report.json`; frames and registration in `review.json` ({len(review['frames'])} frames)\n"
+        f"- Forge inputs: `art/source/references/{slug(asset)}/`, `art/source/forge/recipes/{slug(asset)}.json`\n\n"
+        f"Approval record: `docs/team/comms/director/approvals/{slug(asset)}--{pdir.name}.md` (scope: [held-item, icon]).\n")
+    record(asset, "packet", [gen / "item-review.json"], [pdir / "review.json"], {"packet": _rel(pdir)})
+    return f"packet {_rel(pdir)}; message --to-claude-- (standing review delegation) with what you saw"
 
 
 RUNNERS = {"prep": st_prep, "gen3d": st_gen3d, "clean": st_clean, "texture": st_texture, "rig": st_rig, "animate": st_animate, "bake": st_bake,
-           "pixelize": st_pixelize, "qa": st_qa, "packet": st_packet, "publish": st_publish}
+           "pixelize": st_pixelize, "qa": st_qa, "packet": lambda a: (st_item_packet if asset_kind(a) == "item" else st_packet)(a),
+           "publish": st_publish, "orient": st_orient, "items": st_items}
 
 
 # ---------------------------------------------------------------- next / status / doctor
+def _next_item(asset: str) -> str:
+    try:
+        core.load_sheet(asset)
+    except ForgeError as e:
+        return f"BLOCKED: {e}"
+    if not (core.RECIPES / f"{slug(asset)}.json").exists():
+        return f"BLOCKED: write the recipe art/source/forge/recipes/{slug(asset)}.json (recipes/README.md, item section)."
+    if approval_for(asset):
+        return "item staged" if core.stage_record(asset, "publish") else f"{CMD} publish --asset {asset}"
+    for st in ITEM_STAGES:
+        rec = core.stage_record(asset, st)
+        if st == "items" and rec and rec["extra"].get("status") != "candidate":
+            return f"BLOCKED: item QA is draft. Fix inputs per its qa_report.json, then {CMD} orient --asset {asset}"
+        if st == "packet" and not rec:
+            gen = _item_generation(asset)
+            marker = work_dir(asset) / "contact.viewed"
+            if not marker.exists() or marker.read_text().strip() != core.sha256_file(gen / "contact.png"):
+                return (f"OPEN {_rel(gen / 'contact.png')} with read_file and describe it, write its sha256 to "
+                        f"{_rel(marker)}, then: {CMD} packet --asset {asset}")
+            return f"{CMD} packet --asset {asset}"
+        if st == "publish":
+            return "BLOCKED: waiting for an approval record. Message --to-claude-- with the packet path."
+        if not rec:
+            return f"{CMD} {st} --asset {asset}"
+    return "nothing to do"
+
+
 def next_step(asset: str) -> str:
     if asset_kind(asset) == "item":
-        return f"BLOCKED: item source-prep/gallery/publication remain C9b; technical commands: item-plan or items --asset {asset}"
+        return _next_item(asset)
     # Approved bodies must not be sent back through prep merely because this machine
     # lacks machine-A stage caches. Publishing validates the originals on machine A.
     if approval_for(asset):
@@ -517,7 +661,7 @@ def next_step(asset: str) -> str:
 
 def status(asset: str) -> str:
     rows = []
-    for st in (["items"] if asset_kind(asset) == "item" else STAGES[:-2]):
+    for st in stages_for(asset)[:-2]:
         rec = core.stage_record(asset, st)
         rows.append(f"  {st:9s} {'done ' + rec['at'] if rec else '-'}")
     return "\n".join(rows)
@@ -650,9 +794,11 @@ def doctor() -> int:
 
 def _invalidate_after(asset: str, stage: str) -> None:
     """A stage that really ran makes every later record stale; drop them so `next` re-runs them."""
-    for st in STAGES[STAGES.index(stage) + 1:]:
-        (work_dir(asset) / f"{st}.json").unlink(missing_ok=True)
-    if STAGES.index(stage) < STAGES.index("qa"):
+    order = stages_for(asset)
+    for st in order[order.index(stage) + 1:]:
+        if st != "publish":  # a publication record is never silently dropped
+            (work_dir(asset) / f"{st}.json").unlink(missing_ok=True)
+    if order.index(stage) < order.index("qa" if "qa" in order else "items"):
         (work_dir(asset) / "contact.viewed").unlink(missing_ok=True)
 
 
@@ -667,7 +813,7 @@ def _run(asset: str, st: str) -> str:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("command", choices=["doctor", "selftest", "status", "next", "all", "faces", "item-plan", "items", *STAGES])
+    ap.add_argument("command", choices=["doctor", "selftest", "status", "next", "all", "faces", "item-plan", "items", "orient", *STAGES])
     ap.add_argument("--asset")
     ap.add_argument("--kind", choices=["human", "creature", "item", "all"], default="all", help="selftest fixture kind")
     a = ap.parse_args()
@@ -682,8 +828,10 @@ def main() -> int:
     if not a.asset:
         ap.error("--asset is required")
     try:
-        if asset_kind(a.asset) == "item" and a.command not in ("item-plan", "items", "next", "status"):
-            raise ForgeError("Item body/source stages remain C9b; use item-plan/items/next/status")
+        if asset_kind(a.asset) == "item" and a.command not in (*ITEM_STAGES, "item-plan", "next", "status", "all"):
+            raise ForgeError(f"Items use {', '.join(ITEM_STAGES)} (plus item-plan); {a.command} is a body stage")
+        if a.command == "orient" and asset_kind(a.asset) != "item":
+            raise ForgeError("orient is the held-item source stage")
         if a.command == "next":
             print(next_step(a.asset))
         elif a.command == "status":
@@ -692,12 +840,13 @@ def main() -> int:
             print(st_faces(a.asset))
         elif a.command == "item-plan":
             print(st_item_plan(a.asset))
-        elif a.command == "items":
-            print(st_items(a.asset))
+        elif a.command in ("items", "orient"):
+            print(f"[{a.command}] {_run(a.asset, a.command)}")
+            print("next:", next_step(a.asset))
         elif a.command == "all":
             if approval_for(a.asset):
                 raise ForgeError("This body has a matching director approval; use publish or faces, not an all-stage rerun (PRD-9).")
-            for st in STAGES[:-2]:
+            for st in stages_for(a.asset)[:-2]:
                 print(f"[{st}] {_run(a.asset, st)}")
             print("next:", next_step(a.asset))
         else:

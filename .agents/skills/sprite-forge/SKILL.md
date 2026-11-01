@@ -36,8 +36,9 @@ $F next --asset <asset-id>      # prints the exact next command, or BLOCKED: <re
 ```
 
 Run exactly what it prints. Repeat. Built order for creatures and humans: `prep → gen3d → clean →
-texture → rig → animate → bake → pixelize → qa → packet`. (`fit` and `items` remain C9b; human and creature faces use the separate
-sidecar command below.) Humans need an **A-pose** sheet
+texture → rig → animate → bake → pixelize → qa → packet`. (`fit` remains C9b; human and creature faces use the separate
+sidecar command below.) **Held items** (`item:<id>`, a one-object three-quarter prop sheet, PRD-3.3) run
+`prep → gen3d → clean → texture → orient → items → packet`; `all --asset item:<id>` runs through `items`. Humans need an **A-pose** sheet
 (PRD-3.1) at 4.5–5 heads (L3); their clips come from the UAL animation libraries.
 
 After **every** stage that writes images, open the PNG it names with `read_file` and
@@ -52,6 +53,11 @@ write one line in your session log saying what you saw:
   Humans: red dots on the joints (crown, neck, shoulders, elbows, wrists, hips, knees,
   ankles), blue dots on the face and back; in the arms-up, stride and bend test poses
   the arms lift from the shoulders and the legs bend at the knees.
+- Items: `work/<item>/orient_preview.png`: head up, working edge (blade, tines) facing
+  the second view's left; if not, set `orient.flipHead` / `orient.flipForward` in the
+  recipe. Then the items `contact.png`: rows are grip angles (clockwise from up),
+  columns are facings, the last row is the inventory icon. It must read as the object
+  at 1x; write its sha256 to `work/<item>/contact.viewed` before `packet`.
 - `contact.png` (after `qa`): rest pose in 8 facings on grey and grass, then one row
   per clip. Also open `art/review/<packet>/clips/<clip>.gif` for walk, run and idle
   after `packet`: legs should step, not slide or swim.

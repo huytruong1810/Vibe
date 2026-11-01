@@ -221,3 +221,93 @@ def publish_body(repo: Path, wd: Path, packet: Path, approval: Path, asset: str,
     finally:
         Path(temp).unlink(missing_ok=True)
     return staging
+
+
+def publish_item(repo: Path, wd: Path, packet: Path, approval: Path, asset: str,
+                 config: dict, blender_version: str) -> Path:
+    """C9b: digest-bound held-item publication (64 held poses + icon), same guarantees as bodies.
+
+    The packet's review.json is the renderer's own item-review; its sourceDigest covers the
+    frame metadata, QA and every file hash, so an approval binds exactly what was reviewed.
+    """
+    repo = repo.resolve()
+    if not re.fullmatch(r"item:[a-z][a-z0-9-]*", asset):
+        raise ForgeError("Item asset must use item:<slug>")
+    slug = asset.replace(":", "-")
+    packet, approval = packet.resolve(), approval.resolve()
+    if not approval.is_relative_to(repo / "docs/team/comms/director/approvals"):
+        raise ForgeError("Approval must come from the director records directory")
+    meta = approval_metadata(approval)
+    review = json.loads((packet / "review.json").read_text())
+    payload = {k: v for k, v in review.items() if k != "sourceDigest"}
+    from .items import canonical
+    if hashlib.sha256(canonical(payload)).hexdigest() != review.get("sourceDigest"):
+        raise ForgeError("Item review metadata changed after rendering")
+    if review.get("asset") != asset or review.get("status") != "candidate" or any(not c["pass"] for c in review["qa"]):
+        raise ForgeError("Wrong item packet asset, status or failed hard QA")
+    scope = set(meta.get("scope", "").strip("[]").replace(" ", "").split(","))
+    if (meta.get("asset") != asset or meta.get("decision") != "director-approved"
+            or within(repo, meta.get("packet", "")) != packet
+            or meta.get("packetDigest") != review["sourceDigest"] or not {"held-item", "icon"} <= scope):
+        raise ForgeError("Approval asset, scope [held-item, icon], packet or digest does not match")
+    if not re.fullmatch(r"4\.2\.\d+", blender_version):
+        raise ForgeError("Publication requires the pinned Blender 4.2.x version")
+    for frame in review["frames"]:
+        if sha(within(packet, frame["file"])) != frame["sha256"]:
+            raise ForgeError("Packet frame bytes changed")
+    model = within(repo / "art/source", config["model"])
+    inputs = [(model, "model"), (wd / "orient.json", "pose-config"), (wd / "orient_params.json", "pose-config"),
+              (repo / f"art/source/forge/recipes/{slug}.json", "pose-config"),
+              (repo / "art/source/forge/spec/render_spec.json", "pose-config"),
+              (repo / "art/source/forge/spec/palette.json", "palette"),
+              (repo / "art/source/forge/uv.lock", "dependency-lock")]
+    inputs.extend((repo / "art/source/forge" / name, "script") for name in
+                  ("forge.py", "forgelib/publish.py", "forgelib/items.py", "forgelib/item_render.py",
+                   "forgelib/item_orient.py", "forgelib/pixelize.py", "blender/bake.py", "blender/item_orient.py"))
+    bundle, provenance_inputs, bundle_rows = source_bundle(repo, wd, slug, inputs)
+    provenance = {"id": f"forge-{slug}", "method": "blender-bake", "inputs": provenance_inputs,
+                  "toolchain": [{"name": "blender", "version": blender_version}],
+                  "command": f"uv run --project art/source/forge python art/source/forge/forge.py publish --asset {asset}"}
+    from jsonschema import Draft202012Validator
+    schema = json.loads((repo / "docs/art/source-manifest.schema.json").read_text())
+    Draft202012Validator(schema["oneOf"][1]["properties"]["authoringProvenance"]["items"]).validate(provenance)
+    export = repo / "art/source/exports" / slug / review["sourceDigest"]
+    frames = json.loads(json.dumps(review["frames"]))
+    for frame in frames:
+        frame["file"] = (export / frame["file"]).relative_to(repo / "art/source").as_posix()
+    record = {"schemaVersion": 1, "asset": asset, "scope": ["held-item", "icon"],
+              "packet": packet.relative_to(repo).as_posix(), "packetDigest": review["sourceDigest"],
+              "packetSha256": sha(packet / "review.json"), "approvalRecord": approval.relative_to(repo).as_posix(),
+              "approvalSha256": sha(approval), "socket": config["socket"],
+              "gripConvention": "clockwise-screen-from-up-after-facing-yaw", "frames": frames,
+              "authoringProvenance": provenance}
+    install_sources(bundle, bundle_rows)
+    if export.exists():
+        for frame in review["frames"]:
+            if sha(within(export, frame["file"])) != frame["sha256"]:
+                raise ForgeError("Existing immutable export has changed")
+    else:
+        export.parent.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=export.parent, prefix="publish-") as tmp:
+            candidate = Path(tmp) / "frameset"
+            for frame in review["frames"]:
+                target = within(candidate, frame["file"])
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(within(packet, frame["file"]), target)
+                if sha(target) != frame["sha256"]:
+                    raise ForgeError("Frame changed while copying; publication cancelled")
+            os.replace(candidate, export)
+    guards = [(approval, record["approvalSha256"]), (packet / "review.json", record["packetSha256"])]
+    guards.extend((path, digest) for path, _, digest in bundle_rows)
+    if any(sha(path) != digest for path, digest in guards):
+        raise ForgeError("Publication inputs changed before commit; previous staging retained")
+    staging = repo / "art/source/staging/blender" / f"{slug}.json"
+    staging.parent.mkdir(parents=True, exist_ok=True)
+    fd, temp = tempfile.mkstemp(dir=staging.parent, prefix=".publish-")
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8", newline="\n") as handle:
+            handle.write(json.dumps(record, sort_keys=True, indent=2) + "\n")
+        os.replace(temp, staging)
+    finally:
+        Path(temp).unlink(missing_ok=True)
+    return staging
