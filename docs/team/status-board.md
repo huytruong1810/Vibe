@@ -18,15 +18,15 @@ Queues: [codex](queue/codex.md) · [communicator](queue/communicator.md) · [ble
 | Environment exports (terrain, shore masks, cliff, ramp, house, well, waystone, hearth, flora states) | **candidate** (structural only; never director-reviewed at 2×) | `docs/art/coverage.md` | Re-author at 32-px tiles per ART-11 via tileforge (M9) |
 | Golden sample: player Aqualia (1st) | **candidate** (M4 reference; forge bring-up C9a) | `art/source/references/player-aqualia/`, `art/source/forge/recipes/player-aqualia.json` | Blender B4 golden sample after M11 redraw |
 | Golden sample: Rivallie (2nd) | **director-approved** (body, clips) | `docs/team/comms/director/approvals/rivallie--2026-10-31-rivallie-c3d.md` | Published to exports/staging (B8, B10); M19 digests reported; Catalog & ledger reconciliation with Codex (C12) |
-| Rivallie candidate faces sidecar | **candidate** (5 expressions, 5 forward facings) | `art/review/2026-11-01-rivallie-faces-d749a4350126/` | Awaiting Director decision |
+| Rivallie candidate faces sidecar | **changes-requested** (eyes on crown, overhangs silhouette) | `docs/team/comms/director/approvals/rivallie--2026-11-01-rivallie-faces-d749a4350126.md` | Codex C3b face fixes; body ships without faces until re-approved |
 | Human face sidecar proof (`selftest-human`) | **candidate** (12 expressions, 5 forward facings) | `art/review/2026-11-01-selftest-human-faces-9b64f90be64c/` | Proves C9b sidecar grammar & tracking; production `player-aqualia` proof gated on M11 redraw |
 | Canonical prop reference: hatchet | **candidate** (PRD-3.3 reference package, M21) | `art/source/references/item-hatchet/` | Unblocks C9b item pose planning & Blender 3D modeling |
 | Golden sample: Neris (3rd) | **candidate** (M3 reference) | `art/source/references/npc-neris/` | Blender B4 golden sample after M11 redraw |
 | Bramblefang candidate packet | **director-approved** | `docs/team/comms/director/approvals/bramblefang--2026-10-31-bramblefang-c3d.md` | Published to exports/staging (B8, B10); M19 digests reported; Catalog & ledger reconciliation with Codex (C12) |
 | Marshstalker candidate packet | **director-approved** | `docs/team/comms/director/approvals/marshstalker--2026-10-31-marshstalker.md` | Published to exports/staging (B8, B10); M19 digests reported; Catalog & ledger reconciliation with Codex (C12) |
-| Mireling candidate packet | **candidate** (15 clips, 616 frames) | `art/review/2026-10-31-mireling/` | Awaiting Director approval record |
-| Golden village map layout (C6) | **director-approved** (layout scope) | `docs/team/comms/director/approvals/world-aqualia--world-aqualia-aqualia_village-1.md` | Environment dressing and tile sets via C10/C11/M9 |
-| Riverlands map layout (B2) | **candidate** (Pass 003 layout) | `art/review/world-aqualia-aqualia_riverlands-1/` | Awaiting Director layout approval record |
+| Mireling candidate packet | **changes-requested** (washed lavender ramp mapping, shell/head read) | `docs/team/comms/director/approvals/mireling--2026-10-31-mireling.md` | Blender B3 recipe and ramp re-run on Machine A |
+| Golden village map layout (C6) | **director-approved** (layout scope) | `docs/team/comms/director/approvals/world-aqualia--world-aqualia-aqualia_village-1.md`, `world-aqualia--world-aqualia-aqualia_village-2.md` | Environment dressing and tile sets via C10/C11/M9 |
+| Riverlands map layout (B2) | **changes-requested** (empty screens, staircase edges, rectangle zones) | `docs/team/comms/director/approvals/world-aqualia--world-aqualia-aqualia_riverlands-1.md` | Blender B2 pass adjustments (riverbeds, habitat bounds) |
 | Aqualia region bible & plan (C5, Proposal 001) | **director-approved** | `docs/team/comms/director/approvals/proposal-001.md` | Authoring unblocked for Riverlands (B2) |
 
 ## Workstreams
