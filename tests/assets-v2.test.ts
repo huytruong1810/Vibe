@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { createHash } from 'node:crypto';
 import { z } from 'zod';
+import { readFileSync } from 'node:fs';
+import { mkdtemp, readFile, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { writeAssetSchemas } from '../scripts/lib/asset-schemas';
 import { DIALOGUE_EMOTIONS } from '../src/domain/dialogue';
 import {
   AssetCatalogSchema,
@@ -10,6 +15,8 @@ import {
   normalizedAnchor,
   hasArtApproval,
   AuthoringProvenanceSchema,
+  rigRegistration,
+  RigDefinitionSchema,
   type AssetCatalog,
   type ArtApprovalRecord,
   type PortraitSet,
@@ -23,8 +30,191 @@ import {
   type SourceManifestV2,
 } from '../src/presentation/assets/source';
 import { assetCoverage, canPublishAppearance } from '../src/presentation/assets/coverage';
+import { compositeBounds, layerRegistration } from '../src/presentation/compositor';
 
 const DIGEST = 'a'.repeat(64);
+
+function stagedCreatures(): SourceManifestV2 {
+  const result: SourceManifestV2 = {
+    schemaVersion: 2,
+    frames: [],
+    clips: [],
+    appearances: [],
+    rigs: [],
+    authoringProvenance: [],
+  };
+  const socketIds = new Set<string>();
+  for (const asset of ['rivallie', 'bramblefang', 'marshstalker']) {
+    const staging = JSON.parse(readFileSync(`art/source/staging/blender/${asset}.json`, 'utf8'));
+    const appearanceId = `species:${asset}`;
+    result.frames.push(
+      ...staging.frames.map(
+        (frame: {
+          id: string;
+          file: string;
+          sourceSize: { w: number; h: number };
+          anchorPx: { x: number; y: number };
+          rigId: string;
+          sockets: Record<string, { x: number; y: number }>;
+        }) => {
+          for (const id of Object.keys(frame.sockets)) socketIds.add(id);
+          return {
+            id: frame.id.replaceAll(':', '_'),
+            path: frame.file,
+            sourceSize: frame.sourceSize,
+            anchorPx: frame.anchorPx,
+            rigId: frame.rigId,
+            sockets: frame.sockets,
+            stage: 'candidate' as const,
+          };
+        },
+      ),
+    );
+    const clips = staging.clips.map((clip: SourceManifestV2['clips'][number]) => ({
+      ...clip,
+      appearanceId,
+      frameIds: clip.frameIds.map((id) => id.replaceAll(':', '_')),
+    }));
+    result.clips.push(...clips);
+    result.appearances.push({
+      id: appearanceId,
+      kind: 'species',
+      contentId: asset,
+      quality: 'hd',
+      stage: 'candidate',
+      clipIds: clips.map((clip: SourceManifestV2['clips'][number]) => clip.id),
+      provenanceId: staging.authoringProvenance.id,
+    });
+    result.authoringProvenance!.push(staging.authoringProvenance);
+  }
+  result.rigs!.push({
+    id: 'quadruped-v1',
+    canvas: { w: 112, h: 112 },
+    anchorPx: { x: 56, y: 82 },
+    socketIds: [...socketIds].sort(),
+    registrations: [{ canvas: { w: 160, h: 144 }, anchorPx: { x: 80, y: 112 } }],
+  });
+  return result;
+}
+
+describe('explicit rig registrations', () => {
+  it('validates all 1848 actual staged frames without renaming their shared skeleton', () => {
+    const s = stagedCreatures();
+    expect(s.frames).toHaveLength(1848);
+    expect(SourceManifestSchema.safeParse(s).success).toBe(true);
+    s.rigs![0]!.registrations = undefined;
+    expect(SourceManifestSchema.safeParse(s).success).toBe(false);
+  });
+  it('rejects undeclared mixed pairs, duplicate registrations, missing rigs and outside sockets', () => {
+    const changes: ((s: SourceManifestV2) => void)[] = [
+      (s) => {
+        s.frames[0]!.anchorPx.x++;
+      },
+      (s) => {
+        s.rigs![0]!.registrations!.push({
+          canvas: s.rigs![0]!.canvas,
+          anchorPx: s.rigs![0]!.anchorPx,
+        });
+      },
+      (s) => {
+        s.rigs![0]!.registrations![0]!.anchorPx.x = 161;
+      },
+      (s) => {
+        s.rigs = [];
+      },
+      (s) => {
+        const frame = s.frames[0]!;
+        frame.sockets![Object.keys(frame.sockets!)[0]!]!.x = 1000;
+      },
+    ];
+    for (const change of changes) {
+      const s = stagedCreatures();
+      change(s);
+      expect(SourceManifestSchema.safeParse(s).success).toBe(false);
+    }
+  });
+  it('binds standalone frame rigs and registration edits into source digest dependencies', () => {
+    const s = stagedCreatures();
+    const dependencies = () => sourceSubjectDependencies(s, 'appearance', 'species:rivallie');
+    const hash = () =>
+      createHash('sha256').update(canonicalSourceJson(dependencies())).digest('hex');
+    expect(dependencies().metadata.map((m) => m.key)).toContain('rig:quadruped-v1');
+    const before = hash();
+    s.rigs![0]!.registrations![0]!.anchorPx.x--;
+    expect(hash()).not.toBe(before);
+    s.rigs = [];
+    expect(dependencies).toThrow('Missing source digest dependency: rig:quadruped-v1');
+  });
+  it('accepts multi-canvas human layers but rejects a required layer registered to the wrong pose', () => {
+    const s = source();
+    s.rigs![0]!.registrations = [{ canvas: { w: 192, h: 176 }, anchorPx: { x: 96, y: 132 } }];
+    for (const kind of ['body', 'hair']) {
+      const frame = structuredClone(s.frames.find((f) => f.id === `${kind}0`)!);
+      frame.id = `${kind}_wide`;
+      frame.path = `exports/${frame.id}.png`;
+      frame.sourceSize = { w: 192, h: 176 };
+      frame.anchorPx = { x: 96, y: 132 };
+      s.frames.push(frame);
+      s.clips.push({
+        id: `${kind}-hit`,
+        appearanceId: kind,
+        state: 'hit',
+        facing: 's',
+        frameIds: [frame.id],
+        fps: 6,
+        playback: 'once',
+      });
+      s.appearances.find((a) => a.id === kind)!.clipIds.push(`${kind}-hit`);
+    }
+    expect(SourceManifestSchema.safeParse(s).success).toBe(true);
+    s.clips.find((c) => c.id === 'hair-hit')!.frameIds = ['hair0'];
+    expect(SourceManifestSchema.safeParse(s).success).toBe(false);
+  });
+  it('keeps active frame roots and composite bounds correct for normalized and integer anchors', () => {
+    const rig = RigDefinitionSchema.parse({
+      id: 'human',
+      canvas: { w: 112, h: 152 },
+      anchorPx: { x: 56, y: 132 },
+      socketIds: [],
+      registrations: [{ canvas: { w: 192, h: 176 }, anchorPx: { x: 96, y: 132 } }],
+    });
+    const frame = {
+      id: 'wide',
+      pageId: 'page',
+      textureKey: 'wide',
+      rect: { x: 0, y: 0, w: 192, h: 176 },
+      trim: { x: 0, y: 0, w: 192, h: 176 },
+      sourceSize: { w: 192, h: 176 },
+      anchorPx: { x: 96, y: 132 },
+      anchor: { x: 0.5, y: 0.75 },
+    };
+    const registration = rigRegistration(rig, frame)!;
+    expect(registration).toBe(rig.registrations![0]);
+    expect(rigRegistration(rig, { sourceSize: frame.sourceSize, anchor: frame.anchor })).toBe(
+      registration,
+    );
+    expect(layerRegistration(frame, registration.anchorPx)).toMatchObject({ x: 0, y: 0 });
+    expect(
+      compositeBounds(registration.canvas, [{ frame, target: registration.anchorPx }]),
+    ).toEqual({ x: 0, y: 0, w: 192, h: 176 });
+    expect(rigRegistration(rig, { ...frame, anchorPx: { x: 56, y: 132 } })).toBeUndefined();
+  });
+  it('emits deterministic shared JSON schemas without changing an atlas', async () => {
+    const dir = await mkdtemp(join(tmpdir(), 'hearthwild-c3e-'));
+    try {
+      await writeAssetSchemas(dir);
+      const before = await readFile(join(dir, 'source-manifest.schema.json'), 'utf8');
+      await writeAssetSchemas(dir);
+      expect(await readFile(join(dir, 'source-manifest.schema.json'), 'utf8')).toBe(before);
+      expect(before).toContain('registrations');
+      expect(
+        JSON.parse(before).oneOf[1].properties.rigs.items.properties.registrations.maxItems,
+      ).toBe(64);
+    } finally {
+      await rm(dir, { recursive: true, force: true });
+    }
+  });
+});
 function provenance(): AuthoringProvenance {
   return {
     id: 'authoring',
