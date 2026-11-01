@@ -16,7 +16,7 @@ import sys
 
 import bpy
 from bpy_extras.object_utils import world_to_camera_view
-from mathutils import Vector
+from mathutils import Matrix, Vector
 
 argv = sys.argv[sys.argv.index("--") + 1:]
 src, out_dir, P = argv[0], argv[1], json.loads(open(argv[2]).read())
@@ -132,6 +132,8 @@ def aov_material(src_mat):
 
 
 meshes = [o for o in scene.objects if o.type == "MESH"]
+if P.get("itemPoses") and (not meshes or any(not o.data.color_attributes.get("Col") for o in meshes)):
+    raise SystemExit("Item source needs a separate textured mesh with its Col vertex-color attribute")
 for o in meshes:
     mats = list(o.data.materials) or [None]
     o.data.materials.clear()
@@ -163,6 +165,8 @@ roots = [o for o in scene.objects if o.parent is None and o not in (cam, pivot)]
 for o in roots:
     o.parent = pivot
 arm = next((o for o in scene.objects if o.type == "ARMATURE"), None)
+if P.get("itemPoses") and arm:
+    raise SystemExit("Item rendering requires a separate static prop mesh, not an actor armature")
 
 tracks = {"canvas": [W, H], "anchor": [AX, AY], "clips": {}, "canvases": {}}
 for clip in P["clips"]:
@@ -175,7 +179,15 @@ for clip in P["clips"]:
     ctrack = tracks["clips"].setdefault(clip["name"], {})
     wanted = clip.get("facings") or list(P["facings"])  # 4-facing clips render cardinals only
     for facing, deg in ((f, d) for f, d in P["facings"].items() if f in wanted):
-        pivot.rotation_euler = (0, 0, math.radians(deg))
+        item_pose = P.get("itemPoses", {}).get(f"{clip['name']}/{facing}")
+        if "itemPoses" in P and item_pose is None:
+            raise SystemExit(f"Missing declared item pose: {clip['name']}/{facing}")
+        if item_pose:
+            rotation = item_pose["rotation"]
+            translation = item_pose["translation"]
+            pivot.matrix_world = Matrix([list(row) + [translation[i]] for i, row in enumerate(rotation)] + [[0, 0, 0, 1]])
+        else:
+            pivot.rotation_euler = (0, 0, math.radians(deg))
         ftrack = ctrack.setdefault(facing, [])
         for i, frame in enumerate(clip.get("frames") or [scene.frame_current]):
             scene.frame_set(frame)
@@ -190,6 +202,12 @@ for clip in P["clips"]:
                 return [round(c.x * W, 3), round((1 - c.y) * H, 3)]
 
             entry = {"frame": frame, "root": px(Vector((0, 0, 0)))}
+            if item_pose:
+                entry["root"] = px(pivot.matrix_world @ Vector(item_pose["sourcePivot"]))
+            if item_pose and item_pose["view"] == "held":
+                entry[P["itemSocket"]] = entry["root"]
+                if "supportGrip" in item_pose:
+                    entry["SupportGrip"] = px(Vector(item_pose["supportGrip"]))
             if arm:
                 for b in P.get("sockets", []):
                     pb = arm.pose.bones.get(b)
