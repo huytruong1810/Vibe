@@ -170,7 +170,7 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 
 ### C3b · Creature faces and publish
 
-- status: partial (portable sources received; manifest integration taken by claude in the beta slice). **Faces: changes requested 2026-11-01** (`docs/team/comms/director/approvals/rivallie--2026-11-01-rivallie-faces-d749a4350126.md`): register decals to a face point about 3 art px below `Socket_Head` (per-species offset or a `Socket_Face` bone); `faceAnchor` fails any decal pixel outside the silhouette or on its outline row; hurt and fearful need a distinct pixel in e/w. Re-packet the faces on the approved body 69b6c10d…
+- status: partial (manifest integration done by claude at 0a5e5c6: 3 bodies approved and active in game). **Faces: changes requested 2026-11-01** (`docs/team/comms/director/approvals/rivallie--2026-11-01-rivallie-faces-d749a4350126.md`): register decals to a face point about 3 art px below `Socket_Head` (per-species offset or a `Socket_Face` bone); `faceAnchor` fails any decal pixel outside the silhouette or on its outline row; hurt and fearful need a distinct pixel in e/w. Re-packet the faces on the approved body 69b6c10d…
 - goal: finish the creature class. Then `doctor` lists nothing pending for creatures, and approved creature packets can be published.
 - inputs: the Rivallie packet `art/review/2026-10-31-rivallie/`, `bake/tracks.json` (Socket_Head per frame), ART-8, `render_spec.expressions`, `catalog.ts` `AuthoringProvenanceSchema`.
 - work:
@@ -328,7 +328,7 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 
 ### C7 · Authored world in the engine (WLD-M1…M4)
 
-- status: in-progress (claude, beta slice, director instruction 2026-11-01T2230Z): activation of the approved village level behind a setup-screen beta toggle; procedural stays default. Riverlands is changes-requested, so it isn't loaded
+- status: partial (candidate compiler/loader slice). Claude scoped activation on 2026-11-01 and handed it back: `Simulation` builds only from `WorldGenerator().generate(seed)` (`simulation.ts:187`), saves regenerate from seed (`save-schema.ts:447`), 40 sites read fixed `VILLAGES` coordinates, and the authored map is one 90×68 level, so 20 villagers of the other two villages would be in void. Next: map-driven settlements and player spawn (WLD-M2), save `worldSource` versioning (WLD-M3), then a beta toggle. Village layout approved (village-1/-2 records); Riverlands changes-requested
 - goal: a new game loads the authored LDtk map; procedural world generation is retired.
 - work:
   - a build-time importer from the schema into `ChunkStore`;
@@ -362,7 +362,7 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 
 ### C3f - Legacy-safe source ingestion for M19
 
-- status: in-progress (claude, beta slice, director instruction 2026-11-01T2230Z). Don't start this in parallel; pick up C3b faces, C9b and C10 instead
+- status: done (claude, 2026-11-01, 3298147): V1 rows ride in V2 with `legacy: true`; anchors unrounded; the marker is excluded from digests; assets:build output byte-identical before and after migration; 4 tests in `tests/assets-v2.test.ts` (C3f block). Please review as steward
 - goal: retain original V1 normalized registrations and identity behavior while accepting native V2 candidate records with integer registrations.
 - work: design an explicit versioned compatibility boundary; preserve all existing source frames, appearances and normalized anchors without rounding. Keep native PixelPointSchema integer-strict. Test exact rendering registration, identity/fallback resolution, source dependency closure and collisions. Coordinate the actual tracked native graph with M19 before source compilation or ledger reconciliation.
 - done when: mixed-source ingestion validates without dropping or shifting legacy content, deterministic compiler/tests pass, and candidate/approval boundaries remain explicit. This is not permission to activate art or transcribe preliminary reported digests.
@@ -487,3 +487,13 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 - done when: never closes; add a dated evidence line each week
 - evidence: 2026-10-31: B2 is opened by [go-world](../comms/codex/2026-10-31T1640--to-blender--go-world.md); B6/B7 remain actionable. Communicator has M12/M13 review/kit work and M14–M16 follow-ups; [ack correction](../comms/codex/2026-10-31T1640--to-communicator--c6-ack-link.md) is relayed to its owner. No duplicate tickets added.
 - update 2026-11-01: B13 offers technical item calibration while real source prep stays gated. M19 requests the actual native candidate JSON as a review artifact; M22's audit is received and C3f is the whole-source compatibility prerequisite. Existing B2/B3/B4 and M9/M11 remain available subject to their explicit input gates. No invented approvals or protected-file workarounds.
+
+### C3g · Follow-ups from the beta slice (claude, 2026-11-01)
+
+- status: open
+- goal: tidy what the beta slice exposed.
+- work:
+  1. Packet gallery atlas tab (`src/presentation/gallery.ts:332`, `renderAtlas`) shows only page 0 under a hard-coded "Single page: bundle.png" label. The build now emits four pages.
+  2. Decoded atlas memory went from 14.97 to 63.88 MiB full-res (four 2048 pages, mostly 160×144 quadruped canvases). Decide on a budget, then trim per-clip canvases or move review-only frames out of the runtime atlas.
+  3. Scale: forge creatures render at doctrine scale and look small beside the oversized legacy humans and creatures. Expected while legacy art remains; check it again when M11 humans land.
+- done when: the gallery shows every page and the atlas budget is written into `docs/engineering/`

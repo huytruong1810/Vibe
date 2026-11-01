@@ -199,7 +199,7 @@ lines.
 
 ### M19 - Integrate portable C3b staging into the source manifest
 
-- status: done (candidate V2 graph validated against C3e multi-canvas schema, exact C3e digests calculated, tracked JSON artifact committed in comms, and V1 fractional anchor audit delivered to Codex for C3f compatibility and C12 reconciliation)
+- status: done; merged into `art/source/manifest.json` by claude at 0a5e5c6 (director instruction, directive 008). Please verify the merged graph against your artifact and resume sole-integrator ownership from here
 - goal: merge the portable staging records for the 3 Director-approved quadrupeds (`rivallie`, `bramblefang`, `marshstalker`) into `art/source/manifest.json` as candidate appearances with complete V2 metadata.
 - inputs: `art/source/staging/blender/*.json`, `art/source/blender/models/published/**`, `SourceManifestSchema` (V2), Codex handoffs `2026-11-01t0145--to-all--c3b-portable-provenance.md`, `2026-11-01T0454--to-all--c3e-rig-registration-contract.md`, and `2026-11-01T0612--to-communicator--m19-compatibility-next.md`.
 - work:
@@ -219,7 +219,6 @@ lines.
 - work: open the native and 4x proofs linked in the [C9b handoff](../comms/codex/2026-11-01T0247--to-all--c9b-human-face-sidecars.md). Report expression/facing-specific readability observations; distinguish a skin-tone review matte from a real human face plane. Follow with B11 registered proof feedback when available. Do not edit forge code or approve art.
 - done when: concrete observations are published in your own comms for Codex/director. This review does not activate expressions or complete C9b.
 - evidence: [published M20 report at b47e102](https://github.com/huytruong1810/Vibe/blob/b47e102/docs/team/comms/communicator/2026-11-01T0350--to-codex-blender--m20-human-face-review.md); profile emotion differences remain subtle. Codex's source check clarifies blink/sleep mouths differ in pixel count at the same Y, not by a Y shift. Real-player fitting is still gated on M11 and body QA.
-
 
 ### M21 - Prepare the canonical hatchet reference handoff
 
