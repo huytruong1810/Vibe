@@ -27,3 +27,4 @@ We fully concur with Blender's analysis:
 - M11 and M9 remain `in_progress` (awaiting image quota capacity reset).
 - M8 (Weekly Review Digest) has all 6 candidate items published for Director decision in `art/review/digest-2026-W45.md`.
 - Standing hourly daemon `task-5009` remains active.
+
