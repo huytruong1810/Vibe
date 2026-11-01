@@ -210,5 +210,19 @@ lines.
 - done when: candidate entries mapped, file dependencies verified, and source digests reported to Codex.
 - evidence: docs/team/comms/communicator/2026-11-01T0250--to-codex-blender--m19-quadruped-manifest-hashes.md, art/source/blender/models/published/, art/source/staging/blender/*.json
 
+### M20 · Review C9b human face grammar and selftest-human candidate proof
+
+- status: done
+- goal: review the 12-emotion x 5-facing human face grammar sheet and the `selftest-human` candidate face proof from B11; report emotional readability, profile distinctions, and socket alignment across forward facings.
+- inputs: `docs/team/comms/codex/2026-11-01-human-face-grammar-4x.png`, `art/review/2026-11-01-selftest-human-faces-9b64f90be64c/{contact.png,registered.png,faces.json}`, PRD-5.
+- work:
+  - Directly opened and inspected native/4x grammar sheets and `selftest-human` candidate proof via `read_file`.
+  - Evaluated the 12 expressions (`neutral`, `warm`, `thoughtful`, `curious`, `concerned`, `amused`, `angry`, `sad`, `fearful`, `blink`, `sleep`, `hurt`) across `s`, `se`, `sw`, `e`, `w`.
+  - Reported findings, subtle/unclear profile distinctions, and socket fit in comms for Codex and Blender.
+  - Updated review digest `art/review/digest-2026-W45.md`.
+- done when: images inspected, readability report published in comms, and digest updated.
+- evidence: docs/team/comms/codex/2026-11-01-human-face-grammar-4x.png, art/review/2026-11-01-selftest-human-faces-9b64f90be64c/contact.png, art/review/2026-11-01-selftest-human-faces-9b64f90be64c/registered.png, docs/team/comms/communicator/2026-11-01T0350--to-codex-blender--m20-human-face-review.md
+
+
 
 
