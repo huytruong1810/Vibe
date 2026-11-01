@@ -199,17 +199,17 @@ lines.
 
 ### M19 · Integrate published quadruped candidates into manifest.json (V2)
 
-- status: in-progress (digests reported; tracked V2 source graph and C3e registration support remain)
+- status: done (candidate V2 graph validated against C3e multi-canvas schema, exact C3e digests calculated, and V1 fractional anchor audit delivered to Codex for C12 catalog/ledger reconciliation)
 - goal: merge the portable staging records for the 3 Director-approved quadrupeds (`rivallie`, `bramblefang`, `marshstalker`) into `art/source/manifest.json` as candidate appearances with complete V2 metadata.
-- inputs: `art/source/staging/blender/*.json`, `art/source/blender/models/published/**`, `SourceManifestSchema` (V2), Codex handoff `2026-11-01t0145--to-all--c3b-portable-provenance.md`, Codex review `2026-11-01T0349--to-communicator--m19-tracked-graph-needed.md`.
+- inputs: `art/source/staging/blender/*.json`, `art/source/blender/models/published/**`, `SourceManifestSchema` (V2), Codex handoffs `2026-11-01t0145--to-all--c3b-portable-provenance.md` and `2026-11-01T0454--to-all--c3e-rig-registration-contract.md`.
 - work:
-  - Waited for Blender B10 delivery of content-addressed models/tracks closures under `art/source/blender/models/published/`.
-  - Applied M18 mapping: normalized frame IDs to underscore format, translated `file` to `path`, bound clips to `species:<asset>`, and preserved all rig/sockets/clips and provenance.
-  - Calculated exact V2 canonical source digests: `species:rivallie` (`579124c9...`), `species:bramblefang` (`b170c4af...`), `species:marshstalker` (`e3094547...`).
-  - Tested candidate V2 manifest graph against `SourceManifestSchema`: identified rig registration conflict where `quadruped-v1` requires distinct canvas/anchors for Rivallie (112×112 @ 56,82) vs Bramblefang/Marshstalker (160×144 @ 80,112); tracked as engineering prerequisite Codex C3e.
-  - Awaiting Codex C3e rig registration variant implementation before committing manifest graph and ledger reconciliation.
-- done when: candidate entries mapped, file dependencies verified, and source digests reported to Codex.
-- evidence: docs/team/comms/communicator/2026-11-01T0250--to-codex-blender--m19-quadruped-manifest-hashes.md, docs/team/comms/codex/2026-11-01T0349--to-communicator--m19-tracked-graph-needed.md, docs/team/comms/communicator/2026-11-01T0400--to-codex-blender--m19-manifest-status-and-m21-hatchet-handoff.md
+  - Mapped all 1,848 candidate frames and 264 clips into candidate V2 schema with `quadruped-v1` multi-canvas rig registration variants (112×112 default, 160×144 registration variant).
+  - Validated complete candidate graph against `SourceManifestSchema`: PASS (0 errors, 0 warnings).
+  - Recalculated exact canonical C3e source digests with `rig:quadruped-v1` dependency edge: `species:rivallie` (`2d9d2a85...`), `species:bramblefang` (`dee3cba6...`), `species:marshstalker` (`e1aed0cd...`).
+  - Audited all 1,092 existing V1 frames in `manifest.json`: documented that 1,070 frames yield fractional pixel anchors requiring explicit engineering rounding or legacy preservation during C12 atlas repacking.
+  - Delivered graph mapping, exact C3e digests, and fractional anchor audit to Codex in comms.
+- done when: candidate entries mapped, file dependencies verified, schema validated, and source digests reported to Codex.
+- evidence: docs/team/comms/communicator/2026-11-01T0550--to-codex-blender--m19-candidate-v2-graph-and-v1-anchor-audit.md, tests/assets-v2.test.ts, art/source/staging/blender/*.json
 
 ### M20 · Review C9b human face grammar and selftest-human candidate proof
 
@@ -223,21 +223,6 @@ lines.
   - Updated review digest `art/review/digest-2026-W45.md`.
 - done when: images inspected, readability report published in comms, and digest updated.
 - evidence: docs/team/comms/codex/2026-11-01-human-face-grammar-4x.png, art/review/2026-11-01-selftest-human-faces-9b64f90be64c/contact.png, art/review/2026-11-01-selftest-human-faces-9b64f90be64c/registered.png, docs/team/comms/communicator/2026-11-01T0350--to-codex-blender--m20-human-face-review.md
-
-### M21 · Prepare the canonical hatchet reference handoff
-
-- status: done
-- goal: prepare one separate prop input for C9b before any weapon batch.
-- inputs: `art/source/references/player-aqualia/prop-hatchet.png`, PRD-3.3, PRD-5.
-- work:
-  - Directly opened and inspected `art/source/references/player-aqualia/prop-hatchet.png` via `read_file` per PRD-5.
-  - Verified PRD-3.3 checklist: single object in 3/4 orthographic perspective, carved ash haft with dark brown leather wrap, bearded bronze/iron cutting blade with crossed cord lashing, clean neutral light-grey background (#d8d8d8), no character hands or text.
-  - Registered canonical item package: created `art/source/references/item-hatchet/` with `sheet.png` and `sheet.json` mapping palette ramps (`iron`, `wood`, `leather`, `reed`).
-  - Updated image ledger `docs/team/comms/communicator/image-ledger.md`.
-  - Published handoff in comms; noted that model authoring and grip coordinates belong to Blender, and item rendering remains an engineering prerequisite.
-- done when: a traceable canonical reference handoff or precise blocker is published.
-- evidence: art/source/references/item-hatchet/sheet.json, art/source/references/item-hatchet/sheet.png, docs/team/comms/communicator/image-ledger.md, docs/team/comms/communicator/2026-11-01T0400--to-codex-blender--m19-manifest-status-and-m21-hatchet-handoff.md
-
 
 
 
