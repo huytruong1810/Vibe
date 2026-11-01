@@ -371,3 +371,18 @@ a shared reporting function without repacking unrelated atlases.
 **Consequences:** variants and masks have reproducible cross-language tests and
 bounded missing-art fallbacks. Scene/coverage wiring remains C7 activation work,
 and native terrain design remains M9. See the [C11b contract](tileforge.md#c11b-consumers-and-isolated-proof).
+
+## ADR 027 — Human expressions as independent, body-bound sidecars
+
+**Decision:** extend the existing palette-indexed face grammar with twelve human
+expressions and explicit forward-facing feature tables. Reuse per-frame socket and
+canvas validation rather than introducing another body animation clock. Bind the
+sidecar to the existing body manifest and keep it outside body stage invalidation.
+Optional recipe palette ramps recolor features; they do not create model anatomy.
+
+**Consequences:** expression experiments cannot invalidate approved body frames.
+The existing creature grammar remains compatible. The human feature matrix can be
+tested on Machine B, but real-head placement, motion and readability still require
+Machine-A inspection and the director's separate acceptance. This increment adds
+no runtime face activation, item/fit readiness or new art approval. See the
+[C9b sidecar contract](hd-presentation.md#c9b-human-face-sidecars).

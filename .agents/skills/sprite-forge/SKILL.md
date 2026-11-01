@@ -36,8 +36,8 @@ $F next --asset <asset-id>      # prints the exact next command, or BLOCKED: <re
 ```
 
 Run exactly what it prints. Repeat. Built order for creatures and humans: `prep → gen3d → clean →
-texture → rig → animate → bake → pixelize → qa → packet`. (`fit`, human `faces` and `items`
-remain C9b; creature faces use the separate sidecar command below.) Humans need an **A-pose** sheet
+texture → rig → animate → bake → pixelize → qa → packet`. (`fit` and `items` remain C9b; human and creature faces use the separate
+sidecar command below.) Humans need an **A-pose** sheet
 (PRD-3.1) at 4.5–5 heads (L3); their clips come from the UAL animation libraries.
 
 After **every** stage that writes images, open the PNG it names with `read_file` and
@@ -113,6 +113,14 @@ sources are a blocker, never a reason to regenerate an approved packet.
 neutral, warm, fearful, hurt, sleep. Columns: s, se, sw, e, w. No back-face decal.
 Face-anchor bounds QA does not approve anatomical fit or emotion readability.
 Request a separate director decision for faces; body approval does not cover them.
+
+For a human with an existing valid body review, `faces --asset player-aqualia`
+uses the same separate sidecar workflow. Rows are the nine dialogue emotions in
+render_spec order, then blink, sleep and hurt (12 rows / 60 decals). The contact
+sheet uses a skin-tone review matte; exported decals remain transparent. Optional
+recipe face.eyeRamp, face.inkRamp and face.highlightRamp select named palette ramps.
+Inspect the registered proof on the actual human; bounds QA alone does not establish
+anatomical fit. Items, garment fit and human publication are still pending C9b.
 
 The communicator alone integrates staging into `manifest.json` (TEAM-2a), including
 canonical identity mapping. Codex owns compilation and approval-ledger transcription.

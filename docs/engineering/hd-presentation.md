@@ -209,6 +209,39 @@ not establish anatomical fit, occlusion or emotion readability during movement.
 
 Face candidates bind their body manifest/digest and have their own source digest.
 Body/clip approval excludes faces; adding faces never changes the approved body
-packet or activates a runtime face layer. Human expressions/composition remain
-separate C9b/C8 work. Machine-B unit tests use fake approvals only in temporary
+packet or activates a runtime face layer. Human expressions use the C9b sidecar
+below; runtime composition remains separate. Machine-B unit tests use fake approvals only in temporary
 repositories; production publish and moving face review still require machine A.
+
+### C9b human face sidecars
+
+`forge.py faces --asset player-aqualia` now supports an existing valid human body
+review without launching Blender or changing the body. It emits 60 transparent
+32x24 decals: twelve rows (`neutral`, `warm`, `thoughtful`, `curious`, `concerned`,
+`amused`, `angry`, `sad`, `fearful`, `blink`, `sleep`, `hurt`) across s/se/sw/e/w.
+No back-facing decal is manufactured. Features are authored at 16x12 and exported
+as uniform nearest-neighbor 2x2 blocks, sharing the creature registration checks.
+Every expression is checked against every forward-facing body's per-frame head
+socket and actual canvas, including combat and wide clips. Missing/off-grid or
+out-of-bounds registrations produce draft status; input/body validation still
+rejects malformed packets or failed hard body QA.
+
+Optional recipe `face` contains only `eyeRamp`, `inkRamp`, `highlightRamp` using
+existing palette ramp names. These recolor palette indices without changing shape;
+unknown fields/ramps are rejected. Recipe, grammar, palette, specification and body
+manifest participate in the CLI sidecar revision. The face report binds body
+manifest hash and digest; body data remains immutable. Recoloring is authoring-time
+only in this slice; runtime emotion selection/composition is not activated.
+
+The contact sheet uses a warm-skin review matte, not an identity illustration.
+Inspect its native size and enlarged view, then inspect `registered.png` on the
+real body's standing frames on Machine A. Bounds and unique frame hashes do not
+establish anatomical fit or understandable emotions during motion. Retained
+engineering [native](../team/comms/codex/2026-11-01-human-face-grammar.png) and
+[4x](../team/comms/codex/2026-11-01-human-face-grammar-4x.png) proofs are grammar
+fixtures; they do not substitute for a real-human review or director decision.
+
+Run `human_faces_selftest.py` through the forge's pinned uv environment alongside
+`finish_selftest.py` and `review_selftest.py`. C9b remains partial: item/8-grip
+rendering, garment fit/material masks, thin-feature QA and human publication are
+pending. `items: ready` and `go-items` are deliberately not issued.
