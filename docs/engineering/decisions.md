@@ -329,6 +329,15 @@ permission to generate a replacement for an approved packet. The communicator ow
 manifest integration and Codex owns compilation/ledger transcription. Publication
 does not activate an appearance. See [C3b contracts](hd-presentation.md#c3b-creature-publication-and-face-sidecars).
 
+**Cross-machine closure correction (2026-11-01):** publish snapshots all provenance
+inputs, including the actual stage-verified model, under a content-addressed
+`art/source/blender/models/published/` directory. Keep model and bake metadata rather than
+reducing provenance to references or omitting it. Pin copies of scripts/specs too:
+later tool edits must not invalidate already published source bytes on CI.
+This adds approved source packaging, not a body rebake or artwork approval. The
+existing shared schema and compiler hash checks remain unchanged. Packaging changes
+alter manifest source digests and must follow the normal integration/ledger route.
+
 ## ADR 025 — Isolated map validation and historical regression fixtures
 
 **Decision:** tests about the original village approval and unfinished Riverlands

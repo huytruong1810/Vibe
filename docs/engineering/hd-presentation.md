@@ -173,15 +173,30 @@ sockets and rig identity. Clips retain timing/runtime/move metadata; distance
 strides come from the actual animate record rather than generic defaults. Provenance
 uses the shared generated AuthoringProvenance contract and pins the original blend,
 tracks, relevant publication scripts, animate record and Blender 4.2.x. Original
-model bytes must still match their stage record. Content-addressed exports precede
-an atomic staging-record replacement; a failed pointer write retains the previous
-record and can leave only an unreferenced immutable export directory.
+model bytes must still match their stage record. Publication copies the exact model,
+tracks, animate record, scripts, specification, recipe, palette and dependency lock
+into `art/source/blender/models/published/<asset>/<closure-digest>/`. The closure digest
+includes each relative filename, role and SHA-256. Provenance references these
+immutable copies, never machine-local scratch or mutable live tooling. Existing
+bundles are verified on retry; changed bytes are rejected rather than repaired.
+Original sources and copied bytes are checked again before committing the pointer.
+Content-addressed sources and exports precede an atomic staging-record replacement;
+a failed pointer write retains the previous record and can leave unreferenced
+immutable directories. Only sources bound to the approved body packet are copied.
 
 The communicator integrates staging into the source manifest (TEAM-2a), translating
 frame IDs/paths and canonical species bindings without losing registration or
 provenance. Staging is not automatically ingested or activated by the compiler.
-Provenance references original workspace artifacts: source availability on another
-machine must be resolved before compiling those records there. Missing sources
+Commit the complete source-bundle directory together with staging and exports, so
+Machine B and CI can verify provenance without Blender, the original workspace or
+network access. Internal historical paths inside the copied animate record remain
+audit metadata; the compiler resolves only declared provenance input paths.
+Do not strip provenance to work around missing dependencies. Older staging records
+that reference `forge/work/` need a packaging-only `forge publish --asset <asset>`
+on Machine A from the unchanged original workspace and approved packet. No rebake
+or replacement approval is required when the body packet digest stays unchanged
+(PRD-9). The manifest source digest changes with corrected provenance; it still
+requires normal engineering ledger review before runtime activation. Missing sources
 must not be fabricated or replaced with a fresh bake of an approved asset.
 
 `faces --asset rivallie` creates a separate `art/review/*-faces-*/` candidate from the
