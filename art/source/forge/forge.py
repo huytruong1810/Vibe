@@ -9,6 +9,7 @@ Commands:
   next --asset ID        print the exact next command, or BLOCKED: <reason>
   prep|gen3d|clean|texture|rig|animate|bake|pixelize|qa|packet|publish --asset ID   run one stage
   faces --asset ID       separate human/creature decal candidate; never re-bakes a body
+  item-plan --asset item:ID  validate an existing model and write the draft 8x8 grip/icon pose plan
   all --asset ID         run every runnable stage in order (stops at the first block)
 """
 
@@ -34,7 +35,7 @@ STAGES = ["prep", "gen3d", "clean", "texture", "rig", "animate", "bake", "pixeli
 CLASSES = {
     "creatures": {"ready": True, "pending": [], "templates": ["quadruped"]},
     "humans": {"ready": True, "pending": ["items (held layers)", "fit (garment parts)", "publish"], "templates": ["humanoid"]},
-    "items": {"ready": False, "pending": ["items stage (8 facings x 8 grips + icon)"], "ticket": "codex C9b"},
+    "items": {"ready": False, "pending": ["item-plan built; item rendering, fit/occlusion and QA pending"], "ticket": "codex C9b"},
     "environment": {"ready": False, "pending": ["environment kind: canvas, depth stretch, layers, footprint QA"], "ticket": "codex C10"},
 }
 
@@ -428,12 +429,30 @@ def st_faces(asset: str) -> str:
     return f"{report['status']}: {_rel(output)}; OPEN contact.png and registered.png; request a separate faces decision"
 
 
+def st_item_plan(asset: str) -> str:
+    from forgelib.items import item_pose_plan, write_item_plan
+    if asset_kind(asset) != "item":
+        raise ForgeError("Use item:<canonical-id> for item pose planning")
+    recipe = _recipe(asset)
+    if recipe.get("kind") != "item":
+        raise ForgeError("Item recipe must declare kind: item")
+    # Validate the asset/model before work_dir can create any path from this ID.
+    config = recipe.get("item")
+    item_pose_plan(REPO, asset, config, spec("render_spec"))
+    path = work_dir(asset) / "item_plan.json"
+    plan = write_item_plan(REPO, asset, config, spec("render_spec"), path)
+    # This is not part of the body stage chain and does not invalidate body art.
+    return f"draft: {_rel(path)}; {len(plan['poses'])} mesh poses; renderer/QA pending C9b; no items-ready grant"
+
+
 RUNNERS = {"prep": st_prep, "gen3d": st_gen3d, "clean": st_clean, "texture": st_texture, "rig": st_rig, "animate": st_animate, "bake": st_bake,
            "pixelize": st_pixelize, "qa": st_qa, "packet": st_packet, "publish": st_publish}
 
 
 # ---------------------------------------------------------------- next / status / doctor
 def next_step(asset: str) -> str:
+    if asset_kind(asset) == "item":
+        return f"BLOCKED: item rendering remains C9b; inspect the draft with {CMD} item-plan --asset {asset}"
     # Approved bodies must not be sent back through prep merely because this machine
     # lacks machine-A stage caches. Publishing validates the originals on machine A.
     if approval_for(asset):
@@ -604,7 +623,7 @@ def _run(asset: str, st: str) -> str:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("command", choices=["doctor", "selftest", "status", "next", "all", "faces", *STAGES])
+    ap.add_argument("command", choices=["doctor", "selftest", "status", "next", "all", "faces", "item-plan", *STAGES])
     ap.add_argument("--asset")
     ap.add_argument("--kind", choices=["human", "creature", "all"], default="all", help="selftest fixture kind")
     a = ap.parse_args()
@@ -619,12 +638,16 @@ def main() -> int:
     if not a.asset:
         ap.error("--asset is required")
     try:
+        if asset_kind(a.asset) == "item" and a.command not in ("item-plan", "next", "status"):
+            raise ForgeError("Item body/renderer stages remain C9b; only item-plan/next/status are available")
         if a.command == "next":
             print(next_step(a.asset))
         elif a.command == "status":
             print(status(a.asset))
         elif a.command == "faces":
             print(st_faces(a.asset))
+        elif a.command == "item-plan":
+            print(st_item_plan(a.asset))
         elif a.command == "all":
             if approval_for(a.asset):
                 raise ForgeError("This body has a matching director approval; use publish or faces, not an all-stage rerun (PRD-9).")
