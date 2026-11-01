@@ -416,3 +416,19 @@ earlier messages incorrectly diagnosed it as missing. Shared metadata edits stil
 invalidate dependent source digests. Generate schemas separately from atlas
 packing, and require a complete validated source graph before ledger transcription.
 See the [C3e contract](hd-presentation.md#c3e-explicit-rig-registrations).
+
+## ADR 030 — Item generation is a transaction over an existing mesh
+
+**Decision:** execute the validated 65-pose plan through the shared calibrated
+Blender pass writer and existing pixelizer. Keep item transforms separate from
+body animation, derive root/support registration from the mesh pose, inspect raw
+silhouettes before outlining and install an immutable hashed generation before
+replacing its stage pointer. Inject the baker for transaction tests.
+
+**Consequences:** failures cannot replace a valid pointer with partial output,
+and item work cannot invalidate approved body stages. CPU fixtures and analytical
+projection tests establish bounds/rollback and geometry math, not a successful
+real Blender run. A calibration proxy is allowed under PRD-2; it cannot become
+production art. Silhouette thickness QA has explicit internal-material/readability
+limits. Source generation, publication and runtime item selection remain separate
+gates. See [item rendering](hd-presentation.md#c9b-item-rendering-and-silhouette-qa).

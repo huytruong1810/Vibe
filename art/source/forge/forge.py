@@ -4,12 +4,13 @@
 
 Commands:
   doctor                 environment check plus readiness per asset class (creatures, humans, items, environment)
-  selftest [--kind human|creature|all]   run the forge on built-in fixtures and assert its invariants
+  selftest [--kind human|creature|item|all]   run built-in calibration fixtures and assert invariants
   status --asset ID      stage table for one asset
   next --asset ID        print the exact next command, or BLOCKED: <reason>
   prep|gen3d|clean|texture|rig|animate|bake|pixelize|qa|packet|publish --asset ID   run one stage
   faces --asset ID       separate human/creature decal candidate; never re-bakes a body
   item-plan --asset item:ID  validate an existing model and write the draft 8x8 grip/icon pose plan
+  items --asset item:ID      render a separate existing prop through all 65 poses and QA
   all --asset ID         run every runnable stage in order (stops at the first block)
 """
 
@@ -35,7 +36,7 @@ STAGES = ["prep", "gen3d", "clean", "texture", "rig", "animate", "bake", "pixeli
 CLASSES = {
     "creatures": {"ready": True, "pending": [], "templates": ["quadruped"]},
     "humans": {"ready": True, "pending": ["items (held layers)", "fit (garment parts)", "publish"], "templates": ["humanoid"]},
-    "items": {"ready": False, "pending": ["item-plan built; item rendering, fit/occlusion and QA pending"], "ticket": "codex C9b"},
+    "items": {"ready": False, "pending": ["render/QA built; source-prep, gallery/publication and runtime integration pending"], "ticket": "codex C9b"},
     "environment": {"ready": False, "pending": ["environment kind: canvas, depth stretch, layers, footprint QA"], "ticket": "codex C10"},
 }
 
@@ -382,6 +383,15 @@ def approval_for(asset: str) -> tuple[Path, Path] | None:
     return None
 
 
+def _blender_version() -> str:
+    import re
+    version = subprocess.run([core.blender_bin(), "--version"], capture_output=True, text=True, check=True).stdout
+    match = re.search(r"Blender (4\.2\.\d+)", version)
+    if not match:
+        raise ForgeError("This stage needs the pinned Blender 4.2.x binary")
+    return match[1]
+
+
 def st_publish(asset: str) -> str:
     if asset_kind(asset) != "creature":
         raise ForgeError("Human publication remains C9b; C3b supports creatures only.")
@@ -390,13 +400,8 @@ def st_publish(asset: str) -> str:
         raise ForgeError(f"No director-approved record in {_rel(core.APPROVALS)} whose packetDigest matches the current "
                          f"packet of {asset} (L7, PRD-9). Regenerated frames need a new approval; wait for the director.")
     from forgelib.publish import publish_body
-    import re
-    version = subprocess.run([core.blender_bin(), "--version"], capture_output=True, text=True, check=True).stdout
-    match = re.search(r"Blender (4\.2\.\d+)", version)
-    if not match:
-        raise ForgeError("Publish needs the pinned Blender 4.2.x binary")
     wd = work_dir(asset)
-    path = publish_body(REPO, wd, found[1], found[0], asset, spec("render_spec"), _canvas(asset), match[1])
+    path = publish_body(REPO, wd, found[1], found[0], asset, spec("render_spec"), _canvas(asset), _blender_version())
     record(asset, "publish", [found[0], found[1] / "review.json"], [path], {"scope": ["body", "clips"]})
     return f"staged {_rel(path)}; faces need separate approval; gameplay activation is not changed"
 
@@ -442,7 +447,22 @@ def st_item_plan(asset: str) -> str:
     path = work_dir(asset) / "item_plan.json"
     plan = write_item_plan(REPO, asset, config, spec("render_spec"), path)
     # This is not part of the body stage chain and does not invalidate body art.
-    return f"draft: {_rel(path)}; {len(plan['poses'])} mesh poses; renderer/QA pending C9b; no items-ready grant"
+    return f"draft: {_rel(path)}; {len(plan['poses'])} mesh poses; items runs technical render/QA; no items-ready grant"
+
+
+def st_items(asset: str) -> str:
+    from forgelib.items import item_pose_plan
+    from forgelib.item_render import render_items
+    if asset_kind(asset) != "item":
+        raise ForgeError("Item rendering needs item:<slug> and a separate prop source")
+    recipe = _recipe(asset)
+    if recipe.get("kind") != "item":
+        raise ForgeError("Item recipe must declare kind: item")
+    item_pose_plan(REPO, asset, recipe.get("item"), spec("render_spec"))
+    directory = render_items(REPO, work_dir(asset), asset, recipe["item"], recipe["ramps"],
+                             spec("render_spec"), _blender_version(), detail_slots=recipe.get("detailSlots"))
+    review = json.loads((directory / "item-review.json").read_text())
+    return f"{review['status']}: {_rel(directory)}; OPEN contact.png and qa_report.json; no item approval or gameplay activation"
 
 
 RUNNERS = {"prep": st_prep, "gen3d": st_gen3d, "clean": st_clean, "texture": st_texture, "rig": st_rig, "animate": st_animate, "bake": st_bake,
@@ -452,7 +472,7 @@ RUNNERS = {"prep": st_prep, "gen3d": st_gen3d, "clean": st_clean, "texture": st_
 # ---------------------------------------------------------------- next / status / doctor
 def next_step(asset: str) -> str:
     if asset_kind(asset) == "item":
-        return f"BLOCKED: item rendering remains C9b; inspect the draft with {CMD} item-plan --asset {asset}"
+        return f"BLOCKED: item source-prep/gallery/publication remain C9b; technical commands: item-plan or items --asset {asset}"
     # Approved bodies must not be sent back through prep merely because this machine
     # lacks machine-A stage caches. Publishing validates the originals on machine A.
     if approval_for(asset):
@@ -497,7 +517,7 @@ def next_step(asset: str) -> str:
 
 def status(asset: str) -> str:
     rows = []
-    for st in STAGES[:-2]:
+    for st in (["items"] if asset_kind(asset) == "item" else STAGES[:-2]):
         rec = core.stage_record(asset, st)
         rows.append(f"  {st:9s} {'done ' + rec['at'] if rec else '-'}")
     return "\n".join(rows)
@@ -532,6 +552,8 @@ def _selftest_fixture(asset: str) -> None:
 def selftest(which: str) -> int:
     """Run rig -> animate -> bake -> pixelize -> qa on fixtures and assert the structural invariants.
     Run it after any forge change (codex) or when the forge behaves oddly (agents). Exit 0 = healthy."""
+    if which == "item":
+        return selftest_item()
     kinds = ["human", "creature"] if which == "all" else [which]
     worst = 0
     for k in kinds:
@@ -563,7 +585,29 @@ def selftest(which: str) -> int:
               + (f"; {report['error']}" if "error" in report else "")
               + f"; LOOK at {_rel(wd / 'rig_preview.png')} and {_rel(wd / 'contact.png')}")
         worst = max(worst, 1 if report["verdict"] == "fail" else 0)
-    return worst
+    return max(worst, selftest_item()) if which == "all" else worst
+
+
+def selftest_item() -> int:
+    """PRD-2 calibration proxy only; never generates a production model."""
+    from forgelib.item_render import render_items
+    asset, version = "item:selftest", _blender_version()
+    wd = work_dir(asset)
+    script = core.BLENDER_SCRIPTS / "fixture_item.py"
+    model = wd / "fixture.blend"
+    inputs = [script, core.SPEC_DIR / "palette.json"]
+    if not core.is_fresh(asset, "fixture-item", inputs, {"blender": version}):
+        core.run_blender("fixture_item.py", [str(model)], wd / "logs/fixture.log")
+        record(asset, "fixture-item", inputs, [model], {"blender": version})
+    config = {"model": model.relative_to(REPO / "art/source").as_posix(), "grip": [0, 0, 0],
+              "iconPivot": [0, 0, 0], "supportGrip": [0, 0, 0.125], "socket": "Socket_Hand.R"}
+    directory = render_items(REPO, wd, asset, config, {"fixture": "wood"}, spec("render_spec"), version)
+    review = json.loads((directory / "item-review.json").read_text())
+    report = {"asset": asset, "verdict": "pass" if review["status"] == "candidate" else "fail",
+              "frames": len(review["frames"]), "qa": review["qa"], "directory": _rel(directory)}
+    (wd / "selftest_report.json").write_text(json.dumps(report, indent=2))
+    print(f"selftest item: {report['verdict'].upper()}; 65 calibration poses; OPEN {_rel(directory / 'contact.png')}; not artwork")
+    return 0 if report["verdict"] == "pass" else 1
 
 
 def doctor() -> int:
@@ -623,9 +667,9 @@ def _run(asset: str, st: str) -> str:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("command", choices=["doctor", "selftest", "status", "next", "all", "faces", "item-plan", *STAGES])
+    ap.add_argument("command", choices=["doctor", "selftest", "status", "next", "all", "faces", "item-plan", "items", *STAGES])
     ap.add_argument("--asset")
-    ap.add_argument("--kind", choices=["human", "creature", "all"], default="all", help="selftest fixture kind")
+    ap.add_argument("--kind", choices=["human", "creature", "item", "all"], default="all", help="selftest fixture kind")
     a = ap.parse_args()
     if a.command == "doctor":
         return doctor()
@@ -638,8 +682,8 @@ def main() -> int:
     if not a.asset:
         ap.error("--asset is required")
     try:
-        if asset_kind(a.asset) == "item" and a.command not in ("item-plan", "next", "status"):
-            raise ForgeError("Item body/renderer stages remain C9b; only item-plan/next/status are available")
+        if asset_kind(a.asset) == "item" and a.command not in ("item-plan", "items", "next", "status"):
+            raise ForgeError("Item body/source stages remain C9b; use item-plan/items/next/status")
         if a.command == "next":
             print(next_step(a.asset))
         elif a.command == "status":
@@ -648,6 +692,8 @@ def main() -> int:
             print(st_faces(a.asset))
         elif a.command == "item-plan":
             print(st_item_plan(a.asset))
+        elif a.command == "items":
+            print(st_items(a.asset))
         elif a.command == "all":
             if approval_for(a.asset):
                 raise ForgeError("This body has a matching director approval; use publish or faces, not an all-stage rerun (PRD-9).")

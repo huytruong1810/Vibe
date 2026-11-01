@@ -278,8 +278,63 @@ changed source retain the previous plan. Shared fixtures test projected angles i
 every facing, rigid transforms, both hand sockets, deterministic bytes and failure
 behavior. The planner does not promise that a spear fits the held-item canvas:
 real rendering, transparent margins, feature thickness, silhouette/occlusion and
-any required canvas extensions remain explicit C9b integration work. No `items`
-render stage or `go-items` message is available yet.
+any required canvas extensions remain explicit C9b integration work. No
+production `go-items` message is available yet. The technical renderer below can
+consume a plan against an already existing, separately textured model.
+
+### C9b item rendering and silhouette QA
+
+`forge.py items --asset item:hatchet` validates the same recipe as `item-plan`,
+requires Blender 4.2.x, then renders 64 held poses and one icon. Input must be a
+separate static prop mesh with its `Col` vertex colors, not a human armature. No
+production geometry is constructed, rescaled to fit, or taken from a human body.
+`bake.py` uses the existing calibrated camera and albedo/normal/depth writer. Only
+item jobs select the planned rigid matrix; body jobs keep their original path.
+Root registration is projected from the actual transformed source pivot. An
+optional support grip is projected and exported on the same even-pixel grid.
+
+The stage invokes the existing pixelizer and verifies all 65 native/export pairs,
+exact 2x blocks, actual canvas sizes, transparent margins, root drift,
+primary/support grip bounds, palette membership and the aggregate color budget.
+`thinFeature` examines raw albedo silhouettes before outlines can hide narrow
+geometry: opaque 2x2 blocks support their pixels, connected unsupported runs of
+at least two pixels fail, isolated unsupported islands fail, and a one-pixel cap
+attached to a supported body is allowed. Connected-component tables make this
+diagnostic linear in pixel count. This is a silhouette-spur detector, not proof
+that every internal strap/material detail or every facing reads at the required
+width. Those limitations require inspection and future material-mask validation.
+
+Owned persistent state is an immutable generation at
+`work/<asset>/item-renders/<inputsDigest>/` and the final `items.json` pointer.
+The digest binds model bytes, the full render/QA specification, material/detail
+slots, tool sources, dependency lock and Blender version. The review separately
+binds frame metadata, QA results and every generated file hash. Cache hits verify
+the generation and existing pointer; corrupt bundles fail instead of being repaired.
+Verified cache hits preserve pointer bytes and timestamp.
+
+`render_items` accepts an explicit baker adapter for CPU tests. It copies and hashes
+a self-contained model snapshot before Blender reads it, avoiding a live-file race.
+Its lifecycle is validate → temporary snapshot → bake → pixelize → inspect → hash → recheck inputs
+→ install generation → atomic pointer replacement. Invalid inputs, a failed bake,
+missing passes, source changes or storage errors preserve the previous pointer.
+A failed final pointer write can leave an unreferenced immutable generation.
+Per-pose image work is O(pixels), with bounded 65-pose metadata and a contact sheet
+sized from the largest frame; enlarged canvases are not cropped to a fixed cell.
+
+The output `item-review.json` is a technical review format, not an animation catalog
+or approved publication. It retains facing, grip bucket/degrees, integer anchors,
+primary/support sockets and source hashes without pretending that grip rotations
+are a gameplay animation clip. Source generation from the canonical three-quarter
+reference, item gallery/publish adapters, body angle/occlusion tracks and runtime
+composition remain C9b/C8 integration work. `items: ready` and `go-items` remain off.
+
+`forge.py selftest --kind item` creates a PRD-2 calibration-only cuboid and runs
+the real renderer. It does not create a hatchet or other production source.
+The CPU suite uses fake passes solely to test transactions and QA; it cannot prove
+the Blender integration or artistic quality. Machine B currently has no Blender
+4.2 binary, so the actual calibration contact/QA must be inspected on Machine A.
+The protected sprite-forge runbook remains unchanged; this guide does not override
+its production gate or authorize item asset production.
 
 ### C3e explicit rig registrations
 
