@@ -57,7 +57,7 @@
    "rule": "ART-4.4",
    "pass": true,
    "hard": true,
-   "detail": "12 colours (limit 20)"
+   "detail": "10 colours (limit 20)"
   },
   {
    "check": "outlineContinuity",
@@ -78,21 +78,21 @@
    "rule": "ART-9.3",
    "pass": true,
    "hard": false,
-   "detail": "max changed fraction between frames 0.032"
+   "detail": "max changed fraction between frames 0.026"
   },
   {
    "check": "valueContrast",
    "rule": "ART-7.3",
    "pass": false,
    "hard": false,
-   "detail": "median L delta vs ground {'ground_grass': 0.047, 'ground_dirt': 0.249, 'ground_sand': 0.127, 'ground_freshwater': 0.066} (need >= 0.12)"
+   "detail": "median L delta vs ground {'ground_grass': 0.161, 'ground_dirt': 0.041, 'ground_sand': 0.335, 'ground_freshwater': 0.274} (need >= 0.12)"
   },
   {
    "check": "referenceFidelity",
    "rule": "PRD-3.5",
    "pass": true,
    "hard": true,
-   "detail": "hue/chroma distance to reference 0.045"
+   "detail": "hue/chroma distance to reference 0.044"
   },
   {
    "check": "castDistinctness",
@@ -102,6 +102,6 @@
    "detail": "distinct from all other assets"
   }
  ],
- "colors": 12,
+ "colors": 10,
  "frames": 616
 }
