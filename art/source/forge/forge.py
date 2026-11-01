@@ -301,12 +301,14 @@ def st_pixelize(asset: str) -> str:
     r, wd = _recipe(asset), work_dir(asset)
     bake_files = sorted((wd / "bake").rglob("*.png")) + [wd / "bake" / "tracks.json"]
     extra = {"ramps": r["ramps"], "detailSlots": r.get("detailSlots", [])}
+    if r.get("rampShift"):  # only when used, so existing caches and digests are unchanged
+        extra["rampShift"] = r["rampShift"]
     out = wd / "pix"
     code = [core.FORGE / "forgelib" / "pixelize.py"]
     if core.is_fresh(asset, "pixelize", bake_files + code + [core.SPEC_DIR / "render_spec.json", core.SPEC_DIR / "palette.json"], extra):
         return "fresh (cached)"
     shutil.rmtree(out, ignore_errors=True)
-    pixelize.run_dir(wd / "bake", out, r["ramps"], r.get("detailSlots", []))
+    pixelize.run_dir(wd / "bake", out, r["ramps"], r.get("detailSlots", []), r.get("rampShift"))
     record(asset, "pixelize", bake_files + code + [core.SPEC_DIR / "render_spec.json", core.SPEC_DIR / "palette.json"],
            sorted(out.rglob("*.png")), extra)
     return f"{len(list((out).glob('*/*.png')))} frames"

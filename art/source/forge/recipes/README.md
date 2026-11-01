@@ -23,6 +23,10 @@ spec (`../spec/`); a recipe never overrides spec numbers.
 - `ramps`: one palette ramp per material region (names from `palette.json`). Body
   regions only; eyes and mouth come from the face layer (ART-8). At most the colour
   budget in ART-4.4.
+- `rampShift` (optional): `{"shell": -1}` moves a material's lit steps one notch darker
+  (or `1` lighter) while keeping its lighting bands. Use it for a dark material whose
+  sunlit top lands on a pale `light` step, for example a charcoal shell that reads lavender and
+  fails `valueContrast` on grass. Values are -2, -1 or 1, on recipe material slots.
 - `gen3d.views`: which sheet views feed image-to-3D. Use every view **in the same pose**.
   A sheet that mixes poses (an upright front view and an all-fours side view) fuses into
   a hybrid mesh: drop the odd views here and ask the communicator for a single-pose sheet.
