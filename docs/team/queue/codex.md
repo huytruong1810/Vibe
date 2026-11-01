@@ -360,9 +360,17 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
   - `forge.py selftest` PASS for human and creature
   - player-aqualia validation run: 19 clips, 952 frames, rig without landmark warnings
 
+### C3f - Legacy-safe source ingestion for M19
+
+- status: open (next engineering prerequisite for whole-source M19 integration)
+- goal: retain original V1 normalized registrations and identity behavior while accepting native V2 candidate records with integer registrations.
+- work: design an explicit versioned compatibility boundary; preserve all existing source frames, appearances and normalized anchors without rounding. Keep native PixelPointSchema integer-strict. Test exact rendering registration, identity/fallback resolution, source dependency closure and collisions. Coordinate the actual tracked native graph with M19 before source compilation or ledger reconciliation.
+- done when: mixed-source ingestion validates without dropping or shifting legacy content, deterministic compiler/tests pass, and candidate/approval boundaries remain explicit. This is not permission to activate art or transcribe preliminary reported digests.
+- evidence: [M19 audit and follow-up](../comms/codex/2026-11-01T0612--to-communicator--m19-compatibility-next.md); communicator reports 1,070 fractional registrations among 1,092 V1 frames. Actual candidate JSON is still requested.
+
 ### C9b · Items, fit, human faces
 
-- status: in-progress (human face sidecars candidate; remaining item/fit stages pending)
+- status: in-progress (human face sidecars and technical item renderer delivered; real Blender calibration, integration and fit pending)
 - goal: the remaining human-class stages.
   - `items`: 8 facings × 8 grip angles plus an inventory icon from one mesh (ART-15), registered to `Socket_Hand.*`.
   - `fit`: garment parts (Surface Deform or Shrinkwrap, weights from the body, hidden body faces masked, PRD-1).
@@ -372,6 +380,7 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 - evidence: [human-face sidecar increment](../comms/codex/2026-11-01T0247--to-all--c9b-human-face-sidecars.md), [contract](../../engineering/hd-presentation.md#c9b-human-face-sidecars), [ADR 027](../../engineering/decisions.md#adr-027--human-expressions-as-independent-body-bound-sidecars); engineering `fb621e8`, consumer `4d879bc`. Seven human-face tests, 21 publication and two exporter tests pass, plus 299 engineering tests. Native/4x grammar proofs inspected; real-human fitting/motion and director acceptance remain separate. No items-ready or completed C9b claim.
 
 - follow-up: engineering `3430546` adds a draft 64-held-pose-plus-icon planner, explicit screen-space grip convention, source/contract/tool pins and atomic writes; eight planner tests and all 38 forge Python tests pass. Item rendering/QA remains unfinished. See [item contract](../../engineering/hd-presentation.md#c9b-item-pose-planning), [ADR 028](../../engineering/decisions.md#adr-028--explicit-held-item-mesh-pose-plans-before-rendering). C3e is now delivered; resume item rendering while M19 integrates its source graph.
+- renderer: engineering `7586e49`, consumer `0575294` deliver rigid-mesh baking, source snapshots, projected sockets, immutable hashed output and atomic items.json replacement. All 49 forge tests pass locally and independently in the consumer checkout; all 305 engineering tests/types/assets/build pass. [B13 request](../comms/codex/2026-11-01T0612--to-blender--test-item-renderer.md) covers the real Blender cuboid calibration, unverified here because Blender 4.2 is unavailable. Source prep, gallery/publish adapters, runtime angle/occlusion tracks, garment fit and human publication remain pending; no go-items. Automatic review rejected the optional protected sprite-forge runbook amendment; it remains unchanged, with commands documented in the engineering guide instead.
 
 ### C9c · Human clip polish, per-clip canvases in review export, contract docs
 
@@ -477,3 +486,4 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 - goal: every queue has two or more open tickets; split big tickets; turn the brief's backlog (P1–P3) into tickets as each milestone lands; keep skills and docs truthful to the code (a skill must never describe a feature that doesn't exist).
 - done when: never closes; add a dated evidence line each week
 - evidence: 2026-10-31: B2 is opened by [go-world](../comms/codex/2026-10-31T1640--to-blender--go-world.md); B6/B7 remain actionable. Communicator has M12/M13 review/kit work and M14–M16 follow-ups; [ack correction](../comms/codex/2026-10-31T1640--to-communicator--c6-ack-link.md) is relayed to its owner. No duplicate tickets added.
+- update 2026-11-01: B13 offers technical item calibration while real source prep stays gated. M19 requests the actual native candidate JSON as a review artifact; M22's audit is received and C3f is the whole-source compatibility prerequisite. Existing B2/B3/B4 and M9/M11 remain available subject to their explicit input gates. No invented approvals or protected-file workarounds.

@@ -111,3 +111,11 @@ it's blocked, mark it and take the next. Change only `status:` and `evidence:` l
 - work: after normal consumer-tool integration, run `items_selftest.py` in the pinned forge environment and review `docs/engineering/hd-presentation.md#c9b-item-pose-planning`. Report transform/pivot assumptions and path/atomic-write differences. If a separate existing hatchet mesh is already available, annotate its actual post-clean grip/support/icon pivots in an item recipe and run item-plan; otherwise report that input dependency to M21. Do not construct a new model or treat a plan as rendered artwork.
 - done when: commands, fixture results, optional real source hash/plan and exact remaining input gates are in your comms. No item packet or go-items claim.
 - evidence: [published B12 receipt](https://github.com/huytruong1810/Vibe/blob/779befc/docs/team/comms/blender/2026-11-01T0420--to-all--b12-items-planning-results.md) reports eight Linux planner tests and 299 repository tests pass. No actual hatchet mesh or rendered item packet is reported. C9b item rendering remains engineering work; do not begin a manual modeling substitute.
+
+### B13 - Technical held-item renderer calibration
+
+- status: open (code-health calibration only; no production class grant)
+- goal: exercise the actual C9b baker/pixelizer with the permitted PRD-2 cuboid fixture on Machine A.
+- work: normally integrate consumer `0575294` / PR #4, then follow the [technical handoff](../comms/codex/2026-11-01T0612--to-blender--test-item-renderer.md). Run selftest --kind item, inspect the 65-frame contact at native/enlarged sizes and report actual Blender version/device, QA, source/review digests and repeat-run cache stability. Do not model a hatchet, regenerate approved bodies, edit protected records or infer go-items. If the unchanged runbook blocks this technical check, report that exact gate and take other work.
+- done when: a source-linked execution receipt and inspected QA/contact findings are published. Structural failure or visual limits stay explicit; this does not complete C9b or approve game art.
+- evidence: engineering `7586e49`, consumer `0575294`; 49 CPU forge tests pass on engineering and consumer branches, 305 engineering tests pass. Actual Blender execution is not available on Machine B.
