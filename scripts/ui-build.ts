@@ -2,6 +2,29 @@ import { readFile, mkdir, copyFile, writeFile, readdir } from 'node:fs/promises'
 import { resolve, join } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
+import sharp from 'sharp';
+
+export const BAR_PARTS = {
+  hp: { width: 168, height: 18, segment: 16 },
+  stamina: { width: 168, height: 18, segment: 16 },
+  xp: { width: 168, height: 12, segment: 2 },
+  need: { width: 32, height: 12, segment: 2 },
+} as const;
+
+/** Lossless compilation of authored pixels, not a repaint of the kit. */
+export async function compileBarStrip(
+  bytes: Buffer,
+  kind: keyof typeof BAR_PARTS,
+): Promise<Buffer> {
+  const part = BAR_PARTS[kind],
+    meta = await sharp(bytes).metadata();
+  if (meta.width !== part.width || meta.height !== part.height)
+    throw new Error(`Unexpected ${kind} bar dimensions`);
+  return sharp(bytes)
+    .extract({ left: 4, top: 4, width: part.segment, height: part.height - 8 })
+    .png({ compressionLevel: 9 })
+    .toBuffer();
+}
 
 /** Compile the tracked kit, never redraw it. Runs explicitly and from assets:build. */
 export async function buildUi(): Promise<void> {
@@ -54,15 +77,30 @@ export async function buildUi(): Promise<void> {
     createHash('sha256')
       .update(await readFile(file))
       .digest('hex');
+  const derivatives = [];
+  for (const kind of Object.keys(BAR_PARTS) as (keyof typeof BAR_PARTS)[]) {
+    const file = `bar_${kind}_fill.png`,
+      sourceFile = join(source, 'kit/export', `bar_${kind}.png`);
+    await writeFile(join(output, file), await compileBarStrip(await readFile(sourceFile), kind));
+    derivatives.push({
+      file,
+      source: `bar_${kind}.png`,
+      sourceSha256: await digest(sourceFile),
+      sha256: await digest(join(output, file)),
+      width: BAR_PARTS[kind].segment,
+      height: BAR_PARTS[kind].height - 8,
+    });
+  }
   await writeFile(
     join(output, 'build.json'),
     JSON.stringify(
       {
-        schemaVersion: 1,
+        schemaVersion: 2,
         fontTools: '4.61.1',
         fontSha256: await digest(font),
         subsetSha256: await digest(join(output, 'Silver-core.woff2')),
         files,
+        derivatives,
       },
       null,
       2,

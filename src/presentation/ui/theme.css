@@ -460,7 +460,7 @@ body {
 .hd-game .model-row {
   gap: 12px;
 }
-.hd-game[data-combat='true'] :is(.time-map, .toast) {
+.hd-game[data-combat='true'] :is(.minimap-shell, .toast) {
   opacity: 0.6;
 }
 .hd-game [hidden] {
@@ -490,5 +490,236 @@ body {
   .hd-game .settings-grid,
   .hd-game .map-layout {
     grid-template-columns: 1fr;
+  }
+}
+
+/* C8b: source frames retain their native pixels; only fill masks change width. */
+.hd-game .kit-meter {
+  box-sizing: border-box;
+  width: 168px;
+  height: 18px;
+  border: 4px solid transparent;
+  border-image: var(--meter-frame) 4 / 4px / 0 repeat;
+  background: var(--ui-panel);
+  padding: 0;
+  border-radius: 0;
+  overflow: hidden;
+  align-self: center;
+}
+.hd-game .kit-meter[data-kind='hp'] {
+  --meter-frame: url('/assets/generated/ui/bar_hp.png');
+  --meter-fill: url('/assets/generated/ui/bar_hp_fill.png');
+}
+.hd-game .kit-meter[data-kind='stamina'] {
+  --meter-frame: url('/assets/generated/ui/bar_stamina.png');
+  --meter-fill: url('/assets/generated/ui/bar_stamina_fill.png');
+}
+.hd-game .kit-meter[data-kind='xp'] {
+  --meter-frame: url('/assets/generated/ui/bar_xp.png');
+  --meter-fill: url('/assets/generated/ui/bar_xp_fill.png');
+  height: 12px;
+}
+.hd-game .kit-meter[data-kind='need'] {
+  --meter-frame: url('/assets/generated/ui/bar_need.png');
+  --meter-fill: url('/assets/generated/ui/bar_need_fill.png');
+  height: 12px;
+  width: 100%;
+}
+.hd-game .kit-meter > .kit-fill {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: var(--meter-fill) left top repeat-x;
+  image-rendering: pixelated;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+}
+.hd-game .time-map {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  width: auto;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+.hd-game .time-panel {
+  width: 220px;
+  padding: 8px;
+  border: 16px solid transparent;
+  border-image: url('/assets/generated/ui/frame_standard.png') 16 fill / 16px / 0 repeat;
+  background: var(--ui-panel);
+}
+.hd-game .time-panel > span {
+  display: block;
+  white-space: nowrap;
+}
+.hd-game .time-panel .clock-badge {
+  padding: 0;
+  border: 0;
+  background: none;
+}
+.hd-game #hud-weather {
+  text-transform: capitalize;
+}
+.hd-game .minimap-shell {
+  width: 152px;
+  height: 152px;
+  padding: 12px;
+  flex: none;
+  image-rendering: pixelated;
+}
+.hd-game .minimap-shell #hud-minimap {
+  width: 128px;
+  height: 128px;
+  border: 0;
+  border-radius: 50%;
+}
+.hd-game :is(.hand-slot, .equipment-slot) {
+  border: 8px solid transparent;
+  border-image: url('/assets/generated/ui/slot_common.png') 8 fill / 8px / 0 repeat;
+  border-radius: 0;
+  background: var(--ui-panel);
+}
+.hd-game #quick-slots button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: none;
+  width: 148px;
+  min-width: 0;
+  max-width: 160px;
+  white-space: normal;
+}
+.hd-game .slot-face {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  flex: none;
+  background: url('/assets/generated/ui/slot_common.png') center/60px 60px no-repeat;
+  image-rendering: pixelated;
+}
+.hd-game .slot-face .quick-icon {
+  display: block;
+  margin: 0;
+}
+.hd-game .slot-face .item-pixel {
+  width: 28px;
+  height: 28px;
+  border-radius: 0;
+}
+.hd-game .quick-label {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  max-width: 100%;
+}
+.hd-game .quick-charges {
+  position: absolute;
+  bottom: 0;
+  right: -24px;
+  width: 24px;
+  line-height: 24px !important;
+  text-align: center;
+  background: var(--ui-panel);
+  color: var(--ui-textAccent);
+  padding: 0 2px;
+}
+.hd-game .quick-charges:empty {
+  display: none;
+}
+.hd-game .inventory-hands {
+  align-items: stretch;
+}
+.hd-game .hand-slot {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+.hd-game .hand-slot .slot-item {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  gap: 4px 8px;
+  margin: 8px 0;
+  min-width: 0;
+}
+.hd-game .slot-item b {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.hd-game .slot-item small {
+  grid-column: 2;
+  overflow-wrap: anywhere;
+}
+.hd-game :is(.hand-slot, .equipment-slot) .slot-actions {
+  position: static;
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  min-height: 42px;
+}
+.hd-game .hand-slot .slot-actions button {
+  padding: 0 4px;
+}
+.hd-game #combine-button {
+  height: auto;
+  min-height: 64px;
+  flex-direction: row;
+  gap: 12px;
+  padding: 8px;
+}
+.hd-game .physiology-panel {
+  top: 194px;
+}
+.hd-game .companion-hud {
+  top: 270px;
+  width: 400px;
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 8px;
+}
+.hd-game .companion-portrait {
+  float: none;
+}
+.hd-game .companion-title {
+  overflow-wrap: anywhere;
+}
+.hd-game .companion-needs {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 4px;
+}
+.hd-game .companion-needs .need {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  gap: 0;
+}
+.hd-game .companion-needs .kit-meter {
+  width: 32px;
+}
+.hd-game .masthead {
+  left: 50%;
+  top: 64px;
+  right: auto;
+  bottom: auto;
+  transform: translateX(-50%);
+}
+@media (max-width: 1200px) {
+  .hd-game .time-map {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  .hd-game .masthead {
+    left: calc(50% + 90px);
+    top: 12px;
   }
 }

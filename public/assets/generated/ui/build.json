@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "fontTools": "4.61.1",
   "fontSha256": "5bbbcd90b9f3ed71f8e15816fc114cbfefe9dfa29e5aacab31fe3f49fe1d1c89",
   "subsetSha256": "6ac8b89593799ef22464f9c1ea5dd9b45bf673015bb86fab231312ce77ce0418",
@@ -22,5 +22,39 @@
     "slot_fine.png",
     "slot_mythic.png",
     "slot_rare.png"
+  ],
+  "derivatives": [
+    {
+      "file": "bar_hp_fill.png",
+      "source": "bar_hp.png",
+      "sourceSha256": "445760b4ae055d6ab7ccdf1d6cd0a02b144195d27fbb7fb60394e631f351ed8a",
+      "sha256": "282279c09871f833617dd6ac272b4f1374d49f8c661a77c0c2d7d7a5cb0f33bb",
+      "width": 16,
+      "height": 10
+    },
+    {
+      "file": "bar_stamina_fill.png",
+      "source": "bar_stamina.png",
+      "sourceSha256": "1efb3a772506328156739c1b2fa94c9f167f0f1815003ef14841e48555ce59b3",
+      "sha256": "d132b468ffc1ac8123c0dd88f2f29ab2f2368b968fb06b8dfcab6d1352e7bbb5",
+      "width": 16,
+      "height": 10
+    },
+    {
+      "file": "bar_xp_fill.png",
+      "source": "bar_xp.png",
+      "sourceSha256": "d43732fa55d64e18241cea64a2c43ac966a3cf4aad4f327cc51d4807977febbc",
+      "sha256": "be8bfdb22ca0185efd6e954997e22516839ff2d3cab7dff8feb8ee6ae947f047",
+      "width": 2,
+      "height": 4
+    },
+    {
+      "file": "bar_need_fill.png",
+      "source": "bar_need.png",
+      "sourceSha256": "7cf0ad02e6b775599678bfa24b06488247f6078ecfbc9f726311a6aa96358e62",
+      "sha256": "710f3569532f34fe51409d43b86d675aad366442b9589d5f941e44a39fd40c58",
+      "width": 2,
+      "height": 4
+    }
   ]
 }

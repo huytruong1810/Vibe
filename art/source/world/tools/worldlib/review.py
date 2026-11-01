@@ -30,6 +30,8 @@ def dependencies():
         REPO / "src/content/definitions.ts",
     ]
     paths += sorted((WORLD / "tools").rglob("*.py"))
+    paths += sorted((REPO / "art/source/tiles/tools").rglob("*.py"))
+    paths += sorted((REPO / "art/source/tiles/spec").glob("*.json"))
     # All atlas pages used for previews are bound, not just their JSON registration.
     catalog = read(REPO / "public/assets/generated/catalog.json")
     paths += [REPO / "public" / p["imageUrl"].lstrip("/") for p in catalog["pages"]]
@@ -41,19 +43,14 @@ class PreviewArt:
         self.catalog = read(REPO / "public/assets/generated/catalog.json")
         self.pages = {}
         self.cache = {}
+        self.appearances = {a['contentId']: a for a in self.catalog['appearances'] if a['kind'] == 'environment' and a.get('frameId') and a.get('stage') not in ('proof', 'candidate')}
+        self.content_ids = frozenset(self.appearances)
 
     def asset(self, name):
         name = name.removeprefix("env:")
         if name in self.cache:
             return self.cache[name]
-        a = next(
-            (
-                a
-                for a in self.catalog["appearances"]
-                if a["kind"] == "environment" and a["contentId"] == name
-            ),
-            None,
-        )
+        a = self.appearances.get(name)
         if not a or not a.get("frameId"):
             return None
         f = next(f for f in self.catalog["frames"] if f["id"] == a["frameId"])
@@ -86,29 +83,11 @@ class PreviewArt:
 def draw_level(level, art):
     s = spec()
     w, h = level["pxWid"] // 32, level["pxHei"] // 32
-    canvas = Image.new("RGBA", (w * 32, h * 32), "#1a243e")
+    from .terrain import compose_terrain
+    canvas = compose_terrain(level, art)
     d = ImageDraw.Draw(canvas)
     ls = layers(level)
     font = ImageFont.truetype(str(REPO / "art/source/ui/fonts/Silver.ttf"), 19)
-    for name in ("ground", "water", "paths"):
-        values = {
-            v["value"]: v
-            for v in next(v for v in s["layers"] if v["id"] == name)["values"]
-        }
-        for i, value in enumerate(ls[name]["intGridCsv"]):
-            if not value:
-                continue
-            x, y = i % w * 32, i // w * 32
-            info = values[value]
-            image = art.asset("ground_" + info["id"]) if name == "ground" else None
-            if name == "water" and info["fluid"] == "freshwater":
-                image = art.asset("ground_freshwater")
-            if image:
-                tile = image[0].resize((32, 32), Image.Resampling.NEAREST)
-                canvas.alpha_composite(tile, (x, y))
-                tile.close()
-            else:
-                d.rectangle((x, y, x + 31, y + 31), fill=info["color"])
     for e in sorted(entities(level), key=lambda e: (e["__grid"][1], e["iid"])):
         x, y = [v * 32 for v in e["__grid"]]
         kind, fs = e["__identifier"], fields(e)

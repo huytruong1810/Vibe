@@ -72,3 +72,49 @@ uv run --project art/source/forge python art/source/tiles/tools/tileforge.py sel
   freshwater overlay with tiles, and road and other fluids with flat rectangles.
 - Cliff strips are 32×8 art px per elevation step (64×16 exported). The renderer draws
   `cliff_grass` per step.
+
+## C11b consumers and isolated proof
+
+`TerrainArtIndex` selects native variants with the shared unsigned hash, indexes
+only usable environment appearances, and caches mask lookups. A base plus contiguous
+`_v1`, `_v2`, etc. forms a family; a gap does not silently substitute a differently
+numbered variant. Selection uses global tile coordinates, including across render
+cache regions. It consumes no simulation random stream.
+
+Mask families resolve in this order: `path_<surface>` for path layers or
+`shore_<surface>` for water/ground layers, then `ground_<surface>`, then `<surface>`.
+Append `_mask_1` through `_mask_14`. Zero draws nothing; fifteen selects the full
+material variant. Missing art retains the bounded rectangle fallback. Runtime fluid,
+ice, dirt, stone and boardwalk overlays are separate. Optional sand/stone/mud/reedbed
+ground transitions are drawn when their masks exist.
+
+`TerrainView` accepts optional read-only `ground`/`surface` numeric presentation
+channels and corresponding `groundNames`/`surfaceNames` legends. The primary ground
+wins over the effective surface, retaining reedbeds and ground beneath boardwalks.
+The authored loader already supplies these arrays and legends; C7 activation must
+connect them alongside scene bounds/coverage. Current procedural worker output is
+unchanged. These fields never determine traversal, collision or damage.
+
+Worldforge uses `CatalogTileSet`, a catalog-backed adapter to `TileSet.compose`.
+It restores packed trim before sampling at art resolution, respects the same variant
+coordinates and mask-family precedence, composites water before paths, and labels
+other preview objects through the existing review renderer. The compositor accepts
+a global origin; full-mask tiles now vary by that coordinate instead of always
+sampling material variant zero. World inspection dependency hashes include tileforge
+code and specs. Rendering changes invalidate prior receipts; old inspection markers
+must not be reused without opening the new images.
+
+`npm run assets:coverage` refreshes the normal coverage report from the existing
+catalog without rebuilding any atlas. Terrain page costs are reported once per
+referenced page/resolution; pages shared with actors are not additional allocations.
+The production catalog currently adds zero pages: its shared page costs 14.97 MiB
+full / 7.95 MiB half. The existing quality-tier residency limits remain enforced.
+
+For a non-production integration fixture, run `npm run terrain:proof`. It verifies
+the golden packet PNG hashes, copies exact exports into isolated scratch space,
+uses official AssetPack (2048 maximum, padding, preserved trim, no rotation), and
+renders an authored-village proof. The browser journey routes its prototype catalog
+only inside the test. It never publishes tiles, modifies a production catalog,
+creates an approval or switches new-game maps. Golden swatches remain procedural
+stand-ins. The live capture shows the current procedural village; the authored
+worldforge proof is a separate scene, not evidence of C7 activation.
