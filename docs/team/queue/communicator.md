@@ -171,16 +171,29 @@ lines.
 - done when: board and digest are pushed and cite records
 - evidence: docs/team/status-board.md, art/review/digest-2026-W45.md
 
-### M17 - Review the separate Rivallie face proof
+### M17 · Inspect Rivallie candidate face proof (readability, fit, socket alignment)
 
-- status: open (no image-generation capacity needed)
-- goal: give concrete 2D readability feedback before the director's separate face decision.
-- work: open the two images linked in the [C3b handoff](../comms/codex/2026-10-31T2146--to-blender--c3b-publish-and-faces.md), inspect native size and nearest-neighbor enlargement. Report which expression/facing is unreadable or misplaced; distinguish registration bounds from anatomical fit. Keep body/clip approvals separate and do not repaint exports or modify forge code.
-- done when: an identity/facing-specific observation list is published in your own comms for Codex and the director. Technical feedback is not approval.
+- status: done
+- goal: inspect the separate candidate face sidecar in `art/review/2026-11-01-rivallie-faces-d749a4350126/`, report readability and anatomical fit across forward facings, and update the review digest.
+- inputs: `art/review/2026-11-01-rivallie-faces-d749a4350126/{contact.png,registered.png,faces.json}`, PRD-5.
+- work:
+  - Open and inspect `contact.png` and `registered.png` via `read_file`.
+  - Evaluate decal readability across the 5 expression rows (`neutral`, `warm`, `fearful`, `hurt`, `sleep`) and 5 forward facings (`s`, `se`, `sw`, `e`, `w`).
+  - Check socket alignment, silhouette bounds, and facial feature contrast against cream muzzle.
+  - Document findings in review digest `art/review/digest-2026-W45.md` for Director decision.
+- done when: images inspected, readability/fit report documented, and digest updated.
+- evidence: art/review/2026-11-01-rivallie-faces-d749a4350126/contact.png, art/review/2026-11-01-rivallie-faces-d749a4350126/registered.png, art/review/digest-2026-W45.md, docs/team/comms/communicator/2026-11-01T0100--to-codex-blender--rivallie-faces-and-manifest-plan.md
 
-### M18 - Prepare the C3b source-manifest mapping
+### M18 · Staging-to-manifest mapping & original-source dependency checklist
 
-- status: open (preparation does not require production exports)
-- goal: make approved-body staging integration reviewable before machine-A exports arrive.
-- work: read `forgelib/publish.py`, the shared SourceFrameV2/AnimationClip/AuthoringProvenance contracts and existing canonical species appearances. Document the mapping from staging file paths and frame IDs to source records, clip references, rig/sockets, species identity and provenance; list original model/workspace dependencies needed on compiling machines. Coordinate with B8. Do not invent missing source hashes, edit generated catalogs or activate unapproved faces.
-- done when: a precise mapping/checklist and dependency questions are published in your own comms. Actual manifest integration waits for verified staged exports.
+- status: done
+- goal: analyze published staging records (`art/source/staging/blender/{rivallie,bramblefang,marshstalker}.json`), formulate the exact transformation mapping into `art/source/manifest.json`, and document the original-source dependency checklist across machines.
+- inputs: `art/source/staging/blender/*.json`, `src/presentation/assets/source.ts`, `docs/art/source-manifest.schema.json`, `docs/doctrine/09-production-doctrine.md`.
+- work:
+  - Map staging schema to `SourceManifest` schema: frame id format (regex `^[A-Za-z0-9_-]+$`), field naming (`file` vs `path`), clip appearance binding (`species:<asset>` vs `<asset>`), and candidate staging flags.
+  - Document the machine boundary dependency: `authoringProvenance.inputs` reference `art/source/forge/work/<asset>/animate.blend`, which is gitignored on Machine A and absent on Machine B.
+  - Detail why direct insertion into V2 manifest without local work files or schema normalization would break `npm run check:assets` on Machine B / CI.
+  - Publish the staging-to-manifest mapping specification and dependency resolution path in team comms for Codex and Blender.
+- done when: mapping schema and dependency checklist are published in comms and relayed to Codex.
+- evidence: docs/team/comms/communicator/2026-11-01T0100--to-codex-blender--rivallie-faces-and-manifest-plan.md, art/source/staging/blender/rivallie.json, art/source/manifest.json
+

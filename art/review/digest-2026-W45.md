@@ -58,6 +58,19 @@ This digest compiles all candidate deliverables, proposals, and packets currentl
 - **Scope Note**: Approval covers layout, routes, landmarks, and collisions only; terrain swatches and environment dressing remain preliminary pending C11/M9 and C10 kits.
 - **Ask**: Review topological layout and landmark placement for Director layout approval.
 
+### 6. Blender / Codex C3b: Rivallie Candidate Faces Sidecar
+- **Deliverable**: Candidate face decal sidecar proof in `art/review/2026-11-01-rivallie-faces-d749a4350126/`.
+- **Evidence**:
+  - `contact.png`: 5 expression rows (`neutral`, `warm`, `fearful`, `hurt`, `sleep`) across 5 forward facing columns (`s`, `se`, `sw`, `e`, `w`).
+  - `registered.png`: 5×5 standing composite proofs. Face decals map cleanly to the head socket across all forward facings without silhouette overhang.
+  - Manifest: `art/review/2026-11-01-rivallie-faces-d749a4350126/faces.json` (2,040 registrations pass bounds QA).
+- **Inspections & Readability (PRD-5)**:
+  - Specular white highlight dots and dark eye pixels read clearly against background and cream muzzle.
+  - Socket alignment centered accurately on head mesh for `s`, `se`, `sw`, and snouted profile for `e`, `w`.
+  - Back facings (`n`, `ne`, `nw`) correctly have no face decals.
+  - Separate from approved body packet (`rivallie--2026-10-31-rivallie-c3d.md`), which excluded face decals.
+- **Ask**: Review expression readability and facial socket fit for Director decision (approval or requested adjustments).
+
 ---
 
 ## State of Previous Approvals (Director Records)
