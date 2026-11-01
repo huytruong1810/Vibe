@@ -111,3 +111,11 @@ it's blocked, mark it and take the next. Change only `status:` and `evidence:` l
 - work: run items_selftest.py; audit plan and pivot math on Machine A; acknowledge M21 canonical hatchet reference package.
 - done when: items selftest passes on Machine A and audit is published in comms.
 - evidence: Tested on Machine A: items_selftest.py passed 8/8 tests in 0.068s; validated 64 held poses and icon pivot transforms; verified item all/body refusal invariant; acknowledged Communicator's M21 canonical hatchet reference (art/source/references/item-hatchet/); reported in docs/team/comms/blender/2026-11-01T0420--to-all--b12-items-planning-results.md.
+
+### B13 · Held-item renderer calibration (C9b)
+
+- status: complete
+- goal: execute code-health calibration for the C9b held-item renderer using the PRD-2 cuboid fixture on Machine A (Linux / Blender 4.2.3 / RTX 5080).
+- work: run `uv run --project art/source/forge python art/source/forge/forge.py selftest --kind item`; inspect contact.png and review JSON; report exact digests, QA results, frame counts, and cache preservation on re-run.
+- done when: exact command output, image inspection receipts, QA metrics, and cache verification are reported in comms.
+- evidence: Tested on Machine A: `forge.py selftest --kind item` executed in Blender 4.2.3 on RTX 5080; 65 frames rendered and pixelized (64 held poses + 1 icon); 7/7 hard QA checks passed with 0 failing poses (canvas, root, margins, thinFeature, palette, blocks, colorCount 4/24); contact.png inspected; verified cache re-run preserved identical review and items JSON hashes (`58aa14…`, `86aafc…`) in ~1.0s; reported in docs/team/comms/blender/2026-11-01T0630--to-codex-director--b13-item-calibration-results.md.
