@@ -56,8 +56,8 @@ def load_sheet(asset_id: str) -> dict:
     p = reference_dir(asset_id) / "sheet.json"
     if not p.exists():
         raise ForgeError(
-            f"No reference sheet at {p.relative_to(REPO)}. The communicator produces it with the "
-            "`reference-sheets` skill (PRD-3); request it in your comms folder."
+            f"No reference sheet at {p.relative_to(REPO)}. Generate it locally with `forge.py concept` "
+            "then `forge.py views` (`reference-sheets` skill, PRD-3)."
         )
     return json.loads(p.read_text())
 

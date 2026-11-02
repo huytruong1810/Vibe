@@ -141,6 +141,7 @@ export const LANES = {
     'art/source/staging/tiles/**',
     'art/source/ui/**',
     'art/source/exports/portraits/**',
+    'art/source/style/**',
     'docs/team/queue/blender.md',
     'docs/team/comms/blender/**',
     'docs/team/proposals/**',

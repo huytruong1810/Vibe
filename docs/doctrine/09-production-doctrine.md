@@ -91,32 +91,34 @@ Image-to-3D quality is decided by the input. A reference sheet must have:
   part fit, rig landmarks, recipe), never by editing forge code, the spec or QA
   limits. If you believe a limit is wrong, write a proposal (DOC-3).
 
-## PRD-7 Image-generation subagents (quota-bound)
+## PRD-7 Image generation: local models (since 2026-11-02)
 
-Antigravity agents can spin up image-generation subagents. They are valuable and
-**rationed**: the quota is shared and slow to refill. Since 2026-11-02 only the **blender**
-agent generates images (it makes the sheet, forges it and reviews its own result); it keeps
-the ledger in `docs/team/comms/blender/image-ledger.md` (the communicator's ledger stays as
-history).
+Reference art is generated **locally** on machine A's GPU by the forge (`forge.py concept`,
+then `forge.py views`), not by quota-bound subagents (director decision 2026-11-02: the
+quota stalled production for days). Only the **blender** agent generates images; it makes
+the sheet, forges it and reviews its own result. The models and licences are locked in
+L12.
 
 - **PRD-7.1 Use for:** reference sheets (PRD-3), back and side views, part
   and prop sheets, body-type mannequin sheets, portraits (ART-14), concept and
   mood paintings for new locations, UI frame and icon concepts, VFX concept
-  frames, festival decoration concepts.
+  frames, festival decoration concepts, terrain swatches for tileforge.
 - **PRD-7.2 Never use for:** final sprite frames, turnarounds used as frames,
   terrain tiles used as-is (they don't tile), anything that must be
   pixel-exact (faces, outlines, palettes).
-- **PRD-7.3 Budget:** at most **4 generations per reference sheet** and **2
-  per prop or part sheet** before asking the director. Batch related requests
-  into one prompt where possible (for example front and back in one sheet).
-- **PRD-7.4 Prompt discipline:** use the prompt templates in the
-  `reference-sheets` skill. Always include the identity source, the doctrine
-  proportions, the A-pose clause, "no props in hands", "plain light-grey
-  background", "full body", "orthographic front view". Record prompt, seed and
-  outcome.
-- **PRD-7.5 Ledger:** every generation is logged in your comms folder file
-  `image-ledger.md` (date, asset, purpose, prompt ID, kept or rejected and why).
+- **PRD-7.3 No quota, still deliberate.** Generate as many candidates as the asset needs
+  (`--n`), look at the contact sheet, keep one. If eight candidates in a row miss the
+  checklist, fix the prompt fields or references rather than rolling more seeds.
+- **PRD-7.4 Prompt discipline:** prompts come only from the spec templates
+  (`art/source/forge/spec/concept_templates.json`, fixed clauses verbatim) plus the project
+  style block (`art/source/style/style.json`) and the recipe's `concept.fields` and
+  references. The forge records model, weights revision, seed, prompt and references.
+- **PRD-7.5 Provenance:** every kept sheet carries a `generator` block in its `sheet.json`
+  and a row in `docs/team/comms/blender/image-ledger.md` (the tool writes both).
 - **PRD-7.6** Look at every generated image before using it (PRD-5).
+- **PRD-7.7 One style.** Every generation passes the project style block and, once the
+  director has approved them, 1–3 style anchor images (`art/source/style/`). The pixel-art
+  masters are identity references for their asset only, never style anchors.
 
 ## PRD-8 Determinism and hygiene
 

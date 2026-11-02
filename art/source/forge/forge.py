@@ -732,11 +732,24 @@ ENV_RUNNERS = {"bake": st_env_bake, "pixelize": st_env_pixelize, "qa": st_env_qa
 
 
 # ---------------------------------------------------------------- next / status / doctor
+def _sheet_missing(asset: str, error: ForgeError) -> str:
+    """No reference sheet yet: generate one locally (concept → views) when the recipe says how."""
+    recipe = core.RECIPES / f"{slug(asset)}.json"
+    if not recipe.exists() or "concept" not in json.loads(recipe.read_text()):
+        return (f"BLOCKED: {error} Add a `concept` block to art/source/forge/recipes/{slug(asset)}.json "
+                f"(recipes/README.md), then {CMD} concept --asset {asset}.")
+    contact = work_dir(asset) / "concept" / "contact.png"
+    if contact.exists():
+        return (f"OPEN {_rel(contact)} and pick the best candidate, then {CMD} views --asset {asset} --pick <id> "
+                f"(or {CMD} concept --asset {asset} for new candidates)")
+    return f"{CMD} concept --asset {asset}"
+
+
 def _next_item(asset: str) -> str:
     try:
         core.load_sheet(asset)
     except ForgeError as e:
-        return f"BLOCKED: {e}"
+        return _sheet_missing(asset, e)
     if not (core.RECIPES / f"{slug(asset)}.json").exists():
         return f"BLOCKED: write the recipe art/source/forge/recipes/{slug(asset)}.json (recipes/README.md, item section)."
     if approval_for(asset):
@@ -763,7 +776,7 @@ def _next_env(asset: str) -> str:
     try:
         core.load_sheet(asset)
     except ForgeError as e:
-        return f"BLOCKED: {e}"
+        return _sheet_missing(asset, e)
     if not (core.RECIPES / f"{slug(asset)}.json").exists():
         return f"BLOCKED: write the recipe art/source/forge/recipes/{slug(asset)}.json (environment-forge skill)."
     if approval_for(asset):
@@ -799,7 +812,7 @@ def next_step(asset: str) -> str:
     try:
         core.load_sheet(asset)
     except ForgeError as e:
-        return f"BLOCKED: {e}"
+        return _sheet_missing(asset, e)
     if not (core.RECIPES / f"{slug(asset)}.json").exists():
         return f"BLOCKED: write the recipe art/source/forge/recipes/{slug(asset)}.json (recipes/README.md)."
     for st in STAGES:
@@ -1011,6 +1024,15 @@ def doctor() -> int:
         "Ask claude to download the Hunyuan3D-2mv weights")
     chk("gen3d code", (core.GEN3D_DIR / "vendor" / "Hunyuan3D-2" / "hy3dgen").exists(), "Ask claude to vendor Hunyuan3D-2")
     chk("Quaternius UAL (humans)", (core.VENDOR / "ual").exists(), "Ask claude to run setup (vendor/ual)")
+    ig_py = core.FORGE / "imagegen" / ".venv" / "bin" / "python"
+    chk("imagegen venv (local reference art)", ig_py.exists(), "bash art/source/forge/imagegen/setup.sh")
+    style_model = json.loads((REPO / "art/source/style/style.json").read_text()).get("model", "klein4b")
+    repos = {"klein4b": "black-forest-labs--FLUX.2-klein-4B", "klein9b": "black-forest-labs--FLUX.2-klein-9B",
+             "qwen21": "Qwen--Qwen-Image-2.1", "qwen21turbo": "Qwen--Qwen-Image-2.1-Turbo"}
+    hub = core.FORGE / "imagegen" / "models" / "hf" / "hub" / f"models--{repos.get(style_model, '?')}"
+    complete = (any(p.exists() for p in hub.glob("snapshots/*/transformer/*.safetensors"))
+                and not any(hub.glob("blobs/*.incomplete")))
+    chk(f"imagegen weights ({style_model})", complete, f"bash art/source/forge/imagegen/setup.sh {style_model} (or wait for it to finish)")
     for name, ok, fix in checks:
         print(f"  [{'ok' if ok else 'FAIL'}] {name}" + ("" if ok else f"  -> {fix}"))
     bad = [c for c in checks if not c[1]]
@@ -1046,8 +1068,13 @@ def _run(asset: str, st: str) -> str:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("command", choices=["doctor", "selftest", "status", "next", "all", "faces", "item-plan", "items", "orient", "layout", *STAGES])
+    ap.add_argument("command", choices=["doctor", "selftest", "status", "next", "all", "faces", "item-plan", "items", "orient", "layout",
+                                        "concept", "views", *STAGES])
     ap.add_argument("--asset")
+    ap.add_argument("--n", type=int, default=4, help="concept: candidates to generate")
+    ap.add_argument("--seed", type=int, help="concept: first seed (default: time-based)")
+    ap.add_argument("--model", help="concept: imagegen model (default: recipe concept.model, then art/source/style/style.json)")
+    ap.add_argument("--pick", help="views: the concept candidate id to keep (e.g. c4211)")
     ap.add_argument("--kind", choices=["human", "creature", *[f"creature-{t}" for t in TEMPLATE_FIXTURES], "item", "environment", "all"],
                     default="all", help="selftest fixture kind")
     a = ap.parse_args()
@@ -1070,6 +1097,18 @@ def main() -> int:
             raise ForgeError(f"Environment assets use {', '.join(ENV_STAGES)}")
         if a.command == "layout" and asset_kind(a.asset) != "environment":
             raise ForgeError("layout is the environment stage")
+        if a.command in ("concept", "views"):
+            from forgelib import concept as concept_mod
+            if approval_for(a.asset):
+                print(f"note: {a.asset} has a director approval; new views mean a new packet digest and a new approval (PRD-9).")
+            if a.command == "concept":
+                print(f"[concept] {concept_mod.concept(a.asset, a.n, a.seed, a.model)}")
+            else:
+                if not a.pick:
+                    raise ForgeError("views needs --pick <candidate id> from the concept contact sheet")
+                print(f"[views] {concept_mod.views(a.asset, a.pick)}")
+            print("next:", next_step(a.asset))
+            return 0
         if a.command == "next":
             print(next_step(a.asset))
         elif a.command == "status":

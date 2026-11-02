@@ -132,3 +132,16 @@ deterministic CPU inference, frozen weights per release) on top of scripted floc
 predation movement, under a scripted combat director that guarantees fairness (CRM).
 Language models never run in the creature combat loop: hundreds of decisions per second
 with reproducible saves rule them out. Villagers stay "System 2" (AGT, L10).
+
+## L12 — Local generative models
+
+Reference art is generated on machine A by open-weight models through the forge (PRD-7).
+The project is personal until the director says otherwise, so non-commercial and research
+licences are accepted (director, 2026-11-02); every kept image records its model and
+revision, so a future commercial release regenerates anything made with a non-commercial
+model using a commercial-safe one. Candidates: Qwen-Image-2.1 (research licence),
+FLUX.2 [klein] 9B (non-commercial) and 4B (Apache-2.0); image-to-3D: Hunyuan3D-2mv
+(current), Hunyuan3D-2.1 shape and TRELLIS (MIT). The golden-sample bake-off picks the
+defaults; the director records the winners here. 2D → 3D stays for everything that moves or
+turns (L5); only non-rotating classes (terrain swatches, portraits, icons, VFX concepts)
+go image → 2D tools.

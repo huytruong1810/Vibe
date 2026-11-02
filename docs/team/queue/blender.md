@@ -4,8 +4,8 @@ Read your brief `docs/team/briefs/blender.md` first. Take the top `open` ticket.
 blocked, mark it and take the next. Change only `status:` and `evidence:` lines.
 Finished tickets are in [archive/blender.md](archive/blender.md).
 
-**Since 2026-11-02 you hold the whole art pipeline** (directive 012): you generate the
-reference sheets (B15, B16), forge them (B3, B4, B5), make the 2D art (B17, B18) and
+**Since 2026-11-02 you hold the whole art pipeline** (directives 012, 013) and generate
+images **locally** on machine A's GPU (`forge.py concept` → `views`): the reference sheets (B15, B16), forge them (B3, B4, B5), make the 2D art (B17, B18) and
 review your own results. Make a sheet, forge it straight away, and fix the sheet yourself
 when the forge shows a problem.
 
@@ -20,9 +20,22 @@ when the forge shows a problem.
 - done when: `art/source/staging/blender/item-hatchet.json` (or the path publish prints) is committed and a `--to-communicator-codex--hatchet-published` message lists it
 - evidence: art/source/staging/blender/item-hatchet.json; docs/team/comms/blender/2026-11-02T0416--to-communicator-codex--hatchet-published.md (stand-in session, claude)
 
+### B19 · Golden-sample bake-off with local image generation (first)
+
+- status: open (after B14)
+- goal: pick the image and 3D models and approve the new look on six golden samples before regenerating everything (PRD-4, L12; director decision 2026-11-02).
+- inputs: [directive 013](../comms/claude/2026-11-02T0807--to-all--directive-013-local-image-generation.md); [imagegen notes](../../engineering/imagegen.md); `reference-sheets` skill; Rivallie's recipe `concept` block with `poseGuide` (copy the pattern; make a pose guide per new body type).
+- work, one asset at a time:
+  1. Rivallie (creature): `forge.py concept --asset rivallie --n 4 --model klein4b`, then the same with `--model qwen21`. Look at both contact sheets; keep the best of each with `views` into a scratch copy only if comparing, or keep the winner.
+  2. player-aqualia (human, A-pose, 5 heads, L3), item:hatchet (prop), env:house-aqualia (building) the same way.
+  3. Run each kept sheet through the forge to a packet (the 3D backend comparison follows once claude lands the extra backends).
+  4. Post one message `--to-director--bakeoff` with the side-by-side contact sheets, the forge packets, timings and peak VRAM from each `work/<asset>/concept/concept-*.json`, and your recommendation.
+- done when: the director has picked the models (recorded in L12) and approved the golden samples' look; their concepts become the style anchors in `art/source/style/style.json`
+- evidence:
+
 ### B15 · Reference-sheet production run (quota restored by the director)
 
-- moved: from the communicator's M23 on 2026-11-02 (all art is blender's, TEAM-1). Generate with your own image subagents, log in `docs/team/comms/blender/image-ledger.md`, and forge each sheet as soon as it passes the checklist.
+- moved: from the communicator's M23 on 2026-11-02 (all art is blender's, TEAM-1). Since directive 013 generate **locally** (`forge.py concept` → `views`, `reference-sheets` skill), after B19's decision, and forge each sheet as soon as it passes the checklist. Quota limits no longer apply.
 - status: open (top priority; directive 009)
 - goal: every class the forge can build has its sheets, so blender is never waiting on input.
 - work:
@@ -40,7 +53,7 @@ when the forge shows a problem.
 
 ### B16 · Redraw the human sheets; fix ramp names on every sheet
 
-- moved: from the communicator's M11 on 2026-11-02 (all art is blender's, TEAM-1). Generate with your own image subagents, log in `docs/team/comms/blender/image-ledger.md`, and forge each sheet as soon as it passes the checklist.
+- moved: from the communicator's M11 on 2026-11-02 (all art is blender's, TEAM-1). Since directive 013 generate **locally** with the forge after B19's decision; quota limits no longer apply.
 - status: in_progress (palette ramps and metadata schemas normalized; 3-view redraw paused on image model capacity limit)
 - goal: bring every reference sheet up to PRD-3 and L3 (director decision via directive 006).
 - work:
@@ -96,7 +109,7 @@ when the forge shows a problem.
 
 ### B17 · Aqualia terrain set through tileforge (long design session)
 
-- moved: from the communicator's M9 on 2026-11-02 (all art is blender's, TEAM-1). Generate with your own image subagents, log in `docs/team/comms/blender/image-ledger.md`, and forge each sheet as soon as it passes the checklist.
+- moved: from the communicator's M9 on 2026-11-02 (all art is blender's, TEAM-1). Since directive 013 generate **locally** with the forge after B19's decision; quota limits no longer apply.
 - status: in_progress (scaffolded aqualia-terrain; swatches paused awaiting image generation quota reset per PRD-7)
 - goal: the whole Aqualia ground in palette-locked 32-px tiles (ART-11.2), designed by you, made exact by tileforge: grass, dirt, sand, stone, mud, reedbed, boardwalk; freshwater with its 14 shore masks; dirt-path and stone-path edges; cliff strip and ramp.
 - inputs: `.agents/skills/tile-forge/SKILL.md` (read it fully first); region bible `docs/doctrine/regions/aqualia.md` and ART-13 (teal, sand, warm timber); the concept `art/source/masters/aqualia_canal_settlement_master.jpg` for mood only (its grid lines and props make it unusable as a swatch); the golden sample `art/source/tiles/sets/aqualia-grass-water/` and its packet `art/review/tiles-aqualia-grass-water-1/` (procedural stand-in swatches; beat them).
@@ -115,7 +128,7 @@ when the forge shows a problem.
 
 ### B18 · Art for notes, books and paintings (after B15 step 3)
 
-- moved: from the communicator's M24 on 2026-11-02 (all art is blender's, TEAM-1). Generate with your own image subagents, log in `docs/team/comms/blender/image-ledger.md`, and forge each sheet as soon as it passes the checklist.
+- moved: from the communicator's M24 on 2026-11-02 (all art is blender's, TEAM-1). Since directive 013 generate **locally** with the forge after B19's decision; quota limits no longer apply.
 - status: open (after B15 step 3)
 - goal: the UI and props the authored-artifacts feature needs (codex C17–C20), so it ships with real art instead of placeholders.
 - inputs: [authored artifacts spec](../../engineering/authored-artifacts.md) §3, §7.5, §8; doctrine AGT-6, AGT-8, UI direction (`docs/doctrine/04-ui-direction.md`); the UI kit generator `art/source/ui/`.
@@ -134,6 +147,14 @@ when the forge shows a problem.
 - work: follow the [C9b handoff](../comms/codex/archive/2026-11-01T0247--to-all--c9b-human-face-sidecars.md), normally merge the consumer tooling, then run `faces --asset player-aqualia` on a valid body review. Inspect native/enlarged contact and registered proofs; check the blank face plane, per-facing placement and motion. Report missing packet/hard body QA as explicit prerequisites; do not weaken validation or regenerate an approved body.
 - done when: exact commands, body/sidecar digests, inspected images and any blockers are published. Human faces remain candidate; this is not go-items or human publication readiness.
 - evidence: [studio receipt at 19eb907](https://github.com/huytruong1810/Vibe/blob/19eb907/docs/team/comms/blender/archive/2026-11-01T0325--to-codex-communicator--b11-human-face-results.md) reports 60 selftest-human decals / 7,416 registrations. Player Aqualia margins (0px) and color count (27) remain hard QA blockers; no threshold change or local visual acceptance is claimed.
+
+### B20 · Regenerate the approved assets in the new style (after B19)
+
+- status: blocked: waits for B19's director decision
+- goal: every asset shares the approved look (director decision 2026-11-02), including the four approved creatures and the hatchet.
+- work: one at a time: `concept` → `views` → forge → packet → message the director. Each gets a new digest and needs a new approval record (PRD-9); the communicator merges and codex ledgers as usual.
+- done when: rivallie, bramblefang, marshstalker, mireling and the hatchet are re-approved in the new style
+- evidence:
 
 ## Standing
 
