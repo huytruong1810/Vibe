@@ -40,12 +40,12 @@ B0 is standing; B2 and B14 wait on the director.
 ### B19 · Golden samples with local image generation (first)
 
 - status: open (first; B14 is done)
-- goal: approve the new look on six golden samples (image model: klein 9B; 3D model: Hunyuan3D-2mv unless TRELLIS.2 wins C31) before regenerating everything (PRD-4, L12; director decision 2026-11-02).
+- goal: approve the new look on six golden samples (image model: klein 9B; 3D model: Hunyuan3D-2mv, decided in C31) before regenerating everything (PRD-4, L12; director decision 2026-11-02).
 - inputs: [directive 013](../comms/claude/2026-11-02T0807--to-all--directive-013-local-image-generation.md); [imagegen notes](../../engineering/imagegen.md); `reference-sheets` skill; Rivallie's recipe `concept` block with `poseGuide` (copy the pattern; claude makes the pose guides for other body types in C27, so don't make your own).
 - work, one asset at a time:
   1. The image model is decided: klein 9B is the only one installed (claude C29, doctrine L12), so there's no `--model` flag to choose. Rivallie (creature): `forge.py concept --asset rivallie --n 4`; c901 and c903 from seeds 900–903 are already clean on all fours (`docs/team/comms/claude/boards/2026-11-02-imagegen-rivallie-klein9b.png`). Look at the contact sheet and keep the best with `views`.
   2. player-aqualia (human, A-pose, 5 heads, L3), item:hatchet (prop), env:house-aqualia (building) the same way; the human, winged, shelled and biped pose guides come with claude's C27.
-  3. Run each kept sheet through the forge to a packet with the default 3D backend (Hunyuan3D-2mv; claude reports if TRELLIS.2 replaces it in C31).
+  3. Run each kept sheet through the forge to a packet with the 3D backend (Hunyuan3D-2mv; TRELLIS.2 lost C31 and is removed).
   4. Post one message `--to-director--golden-samples` with the contact sheets, the forge packets and what you saw in each; the director approves the look.
 - done when: the director has approved the golden samples' look (the models are already recorded in L12); their concepts become the style anchors in `art/source/style/style.json`
 - evidence:

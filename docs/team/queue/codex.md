@@ -308,15 +308,14 @@ order; C26 gates any regeneration of approved assets (blender B20).
 
 ### C31 · gen3d backends: Hunyuan3D-2.1 shape and TRELLIS.2
 
-- status: blocked: the director accepts the gated `facebook/dinov3-vitl16-pretrain-lvd1689m` licence on huggingface.co (403 on 2026-11-02; TRELLIS.2's image encoder, no way round it). `briaai/RMBG-2.0` can be skipped: the runner sets `rembg_model = None` because prep views carry alpha. Director chose C26 first.
+- status: done (2026-11-02, claude)
 - owner: claude
 - goal: compare single-image 3D against the current Hunyuan3D-2mv on the golden samples (L12).
-- work: recipe `gen3d.backend` (done: `forgelib/core.py` `GEN3D_BACKENDS`, default stays out of the digest), pinned setups (Blackwell cu128 builds), same `mesh.glb` contract.
-- progress:
-  - Hunyuan3D-2.1 ran on Rivallie, front-only in 189 s and side-only in 207 s, 7.7 GiB. It lost to 2mv and was removed (board `docs/team/comms/claude/boards/2026-11-02-gen3d-rivallie-hunyuan.png`).
-  - TRELLIS.2-4B: code cloned and its venv is ready (torch 2.11 cu128). The CUDA 12.8 toolkit is installed (`/usr/local/cuda-12.8`). Next: the director accepts the gated licences (`facebook/dinov3-vitl16-pretrain-lvd1689m`, `briaai/RMBG-2.0`), then build the extensions and write the runner (steps in the claude handoff `docs/team/comms/claude/2026-11-02T2036--to-claude--handoff.md`).
-- done when: Rivallie through TRELLIS.2 to a `gen3d` preview, timings recorded; the loser is removed from `models.json`
-- evidence:
+- result: **Hunyuan3D-2mv stays the only gen3d model.** Recipe `gen3d.backend` dispatch stays (`forgelib/core.py` `GEN3D_BACKENDS`, default out of the digest).
+  - Hunyuan3D-2.1 lost (front-only 189 s, side-only 207 s, 7.7 GiB) and was removed.
+  - TRELLIS.2-4B (licence accepted 2026-11-02) ran on Rivallie's side view: shape only, 512, 118 s with a 38 s load, 5.4 GiB peak. From the front it is a narrow pillar, not the round otter 2mv builds from three views, and its surface is voxel-faceted. Its 1024 cascade fails in the decode on 16 GB (`CUDA driver error: device not ready`, twice).
+  - Removed with `hf cache rm` (TRELLIS.2-4B, TRELLIS-image-large, DINOv3; 10 GB), together with its venv, vendored code, runner and registry entry.
+- evidence: boards `docs/team/comms/claude/boards/2026-11-02-gen3d-rivallie-hunyuan.png`, `…-gen3d-rivallie-trellis2.png`; `forge.py doctor` 13/13; doctrine L12; `docs/engineering/imagegen.md`
 
 ## Waiting on the director
 
