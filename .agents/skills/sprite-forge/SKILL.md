@@ -41,6 +41,16 @@ sidecar command below.) **Held items** (`item:<id>`, a one-object three-quarter 
 `prep → gen3d → clean → texture → orient → items → packet`; `all --asset item:<id>` runs through `items`. Humans need an **A-pose** sheet
 (PRD-3.1) at 4.5–5 heads (L3); their clips come from the UAL animation libraries.
 
+**Creature templates (L6, C3h).** The rig and clips follow the species' skeleton template
+(`spec/skeletons/quadruped.json` `species` map): rivallie, bramblefang, marshstalker,
+mireling → `quadruped`; steamshell → `shelled` (a shell bone; guard, sleep and downed
+withdraw under the shell); zephyrit, cindermoth → `winged` (two-bone wings, hovers
+`gait.hoverPx` above the anchor in every airborne clip, lands to eat, drink and sleep);
+ignicap → `mushroom-biped` (stem and cap on two legs, waddles). Quadrupeds are turned
+head-to-south from the mesh; shelled, winged and biped keep the sheet's **front view** facing
+south, so their sheets need a true front view (set `rig.yawDeg` if `rig_preview.png` shows it
+turned).
+
 After **every** stage that writes images, open the PNG it names with `read_file` and
 write one line in your session log saying what you saw:
 
@@ -50,6 +60,10 @@ write one line in your session log saying what you saw:
 - `rig_preview.png`: red dots on the body (head, spine, legs), yellow dots along the
   tail; in the stride, rear-up and head-turn test poses nothing tears, stretches into
   spikes or leaves parts behind.
+  Shelled: the head dots on the head beyond the shell, not on the dome. Winged: yellow
+  dots along both wings to the tips; the wings-up/down/folded poses move only the wings.
+  Biped: yellow dots down both legs, red dots up the centre to the crown; the stride and
+  waddle poses bend the knees under the cap.
   Humans: red dots on the joints (crown, neck, shoulders, elbows, wrists, hips, knees,
   ankles), blue dots on the face and back; in the arms-up, stride and bend test poses
   the arms lift from the shoulders and the legs bend at the knees.
@@ -68,7 +82,9 @@ write one line in your session log saying what you saw:
 $F selftest
 ```
 
-Runs the forge on built-in fixtures (a human mannequin and a copy of Rivallie) and
+Runs the forge on built-in fixtures (a human mannequin, a copy of Rivallie, and primitive
+calibration bodies for the shelled, winged and mushroom-biped templates: `--kind
+creature-<template>`), the held-item and environment proxies, and
 checks rig weights, landmarks, clip matrix, canvases, margins and anchors. `PASS` means
 the forge works; `FAIL` means message codex with the output. Run it when a stage
 behaves strangely before you change any input.

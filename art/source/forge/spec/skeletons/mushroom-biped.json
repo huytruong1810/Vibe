@@ -1,0 +1,178 @@
+{
+  "schemaVersion": 1,
+  "rigId": "mushroom-biped-v1",
+  "plan": "mushroom-biped",
+  "rigScript": "rig_biped.py",
+  "doctrine": ["L6", "ART-9.2", "ART-9.3", "ART-9.4", "CMB-3"],
+  "note": "Creature template for small two-legged species with a large head or cap (ignicap). A stem body on two short legs carries the cap as its head; stubby arms, if any, ride with the stem. Locomotion is a waddle: the body rolls over the planted foot. Protected spec: change under DOC-5.",
+  "orientation": {
+    "forward": "-Y",
+    "up": "+Z",
+    "left": "+X",
+    "autoOrient": "none: a biped is about as deep as it is wide, so the mesh keeps the sheet's front view facing -Y (as humans). Recipe rig.yawDeg overrides."
+  },
+  "bones": [
+    {
+      "name": "root",
+      "parent": null,
+      "head": "ground",
+      "tail": "ground+up",
+      "deform": false
+    },
+    {
+      "name": "pelvis",
+      "parent": "root",
+      "head": "hip",
+      "tail": "stem_mid",
+      "deform": true
+    },
+    {
+      "name": "stem",
+      "parent": "pelvis",
+      "head": "stem_mid",
+      "tail": "cap_base",
+      "deform": true
+    },
+    {
+      "name": "head",
+      "parent": "stem",
+      "head": "cap_base",
+      "tail": "crown",
+      "deform": true
+    },
+    {
+      "name": "l_upper",
+      "parent": "pelvis",
+      "head": "hip_l",
+      "tail": "knee_l",
+      "deform": true
+    },
+    {
+      "name": "l_lower",
+      "parent": "l_upper",
+      "head": "knee_l",
+      "tail": "ankle_l",
+      "deform": true
+    },
+    {
+      "name": "l_foot",
+      "parent": "l_lower",
+      "head": "ankle_l",
+      "tail": "toe_l",
+      "deform": true
+    },
+    {
+      "name": "r_upper",
+      "parent": "pelvis",
+      "head": "hip_r",
+      "tail": "knee_r",
+      "deform": true
+    },
+    {
+      "name": "r_lower",
+      "parent": "r_upper",
+      "head": "knee_r",
+      "tail": "ankle_r",
+      "deform": true
+    },
+    {
+      "name": "r_foot",
+      "parent": "r_lower",
+      "head": "ankle_r",
+      "tail": "toe_r",
+      "deform": true
+    },
+    {
+      "name": "Socket_Head",
+      "parent": "head",
+      "head": "crown",
+      "tail": "crown+up",
+      "deform": false
+    },
+    {
+      "name": "Socket_Mouth",
+      "parent": "stem",
+      "head": "face",
+      "tail": "face+fwd",
+      "deform": false
+    },
+    {
+      "name": "Socket_Back",
+      "parent": "head",
+      "head": "back_top",
+      "tail": "back_top+up",
+      "deform": false
+    },
+    {
+      "name": "ik_l",
+      "parent": "root",
+      "head": "ankle_l",
+      "tail": "ankle_l+fwd",
+      "deform": false
+    },
+    {
+      "name": "ik_r",
+      "parent": "root",
+      "head": "ankle_r",
+      "tail": "ankle_r+fwd",
+      "deform": false
+    }
+  ],
+  "landmarks": {
+    "note": "Detected from the front-facing mesh. Heights are fractions of the mesh height H. The crotch is the lowest point on the centre line (|x| < centreBand x width) above crotchMin; below it the vertices split into left (+X) and right legs. The cap base is the lowest height above capSearchMin whose slice is at least capWidthFraction of the widest slice there. The face sits on the stem front at faceFraction of the way from crotch to cap base. A recipe may override any of: hip, hip_l/r, knee_l/r, ankle_l/r, toe_l/r, stem_mid, cap_base, crown, face, back_top.",
+    "centreBand": 0.05,
+    "crotchMin": 0.04,
+    "capSearchMin": 0.35,
+    "capWidthFraction": 0.8,
+    "faceFraction": 0.75,
+    "ankleHeight": 0.05,
+    "kneeForward": 0.04,
+    "sliceFraction": 0.02
+  },
+  "weights": {
+    "proxyVoxelFraction": 0.02,
+    "maxInfluences": 4,
+    "fallback": "nearest bone segment for proxy vertices heat weighting leaves empty"
+  },
+  "gait": {
+    "artPxPerUnit": 32,
+    "idle": {
+      "breathPx": 1,
+      "breathFrames": [3, 4],
+      "capTiltDeg": 0,
+      "note": "Breath lifts the stem and cap 1 px; a cap tilt (capTiltDeg) moves too many pixels of a wide cap for idleFlicker, so it is off."
+    },
+    "walk": {
+      "strideUnits": 0.22,
+      "liftUnits": 0.07,
+      "duty": 0.6,
+      "rollDeg": 9,
+      "bobPx": 1,
+      "capLagDeg": 4
+    },
+    "run": {
+      "strideUnits": 0.34,
+      "liftUnits": 0.1,
+      "duty": 0.45,
+      "rollDeg": 7,
+      "bobPx": 2,
+      "leanDeg": 8,
+      "capLagDeg": 6
+    },
+    "sitDropFraction": 0.55,
+    "sitNote": "sleep, downed and recovery sit the body down: the pelvis drops this fraction of the crotch height while the feet stay planted and slide forward."
+  },
+  "ik": [
+    {
+      "bone": "l_lower",
+      "target": "ik_l",
+      "chain": 2
+    },
+    {
+      "bone": "r_lower",
+      "target": "ik_r",
+      "chain": 2
+    }
+  ],
+  "ikNote": "Foot targets are children of root, so a planted foot stays put while the body rolls over it."
+}

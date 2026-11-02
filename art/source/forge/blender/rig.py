@@ -5,7 +5,8 @@ params: {"template": {...spec/skeletons/<t>.json...}, "yawDeg": null | float,
          "landmarks": {"snout": [x, y, z], ...}}   # recipe overrides (the operator's lever)
 Writes rig.blend (armature "Rig" + skinned "Body"), <preview_dir>/rig_<view>.png renders for the
 preview sheet, and prints "RIG {json}" with the landmarks used (doctrine L6, PRD-1).
-Quadruped template only; humanoid (UAL2) fitting is codex ticket C9.
+Quadruped and shelled templates (shelled adds a shell bone; tailOptional). Winged and
+mushroom-biped use rig_winged.py and rig_biped.py; humans use rig_humanoid.py.
 """
 
 import json
@@ -49,7 +50,10 @@ else:
     ax = vec[:, 1]
     proj = xy @ ax
     lo, hi = np.quantile(proj, [0.15, 0.85])
-    head_dir = -ax if np.quantile(V[proj < lo, 2], 0.9) > np.quantile(V[proj > hi, 2], 0.9) else ax
+    if T["orientation"].get("headEnd") == "front":  # shelled: a domed back outranks a low head
+        head_dir = ax if ax[1] < 0 else -ax
+    else:
+        head_dir = -ax if np.quantile(V[proj < lo, 2], 0.9) > np.quantile(V[proj > hi, 2], 0.9) else ax
     yaw = -math.pi / 2 - math.atan2(head_dir[1], head_dir[0])  # rotate head_dir onto -Y
     how = "pca"
 body.data.transform(Matrix.Rotation(yaw, 4, "Z"))
@@ -163,7 +167,8 @@ if adj:
     while path[-1] in prev:
         path.append(prev[path[-1]])
     path = path[::-1]
-    if dist[tip] > 0.2 * L and len(path) > 8:
+    behind = V[tip][1] > y_back + 0.08 * L or not LM.get("tailOptional")  # a tailless shell's path ends under the body
+    if dist[tip] > 0.2 * L and len(path) > 8 and behind:
         cum = np.array([dist[i] for i in path])
         for k, f in ((1, 0.25), (2, 0.5), (3, 0.75), (4, 1.0)):
             pv = V[path[int(np.searchsorted(cum, f * cum[-1]).clip(0, len(path) - 1))]]
@@ -171,7 +176,8 @@ if adj:
             lmk[f"tail_{k}"] = tuple(near.mean(0) if len(near) else pv)
         tail_ok = True
 if not tail_ok:
-    warnings.append("tail path not found; tail bones placed by proportion (set rig.landmarks.tail_1..tail_4)")
+    if not LM.get("tailOptional"):
+        warnings.append("tail path not found; tail bones placed by proportion (set rig.landmarks.tail_1..tail_4)")
     for i in range(1, 5):
         lmk[f"tail_{i}"] = (0.0, y_back + 0.05 * L + i * 0.06 * L, z_back * (1 - 0.15 * i))
 bt = V[(np.abs(V[:, 1] - lmk["spine_b"][1]) < 0.05 * L)]
@@ -197,13 +203,14 @@ def resolve(ref: str) -> Vector:
     return p + {"": Vector(), "up": Vector((0, 0, 0.06 * Hh)), "fwd": Vector((0, -0.06 * L, 0))}[mod]
 
 
+notail = LM.get("tailOptional") and not tail_ok  # tail bones exist but weigh nothing
 eb = arm_data.edit_bones
 for b in T["bones"]:
     e = eb.new(b["name"])
     e.head, e.tail = resolve(b["head"]), resolve(b["tail"])
     if (e.tail - e.head).length < 1e-4:
         e.tail = e.head + Vector((0, 0, 0.02 * Hh))
-    e.use_deform = b["deform"]
+    e.use_deform = b["deform"] and not (notail and b["name"].startswith("tail_"))
     vertical = abs((e.tail - e.head).normalized().z) > 0.7
     e.align_roll(Vector((0, -1, 0)) if vertical else Vector((0, 0, 1)))
 for b in T["bones"]:
@@ -253,5 +260,5 @@ for name, rot, move, view, show in shots:
 pose({})
 
 print("RIG", json.dumps({"orient": how, "yawDeg": round(math.degrees(yaw), 1), "landmarks": {k: [round(float(c), 4) for c in v] for k, v in lmk.items()},
-                         "proxyFallbackVerts": empty, "unweightedVerts": unweighted, "warnings": warnings,
+                         "tailFound": tail_ok, "proxyFallbackVerts": empty, "unweightedVerts": unweighted, "warnings": warnings,
                          "heightUnits": round(Hh, 4), "lengthUnits": round(L, 4), "bones": len(arm_data.bones), "previews": previews}))

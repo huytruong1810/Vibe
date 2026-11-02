@@ -504,8 +504,8 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 
 ### C3h · Creature templates: winged, shelled, mushroom-biped
 
-- status: open (claude)
+- status: done (claude, 2026-11-02)
 - goal: zephyrit and cindermoth (winged), steamshell (shelled) and ignicap (mushroom-biped) go through the forge like the quadrupeds.
 - work: per template, `spec/skeletons/<template>.json` (bones, sockets, landmark rules, gait parameters), landmark detection in `rig.py`, parametric clips in `gaits.py` for the full creature clip matrix (winged: hover idle and wing-beat locomotion; shelled: withdraw for guard and sleep; biped: a waddle), a fixture mesh and a `selftest --kind creature-<template>`.
 - done when: each template's selftest reaches QA candidate with drift 0; doctor lists the templates; the `sprite-forge` skill names the species-to-template map
-- evidence:
+- evidence: `spec/skeletons/{shelled,winged,mushroom-biped}.json`, `blender/rig_winged.py`, `blender/rig_biped.py`, `blender/gaits.py` (SHELLED, WINGED, BIPED), `blender/fixture_creature.py`; `forge.py selftest --kind creature-<template>` PASS for all three (QA candidate, drift 0); `selftest --kind creature` (Rivallie) still PASS; `forgelib/gaits_selftest.py` OK; doctor lists the four templates; `sprite-forge` skill names the species-to-template map

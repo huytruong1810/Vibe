@@ -359,6 +359,38 @@ packet → publish` (`forgelib/environment.py`, `blender/env_layout.py`).
   never art) and asserts base and roof on a shared canvas, the roof above the base, and every QA
   check. Runtime use (roof fade when actors stand under it) is engine work for the catalog.
 
+### C3h creature templates (claude, 2026-11-02)
+
+Every creature species maps to a skeleton template (`spec/skeletons/quadruped.json`
+`species`); each template is one spec file, one rig script and one clip set in
+`blender/gaits.py` (`gaits.clips_for(template)`), all covering the same 15-clip creature
+matrix.
+
+| Template            | Species                                       | Rig script                                                        | Notes                                                                                                                                         |
+| ------------------- | --------------------------------------------- | ----------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `quadruped-v1`      | rivallie, bramblefang, marshstalker, mireling | `rig.py`                                                          | unchanged                                                                                                                                     |
+| `shelled-v1`        | steamshell                                    | `rig.py` (`orientation.headEnd: front`, `landmarks.tailOptional`) | `shell` bone; guard, sleep, downed withdraw the head under the shell; tailless bodies keep tail bones without weights                         |
+| `winged-v1`         | zephyrit, cindermoth                          | `rig_winged.py`                                                   | core + head + 2 tail bones + 2x2 wing bones; airborne clips hover `gait.hoverPx` (4) above the ground anchor; QA height target adds the hover |
+| `mushroom-biped-v1` | ignicap                                       | `rig_biped.py`                                                    | pelvis/stem/cap vertical chain, IK legs; waddle locomotion                                                                                    |
+
+`rig_winged.py` and `rig_biped.py` keep the sheet's front view facing -Y (a wingspan or a
+round cap defeats the PCA long axis) and share `riglib.front_mesh`, `build_armature`,
+`set_pose`. The quadruped path in `rig.py` is unchanged except for template-guarded
+branches; `selftest --kind creature` still passes on the Rivallie copy.
+
+Selftests: `forge.py selftest --kind creature-shelled|creature-winged|creature-mushroom-biped`
+run PRD-2 primitive bodies (`blender/fixture_creature.py`) through the real clean, rig,
+animate, bake, pixelize and QA stages; each reaches QA `candidate` with anchor drift 0.
+Soft checks that fail on the fixtures and are expected: `idleFlicker` on winged (0.24, a
+hovering idle beats its wings) and on mushroom-biped (0.11, a 1 px breath moves the wide
+cap), and `valueContrast` on sand (fixture colours). `gaits_selftest.py` (no Blender)
+checks each clip set covers the matrix with its own bones.
+
+Integration: the new rig ids need `rigs` entries in the manifest when the first species
+of each template is published (same three creature sockets `Socket_Back`, `Socket_Head`,
+`Socket_Mouth`; default canvas from the species' `creature.*` canvas at 2x; registrations as
+the staging record's frames show, per C3e).
+
 ### C9b item source, packet and publication (claude, 2026-11-01)
 
 Held items now run end to end: `prep → gen3d → clean → texture → orient → items →

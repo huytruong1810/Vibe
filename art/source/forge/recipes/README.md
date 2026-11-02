@@ -32,12 +32,22 @@ spec (`../spec/`); a recipe never overrides spec numbers.
   a hybrid mesh: drop the odd views here and ask the communicator for a single-pose sheet.
 - `texture.views`: which views colour the mesh (default: every prep view). Keep it to
   the views used for gen3d.
-- `rig.yawDeg`: creatures are turned head-to-south automatically (`rig_preview.png`
-  shows the result). If the head points the wrong way, set the yaw in degrees.
+- `rig.yawDeg`: quadrupeds are turned head-to-south automatically; shelled (steamshell),
+  winged (zephyrit, cindermoth) and mushroom-biped (ignicap) keep the sheet's front view
+  facing south (`rig_preview.png` shows the result). If the head points the wrong way, set
+  the yaw in degrees.
+- `heightArtPx` for winged species is the creature's own height; QA adds the template's
+  `gait.hoverPx` (4) because it hovers in idle. Keep `heightArtPx + 4` under the anchor
+  headroom (31 px on `creature.small`) or the hover clips lose their top margin. A wide
+  wingspan is fitted to the canvas width first, so the height may come out lower than asked:
+  the QA `height` detail shows what the span allows.
 - `rig.landmarks`: override a misplaced landmark, `{"snout": [x, y, z]}`, in model units
   (the RIG line in `work/<asset>/logs/rig.log` lists every detected landmark). Use it
   when `rig_preview.png` shows a dot off the body, a leg bent the wrong way or a tail
-  that doesn't follow the tail.
+  that doesn't follow the tail. Landmark names per template are in the template's
+  `landmarks.note` (`spec/skeletons/<template>.json`): winged adds `wing_l/r_root/mid/tip`,
+  `chest`, `hip`; mushroom-biped uses `hip`, `hip_l/r`, `knee_l/r`, `ankle_l/r`, `toe_l/r`,
+  `stem_mid`, `cap_base`, `crown`, `face`, `back_top`.
 - Changing a recipe re-runs only the stages it affects (`forge.py next` tells you).
 
 ## Held-item recipes (C9b)

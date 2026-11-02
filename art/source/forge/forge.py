@@ -44,7 +44,7 @@ def stages_for(asset: str) -> list[str]:
     return ITEM_STAGES if kind == "item" else ENV_STAGES if kind == "environment" else STAGES
 # Readiness per asset class (doctor). A class is ready when every stage it needs up to `packet` exists.
 CLASSES = {
-    "creatures": {"ready": True, "pending": [], "templates": ["quadruped"]},
+    "creatures": {"ready": True, "pending": [], "templates": ["quadruped", "shelled", "winged", "mushroom-biped"]},
     "humans": {"ready": True, "pending": ["fit (modular garment parts; outfits baked from the sheet need none)"], "templates": ["humanoid"]},
     "items": {"ready": True, "pending": [], "templates": ["held-item"]},
     "environment": {"ready": True, "pending": [], "templates": ["building", "tree", "large-prop"]},
@@ -61,6 +61,13 @@ SELFTEST_RECIPES = {
                        "ramps": {"skin": "skin-warm", "shirt": "teal", "pants": "leather", "hair": "hair-teal"}},
     "selftest-creature": {"asset": "selftest-creature", "kind": "creature", "heightArtPx": 31,
                           "ramps": {"body": "teal", "belly": "cream", "fins": "glass"}},
+    # C3h template fixtures: PRD-2 primitive bodies (fixture_creature.py), mechanics only.
+    "selftest-creature-shelled": {"asset": "selftest-creature-shelled", "kind": "creature", "heightArtPx": 28,
+                                  "ramps": {"shell": "basalt", "body": "ochre"}},
+    "selftest-creature-winged": {"asset": "selftest-creature-winged", "kind": "creature", "heightArtPx": 20,
+                                 "ramps": {"body": "cream", "wings": "sky", "tail": "ochre"}},
+    "selftest-creature-mushroom-biped": {"asset": "selftest-creature-mushroom-biped", "kind": "creature", "heightArtPx": 26,
+                                         "ramps": {"cap": "ember", "stem": "cream"}},
     "env:selftest-house": {"asset": "env:selftest-house", "kind": "environment",
                            "ramps": {"walls": "timber", "roof": "teal"},
                            "environment": {"footprint": [2, 2], "split": {"layer": "roof", "aboveFraction": 0.55},
@@ -170,6 +177,8 @@ def _template(asset: str) -> dict:
         return json.loads((core.SPEC_DIR / "skeletons" / "humanoid.json").read_text())
     if kind != "creature":
         raise ForgeError(f"No rig for asset kind '{kind}' ({CLASSES['environment']['ticket']}).")
+    if asset.startswith("selftest-creature-"):
+        return json.loads((core.SPEC_DIR / "skeletons" / f"{asset.removeprefix('selftest-creature-')}.json").read_text())
     name = "rivallie" if asset == "selftest-creature" else slug(asset)
     for f in sorted((core.SPEC_DIR / "skeletons").glob("*.json")):
         t = json.loads(f.read_text())
@@ -205,14 +214,15 @@ def st_rig(asset: str) -> str:
         params["library"] = str(_ual_library())
     pfile.write_text(json.dumps(params))
     src, out, pdir = wd / "texture.blend", wd / "rig.blend", wd / "rig_preview"
-    script = "rig_humanoid.py" if humanoid else "rig.py"
-    if core.is_fresh(asset, "rig", [src, pfile, core.BLENDER_SCRIPTS / script]):
+    script = "rig_humanoid.py" if humanoid else t.get("rigScript", "rig.py")
+    code = [core.BLENDER_SCRIPTS / script] + ([core.BLENDER_SCRIPTS / "riglib.py"] if "rigScript" in t else [])
+    if core.is_fresh(asset, "rig", [src, pfile, *code]):
         return "fresh (cached)"
     shutil.rmtree(pdir, ignore_errors=True)
     core.run_blender(script, [str(src), str(out), str(pfile), str(pdir)], wd / "logs" / "rig.log", timeout=1800)
     info = json.loads([l for l in (wd / "logs" / "rig.log").read_text().splitlines() if l.startswith("RIG ")][-1][4:])
     _preview_strip(pdir, info["previews"], wd / "rig_preview.png")
-    record(asset, "rig", [src, pfile, core.BLENDER_SCRIPTS / script], [out, wd / "rig_preview.png"], {**info, "rigId": t["rigId"]}, digest_extra=None)
+    record(asset, "rig", [src, pfile, *code], [out, wd / "rig_preview.png"], {**info, "rigId": t["rigId"]}, digest_extra=None)
     warn = f"; warnings: {'; '.join(info['warnings'])}" if info["warnings"] else ""
     return (f"{info['bones']} bones, oriented by {info['orient']} ({info['yawDeg']} deg), {info['unweightedVerts']} unweighted verts{warn}; "
             f"LOOK at {_rel(wd / 'rig_preview.png')}: landmarks on the body, no tearing in the test poses")
@@ -330,7 +340,9 @@ def st_qa(asset: str) -> str:
     ref = wd / "prep" / "front_cutout.png"
     anim = core.stage_record(asset, "animate")
     plan = [{"name": c["name"], "frames": len(c["frames"]), "facings": c["facings"]} for c in anim["extra"]["clips"]] if anim else None
-    report, signature = qa.run(asset, wd / "pix", wd / "bake", r["ramps"], cv, asset_kind(asset), r["heightArtPx"], ref, plan)
+    # A hovering template (winged) holds its idle body gait.hoverPx above the ground anchor.
+    hover = _template(asset).get("gait", {}).get("hoverPx", 0) if asset_kind(asset) == "creature" and anim else 0
+    report, signature = qa.run(asset, wd / "pix", wd / "bake", r["ramps"], cv, asset_kind(asset), r["heightArtPx"] + hover, ref, plan)
     (wd / "qa_report.json").write_text(json.dumps(report, indent=1))
     (wd / "qa_signature.json").write_text(json.dumps(signature))
     qa.contact_sheet(asset, wd / "pix", cv, report, ref, wd / "contact.png")
@@ -832,6 +844,9 @@ def _selftest_fixture(asset: str) -> None:
     """texture.blend for a selftest asset: the A-posed UAL2 mannequin, or a copy of Rivallie's textured mesh."""
     wd = work_dir(asset)
     out = wd / "texture.blend"
+    if asset.startswith("selftest-creature-"):
+        _template_fixture(asset)
+        return
     if asset == "selftest-creature":
         src = work_dir("rivallie") / "texture.blend"
         if not src.exists():
@@ -850,6 +865,28 @@ def _selftest_fixture(asset: str) -> None:
     pfile = wd / "clean_params.json"
     pfile.write_text(json.dumps({"heightArtPx": _recipe(asset)["heightArtPx"], "canvas": cv["size"], "anchor": cv["anchor"],
                                  "artPxPerUnit": rs["camera"]["artPixelsPerWorldUnit"], "elevationDeg": rs["camera"]["elevationDeg"]}))
+    core.run_blender("clean.py", [str(glb), str(wd / "clean.blend"), str(pfile)], wd / "logs" / "clean.log")
+    core.run_blender("fixture_mannequin.py", ["finish", str(wd / "clean.blend"), str(out)], wd / "logs" / "fixture.log")
+
+
+TEMPLATE_FIXTURES = ("shelled", "winged", "mushroom-biped")
+
+
+def _template_fixture(asset: str) -> None:
+    """texture.blend for a template selftest: fixture_creature.py primitives through the real clean stage."""
+    wd, template = work_dir(asset), asset.removeprefix("selftest-creature-")
+    out, script = wd / "texture.blend", core.BLENDER_SCRIPTS / "fixture_creature.py"
+    cv, rs = _canvas(asset), spec("render_spec")
+    params = json.dumps({"heightArtPx": _recipe(asset)["heightArtPx"], "canvas": cv["size"], "anchor": cv["anchor"],
+                         "artPxPerUnit": rs["camera"]["artPixelsPerWorldUnit"], "elevationDeg": rs["camera"]["elevationDeg"]})
+    pfile = wd / "clean_params.json"
+    if (out.exists() and pfile.exists() and pfile.read_text() == params
+            and out.stat().st_mtime > max(script.stat().st_mtime, (core.BLENDER_SCRIPTS / "clean.py").stat().st_mtime)):
+        return
+    glb = wd / "gen3d" / "mesh.glb"
+    glb.parent.mkdir(parents=True, exist_ok=True)
+    core.run_blender("fixture_creature.py", [template, str(glb)], wd / "logs" / "fixture.log")
+    pfile.write_text(params)
     core.run_blender("clean.py", [str(glb), str(wd / "clean.blend"), str(pfile)], wd / "logs" / "clean.log")
     core.run_blender("fixture_mannequin.py", ["finish", str(wd / "clean.blend"), str(out)], wd / "logs" / "fixture.log")
 
@@ -887,7 +924,7 @@ def selftest(which: str) -> int:
         return selftest_item()
     if which == "environment":
         return selftest_environment()
-    kinds = ["human", "creature"] if which == "all" else [which]
+    kinds = ["human", "creature", *[f"creature-{t}" for t in TEMPLATE_FIXTURES]] if which == "all" else [which]
     worst = 0
     for k in kinds:
         asset = f"selftest-{k}"
@@ -977,6 +1014,7 @@ def doctor() -> int:
     for cls, c in CLASSES.items():
         state = "READY" if c["ready"] and not bad else "not ready"
         extra = f"; still to build: {', '.join(c['pending'])}" if c["pending"] else ""
+        extra += f" (templates: {', '.join(c['templates'])})" if len(c["templates"]) > 1 and cls == "creatures" else ""
         print(f"  {cls:12s} {state}{extra}" + (f" ({c['ticket']})" if not c["ready"] else ""))
     return 1 if bad or not any(c["ready"] for c in CLASSES.values()) else 0
 
@@ -1005,7 +1043,8 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("command", choices=["doctor", "selftest", "status", "next", "all", "faces", "item-plan", "items", "orient", "layout", *STAGES])
     ap.add_argument("--asset")
-    ap.add_argument("--kind", choices=["human", "creature", "item", "environment", "all"], default="all", help="selftest fixture kind")
+    ap.add_argument("--kind", choices=["human", "creature", *[f"creature-{t}" for t in TEMPLATE_FIXTURES], "item", "environment", "all"],
+                    default="all", help="selftest fixture kind")
     a = ap.parse_args()
     if a.command == "doctor":
         return doctor()

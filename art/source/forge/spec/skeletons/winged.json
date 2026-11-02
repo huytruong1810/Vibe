@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "rigId": "winged-v1",
+  "plan": "winged",
+  "rigScript": "rig_winged.py",
+  "doctrine": ["L6", "ART-9.2", "ART-9.3", "ART-9.4", "CMB-3"],
+  "note": "Creature template for flying species (zephyrit, cindermoth). A body core along Y with a head, a two-bone tail or abdomen and two wings of two bones each. The creature hovers: every airborne clip lifts the body by gait.hoverPx while the root stays on the ground anchor (L2); sleep and downed land it. Legs, if any, ride with the body. Protected spec: change under DOC-5.",
+  "orientation": {
+    "forward": "-Y",
+    "up": "+Z",
+    "left": "+X",
+    "autoOrient": "none: the wingspan defeats a PCA long axis, so the mesh keeps the sheet's front view facing -Y (as humans). Recipe rig.yawDeg overrides."
+  },
+  "bones": [
+    { "name": "root", "parent": null, "head": "ground", "tail": "ground+up", "deform": false },
+    { "name": "pelvis", "parent": "root", "head": "hip", "tail": "chest", "deform": true },
+    {
+      "name": "spine_01",
+      "parent": "pelvis",
+      "head": "chest",
+      "tail": "head_base",
+      "deform": true
+    },
+    { "name": "head", "parent": "spine_01", "head": "head_base", "tail": "snout", "deform": true },
+    { "name": "tail_01", "parent": "pelvis", "head": "hip", "tail": "tail_1", "deform": true },
+    { "name": "tail_02", "parent": "tail_01", "head": "tail_1", "tail": "tail_2", "deform": true },
+    {
+      "name": "wing_l_01",
+      "parent": "spine_01",
+      "head": "wing_l_root",
+      "tail": "wing_l_mid",
+      "deform": true
+    },
+    {
+      "name": "wing_l_02",
+      "parent": "wing_l_01",
+      "head": "wing_l_mid",
+      "tail": "wing_l_tip",
+      "deform": true
+    },
+    {
+      "name": "wing_r_01",
+      "parent": "spine_01",
+      "head": "wing_r_root",
+      "tail": "wing_r_mid",
+      "deform": true
+    },
+    {
+      "name": "wing_r_02",
+      "parent": "wing_r_01",
+      "head": "wing_r_mid",
+      "tail": "wing_r_tip",
+      "deform": true
+    },
+    {
+      "name": "Socket_Head",
+      "parent": "head",
+      "head": "crown",
+      "tail": "crown+up",
+      "deform": false
+    },
+    {
+      "name": "Socket_Mouth",
+      "parent": "head",
+      "head": "snout",
+      "tail": "snout+fwd",
+      "deform": false
+    },
+    {
+      "name": "Socket_Back",
+      "parent": "spine_01",
+      "head": "back_top",
+      "tail": "back_top+up",
+      "deform": false
+    }
+  ],
+  "landmarks": {
+    "note": "Detected from the front-facing mesh. Fractions of the half-span (|x| from the centre line): the body core is |x| < coreFraction; the wing root, middle and tip are the mean of the wing vertices in rootBand, midBand and beyond tipFraction. Head and tail regions are fractions of the core's length. A recipe may override any landmark with model-space [x, y, z] under rig.landmarks: hip, chest, head_base, snout, crown, tail_1, tail_2, back_top, wing_l_root/mid/tip, wing_r_root/mid/tip.",
+    "coreFraction": 0.22,
+    "rootBand": [0.22, 0.34],
+    "midBand": [0.55, 0.7],
+    "tipFraction": 0.92,
+    "headRegionFraction": 0.3,
+    "minWingSpanRatio": 1.15
+  },
+  "weights": {
+    "proxyVoxelFraction": 0.012,
+    "proxyBasis": "largest dimension (span); thin wings need a finer proxy than the body height gives",
+    "maxInfluences": 4,
+    "fallback": "nearest bone segment for proxy vertices heat weighting leaves empty"
+  },
+  "gait": {
+    "artPxPerUnit": 32,
+    "hoverPx": 4,
+    "hoverNote": "Airborne clips lift the body this many art pixels; QA measures the idle height as heightArtPx + hoverPx.",
+    "idle": {
+      "beatDeg": [26, -14],
+      "bobPx": 1,
+      "note": "Two slow beats in six frames: wings up (beatDeg[0]) on frames 1-2, level, down (beatDeg[1]) on 4-5; the body rises 1 px on the downstroke. idleFlicker is a soft check: a hovering idle moves more pixels than a standing one."
+    },
+    "walk": {
+      "beatDeg": [34, -22],
+      "beatsPerCycle": 2,
+      "leanDeg": 8,
+      "bobPx": 1,
+      "tailSwayDeg": 8
+    },
+    "run": {
+      "beatDeg": [44, -30],
+      "beatsPerCycle": 2,
+      "leanDeg": 16,
+      "bobPx": 2,
+      "tailSwayDeg": 6,
+      "sweepDeg": 10
+    },
+    "foldDeg": 62,
+    "foldNote": "Folded wings (sleep, eat, drink) sweep back this far about the vertical and lie low."
+  },
+  "ik": []
+}

@@ -121,3 +121,82 @@ class Preview:
         self.scene.render.filepath = path
         bpy.ops.render.render(write_still=True)
         return name
+
+
+# ---------------------------------------------------------------- shared by rig_winged.py and rig_biped.py
+def front_mesh(body, yaw_deg):
+    """Front view stays facing -Y (recipe yaw overrides); centre x/y, ground z. Returns the vertex array."""
+    import math
+
+    from mathutils import Matrix
+
+    if yaw_deg:
+        body.data.transform(Matrix.Rotation(math.radians(yaw_deg), 4, "Z"))
+    v = np.array([tuple(body.matrix_world @ p.co) for p in body.data.vertices])
+    body.data.transform(Matrix.Translation(Vector((-(v[:, 0].min() + v[:, 0].max()) / 2, -(v[:, 1].min() + v[:, 1].max()) / 2, -v[:, 2].min()))))
+    body.data.update()
+    return np.array([tuple(body.matrix_world @ p.co) for p in body.data.vertices])
+
+
+def build_armature(scene, template: dict, lmk: dict, height: float, length: float):
+    """Armature "Rig" from the template's landmark-referenced bones, with its IK constraints."""
+    arm_data = bpy.data.armatures.new("Rig")
+    arm = bpy.data.objects.new("Rig", arm_data)
+    scene.collection.objects.link(arm)
+    bpy.context.view_layer.objects.active = arm
+    bpy.ops.object.mode_set(mode="EDIT")
+
+    def resolve(ref: str) -> Vector:
+        if ref == "ground":
+            return Vector((0, 0, 0))
+        if ref == "ground+up":
+            return Vector((0, 0, 0.1 * height))
+        base, _, mod = ref.partition("+")
+        return Vector(lmk[base]) + {"": Vector(), "up": Vector((0, 0, 0.06 * height)), "fwd": Vector((0, -0.06 * length, 0))}[mod]
+
+    eb = arm_data.edit_bones
+    for b in template["bones"]:
+        e = eb.new(b["name"])
+        e.head, e.tail = resolve(b["head"]), resolve(b["tail"])
+        if (e.tail - e.head).length < 1e-4:
+            e.tail = e.head + Vector((0, 0, 0.02 * height))
+        e.use_deform = b["deform"]
+        vertical = abs((e.tail - e.head).normalized().z) > 0.7
+        e.align_roll(Vector((0, -1, 0)) if vertical else Vector((0, 0, 1)))
+    for b in template["bones"]:
+        if b["parent"]:
+            eb[b["name"]].parent = eb[b["parent"]]
+            eb[b["name"]].use_connect = False
+    bpy.ops.object.mode_set(mode="OBJECT")
+    for spec_ik in template.get("ik", []):
+        c = arm.pose.bones[spec_ik["bone"]].constraints.new("IK")
+        c.target, c.subtarget, c.chain_count = arm, spec_ik["target"], spec_ik["chain"]
+        c.use_tail = True
+    for pb in arm.pose.bones:
+        pb.rotation_mode = "XYZ"
+    return arm
+
+
+def set_pose(arm, rot: dict, move: dict | None = None) -> None:
+    """Preview pose: local XYZ euler degrees per bone, world-space offsets per bone."""
+    import math
+
+    for b in arm.pose.bones:
+        b.rotation_euler = (0, 0, 0)
+        b.location = (0, 0, 0)
+    for name, r in rot.items():
+        arm.pose.bones[name].rotation_euler = tuple(math.radians(a) for a in r)
+    for name, d in (move or {}).items():
+        arm.pose.bones[name].location = arm.data.bones[name].matrix_local.to_3x3().inverted() @ Vector(d)
+    bpy.context.view_layer.update()
+
+
+def slice_widths(v: np.ndarray, z_lo: float, z_hi: float, step: float) -> list[tuple[float, float, int]]:
+    """(z centre, x-extent, count) of horizontal slices from z_lo to z_hi."""
+    out = []
+    z = z_lo
+    while z < z_hi:
+        m = (v[:, 2] >= z) & (v[:, 2] < z + step)
+        out.append((z + step / 2, float(np.ptp(v[m, 0])) if m.sum() > 2 else 0.0, int(m.sum())))
+        z += step
+    return out
