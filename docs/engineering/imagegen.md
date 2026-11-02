@@ -84,5 +84,17 @@ Earlier klein 4B measurements: the first attempt kept the text encoder resident 
 - **gen3d:** Hunyuan3D-2mv stays the default. Hunyuan3D-2.1 was tried and removed:
   single-image only, so from the front it invents a spike tail, and from the side it gets the
   body right but faces sideways and drops the whiskers
-  ([board](../team/comms/claude/boards/2026-11-02-gen3d-rivallie-hunyuan.png)). TRELLIS.2
-  waits on the CUDA 12.8 toolkit being installed for its extensions (C31).
+  ([board](../team/comms/claude/boards/2026-11-02-gen3d-rivallie-hunyuan.png)). TRELLIS.2-4B
+  was tried and removed (C31):
+  - **Speed and memory:** shape only, 512 pipeline, side view, 118 s including a 38 s load,
+    5.4 GiB peak (2mv takes 192 s).
+  - **Shape:** from the front Rivallie is a narrow pillar instead of a round otter, and the
+    surface is voxel-faceted.
+  - **1024:** the cascade fails in the 1024 decode on 16 GB under WSL (`CUDA driver error:
+device not ready`, twice).
+  - **Board:** [2mv vs TRELLIS.2](../team/comms/claude/boards/2026-11-02-gen3d-rivallie-trellis2.png).
+  - **Setup notes for a retry:**
+    - o-voxel imports nvdiffrast at load;
+    - transformers 5 moved DINOv3's layers, so pin 4.56.2;
+    - o-voxel's unpinned git deps rebuild FlexGEMM and run out of memory at 24 GB, so use
+      `--no-deps`.

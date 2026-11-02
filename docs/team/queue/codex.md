@@ -243,13 +243,13 @@ order; C26 gates any regeneration of approved assets (blender B20).
 
 ### C26 · Sprite readability: features survive the bake and pixelize step
 
-- status: candidate (see status line below)
+- status: direction approved (2026-11-02); open items: `heightArtPx` headroom and the concept clause
 - owner: claude
 - goal: a creature reads as itself at game size: Bramblefang's fangs and fire mane, Rivallie's crest and bib, Mireling's face and moss, a human's face and hair.
 - evidence of the problem: [comparison boards](../comms/blender/2026-11-02T0500--to-director--sprite-comparison-boards.md): every shipped body loses its defining features; the pixel grid is clean, so shapes are lost in bake/pixelize, not outline or palette.
 - work: (1) readability-first concept fields and template clause (oversized head and eyes, exaggerated signature features, ART-6.3/7.2) so the mesh carries chunky features; (2) feature-preserving pixelize: detail masks from the reference views (eyes, fangs, mane accents) kept as protected pixels, highlight/accent ramp steps on signature materials; (3) measure `heightArtPx` headroom per canvas; (4) creature face sidecars (C3b) as part of the answer.
 - done when: Bramblefang and Rivallie boards (reference beside idle s/e/n at 4x) show the signature features at 1x, director agrees
-- status 2026-11-02: candidate, awaiting the director's agreement before B20 (claude)
+- status 2026-11-02: direction approved by the director for B20 (recorded by claude on the director's instruction, in this session). The two open items below stay with claude.
 - cause found: the bake renders one albedo sample per art pixel, so a fang or an eye (2–4 samples wide at 4×) never reaches pixelize. Then `_majority` and `_min_regions` remove what is left, and dark materials sit on pale `light` steps (Bramblefang's basalt coat reads lavender-grey).
 - result: opt-in recipe fields `supersample` (extra 4× albedo pass in `blender/bake.py`) and `features` (`forgelib/pixelize.py` `_ss_labels`: a slot wins a pixel near a socket and on a host region; at least 2 px, never an orphan; hidden from behind), plus the existing `rampShift`. Without them every published creature re-pixelizes pixel-identical (2,464 frames). Eyes stay out: creature faces are runtime decals (ART-8.1), so that part belongs to C3b. A 2-px eye decal at the mouth/head anchor reads at 1× (tried and removed).
 - proof recipes (for blender in B20, after the director agrees): Bramblefang `"supersample": 4, "rampShift": {"pelt": -1, "mane": -1}, "features": {"fangs": {"minSamples": 1, "on": ["pelt", "edge"], "near": ["Socket_Mouth"], "radiusPx": 4, "maxPx": 2}}`; Rivallie `"supersample": 4, "rampShift": {"body": -1, "fins": 1}`.
@@ -292,15 +292,14 @@ order; C26 gates any regeneration of approved assets (blender B20).
 
 ### C31 · gen3d backends: Hunyuan3D-2.1 shape and TRELLIS.2
 
-- status: blocked: the director accepts the gated `facebook/dinov3-vitl16-pretrain-lvd1689m` licence on huggingface.co (403 on 2026-11-02; TRELLIS.2's image encoder, no way round it). `briaai/RMBG-2.0` can be skipped: the runner sets `rembg_model = None` because prep views carry alpha. Director chose C26 first.
+- status: done (2026-11-02, claude)
 - owner: claude
 - goal: compare single-image 3D against the current Hunyuan3D-2mv on the golden samples (L12).
-- work: recipe `gen3d.backend` (done: `forgelib/core.py` `GEN3D_BACKENDS`, default stays out of the digest), pinned setups (Blackwell cu128 builds), same `mesh.glb` contract.
-- progress:
-  - Hunyuan3D-2.1 ran on Rivallie, front-only in 189 s and side-only in 207 s, 7.7 GiB. It lost to 2mv and was removed (board `docs/team/comms/claude/boards/2026-11-02-gen3d-rivallie-hunyuan.png`).
-  - TRELLIS.2-4B: code cloned and its venv is ready (torch 2.11 cu128). The CUDA 12.8 toolkit is installed (`/usr/local/cuda-12.8`). Next: the director accepts the gated licences (`facebook/dinov3-vitl16-pretrain-lvd1689m`, `briaai/RMBG-2.0`), then build the extensions and write the runner (steps in the claude handoff `docs/team/comms/claude/2026-11-02T2036--to-claude--handoff.md`).
-- done when: Rivallie through TRELLIS.2 to a `gen3d` preview, timings recorded; the loser is removed from `models.json`
-- evidence:
+- result: **Hunyuan3D-2mv stays the only gen3d model.** Recipe `gen3d.backend` dispatch stays (`forgelib/core.py` `GEN3D_BACKENDS`, default out of the digest).
+  - Hunyuan3D-2.1 lost (front-only 189 s, side-only 207 s, 7.7 GiB) and was removed.
+  - TRELLIS.2-4B (licence accepted 2026-11-02) ran on Rivallie's side view: shape only, 512, 118 s with a 38 s load, 5.4 GiB peak. From the front it is a narrow pillar, not the round otter 2mv builds from three views, and its surface is voxel-faceted. Its 1024 cascade fails in the decode on 16 GB (`CUDA driver error: device not ready`, twice).
+  - Removed with `hf cache rm` (TRELLIS.2-4B, TRELLIS-image-large, DINOv3; 10 GB), together with its venv, vendored code, runner and registry entry.
+- evidence: boards `docs/team/comms/claude/boards/2026-11-02-gen3d-rivallie-hunyuan.png`, `…-gen3d-rivallie-trellis2.png`; `forge.py doctor` 13/13; doctrine L12; `docs/engineering/imagegen.md`
 
 ## Waiting on the director
 

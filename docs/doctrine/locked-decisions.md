@@ -71,15 +71,15 @@ Face and held layers are always runtime layers.
 ## L5 — Image-to-3D modular kit
 
 3D geometry comes from an open-weight image-to-3D model run locally on the
-RTX 5080 (Hunyuan3D-2 multi-view or TRELLIS; a bake-off picks the default),
+RTX 5080 (Hunyuan3D-2mv, multi-view; chosen by the 2026-11-02 bake-off, L12),
 taking doctrine-standard reference sheets as input. Assets are organized as a
 **kit**: a few body types plus a library of parts (hair, headwear, tops,
 bottoms, outerwear, footwear, props), combined by character recipes. Agents never
 author geometry from typed coordinates (PRD-2).
 
 Licence note: Hunyuan3D-2 ships under the Tencent Hunyuan Community Licence,
-which has territory and user-count limits. TRELLIS is MIT. The director confirms
-the licence before shipping commercially.
+which has territory and user-count limits. The director confirms the licence before
+shipping commercially.
 
 ## L6 — One skeleton
 
@@ -148,9 +148,11 @@ fails on anything it doesn't list. A bake-off ends by deleting the losers. Decid
 - **Images: FLUX.2 [klein] 9B** (4-bit transformer).
   - Klein 4B drifted to upright poses.
   - Qwen-Image-2.1 can't make a sheet on 16 GB in useful time.
-- **Image-to-3D: Hunyuan3D-2mv** stays the default for now.
+- **Image-to-3D: Hunyuan3D-2mv** (multi-view: front, side and back).
   - Hunyuan3D-2.1 was removed: single image only, and it lost to multi-view.
-  - TRELLIS.2 (MIT) is the open trial.
+  - TRELLIS.2-4B was removed (C31): single image only. From the side view it gets the
+    body, but from the front it is a narrow pillar and its 512 surface is voxel-faceted;
+    its 1024 cascade does not decode on 16 GB.
 
 2D → 3D stays for everything that moves or turns (L5); only non-rotating classes (terrain
 swatches, portraits, icons, VFX concepts) go image → 2D tools.

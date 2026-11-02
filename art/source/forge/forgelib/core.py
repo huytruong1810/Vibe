@@ -28,7 +28,6 @@ GEN3D_HF_HOME = GEN3D_DIR / "models" / "hf"
 GEN3D_DEFAULT = "hunyuan-2mv"
 GEN3D_BACKENDS = {
     "hunyuan-2mv": (GEN3D_PY, "run_shape.py"),
-    "trellis2": (GEN3D_DIR / "vendor" / "venv-trellis2" / "bin" / "python", "run_shape_trellis2.py"),
 }
 
 os.environ.setdefault("PYTHONDONTWRITEBYTECODE", "1")

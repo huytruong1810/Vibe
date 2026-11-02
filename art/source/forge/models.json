@@ -27,14 +27,6 @@
           "status": "default",
           "venv": "art/source/forge/gen3d/.venv",
           "code": "art/source/forge/gen3d/vendor/Hunyuan3D-2"
-        },
-        "trellis2": {
-          "repo": "microsoft/TRELLIS.2-4B",
-          "revision": "af44b45f2e35a493886929c6d786e563ec68364d",
-          "licence": "MIT",
-          "status": "trial",
-          "venv": "art/source/forge/gen3d/vendor/venv-trellis2",
-          "code": "art/source/forge/gen3d/vendor/TRELLIS.2"
         }
       }
     },
