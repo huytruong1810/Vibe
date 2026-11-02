@@ -24,5 +24,5 @@ Formatting passed. The title and settings captures in artifacts were inspected.
 [2026-11-02T2056--to-blender--test-c24-conversation.md](2026-11-02T2056--to-blender--test-c24-conversation.md). No live model or first-streamed-token timing is
 claimed. HD gate remains blocked by the existing 1,515 slice requirements (4/41 approved),
 not weakened. C22 live Pages/SHA/timing awaits director rollout. Hatchet item sidecars
-need integration-tool support before M25/C23; C12 records it. Riverlands revision 2
-remains candidate; C32 tracks previous-revision packet comparisons. No art activation.
+need integration-tool support before M25/C23; C12 records it. Riverlands revision 2 now has director approval for layout only (published ada4efa);
+preview art and C7 activation remain separate. C32 tracks previous-revision comparisons.

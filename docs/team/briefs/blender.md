@@ -66,13 +66,26 @@ you directly.
 
 ## Reference sheets and image generation (skill `reference-sheets`)
 
-You have image-generation subagents. They are **quota-bound** (PRD-7): at most 4
-generations per sheet and 2 per prop or part sheet; log every generation in
-`docs/team/comms/blender/image-ledger.md` (the communicator's ledger before 2026-11-02 is
-history); look at every result before keeping it (PRD-5). Never use a generated image as a
-game frame. Make the sheet, run it through the forge at once, and when the forge shows a
-sheet problem (fused poses, wrong proportions, baked shadows), fix the sheet yourself
-before re-running.
+Since 2026-11-02 the forge generates images **locally** on machine A's GPU (PRD-7, L12);
+there is no quota and no image subagent. The model is FLUX.2 [klein] 9B, the only image model
+installed.
+
+- `forge.py concept --asset <id> --n 4` makes candidate sheets from the recipe's `concept`
+  block (about 1 min to load, then about 50 s per sheet).
+- `forge.py views --asset <id> --pick <cand>` writes `art/source/references/<id>/` with
+  `sheet.json` provenance and your ledger row.
+- **Pose guides:** creatures and humans need a grey pose guide
+  (`art/source/style/pose-guides/`, recipe `concept.poseGuide`), or quadrupeds come out
+  upright.
+- **Look at every candidate** before keeping it (PRD-5). A fused or extra head, a mixed pose
+  or an upright quadruped is a fail. Fix the fields and run again; don't just roll seeds.
+- **Never use a generated image as a game frame.** Make the sheet and run it through the
+  forge at once. When the forge shows a sheet problem (fused poses, wrong proportions, baked
+  shadows), fix the sheet yourself before re-running.
+- **Models are fixed.** Never download, install or swap models. `art/source/forge/models.json`
+  is the registry, and `forge.py doctor` fails on anything else. Model changes are claude's.
+- **One GPU job at a time.** Image generation needs about 14 GB of the 16 GB GPU, so don't
+  run it while a Blender bake, `gen3d` or Ollama is running.
 
 ## 2D classes (skills `tile-forge`, UI kit)
 

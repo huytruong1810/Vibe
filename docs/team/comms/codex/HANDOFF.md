@@ -9,8 +9,10 @@ C25 remains outside this session's implementation. Claude is away until about No
 ## Integrated baseline
 
 - Engineering branch: `eng/hd-presentation`. Studio through **8085a9e** is integrated
-  in merge **f309370**. Studio CI **41428705037** completed/success, independently
-  checked through the GitHub API. Pull/check current refs and CI at startup.
+  in merge **f309370**. C24 code is **84f08a3**. The final pull also fetched published
+  studio **d9a62b2** (briefing/approval docs only), integrated in the following merge.
+  Studio 8085a9e CI 41428705037 and ada4efa CI 41521499323 succeeded; d9a62b2 CI
+  41523150519 was running at final integration. Check current CI at startup.
 - Preserve C17/save v5, note/stick canvas and bow recipe correction, C22 fallback play,
   asset base-path handling, held-layer compositor, AssetPack 1.7.0 pin and ordered adapter.
 - The only merge conflict was the authored-artifacts test table: save v5 and current
@@ -63,8 +65,11 @@ C25 remains outside this session's implementation. Claude is away until about No
 - Hatchet B14 is staged, not manifest-integrated. `art:integrate` currently maps species/npc
   appearances; do not pass a fake NPC override for item sidecars. C12 records the tool gap;
   communicator M25 precedes C23 ledger work. Held-layer runtime already exists.
-- Riverlands revision 2 remains candidate, not C7 activation. C32 already tracks the
-  previous-revision before-overview fix. New C26-C32 tickets retain upstream statuses.
+- Riverlands revision 2 is director-approved for layout only, per
+  `docs/team/comms/director/approvals/world-aqualia--world-aqualia-aqualia_riverlands-2.md`;
+  preview tiles/placeholders are not approved art, and C7 activation remains gated. C32 already tracks the
+  previous-revision before-overview fix. New C26-C32 tickets retain upstream statuses (C31 now has the installed toolkit and
+  gated-licence/build prerequisites recorded upstream).
 - After C25: C14, C13, C18, C19, C20, C3g, C7. C23/C12 standing; C21 needs director go;
   C15/C16 remain gated. Blender owns all art; communicator owns manifest integration,
   relay/status/digests/music. Hourly automation remains cancelled.

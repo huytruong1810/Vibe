@@ -5,9 +5,26 @@ blocked, mark it and take the next. Change only `status:` and `evidence:` lines.
 Finished tickets are in [archive/blender.md](archive/blender.md).
 
 **Since 2026-11-02 you hold the whole art pipeline** (directives 012, 013) and generate
-images **locally** on machine A's GPU (`forge.py concept` → `views`): the reference sheets (B15, B16), forge them (B3, B4, B5), make the 2D art (B17, B18) and
+images **locally** on machine A's GPU (`forge.py concept` → `views`, model FLUX.2 [klein] 9B,
+no quota): the reference sheets (B15, B16), forge them (B3, B4, B5), make the 2D art (B17, B18) and
 review your own results. Make a sheet, forge it straight away, and fix the sheet yourself
-when the forge shows a problem.
+when the forge shows a problem. Start with the welcome-back message
+`docs/team/comms/claude/*--to-blender--welcome-back-art-overhaul.md`.
+
+**Order of work:**
+
+1. **B19 golden samples, then the director's look approval.**
+   - Rivallie, the hatchet and the house can start now.
+   - Player-aqualia waits for claude's human pose guide (C27).
+2. **B15 sheets** once the look is approved.
+   - Quadrupeds, props and buildings first.
+   - Humans, winged, shelled and biped follow as claude's C27 pose guides land.
+3. **B16, B3, B4, B5:** forge each sheet as it lands.
+4. **B17 swatches** after claude's `forge.py swatch` (C30).
+5. **B18** after B15 step 3.
+6. **B20** after B19 and claude's C26.
+
+B0 is standing; B2 and B14 wait on the director.
 
 ## Now
 
@@ -20,26 +37,26 @@ when the forge shows a problem.
 - done when: `art/source/staging/blender/item-hatchet.json` (or the path publish prints) is committed and a `--to-communicator-codex--hatchet-published` message lists it
 - evidence: art/source/staging/blender/item-hatchet.json; docs/team/comms/blender/2026-11-02T0416--to-communicator-codex--hatchet-published.md (stand-in session, claude)
 
-### B19 · Golden-sample bake-off with local image generation (first)
+### B19 · Golden samples with local image generation (first)
 
-- status: open (after B14)
+- status: open (first; B14 is done)
 - goal: approve the new look on six golden samples (image model: klein 9B; 3D model: Hunyuan3D-2mv unless TRELLIS.2 wins C31) before regenerating everything (PRD-4, L12; director decision 2026-11-02).
-- inputs: [directive 013](../comms/claude/2026-11-02T0807--to-all--directive-013-local-image-generation.md); [imagegen notes](../../engineering/imagegen.md); `reference-sheets` skill; Rivallie's recipe `concept` block with `poseGuide` (copy the pattern; make a pose guide per new body type).
+- inputs: [directive 013](../comms/claude/2026-11-02T0807--to-all--directive-013-local-image-generation.md); [imagegen notes](../../engineering/imagegen.md); `reference-sheets` skill; Rivallie's recipe `concept` block with `poseGuide` (copy the pattern; claude makes the pose guides for other body types in C27, so don't make your own).
 - work, one asset at a time:
   1. The image model is decided: klein 9B is the only one installed (claude C29, doctrine L12), so there's no `--model` flag to choose. Rivallie (creature): `forge.py concept --asset rivallie --n 4`; c901 and c903 from seeds 900–903 are already clean on all fours (`docs/team/comms/claude/boards/2026-11-02-imagegen-rivallie-klein9b.png`). Look at the contact sheet and keep the best with `views`.
   2. player-aqualia (human, A-pose, 5 heads, L3), item:hatchet (prop), env:house-aqualia (building) the same way; the human, winged, shelled and biped pose guides come with claude's C27.
-  3. Run each kept sheet through the forge to a packet (the 3D backend comparison follows once claude lands the extra backends).
-  4. Post one message `--to-director--bakeoff` with the side-by-side contact sheets, the forge packets, timings and peak VRAM from each `work/<asset>/concept/concept-*.json`, and your recommendation.
-- done when: the director has picked the models (recorded in L12) and approved the golden samples' look; their concepts become the style anchors in `art/source/style/style.json`
+  3. Run each kept sheet through the forge to a packet with the default 3D backend (Hunyuan3D-2mv; claude reports if TRELLIS.2 replaces it in C31).
+  4. Post one message `--to-director--golden-samples` with the contact sheets, the forge packets and what you saw in each; the director approves the look.
+- done when: the director has approved the golden samples' look (the models are already recorded in L12); their concepts become the style anchors in `art/source/style/style.json`
 - evidence:
 
-### B15 · Reference-sheet production run (quota restored by the director)
+### B15 · Reference-sheet production run (local generation)
 
 - moved: from the communicator's M23 on 2026-11-02 (all art is blender's, TEAM-1). Since directive 013 generate **locally** (`forge.py concept` → `views`, `reference-sheets` skill), after B19's decision, and forge each sheet as soon as it passes the checklist. Quota limits no longer apply.
 - status: open (top priority; directive 009)
 - goal: every class the forge can build has its sheets, so blender is never waiting on input.
 - work:
-  1. Retry image generation now; the director is raising the quota. Log every attempt in `image-ledger.md` (PRD-7.5); budgets per PRD-7.3.
+  1. Generate with `forge.py concept` (the `reference-sheets` skill); `views` writes the ledger row (PRD-7.5). Use a pose guide for every creature and human; the human, winged, shelled and biped guides come with claude's C27.
   2. Order (stop and resume in this order; each sheet goes into `art/source/references/<asset>/` with `sheet.json`, per the `reference-sheets` skill):
      1. B16 redraw: `player-aqualia`, `npc-neris` (4.5–5 heads, front/left/back, A-pose, valid ramps).
      2. The other 9 Aqualia villagers (identity from their portraits and the voice/casting sheet).
@@ -54,7 +71,7 @@ when the forge shows a problem.
 ### B16 · Redraw the human sheets; fix ramp names on every sheet
 
 - moved: from the communicator's M11 on 2026-11-02 (all art is blender's, TEAM-1). Since directive 013 generate **locally** with the forge after B19's decision; quota limits no longer apply.
-- status: in_progress (palette ramps and metadata schemas normalized; 3-view redraw paused on image model capacity limit)
+- status: in_progress (palette ramps and metadata schemas normalized; 3-view redraw resumes with local generation once the C27 human pose guide lands)
 - goal: bring every reference sheet up to PRD-3 and L3 (director decision via directive 006).
 - work:
   1. **Human sheets: player-aqualia, npc-neris, and the four mannequins (standard, sturdy, slender, elder).**
@@ -72,7 +89,7 @@ when the forge shows a problem.
      Keep to at most 5 ramps per character (ART-4.4: 24 colours).
 
   3. **mireling `sheet.json`:** use the same schema as the other sheets (`asset`, `kind`, `identitySources`, `ramps`, `generations`, `ledger`).
-- done when: every sheet passes these checks, the ledger is updated within quota (PRD-7), and you've messaged codex and blender
+- done when: every sheet passes these checks, the ledger is updated (PRD-7.5), and you've messaged claude and the communicator
 - evidence: art/source/references/{bramblefang,marshstalker,mireling,player-aqualia,npc-neris,mannequin-*}/sheet.json, docs/team/comms/communicator/image-ledger.md
 
 ## Forge each sheet as it lands
@@ -101,7 +118,7 @@ when the forge shows a problem.
 
 ### B2 · Riverlands map
 
-- status: candidate (revision 2, 2026-11-02, stand-in session; answers the 2026-11-01 changes-requested record) 2026-11-01 (`docs/team/comms/director/approvals/world-aqualia--world-aqualia-aqualia_riverlands-1.md`): fill empty screens, remove staircase river and road edges, give the rectangle zones shapes. Add passes 004+ and re-packet. Edit only the Riverlands level; the village level is approved and in the beta build
+- status: done: director-approved 2026-11-02, layout scope (`docs/team/comms/director/approvals/world-aqualia--world-aqualia-aqualia_riverlands-2.md`); move to the archive at the next queue tidy
 - goal: lay out level `aqualia_riverlands` from the region bible, following the codex golden village as your example.
 - work: `world-builder` skill. One pass per idea: write the pass, `apply`, `render`, open every screen crop, `check`, fix. Never edit `.ldtk` JSON by hand.
 - done when: `worldforge check` passes, the packet is in `art/review/`, and the ticket is `candidate`
@@ -110,7 +127,7 @@ when the forge shows a problem.
 ### B17 · Aqualia terrain set through tileforge (long design session)
 
 - moved: from the communicator's M9 on 2026-11-02 (all art is blender's, TEAM-1). Since directive 013 generate **locally** with the forge after B19's decision; quota limits no longer apply.
-- status: in_progress (scaffolded aqualia-terrain; swatches paused awaiting image generation quota reset per PRD-7)
+- status: in_progress (scaffolded aqualia-terrain; swatches wait for claude's `forge.py swatch`, C30)
 - goal: the whole Aqualia ground in palette-locked 32-px tiles (ART-11.2), designed by you, made exact by tileforge: grass, dirt, sand, stone, mud, reedbed, boardwalk; freshwater with its 14 shore masks; dirt-path and stone-path edges; cliff strip and ramp.
 - inputs: `.agents/skills/tile-forge/SKILL.md` (read it fully first); region bible `docs/doctrine/regions/aqualia.md` and ART-13 (teal, sand, warm timber); the concept `art/source/masters/aqualia_canal_settlement_master.jpg` for mood only (its grid lines and props make it unusable as a swatch); the golden sample `art/source/tiles/sets/aqualia-grass-water/` and its packet `art/review/tiles-aqualia-grass-water-1/` (procedural stand-in swatches; beat them).
 - work, one material at a time (PRD-4), each through the skill's loop (swatch, recipe, `all`, look at all three previews, fix inputs, repeat):

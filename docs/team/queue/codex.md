@@ -170,7 +170,7 @@ and local-generation tickets (C26–C31) sit in their own section.
 
 ### C7 · Authored world in the engine (WLD-M1…M4)
 
-- status: partial (candidate compiler/loader slice). Claude scoped activation on 2026-11-01 and handed it back: `Simulation` builds only from `WorldGenerator().generate(seed)` (`simulation.ts:187`), saves regenerate from seed (`save-schema.ts:447`), 40 sites read fixed `VILLAGES` coordinates, and the authored map is one 90×68 level, so 20 villagers of the other two villages would be in void. Next: map-driven settlements and player spawn (WLD-M2), save `worldSource` versioning (WLD-M3), then a beta toggle. Village layout approved (village-1/-2 records); Riverlands changes-requested
+- status: partial (candidate compiler/loader slice). Claude scoped activation on 2026-11-01 and handed it back: `Simulation` builds only from `WorldGenerator().generate(seed)` (`simulation.ts:187`), saves regenerate from seed (`save-schema.ts:447`), 40 sites read fixed `VILLAGES` coordinates, and the authored map is one 90×68 level, so 20 villagers of the other two villages would be in void. Next: map-driven settlements and player spawn (WLD-M2), save `worldSource` versioning (WLD-M3), then a beta toggle. Village layout approved (village-1/-2 records); Riverlands layout approved 2026-11-02 (`world-aqualia--world-aqualia-aqualia_riverlands-2.md`)
 - goal: a new game loads the authored LDtk map; procedural world generation is retired.
 - work:
   - a build-time importer from the schema into `ChunkStore`;
@@ -293,7 +293,7 @@ order; C26 gates any regeneration of approved assets (blender B20).
 - work: recipe `gen3d.backend` (done: `forgelib/core.py` `GEN3D_BACKENDS`, default stays out of the digest), pinned setups (Blackwell cu128 builds), same `mesh.glb` contract.
 - progress:
   - Hunyuan3D-2.1 ran on Rivallie, front-only in 189 s and side-only in 207 s, 7.7 GiB. It lost to 2mv and was removed (board `docs/team/comms/claude/boards/2026-11-02-gen3d-rivallie-hunyuan.png`).
-  - TRELLIS.2-4B: code cloned and its venv is ready. Its CUDA extensions need the CUDA 12.8 toolkit, and the director installs it (`cuda-toolkit-12-8`, WSL repo).
+  - TRELLIS.2-4B: code cloned and its venv is ready (torch 2.11 cu128). The CUDA 12.8 toolkit is installed (`/usr/local/cuda-12.8`). Next: the director accepts the gated licences (`facebook/dinov3-vitl16-pretrain-lvd1689m`, `briaai/RMBG-2.0`), then build the extensions and write the runner (steps in the claude handoff `docs/team/comms/claude/2026-11-02T2036--to-claude--handoff.md`).
 - done when: Rivallie through TRELLIS.2 to a `gen3d` preview, timings recorded; the loser is removed from `models.json`
 - evidence:
 
