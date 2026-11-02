@@ -87041,14 +87041,14 @@
         "mireling_element_e_11"
       ],
       "id": "mireling:element:e",
-      "playback": "combat",
-      "state": "attack",
       "moveId": "element",
       "phases": {
         "active": [3, 5],
         "recovery": [5, 12],
         "windup": [0, 3]
-      }
+      },
+      "playback": "combat",
+      "state": "attack"
     },
     {
       "appearanceId": "species:mireling",
@@ -87069,14 +87069,14 @@
         "mireling_element_n_11"
       ],
       "id": "mireling:element:n",
-      "playback": "combat",
-      "state": "attack",
       "moveId": "element",
       "phases": {
         "active": [3, 5],
         "recovery": [5, 12],
         "windup": [0, 3]
-      }
+      },
+      "playback": "combat",
+      "state": "attack"
     },
     {
       "appearanceId": "species:mireling",
@@ -87097,14 +87097,14 @@
         "mireling_element_ne_11"
       ],
       "id": "mireling:element:ne",
-      "playback": "combat",
-      "state": "attack",
       "moveId": "element",
       "phases": {
         "active": [3, 5],
         "recovery": [5, 12],
         "windup": [0, 3]
-      }
+      },
+      "playback": "combat",
+      "state": "attack"
     },
     {
       "appearanceId": "species:mireling",
@@ -87125,14 +87125,14 @@
         "mireling_element_nw_11"
       ],
       "id": "mireling:element:nw",
-      "playback": "combat",
-      "state": "attack",
       "moveId": "element",
       "phases": {
         "active": [3, 5],
         "recovery": [5, 12],
         "windup": [0, 3]
-      }
+      },
+      "playback": "combat",
+      "state": "attack"
     },
     {
       "appearanceId": "species:mireling",
@@ -87153,14 +87153,14 @@
         "mireling_element_s_11"
       ],
       "id": "mireling:element:s",
-      "playback": "combat",
-      "state": "attack",
       "moveId": "element",
       "phases": {
         "active": [3, 5],
         "recovery": [5, 12],
         "windup": [0, 3]
-      }
+      },
+      "playback": "combat",
+      "state": "attack"
     },
     {
       "appearanceId": "species:mireling",
@@ -87181,14 +87181,14 @@
         "mireling_element_se_11"
       ],
       "id": "mireling:element:se",
-      "playback": "combat",
-      "state": "attack",
       "moveId": "element",
       "phases": {
         "active": [3, 5],
         "recovery": [5, 12],
         "windup": [0, 3]
-      }
+      },
+      "playback": "combat",
+      "state": "attack"
     },
     {
       "appearanceId": "species:mireling",
@@ -87209,14 +87209,14 @@
         "mireling_element_sw_11"
       ],
       "id": "mireling:element:sw",
-      "playback": "combat",
-      "state": "attack",
       "moveId": "element",
       "phases": {
         "active": [3, 5],
         "recovery": [5, 12],
         "windup": [0, 3]
-      }
+      },
+      "playback": "combat",
+      "state": "attack"
     },
     {
       "appearanceId": "species:mireling",
@@ -87237,14 +87237,14 @@
         "mireling_element_w_11"
       ],
       "id": "mireling:element:w",
-      "playback": "combat",
-      "state": "attack",
       "moveId": "element",
       "phases": {
         "active": [3, 5],
         "recovery": [5, 12],
         "windup": [0, 3]
-      }
+      },
+      "playback": "combat",
+      "state": "attack"
     },
     {
       "appearanceId": "species:mireling",
@@ -87933,14 +87933,14 @@
         "mireling_strike_e_11"
       ],
       "id": "mireling:strike:e",
-      "playback": "combat",
-      "state": "attack",
       "moveId": "strike",
       "phases": {
         "active": [3, 5],
         "recovery": [5, 12],
         "windup": [0, 3]
-      }
+      },
+      "playback": "combat",
+      "state": "attack"
     },
     {
       "appearanceId": "species:mireling",
@@ -87961,14 +87961,14 @@
         "mireling_strike_n_11"
       ],
       "id": "mireling:strike:n",
-      "playback": "combat",
-      "state": "attack",
       "moveId": "strike",
       "phases": {
         "active": [3, 5],
         "recovery": [5, 12],
         "windup": [0, 3]
-      }
+      },
+      "playback": "combat",
+      "state": "attack"
     },
     {
       "appearanceId": "species:mireling",
@@ -87989,14 +87989,14 @@
         "mireling_strike_ne_11"
       ],
       "id": "mireling:strike:ne",
-      "playback": "combat",
-      "state": "attack",
       "moveId": "strike",
       "phases": {
         "active": [3, 5],
         "recovery": [5, 12],
         "windup": [0, 3]
-      }
+      },
+      "playback": "combat",
+      "state": "attack"
     },
     {
       "appearanceId": "species:mireling",
@@ -88017,14 +88017,14 @@
         "mireling_strike_nw_11"
       ],
       "id": "mireling:strike:nw",
-      "playback": "combat",
-      "state": "attack",
       "moveId": "strike",
       "phases": {
         "active": [3, 5],
         "recovery": [5, 12],
         "windup": [0, 3]
-      }
+      },
+      "playback": "combat",
+      "state": "attack"
     },
     {
       "appearanceId": "species:mireling",
@@ -88045,14 +88045,14 @@
         "mireling_strike_s_11"
       ],
       "id": "mireling:strike:s",
-      "playback": "combat",
-      "state": "attack",
       "moveId": "strike",
       "phases": {
         "active": [3, 5],
         "recovery": [5, 12],
         "windup": [0, 3]
-      }
+      },
+      "playback": "combat",
+      "state": "attack"
     },
     {
       "appearanceId": "species:mireling",
@@ -88073,14 +88073,14 @@
         "mireling_strike_se_11"
       ],
       "id": "mireling:strike:se",
-      "playback": "combat",
-      "state": "attack",
       "moveId": "strike",
       "phases": {
         "active": [3, 5],
         "recovery": [5, 12],
         "windup": [0, 3]
-      }
+      },
+      "playback": "combat",
+      "state": "attack"
     },
     {
       "appearanceId": "species:mireling",
@@ -88101,14 +88101,14 @@
         "mireling_strike_sw_11"
       ],
       "id": "mireling:strike:sw",
-      "playback": "combat",
-      "state": "attack",
       "moveId": "strike",
       "phases": {
         "active": [3, 5],
         "recovery": [5, 12],
         "windup": [0, 3]
-      }
+      },
+      "playback": "combat",
+      "state": "attack"
     },
     {
       "appearanceId": "species:mireling",
@@ -88129,14 +88129,14 @@
         "mireling_strike_w_11"
       ],
       "id": "mireling:strike:w",
-      "playback": "combat",
-      "state": "attack",
       "moveId": "strike",
       "phases": {
         "active": [3, 5],
         "recovery": [5, 12],
         "windup": [0, 3]
-      }
+      },
+      "playback": "combat",
+      "state": "attack"
     },
     {
       "appearanceId": "species:mireling",

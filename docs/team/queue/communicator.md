@@ -81,3 +81,12 @@ Finished tickets are in [archive/communicator.md](archive/communicator.md).
 - goal: `art/review/digest-<YYYY-Www>.md` covering every packet, proposal and approval request waiting on the director, each with a one-line ask. The director decides them in one pass. First digest: the Rivallie golden sample `art/review/2026-10-31-rivallie/`, and codex C5 (the Aqualia region bible, `docs/doctrine/regions/aqualia.md`, awaiting composition review).
 - done when: never closes; add a dated evidence line each week
 - evidence: art/review/digest-2026-W44.md (2026-10-31)
+
+### M25 · Merge every published, approved body into the manifest (standing)
+
+- status: open (standing)
+- goal: an approved body reaches the game the day blender publishes it (you are the sole manifest integrator, TEAM-2a).
+- work: when blender messages that `art/source/staging/blender/<asset>.json` is published, run `npm run art:integrate -- merge <asset>` (`--appearance npc:<id>` for a flat human), then `npm run assets:build`, commit `art/source/manifest.json` with the generated outputs, push, and message codex (C23 adds the ledger entry). If the tool refuses, send its message to codex; never edit the manifest by hand to get past it.
+- inputs: [integration steps](../../engineering/hd-presentation.md#c3b-creature-publication-and-face-sidecars)
+- done when: never closes
+- evidence:

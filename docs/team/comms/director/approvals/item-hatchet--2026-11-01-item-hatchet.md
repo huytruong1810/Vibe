@@ -14,7 +14,7 @@ minimum, icon scale 1.72. Claude produced this packet while building C9b, so it 
 for the director rather than approved under the standing delegation.
 
 Next:
-1. blender: `forge.py publish --asset item:hatchet` (queue B14), then message `--to-claude--`.
+1. blender: `forge.py publish --asset item:hatchet` (queue B14), then message `--to-communicator-codex--`.
 2. The staged item reaches the game when the runtime draws held layers (the open
    "runtime held-layer composition" part of codex C9b). Until then the publish is the end
    of the art path.

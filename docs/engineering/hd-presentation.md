@@ -187,6 +187,20 @@ immutable directories. Only sources bound to the approved body packet are copied
 The communicator integrates staging into the source manifest (TEAM-2a), translating
 frame IDs/paths and canonical species bindings without losing registration or
 provenance. Staging is not automatically ingested or activated by the compiler.
+The commands (`scripts/art-integrate.ts`, 2026-11-02):
+
+1. communicator: `npm run art:integrate -- merge <asset>` (species; `--appearance npc:<id>`
+   for a flat human body). It replaces that appearance's rows, legacy rows included,
+   adds a missing rig from the frames (C3e registrations) and validates the manifest.
+   Then `npm run assets:build`; commit manifest and generated outputs.
+2. codex: `npm run art:integrate -- ledger <asset>`. It refuses unless the approval record
+   is unchanged since publish, `director-approved` for the staged packet digest, and every
+   manifest frame is byte-identical to the staged export. It writes the ledger entry bound
+   to the catalog digest. Then `npm run assets:build && npm run check:assets`, and an
+   in-game capture looked at (PRD-5).
+
+Re-running `merge` on an integrated asset is a no-op apart from key order (tested on
+Mireling: same source digest, byte-identical build).
 Commit the complete source-bundle directory together with staging and exports, so
 Machine B and CI can verify provenance without Blender, the original workspace or
 network access. Internal historical paths inside the copied animate record remain

@@ -3,13 +3,32 @@
 Read your brief `docs/team/briefs/codex.md` and [the queue rules](README.md) first.
 Finished tickets are in [archive/codex.md](archive/codex.md); open it only when a live ticket links there.
 
-**Who does what (directive 010, 2026-11-02).** Codex is back for the authored-artifacts
-feature: take **C17 → C18 → C19 → C20** in order (C19 can run beside C18), C21 only on the
-director's go. Codex has no GPU on machine B: build against mocks and send every live
-GPU smoke to blender as a `--to-blender--test-` request. Claude keeps the art-path
-tickets under "Claude (machine A)"; don't take those unless claude hands one over.
+**Who does what (directive 011, 2026-11-02, claude away until about 2026-11-09).** Codex
+owns this queue: **C22 → C17 → C18 → C19 → C20**, then C3g and C7, with C23 and C12
+standing (C19 can run beside C18; C21 only on the director's go). Machine B has no
+Blender or GPU: build against mocks and send live GPU smokes to blender as
+`--to-blender--test-` requests. The forge tickets under "Waiting for claude" need
+Blender on machine A; leave them unless the director says otherwise.
 
 ## Now: codex
+
+### C22 · Beta channel: green CI, a deploy on every green push, a playtest loop
+
+- status: open (first)
+- owner: codex
+- goal: the director plays the latest green build from a URL on any day, files playtest notes in one place, and they become tickets, without anyone on machine A.
+- context: CI was red for 100+ runs (`format:check` failed on machine-written sources, so browser tests and the benchmark never ran) until claude's `88b11ba`. The repo is public, so GitHub Pages is free.
+- work:
+  1. **Keep CI green.** A red `studio/doctrine-v1` is the top ticket until fixed, the same day. Write the rule and the job list in `docs/operations/operations.md`.
+  2. **Deploy:** `.github/workflows/beta.yml` on `workflow_run` of "Reference game checks" succeeding on `studio/doctrine-v1`: `vite build` with `base: '/Vibe/'`, then `actions/upload-pages-artifact` and `actions/deploy-pages` (`pages: write`, `id-token: write`). Watch out: catalog URLs are absolute `/assets/...` (`Url` in `src/presentation/assets/catalog.ts`). Resolve them against `import.meta.env.BASE_URL` at fetch time (one place in the asset manager) and test both `/` and `/Vibe/`. The director switches Pages to "GitHub Actions" once (Settings → Pages).
+  3. **Build stamp:** commit sha, date and branch on the settings screen and in exported saves; `public/beta-notes.json` with the commit subjects since the previous deploy, shown as "What changed" on the title screen.
+  4. **Ollama from the beta site:** the page origin is `https://huytruong1810.github.io`. Document `OLLAMA_ORIGINS` and Chrome's local-network permission prompt in `docs/operations/`. When the call is blocked, the setup dialog names the exact fix. Without Ollama, the game stays playable with fallback dialogue.
+  5. **Playtest intake:** `.github/ISSUE_TEMPLATE/playtest.yml` (build stamp, what you did, expected, saw, screenshot, exported save). Triage weekly into queue tickets (C12).
+  6. **Nightly:** run CI nightly (today it is weekly), keep browser screenshots and benchmark JSON as artifacts for 14 days.
+- out of scope: hosting Ollama or an image server anywhere but the player's machine.
+- note: editing `.github/workflows/` needs a token with the `workflow` scope on machine B.
+- done when: a green push to `studio/doctrine-v1` is live on the Pages URL with its sha within 15 minutes; the playtest template exists; the operations doc lists the jobs and the green-CI rule; claude's local check of `/Vibe/` asset loading is replaced by a CI browser test
+- evidence:
 
 ### C17 · Artifact item class and save v4 (foundation for notes, books, paintings)
 
@@ -83,9 +102,37 @@ tickets under "Claude (machine A)"; don't take those unless claude hands one ove
 - done when: editor with pencil, fill, eyedropper and 32-step undo; output passes the same palette and colour-count validation; Playwright edit-and-save test; capture looked at.
 - evidence:
 
-## Claude (machine A, directive 009)
+## After C20: codex
 
-In order: C9b (runtime held-layer composition, then `fit`) → C9c → C3b faces → C3g → C7.
+### C3g · Follow-ups from the beta slice (claude, 2026-11-01)
+
+- status: open
+- goal: tidy what the beta slice exposed.
+- work:
+  1. Packet gallery atlas tab (`src/presentation/gallery.ts:332`, `renderAtlas`) shows only page 0 under a hard-coded "Single page: bundle.png" label. The build now emits four pages.
+  2. Decoded atlas memory went from 14.97 to 63.88 MiB full-res (four 2048 pages, mostly 160×144 quadruped canvases). Decide on a budget, then trim per-clip canvases or move review-only frames out of the runtime atlas.
+  3. Scale: forge creatures render at doctrine scale and look small beside the oversized legacy humans and creatures. Expected while legacy art remains; check it again when M11 humans land.
+- done when: the gallery shows every page and the atlas budget is written into `docs/engineering/`
+
+### C7 · Authored world in the engine (WLD-M1…M4)
+
+- status: partial (candidate compiler/loader slice). Claude scoped activation on 2026-11-01 and handed it back: `Simulation` builds only from `WorldGenerator().generate(seed)` (`simulation.ts:187`), saves regenerate from seed (`save-schema.ts:447`), 40 sites read fixed `VILLAGES` coordinates, and the authored map is one 90×68 level, so 20 villagers of the other two villages would be in void. Next: map-driven settlements and player spawn (WLD-M2), save `worldSource` versioning (WLD-M3), then a beta toggle. Village layout approved (village-1/-2 records); Riverlands changes-requested
+- goal: a new game loads the authored LDtk map; procedural world generation is retired.
+- work:
+  - a build-time importer from the schema into `ChunkStore`;
+  - map-placed settlements, entrances, anchors and habitats (WLD-M2);
+  - version bumps (WLD-M3);
+  - CI validation that reads `world_schema.json` (WLD-M4);
+  - update `docs/engineering/full-world-presentation.md` (its canal ban at :5, :85, :99
+    is superseded by WLD-3.5 and L8).
+- done when: `npm run check` passes with tests and soak running on the authored map
+- evidence: [candidate importer handoff](../comms/codex/archive/2026-10-31T1614--to-all--c7-candidate-importer.md), [compiler/loader guide](../../engineering/worldforge.md#c7-candidate-compiler-and-domain-loader), [ADR 021](../../engineering/decisions.md#adr-021--candidate-authored-world-compilation). Runtime activation, Riverlands visual approval and forage placement remain outstanding; no authored-world soak is claimed. C5/layout records are now published upstream: [directive 006 receipt](../comms/codex/archive/2026-10-31T1627--to-all--c7-review-update.md).
+
+- follow-up: Riverlands history is integrated and full-region candidate validation now passes (two levels / 219 placements). Historical approval/draft tests use pinned fixtures; alternate-project QA is read-only and isolated. See [fixture repair](../comms/codex/archive/2026-10-31T2248--to-all--c7-fixtures-and-art-followups.md). C7 activation remains separate.
+
+## Waiting for claude (back about 2026-11-09)
+
+Forge work that needs Blender on machine A, in order: C9b `fit` → C9c → C3b faces.
 
 ### C9b · Items, fit, human faces
 
@@ -134,32 +181,6 @@ In order: C9b (runtime held-layer composition, then `fit`) → C9c → C3b faces
 - evidence: [C3b tool handoff](../comms/codex/archive/2026-10-31T2146--to-blender--c3b-publish-and-faces.md); [registered face candidate](../../../art/review/2026-10-31-rivallie-faces-145faf106c4e/faces.json); 16 finishing and two packet-export tests pass. Body approval excludes faces; no approved packet is rerun.
 
 - distribution: source-only branch `eng/c3b-c7-tools` at `f037e2e` / draft PR #3 avoids the protected runbook merge delta. [Guarded handoff](../comms/codex/archive/2026-10-31T2346--to-blender--c3b-source-only-handoff.md); [machine-A execution report](../comms/blender/archive/2026-10-31T2355--to-codex-communicator--c3b-b8-b9-results.md) is integrated, with 1,848 staged frame hashes verified locally. [Portable-source correction](../comms/codex/archive/2026-11-01T0145--to-all--c3b-portable-provenance.md) at engineering `9dd81ee`, consumer `01e9fbb` / PR #4: 21 publication and two review-export tests pass. B10 packaging is delivered; M19 source integration and separate face acceptance remain; no new artwork approval.
-
-### C3g · Follow-ups from the beta slice (claude, 2026-11-01)
-
-- status: open
-- goal: tidy what the beta slice exposed.
-- work:
-  1. Packet gallery atlas tab (`src/presentation/gallery.ts:332`, `renderAtlas`) shows only page 0 under a hard-coded "Single page: bundle.png" label. The build now emits four pages.
-  2. Decoded atlas memory went from 14.97 to 63.88 MiB full-res (four 2048 pages, mostly 160×144 quadruped canvases). Decide on a budget, then trim per-clip canvases or move review-only frames out of the runtime atlas.
-  3. Scale: forge creatures render at doctrine scale and look small beside the oversized legacy humans and creatures. Expected while legacy art remains; check it again when M11 humans land.
-- done when: the gallery shows every page and the atlas budget is written into `docs/engineering/`
-
-### C7 · Authored world in the engine (WLD-M1…M4)
-
-- status: partial (candidate compiler/loader slice). Claude scoped activation on 2026-11-01 and handed it back: `Simulation` builds only from `WorldGenerator().generate(seed)` (`simulation.ts:187`), saves regenerate from seed (`save-schema.ts:447`), 40 sites read fixed `VILLAGES` coordinates, and the authored map is one 90×68 level, so 20 villagers of the other two villages would be in void. Next: map-driven settlements and player spawn (WLD-M2), save `worldSource` versioning (WLD-M3), then a beta toggle. Village layout approved (village-1/-2 records); Riverlands changes-requested
-- goal: a new game loads the authored LDtk map; procedural world generation is retired.
-- work:
-  - a build-time importer from the schema into `ChunkStore`;
-  - map-placed settlements, entrances, anchors and habitats (WLD-M2);
-  - version bumps (WLD-M3);
-  - CI validation that reads `world_schema.json` (WLD-M4);
-  - update `docs/engineering/full-world-presentation.md` (its canal ban at :5, :85, :99
-    is superseded by WLD-3.5 and L8).
-- done when: `npm run check` passes with tests and soak running on the authored map
-- evidence: [candidate importer handoff](../comms/codex/archive/2026-10-31T1614--to-all--c7-candidate-importer.md), [compiler/loader guide](../../engineering/worldforge.md#c7-candidate-compiler-and-domain-loader), [ADR 021](../../engineering/decisions.md#adr-021--candidate-authored-world-compilation). Runtime activation, Riverlands visual approval and forage placement remain outstanding; no authored-world soak is claimed. C5/layout records are now published upstream: [directive 006 receipt](../comms/codex/archive/2026-10-31T1627--to-all--c7-review-update.md).
-
-- follow-up: Riverlands history is integrated and full-region candidate validation now passes (two levels / 219 placements). Historical approval/draft tests use pinned fixtures; alternate-project QA is read-only and isolated. See [fixture repair](../comms/codex/archive/2026-10-31T2248--to-all--c7-fixtures-and-art-followups.md). C7 activation remains separate.
 
 ## Waiting on the director
 
@@ -241,7 +262,16 @@ Creature minds (C13–C16) start after C7; C8 holds the remaining brief P0 rows.
 - done when: 150 creatures in combat within CRM-8.1; species tests green; a save replays to identical decisions; the director reviews a capture of a 20-creature fight (scripted vs learned side by side)
 - evidence:
 
-## Recurring
+## Standing
+
+### C23 · Ledger every integrated, approved body (standing)
+
+- status: open (standing)
+- owner: codex
+- goal: approved art reaches gameplay the day the communicator merges it.
+- work: after each `art:integrate merge` commit, run `npm run art:integrate -- ledger <asset>`, `npm run assets:build && npm run check:assets`, a 1080p in-game capture you look at (PRD-5), commit and push. The tool refuses if the approval record changed, isn't `director-approved` for the staged digest, or any frame differs from the export: report that, don't work around it.
+- done when: never closes
+- evidence:
 
 ### C12 · Keep the team fed
 

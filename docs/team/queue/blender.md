@@ -12,7 +12,7 @@ Finished tickets are in [archive/blender.md](archive/blender.md).
 - goal: stage the director-approved golden held item so the runtime can draw it once C9b's held-layer composition lands.
 - inputs: [approval record](../comms/director/approvals/item-hatchet--2026-11-01-item-hatchet.md) (digest 89102c20…, scope held-item and icon).
 - work: `uv run --project art/source/forge python art/source/forge/forge.py publish --asset item:hatchet`; don't re-run any hatchet stage first (a new digest voids the approval, PRD-9).
-- done when: `art/source/staging/blender/item-hatchet.json` (or the path publish prints) is committed and a `--to-claude--hatchet-published` message lists it
+- done when: `art/source/staging/blender/item-hatchet.json` (or the path publish prints) is committed and a `--to-communicator-codex--hatchet-published` message lists it
 - evidence:
 
 ### B2 · Riverlands map
