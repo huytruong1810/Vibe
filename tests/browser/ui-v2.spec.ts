@@ -28,7 +28,7 @@ test('worn gear uses keyboard actions, carried capacity stays two, and guard rel
     const request = route.request();
     const data = request.postDataJSON() as { format?: { properties?: { ready?: object } } } | null;
     const response = request.url().endsWith('/api/tags')
-      ? { models: [{ name: 'qwen2.5:3b', size: 1900000000 }] }
+      ? { models: [{ name: 'gemma4-abliterated:26b', size: 1900000000 }] }
       : {
           message: {
             content: JSON.stringify(

@@ -12,7 +12,7 @@ test('HD overlays preserve focus, portrait identity, quality and saved outcomes'
       contentType: 'application/json',
       body: JSON.stringify(
         tags
-          ? { models: [{ name: 'qwen2.5:3b', size: 1 }] }
+          ? { models: [{ name: 'gemma4-abliterated:26b', size: 1 }] }
           : { message: { content: JSON.stringify({ ready: true }) }, eval_count: 1 },
       ),
     });

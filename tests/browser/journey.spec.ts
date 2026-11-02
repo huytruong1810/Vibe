@@ -8,21 +8,30 @@ const body = (save: GameSave, id = 0) => save.entities.records.find((e) => e.id 
 async function mockOllama(page: Page, valid = true): Promise<void> {
   await page.route('http://127.0.0.1:11434/**', async (route) => {
     const data = route.request().postDataJSON() as {
-      format?: { properties?: { ready?: object } };
+      format?: { properties?: { ready?: object; gist?: object } };
     } | null;
     const body = route.request().url().endsWith('/api/tags')
-      ? { models: [{ name: 'qwen2.5:3b', size: 1900000000 }] }
+      ? { models: [{ name: 'gemma4-abliterated:26b', size: 1900000000 }] }
       : {
           message: {
             content: JSON.stringify(
               data?.format?.properties?.ready
                 ? { ready: valid }
-                : {
-                    dialogue:
-                      'I can offer a few sunberries. I will leave them nearby when we finish talking.',
-                    emotion: 'warm',
-                    action: { type: 'DROP_GIFT', itemId: 'berries' },
-                  },
+                : data?.format?.properties?.gist
+                  ? {
+                      gist: 'We discussed the river and a gift.',
+                      playerAsked: ['A gift'],
+                      villagerPromised: ['Berries after conversation'],
+                      decided: [],
+                      open: [],
+                      mood: 'warm',
+                    }
+                  : {
+                      dialogue:
+                        'I can offer a few sunberries. I will leave them nearby when we finish talking.',
+                      emotion: 'warm',
+                      action: { type: 'DROP_GIFT', itemId: 'berries' },
+                    },
             ),
           },
           eval_count: 32,
@@ -52,6 +61,9 @@ async function enter(page: Page): Promise<void> {
   await page.getByRole('button', { name: 'Connect & begin journey' }).click();
   await expect(page.locator('#setup-dialog')).not.toBeVisible({ timeout: 30_000 });
   await expect(page.locator('#location-title')).toContainText('Aqualia');
+  await expect(page.locator('#toast')).toContainText(
+    'Background model gemma4-abliterated:e4b is missing. Using gemma4-abliterated:26b.',
+  );
 }
 async function worldSession(page: Page): Promise<string> {
   return page.evaluate(
@@ -145,6 +157,50 @@ test('full world, movement, grounded dialogue, save and resume', async ({ page }
   await page.getByLabel('Your message').fill('Could you offer a gift?');
   await page.getByRole('button', { name: 'Send ↗' }).click();
   await expect(page.locator('#staged-note')).toBeVisible();
+  // C24: keep the worker transcript while bounding frame traffic through a long conversation.
+  for (let turn = 0; turn < 30; turn++) {
+    await page.evaluate(async (n) => {
+      const api = (
+        window as unknown as { __hearthwild: { command(c: object): Promise<{ ok: boolean }> } }
+      ).__hearthwild;
+      const result = await api.command({
+        type: 'dialogue',
+        text: `Turn ${n}: ${'We spoke about the river and the village. '.repeat(18)}`,
+      });
+      if (!result.ok) throw Error('Long conversation refused');
+    }, turn);
+    await expect
+      .poll(() =>
+        page.evaluate(() => {
+          const api = (
+            window as unknown as {
+              __hearthwild: {
+                frame(): { dialogue: { pendingJob: string | null; lines: unknown[] } };
+              };
+            }
+          ).__hearthwild;
+          return api.frame().dialogue.pendingJob;
+        }),
+      )
+      .toBeNull();
+  }
+  const contextProof = await page.evaluate(() => {
+    const f = (
+      window as unknown as {
+        __hearthwild: {
+          frame(): {
+            dialogue: { lines: unknown[] };
+            performance: { context: { tokens: number; budget: number; compactions: number } };
+          };
+        };
+      }
+    ).__hearthwild.frame();
+    return { lines: f.dialogue.lines.length, ...f.performance.context };
+  });
+  expect(contextProof.lines).toBeLessThanOrEqual(32);
+  expect(contextProof.tokens).toBeLessThanOrEqual(contextProof.budget);
+  expect(contextProof.compactions).toBeGreaterThan(0);
+
   expect((await checkpoint(page)).drops).toHaveLength(0);
   await page.getByRole('button', { name: 'Finish conversation' }).click();
   await expect(page.locator('#conversation-dialog')).not.toBeVisible();

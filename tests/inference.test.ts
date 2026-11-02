@@ -20,6 +20,47 @@ const job = (id: string, kind: InferenceJob['kind'] = 'plan'): InferenceJob => (
 });
 afterEach(() => vi.useRealTimers());
 describe('local inference adapter and scheduling', () => {
+  it('sends per-job context and CPU options and returns prompt token counts', async () => {
+    let request: Record<string, unknown> = {};
+    const adapter = new OllamaAdapter('http://localhost:11434', async (_url, init) => {
+      request = JSON.parse(String(init?.body));
+      return new Response(
+        JSON.stringify({ message: { content: '{}' }, eval_count: 12, prompt_eval_count: 246 }),
+      );
+    });
+    const result = await adapter.generate(
+      { ...job('compact', 'compaction'), contextTokens: 16384, numGpu: 0, outputLimit: 768 },
+      'gemma4-abliterated:e4b',
+      new AbortController().signal,
+    );
+    expect(request.model).toBe('gemma4-abliterated:e4b');
+    expect(request.options).toEqual({
+      temperature: 0.4,
+      num_ctx: 16384,
+      num_predict: 768,
+      num_gpu: 0,
+    });
+    expect(result.promptTokens).toBe(246);
+  });
+  it('routes compaction to its selected model and forwards token calibration receipts', async () => {
+    const generate = vi.fn(async (_job: InferenceJob, _model: string, _signal: AbortSignal) => ({
+      output: {},
+      tokens: 3,
+      promptTokens: 150,
+    }));
+    const receipts: InferenceReceipt[] = [];
+    const scheduler = new InferenceScheduler(
+      { models: async () => [], capabilityCheck: async () => undefined, generate },
+      'dialogue-model',
+      (r) => receipts.push(r),
+    );
+    scheduler.enqueue({ ...job('compact', 'compaction'), model: 'cpu-model', numGpu: 0 });
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    expect(generate.mock.calls[0]?.[1]).toBe('cpu-model');
+    expect(receipts[0]?.promptTokens).toBe(150);
+    scheduler.dispose();
+  });
+
   it('settles cancelled generation before a readiness check and holds queued work until it ends', async () => {
     let settle!: () => void, finishCheck!: () => void;
     const checked = vi.fn(
@@ -198,7 +239,7 @@ describe('local inference adapter and scheduling', () => {
               ),
       };
     const scheduler = new InferenceScheduler(provider, 'model', (r) => receipts.push(r));
-    scheduler.enqueue(job('background'));
+    scheduler.enqueue(job('background', 'compaction'));
     scheduler.enqueue(job('conversation', 'dialogue'));
     await vi.advanceTimersByTimeAsync(1);
     expect(receipts.find((r) => r.jobId === 'background')?.error).toBe('aborted');

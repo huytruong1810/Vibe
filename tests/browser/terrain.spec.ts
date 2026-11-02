@@ -44,7 +44,7 @@ test('golden terrain variants and water masks load in the live renderer without 
       contentType: 'application/json',
       body: JSON.stringify(
         route.request().url().endsWith('/api/tags')
-          ? { models: [{ name: 'qwen2.5:3b', size: 1 }] }
+          ? { models: [{ name: 'gemma4-abliterated:26b', size: 1 }] }
           : { message: { content: JSON.stringify({ ready: true }) } },
       ),
     }),

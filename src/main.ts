@@ -1,3 +1,4 @@
+import { ContextSettingsSchema, type ContextSettings } from './domain/conversation';
 import './style.css';
 import { FallbackProvider, InferenceScheduler, OllamaAdapter } from './adapters/inference';
 import { IndexedDbSaveRepository, SaveCoordinator } from './adapters/persistence';
@@ -27,6 +28,7 @@ export class GameBootstrap {
   private connectedModel = '';
   private offline = false;
   private connectedEndpoint = '';
+  private contextSettings: ContextSettings = ContextSettingsSchema.parse({});
   private hudMs = 0;
   private readonly autoSave: ReturnType<typeof setInterval>;
   constructor(root: HTMLElement) {
@@ -45,6 +47,7 @@ export class GameBootstrap {
       import: async (file) => {
         await this.requireConnection();
         await this.bridge.restore(this.repository.import(await file.text()));
+        await this.bridge.send({ type: 'configureContext', settings: this.contextSettings });
         await this.save();
       },
       settings: (quality, reducedMotion, debug) => {
@@ -127,10 +130,27 @@ export class GameBootstrap {
     origin: number;
     resume: boolean;
     offline: boolean;
-  }): Promise<void> {
+    backgroundModel: string;
+    backgroundCpu: boolean;
+    contextTokens: number;
+  }): Promise<string | void> {
     await this.rendererReady;
     const provider = options.offline ? new FallbackProvider() : new OllamaAdapter(options.endpoint);
     if (!options.offline) await provider.capabilityCheck(options.model);
+    const context = ContextSettingsSchema.parse({
+      dialogueModel: options.model,
+      backgroundModel: options.backgroundModel,
+      backgroundCpu: options.backgroundCpu,
+      contextTokens: options.contextTokens,
+    });
+    let backgroundWarning = '';
+    if (!options.offline) {
+      const models = await provider.models();
+      if (!models.some((m) => m.name === context.backgroundModel)) {
+        backgroundWarning = `Background model ${context.backgroundModel} is missing. Using ${options.model}. Install the source weights and create the local alias using the Install the background model link in Conversation settings.`;
+        context.backgroundModel = options.model;
+      }
+    }
     this.offline = options.offline;
     this.connectedModel = options.model;
     this.connectedEndpoint = options.endpoint;
@@ -146,7 +166,15 @@ export class GameBootstrap {
           .catch((error) => this.hud.notify(String(error)));
       else
         void this.bridge
-          .send({ type: 'agentResult', jobId: receipt.jobId, output: receipt.output }, 'inference')
+          .send(
+            {
+              type: 'agentResult',
+              jobId: receipt.jobId,
+              output: receipt.output,
+              promptTokens: receipt.promptTokens,
+            },
+            'inference',
+          )
           .catch((error) => this.hud.notify(String(error)));
     });
     if (options.resume) {
@@ -155,7 +183,10 @@ export class GameBootstrap {
         throw new Error('There is no saved journey in this browser yet. Begin a new journey.');
       await this.bridge.restore(saved);
     } else await this.bridge.initialize(options.seed, options.origin);
+    this.contextSettings = context;
+    await this.bridge.send({ type: 'configureContext', settings: context });
     await this.save();
+    return backgroundWarning;
   }
   private async requireConnection(): Promise<void> {
     if (this.offline) return;
@@ -173,6 +204,7 @@ export class GameBootstrap {
     const saved = await this.repository.restore();
     if (!saved) throw new Error('No saved journey found');
     await this.bridge.restore(saved);
+    await this.bridge.send({ type: 'configureContext', settings: this.contextSettings });
   }
   private async exportSave(): Promise<void> {
     const data = this.repository.export(await this.bridge.checkpoint()),

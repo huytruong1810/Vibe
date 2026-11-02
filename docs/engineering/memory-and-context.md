@@ -1,7 +1,8 @@
 # Villager memory and conversation context (AGT-10)
 
-Status: specification, 2026-11-02 (claude, on the director's request). Implementation is
-codex tickets C24 (context and compaction) and C25 (long-term memory). Doctrine:
+Status: C24 candidate, 2026-11-02; live B0 acceptance pending. C25 remains specification.
+Original spec by claude on the director's request. Implementation: C24 (context and
+compaction) and C25 (long-term memory). Doctrine:
 `docs/doctrine/11-living-minds.md` AGT-1.3, AGT-10, AGT-7; ADR 032.
 
 ## 1. What is wrong today (the correction)
@@ -102,6 +103,18 @@ decided[], open[], mood }`, each list ≤ 5 items of ≤ 20 words. Apply only if
   VRAM; measure CPU latency in the smoke and record it).
 - **Remove** the old count-based `compaction` job and `MemoryRepository.compact`'s deletion
   path (C25 replaces consolidation).
+
+C24 implementation notes: the worker's `ConversationContext` owns session state;
+`PlanService.compaction` builds session jobs independently of memory. A turn here is one
+speaker entry, so K=4 retains two player/villager exchanges. The UI frame contains only 32
+recent lines; session history remains worker-owned. Settings live in browser preferences,
+not saves. Summary validation also bounds string lengths and rejects summaries consuming
+more than half of the dialogue input budget at the maximum calibration ratio (4).
+`prompt_eval_count` calibrates estimates per model using cumulative actual/estimated
+ratios, bounded to 1 to 4 times the initial UTF-8 estimate to contain malformed/outlier
+telemetry. No token estimator guarantees the exact tokenizer count; the 5% reserve and
+95% fallback provide headroom. See the C24 operation/smoke procedure in
+[operations](../operations/operations.md).
 
 ### 3.2 Long-term memory (C25)
 

@@ -33,11 +33,14 @@ export interface HudHandlers {
   enter(options: {
     endpoint: string;
     model: string;
+    backgroundModel: string;
+    backgroundCpu: boolean;
+    contextTokens: number;
     seed: number;
     origin: number;
     resume: boolean;
     offline: boolean;
-  }): Promise<void>;
+  }): Promise<string | void>;
   discover(endpoint: string): Promise<readonly ModelInfo[]>;
   save(): Promise<void>;
   load(): Promise<void>;
@@ -80,7 +83,16 @@ export class HudPresenter {
       const settings = JSON.parse(localStorage.getItem('hearthwild-connection') ?? 'null') as {
         endpoint?: string;
         model?: string;
+        backgroundModel?: string;
+        backgroundCpu?: boolean;
+        contextTokens?: number;
       } | null;
+      if (settings?.backgroundModel)
+        this.el<HTMLInputElement>('background-model').value = settings.backgroundModel;
+      if (settings?.backgroundCpu !== undefined)
+        this.el<HTMLInputElement>('background-cpu').checked = settings.backgroundCpu;
+      if (settings?.contextTokens)
+        this.el<HTMLInputElement>('context-tokens').value = String(settings.contextTokens);
       if (settings?.endpoint) this.el<HTMLInputElement>('endpoint').value = settings.endpoint;
       if (settings?.model)
         this.el<HTMLSelectElement>('model').replaceChildren(
@@ -344,17 +356,26 @@ export class HudPresenter {
     const options = {
       endpoint: this.el<HTMLInputElement>('endpoint').value,
       model: this.el<HTMLSelectElement>('model').value,
+      backgroundModel: this.el<HTMLInputElement>('background-model').value,
+      backgroundCpu: this.el<HTMLInputElement>('background-cpu').checked,
+      contextTokens: Number(this.el<HTMLInputElement>('context-tokens').value),
       seed: Number(this.el<HTMLInputElement>('seed').value),
       origin: Number(this.el<HTMLSelectElement>('origin').value),
       resume,
       offline,
     };
     try {
-      await this.handlers.enter(options);
+      const warning = await this.handlers.enter(options);
       try {
         localStorage.setItem(
           'hearthwild-connection',
-          JSON.stringify({ endpoint: options.endpoint, model: options.model }),
+          JSON.stringify({
+            endpoint: options.endpoint,
+            model: options.model,
+            backgroundModel: options.backgroundModel,
+            backgroundCpu: options.backgroundCpu,
+            contextTokens: options.contextTokens,
+          }),
         );
       } catch {
         /* Optional preference. */
@@ -364,9 +385,10 @@ export class HudPresenter {
         ? 'FALLBACK DIALOGUE - LOCAL AI OFF'
         : `LOCAL AI · ${options.model}`;
       this.notify(
-        resume
-          ? 'Welcome back. Your little world remembers.'
-          : `Welcome to ${VILLAGES[options.origin]!.name}. Take your time. Look around.`,
+        warning ||
+          (resume
+            ? 'Welcome back. Your little world remembers.'
+            : `Welcome to ${VILLAGES[options.origin]!.name}. Take your time. Look around.`),
       );
     } catch (error) {
       status.textContent = error instanceof Error ? error.message : 'Unable to start the game.';
@@ -481,6 +503,9 @@ export class HudPresenter {
     this.el('performance-mini').textContent = `${Math.round(stats.fps)} FPS`;
     this.el('debug-stats').textContent =
       `Tick ${frame.tick} · simulation ${frame.performance.stepMs.toFixed(2)} ms · ${frame.performance.detailed} detailed creatures · ${frame.performance.paths} pending paths · ${stats.sprites} sprites · ${stats.chunks} chunks\nAI: ${usage?.requests ?? 0} requests · ${usage?.queued ?? 0} queued · ${usage?.errors ?? 0} errors · ${Math.round(usage?.lastMs ?? 0)} ms last request`;
+    if (frame.performance.context)
+      this.el('debug-stats').textContent +=
+        `\nContext: ${frame.performance.context.tokens}/${frame.performance.context.budget} tokens ? ${frame.performance.context.compactions} compactions${frame.performance.context.truncated ? ' ? truncated' : ''}`;
     this.el('debug-stats').textContent +=
       `\nRender CPU ${stats.renderMs?.toFixed(2) ?? '?'} ms · load ${stats.loadMs?.toFixed(0) ?? '?'} ms · tracked textures ${((stats.textureBytes ?? 0) / 1048576).toFixed(1)} MiB · framebuffer ${stats.framebufferScale ?? 1} · prototype actors ${stats.prototypeActors ?? 0}\nGPU: ${stats.gpu ?? 'unreported'}${stats.assetError ? `\n${stats.assetError}` : ''}`;
     if (this.el<HTMLInputElement>('debug').checked)

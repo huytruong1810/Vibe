@@ -23,7 +23,7 @@ ollama pull qwen2.5:3b
 npm run test:ollama -- qwen2.5:3b
 ```
 
-The application discovers `/api/tags` and performs a real schema-constrained `/api/chat` check. A successful ping alone is insufficient. The adapter uses nonstreaming JSON responses, a 4,096-token context option, bounded output, and abortable requests. Thinking is disabled for supported Qwen 3/Gemma 4 model families; other models must satisfy the same content contract.
+The application discovers `/api/tags` and performs a real schema-constrained `/api/chat` check. A successful ping alone is insufficient. The adapter uses nonstreaming JSON responses, a configurable context option (8,192 tokens by default), bounded output, and abortable requests. Thinking is disabled for supported Qwen 3/Gemma 4 model families; other models must satisfy the same content contract.
 
 Choose **Play without local AI** or **Resume without local AI** to use deterministic fallback dialogue without any Ollama requests. Export/import and checkpoint loading work in that mode. If you select Connect, the check must succeed before that session starts. During play, a timeout, HTTP error, malformed response, or canceled background request is bounded and reported; deterministic schedules and dialogue fallback keep the session usable. The fallback cannot waive action prerequisites.
 
@@ -48,6 +48,40 @@ layers spill to the CPU; the stock `gemma4:26b` measured 6.3 tokens/s the same w
 responsive play on this laptop pick `gemma4-abliterated:e4b`; the 26B gives richer
 characters at much slower replies. Neither refused the in-character threat test the stock
 26B softened.
+
+### Conversation context and compaction (C24)
+
+In setup, expand **Conversation settings** to select the background model, CPU placement
+(default on), and context size (4,096 to 131,072; default 8,192). The selected context size is
+sent as `num_ctx`; input reserves 384 reply tokens and 5% of the window. Compaction reserves
+768 reply tokens. Missing background aliases produce a visible warning and use the dialogue
+model instead; install aliases with the pull/copy recipe above, not `ollama pull` on a local alias.
+Fallback play requires no model and continues through long conversations.
+
+The worker retains the transcript until close/reload. The UI transports only the latest 32
+lines. At projected 75% input usage, one background compaction summarizes older entries
+and retains four recent speaker entries verbatim. An unchanged conversation revision is
+required to apply it, even while the world is paused for dialogue. At 95%, oldest verbatim
+entries are omitted deterministically; Developer overlay shows tokens, budget, applied
+compactions, and `truncated`. Compaction never writes persistent memory. C25 supplies typed
+memory, extraction and migration separately.
+
+Machine-A B0 command (requires both installed aliases):
+
+```sh
+npm run test:ollama -- gemma4-abliterated:26b --conversation
+```
+
+Optional environment variables: `OLLAMA_BACKGROUND_MODEL`, `OLLAMA_BACKGROUND_CPU=0`
+(disables CPU placement), `OLLAMA_CONTEXT_TOKENS`, and `OLLAMA_SMOKE_DIR` (receipt directory).
+The default receipt directory is the OS temp directory's `hearthwild-ollama-smoke/`;
+retain `conversation-smoke.json` in the replying member's comms folder. The receipt includes
+all 30 exchanges, a player promise at turn 3, recall at turn 28, full reply/compaction
+latencies, and a persistent-memory equality check around each compaction. The lexical
+recall check is preliminary; the director reviews the two turns. This nonstreaming harness
+does not measure AGT-7's first streamed token target, and awaits compaction between turns
+only for measurement. Runtime cancellation/preemption is covered by mocked tests.
+No live C24 hardware result is claimed yet.
 
 ### Browser origins and permissions
 

@@ -501,6 +501,7 @@ export class SimulationHost {
     const c = envelope.command;
     const allowedPaused = [
       'debug',
+      'configureContext',
       'move',
       'dialogue',
       'closeDialogue',
@@ -965,6 +966,7 @@ export class SimulationHost {
         this.pauses.acquire('dialogue');
         npc.facingX = this.player.x - npc.x;
         npc.facingY = this.player.y - npc.y;
+        this.plans.context.open(npc.profileId);
         this.dialogue = {
           npcId: npc.profileId,
           revision: npc.revision,
@@ -980,33 +982,26 @@ export class SimulationHost {
         };
         break;
       }
+      case 'configureContext':
+        ok = this.plans.context.configure(c.settings);
+        if (!ok) message = 'Close this conversation before reducing its context size.';
+        break;
       case 'dialogue': {
         if (!this.dialogue || this.dialogue.pendingJob) {
           ok = false;
           message = 'Wait for the villager’s response.';
           break;
         }
-        if (this.dialogue.lines.length >= 31) {
-          ok = false;
-          message = 'Finish this conversation before starting a new one.';
-          break;
-        }
         const npc = this.npcs.find((n) => n.profileId === this.dialogue!.npcId)!;
-        if (
-          !this.memories.append(npc, {
-            kind: 'conversation',
-            text: `Player said: ${c.text}`,
-            tick: this.tick,
-            day: this.calendar.day,
-            importance: 5,
-            subjects: ['player'],
-            sourceIds: [],
-          })
-        ) {
-          ok = false;
-          message = 'Memory storage is full. Let consolidation finish before continuing.';
-          break;
-        }
+        this.memories.append(npc, {
+          kind: 'conversation',
+          text: `Player said: ${c.text}`,
+          tick: this.tick,
+          day: this.calendar.day,
+          importance: 5,
+          subjects: ['player'],
+          sourceIds: [],
+        });
         this.dialogue.lines.push({ speaker: 'player', text: c.text });
         const job = this.plans.job(
           npc,
@@ -1016,6 +1011,8 @@ export class SimulationHost {
           'dialogue',
           c.text,
         );
+        this.plans.context.append('player', c.text);
+        this.dialogue.lines.splice(0, Math.max(0, this.dialogue.lines.length - 32));
         this.dialogue.pendingJob = job.id;
         this.queueJob(job);
         break;
@@ -1048,6 +1045,7 @@ export class SimulationHost {
           this.acceptInference(job.id, fallbackDialogue(profile, lastLine));
           message = `Local AI unavailable (${c.reason}). A deterministic response kept the conversation playable.`;
         } else {
+          this.plans.context.release(c.jobId);
           this.pendingJobs.delete(c.jobId);
           message = 'Background inference postponed.';
         }
@@ -1055,7 +1053,12 @@ export class SimulationHost {
       }
       case 'agentResult': {
         const job = this.pendingJobs.get(c.jobId);
-        if ((this.pauses.paused || this.acceleration > 1) && job && job.kind !== 'dialogue') {
+        if (
+          (this.pauses.paused || this.acceleration > 1) &&
+          job &&
+          job.kind !== 'dialogue' &&
+          job.kind !== 'compaction'
+        ) {
           if (
             !this.deferredResults.some(
               (e) => e.command.type === 'agentResult' && e.command.jobId === c.jobId,
@@ -1064,6 +1067,12 @@ export class SimulationHost {
             this.deferredResults.push(envelope);
           message = 'Background proposal waits for simulation resume.';
         } else {
+          if (job)
+            this.plans.context.calibrate(
+              job.model ?? this.plans.context.settings.dialogueModel,
+              job.messages,
+              c.promptTokens,
+            );
           const result = this.acceptInference(c.jobId, c.output);
           message = result.message;
           ok = result.ok;
@@ -1125,7 +1134,10 @@ export class SimulationHost {
   private queueJob(job: InferenceJob): void {
     if (this.pendingJobs.size >= 16) {
       const oldest = [...this.pendingJobs.values()].find((j) => j.kind !== 'dialogue');
-      if (oldest) this.pendingJobs.delete(oldest.id);
+      if (oldest) {
+        this.plans.context.release(oldest.id);
+        this.pendingJobs.delete(oldest.id);
+      }
     }
     this.pendingJobs.set(job.id, job);
     this.outgoingJobs.push(job);
@@ -1135,6 +1147,14 @@ export class SimulationHost {
     if (!job || job.session !== this.session)
       return { ok: false, message: 'Obsolete inference result ignored.' };
     this.pendingJobs.delete(id);
+    if (job.kind === 'compaction') {
+      const applied =
+        !!job.compactionTarget && this.plans.context.apply(id, job.compactionTarget, output);
+      return {
+        ok: applied,
+        message: applied ? '' : 'Stale or invalid conversation summary ignored.',
+      };
+    }
     const npc = this.npcs.find((n) => n.profileId === job.npcId)!;
     if (job.expectedRevision !== npc.revision)
       return this.failedDialogue(job, 'The villager’s state changed before the response arrived.');
@@ -1164,7 +1184,12 @@ export class SimulationHost {
         subjects: ['player', npc.profileId],
         sourceIds: [],
       });
-      if (parsed.data.action.type !== 'NONE') this.dialogue.staged.push(parsed.data.action);
+      this.plans.context.append('npc', parsed.data.dialogue, parsed.data.emotion);
+      this.dialogue.lines.splice(0, Math.max(0, this.dialogue.lines.length - 32));
+      const compaction = this.plans.compaction(npc, this.session);
+      if (compaction) this.queueJob(compaction);
+      if (parsed.data.action.type !== 'NONE' && this.dialogue.staged.length < 32)
+        this.dialogue.staged.push(parsed.data.action);
       return {
         ok: true,
         message:
@@ -1199,17 +1224,14 @@ export class SimulationHost {
     }
     const parsed = ReflectionResponseSchema.safeParse(output);
     if (!parsed.success) return { ok: false, message: 'Invalid memory synthesis rejected.' };
-    const committed =
-      job.kind === 'compaction'
-        ? this.memories.compact(npc, job.memoryRevision, job.sourceIds, parsed.data)
-        : this.reflections.commit(
-            npc,
-            job,
-            parsed.data,
-            this.tick,
-            this.calendar.day,
-            this.calendar.elapsedSeconds,
-          );
+    const committed = this.reflections.commit(
+      npc,
+      job,
+      parsed.data,
+      this.tick,
+      this.calendar.day,
+      this.calendar.elapsedSeconds,
+    );
     return {
       ok: committed,
       message: committed ? '' : 'Memory revision changed; source records were retained.',
@@ -1226,6 +1248,7 @@ export class SimulationHost {
     if (!this.dialogue) return '';
     const dialogue = this.dialogue;
     if (dialogue.pendingJob) this.pendingJobs.delete(dialogue.pendingJob);
+    this.plans.context.close();
     this.dialogue = null;
     this.pauses.release('dialogue');
     if (this.pauses.paused) {
@@ -2039,6 +2062,7 @@ export class SimulationHost {
           0,
         ),
         inferencePending: this.pendingJobs.size,
+        context: { ...this.plans.context.debug },
       },
     };
   }
@@ -2185,6 +2209,7 @@ export class SimulationHost {
     this.outgoingJobs.length = 0;
     this.deferredResults.length = 0;
     this.deferredConversations.length = 0;
+    this.plans.context.close();
     this.dialogue = null;
     this.pauses.clear();
     this.movement = { x: 0, y: 0 };

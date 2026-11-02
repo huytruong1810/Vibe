@@ -18,7 +18,7 @@ export interface InferenceProvider {
     job: InferenceJob,
     model: string,
     signal: AbortSignal,
-  ): Promise<{ output: unknown; tokens: number }>;
+  ): Promise<{ output: unknown; tokens: number; promptTokens?: number }>;
 }
 
 /** Drives the normal failure receipts immediately, without network requests or fabricated actions. */
@@ -113,7 +113,9 @@ export class OllamaAdapter implements InferenceProvider {
     format: unknown,
     outputLimit: number,
     signal: AbortSignal,
-  ): Promise<{ message: { content: string }; eval_count?: number }> {
+    contextTokens = 8192,
+    numGpu?: number,
+  ): Promise<{ message: { content: string }; eval_count?: number; prompt_eval_count?: number }> {
     const data = (await this.call('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -125,26 +127,43 @@ export class OllamaAdapter implements InferenceProvider {
         stream: false,
         ...(model.startsWith('qwen3') || model.startsWith('gemma4') ? { think: false } : {}),
         keep_alive: '5m',
-        options: { temperature: 0.4, num_ctx: 4096, num_predict: outputLimit },
+        options: {
+          temperature: 0.4,
+          num_ctx: contextTokens,
+          num_predict: outputLimit,
+          ...(numGpu === undefined ? {} : { num_gpu: numGpu }),
+        },
       }),
-    })) as { message?: { content?: unknown }; eval_count?: number };
+    })) as { message?: { content?: unknown }; eval_count?: number; prompt_eval_count?: number };
     if (typeof data.message?.content !== 'string')
       throw new Error('Ollama did not return message content');
-    return data as { message: { content: string }; eval_count?: number };
+    return data as {
+      message: { content: string };
+      eval_count?: number;
+      prompt_eval_count?: number;
+    };
   }
   async generate(
     job: InferenceJob,
     model: string,
     signal: AbortSignal,
-  ): Promise<{ output: unknown; tokens: number }> {
+  ): Promise<{ output: unknown; tokens: number; promptTokens?: number }> {
     const response = await this.chat(
       model,
       job.messages,
       RESPONSE_SCHEMAS[job.kind],
-      job.kind === 'dialogue' ? 384 : 256,
+      job.outputLimit ?? (job.kind === 'dialogue' ? 384 : 256),
       signal,
+      job.contextTokens ?? 8192,
+      job.numGpu,
     );
-    return { output: JSON.parse(response.message.content), tokens: response.eval_count ?? 0 };
+    return {
+      output: JSON.parse(response.message.content),
+      tokens: response.eval_count ?? 0,
+      ...(Number.isInteger(response.prompt_eval_count) && response.prompt_eval_count! >= 0
+        ? { promptTokens: response.prompt_eval_count }
+        : {}),
+    };
   }
 }
 
@@ -152,6 +171,7 @@ export interface InferenceReceipt {
   readonly jobId: string;
   readonly output?: unknown;
   readonly error?: string;
+  readonly promptTokens?: number;
 }
 /** One in-flight request; real-time budget, deadlines, and dialogue preemption. */
 export class InferenceScheduler {
@@ -243,11 +263,15 @@ export class InferenceScheduler {
     this.requests++;
     const timeout = setTimeout(() => abort.abort(), job.kind === 'dialogue' ? 45_000 : 30_000);
     this.settling = this.provider
-      .generate(job, this.model, abort.signal)
+      .generate(job, job.model ?? this.model, abort.signal)
       .then((response) => {
         if (generation !== this.generation) return;
         this.outputTokens += response.tokens;
-        this.receipt({ jobId: job.id, output: response.output });
+        this.receipt({
+          jobId: job.id,
+          output: response.output,
+          promptTokens: response.promptTokens,
+        });
       })
       .catch((error: unknown) => {
         if (generation !== this.generation) return;

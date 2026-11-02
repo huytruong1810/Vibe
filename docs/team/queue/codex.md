@@ -33,7 +33,7 @@ and local-generation tickets (C26–C31) sit in their own section.
 
 ### C24 · Conversation context and compaction on gemma4-abliterated:e4b at 75%
 
-- status: open (after C22)
+- status: candidate (2026-11-02; local checks pass, machine-A B0 and director review pending)
 - owner: codex
 - goal: a villager keeps the thread of a long conversation, and no prompt ever passes its budget, without compaction touching long-term memory.
 - spec: [memory and context](../../engineering/memory-and-context.md) §1, §2, §3.1, §4; doctrine AGT-1.3, AGT-10.1–10.2, AGT-7; ADR 032.
@@ -43,7 +43,7 @@ and local-generation tickets (C26–C31) sit in their own section.
   3. Settings: background model, "run on CPU", context size; model check in the setup dialog (`gemma4-abliterated:e4b` missing → clear install line, fallback to the dialogue model with a warning).
   4. Remove the count-based `needsCompaction` path and the deleting `MemoryRepository.compact`; until C25 lands, keep memory records as they are (no deletion).
 - done when: §4 rows "budget and trigger" and "no memory loss" pass in `npm run check`; the debug overlay shows prompt tokens, budget and compactions; blender's live smoke (B0) runs a 30-turn conversation where the villager recalls a turn-3 promise at turn 28, with compaction and reply latencies recorded in `docs/operations/`.
-- evidence:
+- evidence: 2026-11-02: `npm run check` 365 tests / 29 files; 19 browser journeys plus final long-conversation rerun; production beta 2/2 at both bases. [Candidate report](../comms/codex/2026-11-02T2056--to-all--c24-context-candidate.md); [B0 request](../comms/codex/2026-11-02T2056--to-blender--test-c24-conversation.md). Compaction preserves persistent memory; no live latency/recall result yet.
 
 ### C25 · Long-term memory v2: typed records, extraction operations, core blocks, embedding retrieval
 
@@ -369,5 +369,6 @@ C8 holds the remaining brief P0 rows; the learned creature brain (C15, C16) is g
 - status: open (recurring)
 - goal: every queue has two or more open tickets; split big tickets; turn the brief's backlog (P1–P3) into tickets as each milestone lands; keep skills and docs truthful to the code (a skill must never describe a feature that doesn't exist).
 - done when: never closes; add a dated evidence line each week
+- update 2026-11-02: integrated studio 8085a9e with C17 still archived. C32 already tracks Riverlands previous-revision overview; no duplicate ticket. Hatchet remains staged: `art:integrate` currently maps species/npc appearances, so item sidecars need tool support before M25/C23; no NPC override or ledger bypass. C26-C32 retain their upstream statuses.
 - evidence: 2026-10-31: B2 is opened by [go-world](../comms/codex/archive/2026-10-31T1640--to-blender--go-world.md); B6/B7 remain actionable. Communicator has M12/M13 review/kit work and M14–M16 follow-ups; [ack correction](../comms/codex/archive/2026-10-31T1640--to-communicator--c6-ack-link.md) is relayed to its owner. No duplicate tickets added.
 - update 2026-11-01: B13 offers technical item calibration while real source prep stays gated. M19 requests the actual native candidate JSON as a review artifact; M22's audit is received and C3f is the whole-source compatibility prerequisite. Existing B2/B3/B4 and M9/M11 remain available subject to their explicit input gates. No invented approvals or protected-file workarounds.

@@ -34,7 +34,7 @@ describe('agent grounding and memory', () => {
       NPC_PROFILES[0]!,
       'world:budget',
       30,
-      'compaction',
+      'reflection',
     );
     const context = JSON.parse(job.messages[1]!.content) as {
       memories: { id: string; text: string }[];
@@ -112,7 +112,7 @@ describe('agent grounding and memory', () => {
     });
     expect(npcs[0]!.memory.records).toHaveLength(1);
   });
-  it('retrieves relevant memories and preserves source turns if compaction is stale', () => {
+  it('retrieves relevant memories without rewriting their source records', () => {
     const npc = new NpcProfileRegistry().create()[0]!,
       memories = new MemoryRepository();
     const a = memories.append(npc, {
@@ -144,26 +144,8 @@ describe('agent grounding and memory', () => {
       sourceIds: [],
       subjects: [],
     });
-    expect(
-      memories.compact(npc, revision, [a.id], {
-        summary: 'We plan to inspect the bridge.',
-        sourceIds: [a.id],
-      }),
-    ).toBe(false);
+    expect(npc.memory.revision).toBeGreaterThan(revision);
     expect(npc.memory.records.some((r) => r.id === a.id)).toBe(true);
-    expect(
-      memories.compact(npc, npc.memory.revision, [a.id], {
-        summary: 'Unsupported.',
-        sourceIds: ['invented'],
-      }),
-    ).toBe(false);
-    expect(
-      memories.compact(npc, npc.memory.revision, [a.id], {
-        summary: 'We plan to inspect the bridge.',
-        sourceIds: [a.id],
-      }),
-    ).toBe(true);
-    expect(npc.memory.records.some((r) => r.id === a.id)).toBe(false);
   });
   it('shares attributed hearsay without recursively broadcasting hearsay as a fact', () => {
     const npcs = new NpcProfileRegistry().create().slice(0, 2),
