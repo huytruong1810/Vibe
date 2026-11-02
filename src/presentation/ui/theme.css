@@ -723,3 +723,18 @@ body {
     top: 12px;
   }
 }
+
+#build-stamp {
+  overflow-wrap: anywhere;
+}
+#beta-notes {
+  margin-block: 12px;
+}
+#beta-notes summary {
+  cursor: pointer;
+}
+
+.hd-game .setup-dialog[open] {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: min(1100px, calc(100vw - 24px));
+}

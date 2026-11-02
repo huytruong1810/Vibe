@@ -21,6 +21,19 @@ export interface InferenceProvider {
   ): Promise<{ output: unknown; tokens: number }>;
 }
 
+/** Drives the normal failure receipts immediately, without network requests or fabricated actions. */
+export class FallbackProvider implements InferenceProvider {
+  async models(): Promise<readonly ModelInfo[]> {
+    return [];
+  }
+  async capabilityCheck(): Promise<void> {
+    throw new Error('Local AI is disabled');
+  }
+  async generate(): Promise<never> {
+    throw new Error('Playing without local AI');
+  }
+}
+
 export class OllamaAdapter implements InferenceProvider {
   readonly endpoint: string;
   constructor(
@@ -41,10 +54,22 @@ export class OllamaAdapter implements InferenceProvider {
     this.endpoint = url.origin;
   }
   private async call(path: string, init: RequestInit): Promise<unknown> {
-    const response = await this.fetcher(`${this.endpoint}${path}`, init);
+    const origin =
+      typeof location === 'undefined' ? 'https://huytruong1810.github.io' : location.origin;
+    let response: Response;
+    try {
+      response = await this.fetcher(`${this.endpoint}${path}`, init);
+    } catch (error) {
+      if (init.signal?.aborted) throw error;
+      throw new Error(
+        `Could not reach local Ollama. Start Ollama; set OLLAMA_ORIGINS=${origin} in its service environment and restart it. Allow local-network access for this site in your browser. You can also choose Play without local AI.`,
+      );
+    }
     if (!response.ok)
       throw new Error(
-        `Ollama returned HTTP ${response.status}. Check the selected model and allowed browser origin.`,
+        response.status === 403
+          ? `Ollama returned HTTP 403. Set OLLAMA_ORIGINS=${origin} in its service environment and restart Ollama. You can also choose Play without local AI.`
+          : `Ollama returned HTTP ${response.status}. Check the selected model and local server.`,
       );
     const text = await response.text();
     if (text.length > 128_000) throw new Error('Ollama response exceeded its size limit');

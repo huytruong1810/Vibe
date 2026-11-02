@@ -1,4 +1,5 @@
-import { mountHudView, escapeHtml } from './ui/view';
+import { appUrl } from './assets/url';
+import { mountHudView, loadBetaNotes, escapeHtml } from './ui/view';
 import {
   commandForIntent,
   hudViewState,
@@ -35,6 +36,7 @@ export interface HudHandlers {
     seed: number;
     origin: number;
     resume: boolean;
+    offline: boolean;
   }): Promise<void>;
   discover(endpoint: string): Promise<readonly ModelInfo[]>;
   save(): Promise<void>;
@@ -67,6 +69,7 @@ export class HudPresenter {
   constructor(root: HTMLElement, handlers: HudHandlers) {
     this.handlers = handlers;
     mountHudView(root);
+    void loadBetaNotes(root);
     this.gameElement = root.querySelector<HTMLElement>('#game-viewport')!;
     this.bind();
     this.renderEmpty();
@@ -103,6 +106,8 @@ export class HudPresenter {
       void this.enter(false);
     });
     this.el('resume-button').addEventListener('click', () => void this.enter(true));
+    this.el('offline-button').addEventListener('click', () => void this.enter(false, true));
+    this.el('offline-resume-button').addEventListener('click', () => void this.enter(true, true));
     this.el('discover-button').addEventListener('click', () => void this.discover());
     this.el('combine-button').addEventListener(
       'click',
@@ -326,19 +331,23 @@ export class HudPresenter {
       button.disabled = false;
     }
   }
-  private async enter(resume: boolean): Promise<void> {
+  private async enter(resume: boolean, offline = false): Promise<void> {
     const begin = this.el<HTMLButtonElement>('enter-button'),
       resumeButton = this.el<HTMLButtonElement>('resume-button'),
       status = this.el('setup-status');
-    begin.disabled = resumeButton.disabled = true;
-    status.textContent =
-      'Checking local AI and preparing the world. A cold model can take a moment…';
+    const offlineBegin = this.el<HTMLButtonElement>('offline-button'),
+      offlineResume = this.el<HTMLButtonElement>('offline-resume-button');
+    begin.disabled = resumeButton.disabled = offlineBegin.disabled = offlineResume.disabled = true;
+    status.textContent = offline
+      ? 'Preparing your world with fallback dialogue...'
+      : 'Checking local AI and preparing the world. A cold model can take a moment...';
     const options = {
       endpoint: this.el<HTMLInputElement>('endpoint').value,
       model: this.el<HTMLSelectElement>('model').value,
       seed: Number(this.el<HTMLInputElement>('seed').value),
       origin: Number(this.el<HTMLSelectElement>('origin').value),
       resume,
+      offline,
     };
     try {
       await this.handlers.enter(options);
@@ -351,7 +360,9 @@ export class HudPresenter {
         /* Optional preference. */
       }
       this.el<HTMLDialogElement>('setup-dialog').close();
-      this.el('connection-label').textContent = `LOCAL AI · ${options.model}`;
+      this.el('connection-label').textContent = offline
+        ? 'FALLBACK DIALOGUE - LOCAL AI OFF'
+        : `LOCAL AI · ${options.model}`;
       this.notify(
         resume
           ? 'Welcome back. Your little world remembers.'
@@ -360,7 +371,11 @@ export class HudPresenter {
     } catch (error) {
       status.textContent = error instanceof Error ? error.message : 'Unable to start the game.';
     } finally {
-      begin.disabled = resumeButton.disabled = false;
+      begin.disabled =
+        resumeButton.disabled =
+        offlineBegin.disabled =
+        offlineResume.disabled =
+          false;
     }
   }
   private async run(action: () => Promise<void>, message: string): Promise<void> {
@@ -662,7 +677,7 @@ export class HudPresenter {
     const definition = SPECIES.find((s) => s.id === creature.species)!,
       tamed = creature.owner === 0,
       portrait = this.appearance?.portrait('species', creature.species);
-    return `<div class="creature-card"><div class="creature-art creature-art-${creature.species}" style="--creature:#${definition.color.toString(16)}">${portrait ? `<img src="${escapeHtml(portrait.hud128)}" alt="${escapeHtml(creature.name)} portrait" width="128" height="128"/>` : `<span class="creature-ear left"></span><span class="creature-ear right"></span><span class="creature-face"><i></i><i></i></span>`}<span class="creature-spark">✧</span></div><div class="creature-title"><div><div class="eyebrow">${tamed ? 'YOUR COMPANION' : creature.owner > 0 ? 'VILLAGER COMPANION' : 'A WILD LITTLE WONDER'}</div><h3>${creature.name}</h3></div><span class="element-tag">${creature.elements.join(' / ')}</span></div><p class="creature-description">${definition.description}</p><p class="creature-diet"><b>Likes</b> ${definition.diet.map((id) => ITEMS[id].name).join(', ')} <span>·</span> <b>Bathes in</b> ${definition.bath}</p>${tamed ? `<div class="creature-stats"><span>LV ${creature.level}</span><span>HP ${Math.ceil(creature.hp)} / ${creature.maxHp}</span><span>ATK ${creature.attack}</span><span>DEF ${creature.defense}</span></div>${meter('Food', creature.food)}${meter('Water', creature.water, 'water')}${meter('Recreation', creature.recreation)}${meter('Cleanliness', creature.cleanliness, 'water')}${meter('Rest', creature.rest, 'warm')}${meter('Wildness', creature.wildness, 'warm')}` : `<div class="wild-stats"><span>HP ???</span><span>ATK ???</span><span>DEF ???</span></div>${meter('Trust', creature.trust, 'warm')}`}<p class="creature-mode">${escapeHtml(creature.mode)} · ${escapeHtml(creature.nature.join(', '))} · ${Math.round(Math.hypot(creature.x - this.frame!.player.x, creature.y - this.frame!.player.y))} tiles away</p><div class="care-buttons">${(['feed', 'water', 'pet', 'bathe', 'heal'] as const).map((action) => `<button data-action="care" data-care="${action}" data-id="${creature.id}">${action[0]!.toUpperCase() + action.slice(1)}</button>`).join('')}</div><button class="wide-secondary" data-action="${tamed ? 'release' : 'tame'}" data-id="${creature.id}">${tamed ? 'Release to the wild' : 'Form a partnership'} <span>♡</span></button></div>`;
+    return `<div class="creature-card"><div class="creature-art creature-art-${creature.species}" style="--creature:#${definition.color.toString(16)}">${portrait ? `<img src="${escapeHtml(appUrl(portrait.hud128))}" alt="${escapeHtml(creature.name)} portrait" width="128" height="128"/>` : `<span class="creature-ear left"></span><span class="creature-ear right"></span><span class="creature-face"><i></i><i></i></span>`}<span class="creature-spark">✧</span></div><div class="creature-title"><div><div class="eyebrow">${tamed ? 'YOUR COMPANION' : creature.owner > 0 ? 'VILLAGER COMPANION' : 'A WILD LITTLE WONDER'}</div><h3>${creature.name}</h3></div><span class="element-tag">${creature.elements.join(' / ')}</span></div><p class="creature-description">${definition.description}</p><p class="creature-diet"><b>Likes</b> ${definition.diet.map((id) => ITEMS[id].name).join(', ')} <span>·</span> <b>Bathes in</b> ${definition.bath}</p>${tamed ? `<div class="creature-stats"><span>LV ${creature.level}</span><span>HP ${Math.ceil(creature.hp)} / ${creature.maxHp}</span><span>ATK ${creature.attack}</span><span>DEF ${creature.defense}</span></div>${meter('Food', creature.food)}${meter('Water', creature.water, 'water')}${meter('Recreation', creature.recreation)}${meter('Cleanliness', creature.cleanliness, 'water')}${meter('Rest', creature.rest, 'warm')}${meter('Wildness', creature.wildness, 'warm')}` : `<div class="wild-stats"><span>HP ???</span><span>ATK ???</span><span>DEF ???</span></div>${meter('Trust', creature.trust, 'warm')}`}<p class="creature-mode">${escapeHtml(creature.mode)} · ${escapeHtml(creature.nature.join(', '))} · ${Math.round(Math.hypot(creature.x - this.frame!.player.x, creature.y - this.frame!.player.y))} tiles away</p><div class="care-buttons">${(['feed', 'water', 'pet', 'bathe', 'heal'] as const).map((action) => `<button data-action="care" data-care="${action}" data-id="${creature.id}">${action[0]!.toUpperCase() + action.slice(1)}</button>`).join('')}</div><button class="wide-secondary" data-action="${tamed ? 'release' : 'tame'}" data-id="${creature.id}">${tamed ? 'Release to the wild' : 'Form a partnership'} <span>♡</span></button></div>`;
   }
   private renderConversation(): void {
     const frame = this.frame!,
@@ -692,7 +707,7 @@ export class HudPresenter {
     this.setHtml(
       'portrait',
       portrait
-        ? `<img data-key="portrait:${escapeHtml(profile.id)}" src="${escapeHtml(portrait.hud128)}" width="96" height="96" alt="${escapeHtml(profile.name)} portrait"/>`
+        ? `<img data-key="portrait:${escapeHtml(profile.id)}" src="${escapeHtml(appUrl(portrait.hud128))}" width="96" height="96" alt="${escapeHtml(profile.name)} portrait"/>`
         : `<span data-key="portrait-pending:${escapeHtml(profile.id)}" aria-label="${escapeHtml(profile.name)} · portrait pending">${escapeHtml(profile.name[0]!)}</span>`,
     );
     const signature = JSON.stringify([

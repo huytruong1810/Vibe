@@ -3,8 +3,10 @@ on:
   push:
   pull_request:
   schedule:
-    - cron: '0 8 * * 1'
+    - cron: '0 8 * * *'
   workflow_dispatch:
+env:
+  BUILD_BRANCH: ${{ github.event_name == 'schedule' && 'studio/doctrine-v1' || github.head_ref || github.ref_name }}
 permissions:
   contents: read
 jobs:
@@ -15,6 +17,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: ${{ github.event_name == 'schedule' && 'studio/doctrine-v1' || github.ref }}
       - name: Classify source-only art pull request
         id: art-scope
         shell: bash
@@ -75,9 +78,11 @@ jobs:
         if: always()
         with:
           name: verification-artifacts
+          retention-days: 14
           path: |
             artifacts/
             test-results/
+            docs/team/comms/codex/tmp/*.png
   ecology-soak:
     runs-on: ubuntu-latest
     timeout-minutes: 25
@@ -85,6 +90,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: ${{ github.event_name == 'schedule' && 'studio/doctrine-v1' || github.ref }}
       - id: scope
         shell: bash
         env:
@@ -109,4 +115,38 @@ jobs:
         if: always() && steps.scope.outputs.run == 'true'
         with:
           name: ecology-soak
+          retention-days: 14
           path: artifacts/soak.json
+
+  beta-browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        base: ['/', '/Vibe/']
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'schedule' && 'studio/doctrine-v1' || github.ref }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+        env:
+          VITE_BASE_PATH: ${{ matrix.base }}
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:beta
+        env:
+          PLAYWRIGHT_BASE_PATH: ${{ matrix.base }}
+          VITE_BASE_PATH: ${{ matrix.base }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: beta-browser-${{ strategy.job-index }}
+          retention-days: 14
+          path: |
+            artifacts/beta-*.png
+            test-results/

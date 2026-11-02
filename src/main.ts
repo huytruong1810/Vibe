@@ -1,5 +1,5 @@
 import './style.css';
-import { InferenceScheduler, OllamaAdapter } from './adapters/inference';
+import { FallbackProvider, InferenceScheduler, OllamaAdapter } from './adapters/inference';
 import { IndexedDbSaveRepository, SaveCoordinator } from './adapters/persistence';
 import { WorkerBridge } from './adapters/worker-bridge';
 import type { CommandPayload, RenderSnapshot } from './domain/contracts';
@@ -25,6 +25,7 @@ export class GameBootstrap {
   private readonly portals: PortalEntryController;
   private lastEventId = '';
   private connectedModel = '';
+  private offline = false;
   private connectedEndpoint = '';
   private hudMs = 0;
   private readonly autoSave: ReturnType<typeof setInterval>;
@@ -125,10 +126,12 @@ export class GameBootstrap {
     seed: number;
     origin: number;
     resume: boolean;
+    offline: boolean;
   }): Promise<void> {
     await this.rendererReady;
-    const provider = new OllamaAdapter(options.endpoint);
-    await provider.capabilityCheck(options.model);
+    const provider = options.offline ? new FallbackProvider() : new OllamaAdapter(options.endpoint);
+    if (!options.offline) await provider.capabilityCheck(options.model);
+    this.offline = options.offline;
     this.connectedModel = options.model;
     this.connectedEndpoint = options.endpoint;
     this.inference?.dispose();
@@ -137,7 +140,8 @@ export class GameBootstrap {
         void this.bridge
           .send({ type: 'agentFailure', jobId: receipt.jobId, reason: receipt.error }, 'inference')
           .then((result) => {
-            if (result.message.includes('unavailable')) this.hud.notify(result.message);
+            if (!this.offline && result.message.includes('unavailable'))
+              this.hud.notify(result.message);
           })
           .catch((error) => this.hud.notify(String(error)));
       else
@@ -154,6 +158,7 @@ export class GameBootstrap {
     await this.save();
   }
   private async requireConnection(): Promise<void> {
+    if (this.offline) return;
     if (!this.connectedModel) throw new Error('Connect local Ollama before resuming a journey');
     const check = () =>
       new OllamaAdapter(this.connectedEndpoint).capabilityCheck(this.connectedModel);

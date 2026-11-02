@@ -1,3 +1,4 @@
+import { BUILD, BuildStampSchema } from './build';
 import { hashString } from '../domain/core';
 import { migrateSave, type GameSave } from '../domain/save-schema';
 
@@ -104,12 +105,18 @@ export class IndexedDbSaveRepository implements SaveRepository {
     return null;
   }
   export(snapshot: GameSave): string {
-    return JSON.stringify(migrateSave(snapshot));
+    return JSON.stringify({ ...migrateSave(snapshot), build: BUILD });
   }
   import(text: string): GameSave {
     if (new TextEncoder().encode(text).length > 24 * 1024 * 1024)
       throw new Error('Save exceeds the 24 MB import limit');
-    return migrateSave(JSON.parse(text));
+    const parsed: unknown = JSON.parse(text);
+    if (parsed && typeof parsed === 'object' && !Array.isArray(parsed) && 'build' in parsed) {
+      const { build, ...save } = parsed;
+      BuildStampSchema.parse(build);
+      return migrateSave(save);
+    }
+    return migrateSave(parsed);
   }
   async close(): Promise<void> {
     if (this.database) (await this.database).close();

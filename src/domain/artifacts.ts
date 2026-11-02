@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { ARTIFACT_LIMITS as LIMIT, NPC_PROFILES } from '../content/definitions';
-import paletteSpec from '../../art/source/forge/spec/palette.json';
+import paletteSpec from '../../art/source/forge/spec/palette.json' with { type: 'json' };
 import type { ItemInstance } from './inventory';
 
 export const ArtifactIdSchema = z

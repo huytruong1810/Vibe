@@ -485,3 +485,18 @@ player; cost scales with engaged creatures, not population; replays stay exact. 
 straight-line chase in `CombatSystem.advance` is replaced; hunting, territory and
 retaliation rules remain the reasons to engage. A typed-array perception grid replaces
 string-keyed spatial queries in the hot path. See [creature minds](creature-minds.md).
+
+## ADR 034 - Exact-SHA beta deployments and optional local AI
+
+**Decision:** C22 deploys only a successful studio push's SHA, via a separate Pages
+workflow on the default branch. The workflow checks for newer successful runs before
+building and deploying. Catalog records retain canonical `/assets/` URLs; a shared
+transport resolver applies the Vite base at use time, including atlas JSON loading,
+portraits and gallery assets. Vite rewrites CSS public-resource URLs at build time.
+
+**Consequences:** production smoke tests run at `/` and `/Vibe/`, with no development
+test hooks. Export-only build metadata is validated and removed by the persistence
+adapter before the unchanged save-v5 validator. Explicit fallback entry uses the normal
+bounded inference scheduler and deterministic failure receipts, with no model/network
+calls or action bypass. Connect continues to require a real capability check. See
+[beta operations](../operations/operations.md#beta-channel-and-ci-c22).

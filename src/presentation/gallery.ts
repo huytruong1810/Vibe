@@ -1,3 +1,4 @@
+import { appUrl } from './assets/url';
 import { NPC_PROFILES, SPECIES, VILLAGES } from '../content/definitions';
 import {
   ANIMATION_STATES,
@@ -456,7 +457,7 @@ export async function initializeArtGallery(root: HTMLElement): Promise<() => voi
       pageErrors.set(pageId, `Could not decode atlas image: ${page.imageUrl}`);
       renderActiveView();
     };
-    image.src = page.imageUrl;
+    image.src = appUrl(page.imageUrl);
   };
 
   const drawFrame = (
@@ -570,9 +571,9 @@ export async function initializeArtGallery(root: HTMLElement): Promise<() => voi
     }
     if (pVar) {
       panel.hidden = false;
-      el<HTMLImageElement>('art-portrait-cutout').src = pVar.master;
-      el<HTMLImageElement>('art-portrait-128').src = pVar.hud_128;
-      el<HTMLImageElement>('art-portrait-96').src = pVar.hud_96;
+      el<HTMLImageElement>('art-portrait-cutout').src = appUrl(pVar.master);
+      el<HTMLImageElement>('art-portrait-128').src = appUrl(pVar.hud_128);
+      el<HTMLImageElement>('art-portrait-96').src = appUrl(pVar.hud_96);
     } else {
       panel.hidden = true;
     }
@@ -1773,8 +1774,10 @@ export async function initializeArtGallery(root: HTMLElement): Promise<() => voi
 
   try {
     const [catResponse, manifestResponse] = await Promise.all([
-      fetch('/assets/generated/catalog.json', { signal: lifecycle.signal }),
-      fetch('/assets/portraits/manifest.json', { signal: lifecycle.signal }).catch(() => null),
+      fetch(appUrl('/assets/generated/catalog.json'), { signal: lifecycle.signal }),
+      fetch(appUrl('/assets/portraits/manifest.json'), { signal: lifecycle.signal }).catch(
+        () => null,
+      ),
     ]);
 
     if (!catResponse.ok)

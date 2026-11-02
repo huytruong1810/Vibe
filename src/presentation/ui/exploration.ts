@@ -1,3 +1,4 @@
+import { appUrl } from '../assets/url';
 import type { RenderSnapshot } from '../../domain/contracts';
 import type { AppearanceResolver } from '../assets/catalog';
 import { ITEMS } from '../../content/definitions';
@@ -23,7 +24,7 @@ export function updateExploration(
   const actor = frame.actors.find((a) => a.id === frame.player.entityId);
   const portrait = actor && appearance?.portrait(actor.appearanceKind, actor.appearanceId);
   const medallion = el('player-medallion');
-  const url = portrait?.hud96;
+  const url = portrait ? appUrl(portrait.hud96) : undefined;
   if (medallion.dataset.url !== (url ?? '')) {
     medallion.dataset.url = url ?? '';
     medallion.replaceChildren();
@@ -72,7 +73,7 @@ export function updateExploration(
     const portrait = appearance?.portrait('species', partner.species);
     patchView(
       companion,
-      `${portrait ? `<img data-key="partner:portrait" src="${escapeHtml(portrait.hud96)}" alt="${escapeHtml(partner.name)}" class="companion-portrait"/>` : ''}<div class="companion-body" data-key="partner:body"><div class="companion-title">${escapeHtml(partner.name)} · ${Math.ceil(partner.hp)}/${partner.maxHp}</div><div class="companion-needs">${(
+      `${portrait ? `<img data-key="partner:portrait" src="${escapeHtml(appUrl(portrait.hud96))}" alt="${escapeHtml(partner.name)}" class="companion-portrait"/>` : ''}<div class="companion-body" data-key="partner:body"><div class="companion-title">${escapeHtml(partner.name)} · ${Math.ceil(partner.hp)}/${partner.maxHp}</div><div class="companion-needs">${(
         [
           ['Food', partner.food],
           ['Water', partner.water],
@@ -108,7 +109,9 @@ export function updateExploration(
     icon.className = `quick-icon${item ? ' item-pixel' : ''}`;
     icon.textContent = item ? '' : '+';
     const authored = item && ['note', 'book', 'canvas', 'painting'].includes(item.id);
-    icon.style.backgroundImage = authored ? 'url(/assets/generated/ui/frame_thin.png)' : '';
+    icon.style.backgroundImage = authored
+      ? `url(${appUrl('/assets/generated/ui/frame_thin.png')})`
+      : '';
     icon.style.backgroundSize = authored ? '100% 100%' : '';
     if (item)
       icon.style.setProperty('--item', `#${ITEMS[item.id].color.toString(16).padStart(6, '0')}`);
