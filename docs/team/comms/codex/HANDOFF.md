@@ -2,17 +2,21 @@
 
 ## Next: C25; C24 candidate awaits machine-A B0
 
-The director's continuation plan was implemented. C24 is **candidate**, not live-model
-accepted. Take C25 next unless the director reorders; do not redo C24 or reopen C17.
-C25 remains outside this session's implementation. Claude is away until about November 9.
+The director requested a fresh handoff for the next outstanding queue item: **C25,
+long-term memory v2**. C22 and C24 remain candidates awaiting external acceptance;
+C25 is the next open implementation under TEAM-8.4. No C25 runtime work has started.
+Do not redo C24 or reopen C17. Claude is away until about November 9.
 
 ## Integrated baseline
 
 - Engineering branch: `eng/hd-presentation`. Studio through **8085a9e** is integrated
   in merge **f309370**. C24 code is **84f08a3**. The final pull also fetched published
-  studio **d9a62b2** (briefing/approval docs only), integrated in the following merge.
-  Studio 8085a9e CI 41428705037 and ada4efa CI 41521499323 succeeded; d9a62b2 CI
-  41523150519 was running at final integration. Check current CI at startup.
+  studio **d9a62b2** (briefing/approval docs only), integrated in **9a376d7**.
+  Workspace was clean at this handoff start; engineering pull was up to date.
+  Studio d9a62b2 CI **41523150519 completed/success**, independently rechecked.
+  C24 PR run 41524008070 succeeded; code push 41523994321 and engineering-tip
+  runs 41524329426 / 41524315612 were still running when checked. Recheck actual
+  CI at startup; a red studio takes priority. Do not infer success from these pending runs.
 - Preserve C17/save v5, note/stick canvas and bow recipe correction, C22 fallback play,
   asset base-path handling, held-layer compositor, AssetPack 1.7.0 pin and ordered adapter.
 - The only merge conflict was the authored-artifacts test table: save v5 and current
@@ -20,7 +24,81 @@ C25 remains outside this session's implementation. Claude is away until about No
 - Directives 012/013 read. Latest model aliases are `gemma4-abliterated:26b` and
   `gemma4-abliterated:e4b`; use the operations pull/copy recipe, never pull a local alias.
 
-## C24 implementation and interfaces
+## C25 binding inputs and intended result
+
+Read `docs/team/queue/codex.md` C25, `docs/engineering/memory-and-context.md`
+sections 2, 3.2, 3.3 and 4, ADR 032, and AGT-10.3 through AGT-10.6 / AGT-7.
+AGT-10.3: **"Memories are invalidated, never silently deleted."** AGT-10.2 still
+protects C24: **"Compaction changes nothing in long-term memory."**
+
+- Add `MemoryRecordV2` and `CoreBlocks` exactly as specified: six memory types,
+  provenance/confidence, importance, created/access ticks, invalidation/supersession,
+  and bounded self/player/relationship blocks. Deterministic simulation events write
+  typed records directly; only validated memory operations change core blocks.
+- Current save version is **5** (`save-schema.ts`); C25 introduces **v6** and the spec's
+  legacy migration. Preserve IDs and provenance; map old kinds as specified, preserve
+  the old summary as an episodic record (importance 5), and seed core blocks from profiles.
+  Retain all earlier migrations and C17 artifacts/placements/recipe corrections.
+- At conversation end, enqueue at most one extraction on `gemma4-abliterated:e4b`.
+  Input: final summary, last four entries, top-10 similar existing records with IDs,
+  and core blocks. Output: at most eight ADD/UPDATE/INVALIDATE/NOOP operations and
+  two block edits. Validate supplied IDs, entity grounding, caps and revisions before
+  applying with session provenance. Player claims stay `told`; text cannot execute actions.
+- Retrieval: recency `0.995^(game hours since last access)`, importance and relevance,
+  min-max normalized with equal weights. Exclude invalid records; update last access
+  only for selected records. `embeddinggemma` uses 256 dimensions via `/api/embed`;
+  keyword overlap is the no-model fallback. Cache embeddings in IndexedDB by model,
+  dimensions, record ID and text hash; embeddings are never save data.
+- Reflection uses the dialogue model while idle at importance sum 150, producing at
+  most three sourced records. At the 400-valid-record cap, fold lowest-scoring episodic
+  records into an episodic digest and invalidate originals with `supersededBy`.
+  Never fold semantic facts or commitments, and never restore C24's old deleting path.
+
+## C25 entry points and implementation traps
+
+- `src/domain/agents.ts`: current `MemoryRecord`/`MemoryState`, `MemoryRepository`,
+  `MemoryRetriever`, event/perception/social writes, `PlanService`, `ReflectionService`.
+  Current capacity is 256; append can delete low-importance facts or refuse writes.
+  Current retrieval uses unequal keyword/importance/recency weights, and reflection
+  triggers from record counts/time. These are C25 replacement points, not completed v2.
+- `src/domain/conversation.ts` and `simulation.ts`: `closeDialogue` currently discards
+  the worker context immediately. Capture the extraction snapshot before that discard.
+  A summary may lag recent turns when compaction failed or was stale; account for that
+  without unbounded prompts or claiming omitted turns were processed. Conversation IDs
+  are worker-local; persistent provenance must distinguish sessions across reloads.
+- Extend job kinds/response validation, receipt routing and background scheduling for
+  extraction/folding as needed. Preserve cancellation, stale receipt rejection, dialogue
+  preemption, CPU/model settings and no-Ollama play. Check the existing two-per-minute
+  background quota against AGT-7's extraction deadline (30 seconds after close).
+- `src/adapters/inference.ts` owns loopback network I/O; `persistence.ts` owns browser
+  storage. Domain code cannot use network or IndexedDB. Thread embedding results into
+  worker-owned retrieval through validated interfaces; preserve save checkpoint stores.
+- Search all old memory-kind/summary/source-ID consumers, including save validation,
+  diagnostics and tests. C24 currently inserts provisional old summary/commitment context;
+  replace it with typed core blocks within the existing core/memory prompt budgets.
+- C18 needs the `reading` type; sight needs `sight`. Do not implement those tickets,
+  C14 combat, C19 painting infrastructure, or art regeneration during this C25 slice.
+
+## C25 acceptance and machine-A handoff
+
+- Unit tests: every extraction operation and block edit, foreign/stale IDs, grounding,
+  player claims remain told, malformed/over-cap outputs, and injection text changes no
+  actions or witnessed facts. Test at most one extraction per closed conversation.
+- Golden retrieval rankings with fixed vectors; keyword fallback, invalidation exclusion,
+  last-access updates and cache invalidation after text/model/dimension changes.
+- Migration fixtures from v5 plus older supported saves: record counts/types/IDs,
+  preserved summary/provenance, artifacts and round trips. Test reflection threshold,
+  sourced insights and episodic folding without semantic/commitment loss.
+- Keep C24 budget, stale-session, no-memory-mutation and long-dialogue tests green.
+  Run `npm run check`, relevant browser journeys, formatting and hygiene; preserve
+  the serialized 512-artifact <50 ms gate and HD gate. Run benchmark/ecology soak
+  with retrieval measured at no more than 5 ms per prompt; avoid competing timing work.
+- Machine B uses mocks. Once concrete, extend the existing B0 smoke to two conversations:
+  a fact from the first is recalled in the second. Send Blender a test request through
+  own comms with model tags, CPU placement and AGT-7 measurements. No C25 live result
+  or migration is claimed in this handoff; C24's existing B0 request remains pending.
+
+## C24 implementation and interfaces (preserve)
 
 - `src/domain/conversation.ts`: worker-owned `DialogueSession`, strict summary schema,
   bounded prompt sections, 75% projected trigger, four recent speaker entries retained,
@@ -40,7 +118,7 @@ C25 remains outside this session's implementation. Claude is away until about No
 - Session context ends on close/reload; save schema stays v5. C25 owns typed records,
   extraction, embeddings, persistent core blocks and the next save migration.
 
-## Evidence and remaining acceptance
+## Preserved C24 evidence and remaining acceptance
 
 - `npm run check`: **365 tests / 29 files**, including serialized artifact validation
   below 50 ms, asset validation, architecture and production build.
