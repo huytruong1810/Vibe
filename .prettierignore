@@ -8,3 +8,14 @@ artifacts
 package-lock.json
 docs/team/comms
 art/source/world/spec/vendor
+# Machine-written, hash-bound or cache-bound sources: reformatting changes digests,
+# voids approvals (PRD-9) or invalidates forge stage caches. Tools own their bytes.
+art/source/blender/models/published
+art/source/staging
+art/source/exports
+art/source/forge/spec
+art/source/forge/recipes
+art/source/forge/work
+art/source/references/**/sheet.json
+art/source/tiles/sets
+art/source/world/passes
