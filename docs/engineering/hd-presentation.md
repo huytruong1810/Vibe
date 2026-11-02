@@ -503,3 +503,23 @@ three shared JSON Schemas without packing textures. Run it before consuming new
 fields in the Python publisher or the source manifest. The source manifest remains
 the communicator's integration artifact; the tested 1,848-frame V2 graph in
 `assets-v2.test.ts` is a fixture, not a committed production manifest or approval.
+
+## Atlas reproducibility across Windows and Linux (C22)
+
+The asset compiler supplies frame paths in binary descending order to AssetPack's
+packer. AssetPack 1.7's public folder pipe uses unsorted `glob` results; feeding those
+results straight into its order-sensitive rectangle packer produced different page
+placements, PNGs, catalogs and memory reports on Windows and Linux. CI's unchanged
+reproducibility gate caught this at b2afda6.
+
+`scripts/lib/atlas-packer.ts` is a narrow adapter to the existing packing implementation,
+resolved relative to AssetPack's public texture-packer entry. `@assetpack/core` is pinned
+to 1.7.0 because this adapter calls its internal packing function; an upgrade must review
+that interface and pass the shuffled-input multi-page tests at both resolutions.
+Trimming, nearest-neighbor resizing, padding, frame names and source provenance are
+unchanged. Input enumeration is explicit; the compiler no longer relies on directory
+order, glob traversal order or locale collation.
+
+After a repack, compare every decoded full/half frame crop and trim/source dimensions
+against the previous catalog before treating page/rectangle changes as packaging-only.
+Structural asset and decoded-memory gates still apply; a repack grants no art approval.

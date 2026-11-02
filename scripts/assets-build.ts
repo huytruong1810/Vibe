@@ -1,7 +1,6 @@
 import { writeCoverageReport } from './lib/coverage-report';
 import { writeAssetSchemas } from './lib/asset-schemas';
-import { AssetPack } from '@assetpack/core';
-import { texturePacker } from '@assetpack/core/texture-packer';
+import { packAtlasTextures } from './lib/atlas-packer';
 import sharp from 'sharp';
 import { buildUi } from './ui-build';
 import { format } from 'prettier';
@@ -363,27 +362,20 @@ for (const [id, frame] of [...frameSources].sort(([a], [b]) => a.localeCompare(b
   sizeById.set(id, { w: info.width, h: info.height });
   await writeFile(join(cache, 'input/bundle{tps}', `${id}.png`), data);
 }
-await new AssetPack({
-  entry: join(cache, 'input'),
-  output: join(cache, 'packed'),
-  cache: false,
-  strict: true,
-  logLevel: 'warn',
-  pipes: [
-    texturePacker({
-      texturePacker: {
-        padding: 2,
-        allowTrim: true,
-        allowRotation: false,
-        nameStyle: 'short',
-        removeFileExtension: true,
-        autodetectAnimations: false,
-        sharpOptions: { resize: { kernel: 'nearest' } },
-      },
-      resolutionOptions: { resolutions: { full: 1, half: 0.5 }, maximumTextureSize: 2044 }, // padding is added past this; pages stay ≤ 2048
-    }),
-  ],
-}).run();
+const packingInputs = await Promise.all(
+  [...frameSources.keys()].map(async (id) => ({
+    path: `${id}.png`,
+    contents: await readFile(join(cache, 'input/bundle{tps}', `${id}.png`)),
+  })),
+);
+await mkdir(join(cache, 'packed'), { recursive: true });
+for (const resolution of [1, 0.5] as const) {
+  const packed = await packAtlasTextures(packingInputs, resolution);
+  for (const texture of packed.textures)
+    await writeFile(join(cache, 'packed', texture.name), texture.buffer);
+  for (const atlas of packed.jsons)
+    await writeFile(join(cache, 'packed', atlas.name), JSON.stringify(atlas.json));
+}
 type Atlas = {
   frames: Record<
     string,
