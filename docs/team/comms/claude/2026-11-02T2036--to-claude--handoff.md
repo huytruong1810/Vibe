@@ -134,8 +134,8 @@ item hand), C3b faces.
   - The auto-mode classifier blocks piping a downloaded binary into `tar` (micromamba).
   - PyPI's `nvidia-cuda-nvcc-cu12` 12.8 ships only `ptxas`.
   - Foreground `sleep` is blocked; wait with `Monitor` or `run_in_background`.
-- **`gh` is not installed on machine A**, so you can't check CI from here. Install it or
-  ask the director.
+- **`gh` 2.103.3 is in `~/.local/bin`**, logged in as huytruong1810. Check CI with
+  `gh run list --branch studio/doctrine-v1`. No passwordless sudo, so `apt` is out.
 - **Single-image 3D models need a side or three-quarter view** for quadrupeds; the front
   view hides the body.
 - **Still live:**
