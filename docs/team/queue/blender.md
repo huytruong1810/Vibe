@@ -118,7 +118,7 @@ B0 is standing; B2 and B14 wait on the director.
 
 ### B2 · Riverlands map
 
-- status: candidate (revision 2, 2026-11-02, stand-in session; answers the 2026-11-01 changes-requested record) 2026-11-01 (`docs/team/comms/director/approvals/world-aqualia--world-aqualia-aqualia_riverlands-1.md`): fill empty screens, remove staircase river and road edges, give the rectangle zones shapes. Add passes 004+ and re-packet. Edit only the Riverlands level; the village level is approved and in the beta build
+- status: done: director-approved 2026-11-02, layout scope (`docs/team/comms/director/approvals/world-aqualia--world-aqualia-aqualia_riverlands-2.md`); move to the archive at the next queue tidy
 - goal: lay out level `aqualia_riverlands` from the region bible, following the codex golden village as your example.
 - work: `world-builder` skill. One pass per idea: write the pass, `apply`, `render`, open every screen crop, `check`, fix. Never edit `.ldtk` JSON by hand.
 - done when: `worldforge check` passes, the packet is in `art/review/`, and the ticket is `candidate`
