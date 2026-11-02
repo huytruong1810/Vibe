@@ -39,7 +39,7 @@ Queues: [codex](queue/codex.md) · [communicator](queue/communicator.md) · [ble
 | Engineering mandates (2×, layers, paging, …) | codex | **candidate** (contract v2 baseline `a3fc957`, approvals ledger, 9-emotion portraits) | [codex brief](briefs/codex.md) |
 | World pipeline | codex + blender | **candidate** (C4-C6 approved village layout, B2 Riverlands layout candidate, C6b/B6 smoke checks, C7 compiler candidate) | `docs/team/queue/codex.md`, `art/source/world/` |
 | Tileforge | codex | **candidate** (C11 delivered; ADR 022; tile-forge skill) | `docs/engineering/tileforge.md`, `docs/team/queue/codex.md` |
-| Creature minds (System 1) | codex | **candidate** (queued C13–C16) | `docs/doctrine/14-creature-minds.md`, `docs/team/comms/claude/2026-11-01T0700--to-all--directive-005-creature-minds.md` |
+| Creature minds (System 1) | codex | **candidate** (queued C13–C16) | `docs/doctrine/14-creature-minds.md`, `docs/team/comms/claude/archive/2026-11-01T0700--to-all--directive-005-creature-minds.md` |
 | Reference sheets: quadrupeds, humanoids, mannequins | communicator | **candidate** (M10 done, M11 ramps/schemas normalized, redraws in progress) | `art/source/references/` |
 | Voice casting sheet: 10 Aqualia villagers | communicator | **candidate** (Proposal 002 Revision 2, M14) | `docs/team/proposals/002-aqualia-voice-casting.md` |
 | Aqualia day & night scores | communicator | **candidate** (Revision 2, M15) | `art/source/audio/scores/aqualia-{day,night}.json` |
