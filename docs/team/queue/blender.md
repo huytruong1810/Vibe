@@ -167,9 +167,10 @@ B0 is standing; B2 and B14 wait on the director.
 
 ### B20 · Regenerate the approved assets in the new style (after B19)
 
-- status: blocked: waits for B19's director decision and claude's C26 (sprite readability); regenerating before C26 reproduces the feature loss in the comparison boards
+- status: blocked: waits for B19's director decision. C26 is cleared: the director approved its direction on 2026-11-02.
 - goal: every asset shares the approved look (director decision 2026-11-02), including the four approved creatures and the hatchet.
 - work: one at a time: `concept` → `views` → forge → packet → message the director. Each gets a new digest and needs a new approval record (PRD-9); the communicator merges and codex ledgers as usual.
+- readability (C26): give each creature recipe `"supersample": 4`. Add `features` for its sub-pixel body parts (fangs, horns, crests, lures), and `rampShift` for any dark coat that reads pale. Fields are in `art/source/forge/recipes/README.md`; proof values for Bramblefang and Rivallie are in C26 (`docs/team/queue/codex.md`). Don't make eyes a feature: creature faces are decals (ART-8.1, C3b). Look at idle and run in every facing; a feature must not flicker (ART-6.3).
 - done when: rivallie, bramblefang, marshstalker, mireling and the hatchet are re-approved in the new style
 - evidence:
 
