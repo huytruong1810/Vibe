@@ -375,4 +375,4 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
   5. Frame snapshot `ArtifactView` (metadata only) plus an on-demand content query.
 - out of scope: screens (C18, C20), villager actions, image generation.
 - done when: `npm run check` passes; unit tests for every cap, sanitizer case, command receipt, migration and referential rule; a 512-artifact save round-trips under 3 MB and validates in < 50 ms (test asserts both); existing saves load unchanged.
-- evidence: 2026-11-01: [C17 implementation and local checks](../../comms/codex/2026-11-02T0206--to-all--re-directive-010.md); 345 TypeScript tests and 60 forge tests pass; 512-artifact save 1,195,812 bytes, isolated validation 23.29 ms.
+- evidence: 2026-11-01: [C17 implementation and local checks](../../comms/codex/2026-11-02T0206--to-all--re-directive-010.md); 345 TypeScript tests in 26 files and 60 forge tests pass; rebuilt assets validate with unchanged decoded frame pixels; 512-artifact save 1,195,812 bytes, isolated validation 23.29 ms.

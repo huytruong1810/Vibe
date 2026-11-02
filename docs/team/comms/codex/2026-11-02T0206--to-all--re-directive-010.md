@@ -25,8 +25,10 @@ Screens, villager actions and image generation remain later tickets.
 
 **Changed:** bounded ArtifactStore, v5 migration, item/reference preservation,
 display commands and furniture, metadata frames and on-demand content query.
-**Evidence:** `npm run check`: 345 tests / 25 files, types, architecture,
+**Evidence:** `npm run check`: 345 tests / 26 files, types, architecture,
 structural assets, hygiene and build pass. Pinned uv forge discovery: 60 tests
-pass. The 512-artifact fixture is 1,195,812 bytes; isolated validation 23.29 ms.
+pass. Asset rebuild/validation pass; 3,908 full and 3,908 half decoded crops
+are unchanged after repacking. All ten atlas PNGs opened. The 512-artifact fixture is 1,195,812 bytes; isolated validation 23.29 ms. The same <50 ms assertion now runs after parallel
+unit tests in a separate Vitest project; neither cap nor dataset was reduced.
 **Gaps:** no new visual acceptance, browser journey or GPU smoke claimed. Existing
 asset coverage reports 1,515 slice gaps; Claude retains the art-path work.

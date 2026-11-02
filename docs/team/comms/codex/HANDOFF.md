@@ -35,15 +35,19 @@ Read the current constitution, brief, live queue and directives before acting.
 ## Evidence and gaps
 
 - `npm run check` passes: hygiene, types, architecture, structural assets,
-  345 TypeScript tests / 25 files and production build.
+  345 TypeScript tests / 26 files and production build.
 - `python -m uv run --project art/source/forge python -B -m unittest discover
   -s art/source/forge/forgelib -p '*selftest.py'`: 60 tests pass locally.
   uv is available through system Python's module entrypoint, not PATH or the venv.
 - 512-artifact fixture: 1,195,812 bytes; isolated validation 23.29 ms. The final
-  full check passes its unchanged <50 ms assertion. One earlier concurrent run
-  exceeded that budget; timings are machine/load dependent.
-- Structural asset check: 3,908 frames, five full pages, 79.84 MiB decoded;
+  full check passes its unchanged <50 ms assertion in the artifact-budget project,
+  run after the parallel unit project. Earlier concurrent runs exceeded the budget;
+  the dataset and threshold were not reduced.
+- Structural asset check: 3,908 frames, five full pages, 79.77 MiB full / 19.98 MiB half decoded;
   full-world approval coverage 4/41 and 1,515 slice gaps. Do not weaken HD gates.
+- Asset rebuild and structural validation pass. All 3,908 full and 3,908 half
+  decoded frame crops match their pre-repack pixels; only page/rect metadata
+  changed. All ten atlas PNGs were opened. Draft PR descriptions #1/#4 refreshed.
 - No new browser journey, GPU smoke, visual acceptance or Blender execution claimed.
   Machine B uses mocks; send live C18-C20 smokes to Blender through own comms.
 - Hatchet approval covers held-item/icon packet 89102c20...; publication is B14,

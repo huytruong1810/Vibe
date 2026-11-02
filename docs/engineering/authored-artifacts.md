@@ -362,7 +362,8 @@ undo 32 steps. Output goes through the same validation (≤ 16 colours, palette 
 - Validation: unique ids; every `artifact?` reference resolves; every record is referenced
   exactly once (inventory, drop, placement or NPC home store); text and pixel caps; palette
   members.
-- Export/import (settings) carries artifacts; size grows ≤ 2.5 MB worst case.
+- Export/import (settings) carries artifacts; the representative 512-artifact fixture
+  is below 3 MB. The UTF-16 text budget is distinct from serialized UTF-8 JSON size.
 
 ### 9.1 C17 compatibility decisions
 
@@ -389,6 +390,11 @@ receipts. `ArtifactView` and placements accompany frames without text or pixels.
 `WorkerBridge.artifactContent(id)` returns a detached record or null through a
 request-correlated worker message; it requires an initialized journey. Screens and
 villager actions remain C18/C20. No browser/GPU smoke is required for C17.
+
+The 512-artifact capacity test runs in Vitest's `artifact-budget` project after the
+parallel `unit` project completes. It retains the full dataset, 3 MB size cap and
+single warmed validation assertion below 50 ms; isolating timing avoids measuring
+CPU contention with other world-generation tests. `npm test` runs both projects.
 
 ## 10. Security and safety
 
