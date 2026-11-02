@@ -68,6 +68,7 @@ describe('durable physique and bounded motion', () => {
     const old = {
       ...v4,
       version: 4,
+      combat: (({ director: _director, ...legacy }) => legacy)(v4.combat),
       npcs: v4.npcs.map((n) => ({
         ...n,
         memory: {

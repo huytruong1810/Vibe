@@ -1,4 +1,5 @@
 import { ContextSettingsSchema } from './conversation';
+import { CombatSettingsSchema, type CombatSettings } from './combat-director';
 import { z } from 'zod';
 import { NPC_PROFILES, SETTLEMENTS } from '../content/definitions';
 import type { InventoryState } from './inventory';
@@ -17,6 +18,7 @@ import type { ScenePresentation, ProjectilePresentation } from './presentation-c
 const npc = z.enum(NPC_PROFILES.map((n) => n.id) as [NpcId, ...NpcId[]]);
 const slot = z.union([z.literal(0), z.literal(1)]);
 export const CommandPayloadSchema = z.discriminatedUnion('type', [
+  z.object({ type: z.literal('configureCombat'), settings: CombatSettingsSchema }).strict(),
   z.object({ type: z.literal('configureContext'), settings: ContextSettingsSchema }).strict(),
   z
     .object({
@@ -185,6 +187,7 @@ export interface PerformanceView {
   readonly context?: { tokens: number; budget: number; compactions: number; truncated: boolean };
 }
 export interface RenderSnapshot {
+  readonly combatSettings: CombatSettings;
   readonly equipment: EquipmentView;
   readonly scene: ScenePresentation;
   readonly projectiles: readonly ProjectilePresentation[];

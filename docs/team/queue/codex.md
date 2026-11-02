@@ -61,12 +61,12 @@ and local-generation tickets (C26–C31) sit in their own section.
 
 ### C14 · Combat director and telegraphs: fair fights first (CRM-4, CMB-4)
 
-- status: open (after C25)
+- status: in progress (director-authorized C14 implementation, 2026-11-02)
 - owner: codex
 - goal: no matter how many hostiles, the player faces one or two clear threats at a time, every heavy attack is telegraphed, and nothing attacks from off screen.
 - spec: [creature minds](../../engineering/creature-minds.md) §1, §2, §7, §10 (partner icon), §11 rows "director" and "telegraphs"; doctrine CRM-4, CRM-10.3, CMB-4; ADR 033.
 - work:
-  1. Token pools per target (player 2 melee / 1 ranged-element, partner 2/1, villager 1/1; none wild-vs-wild), held windup→recovery, priority grants with ≥ 8 ticks between grants on a target, no player tokens outside the 30 × 17 tile view rectangle.
+  1. Token pools per target (player 2 melee / 1 ranged-element, partner 2/1, villager 1/1; wild targets 2/1 in independent pools per director decision 2026-11-02), held windup→recovery, priority grants with ≥ 8 ticks between grants on a target, no player tokens outside the 30 × 17 tile view rectangle.
   2. Gate today's `CombatSystem.advance` attack start on a token; creatures without one hold at their readiness ring (`max(range + 1.5, kiteRange)`) and circle (a minimal orbit is enough until C13).
   3. Telegraphs for every creature attack over 15% of the target's max HP from windup tick 0 (`ground` arc or `glint`), drawn in the effect layer under VFX, plus the predator crouch-and-shiver on windup frames.
   4. Difficulty knobs (token counts, grant spacing, aggression bias) in settings.

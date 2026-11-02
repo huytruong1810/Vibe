@@ -486,6 +486,16 @@ straight-line chase in `CombatSystem.advance` is replaced; hunting, territory an
 retaliation rules remain the reasons to engage. A typed-array perception grid replaces
 string-keyed spatial queries in the hot path. See [creature minds](creature-minds.md).
 
+**C14 implementation, 2026-11-02:** the director selected independent 2/1 pools for
+wild targets, resolving the spec exemption in favor of CRM-4.1. Save v7 persists
+settings, holds, waiting times and grant timestamps; legacy attack phases continue
+unchanged. Move categories are separate from existing damage kinds. A selection
+permits closing; a hold commits only at successful attack startup. Projection uses a
+one-tile inset inside the 30 × 17 content window and catches up the camera during
+incoming attacks. Inverse effect masks reserve cue space. Existing predator sprites
+receive presentation-only crouch/shiver; authored anticipation remains an art follow-up.
+Full perception, intent selection and reaction delay remain C13.
+
 ## ADR 034 - Exact-SHA beta deployments and optional local AI
 
 **Decision:** C22 deploys only a successful studio push's SHA, via a separate Pages

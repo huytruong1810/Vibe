@@ -25,6 +25,9 @@ export interface ActionTiming {
   readonly endsAt: number;
 }
 export interface ActorPresentation {
+  readonly attackTarget?: number;
+  readonly telegraph?: AttackTelegraph;
+  readonly intent?: 'attack' | 'guard' | 'follow';
   readonly physique?: {
     readonly heightMeters: number;
     readonly massKg: number;
@@ -55,6 +58,15 @@ export interface ActorPresentation {
   readonly pose: ActorPose;
   readonly protected: boolean;
   readonly action: ActionTiming | null;
+}
+export interface AttackTelegraph {
+  readonly kind: 'ground' | 'glint';
+  readonly target: number;
+  readonly range: number;
+  readonly facingX: number;
+  readonly facingY: number;
+  readonly phase: 'windup' | 'active';
+  readonly predator: boolean;
 }
 export interface PresentationCue {
   readonly strength?: number;

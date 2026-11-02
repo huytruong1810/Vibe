@@ -9,6 +9,13 @@ import { clamp, distanceSquared, type Element, type WorldPosition } from './valu
 import { EquipmentService } from './equipment';
 import { ProjectileSystem, type ProjectileSnapshot } from './projectiles';
 import { PHYSIQUES, PhysiquePolicy } from './physique';
+import {
+  CombatDirector,
+  CombatSettingsSchema,
+  COMBAT_VIEW,
+  type AttackCategory,
+  type DirectorSnapshot,
+} from './combat-director';
 
 export interface AttackDefinition {
   readonly id: string;
@@ -96,6 +103,7 @@ export interface Encounter {
   readonly startedAt: number;
 }
 export interface CombatSnapshot {
+  director?: DirectorSnapshot;
   projectiles?: ProjectileSnapshot;
   hunting: number[];
   serial: number;
@@ -284,6 +292,197 @@ export interface CombatEvent {
 }
 /** Combat, threats and hit windows operate on stable entity IDs for every controller. */
 export class CombatSystem {
+  readonly director: CombatDirector;
+  private expectedDamage(
+    a: number,
+    b: number,
+    kind: 'strike' | 'element',
+    power: number,
+    guarded: boolean,
+    potential = false,
+  ): number {
+    const s = this.store,
+      attack = s.definition(a),
+      defend = s.definition(b);
+    const elements = kind === 'strike' ? [] : attack.elements;
+    const multiplier = elements.length
+      ? elements.reduce((sum, e) => sum + ElementPolicy.against(e, defend.elements), 0) /
+        elements.length
+      : 1;
+    return DamagePolicy.damage(
+      power,
+      (attack.attack + (s.level[a]! - 1)) *
+        PhysiquePolicy.attack(s.physique(a), PHYSIQUES[attack.id]),
+      defend.defense * PhysiquePolicy.defense(s.physique(b), PHYSIQUES[defend.id]) +
+        (this.equipment?.defense(s.id(b)) ?? 0),
+      multiplier,
+      potential ? 1 : WellbeingPolicy.multiplier(s.wellbeing(a)),
+      guarded,
+    );
+  }
+  telegraph(
+    id: number,
+    tick: number,
+  ): import('./presentation-contract').AttackTelegraph | undefined {
+    const s = this.store,
+      a = s.slot(id),
+      p = this.pursuits.get(id),
+      attack = this.attacks.get(id);
+    const b = p ? s.slot(p.target) : undefined;
+    if (
+      a === undefined ||
+      b === undefined ||
+      !attack ||
+      s.hp[a]! <= 0 ||
+      s.hp[b]! <= 0 ||
+      s.scene[a] !== s.scene[b]
+    )
+      return;
+    const timing = this.presentation(id, tick);
+    if (!timing || tick < timing.startedAt || tick >= timing.recoveryAt) return;
+    const move = CREATURE_MOVES[s.definition(a).id],
+      weapon = WEAPON_ATTACKS[attack.moveId ?? ''];
+    const predator = !s.isHuman(a) && s.definition(a).diet.includes('meat');
+    if (
+      !predator &&
+      this.expectedDamage(a, b, attack.kind, weapon?.power ?? move.power, false, true) <=
+        s.maxHp(b) * 0.15
+    )
+      return;
+    return {
+      kind: this.category(a, attack) === 'melee' ? 'ground' : 'glint',
+      target: p!.target,
+      range: weapon?.range ?? move.range,
+      facingX: s.facingX[a]!,
+      facingY: s.facingY[a]!,
+      phase: tick < timing.activeAt ? 'windup' : 'active',
+      predator,
+    };
+  }
+  configure(settings: unknown): boolean {
+    const parsed = CombatSettingsSchema.safeParse(settings);
+    if (!parsed.success) return false;
+    this.director.settings = parsed.data;
+    return true;
+  }
+  partnerIntent(id: number, tick: number): 'attack' | 'guard' | 'follow' {
+    return this.presentation(id, tick)
+      ? 'attack'
+      : this.presentationGuard(id, tick)
+        ? 'guard'
+        : this.pursuits.has(id)
+          ? 'attack'
+          : 'follow';
+  }
+  private category(slot: number, attack?: AttackState): AttackCategory {
+    const weapon = attack?.moveId ?? this.weaponMove(this.store.id(slot), slot);
+    return weapon === 'bow_shot'
+      ? 'ranged'
+      : weapon && weapon !== 'element'
+        ? 'melee'
+        : CREATURE_MOVES[this.store.definition(slot).id].category;
+  }
+  private weaponMove(id: number, slot: number): string {
+    const held = this.equipment?.held(id)[0]?.id;
+    return this.store.isHuman(slot) &&
+      held &&
+      ['sword', 'spear', 'bow'].includes(held) &&
+      (held !== 'bow' || (this.equipment!.held(id)[1]?.charges ?? 0) > 0)
+      ? `${held}_${held === 'sword' ? 'slash' : held === 'spear' ? 'thrust' : 'shot'}`
+      : 'element';
+  }
+  /** Collect and rank before movement; a selection permits closing but is not a token hold. */
+  prepareDirector(tick: number): void {
+    const s = this.store,
+      d = this.director;
+    d.begin();
+    for (const [id, p] of this.pursuits) {
+      const a = s.slot(id),
+        b = s.slot(p.target);
+      if (a !== undefined) d.touch(a, id);
+      if (b !== undefined) d.touch(b, p.target);
+    }
+    for (let slot = 0; slot < d.capacity; slot++) {
+      const id = d.ids[slot]!;
+      if (id < 0) continue;
+      if (id === this.player.entityId) continue;
+      if (d.targets[slot] === -1 && !this.attacks.has(id) && s.slot(id) === slot) continue;
+      const p = this.pursuits.get(id),
+        b = p ? s.slot(p.target) : undefined;
+      const attack = this.attacks.get(id);
+      if (
+        s.slot(id) !== slot ||
+        !p ||
+        b === undefined ||
+        s.hp[slot]! <= 0 ||
+        s.hp[b]! <= 0 ||
+        s.scene[slot] !== s.scene[b] ||
+        p.until <= tick ||
+        (d.targets[slot]! >= 0 && d.targets[slot] !== p.target) ||
+        (attack && !this.presentation(id, tick))
+      ) {
+        this.cancelAction(id);
+        d.release(slot);
+        if (s.slot(id) !== slot) d.ids[slot] = -1;
+      }
+    }
+    for (const [id, attack] of this.attacks) {
+      const a = s.slot(id),
+        p = this.pursuits.get(id),
+        b = p ? s.slot(p.target) : undefined;
+      if (a === undefined || b === undefined) continue;
+      d.targets[a] = p!.target;
+      d.held[a] = this.category(a, attack) === 'melee' ? 1 : 2;
+      d.occupied(b, d.held[a]!);
+    }
+    for (const [id, p] of this.pursuits) {
+      const a = s.slot(id),
+        b = s.slot(p.target);
+      if (
+        a === undefined ||
+        b === undefined ||
+        id === 0 ||
+        this.attacks.has(id) ||
+        s.hp[a]! <= 0 ||
+        s.hp[b]! <= 0 ||
+        s.scene[a] !== s.scene[b] ||
+        p.until <= tick ||
+        (p.cause === 'retaliate' && s.nature(a).response === 'avoid') ||
+        (p.cause === 'hunt' && (!this.hunting.has(id) || !NatureRules.canHunt(s, a, b, true)))
+      )
+        continue;
+      const distance = Math.hypot(s.x[a]! - s.x[b]!, s.y[a]! - s.y[b]!);
+      const move = CREATURE_MOVES[s.definition(a).id],
+        weapon = WEAPON_ATTACKS[this.weaponMove(id, a)];
+      if (weapon?.id === 'bow_shot' && this.projectiles.size >= 64) continue;
+      if (
+        distance > 12 ||
+        (this.nextAttack.get(id) ?? 0) > tick ||
+        s.stamina[a]! < (weapon?.stamina ?? 5)
+      )
+        continue;
+      if (
+        p.target === 0 &&
+        (Math.abs(s.x[a]! - this.player.x) > COMBAT_VIEW.width / 2 - COMBAT_VIEW.inset ||
+          Math.abs(s.y[a]! - this.player.y) > COMBAT_VIEW.height / 2 - COMBAT_VIEW.inset)
+      )
+        continue;
+      const category = this.category(a),
+        settings = d.settings;
+      const pool =
+        p.target === 0
+          ? settings.player
+          : s.isHuman(b)
+            ? settings.villager
+            : s.owner[b]! >= 0
+              ? settings.partner
+              : settings.wild;
+      d.consider(a, p.target, b, category, tick, move.aggression, distance, pool[category]);
+    }
+    while (d.next(tick) >= 0) {
+      /* selected slots close or start below */
+    }
+  }
   readonly projectiles = new ProjectileSystem();
   presentationGuard(id: number, tick: number): boolean {
     if (id === 0) return !!this.player.guarding;
@@ -334,6 +533,7 @@ export class CombatSystem {
     private readonly equipment?: EquipmentService,
     private readonly worldFor?: (scene: number) => ChunkStore,
   ) {
+    this.director = new CombatDirector(store.capacity);
     this.encounters = new EncounterService(store, player, npcs);
   }
   attack(kind: 'strike' | 'element', tick: number): boolean {
@@ -371,6 +571,8 @@ export class CombatSystem {
     if (action?.instanceId) this.equipment?.cancel(action.instanceId);
     if (id === 0) this.player.attack = null;
     else this.attacks.delete(id);
+    const slot = this.store.slot(id);
+    if (slot !== undefined) this.director.release(slot);
   }
   danger(id: number, radius = 6): boolean {
     const s = this.store,
@@ -462,21 +664,12 @@ export class CombatSystem {
       (tick < this.player.invulnerableUntil || tick < this.player.dashUntil)
     )
       return;
-    const attack = s.definition(a),
-      defend = s.definition(b),
-      elements = kind === 'strike' ? [] : attack.elements;
-    const multiplier = elements.length
-      ? elements.reduce((sum, e) => sum + ElementPolicy.against(e, defend.elements), 0) /
-        elements.length
-      : 1;
-    const damage = DamagePolicy.damage(
+    const defend = s.definition(b);
+    const damage = this.expectedDamage(
+      a,
+      b,
+      kind,
       power,
-      (attack.attack + (s.level[a]! - 1)) *
-        PhysiquePolicy.attack(s.physique(a), PHYSIQUES[attack.id]),
-      defend.defense * PhysiquePolicy.defense(s.physique(b), PHYSIQUES[defend.id]) +
-        (this.equipment?.defense(target) ?? 0),
-      multiplier,
-      WellbeingPolicy.multiplier(s.wellbeing(a)),
       target === 0 ? !!this.player.guarding : this.defense.defended(defend, tick),
     );
     s.hp[b] = Math.max(0, s.hp[b]! - damage);
@@ -540,7 +733,7 @@ export class CombatSystem {
         type: 'hunt',
         actor,
         target,
-        text: `${attack.name} brought down ${defend.name}.`,
+        text: `${s.definition(a).name} brought down ${defend.name}.`,
       });
   }
   advance(tick: number, spatial: SpatialIndex, now = 480 + tick / 30): CombatEvent[] {
@@ -610,6 +803,7 @@ export class CombatSystem {
       else if (s.nature(enemy).response === 'retaliate' && !this.pursuits.has(target))
         this.pursue(target, s.id(partner), 'retaliate', tick);
     }
+    this.prepareDirector(tick);
     for (const [id, p] of this.pursuits) {
       const a = s.slot(id),
         b = s.slot(p.target);
@@ -626,7 +820,7 @@ export class CombatSystem {
         this.pursuits.delete(id);
         const cancelled = this.attacks.get(id);
         if (cancelled?.instanceId) this.equipment?.cancel(cancelled.instanceId);
-        this.attacks.delete(id);
+        this.cancelAction(id);
         this.huntReservations.delete(p.target);
         this.failedHunts.set(id, tick + 150);
         if (a !== undefined) s.mode[a] = CreatureMode.Wander;
@@ -635,7 +829,7 @@ export class CombatSystem {
       if (s.scene[a] !== s.scene[b]) {
         const cancelled = this.attacks.get(id);
         if (cancelled?.instanceId) this.equipment?.cancel(cancelled.instanceId);
-        this.attacks.delete(id);
+        this.cancelAction(id);
         continue;
       }
       SleepSystem.interrupt(s, a, this.now);
@@ -659,11 +853,28 @@ export class CombatSystem {
         range = weaponMove?.range ?? move.range;
       s.targetX[a] = flee ? s.x[a]! - delta.x : s.x[b]!;
       s.targetY[a] = flee ? s.y[a]! - delta.y : s.y[b]!;
+      const waiting = !flee && !this.attacks.has(id) && !this.director.selected[a];
+      const ring = Math.max(range + 1.5, move.kiteRange);
+      if (waiting) {
+        const radial = Math.max(-1, Math.min(1, distance - ring));
+        const side = id % 2 ? 1 : -1;
+        const nx = delta.x / Math.max(0.001, distance),
+          ny = delta.y / Math.max(0.001, distance);
+        delta.x = nx * radial - ny * 0.25 * side;
+        delta.y = ny * radial + nx * 0.25 * side;
+        s.targetX[a] = s.x[a]! + delta.x;
+        s.targetY[a] = s.y[a]! + delta.y;
+      }
       const combatWorld = this.worldFor?.(s.scene[a]!) ?? this.world;
-      if (id !== player.entityId && combatWorld && distance > (flee ? 0 : range * 0.85)) {
+      if (
+        id !== player.entityId &&
+        combatWorld &&
+        (waiting || distance > (flee ? 0 : range * 0.85))
+      ) {
+        const moveDistance = Math.max(0.001, Math.hypot(delta.x, delta.y));
         const step =
           Math.min(
-            distance,
+            moveDistance,
             (s.definition(a).speed *
               WellbeingPolicy.speed(s.wellbeing(a)) *
               s.movementFactor(a) *
@@ -673,8 +884,8 @@ export class CombatSystem {
         const position = moveOnTerrain(
           combatWorld,
           s.position(a),
-          (delta.x / Math.max(0.001, distance)) * step,
-          (delta.y / Math.max(0.001, distance)) * step,
+          (delta.x / moveDistance) * step,
+          (delta.y / moveDistance) * step,
           creatureTraversal(s, a),
         );
         s.vx[a] = (position.x - s.x[a]!) * 30;
@@ -686,6 +897,7 @@ export class CombatSystem {
       let attack = this.attacks.get(id);
       if (
         !attack &&
+        this.director.selected[a] &&
         distance <= range &&
         (this.nextAttack.get(id) ?? 0) <= tick &&
         s.stamina[a]! >= (weaponMove?.stamina ?? 5)
@@ -704,6 +916,7 @@ export class CombatSystem {
           instanceId,
         };
         this.attacks.set(id, attack);
+        this.director.commit(a, b, this.category(a, attack), tick);
         s.stamina[a]! -= weaponMove?.stamina ?? 5;
         this.nextAttack.set(
           id,
@@ -743,7 +956,7 @@ export class CombatSystem {
         }
         if (elapsed >= definition.windup + definition.active + definition.recovery) {
           this.equipment?.cancel(attack.instanceId!);
-          this.attacks.delete(id);
+          this.cancelAction(id);
         }
       }
     }
@@ -792,10 +1005,14 @@ export class CombatSystem {
       if (r.until <= tick) this.huntReservations.delete(id);
     for (const [id, action] of this.attacks) {
       const slot = s.slot(id),
+        targetSlot = s.slot(this.pursuits.get(id)?.target ?? -1),
         definition = attackDefinition(action);
       if (
         !this.pursuits.has(id) ||
         slot === undefined ||
+        targetSlot === undefined ||
+        s.hp[targetSlot]! <= 0 ||
+        (slot !== undefined && s.scene[slot] !== s.scene[targetSlot]) ||
         s.hp[slot]! <= 0 ||
         tick >= action.startedAt + definition.windup + definition.active + definition.recovery
       )
@@ -811,9 +1028,17 @@ export class CombatSystem {
       for (const id of map.keys()) if (this.store.slot(id) === undefined) map.delete(id);
     for (const id of this.attacks.keys()) if (!this.pursuits.has(id)) this.cancelAction(id);
     for (const id of this.hunting) if (this.store.slot(id) === undefined) this.hunting.delete(id);
+    for (let slot = 0; slot < this.director.capacity; slot++) {
+      const id = this.director.ids[slot]!;
+      if (id >= 0 && (this.store.slot(id) !== slot || !this.pursuits.has(id))) {
+        this.director.release(slot);
+        if (this.store.slot(id) !== slot) this.director.ids[slot] = -1;
+      }
+    }
   }
   snapshot(): CombatSnapshot {
     return {
+      director: this.director.snapshot(),
       projectiles: this.projectiles.snapshot(),
       hunting: [...this.hunting],
       ...this.encounters.snapshot(),
@@ -824,6 +1049,27 @@ export class CombatSystem {
     };
   }
   restore(snapshot: CombatSnapshot): void {
+    this.director.reset();
+    if (snapshot.director) {
+      this.director.settings = structuredClone(snapshot.director.settings);
+      for (const slot of this.store.slots()) this.director.touch(slot, this.store.id(slot));
+      for (const [id, target, category] of snapshot.director.holds) {
+        const slot = this.store.slot(id);
+        if (slot === undefined || !snapshot.attacks.some(([actor]) => actor === id)) continue;
+        this.director.targets[slot] = target;
+        this.director.held[slot] = category === 'melee' ? 1 : 2;
+      }
+      for (const [id, target, since] of snapshot.director.waiting) {
+        const slot = this.store.slot(id);
+        if (slot === undefined) continue;
+        this.director.targets[slot] = target;
+        this.director.since[slot] = since;
+      }
+      for (const [id, tick] of snapshot.director.grants) {
+        const slot = this.store.slot(id);
+        if (slot !== undefined) this.director.lastGrant[slot] = tick;
+      }
+    }
     this.projectiles.restore(snapshot.projectiles ?? { serial: 0, arrows: [] });
     this.encounters.restore(snapshot);
     for (const [map, entries] of [

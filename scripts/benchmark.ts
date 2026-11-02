@@ -5,6 +5,8 @@ import { performance } from 'node:perf_hooks';
 import { SimulationHost } from '../src/domain/simulation';
 import { NPC_PROFILES } from '../src/content/definitions';
 import { migrateSave } from '../src/domain/save-schema';
+import { CombatSystem } from '../src/domain/combat';
+import { EntityStore, bindBody } from '../src/domain/entities';
 
 const samples = Number(process.env.BENCHMARK_TICKS ?? 3000);
 const started = performance.now(),
@@ -127,6 +129,31 @@ for (let i = 0; i < 1100; i++) {
   memoryPlans.job(memoryNpc, NPC_PROFILES[0]!, 'world:benchmark-memory', 1000, 'dialogue', query);
   if (i >= 100) memoryPromptTimings.push(performance.now() - promptStart);
 }
+// Director preparation includes release, candidate collection and deterministic selection.
+// Exercise both one crowded target and 75 independent wild-target pools.
+const directorStore = new EntityStore(),
+  directorPlayer = { ...host.player };
+directorStore.spawnHuman(0, 1, 20, 20);
+bindBody(directorPlayer, directorStore, 0);
+const directorCombat = new CombatSystem(directorStore, directorPlayer, []);
+for (let n = 0; n < 150; n++) directorStore.spawn(6, 20 + (n % 2), 20);
+const directorTimings: number[] = [],
+  wildDirectorTimings: number[] = [];
+for (const paired of [false, true]) {
+  directorCombat.pursuits.clear();
+  directorCombat.director.reset();
+  for (let n = 0; n < 150; n++)
+    directorCombat.pursuits.set(directorStore.id(n), {
+      target: paired ? directorStore.id(n % 2 ? n - 1 : n + 1) : 0,
+      cause: 'territory',
+      until: 10000,
+    });
+  for (let n = 0; n < 3300; n++) {
+    const before = performance.now();
+    directorCombat.prepareDirector(n);
+    if (n >= 300) (paired ? wildDirectorTimings : directorTimings).push(performance.now() - before);
+  }
+}
 const report = {
   recordedAt: new Date().toISOString(),
   runtime: process.version,
@@ -156,6 +183,10 @@ const report = {
   memoryPrompt: summarize(memoryPromptTimings),
   memoryFixture:
     '400 valid records, cached 256-d embeddings, full prompt construction; 100 warmups and 1000 samples',
+  director150: summarize(directorTimings),
+  directorWild150: summarize(wildDirectorTimings),
+  directorFixture:
+    '150 ready Bramblefang: one player target, then 75 independent wild pairs; 300 warmups and 3000 samples each; collection, release and selection included.',
   checkpointMs: +saveMs.toFixed(2),
   checkpointBytes: Buffer.byteLength(serialized),
   nodeRssMiB: +(process.memoryUsage().rss / 2 ** 20).toFixed(1),
@@ -168,5 +199,9 @@ console.log(JSON.stringify(report, null, 2));
 host.dispose();
 if (summarize(memoryTimings).p95Ms > 5) {
   console.error('Memory retrieval/prompt p95 exceeds 5 ms');
+  process.exitCode = 1;
+}
+if (Math.max(summarize(directorTimings).p95Ms, summarize(wildDirectorTimings).p95Ms) > 0.2) {
+  console.error('Combat director p95 exceeds 0.2 ms/tick');
   process.exitCode = 1;
 }

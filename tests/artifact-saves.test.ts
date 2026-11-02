@@ -127,8 +127,10 @@ describe('artifact simulation and save v5', () => {
     const host = new SimulationHost(42, 1, 0),
       current = host.snapshot();
     const { artifacts: _a, placements: _p, artifactSequence: _s, ...legacy } = current;
+    const { director: _director, ...legacyCombat } = current.combat;
     const upgraded = migrateSave({
       ...legacy,
+      combat: legacyCombat,
       version: 4,
       npcs: legacy.npcs.map((n) => ({
         ...n,

@@ -157,7 +157,7 @@ decision 2–4 ticks later (never sooner than 2).
 ### 7.1 Tokens
 
 Pools per target: the player (2 melee, 1 ranged/element), the partner (2/1), each villager
-in a fight (1/1); wild-versus-wild fights don't use tokens. A token is held from
+in a fight (1/1); wild-versus-wild fights use independent per-target pools (2/1), per director decision on 2026-11-02 and CRM-4.1. A token is held from
 windup start to recovery end. Grants each tick go to the waiting candidate with the best
 `priority = waitTicks / 30 + 0.5 × aggression − 0.1 × distance`, with at least **8 ticks
 between grants** on the same target so strikes arrive one after another (staggered
@@ -165,6 +165,15 @@ pressure). Creatures off screen (outside a fixed 30 × 17 tile view rectangle ar
 (CRM-4.3).
 
 ### 7.2 Difficulty knobs (settings → content)
+
+C14 implements independent wild-target pools (director decision, 2026-11-02), explicit
+move categories independent of damage kind, and saved director state in save v7.
+`configureCombat` validates counts (0–16), spacing (8–300 ticks), and aggression bias
+(−1…1); existing attacks finish when limits decrease. Selection permits closing from
+the readiness ring; a hold and grant timestamp commit only when an attack starts.
+The 30 × 17 content rectangle has a one-tile safety inset for projection/elevation;
+the renderer catches up its camera during incoming attacks, without feeding pixels
+into gameplay. Reaction-delay settings and the full intent pipeline remain C13.
 
 Token counts, reaction delay range, an aggression bias added to every species'
 aggression, and the grant spacing. Never a different brain (CRM-4.4).
@@ -177,6 +186,13 @@ element), facing, range. The presentation draws it (ground marking under the att
 in the effect layer, never covered by VFX: CMB-4.3); predators add the crouch-and-shiver
 pose on the first windup frames (CMB-4.2). Telegraphs are also observation inputs, so
 creatures react to the _player's_ windups too (they guard or dash), and to each other.
+
+C14 uses the hit-resolution damage calculation with potential full wellbeing and no
+temporary guard reduction for eligibility. Predator windups always show a cue.
+Ground arcs/glints reserve space through inverse masks on VFX, indicators, labels and
+weather. Crouch/shiver currently transforms the existing attack sprite; reduced motion
+keeps the crouch and static cue. An authored predator anticipation clip remains an art
+follow-up. Creature reactions to observed windups remain C13.
 
 ## 8. Movement layer changes (CRM-2)
 

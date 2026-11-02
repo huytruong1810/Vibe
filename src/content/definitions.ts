@@ -317,6 +317,9 @@ export const SPECIES: readonly CreatureDefinition[] = [
   },
 ];
 export interface CreatureMoveset {
+  readonly category: 'melee' | 'ranged';
+  readonly aggression: number;
+  readonly kiteRange: number;
   readonly attackName: string;
   readonly power: number;
   readonly cooldownTicks: number;
@@ -328,6 +331,9 @@ export interface CreatureMoveset {
 export const CREATURE_MOVES: Readonly<Record<SpeciesId, CreatureMoveset>> = {
   ignicap: {
     attackName: 'Ember tap',
+    category: 'melee',
+    aggression: 0.2,
+    kiteRange: 0,
     power: 10,
     cooldownTicks: 35,
     range: 1.6,
@@ -337,6 +343,9 @@ export const CREATURE_MOVES: Readonly<Record<SpeciesId, CreatureMoveset>> = {
   },
   rivallie: {
     attackName: 'River pulse',
+    category: 'ranged',
+    aggression: 0.4,
+    kiteRange: 0,
     power: 8,
     cooldownTicks: 32,
     range: 2,
@@ -346,6 +355,9 @@ export const CREATURE_MOVES: Readonly<Record<SpeciesId, CreatureMoveset>> = {
   },
   zephyrit: {
     attackName: 'Gust kick',
+    category: 'melee',
+    aggression: 0.5,
+    kiteRange: 2.5,
     power: 8,
     cooldownTicks: 26,
     range: 1.8,
@@ -355,6 +367,9 @@ export const CREATURE_MOVES: Readonly<Record<SpeciesId, CreatureMoveset>> = {
   },
   mireling: {
     attackName: 'Mist spiral',
+    category: 'ranged',
+    aggression: 0.3,
+    kiteRange: 0,
     power: 9,
     cooldownTicks: 36,
     range: 2.1,
@@ -364,6 +379,9 @@ export const CREATURE_MOVES: Readonly<Record<SpeciesId, CreatureMoveset>> = {
   },
   cindermoth: {
     attackName: 'Spark wing',
+    category: 'ranged',
+    aggression: 0.4,
+    kiteRange: 3.5,
     power: 11,
     cooldownTicks: 30,
     range: 1.9,
@@ -373,6 +391,9 @@ export const CREATURE_MOVES: Readonly<Record<SpeciesId, CreatureMoveset>> = {
   },
   steamshell: {
     attackName: 'Steam burst',
+    category: 'ranged',
+    aggression: 0.4,
+    kiteRange: 0,
     power: 12,
     cooldownTicks: 44,
     range: 1.7,
@@ -382,6 +403,9 @@ export const CREATURE_MOVES: Readonly<Record<SpeciesId, CreatureMoveset>> = {
   },
   bramblefang: {
     attackName: 'Bramble pounce',
+    category: 'melee',
+    aggression: 0.8,
+    kiteRange: 0,
     power: 11,
     cooldownTicks: 30,
     range: 1.9,
@@ -391,6 +415,9 @@ export const CREATURE_MOVES: Readonly<Record<SpeciesId, CreatureMoveset>> = {
   },
   marshstalker: {
     attackName: 'Reed ambush',
+    category: 'melee',
+    aggression: 0.7,
+    kiteRange: 0,
     power: 9,
     cooldownTicks: 36,
     range: 2.1,
@@ -400,6 +427,9 @@ export const CREATURE_MOVES: Readonly<Record<SpeciesId, CreatureMoveset>> = {
   },
   human: {
     attackName: 'Elemental palm',
+    category: 'ranged',
+    aggression: 0.5,
+    kiteRange: 0,
     power: 8,
     cooldownTicks: 36,
     range: 1.8,

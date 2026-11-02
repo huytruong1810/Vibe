@@ -506,6 +506,7 @@ export class SimulationHost {
     const allowedPaused = [
       'debug',
       'configureContext',
+      'configureCombat',
       'move',
       'dialogue',
       'closeDialogue',
@@ -986,6 +987,9 @@ export class SimulationHost {
         };
         break;
       }
+      case 'configureCombat':
+        ok = this.combat.configure(c.settings);
+        break;
       case 'configureContext':
         ok = this.plans.context.configure(c.settings);
         if (!ok) message = 'Close this conversation before reducing its context size.';
@@ -1959,6 +1963,13 @@ export class SimulationHost {
                                     )
                                   : 'idle';
       actors.push({
+        ...(action && id !== 0
+          ? {
+              telegraph: this.combat.telegraph(id, this.tick),
+              attackTarget: this.combat.pursuits.get(id)?.target,
+            }
+          : {}),
+        ...(s.owner[slot] === 0 ? { intent: this.combat.partnerIntent(id, this.tick) } : {}),
         physique: {
           ...s.physique(slot),
           strideTiles: PhysiquePolicy.stride(s.physique(slot)),
@@ -2003,8 +2014,14 @@ export class SimulationHost {
         x,
         y,
         elevation: local.world.elevation[local.world.index(x, y)] ?? 0,
-        facingX: id === 0 ? this.player.facingX : (npc?.facingX ?? s.vx[slot]!),
-        facingY: id === 0 ? this.player.facingY : (npc?.facingY ?? s.vy[slot]!),
+        facingX:
+          id === 0
+            ? this.player.facingX
+            : (npc?.facingX ?? (action ? s.facingX[slot]! : s.vx[slot]!)),
+        facingY:
+          id === 0
+            ? this.player.facingY
+            : (npc?.facingY ?? (action ? s.facingY[slot]! : s.vy[slot]!)),
         pose,
         protected: s.isHuman(slot) || s.owner[slot]! >= 0,
         action,
@@ -2015,6 +2032,7 @@ export class SimulationHost {
       if (!presentIds.has(id)) this.presentationPositions.delete(id);
     return {
       equipment: this.equipment.view(),
+      combatSettings: structuredClone(this.combat.director.settings),
       artifacts: this.artifacts.views(),
       placements: structuredClone(this.placements),
       scene: this.scenes.presentation(activeScene, 0, this.calendar.day),
@@ -2305,6 +2323,7 @@ export class SimulationHost {
     this.creatures.validate();
   }
   dispose(): void {
+    this.combat.director.reset();
     this.disposed = true;
     this.plans.context.close();
     this.plans.queries.clear();

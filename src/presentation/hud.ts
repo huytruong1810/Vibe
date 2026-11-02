@@ -151,6 +151,34 @@ export class HudPresenter {
       this.drawMap();
     });
     this.el('settings-button').addEventListener('click', () => this.openMenu('settings-dialog'));
+    this.el('combat-settings').addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (!this.frame) return;
+      const value = (id: string) => Number(this.el<HTMLInputElement>(`combat-${id}`).value);
+      const pools = Object.fromEntries(
+        ['player', 'partner', 'villager', 'wild'].map((kind) => [
+          kind,
+          { melee: value(`${kind}-melee`), ranged: value(`${kind}-ranged`) },
+        ]),
+      ) as Pick<
+        import('../domain/combat-director').CombatSettings,
+        'player' | 'partner' | 'villager' | 'wild'
+      >;
+      void this.handlers
+        .send({
+          type: 'configureCombat',
+          settings: {
+            ...pools,
+            grantSpacing: value('spacing'),
+            aggressionBias: value('aggression'),
+          },
+        })
+        .then((result) => {
+          this.el('combat-settings-status').textContent = result.ok
+            ? 'Combat settings applied.'
+            : (result.message ?? 'Invalid settings.');
+        });
+    });
     this.el('inventory-button').addEventListener('click', () =>
       this.intent({ type: 'toggle', overlay: 'inventory' }),
     );
@@ -774,6 +802,14 @@ export class HudPresenter {
     el.dataset.rendered = html;
   }
   openMenu(id: 'map-dialog' | 'settings-dialog' | 'journal-dialog'): void {
+    if (id === 'settings-dialog' && this.frame) {
+      const settings = this.frame.combatSettings;
+      for (const kind of ['player', 'partner', 'villager', 'wild'] as const)
+        for (const cat of ['melee', 'ranged'] as const)
+          this.el<HTMLInputElement>(`combat-${kind}-${cat}`).value = String(settings[kind][cat]);
+      this.el<HTMLInputElement>('combat-spacing').value = String(settings.grantSpacing);
+      this.el<HTMLInputElement>('combat-aggression').value = String(settings.aggressionBias);
+    }
     if (!this.frame || this.frame.dialogue) return;
     if (document.querySelector('dialog[open]')) return;
     void this.command({ type: 'pause', token: 'menu' });

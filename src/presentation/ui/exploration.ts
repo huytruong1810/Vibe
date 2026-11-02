@@ -70,10 +70,12 @@ export function updateExploration(
   const companion = el('companion-hud');
   companion.hidden = !partner;
   if (partner) {
+    const intent = frame.actors.find((a) => a.id === partner.id)?.intent ?? 'follow';
+    const intentIcon = { attack: '\u2694', guard: '\u25c7', follow: '\u2197' }[intent];
     const portrait = appearance?.portrait('species', partner.species);
     patchView(
       companion,
-      `${portrait ? `<img data-key="partner:portrait" src="${escapeHtml(appUrl(portrait.hud96))}" alt="${escapeHtml(partner.name)}" class="companion-portrait"/>` : ''}<div class="companion-body" data-key="partner:body"><div class="companion-title">${escapeHtml(partner.name)} · ${Math.ceil(partner.hp)}/${partner.maxHp}</div><div class="companion-needs">${(
+      `${portrait ? `<img data-key="partner:portrait" src="${escapeHtml(appUrl(portrait.hud96))}" alt="${escapeHtml(partner.name)}" class="companion-portrait"/>` : ''}<span class="partner-intent" data-key="partner:intent" role="img" aria-label="Companion intent: ${intent}" title="${intent}">${intentIcon}</span><div class="companion-body" data-key="partner:body"><div class="companion-title">${escapeHtml(partner.name)} · ${Math.ceil(partner.hp)}/${partner.maxHp}</div><div class="companion-needs">${(
         [
           ['Food', partner.food],
           ['Water', partner.water],

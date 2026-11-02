@@ -12,6 +12,8 @@ import { CONFIG } from './values';
 import { PHYSIQUES } from './physique';
 import { SPECIES } from '../content/definitions';
 import { ATTACKS, WEAPON_ATTACKS } from './combat';
+import { DirectorSnapshotSchema, DEFAULT_COMBAT_SETTINGS } from './combat-director';
+import { CREATURE_MOVES } from '../content/definitions';
 
 export { GameSaveV3Schema } from './save-v3';
 const uint = z.number().int().min(0).max(0xffffffff);
@@ -134,7 +136,7 @@ const projectiles = z
 export const GameSaveSchema = z
   .object({
     ...legacy,
-    version: z.literal(6),
+    version: z.literal(7),
     npcs: z.array(legacy.npcs.element.extend({ memory: MemoryStateSchema })).length(30),
     artifacts: ArtifactRecordsSchema,
     artifactSequence: z.number().int().min(0).max(Number.MAX_SAFE_INTEGER),
@@ -173,6 +175,7 @@ export const GameSaveSchema = z
     carrion: z.array(carrion).max(CONFIG.creatureCapacity * 2),
     supplies: z.array(legacy.supplies.element.extend({ scene: sceneCode.optional() })).length(9),
     combat: legacy.combat.extend({
+      director: DirectorSnapshotSchema,
       attacks: z.array(z.tuple([uint, attack])).max(CONFIG.creatureCapacity + 31),
       projectiles,
     }),
@@ -253,7 +256,7 @@ function v3Projection(save: GameSave): unknown {
     ...base
   } = save;
   const { guarding: _guarding, ...player } = save.player;
-  const { projectiles: _projectiles, ...combat } = save.combat;
+  const { projectiles: _projectiles, director: _director, ...combat } = save.combat;
   const oldItem = (value: GameSave['inventory'][number]) => {
     if (!value) return null;
     const { charges: _charges, artifact: _artifact, ...old } = value;
@@ -302,6 +305,55 @@ function v3Projection(save: GameSave): unknown {
 
 function validateV4(save: GameSave, fail: (message: string) => void): void {
   const records = new Map(save.entities.records.map((r) => [r.id, r]));
+  const d = save.combat.director,
+    heldActors = new Set<number>(),
+    waitingActors = new Set<number>(),
+    grantTargets = new Set<number>();
+  const attacks = new Map(save.combat.attacks),
+    pursuits = new Map(save.combat.pursuits);
+  for (const [actor, target, category] of d.holds) {
+    const a = records.get(actor),
+      b = records.get(target),
+      action = attacks.get(actor);
+    if (
+      heldActors.has(actor) ||
+      !a ||
+      !b ||
+      !action ||
+      pursuits.get(actor)?.target !== target ||
+      a.scene !== b.scene
+    )
+      fail('Invalid director hold');
+    if (a && action) {
+      const expected =
+        action.moveId === 'bow_shot'
+          ? 'ranged'
+          : action.moveId && action.moveId !== 'element'
+            ? 'melee'
+            : CREATURE_MOVES[SPECIES[a.species]?.id ?? 'human'].category;
+      if (category !== expected) fail('Director category disagrees with attack');
+    }
+    heldActors.add(actor);
+  }
+  for (const [actor] of attacks)
+    if (!heldActors.has(actor)) fail('Attack is missing a director hold');
+  for (const [actor, target, since] of d.waiting) {
+    if (
+      waitingActors.has(actor) ||
+      heldActors.has(actor) ||
+      !records.has(actor) ||
+      !records.has(target) ||
+      pursuits.get(actor)?.target !== target ||
+      since > save.tick
+    )
+      fail('Invalid director wait');
+    waitingActors.add(actor);
+  }
+  for (const [target, tick] of d.grants) {
+    if (grantTargets.has(target) || !records.has(target) || tick > save.tick)
+      fail('Invalid director grant time');
+    grantTargets.add(target);
+  }
   const bindings = new Map(save.scenes.bindings.map((b) => [b.code, b.id]));
   const layouts = new Map(sceneSaveLayouts().map((layout) => [layout.id, layout]));
   const codes = new Map(save.scenes.bindings.map((binding) => [binding.id, binding.code]));
@@ -598,6 +650,41 @@ export function migrateSave(input: unknown): GameSave {
         const oldMemory = legacy.npcs.element.shape.memory.parse(n.memory);
         return { ...n, memory: migrateMemory(NPC_PROFILES[i]!, oldMemory) };
       }),
+    };
+  }
+  if (candidate.version === 6) {
+    if (!candidate.combat || typeof candidate.combat !== 'object')
+      throw Error('Missing combat state');
+    const combat = candidate.combat as Omit<GameSave['combat'], 'director'>;
+    if ('director' in combat) throw Error('Save v6 cannot contain v7 director fields');
+    const records = (candidate.entities as GameSave['entities']).records;
+    const holds: z.infer<typeof DirectorSnapshotSchema>['holds'] = [];
+    const grants = new Map<number, number>();
+    for (const [actor, attack] of combat.attacks) {
+      const pursuit = combat.pursuits.find(([id]) => id === actor)?.[1];
+      const entity = records.find((r) => r.id === actor);
+      if (!pursuit || !entity) continue;
+      const category =
+        attack.moveId === 'bow_shot'
+          ? 'ranged'
+          : attack.moveId && attack.moveId !== 'element'
+            ? 'melee'
+            : CREATURE_MOVES[SPECIES[entity.species]?.id ?? 'rivallie'].category;
+      holds.push([actor, pursuit.target, category]);
+      grants.set(pursuit.target, Math.max(grants.get(pursuit.target) ?? 0, attack.startedAt));
+    }
+    candidate = {
+      ...candidate,
+      version: 7,
+      combat: {
+        ...combat,
+        director: {
+          settings: structuredClone(DEFAULT_COMBAT_SETTINGS),
+          holds,
+          waiting: [],
+          grants: [...grants],
+        },
+      },
     };
   }
   const result = GameSaveSchema.safeParse(candidate);
