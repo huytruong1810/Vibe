@@ -13,12 +13,12 @@ when the forge shows a problem.
 
 ### B14 · Publish the approved hatchet
 
-- status: open
+- status: candidate
 - goal: stage the director-approved golden held item so the runtime can draw it once C9b's held-layer composition lands.
 - inputs: [approval record](../comms/director/approvals/item-hatchet--2026-11-01-item-hatchet.md) (digest 89102c20…, scope held-item and icon).
 - work: `uv run --project art/source/forge python art/source/forge/forge.py publish --asset item:hatchet`; don't re-run any hatchet stage first (a new digest voids the approval, PRD-9).
 - done when: `art/source/staging/blender/item-hatchet.json` (or the path publish prints) is committed and a `--to-communicator-codex--hatchet-published` message lists it
-- evidence:
+- evidence: art/source/staging/blender/item-hatchet.json; docs/team/comms/blender/2026-11-02T0416--to-communicator-codex--hatchet-published.md (stand-in session, claude)
 
 ### B15 · Reference-sheet production run (quota restored by the director)
 
