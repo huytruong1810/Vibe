@@ -27,6 +27,19 @@ spec (`../spec/`); a recipe never overrides spec numbers.
   (or `1` lighter) while keeping its lighting bands. Use it for a dark material whose
   sunlit top lands on a pale `light` step, for example a charcoal shell that reads lavender and
   fails `valueContrast` on grass. Values are -2, -1 or 1, on recipe material slots.
+- `supersample` and `features` (optional, C26): keep body features that are smaller than one
+  art pixel at game size (fangs, horns, a lure). `"supersample": 4` bakes an extra albedo pass at
+  4 × 4 samples per art pixel. `features` names material slots that win a pixel when enough of
+  its samples hit them, but only near a socket and on a host region:
+  `"features": {"fangs": {"minSamples": 1, "on": ["pelt", "edge"], "near": ["Socket_Mouth"], "radiusPx": 4, "maxPx": 2}}`.
+  - `on`: host slots. `"edge"` allows a fang that hangs past the silhouette.
+  - `near`: one socket, or two sockets for a segment (default `Socket_Head` to `Socket_Mouth`).
+  - `enclosed: true`: keep a feature only where all eight neighbours are host pixels.
+  - `facings`: where the feature is visible. The default is s, se, sw, e and w.
+  - `step`: the one ramp step the feature takes. The default is light; deep is for outlines.
+
+  A feature is always at least 2 px, never an orphan (ART-5.4, ART-6.3). Eyes are not features:
+  creature faces are runtime decals (ART-8.1, C3b). Without `supersample`, pixelize is unchanged.
 - `gen3d.views`: which sheet views feed image-to-3D. Use every view **in the same pose**.
   A sheet that mixes poses (an upright front view and an all-fours side view) fuses into
   a hybrid mesh: drop the odd views here and ask the communicator for a single-pose sheet.

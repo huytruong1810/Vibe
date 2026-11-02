@@ -108,19 +108,120 @@ def _majority(labels: np.ndarray, mask: np.ndarray, n: int) -> np.ndarray:
     return np.where(mask & ~keep, out, labels)
 
 
+FEATURE_FACINGS = ("s", "se", "sw", "e", "w")  # a face is out of sight from behind
+
+
+def _near(track: dict, sockets: list[str], radius: float, h: int, w: int) -> np.ndarray:
+    """Pixels within `radius` art pixels of the segment through the named socket tracks."""
+    pts = [np.array(track[s_]) for s_ in sockets if s_ in track]
+    if not pts:
+        raise ForgeError(f"feature sockets {sockets} are not in the bake tracks")
+    yy, xx = np.mgrid[0:h, 0:w]
+    q = np.stack([xx + 0.5, yy + 0.5], -1)
+    a, b = pts[0], pts[-1]
+    ab = b - a
+    t = np.clip(((q - a) @ ab) / max(ab @ ab, 1e-9), 0, 1)
+    return np.linalg.norm(q - (a + t[..., None] * ab), axis=-1) <= radius
+
+
+def _ss_labels(ss_p: Path, k: int, ramps: RampSet, mask: np.ndarray, features: dict,
+               track: dict | None = None, facing: str | None = None) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """C26: labels from a K x K supersampled albedo. Each art pixel takes the most common
+    non-feature label of its samples; a feature slot (fangs, eyes: smaller than a pixel at game
+    size) wins the pixel when at least `minSamples` of its samples hit it and the pixel sits on
+    one of its `on` hosts (a slot, or "edge" for a fang hanging past the silhouette), within
+    `radiusPx` of the `near` socket segment (default Socket_Head to Socket_Mouth) and on a
+    facing in `facings` (default: not from behind). `enclosed` keeps a feature only where all
+    eight neighbours are host pixels (an eye inside the face, not the mane fringe beside it);
+    `maxPx` (default 4) keeps the pixels with the most samples; `step` (default light) is the
+    one ramp step every pixel of the feature takes. A feature
+    that lands on one pixel grows to two, because a lone pixel is an orphan (ART-5.4).
+    Returns labels, the feature mask and the silhouette extended by edge features."""
+    a = _load16(ss_p)
+    h, w = mask.shape
+    if a.shape[:2] != (h * k, w * k):
+        raise ForgeError(f"{ss_p.name}: supersampled pass is {a.shape[1]}x{a.shape[0]}, expected {w * k}x{h * k}")
+    sm = a[..., 3] > 0.5
+    lab = ramps.classify(_linear_to_srgb8(a[..., :3]))
+    n = len(ramps.names)
+    cnt = np.stack([((lab == i) & sm).reshape(h, k, w, k).sum(axis=(1, 3)) for i in range(n)])
+    cover = sm.reshape(h, k, w, k).sum(axis=(1, 3))
+    fids = {ramps.slots.index(sl): spec_ for sl, spec_ in features.items()}
+    plain = cnt.copy()
+    plain[list(fids)] = -1
+    labels = plain.argmax(axis=0)
+    has = plain.max(axis=0) > 0
+    if has.any() and not has.all():  # only feature samples: take the nearest ordinary pixel's label
+        _, (iy, ix) = ndimage.distance_transform_edt(~has, return_indices=True)
+        labels = labels[iy, ix]
+    best = np.zeros((h, w), dtype=np.int64)
+    win = np.full((h, w), -1, dtype=np.int64)
+    edge = cover < 0.75 * k * k
+    for fid, f in fids.items():
+        hosts = [ramps.slots.index(x) for x in f.get("on", []) if x in ramps.slots]
+        on = (np.isin(labels, hosts) & mask) | (edge if "edge" in f.get("on", []) else False)
+        if facing is not None and facing not in f.get("facings", FEATURE_FACINGS):
+            continue
+        if track is not None:
+            on &= _near(track, f.get("near", ["Socket_Head", "Socket_Mouth"]), f.get("radiusPx", 4), h, w)
+        if f.get("enclosed"):
+            host = np.isin(labels, hosts) & mask
+            on &= ndimage.binary_erosion(host, structure=np.ones((3, 3)), border_value=0)
+        ok = (cnt[fid] >= f.get("minSamples", 2)) & on & (cnt[fid] > best)
+        cap = f.get("maxPx", 4)
+        if ok.sum() > cap:
+            order = np.argsort(-np.where(ok, cnt[fid], -1), axis=None, kind="stable")[:cap]
+            ok = np.zeros_like(ok)
+            ok.flat[order] = True
+        win[ok], best[ok] = fid, cnt[fid][ok]
+    feat = win >= 0
+    for fid in fids:  # grow single-pixel features along their strongest neighbour
+        cc, num = ndimage.label(win == fid)
+        for i in range(1, num + 1):
+            ys, xs = np.nonzero(cc == i)
+            if len(ys) > 1:
+                continue
+            y, x = ys[0], xs[0]
+            nbs = [(y + dy, x + dx) for dy, dx in ((0, 1), (0, -1), (1, 0), (-1, 0))
+                   if 0 <= y + dy < h and 0 <= x + dx < w and (mask[y + dy, x + dx] or cover[y + dy, x + dx]) and not feat[y + dy, x + dx]]
+            if nbs:
+                yy, xx = max(nbs, key=lambda q: (cnt[fid][q], cover[q]))
+                win[yy, xx] = fid
+                feat[yy, xx] = True
+    labels = np.where(feat, win, labels)
+    return labels, feat, mask | feat
+
+
 def pixelize_frame(albedo_p: Path, normal_p: Path, depth_p: Path, ramps: RampSet,
-                   detail: set[int] | None = None) -> tuple[np.ndarray, dict]:
+                   detail: set[int] | None = None, ss: dict | None = None) -> tuple[np.ndarray, dict]:
+    """`ss` (C26, opt-in): {"path": supersampled albedo, "k": K, "features": {slot: {...}}}."""
     rs = spec("render_spec")
     alb = _load16(albedo_p)
     nrm = _load16(normal_p)
     dep = _load16(depth_p)
     mask = alb[..., 3] > 0.5
     h, w = mask.shape
-    labels = ramps.classify(_linear_to_srgb8(alb[..., :3]))
+    feat = np.zeros_like(mask)
+    if ss:
+        body = mask
+        labels, feat, mask = _ss_labels(ss["path"], ss["k"], ramps, mask, ss.get("features", {}),
+                                         ss.get("track"), ss.get("facing"))
+        if (mask & ~body).any():  # edge features borrow normal and depth from the nearest body pixel
+            _, (iy, ix) = ndimage.distance_transform_edt(~body, return_indices=True)
+            nrm = np.where((mask & ~body)[..., None], nrm[iy, ix], nrm)
+            dep = np.where((mask & ~body)[..., None], dep[iy, ix], dep)
+        fixed = labels.copy()
+        detail = (detail or set()) | {ramps.slots.index(sl) for sl in ss.get("features", {})}
+    else:
+        labels = ramps.classify(_linear_to_srgb8(alb[..., :3]))
     labels = _majority(labels, mask, len(ramps.names))
     frac = rs.get("pixelize", {}).get("minRegionFraction", 0.0)
     if frac:
         labels = _min_regions(labels, mask, len(ramps.names), max(4, int(round(frac * mask.sum()))), detail or set())
+    if ss:  # feature slots belong to feature pixels only: the votes above must not spread them
+        fslots = [ramps.slots.index(sl) for sl in ss.get("features", {})]
+        labels = np.where(feat | ~np.isin(labels, fslots), labels, fixed)
+        labels = np.where(feat, fixed, labels)
 
     n = nrm[..., :3] * 2 - 1
     # smooth normals inside the silhouette: gen3d surfaces are bumpy at this scale
@@ -137,6 +238,14 @@ def pixelize_frame(albedo_p: Path, normal_p: Path, depth_p: Path, ramps: RampSet
         step = np.clip(step + ramps.shift[labels], 1, 3)
     gloss = ramps.glossy[labels] & (ndl >= b["highlightAbove"])
     step = np.where(gloss, 4, step)
+    if ss:  # one colour per feature so a 2-pixel fang or eye is never an orphan (ART-5.4)
+        fstep = np.full(len(ramps.slots), 3)
+        for sl, f in ss.get("features", {}).items():
+            st = f.get("step", "light")
+            if st not in STEPS[1:]:
+                raise ForgeError(f"feature {sl}: step is one of {', '.join(STEPS[1:])} (deep is for outlines, ART-5)")
+            fstep[ramps.slots.index(sl)] = STEPS.index(st)
+        step = np.where(feat, fstep[labels], step)
 
     depth = dep[..., 0] * 2 * DEPTH_RANGE + (CAM_DIST - DEPTH_RANGE)
     out = np.zeros((h, w, 4), dtype=np.uint8)
@@ -150,11 +259,12 @@ def pixelize_frame(albedo_p: Path, normal_p: Path, depth_p: Path, ramps: RampSet
         nb_depth = _shift(depth, dy, dx)
         nb_mask = _shift(mask, dy, dx)
         interior |= mask & nb_mask & (depth - nb_depth > thr)
+    interior &= ~feat
     out[interior, :3] = ramps.rgb[labels[interior], 0]
 
     # orphan cleanup: a body pixel unlike all 8 neighbours takes the most common neighbour colour
     flat = (out[..., 0].astype(np.int64) << 16) | (out[..., 1].astype(np.int64) << 8) | out[..., 2]
-    for y, x in zip(*np.nonzero(mask)):
+    for y, x in zip(*np.nonzero(mask & ~feat)):
         ys, xs = slice(max(y - 1, 0), y + 2), slice(max(x - 1, 0), x + 2)
         nb = flat[ys, xs][mask[ys, xs]]
         nb = nb[nb != flat[y, x]] if (nb == flat[y, x]).sum() == 1 else None
@@ -183,16 +293,18 @@ def pixelize_frame(albedo_p: Path, normal_p: Path, depth_p: Path, ramps: RampSet
         body_diag |= _shift(mask, dy, dx)
     body_orth = _shift(mask, 1, 0) | _shift(mask, -1, 0) | _shift(mask, 0, 1) | _shift(mask, 0, -1)
     outline[corner & body_diag & ~body_orth] = 0
-    final = _clean_orphans(np.where(outline[..., 3:] > 0, outline, out))
+    final = _clean_orphans(np.where(outline[..., 3:] > 0, outline, out), protect=feat)
 
     info = {
         "labels": {ramps.slots[k]: int(((labels == k) & mask).sum()) for k in range(len(ramps.names))},
         "interiorLinePx": int(interior.sum()),
     }
+    if ss:
+        info["featurePx"] = {sl: int(((labels == ramps.slots.index(sl)) & feat).sum()) for sl in ss.get("features", {})}
     return final, info
 
 
-def _clean_orphans(img: np.ndarray, passes: int = 4) -> np.ndarray:
+def _clean_orphans(img: np.ndarray, passes: int = 4, protect: np.ndarray | None = None) -> np.ndarray:
     """Final pass with QA's exact definition (ART-5.4): an interior pixel (all four neighbours
     opaque) whose colour matches none of its 8 neighbours takes their most common colour.
     Runs on the composited frame, because the outline turns former edge pixels into interior."""
@@ -207,6 +319,8 @@ def _clean_orphans(img: np.ndarray, passes: int = 4) -> np.ndarray:
                 if dy or dx:
                     same |= (_shift(flat, dy, dx) == flat) & _shift(a, dy, dx)
         bad = interior & ~same
+        if protect is not None:
+            bad &= ~protect
         if not bad.any():
             break
         for y, x in zip(*np.nonzero(bad)):
@@ -227,8 +341,10 @@ def upscale2(img: np.ndarray) -> np.ndarray:
 
 
 def run_dir(bake_dir: Path, out_dir: Path, ramps_map: dict[str, str], detail_slots: list[str] | None = None,
-            ramp_shift: dict[str, int] | None = None) -> dict:
+            ramp_shift: dict[str, int] | None = None, supersample: int = 1, features: dict | None = None) -> dict:
     ramps = RampSet(ramps_map, ramp_shift)
+    if set(features or {}) - set(ramps.slots):
+        raise ForgeError("features name recipe material slots (C26)")
     detail = {ramps.slots.index(sl) for sl in (detail_slots or []) if sl in ramps.slots}
     tracks = json.loads((bake_dir / "tracks.json").read_text())
     summary = {}
@@ -238,7 +354,9 @@ def run_dir(bake_dir: Path, out_dir: Path, ramps_map: dict[str, str], detail_slo
         for facing, frames in facings.items():
             for i in range(len(frames)):
                 base = bake_dir / clip / f"{facing}_{i}_"
-                img, info = pixelize_frame(Path(f"{base}albedo.png"), Path(f"{base}normal.png"), Path(f"{base}depth.png"), ramps, detail)
+                ss = {"path": Path(f"{base}albedo_ss.png"), "k": supersample, "features": features or {},
+                      "track": frames[i], "facing": facing} if supersample > 1 else None
+                img, info = pixelize_frame(Path(f"{base}albedo.png"), Path(f"{base}normal.png"), Path(f"{base}depth.png"), ramps, detail, ss)
                 Image.fromarray(img).save(out_dir / clip / f"{facing}_{i}.png")
                 Image.fromarray(upscale2(img)).save(out_dir / "export" / clip / f"{facing}_{i}.png")
                 summary[f"{clip}/{facing}_{i}"] = info
