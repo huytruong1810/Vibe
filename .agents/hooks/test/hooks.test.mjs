@@ -419,16 +419,39 @@ test('inline scripts are only treated as map writes when they touch world files'
   );
 });
 
-test('tileforge lanes: communicator owns tile recipes and swatches, never the tool or its spec', () => {
+test('tileforge lanes: blender owns tile recipes and swatches, never the tool or its spec', () => {
   const fx = fixtureRepo();
   const decide = (path, role) => run('guard.mjs', write(path), fx, role).decision;
-  assert.equal(decide('art/source/tiles/sets/aqualia-terrain/set.json', 'communicator'), 'allow');
+  assert.equal(decide('art/source/tiles/sets/aqualia-terrain/set.json', 'blender'), 'allow');
   assert.equal(
-    decide('art/source/tiles/sets/aqualia-terrain/swatches/grass.png', 'communicator'),
+    decide('art/source/tiles/sets/aqualia-terrain/swatches/grass.png', 'blender'),
     'allow',
   );
-  assert.equal(decide('art/source/tiles/tools/tilelib/material.py', 'communicator'), 'deny');
-  assert.equal(decide('art/source/tiles/spec/tile_spec.json', 'communicator'), 'deny');
+  assert.equal(decide('art/source/tiles/tools/tilelib/material.py', 'blender'), 'deny');
   assert.equal(decide('art/source/tiles/spec/tile_spec.json', 'blender'), 'deny');
-  assert.equal(decide('art/source/tiles/sets/aqualia-terrain/set.json', 'blender'), 'deny');
+  assert.equal(decide('art/source/tiles/spec/tile_spec.json', 'communicator'), 'deny');
+  assert.equal(decide('art/source/tiles/sets/aqualia-terrain/set.json', 'communicator'), 'deny');
+});
+
+test('art moved to blender (2026-11-02): blender writes every art source, communicator none', () => {
+  const fx = fixtureRepo();
+  const decide = (path, role) => run('guard.mjs', write(path), fx, role).decision;
+  for (const path of [
+    'art/source/references/rivallie/front.png',
+    'art/source/masters/aqualia_master.jpg',
+    'art/source/ui/kit.json',
+    'art/source/exports/portraits/neris/warm.png',
+    'docs/team/comms/blender/image-ledger.md',
+  ]) {
+    assert.equal(decide(path, 'blender'), 'allow', path);
+    assert.equal(decide(path, 'communicator'), 'deny', path);
+  }
+  for (const path of [
+    'art/source/manifest.json',
+    'docs/team/status-board.md',
+    'art/source/audio/day.json',
+  ])
+    assert.equal(decide(path, 'communicator'), 'allow', path);
+  // forge exports stay publish-only for blender
+  assert.equal(decide('art/source/exports/rivallie/x/frames/idle/s_0.png', 'blender'), 'deny');
 });

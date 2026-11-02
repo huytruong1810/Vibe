@@ -3,9 +3,9 @@ name: reference-sheets
 description: >-
   Produces doctrine-standard reference sheets (A-pose human sheets, creature sheets,
   prop, part and body-type sheets) with image-generation subagents, within the
-  quota budget, and commits them under art/source/references/. Use when a
-  character, creature, prop or gear part needs input for the 3D forge, or when
-  blender requests a missing view.
+  quota budget, and commits them under art/source/references/. Blender's skill (since
+  2026-11-02): use when a character, creature, prop or gear part needs input for the
+  3D forge, or a forge run shows the sheet needs a missing or cleaner view.
 ---
 
 # Reference sheets (doctrine PRD-3, PRD-7)
@@ -52,11 +52,13 @@ spend it deliberately.
      "props": { "ferry-pole": "prop-ferry-pole.png" },
      "ramps": { "skin": "skin-warm", "hair": "hair-silver", "coat": "navy", "trim": "teal" },
      "generations": 3,
-     "ledger": "docs/team/comms/communicator/image-ledger.md#npc-neris"
+     "ledger": "docs/team/comms/blender/image-ledger.md#npc-neris"
    }
    ```
-7. **Message** codex and blender (`team-comms` skill) with the folder path and
-   what you saw. Status is `draft` until the forge consumes it.
+7. **Log** the sheet in your session log with what you saw, then run it through the forge
+   straight away (`forge.py next --asset <id>`). Status is `draft` until the forge
+   consumes it. If the forge shows a sheet problem (fused poses, wrong proportions,
+   baked shadows), fix the sheet here before re-running.
 
 ## Acceptance checklist (look, don't assume)
 

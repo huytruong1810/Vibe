@@ -4,7 +4,7 @@ description: >-
   Makes terrain tile sets (ground materials, shorelines and path edges as dual-grid
   masks, cliff strips, ramps) from concept swatches with tileforge: palette-locked
   32-px tiles, seamless, with QA, previews on the real map and a director packet.
-  Use for communicator ticket M9 and any ground, water, path or cliff art (ART-11.2).
+  Use for blender's terrain ticket (formerly communicator M9) and any ground, water, path or cliff art (ART-11.2).
 ---
 
 # Tile forge (doctrine ART-11.2, ART-11.3, ART-7.3, WLD-4.2, PRD-9)

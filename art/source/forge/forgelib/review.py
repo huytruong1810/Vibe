@@ -6,6 +6,15 @@ from pathlib import Path
 from PIL import Image
 
 
+HELD_BEHIND_UNITS = 0.05  # hand this far (world units, ~1.6 art px) behind the chest draws the item behind the body
+
+
+def held_poses(track: dict, sockets: dict) -> dict:
+    """C9b: runtime held pose per hand socket: grip bucket = nearest 45 degrees clockwise from up."""
+    return {k: {"bucket": round(v["angleDeg"] / 45) % 8, "behind": v["depth"] > HELD_BEHIND_UNITS}
+            for k, v in sorted(track.get("held", {}).items()) if k in sockets}
+
+
 def export_packet(wd: Path, output: Path, asset: str, render_spec: dict, canvas: dict):
     tracks = json.loads((wd / "bake/tracks.json").read_text())
     frames, clips = [], []
@@ -34,6 +43,7 @@ def export_packet(wd: Path, output: Path, asset: str, render_spec: dict, canvas:
                        for k, v in track.items() if k.startswith("Socket_")}
             if any(min(p.values()) < 0 for p in sockets.values()):
                 raise ValueError(f"{path}: negative socket requires an expanded canvas")
+            held = held_poses(track, sockets)
             rel = f"frames/{name}/{path.name}"
             target = output / rel
             target.parent.mkdir(parents=True, exist_ok=True)
@@ -49,7 +59,7 @@ def export_packet(wd: Path, output: Path, asset: str, render_spec: dict, canvas:
                            "sourceSize": {"w": width, "h": height},
                            "anchorPx": {"x": anchor[0], "y": anchor[1]},
                            "anchor": {"x": anchor[0] / width, "y": anchor[1] / height},
-                           "sockets": sockets})
+                           "sockets": sockets, **({"held": held} if held else {})})
             by_facing.setdefault(facing, []).append(frame_id)
         for facing, ids in sorted(by_facing.items()):
             clip = {"id": f"{asset}:{name}:{facing}", "appearanceId": asset,

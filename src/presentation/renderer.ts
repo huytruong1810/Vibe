@@ -52,6 +52,7 @@ import {
   layerRegistration,
   layerSockets,
   selectModularLayers,
+  heldLayerFrame,
   socketWorld,
   frameAnchor,
   type CompositeLease,
@@ -1485,9 +1486,20 @@ export class WorldRenderer {
     const { rig, recipe } = selection;
     const registration = rigRegistration(rig, bodyFrame);
     if (!registration) return false;
-    const layers: { texture: Texture; frame: AssetFrame; target: { x: number; y: number } }[] = [];
+    const layers: {
+      texture: Texture;
+      frame: AssetFrame;
+      target: { x: number; y: number };
+      order: number;
+    }[] = [];
+    const bodyZ = selection.layers.find((l) => l.layerSet.slot === 'body')?.definition.z ?? 0;
     for (const layer of selection.layers) {
-      const id = layerFrameId(layer.clip, sample),
+      const held =
+        layer.layerSet.slot === 'held' && layer.definition.socketId
+          ? heldLayerFrame(layer.clip, bodyFrame, layer.definition.socketId)
+          : undefined;
+      if (layer.layerSet.slot === 'held' && !held) continue; // this pose shows no item
+      const id = held ? held.frameId : layerFrameId(layer.clip, sample),
         frame = id && this.frames.get(id),
         texture = id && this.assets.texture(id);
       const socket = layer.definition.socketId
@@ -1497,9 +1509,15 @@ export class WorldRenderer {
         if (layer.definition.required) return false;
         continue;
       }
-      layers.push({ texture, frame, target: socket ?? registration.anchorPx });
+      layers.push({
+        texture,
+        frame,
+        target: socket ?? registration.anchorPx,
+        order: held?.behind ? bodyZ - 0.5 : layer.definition.z,
+      });
     }
     if (!layers.length) return false;
+    layers.sort((a, b) => a.order - b.order); // stable: equal z keeps recipe order
     const bounds = compositeBounds(registration.canvas, layers);
     e.socketPositions = new Map(
       layers.flatMap((layer) => Object.entries(layerSockets(layer.frame, layer.target))),

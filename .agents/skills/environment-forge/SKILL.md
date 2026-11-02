@@ -69,12 +69,12 @@ $F next --asset env:<id>
 
 ## Inputs
 
-Reference: a concept or prop-style sheet from the communicator (three-quarter view
+Reference: a concept or prop-style sheet you make with the `reference-sheets` skill (three-quarter view
 or front plus side), made with the `prop v1` template, or crops of an approved
 concept painting. Region identity per ART-13 (Aqualia timber, teal slate roofs,
 lanterns, rope).
 
 ## Not this skill
 
-Terrain materials, shorelines, cliffs, ramps and autotile masks are **2D** and
-belong to the communicator (ART-11.2, ART-15).
+Terrain materials, shorelines, cliffs, ramps and autotile masks are **2D**: make them with
+the `tile-forge` skill (ART-11.2, ART-15).

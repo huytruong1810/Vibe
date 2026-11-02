@@ -126,6 +126,12 @@ const Url = z
   .string()
   .regex(/^\/assets\/[A-Za-z0-9_./@+-]+$/)
   .refine((s) => !s.includes('..'), 'Asset URLs must stay inside /assets');
+/** C9b: the held item's grip bucket (clockwise screen angle from up / 45 deg) and whether the
+ * hand is behind the body, per body frame and hand socket. */
+export const HeldPoseSchema = z
+  .object({ bucket: z.number().int().min(0).max(7), behind: z.boolean() })
+  .strict();
+export type HeldPose = z.infer<typeof HeldPoseSchema>;
 export const AssetFrameSchema = z
   .object({
     id: Id,
@@ -138,6 +144,7 @@ export const AssetFrameSchema = z
     anchorPx: PixelPointSchema.optional(),
     rigId: Id.optional(),
     sockets: z.record(Id, PixelPointSchema).optional(),
+    held: z.record(Id, HeldPoseSchema).optional(),
   })
   .strict();
 export const AnimationClipSchema = z
@@ -638,6 +645,7 @@ type GraphFrame = {
   anchorPx?: { x: number; y: number };
   rigId?: string;
   sockets?: Record<string, { x: number; y: number }>;
+  held?: Record<string, HeldPose>;
 };
 export interface AssetGraph {
   frames: readonly GraphFrame[];
@@ -732,6 +740,8 @@ export function validateV2Graph(graph: AssetGraph, issue: (message: string) => v
       if (!f.sourceSize || p.x > f.sourceSize.w || p.y > f.sourceSize.h)
         issue(`Socket outside untrimmed canvas: ${f.id}/${id}`);
     }
+    for (const id of Object.keys(f.held ?? {}))
+      if (!f.sockets?.[id]) issue(`Held pose without its socket: ${f.id}/${id}`);
   }
   for (const layer of layers.values()) {
     const rig = rigs.get(layer.rigId),
@@ -746,6 +756,12 @@ export function validateV2Graph(graph: AssetGraph, issue: (message: string) => v
         issue(`Incompatible layer build profile: ${layer.id}/${id}`);
     if (new Set(layer.buildProfileIds).size !== layer.buildProfileIds.length)
       issue(`Duplicate layer build profile: ${layer.id}`);
+    if (appearance && layer.slot === 'held')
+      for (const id of appearance.clipIds) {
+        const clip = clips.get(id);
+        if (clip && (clip.state !== 'idle' || clip.frameIds.length !== 8))
+          issue(`Held layer needs one idle clip per facing with 8 grip frames: ${layer.id}/${id}`);
+      }
     if (appearance && rig && layer.slot !== 'held')
       for (const f of appearanceFrames(appearance)) {
         if (!f || !rigRegistration(rig, f))
@@ -785,7 +801,14 @@ export function validateV2Graph(graph: AssetGraph, issue: (message: string) => v
         issue(`Item/garment slot mismatch: ${recipe.id}/${part.itemId}`);
       if (part.socketId && (!rig?.socketIds.includes(part.socketId) || layer?.slot !== 'held'))
         issue(`Invalid attachment socket: ${recipe.id}/${part.socketId}`);
-      if (layer && body[0] && part.required && layer.slot !== 'body') {
+      if (
+        layer?.slot === 'held' &&
+        (!part.socketId || part.heldSlot === undefined || part.required)
+      )
+        issue(
+          `Held layer needs a socket, a held slot and required: false: ${recipe.id}/${part.layerSetId}`,
+        );
+      if (layer && body[0] && part.required && layer.slot !== 'body' && layer.slot !== 'held') {
         const base = appearances.get(layers.get(body[0].layerSetId)?.appearanceId ?? ''),
           overlay = appearances.get(layer.appearanceId);
         if (base && overlay)
@@ -801,7 +824,7 @@ export function validateV2Graph(graph: AssetGraph, issue: (message: string) => v
                 );
             if (baseClip && overlayClip && baseClip.frameIds.length !== overlayClip.frameIds.length)
               issue(`Required layer pose cadence mismatch: ${recipe.id}/${layer.id}/${clipId}`);
-            if (baseClip && overlayClip && layer.slot !== 'held')
+            if (baseClip && overlayClip)
               for (let i = 0; i < baseClip.frameIds.length; i++) {
                 const baseFrame = frames.get(baseClip.frameIds[i]!),
                   overlayFrame = frames.get(overlayClip.frameIds[i] ?? '');
@@ -824,6 +847,8 @@ export function validateV2Graph(graph: AssetGraph, issue: (message: string) => v
           for (const f of appearanceFrames(base))
             if (!f?.sockets?.[part.socketId])
               issue(`Body pose lacks attachment socket: ${recipe.id}/${f?.id}/${part.socketId}`);
+            else if (layer?.slot === 'held' && !f.held?.[part.socketId])
+              issue(`Body pose lacks a held pose: ${recipe.id}/${f.id}/${part.socketId}`);
       }
     }
   }

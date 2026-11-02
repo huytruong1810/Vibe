@@ -3,13 +3,92 @@
 Read your brief `docs/team/briefs/codex.md` and [the queue rules](README.md) first.
 Finished tickets are in [archive/codex.md](archive/codex.md); open it only when a live ticket links there.
 
-**Who does what (directive 010, 2026-11-02).** Codex is back for the authored-artifacts
-feature: take **C17 → C18 → C19 → C20** in order (C19 can run beside C18), C21 only on the
-director's go. Codex has no GPU on machine B: build against mocks and send every live
-GPU smoke to blender as a `--to-blender--test-` request. Claude keeps the art-path
-tickets under "Claude (machine A)"; don't take those unless claude hands one over.
+**Who does what (directive 011, 2026-11-02, claude away until about 2026-11-09).** Codex
+owns this queue: **C22 → C24 → C25 → C14 → C13 → C17 → C18 → C19 → C20**, then C3g and C7, with C17 already shipped (save v5; see archive/codex.md), and C23 and C12
+standing (C19 can run beside C18; C21 only on the director's go). Machine B has no
+Blender or GPU: build against mocks and send live GPU smokes to blender as
+`--to-blender--test-` requests. The forge tickets under "Waiting for claude" need
+Blender on machine A; leave them unless the director says otherwise.
 
 ## Now: codex
+
+### C22 · Beta channel: green CI, a deploy on every green push, a playtest loop
+
+- status: in-progress (first)
+- owner: codex
+- goal: the director plays the latest green build from a URL on any day, files playtest notes in one place, and they become tickets, without anyone on machine A.
+- context: CI was red for 100+ runs (`format:check` failed on machine-written sources, so browser tests and the benchmark never ran) until claude's `88b11ba`. The repo is public, so GitHub Pages is free.
+- work:
+  1. **Keep CI green.** A red `studio/doctrine-v1` is the top ticket until fixed, the same day. Write the rule and the job list in `docs/operations/operations.md`.
+  2. **Deploy:** `.github/workflows/beta.yml` on `workflow_run` of "Reference game checks" succeeding on `studio/doctrine-v1`: `vite build` with `base: '/Vibe/'`, then `actions/upload-pages-artifact` and `actions/deploy-pages` (`pages: write`, `id-token: write`). Watch out: catalog URLs are absolute `/assets/...` (`Url` in `src/presentation/assets/catalog.ts`). Resolve them against `import.meta.env.BASE_URL` at fetch time (one place in the asset manager) and test both `/` and `/Vibe/`. The director switches Pages to "GitHub Actions" once (Settings → Pages).
+  3. **Build stamp:** commit sha, date and branch on the settings screen and in exported saves; `public/beta-notes.json` with the commit subjects since the previous deploy, shown as "What changed" on the title screen.
+  4. **Ollama from the beta site:** the page origin is `https://huytruong1810.github.io`. Document `OLLAMA_ORIGINS` and Chrome's local-network permission prompt in `docs/operations/`. When the call is blocked, the setup dialog names the exact fix. Without Ollama, the game stays playable with fallback dialogue.
+  5. **Playtest intake:** `.github/ISSUE_TEMPLATE/playtest.yml` (build stamp, what you did, expected, saw, screenshot, exported save). Triage weekly into queue tickets (C12).
+  6. **Nightly:** run CI nightly (today it is weekly), keep browser screenshots and benchmark JSON as artifacts for 14 days.
+- out of scope: hosting Ollama or an image server anywhere but the player's machine.
+- note: editing `.github/workflows/` needs a token with the `workflow` scope on machine B.
+- done when: a green push to `studio/doctrine-v1` is live on the Pages URL with its sha within 15 minutes; the playtest template exists; the operations doc lists the jobs and the green-CI rule; claude's local check of `/Vibe/` asset loading is replaced by a CI browser test
+- evidence:
+
+### C24 · Conversation context and compaction on gemma4:e4b at 75%
+
+- status: open (after C22)
+- owner: codex
+- goal: a villager keeps the thread of a long conversation, and no prompt ever passes its budget, without compaction touching long-term memory.
+- spec: [memory and context](../../engineering/memory-and-context.md) §1, §2, §3.1, §4; doctrine AGT-1.3, AGT-10.1–10.2, AGT-7; ADR 032.
+- work:
+  1. `DialogueSession` with transcript in the worker; prompt order and fixed sub-budgets (§3.1); `contextTokens` setting (default 8192) sent as `num_ctx`; token estimate calibrated from Ollama's `prompt_eval_count`.
+  2. 75% trigger → one background `compaction` job on `backgroundModel` (`gemma4:e4b`, CPU via `options.num_gpu: 0` by default), `CompactionSummary` schema, K = 4 recent turns verbatim, revision-checked apply; ≥ 95% overflow drops oldest turns deterministically.
+  3. Settings: background model, "run on CPU", context size; model check in the setup dialog (`gemma4:e4b` missing → clear install line, fallback to the dialogue model with a warning).
+  4. Remove the count-based `needsCompaction` path and the deleting `MemoryRepository.compact`; until C25 lands, keep memory records as they are (no deletion).
+- done when: §4 rows "budget and trigger" and "no memory loss" pass in `npm run check`; the debug overlay shows prompt tokens, budget and compactions; blender's live smoke (B0) runs a 30-turn conversation where the villager recalls a turn-3 promise at turn 28, with compaction and reply latencies recorded in `docs/operations/`.
+- evidence:
+
+### C25 · Long-term memory v2: typed records, extraction operations, core blocks, embedding retrieval
+
+- status: open (after C24; before C18, whose `reading` memories use these types)
+- owner: codex
+- goal: villagers remember structured, sourced facts across conversations, update them when they change, and retrieve the right ones, the way current agent-memory systems do.
+- spec: [memory and context](../../engineering/memory-and-context.md) §2, §3.2, §3.3, §4; doctrine AGT-10.3–10.6; ADR 032.
+- work:
+  1. `MemoryRecordV2` and `CoreBlocks` with the next save version and the §3.2 migration.
+  2. Session-end extraction job on `gemma4:e4b`: ADD / UPDATE / INVALIDATE / NOOP against the top-10 similar memories plus core-block edits, validated (supplied ids only, grounding, `told` for player claims, caps) and applied with provenance.
+  3. Retrieval: recency (0.995 per game hour) + importance + relevance, min-max normalized, equal weights; `embeddinggemma` 256-d via `/api/embed`, cached in IndexedDB (not in saves), keyword fallback; invalidated records excluded; `lastAccessTick` updated.
+  4. Reflection at an importance-sum threshold (start 150) on the dialogue model when idle; capacity cap 400 with episodic folding (never semantic facts or commitments).
+- done when: §4 rows "extraction", "retrieval", "migration" pass; the C24 live smoke repeated across two conversations: the villager recalls a fact from the first in the second; soak (`npm run benchmark` or ecology soak) shows retrieval ≤ 5 ms per prompt.
+- evidence:
+
+### C14 · Combat director and telegraphs: fair fights first (CRM-4, CMB-4)
+
+- status: open (after C25)
+- owner: codex
+- goal: no matter how many hostiles, the player faces one or two clear threats at a time, every heavy attack is telegraphed, and nothing attacks from off screen.
+- spec: [creature minds](../../engineering/creature-minds.md) §1, §2, §7, §10 (partner icon), §11 rows "director" and "telegraphs"; doctrine CRM-4, CRM-10.3, CMB-4; ADR 033.
+- work:
+  1. Token pools per target (player 2 melee / 1 ranged-element, partner 2/1, villager 1/1; none wild-vs-wild), held windup→recovery, priority grants with ≥ 8 ticks between grants on a target, no player tokens outside the 30 × 17 tile view rectangle.
+  2. Gate today's `CombatSystem.advance` attack start on a token; creatures without one hold at their readiness ring (`max(range + 1.5, kiteRange)`) and circle (a minimal orbit is enough until C13).
+  3. Telegraphs for every creature attack over 15% of the target's max HP from windup tick 0 (`ground` arc or `glint`), drawn in the effect layer under VFX, plus the predator crouch-and-shiver on windup frames.
+  4. Difficulty knobs (token counts, grant spacing, aggression bias) in settings.
+  5. Partner intent icon slot in the HUD (shows `attack`/`guard`/`follow` from today's state until C13 provides intents).
+- done when: unit and browser tests from §11 "director" and "telegraphs" pass; a Playwright journey with 20 hostile Bramblefang shows at most the token count in windup or active at any tick; a 1080p capture of that fight is looked at (PRD-5) and attached; `npm run benchmark` unchanged within 5%.
+- evidence:
+
+### C13 · Creature minds v1: engagement, perception, intents, scripted brain, flight (CRM-1…3, CRM-10)
+
+- status: open (after C14)
+- owner: codex
+- goal: creatures notice, stalk, commit and break like animals, each species recognisably itself, within budget and deterministic.
+- spec: [creature minds](../../engineering/creature-minds.md) §2–§6, §8–§11; doctrine CRM-1.4, CRM-2 (incl. flight), CRM-3, CRM-6.1, CRM-6.4, CRM-8, CRM-9, CRM-10; ADR 033.
+- work:
+  1. Engagement state machine (calm/alert/engaged/disengaging) with the notice beat; calm creatures keep the current utility system.
+  2. `PerceptionGrid` (typed arrays, no allocation) and the `crm-obs-1` observation; `crm-cond-1` conditioning for later.
+  3. Intents, masking, executor (§5.3) with the clip mapping (C3h clips), readiness ring, flank orbits, feints, safe-medium flight to water/lava, pack calls.
+  4. Scripted utility brain with `CREATURE_TACTICS` for all 8 species, hysteresis, commitment, jitter, staggered cadence and reaction delays.
+  5. Movement: intercept/evade, per-species boids weights, `Traversal.air` for winged species (landing for eat/drink/bathe/sleep), home ranges (spawn point until C7's `Habitat`).
+  6. Engaged tier (cap 48) and the 2 Hz scripted fallback; save the brain state; debug overlay, observation inspector.
+  7. Partner: `focus`/`regroup` commands with bond-scaled weight; real intents on the HUD icon.
+- done when: §11 rows "determinism", "masking and reaction", "species identity" (all 8 species) and "budget" (`engagedCombat150` in the benchmark, asserted on CI) pass; a mid-fight save replays to identical intents; 1080p captures of a 6-Bramblefang pack fight and a Zephyrit skirmish for the director show notice, stalk, staggered strikes and break.
+- evidence:
 
 ### C18 · The written word: book screen, villager reading and writing
 
@@ -67,56 +146,7 @@ tickets under "Claude (machine A)"; don't take those unless claude hands one ove
 - done when: editor with pencil, fill, eyedropper and 32-step undo; output passes the same palette and colour-count validation; Playwright edit-and-save test; capture looked at.
 - evidence:
 
-## Claude (machine A, directive 009)
-
-In order: C9b (runtime held-layer composition, then `fit`) → C9c → C3b faces → C3g → C7.
-
-### C9b · Items, fit, human faces
-
-- status: in-progress (claude). **Items done 2026-11-01:** source prep, orient, icon scale, packet and publish; doctor `items: READY`; golden hatchet **director-approved 2026-11-02** (blender B14 publishes it). Human `publish` done (ed32dab). Open: runtime held-layer composition (the hatchet reaches the game through it), then `fit` (garments)
-- goal: the remaining human-class stages.
-  - `items`: 8 facings × 8 grip angles plus an inventory icon from one mesh (ART-15), registered to `Socket_Hand.*`.
-  - `fit`: garment parts (Surface Deform or Shrinkwrap, weights from the body, hidden body faces masked, PRD-1).
-  - The `thinFeature` check.
-  - Human faces: the full 9 expressions plus blink, sleep and hurt, sharing the C3b grammar.
-- done when: doctor shows `items: ready` and humans with nothing pending; you've posted `--to-blender--go-items`
-- evidence: [human-face sidecar increment](../comms/codex/archive/2026-11-01T0247--to-all--c9b-human-face-sidecars.md), [contract](../../engineering/hd-presentation.md#c9b-human-face-sidecars), [ADR 027](../../engineering/decisions.md#adr-027--human-expressions-as-independent-body-bound-sidecars); engineering `fb621e8`, consumer `4d879bc`. Seven human-face tests, 21 publication and two exporter tests pass, plus 299 engineering tests. Native/4x grammar proofs inspected; real-human fitting/motion and director acceptance remain separate. No items-ready or completed C9b claim.
-
-- follow-up: engineering `3430546` adds a draft 64-held-pose-plus-icon planner, explicit screen-space grip convention, source/contract/tool pins and atomic writes; eight planner tests and all 38 forge Python tests pass. Item rendering/QA remains unfinished. See [item contract](../../engineering/hd-presentation.md#c9b-item-pose-planning), [ADR 028](../../engineering/decisions.md#adr-028--explicit-held-item-mesh-pose-plans-before-rendering). C3e is now delivered; resume item rendering while M19 integrates its source graph.
-- renderer: engineering `7586e49`, consumer `0575294` deliver rigid-mesh baking, source snapshots, projected sockets, immutable hashed output and atomic items.json replacement. All 49 forge tests pass locally and independently in the consumer checkout; all 305 engineering tests/types/assets/build pass. [B13 request](../comms/codex/archive/2026-11-01T0612--to-blender--test-item-renderer.md) covers the real Blender cuboid calibration, unverified here because Blender 4.2 is unavailable. Source prep, gallery/publish adapters, runtime angle/occlusion tracks, garment fit and human publication remain pending; no go-items. Automatic review rejected the optional protected sprite-forge runbook amendment; it remains unchanged, with commands documented in the engineering guide instead.
-
-### C9c · Human clip polish, per-clip canvases in review export, contract docs
-
-- status: open
-- goal: finish what the C9a validation run (`work/player-aqualia`, `work/selftest-human`) showed.
-- work:
-  1. **Done (claude, 2026-10-31T1636Z):** `forgelib/review.py` `export_packet` now registers frames per clip canvas, with a test in `review_selftest.py`. Previously: Humans bake combat clips on `human.combat` and lying/bending clips on `human.wide`; `bake/tracks.json` has `canvases[clip]`. Today it uses one canvas.
-  2. **Weak combat reads:** strike (UAL1 Punch_Jab), element (Spell_Simple_Shoot) and bow_shot (a two-handed pistol aim as a stand-in) barely move at 56 px. Add authored pose overlays: bone rotations at given frames, layered after the retarget and declared in `spec/clips/humanoid.json`. Give each one a readable windup, active and recovery (CMB-3, ART-9.2). bow_shot needs a real draw: left arm forward, right hand to the ear, release.
-  3. **eat and drink:** the hand stays at chest height. Pick the Consume window by eye, or add an overlay to bring the hand to the mouth.
-  4. **Contract docs:** update `docs/art/contract.md`, `contract-v2.md` and `docs/engineering/hd-presentation.md` for the human canvases now in `render_spec.json`.
-- done when: in `forge.py selftest --kind human`, the strike, element and bow_shot strips read at 1×; packet review.json frames register on their own canvases; tests green
-- evidence:
-
-### C3b · Creature faces and publish
-
-- status: partial (manifest integration done by claude at 0a5e5c6: 3 bodies approved and active in game). **Faces: changes requested 2026-11-01** (`docs/team/comms/director/approvals/rivallie--2026-11-01-rivallie-faces-d749a4350126.md`): register decals to a face point about 3 art px below `Socket_Head` (per-species offset or a `Socket_Face` bone); `faceAnchor` fails any decal pixel outside the silhouette or on its outline row; hurt and fearful need a distinct pixel in e/w. Re-packet the faces on the approved body 69b6c10d…
-- goal: finish the creature class. Then `doctor` lists nothing pending for creatures, and approved creature packets can be published.
-- inputs: the Rivallie packet `art/review/2026-10-31-rivallie/`, `bake/tracks.json` (Socket_Head per frame), ART-8, `render_spec.expressions`, `catalog.ts` `AuthoringProvenanceSchema`.
-- work:
-  1. **`faces`**: a palette-indexed decal grammar (eyes 2 px with a 1 px highlight on the light side, brows 1 px, mouth 1–2 px) for the creature subset: neutral, warm, fearful, hurt, sleep.
-     - It is drawn on `layer.face` 16×12, registered to `Socket_Head` in facings s, se, sw, e and w.
-     - Implement the `faceAnchor` QA check.
-     - Rivallie's eyes are `hair-ink` and its nose is `outline-neutral` (sheet ramps).
-  2. **`publish`**:
-     - Define the staging record `art/source/staging/blender/<asset>.json` with frames, clips (fps, playback, strideTiles from the animate record, runtime state/moveId, phases), `sourceSize`, `anchorPx`, sockets per frame and `rigId`.
-     - Include provenance per `AuthoringProvenanceSchema`: `blender-bake`, the `.blend` input as model, the script inputs and the pinned Blender version.
-     - Record the packet sha and the approval record path.
-     - Copy the exact 2× frames from `pix/export/` into `art/source/exports/<asset>/`, gated on the approval file (`st_publish` already checks it).
-  3. In `forge.py` `CLASSES`, remove these two from creatures' `pending`. Update the `sprite-forge` skill and the `qa-fixes.md` banner.
-- done when: Rivallie re-runs with faces in the packet; `publish` writes the staging record once a director approval record exists (test with a scratch record and delete it afterwards); `doctor` shows creatures with nothing pending
-- evidence: [C3b tool handoff](../comms/codex/archive/2026-10-31T2146--to-blender--c3b-publish-and-faces.md); [registered face candidate](../../../art/review/2026-10-31-rivallie-faces-145faf106c4e/faces.json); 16 finishing and two packet-export tests pass. Body approval excludes faces; no approved packet is rerun.
-
-- distribution: source-only branch `eng/c3b-c7-tools` at `f037e2e` / draft PR #3 avoids the protected runbook merge delta. [Guarded handoff](../comms/codex/archive/2026-10-31T2346--to-blender--c3b-source-only-handoff.md); [machine-A execution report](../comms/blender/archive/2026-10-31T2355--to-codex-communicator--c3b-b8-b9-results.md) is integrated, with 1,848 staged frame hashes verified locally. [Portable-source correction](../comms/codex/archive/2026-11-01T0145--to-all--c3b-portable-provenance.md) at engineering `9dd81ee`, consumer `01e9fbb` / PR #4: 21 publication and two review-export tests pass. B10 packaging is delivered; M19 source integration and separate face acceptance remain; no new artwork approval.
+## After C20: codex
 
 ### C3g · Follow-ups from the beta slice (claude, 2026-11-01)
 
@@ -144,6 +174,58 @@ In order: C9b (runtime held-layer composition, then `fit`) → C9c → C3b faces
 
 - follow-up: Riverlands history is integrated and full-region candidate validation now passes (two levels / 219 placements). Historical approval/draft tests use pinned fixtures; alternate-project QA is read-only and isolated. See [fixture repair](../comms/codex/archive/2026-10-31T2248--to-all--c7-fixtures-and-art-followups.md). C7 activation remains separate.
 
+## Waiting for claude (back about 2026-11-09)
+
+Forge work that needs Blender on machine A, in order: C9b `fit` → C9c → C3b faces.
+
+### C9b · Items, fit, human faces
+
+- status: in-progress (claude). **Items done 2026-11-01:** source prep, orient, icon scale, packet and publish; doctor `items: READY`; golden hatchet **director-approved 2026-11-02** (blender B14 publishes it). Human `publish` done (ed32dab). Runtime held-layer composition done 2026-11-02 (hand grip and occlusion tracks, held clip contract, compositor; see hd-presentation C9b runtime held-item composition): the hatchet shows once a modular human body is integrated. Open: `fit` (garments)
+- goal: the remaining human-class stages.
+  - `items`: 8 facings × 8 grip angles plus an inventory icon from one mesh (ART-15), registered to `Socket_Hand.*`.
+  - `fit`: garment parts (Surface Deform or Shrinkwrap, weights from the body, hidden body faces masked, PRD-1).
+  - The `thinFeature` check.
+  - Human faces: the full 9 expressions plus blink, sleep and hurt, sharing the C3b grammar.
+- done when: doctor shows `items: ready` and humans with nothing pending; you've posted `--to-blender--go-items`
+- evidence: [human-face sidecar increment](../comms/codex/archive/2026-11-01T0247--to-all--c9b-human-face-sidecars.md), [contract](../../engineering/hd-presentation.md#c9b-human-face-sidecars), [ADR 027](../../engineering/decisions.md#adr-027--human-expressions-as-independent-body-bound-sidecars); engineering `fb621e8`, consumer `4d879bc`. Seven human-face tests, 21 publication and two exporter tests pass, plus 299 engineering tests. Native/4x grammar proofs inspected; real-human fitting/motion and director acceptance remain separate. No items-ready or completed C9b claim.
+
+- follow-up: engineering `3430546` adds a draft 64-held-pose-plus-icon planner, explicit screen-space grip convention, source/contract/tool pins and atomic writes; eight planner tests and all 38 forge Python tests pass. Item rendering/QA remains unfinished. See [item contract](../../engineering/hd-presentation.md#c9b-item-pose-planning), [ADR 028](../../engineering/decisions.md#adr-028--explicit-held-item-mesh-pose-plans-before-rendering). C3e is now delivered; resume item rendering while M19 integrates its source graph.
+- renderer: engineering `7586e49`, consumer `0575294` deliver rigid-mesh baking, source snapshots, projected sockets, immutable hashed output and atomic items.json replacement. All 49 forge tests pass locally and independently in the consumer checkout; all 305 engineering tests/types/assets/build pass. [B13 request](../comms/codex/archive/2026-11-01T0612--to-blender--test-item-renderer.md) covers the real Blender cuboid calibration, unverified here because Blender 4.2 is unavailable. Source prep, gallery/publish adapters, runtime angle/occlusion tracks, garment fit and human publication remain pending; no go-items. Automatic review rejected the optional protected sprite-forge runbook amendment; it remains unchanged, with commands documented in the engineering guide instead.
+
+### C9c · Human clip polish, per-clip canvases in review export, contract docs
+
+- status: open
+- goal: finish what the C9a validation run (`work/player-aqualia`, `work/selftest-human`) showed.
+- work:
+  1. **Done (claude, 2026-10-31T1636Z):** `forgelib/review.py` `export_packet` now registers frames per clip canvas, with a test in `review_selftest.py`. Previously: Humans bake combat clips on `human.combat` and lying/bending clips on `human.wide`; `bake/tracks.json` has `canvases[clip]`. Today it uses one canvas.
+  2. **Weak combat reads:** strike (UAL1 Punch_Jab), element (Spell_Simple_Shoot) and bow_shot (a two-handed pistol aim as a stand-in) barely move at 56 px. Add authored pose overlays: bone rotations at given frames, layered after the retarget and declared in `spec/clips/humanoid.json`. Give each one a readable windup, active and recovery (CMB-3, ART-9.2). bow_shot needs a real draw: left arm forward, right hand to the ear, release.
+  3. **eat and drink:** the hand stays at chest height. Pick the Consume window by eye, or add an overlay to bring the hand to the mouth.
+  4. **Contract docs:** update `docs/art/contract.md`, `contract-v2.md` and `docs/engineering/hd-presentation.md` for the human canvases now in `render_spec.json`.
+- added 2026-11-02 (from the C9b held-item overlay): while an item is held, idle and walk should carry it away from the leg (it vanishes against the trousers in s and n), and `strike` must swing the item hand, not punch with the free one. Either item-aware clip variants or an arm offset in the held clips; prove it on the hatchet overlay.
+- done when: in `forge.py selftest --kind human`, the strike, element and bow_shot strips read at 1×; packet review.json frames register on their own canvases; tests green
+- evidence:
+
+### C3b · Creature faces and publish
+
+- status: partial (manifest integration done by claude at 0a5e5c6: 3 bodies approved and active in game). **Faces: changes requested 2026-11-01** (`docs/team/comms/director/approvals/rivallie--2026-11-01-rivallie-faces-d749a4350126.md`): register decals to a face point about 3 art px below `Socket_Head` (per-species offset or a `Socket_Face` bone); `faceAnchor` fails any decal pixel outside the silhouette or on its outline row; hurt and fearful need a distinct pixel in e/w. Re-packet the faces on the approved body 69b6c10d…
+- goal: finish the creature class. Then `doctor` lists nothing pending for creatures, and approved creature packets can be published.
+- inputs: the Rivallie packet `art/review/2026-10-31-rivallie/`, `bake/tracks.json` (Socket_Head per frame), ART-8, `render_spec.expressions`, `catalog.ts` `AuthoringProvenanceSchema`.
+- work:
+  1. **`faces`**: a palette-indexed decal grammar (eyes 2 px with a 1 px highlight on the light side, brows 1 px, mouth 1–2 px) for the creature subset: neutral, warm, fearful, hurt, sleep.
+     - It is drawn on `layer.face` 16×12, registered to `Socket_Head` in facings s, se, sw, e and w.
+     - Implement the `faceAnchor` QA check.
+     - Rivallie's eyes are `hair-ink` and its nose is `outline-neutral` (sheet ramps).
+  2. **`publish`**:
+     - Define the staging record `art/source/staging/blender/<asset>.json` with frames, clips (fps, playback, strideTiles from the animate record, runtime state/moveId, phases), `sourceSize`, `anchorPx`, sockets per frame and `rigId`.
+     - Include provenance per `AuthoringProvenanceSchema`: `blender-bake`, the `.blend` input as model, the script inputs and the pinned Blender version.
+     - Record the packet sha and the approval record path.
+     - Copy the exact 2× frames from `pix/export/` into `art/source/exports/<asset>/`, gated on the approval file (`st_publish` already checks it).
+  3. In `forge.py` `CLASSES`, remove these two from creatures' `pending`. Update the `sprite-forge` skill and the `qa-fixes.md` banner.
+- done when: Rivallie re-runs with faces in the packet; `publish` writes the staging record once a director approval record exists (test with a scratch record and delete it afterwards); `doctor` shows creatures with nothing pending
+- evidence: [C3b tool handoff](../comms/codex/archive/2026-10-31T2146--to-blender--c3b-publish-and-faces.md); [registered face candidate](../../../art/review/2026-10-31-rivallie-faces-145faf106c4e/faces.json); 16 finishing and two packet-export tests pass. Body approval excludes faces; no approved packet is rerun.
+
+- distribution: source-only branch `eng/c3b-c7-tools` at `f037e2e` / draft PR #3 avoids the protected runbook merge delta. [Guarded handoff](../comms/codex/archive/2026-10-31T2346--to-blender--c3b-source-only-handoff.md); [machine-A execution report](../comms/blender/archive/2026-10-31T2355--to-codex-communicator--c3b-b8-b9-results.md) is integrated, with 1,848 staged frame hashes verified locally. [Portable-source correction](../comms/codex/archive/2026-11-01T0145--to-all--c3b-portable-provenance.md) at engineering `9dd81ee`, consumer `01e9fbb` / PR #4: 21 publication and two review-export tests pass. B10 packaging is delivered; M19 source integration and separate face acceptance remain; no new artwork approval.
+
 ## Waiting on the director
 
 ### C8b · HUD fixes from the director's review
@@ -159,7 +241,7 @@ In order: C9b (runtime held-layer composition, then `fit`) → C9c → C3b faces
 
 ### C11b · Terrain tiles in the renderer and worldforge renders
 
-- status: candidate (implementation and isolated golden proof; native M9 approval remains separate)
+- status: candidate (implementation and isolated golden proof; native terrain set (blender B17, formerly M9) approval remains separate)
 - goal: the game and worldforge draw what tileforge publishes, with the same composition as tileforge's previews.
 - inputs: `docs/engineering/tileforge.md` (runtime contract), `art/source/tiles/tools/tilelib/preview.py` (`TileSet.compose`, `variant_of`), `src/presentation/renderer.ts` `drawChunk`
 - work:
@@ -173,7 +255,7 @@ In order: C9b (runtime held-layer composition, then `fit`) → C9c → C3b faces
 
 ## Later
 
-Creature minds (C13–C16) start after C7; C8 holds the remaining brief P0 rows.
+C8 holds the remaining brief P0 rows; the learned creature brain (C15, C16) is gated on playtests of C13.
 
 ### C8 · Existing P0s from your brief
 
@@ -182,49 +264,34 @@ Creature minds (C13–C16) start after C7; C8 holds the remaining brief P0 rows.
 - done when: the acceptance column of each row in `docs/team/briefs/codex.md`
 - evidence: [C8 implementation and validation](../comms/codex/archive/2026-10-31T1040--to-all--c8-ui-packet-gallery.md); [ADR 019](../../engineering/decisions.md#adr-019--director-ui-kit-and-isolated-candidate-packet-preview). This slice does not complete the remaining C8 gates.
 
-### C13 · Creature movement layer and brain interface (CRM-M1, CRM-M2)
+### C15 · Learned brain: headless training bridge (CRM-6.2, CRM-M4) — gated
 
-- status: open
-- goal: creatures flock, hunt and flee by scripted movement, and a scripted utility brain drives combat through the fixed observation and intent interface that the learned brain will later plug into.
-- inputs: `docs/doctrine/14-creature-minds.md` CRM-1…CRM-3, CRM-6.1, CRM-8; the existing predation and disposition code in `src/domain/` (creatures, combat, simulation); `Habitat` regions (C7).
-- work:
-  - per-species flocking weights and predation pursuit/evasion;
-  - the observation vector and the masked intent space as a versioned schema;
-  - decisions staggered every 3–6 ticks, with a reaction delay;
-  - LOD by distance (CRM-8.2);
-  - an ADR in `docs/engineering/decisions.md`.
-- done when: deterministic soak unchanged; benchmark shows 150 creatures within CRM-8.1 for movement and the scripted brain; unit tests for masking and reaction delay
+- status: blocked: starts only after C13 ships in a playtested build and the director asks (CRM-6.1)
+- owner: codex
+- goal: a vectorized multi-agent environment over the deterministic Node simulation for PufferLib or CleanRL; imitation of the C13 scripted brain, then PPO with shared parameters and the CRM-6.3 reward; reproducible runs (seed, config, data hash, weight hash).
+- spec: [creature minds](../../engineering/creature-minds.md) §5, §12; doctrine CRM-6, CRM-7.3.
+- done when: an imitation policy matches the scripted brain's intents on a held-out set above a threshold you set and record; training runs on machine A through blender's B0
 - evidence:
 
-### C14 · Combat director and partner intent (CRM-M3)
+### C16 · Learned brain v1 in the game (CRM-M5…M7) — gated
 
-- status: open
-- goal: attack tokens (2 melee and 1 ranged/element against the player to start), a readiness ring, no off-screen attacks, difficulty knobs, and the partner's intent icon in the HUD.
-- done when: a browser journey with 20 hostiles shows at most the token count attacking at once; partner icon visible; tests green
+- status: blocked: after C15
+- owner: codex
+- goal: the learned brain behind the per-species scripted/learned switch: deterministic CPU inference (≤ 32k parameters, float32 or int8, ≤ 30 µs per pass), weights as versioned content with a save hash, memory counters, a model card.
+- spec: [creature minds](../../engineering/creature-minds.md) §9, §10, §12; doctrine CRM-3.5, CRM-7, CRM-8.
+- done when: the C13 identity tests and budget pass with the learned brain; a save replays identically; the director compares scripted and learned captures of the same 20-creature fight
 - evidence:
 
-### C15 · Headless training bridge (CRM-M4)
+## Standing
 
-- status: open
-- goal: the deterministic Node simulation exposed as a multi-agent environment to PufferLib or CleanRL. Pin the versions; Python tooling runs through `uv` like the forge. The pipeline is imitation of the C13 scripted brain, then PPO with shared parameters. Training runs record seed, config, data hash and weight hash (CRM-7.3).
-- inputs: C13. Training can run on machine A's GPU; ask blender to run long jobs through `--to-blender--test-` if needed.
-- done when: an imitation-trained policy matches the scripted brain's intent choices on a held-out set to a threshold you set and record
+### C23 · Ledger every integrated, approved body (standing)
+
+- status: open (standing)
+- owner: codex
+- goal: approved art reaches gameplay the day the communicator merges it.
+- work: after each `art:integrate merge` commit, run `npm run art:integrate -- ledger <asset>`, `npm run assets:build && npm run check:assets`, a 1080p in-game capture you look at (PRD-5), commit and push. The tool refuses if the approval record changed, isn't `director-approved` for the staged digest, or any frame differs from the export: report that, don't work around it.
+- done when: never closes
 - evidence:
-
-### C16 · Learned System 1 policy v1 (CRM-M5…M7)
-
-- status: open
-- goal: ship the learned brain behind the scripted/learned switch:
-  - deterministic CPU inference (float32 or int8);
-  - weights as versioned content with a save hash;
-  - memory counters;
-  - species identity tests in CI (CRM-6.4);
-  - debug overlay and observation inspector;
-  - a model card.
-- done when: 150 creatures in combat within CRM-8.1; species tests green; a save replays to identical decisions; the director reviews a capture of a 20-creature fight (scripted vs learned side by side)
-- evidence:
-
-## Recurring
 
 ### C12 · Keep the team fed
 

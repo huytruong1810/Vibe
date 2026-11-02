@@ -181,6 +181,16 @@ export function compositeKey(
     resolution,
   ]);
 }
+/** C9b: the item frame for this body frame, or nothing when the pose has no held track. */
+export function heldLayerFrame(
+  clip: Pick<AnimationClip, 'frameIds'>,
+  bodyFrame: Pick<AssetFrame, 'held'>,
+  socketId: string,
+): { readonly frameId: string; readonly behind: boolean } | undefined {
+  const pose = bodyFrame.held?.[socketId];
+  const frameId = pose && clip.frameIds.length === 8 ? clip.frameIds[pose.bucket] : undefined;
+  return frameId ? { frameId, behind: pose!.behind } : undefined;
+}
 export interface ModularLayer {
   readonly definition: AppearanceRecipe['layers'][number];
   readonly layerSet: LayerSet;
@@ -225,8 +235,13 @@ export function selectModularLayers(
         s.stage !== 'candidate',
     );
     const layerAppearance = layerSet && resolver.getAppearance(layerSet.appearanceId);
+    // A held item has one idle clip per facing whose eight frames are its grip buckets; the
+    // body frame's held pose picks the frame (heldLayerFrame), whatever the body is doing.
     const clip =
-      layerAppearance && resolver.clip(layerAppearance, state, facing, actor.action?.move);
+      layerAppearance &&
+      (layerSet.slot === 'held'
+        ? resolver.clip(layerAppearance, 'idle', facing)
+        : resolver.clip(layerAppearance, state, facing, actor.action?.move));
     if (!layerSet || !layerAppearance || !clip) {
       if (definition.required) complete = false;
       continue;

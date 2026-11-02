@@ -451,3 +451,37 @@ can't cause actions; saves stay small. Paintings depend on a separately installe
 Unloading the LLM costs a reload on the next dialogue, measured against the AGT-7 player
 painting budget. Models are limited to Apache-2.0 weights (Z-Image Turbo, FLUX.2 klein 4B).
 See [authored artifacts](authored-artifacts.md).
+
+## ADR 032 — Conversation context and long-term memory are separate; compaction runs on Gemma 4 E4B at 75%
+
+**Decision:** a dialogue keeps its own transcript; when its prompt reaches 75% of the input
+budget, a background `gemma4:e4b` job (CPU by default) summarizes older turns into a
+structured summary and keeps the last four turns verbatim; an overflow drops the oldest
+verbatim turns, never memory. Long-term memory becomes typed records with provenance and
+validity, written by simulation events and by a session-end extraction that proposes
+ADD/UPDATE/INVALIDATE/NOOP operations validated by the simulation; small core blocks stay
+in every prompt; retrieval scores recency, importance and embedding relevance equally.
+The count-based `compaction` job that deleted memories into a summary string is removed.
+
+**Consequences:** villagers keep the thread within a conversation and keep structured
+facts across conversations; prompt size stays bounded by construction. A second model
+must be installed (`gemma4:e4b`, ~7–10 GB disk) and runs on the CPU unless the GPU holds
+both; embeddings need `embeddinggemma` (optional, keyword fallback). The save gains a
+version for typed memories. See [memory and context](memory-and-context.md).
+
+## ADR 033 — Creature combat runs on engagement-gated intents, a scripted utility brain and a token director
+
+**Decision:** calm creatures stay on the needs utility system; a creature that perceives a
+threat, prey it hunts or an attacker becomes alert and runs a System 1 brain that picks
+one intent every 3–6 ticks from a fixed 64-float observation (`crm-obs-1`), with masking,
+hysteresis and reaction delays. The movement layer executes intents (intercept, evade,
+flank orbits, flight for winged species). A combat director grants attack tokens per
+target (2 melee and 1 ranged on the player, 8 ticks apart, none off screen) and every
+heavy attack carries a telegraph. The shipping brain is a hand-written utility brain with
+per-species tactics; a learned brain is optional and gated on playtests.
+
+**Consequences:** fights read in beats (notice, stalk, commit, break) and never swarm the
+player; cost scales with engaged creatures, not population; replays stay exact. The
+straight-line chase in `CombatSystem.advance` is replaced; hunting, territory and
+retaliation rules remain the reasons to engage. A typed-array perception grid replaces
+string-keyed spatial queries in the hot path. See [creature minds](creature-minds.md).

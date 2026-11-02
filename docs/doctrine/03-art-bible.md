@@ -208,21 +208,21 @@ higher-contrast accents than grazers, so threat reads before stats.
 
 ## ART-15 Asset classes and methods
 
-| Class                                       | Method                                                                     | Owner (TEAM-2)                                       |
-| ------------------------------------------- | -------------------------------------------------------------------------- | ---------------------------------------------------- |
-| Humans (body, outfit, hair)                 | Image-to-3D kit → rig → bake → pixelize                                    | Blender agent                                        |
-| Creatures                                   | Image-to-3D → class skeleton → bake → pixelize                             | Blender agent                                        |
-| Held items and their inventory icons        | Image-to-3D prop → bake per facing and grip angle; icon from the same mesh | Blender agent                                        |
-| Buildings, large props, trees               | Image-to-3D or kit → bake with depth stretch; roof and canopy layers       | Blender agent                                        |
-| Faces and expressions                       | Forge face grammar (palette-indexed pixel grids)                           | Authored in the forge; recoloured per character      |
-| Terrain, shorelines, cliffs, masks          | 2D pixel painting                                                          | Communicator (2D)                                    |
-| UI frames, icons without a 3D source, fonts | 2D pixel painting (UI)                                                     | Communicator (2D)                                    |
-| VFX                                         | 2D frame-by-frame or pixel particles                                       | Communicator (2D)                                    |
-| Portraits                                   | 2D paint (image generation plus cleanup)                                   | Communicator (2D)                                    |
-| Reference sheets                            | Image generation to the PRD-3 standard                                     | Communicator                                         |
-| UI kit (frames, bars, slots, medallions)    | Palette-indexed generator (`art/source/ui/`)                               | Communicator (Claude authored the base kit)          |
-| Music                                       | Original score JSON + in-engine sequencer (AUD)                            | Communicator (director approves)                     |
-| World maps                                  | LDtk, authored layout (WLD)                                                | Director and Claude; scripted passes by communicator |
+| Class                                       | Method                                                                     | Owner (TEAM-2)                                  |
+| ------------------------------------------- | -------------------------------------------------------------------------- | ----------------------------------------------- |
+| Humans (body, outfit, hair)                 | Image-to-3D kit → rig → bake → pixelize                                    | Blender agent                                   |
+| Creatures                                   | Image-to-3D → class skeleton → bake → pixelize                             | Blender agent                                   |
+| Held items and their inventory icons        | Image-to-3D prop → bake per facing and grip angle; icon from the same mesh | Blender agent                                   |
+| Buildings, large props, trees               | Image-to-3D or kit → bake with depth stretch; roof and canopy layers       | Blender agent                                   |
+| Faces and expressions                       | Forge face grammar (palette-indexed pixel grids)                           | Authored in the forge; recoloured per character |
+| Terrain, shorelines, cliffs, masks          | 2D pixel painting                                                          | Blender (2D)                                    |
+| UI frames, icons without a 3D source, fonts | 2D pixel painting (UI)                                                     | Blender (2D)                                    |
+| VFX                                         | 2D frame-by-frame or pixel particles                                       | Blender (2D)                                    |
+| Portraits                                   | 2D paint (image generation plus cleanup)                                   | Blender (2D)                                    |
+| Reference sheets                            | Image generation to the PRD-3 standard                                     | Blender                                         |
+| UI kit (frames, bars, slots, medallions)    | Palette-indexed generator (`art/source/ui/`)                               | Blender (Claude authored the base kit)          |
+| Music                                       | Original score JSON + in-engine sequencer (AUD)                            | Communicator (director approves)                |
+| World maps                                  | LDtk, authored layout (WLD)                                                | Director and Claude; scripted passes by blender |
 
 ## Engineering mandates
 

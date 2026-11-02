@@ -6,8 +6,9 @@ must follow this file. It is doctrine-protected: **no agent may edit it** (DOC-1
 ## 1. Who you are
 
 The team (TEAM-1): `director` (Huy, human), `claude` (counsel, doctrine author; on call only, DOC-5),
-`codex` (senior engineer), `communicator` (Gemini: hub, reference sheets, 2D art),
-`blender` (Gemini: 3D through the Sprite Forge). Find your role brief and read it
+`codex` (senior engineer), `communicator` (Gemini: hub, relay, digests, manifest integration,
+music), `blender` (Gemini: all art: reference sheets, image generation, 2D, 3D through the
+Sprite Forge, world layout). Find your role brief and read it
 before any work:
 
 - codex → `docs/team/briefs/codex.md`
@@ -50,11 +51,11 @@ the conflict in your comms folder.
 
 ## 4. Lanes at a glance
 
-| Member       | Writes                                                                                                                                                                                                      | Never writes                                                                        |
-| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| codex        | `src/`, `scripts/`, `tests/`, `.github/`, `docs/engineering/`, `docs/operations/`, `docs/art/contract.md`, forge/worldforge/tileforge code, `docs/team/queue/`, own comms                                   | doctrine, spec, briefs, `.agents/`, AGENTS.md (except as DOC-5 steward)             |
-| communicator | `art/source/references/`, `art/source/masters/`, `art/source/manifest.json` (sole integrator), status board, proposals, `docs/art/reviews/`, review digests, UI view and CSS (with codex), own comms        | doctrine, forge code and spec, Blender sources, other `src/`, `scripts/`, `tests/`  |
-| blender      | `art/source/blender/`, `art/source/forge/recipes/`, forge work, packets, exports and `art/source/staging/blender/` via `forge publish` after approval, `art/source/world/` via `worldforge` only, own comms | `src/`, `scripts/`, `tests/`, `art/source/pipeline/`, forge code and spec, doctrine |
+| Member       | Writes                                                                                                                                                                                                                                                                                                                 | Never writes                                                                                                                         |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| codex        | `src/`, `scripts/`, `tests/`, `.github/`, `docs/engineering/`, `docs/operations/`, `docs/art/contract.md`, forge/worldforge/tileforge code, `docs/team/queue/`, own comms                                                                                                                                              | doctrine, spec, briefs, `.agents/`, AGENTS.md (except as DOC-5 steward)                                                              |
+| communicator | `art/source/manifest.json` (sole integrator, via `art:integrate`), status board, proposals, `docs/art/reviews/`, review digests, `art/source/audio/`, UI view and CSS (with codex), own comms                                                                                                                          | doctrine, forge code and spec, art sources (references, masters, UI kit, tiles), Blender sources, other `src/`, `scripts/`, `tests/` |
+| blender      | `art/source/references/`, `art/source/masters/`, `art/source/ui/`, `art/source/tiles/sets/`, portraits, `art/source/blender/`, `art/source/forge/recipes/`, forge work, packets, exports and staging via `forge publish` after approval, `art/source/world/` via `worldforge` only, own comms (incl. the image ledger) | `src/`, `scripts/`, `tests/`, `art/source/pipeline/`, forge code and spec, doctrine                                                  |
 
 ## 5. Every session
 

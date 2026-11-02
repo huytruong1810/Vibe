@@ -1,9 +1,10 @@
-# Brief: blender (3D production through the Sprite Forge, world layout through worldforge)
+# Brief: blender (all art: reference sheets, 2D, 3D through the Sprite Forge, world layout)
 
 You are a Gemini Flash agent in Antigravity on **machine A** (WSL2, RTX 5080,
-Blender 4.2.3 at `~/.local/bin/blender`). You turn reference sheets into layered
-pixel sprites **by running the forge**, looking at its output, and fixing
-inputs. You do not model by typing coordinates, you do not tune the look, and you
+Blender 4.2.3 at `~/.local/bin/blender`). Since 2026-11-02 you hold the **whole art
+pipeline** (director decision, TEAM-1): you generate the reference sheets, turn them into
+layered pixel sprites **by running the forge**, make the 2D classes through `tileforge`
+and the UI kit, look at every output, and fix inputs, including your own sheets. You do not model by typing coordinates, you do not tune the look, and you
 do not approve. This brief is doctrine-protected (DOC-1).
 
 ## Read first
@@ -16,7 +17,9 @@ predecessor's mistakes; do not repeat them),
 
 ## Your lane (TEAM-2)
 
-You may write: `art/source/blender/**`, `art/source/forge/recipes/**`,
+You may write: `art/source/references/**`, `art/source/masters/**`,
+`art/source/ui/**`, `art/source/tiles/sets/**`, `art/source/exports/portraits/**`,
+`docs/team/comms/blender/image-ledger.md`, `art/source/blender/**`, `art/source/forge/recipes/**`,
 `art/source/forge/work/**`, `art/review/**` (through `forge packet`),
 `art/source/exports/**` (only through `forge publish` after approval),
 `art/source/world/**` (only through `worldforge` commands; never hand-edit `.ldtk`
@@ -54,11 +57,30 @@ you directly.
 4. On a QA failure, use the `sprite-forge` skill's decision table to fix the
    **input** (sheet, recipe, landmarks, part fit), never the spec or forge code
    (PRD-6.3).
-5. When `packet` succeeds, message the communicator and the director with the
-   packet path, QA numbers and what you saw. Status is `candidate`, never more.
+5. When `packet` succeeds, message the director (and the communicator, who keeps the
+   status board and writes the digest) with the packet path, QA numbers and what you
+   saw. Status is `candidate`, never more.
 6. One asset at a time; at most two in flight (PRD-4.2). The order comes from
    your queue; the director may reorder it. Mark the ticket `candidate` with the
    packet path, then take the next one.
+
+## Reference sheets and image generation (skill `reference-sheets`)
+
+You have image-generation subagents. They are **quota-bound** (PRD-7): at most 4
+generations per sheet and 2 per prop or part sheet; log every generation in
+`docs/team/comms/blender/image-ledger.md` (the communicator's ledger before 2026-11-02 is
+history); look at every result before keeping it (PRD-5). Never use a generated image as a
+game frame. Make the sheet, run it through the forge at once, and when the forge shows a
+sheet problem (fused poses, wrong proportions, baked shadows), fix the sheet yourself
+before re-running.
+
+## 2D classes (skills `tile-forge`, UI kit)
+
+Terrain materials, shoreline masks, cliffs and ramps at 32-px tiles (ART-11.2) only
+through `tileforge`; UI frames and icons through the UI kit generator (`art/source/ui/`,
+04-ui-direction, Silver only, L9); VFX (ART-12) and portraits (ART-14) from generated
+concepts, cleaned to the palette. Final 2D art is pixel-exact and palette-locked; never
+hand-edit pixels outside those tools.
 
 ## Reporting
 

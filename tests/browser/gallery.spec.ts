@@ -22,6 +22,8 @@ test('art review is independent of Ollama and preserves missing identities and f
   await expect(page.locator('#art-frame')).toHaveAttribute('aria-busy', 'false');
   await page.screenshot({ path: 'artifacts/hd-gallery-rivallie.png', fullPage: true });
   await expect(page.getByLabel('Eight-direction comparison').locator('figure')).toHaveCount(8);
+  // Rivallie walks in all eight facings now; eat is a cardinal-only clip, so ne stays missing.
+  await page.getByLabel('Animation', { exact: true }).selectOption('eat');
   await page.getByLabel('Facing', { exact: true }).selectOption('ne');
   await expect(page.locator('#art-status')).toContainText('missing');
   await expect(page.locator('#art-frame-label')).toHaveText('No frames for this selection');

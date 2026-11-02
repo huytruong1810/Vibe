@@ -8,6 +8,10 @@ to review candidate packets and write `director-approved` or `changes-requested`
 marked `recordedBy: claude under the director's standing delegation of 2026-11-01`.
 The director can overturn any record.
 
+**Suspended 2026-11-02 → Claude's return (about 2026-11-09):** Claude is phased out for the
+week (directive 011). Only the director writes records until the director reinstates the
+delegation. Agents message `--to-director--` with the packet path when a packet is ready.
+
 File name: `<asset-id>--<packet-id>.md`
 
 The file starts with the front matter itself (no code fence):

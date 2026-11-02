@@ -257,6 +257,7 @@ function source(): SourceManifestV2 {
     anchorPx: { x: 48, y: 140 },
     rigId: 'human',
     sockets: { hand_r: { x: 76, y: 92 } },
+    held: { hand_r: { bucket: 2, behind: false } },
     stage: 'candidate' as const,
   });
   return {
@@ -267,6 +268,55 @@ function source(): SourceManifestV2 {
       {
         id: 'sword0',
         path: 'exports/sword0.png',
+        sourceSize: { w: 24, h: 64 },
+        anchorPx: { x: 12, y: 60 },
+        stage: 'candidate',
+      },
+      {
+        id: 'sword1',
+        path: 'exports/sword1.png',
+        sourceSize: { w: 24, h: 64 },
+        anchorPx: { x: 12, y: 60 },
+        stage: 'candidate',
+      },
+      {
+        id: 'sword2',
+        path: 'exports/sword2.png',
+        sourceSize: { w: 24, h: 64 },
+        anchorPx: { x: 12, y: 60 },
+        stage: 'candidate',
+      },
+      {
+        id: 'sword3',
+        path: 'exports/sword3.png',
+        sourceSize: { w: 24, h: 64 },
+        anchorPx: { x: 12, y: 60 },
+        stage: 'candidate',
+      },
+      {
+        id: 'sword4',
+        path: 'exports/sword4.png',
+        sourceSize: { w: 24, h: 64 },
+        anchorPx: { x: 12, y: 60 },
+        stage: 'candidate',
+      },
+      {
+        id: 'sword5',
+        path: 'exports/sword5.png',
+        sourceSize: { w: 24, h: 64 },
+        anchorPx: { x: 12, y: 60 },
+        stage: 'candidate',
+      },
+      {
+        id: 'sword6',
+        path: 'exports/sword6.png',
+        sourceSize: { w: 24, h: 64 },
+        anchorPx: { x: 12, y: 60 },
+        stage: 'candidate',
+      },
+      {
+        id: 'sword7',
+        path: 'exports/sword7.png',
         sourceSize: { w: 24, h: 64 },
         anchorPx: { x: 12, y: 60 },
         stage: 'candidate',
@@ -312,7 +362,8 @@ function source(): SourceManifestV2 {
       appearanceId: id,
       state: 'idle',
       facing: 's',
-      frameIds: [`${id}0`],
+      // a held item's idle clip holds its eight grip buckets (C9b)
+      frameIds: id === 'sword' ? Array.from({ length: 8 }, (_, i) => `sword${i}`) : [`${id}0`],
       fps: 6,
       playback: 'loop',
     })),
@@ -546,6 +597,40 @@ describe('v2 source boundaries', () => {
       expect(SourceManifestSchema.safeParse(s).success).toBe(false);
     }
   });
+  it('validates held poses and the held-item grip clip contract (C9b)', () => {
+    expect(SourceManifestSchema.safeParse(source()).success).toBe(true);
+    const changes: ((s: SourceManifestV2) => void)[] = [
+      (s) => {
+        // a held pose needs its socket on the same frame
+        (s.frames[0] as SourceFrameV2).held = { other: { bucket: 0, behind: false } };
+      },
+      (s) => {
+        (s.frames[0] as SourceFrameV2).held = { hand_r: { bucket: 8, behind: false } };
+      },
+      (s) => {
+        // the body pose must say how the hand holds the item
+        delete (s.frames[0] as SourceFrameV2).held;
+      },
+      (s) => {
+        // eight grip frames, no fewer
+        s.clips[2]!.frameIds = s.clips[2]!.frameIds.slice(0, 7);
+      },
+      (s) => {
+        s.clips[2]!.state = 'walk';
+      },
+      (s) => {
+        s.recipes![0]!.layers[2]!.required = true;
+      },
+      (s) => {
+        delete s.recipes![0]!.layers[2]!.socketId;
+      },
+    ];
+    for (const change of changes) {
+      const s = source();
+      change(s);
+      expect(SourceManifestSchema.safeParse(s).success).toBe(false);
+    }
+  });
   it('validates action sockets and canonical equipment selectors', () => {
     const changes: ((s: SourceManifestV2) => void)[] = [
       (s) => {
@@ -768,7 +853,11 @@ describe('art approval and provenance', () => {
   it('includes socket, layer, rig and source-file dependencies in per-artifact approval payloads', () => {
     const s = source(),
       before = sourceSubjectDependencies(s, 'appearance', 'aqualia-hd');
-    expect(before.paths).toEqual(['exports/body0.png', 'exports/hair0.png', 'exports/sword0.png']);
+    expect(before.paths).toEqual([
+      'exports/body0.png',
+      'exports/hair0.png',
+      ...Array.from({ length: 8 }, (_, i) => `exports/sword${i}.png`),
+    ]);
     expect(before.metadata.map((m) => m.key)).toContain('rig:human');
     const hash = (value: unknown) =>
       createHash('sha256').update(canonicalSourceJson(value)).digest('hex');

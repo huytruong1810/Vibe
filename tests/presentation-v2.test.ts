@@ -13,6 +13,7 @@ import {
   compositeBounds,
   layerRegistration,
   layerSockets,
+  heldLayerFrame,
   selectModularLayers,
   socketWorld,
 } from '../src/presentation/compositor';
@@ -230,9 +231,37 @@ describe('modular presentation invariants', () => {
       compositeKey({ ...a, held: ['berries', null] }, 'recipe', ['body_0', 'bow_0'], 1),
     ).not.toBe(key);
   });
+  it('picks the held item frame from the body pose grip bucket and occlusion (C9b)', () => {
+    const grips = { frameIds: Array.from({ length: 8 }, (_, i) => `hatchet_e_${i}`) };
+    expect(heldLayerFrame(grips, { held: { hand: { bucket: 3, behind: true } } }, 'hand')).toEqual({
+      frameId: 'hatchet_e_3',
+      behind: true,
+    });
+    expect(heldLayerFrame(grips, { held: { hand: { bucket: 0, behind: false } } }, 'hand')).toEqual(
+      {
+        frameId: 'hatchet_e_0',
+        behind: false,
+      },
+    );
+    // no track for this socket, or a malformed grip clip: draw no item rather than a wrong one
+    expect(heldLayerFrame(grips, {}, 'hand')).toBeUndefined();
+    expect(
+      heldLayerFrame(grips, { held: { other: { bucket: 1, behind: false } } }, 'hand'),
+    ).toBeUndefined();
+    expect(
+      heldLayerFrame({ frameIds: ['a'] }, { held: { hand: { bucket: 0, behind: false } } }, 'hand'),
+    ).toBeUndefined();
+  });
   it('selects authored held layers by canonical item rather than drawing an inventory icon as a weapon', () => {
     const bodyClip = clip({ id: 'body', appearanceId: 'layer:body' }),
-      bowClip = clip({ id: 'bow', appearanceId: 'layer:bow' });
+      bowClip = clip({
+        id: 'bow',
+        appearanceId: 'layer:bow',
+        state: 'idle',
+        playback: 'loop',
+        stride: undefined,
+        frameIds: Array.from({ length: 8 }, (_, i) => `bow_${i}`),
+      });
     const catalog: AssetCatalog = {
       schemaVersion: 2,
       contentVersion: 'fixture',

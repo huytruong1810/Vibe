@@ -50,3 +50,18 @@ class PacketExportTest(unittest.TestCase):
             self.assertEqual(by["idle"]["anchorPx"], {"x": 56, "y": 132})
             self.assertEqual(by["strike"]["anchorPx"], {"x": 80, "y": 144})
             self.assertEqual(by["strike"]["sourceSize"], {"w": 160, "h": 176})
+
+    def test_held_poses(self):
+        """C9b: hand tracks become grip buckets and occlusion; creatures (no track) get none."""
+        from review import held_poses
+        sockets = {"Socket_Hand.R": {"x": 1, "y": 1}, "Socket_Hand.L": {"x": 2, "y": 2}}
+        track = {"held": {"Socket_Hand.R": {"angleDeg": 93.0, "depth": -0.2},
+                          "Socket_Hand.L": {"angleDeg": 350.0, "depth": 0.3}}}
+        self.assertEqual(held_poses(track, sockets), {"Socket_Hand.L": {"bucket": 0, "behind": True},
+                                                      "Socket_Hand.R": {"bucket": 2, "behind": False}})
+        self.assertEqual(held_poses({"held": {"Socket_Hand.R": {"angleDeg": 157.6, "depth": 0.0}}}, sockets),
+                         {"Socket_Hand.R": {"bucket": 4, "behind": False}})
+        self.assertEqual(held_poses({}, sockets), {})
+        # a track for a socket the frame doesn't carry is dropped, never invented
+        self.assertEqual(held_poses(track, {"Socket_Hand.R": {"x": 1, "y": 1}}),
+                         {"Socket_Hand.R": {"bucket": 2, "behind": False}})

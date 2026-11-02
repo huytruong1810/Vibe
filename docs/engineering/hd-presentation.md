@@ -187,6 +187,20 @@ immutable directories. Only sources bound to the approved body packet are copied
 The communicator integrates staging into the source manifest (TEAM-2a), translating
 frame IDs/paths and canonical species bindings without losing registration or
 provenance. Staging is not automatically ingested or activated by the compiler.
+The commands (`scripts/art-integrate.ts`, 2026-11-02):
+
+1. communicator: `npm run art:integrate -- merge <asset>` (species; `--appearance npc:<id>`
+   for a flat human body). It replaces that appearance's rows, legacy rows included,
+   adds a missing rig from the frames (C3e registrations) and validates the manifest.
+   Then `npm run assets:build`; commit manifest and generated outputs.
+2. codex: `npm run art:integrate -- ledger <asset>`. It refuses unless the approval record
+   is unchanged since publish, `director-approved` for the staged packet digest, and every
+   manifest frame is byte-identical to the staged export. It writes the ledger entry bound
+   to the catalog digest. Then `npm run assets:build && npm run check:assets`, and an
+   in-game capture looked at (PRD-5).
+
+Re-running `merge` on an integrated asset is a no-op apart from key order (tested on
+Mireling: same source digest, byte-identical build).
 Commit the complete source-bundle directory together with staging and exports, so
 Machine B and CI can verify provenance without Blender, the original workspace or
 network access. Internal historical paths inside the copied animate record remain
@@ -358,6 +372,38 @@ packet → publish` (`forgelib/environment.py`, `blender/env_layout.py`).
 - `forge.py selftest --kind environment` runs a PRD-2 calibration house (box and prism roof,
   never art) and asserts base and roof on a shared canvas, the roof above the base, and every QA
   check. Runtime use (roof fade when actors stand under it) is engine work for the catalog.
+
+### C9b runtime held-item composition (claude, 2026-11-02)
+
+How a held item reaches the screen on a modular (forge) human body:
+
+- **Body side.** `bake.py` records, per human frame and hand socket, `held: {angleDeg, depth}`:
+  the on-screen direction of the knuckle line (`pinky_01` base → `index_01` base, the way a
+  fist holds a haft with the head beyond the index finger), degrees clockwise from up, and
+  the hand's ground-plane depth behind the chest (`spine_03`). Rigs without finger bones
+  (creatures) get no track. `review.py` turns it into the frame field
+  `held: {"Socket_Hand.R": {bucket, behind}}` (bucket = nearest 45°, behind when > 0.05
+  world units), which human publication copies into staging.
+- **Item side.** A held item's layer appearance has one `idle` clip per facing whose eight
+  frames are grip buckets 0–7 (the item renders, C9b), registered at the grip.
+- **Contract** (`catalog.ts`, `source.ts`, validated at build): `HeldPose` on V2 source and
+  catalog frames, keyed by a socket the frame carries; a held layer set's clips are `idle`
+  with exactly 8 frames; a recipe's held layer has a `socketId`, a `heldSlot` and
+  `required: false`; every body pose of such a recipe has a held pose for that socket.
+- **Runtime.** `selectModularLayers` resolves a held layer's clip by facing only (`idle`), and
+  `heldLayerFrame` picks the frame from the body frame's bucket. The renderer anchors it at
+  the socket and draws it just below the body when `behind`, otherwise at the recipe's z.
+  A pose without a track shows no item rather than a wrong one.
+
+Evidence: the human selftest bakes held tracks for both hands on all 952 frames (asserted).
+An overlay of the approved hatchet's grip frames on those frames puts the hatchet in the
+right fist in every facing, turning with the hand, behind the body on the far side. Seen
+limits, filed under C9c: idle and walk hang the item along the leg, so the brown haft
+vanishes against brown trousers in the s and n views, and the generic `strike` punches with
+the left hand while the right hand holds the item. Unit tests: `review_selftest.py`
+(`held_poses`), `presentation-v2.test.ts` (`heldLayerFrame`), `assets-v2.test.ts` (seven
+contract rejections). The game can't show a held item until a modular human body is
+integrated (blender B16 sheet → B4); existing assets build byte-identical.
 
 ### C3h creature templates (claude, 2026-11-02)
 

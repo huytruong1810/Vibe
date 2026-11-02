@@ -106,7 +106,7 @@ behaves strangely before you change any input.
 $F packet --asset <asset-id>
 ```
 
-Writes `art/review/<date>-<asset>/`. Then message the communicator and director
+Writes `art/review/<date>-<asset>/`. Then message the director (and the communicator, who tracks the status board)
 (`team-comms` skill) with the packet path, QA summary and a concrete description
 of the sprite. Status: `candidate`. **Wait** for an approval record in
 `docs/team/comms/director/approvals/` before `publish`.
@@ -145,7 +145,9 @@ Inspect the registered proof on the actual human; bounds QA alone does not estab
 anatomical fit. Items, garment fit and human publication are still pending C9b.
 
 The communicator alone integrates staging into `manifest.json` (TEAM-2a), including
-canonical identity mapping. Codex owns compilation and approval-ledger transcription.
+canonical identity mapping, with `npm run art:integrate -- merge <asset>`. You make the
+reference sheets yourself (`reference-sheets` skill): a sheet problem is fixed at its source,
+by you, before the next forge run. Codex owns compilation and approval-ledger transcription.
 No CLI publication changes gameplay or grants a face approval.
 
 ## 4. Recipes (your main creative input)

@@ -943,6 +943,11 @@ def selftest(which: str) -> int:
                 ("rig: landmarks detected without fallbacks", not rig["warnings"], "; ".join(rig["warnings"]) or "none"),
                 ("rig: landmarks inside the body height", all(-0.02 <= v[2] <= hi for v in rig["landmarks"].values()), "z range ok"),
             ] + [(f"qa: {c}", qa[c]["pass"], qa[c]["detail"]) for c in ("clipMatrix", "canvas", "margins", "anchorDrift", "orphans", "paletteMembership")]
+            if k == "human":  # C9b: every human frame says how each hand holds an item
+                entries = [e for fs in json.loads((wd / "bake" / "tracks.json").read_text())["clips"].values()
+                           for es in fs.values() for e in es]
+                missing = sum(1 for e in entries if set(e.get("held", {})) != {"Socket_Hand.R", "Socket_Hand.L"})
+                asserts.append(("bake: held tracks for both hands on every frame", missing == 0, f"{missing} of {len(entries)} frames lack one"))
             report["asserts"] = [{"assert": a, "pass": bool(ok), "detail": d} for a, ok, d in asserts]
             report["verdict"] = "pass" if all(ok for _, ok, _ in asserts) else "fail"
         except ForgeError as e:

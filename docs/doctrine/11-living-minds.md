@@ -1,8 +1,9 @@
 # 11 — Living minds
 
 Hearthwild's villagers are local-LLM agents grounded by a deterministic simulation:
-memory with provenance, reflection, daily schedules, structured JSON actions, auto-
-compaction, and emotions that drive portraits and poses. This is a headline feature. It
+structured long-term memory with provenance, reflection, daily schedules, structured
+JSON actions, context compaction within a conversation (AGT-10), and emotions that drive
+portraits and poses. This is a headline feature. It
 must feel alive **and** stay fast. The existing engineering rules stand: the simulation
 alone changes world state, proposals are validated, and a model can't create facts by
 saying them (engineering ADR 005/006).
@@ -15,9 +16,12 @@ saying them (engineering ADR 005/006).
   mixture-of-experts, about 4B active parameters, native vision). The director rates it
   best for character depth. Smaller models are fallbacks for weaker machines and must
   pass the same smoke test.
-- **AGT-1.3** One model serves dialogue, planning, reflection, compaction and sight
-  (AGT-3), so VRAM holds one resident model. Other models (TTS, image) must fit
-  around it (AGT-4, AGT-6).
+- **AGT-1.3** One model serves dialogue, planning, reflection and sight (AGT-3), so VRAM
+  holds one resident model. The background jobs that summarize and extract (context
+  compaction and memory extraction, AGT-10) use the small **Gemma 4 E4B**
+  (`gemma4:e4b`, 128K context), run on the CPU by default so they never evict the
+  villager model from VRAM. Other models (TTS, image, embeddings) must fit around it
+  (AGT-4, AGT-6, AGT-10).
 
 ## AGT-2 What makes a villager feel alive
 
@@ -137,17 +141,19 @@ voice prosody (AGT-4.3). No subsystem picks its own emotion.
 
 ## AGT-7 Performance budgets (reference machine: RTX 5080 laptop, `gemma4:26b`)
 
-| Path                                                                    | Budget                                             |
-| ----------------------------------------------------------------------- | -------------------------------------------------- |
-| Dialogue: player sends → first streamed token                           | ≤ 2.0 s warm                                       |
-| Dialogue: player sends → first voiced audio (Spoken tier)               | ≤ 3.0 s                                            |
-| Dialogue with sight (first turn)                                        | ≤ +1.5 s over text-only                            |
-| Background jobs                                                         | Never delay or block a dialogue (preemption stays) |
-| Reading (`READ_TEXT` reaction) after the read is proposed               | ≤ 2.0 s to first streamed token warm               |
-| Player painting: Generate → palette preview                             | ≤ 30 s, including unloading and reloading the LLM  |
-| Opening a 48-page book on the book screen                               | ≤ 100 ms                                           |
-| Main thread cost of AI subsystems (capture, chunking, audio scheduling) | ≤ 1 ms per frame average                           |
-| TTS on main thread                                                      | 0 (worker only)                                    |
+| Path                                                                    | Budget                                                                               |
+| ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| Dialogue: player sends → first streamed token                           | ≤ 2.0 s warm                                                                         |
+| Dialogue: player sends → first voiced audio (Spoken tier)               | ≤ 3.0 s                                                                              |
+| Dialogue with sight (first turn)                                        | ≤ +1.5 s over text-only                                                              |
+| Background jobs                                                         | Never delay or block a dialogue (preemption stays)                                   |
+| Reading (`READ_TEXT` reaction) after the read is proposed               | ≤ 2.0 s to first streamed token warm                                                 |
+| Player painting: Generate → palette preview                             | ≤ 30 s, including unloading and reloading the LLM                                    |
+| Opening a 48-page book on the book screen                               | ≤ 100 ms                                                                             |
+| Compaction and memory extraction (`gemma4:e4b`, background)             | Never on a reply's critical path; extraction done ≤ 30 s after a conversation closes |
+| Memory retrieval per prompt (scoring, cached embeddings)                | ≤ 5 ms                                                                               |
+| Main thread cost of AI subsystems (capture, chunking, audio scheduling) | ≤ 1 ms per frame average                                                             |
+| TTS on main thread                                                      | 0 (worker only)                                                                      |
 
 These are product targets measured by the smoke and benchmark scripts. Missing one is a
 bug to fix or a tier to downgrade, never a reason to block the game.
@@ -184,14 +190,49 @@ content). Artifacts can be carried, dropped, given, displayed on furniture (wall
 shelves, lecterns) and saved. Their content is bounded (AGT-8.1, AGT-6.2) so a save with
 hundreds of them stays small, and every one carries provenance like a memory does.
 
+## AGT-10 Memory and context are two different things
+
+Memory is what a villager **knows** across every interaction. Context is what one
+**conversation** holds while it lasts. Compaction keeps a conversation inside the model's
+context window; it never decides what a villager remembers. (Corrects the earlier wording
+that treated compaction as the memory mechanism; director, 2026-11-02.)
+
+- **AGT-10.1 Context (one conversation).** A dialogue keeps its own transcript. Each
+  prompt is: identity and rules, the villager's core memory blocks, retrieved memories,
+  world facts, the conversation summary so far, the recent turns verbatim, the player's
+  new line. Context ends when the conversation ends.
+- **AGT-10.2 Compaction.** When a conversation's prompt reaches **75% of the input
+  budget** (the model's configured context minus the reply reserve), a background job on
+  `gemma4:e4b` summarizes the older turns into a structured summary (what was asked,
+  promised, decided, still open, the mood), keeping the last turns verbatim. It runs
+  asynchronously and never delays a reply; if a reply must be sent before it finishes, the
+  oldest verbatim turns are dropped, never the summary or the memory blocks. Compaction
+  changes nothing in long-term memory.
+- **AGT-10.3 Memory (persistent, structured, action-driven).** Long-term memory is a set
+  of typed records (episodic events, semantic facts about people and places, commitments,
+  reflections, sight notes, readings), each with importance, provenance and validity.
+  Records are written by validated actions: simulation events directly; at the end of a
+  conversation, an extraction job on `gemma4:e4b` proposes add, update, invalidate or
+  no-op operations against the most similar existing memories, which the simulation
+  validates like any action. Memories are invalidated, never silently deleted.
+- **AGT-10.4 Core memory.** A few small blocks are always in the villager's prompt: who
+  they are now (self), what they know about the player, their key relationships. They
+  change only through validated memory operations.
+- **AGT-10.5 Retrieval.** Prompts take the best memories by recency, importance and
+  relevance, equally weighted (relevance by local embeddings, keyword overlap without an
+  embedding model), within a token budget.
+- **AGT-10.6 Reflection.** When enough important experience accumulates, the villager
+  reflects: a few higher-level insights citing the memories they rest on.
+
 ## Engineering mandates
 
-| ID     | Mandate                                                                                                                                                                                                                                      |
-| ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| AGT-M1 | Streaming structured dialogue (dialogue field first) with incremental JSON parsing and validation on completion.                                                                                                                             |
-| AGT-M2 | World-layer snapshot capture (no HUD), view-cone crop, nearest downscale, off-main-thread encode; images attached via Ollama's chat `images` field with an image token budget.                                                               |
-| AGT-M3 | `sight` memory kind with entity-grounding filter, salience-triggered notice events, daily look; settings toggle and eye glyph.                                                                                                               |
-| AGT-M4 | Voice system: blip synthesizer, Kokoro worker (WebGPU/WASM), optional Chatterbox loopback adapter, authored voice profiles in content, emotion→prosody presets, sentence-streamed playback with ducking and instant skip.                    |
-| AGT-M5 | `CREATE_PAINTING` action, brief schema and allowlist, async image job against a configurable loopback image endpoint (provider adapters, stable-diffusion.cpp first), palette quantization, player painting screen, captions as sight notes. |
-| AGT-M7 | Artifact item class (notes, books, paintings) with bounded content, provenance, display furniture and save migration; book screen; `READ_TEXT`, `WRITE_NOTE`, `WRITE_PAGE` with range and token caps and `reading` memories.                 |
-| AGT-M6 | Measure AGT-7 budgets in `npm run test:ollama` and the benchmark; record results in operations docs.                                                                                                                                         |
+| ID     | Mandate                                                                                                                                                                                                                                                                                                                                  |
+| ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| AGT-M1 | Streaming structured dialogue (dialogue field first) with incremental JSON parsing and validation on completion.                                                                                                                                                                                                                         |
+| AGT-M2 | World-layer snapshot capture (no HUD), view-cone crop, nearest downscale, off-main-thread encode; images attached via Ollama's chat `images` field with an image token budget.                                                                                                                                                           |
+| AGT-M3 | `sight` memory kind with entity-grounding filter, salience-triggered notice events, daily look; settings toggle and eye glyph.                                                                                                                                                                                                           |
+| AGT-M4 | Voice system: blip synthesizer, Kokoro worker (WebGPU/WASM), optional Chatterbox loopback adapter, authored voice profiles in content, emotion→prosody presets, sentence-streamed playback with ducking and instant skip.                                                                                                                |
+| AGT-M5 | `CREATE_PAINTING` action, brief schema and allowlist, async image job against a configurable loopback image endpoint (provider adapters, stable-diffusion.cpp first), palette quantization, player painting screen, captions as sight notes.                                                                                             |
+| AGT-M7 | Artifact item class (notes, books, paintings) with bounded content, provenance, display furniture and save migration; book screen; `READ_TEXT`, `WRITE_NOTE`, `WRITE_PAGE` with range and token caps and `reading` memories.                                                                                                             |
+| AGT-M8 | Dialogue sessions with transcripts; token budget from the model's context; 75% compaction trigger on `gemma4:e4b` (async, keep recent turns, deterministic overflow fallback); typed long-term memory with provenance and validity; extraction operations at session end; core memory blocks; embedding retrieval; reflection threshold. |
+| AGT-M6 | Measure AGT-7 budgets in `npm run test:ollama` and the benchmark; record results in operations docs.                                                                                                                                                                                                                                     |

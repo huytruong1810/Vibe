@@ -172,6 +172,7 @@ test('kit meters are truthful at zero, partial and full; time and map remain dis
 test('occupied kit slots preserve focus; companion needs and battle HUD remain readable', async ({
   page,
 }) => {
+  test.slow(); // three viewport sizes of screenshots; CI's software renderer needs ~2.5x the local time
   const errors: string[] = [];
   page.on('pageerror', (e) => errors.push(e.message));
   await page.setViewportSize({ width: 1920, height: 1080 });
@@ -275,7 +276,11 @@ test('occupied kit slots preserve focus; companion needs and battle HUD remain r
     await expect(carried).toBeFocused();
     await bounded(page, ['#inventory-panel']);
     await page.screenshot({ path: `docs/team/comms/codex/tmp/c8b-equipment-${size.width}.png` });
-    await page.locator('[data-gear-slot="back"]').scrollIntoViewIfNeeded();
+    // A direct DOM scroll: Playwright's scrollIntoViewIfNeeded waits for the element to be
+    // stable, and live HUD updates keep it moving on CI's software renderer (2026-11-02).
+    await page
+      .locator('[data-gear-slot="back"]')
+      .evaluate((el) => el.scrollIntoView({ block: 'center', inline: 'nearest' }));
     await page.screenshot({ path: `docs/team/comms/codex/tmp/c8b-worn-${size.width}.png` });
     await page.keyboard.press('Escape');
     await page.locator('.physiology-panel summary').click();

@@ -38,7 +38,7 @@ with the exact command and full output. Don't improvise installs.
 
 The forge only uses albedo for ramp matching, so lighting baked into the gen3d
 texture is ignored. Strong seams usually mean the sheet had shadows or
-perspective; request a cleaner sheet from the communicator.
+perspective; redraw a cleaner sheet (`reference-sheets` skill).
 
 ## Thin props disappear
 

@@ -94,7 +94,10 @@ Image-to-3D quality is decided by the input. A reference sheet must have:
 ## PRD-7 Image-generation subagents (quota-bound)
 
 Antigravity agents can spin up image-generation subagents. They are valuable and
-**rationed**: the quota is shared and slow to refill.
+**rationed**: the quota is shared and slow to refill. Since 2026-11-02 only the **blender**
+agent generates images (it makes the sheet, forges it and reviews its own result); it keeps
+the ledger in `docs/team/comms/blender/image-ledger.md` (the communicator's ledger stays as
+history).
 
 - **PRD-7.1 Use for:** reference sheets (PRD-3), back and side views, part
   and prop sheets, body-type mannequin sheets, portraits (ART-14), concept and

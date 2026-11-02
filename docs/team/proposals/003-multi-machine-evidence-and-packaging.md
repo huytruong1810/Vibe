@@ -31,9 +31,11 @@ Amend the production doctrine and team charter with the following two operationa
 ### 2. Packaging-Only Invariant (Add to `docs/doctrine/09-production-doctrine.md` § PRD-4 and `.agents/skills/sprite-forge/SKILL.md`)
 
 > **PRD-4.4 (Packaging Updates)**: When upstream engineering updates export metadata schemas, gallery viewers (`PRD-M2`), or packet manifest formats (e.g. `review.json`), already-approved candidate assets must not repeat 3D generation, rigging, or baking. The asset runner merges the engineering update and executes only:
+>
 > ```bash
 > uv run --project art/source/forge python art/source/forge/forge.py packet --asset <slug>
 > ```
+>
 > This populates the new metadata from existing candidate passes (`pix/export/`, `bake/tracks.json`) without consuming GPU/reconstruction cycles.
 
 ## Impact
