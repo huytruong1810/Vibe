@@ -8,7 +8,8 @@ owns this queue: **C22 → C24 → C25 → C14 → C13 → C18 → C19 → C20**
 standing (C19 can run beside C18; C21 only on the director's go). Machine B has no
 Blender or GPU: build against mocks and send live GPU smokes to blender as
 `--to-blender--test-` requests. The forge tickets under "Waiting for claude" need
-Blender on machine A; leave them unless the director says otherwise.
+Blender on machine A; leave them unless the director says otherwise. Claude's art-quality
+and local-generation tickets (C26–C31) sit in their own section.
 
 ## Now: codex
 
@@ -30,7 +31,7 @@ Blender on machine A; leave them unless the director says otherwise.
 - done when: a green push to `studio/doctrine-v1` is live on the Pages URL with its sha within 15 minutes; the playtest template exists; the operations doc lists the jobs and the green-CI rule; claude's local check of `/Vibe/` asset loading is replaced by a CI browser test
 - evidence: 2026-11-02: implementation b2afda6 and deterministic atlas fix c33981f; [candidate report](../comms/codex/2026-11-02T0716--to-all--c22-beta-candidate.md). Final local check: 355 tests / 28 files; [Final code CI](https://github.com/huytruong1810/Vibe/actions/runs/41404667063) is green, including Linux reproducibility, both production browser bases, existing journeys and benchmark. Live Pages acceptance awaits director setup.
 
-### C24 · Conversation context and compaction on gemma4:e4b at 75%
+### C24 · Conversation context and compaction on gemma4-abliterated:e4b at 75%
 
 - status: open (after C22)
 - owner: codex
@@ -38,8 +39,8 @@ Blender on machine A; leave them unless the director says otherwise.
 - spec: [memory and context](../../engineering/memory-and-context.md) §1, §2, §3.1, §4; doctrine AGT-1.3, AGT-10.1–10.2, AGT-7; ADR 032.
 - work:
   1. `DialogueSession` with transcript in the worker; prompt order and fixed sub-budgets (§3.1); `contextTokens` setting (default 8192) sent as `num_ctx`; token estimate calibrated from Ollama's `prompt_eval_count`.
-  2. 75% trigger → one background `compaction` job on `backgroundModel` (`gemma4:e4b`, CPU via `options.num_gpu: 0` by default), `CompactionSummary` schema, K = 4 recent turns verbatim, revision-checked apply; ≥ 95% overflow drops oldest turns deterministically.
-  3. Settings: background model, "run on CPU", context size; model check in the setup dialog (`gemma4:e4b` missing → clear install line, fallback to the dialogue model with a warning).
+  2. 75% trigger → one background `compaction` job on `backgroundModel` (`gemma4-abliterated:e4b`, CPU via `options.num_gpu: 0` by default), `CompactionSummary` schema, K = 4 recent turns verbatim, revision-checked apply; ≥ 95% overflow drops oldest turns deterministically.
+  3. Settings: background model, "run on CPU", context size; model check in the setup dialog (`gemma4-abliterated:e4b` missing → clear install line, fallback to the dialogue model with a warning).
   4. Remove the count-based `needsCompaction` path and the deleting `MemoryRepository.compact`; until C25 lands, keep memory records as they are (no deletion).
 - done when: §4 rows "budget and trigger" and "no memory loss" pass in `npm run check`; the debug overlay shows prompt tokens, budget and compactions; blender's live smoke (B0) runs a 30-turn conversation where the villager recalls a turn-3 promise at turn 28, with compaction and reply latencies recorded in `docs/operations/`.
 - evidence:
@@ -52,7 +53,7 @@ Blender on machine A; leave them unless the director says otherwise.
 - spec: [memory and context](../../engineering/memory-and-context.md) §2, §3.2, §3.3, §4; doctrine AGT-10.3–10.6; ADR 032.
 - work:
   1. `MemoryRecordV2` and `CoreBlocks` with the next save version and the §3.2 migration.
-  2. Session-end extraction job on `gemma4:e4b`: ADD / UPDATE / INVALIDATE / NOOP against the top-10 similar memories plus core-block edits, validated (supplied ids only, grounding, `told` for player claims, caps) and applied with provenance.
+  2. Session-end extraction job on `gemma4-abliterated:e4b`: ADD / UPDATE / INVALIDATE / NOOP against the top-10 similar memories plus core-block edits, validated (supplied ids only, grounding, `told` for player claims, caps) and applied with provenance.
   3. Retrieval: recency (0.995 per game hour) + importance + relevance, min-max normalized, equal weights; `embeddinggemma` 256-d via `/api/embed`, cached in IndexedDB (not in saves), keyword fallback; invalidated records excluded; `lastAccessTick` updated.
   4. Reflection at an importance-sum threshold (start 150) on the dialogue model when idle; capacity cap 400 with episodic folding (never semantic facts or commitments).
 - done when: §4 rows "extraction", "retrieval", "migration" pass; the C24 live smoke repeated across two conversations: the villager recalls a fact from the first in the second; soak (`npm run benchmark` or ecology soak) shows retrieval ≤ 5 ms per prompt.
@@ -134,7 +135,7 @@ Blender on machine A; leave them unless the director says otherwise.
   4. Painting screen (§8.2) from the easel or a blank canvas: prompt, chips, progress, Cancel, palette preview at 4× beside the raw output, Keep / Retry / Discard.
   5. Rendering: LRU texture cache (32), framed display on hooks, inventory thumbnail, pending easel.
 - out of scope: pixel editing (C21); painting sizes other than 48×32.
-- done when: unit tests for brief validation, rates, allowlist rejections (lettering, URL, brand list), pending-survives-reload; Playwright with a mocked provider paints, keeps, hangs the painting on a hook and captures it at 1080p (look at it, PRD-5); blender's live smoke on machine A: Lark paints overnight during sleep acceleration with `gemma4:26b` and `sd-server`, the painting hangs, a villager's next dialogue can mention it from the caption; contact capture attached to the reply.
+- done when: unit tests for brief validation, rates, allowlist rejections (lettering, URL, brand list), pending-survives-reload; Playwright with a mocked provider paints, keeps, hangs the painting on a hook and captures it at 1080p (look at it, PRD-5); blender's live smoke on machine A: Lark paints overnight during sleep acceleration with `gemma4-abliterated:26b` and `sd-server`, the painting hangs, a villager's next dialogue can mention it from the caption; contact capture attached to the reply.
 - evidence:
 
 ### C21 · Player pixel touch-up for paintings (optional)
@@ -147,6 +148,15 @@ Blender on machine A; leave them unless the director says otherwise.
 - evidence:
 
 ## After C20: codex
+
+### C32 · worldforge packets compare against the previous revision
+
+- status: open
+- owner: codex
+- goal: a world packet's before/after shows the last revision, not the blank draft (gap found in Riverlands revision 2).
+- work: `worldforge render`/`packet` writes `before-overview.png` from the previous packet's overview (or re-renders the previous map); README wording follows.
+- done when: Riverlands revision 3's packet shows revision 2 as its before
+- evidence:
 
 ### C3g · Follow-ups from the beta slice (claude, 2026-11-01)
 
@@ -225,6 +235,67 @@ Forge work that needs Blender on machine A, in order: C9b `fit` → C9c → C3b 
 - evidence: [C3b tool handoff](../comms/codex/archive/2026-10-31T2146--to-blender--c3b-publish-and-faces.md); [registered face candidate](../../../art/review/2026-10-31-rivallie-faces-145faf106c4e/faces.json); 16 finishing and two packet-export tests pass. Body approval excludes faces; no approved packet is rerun.
 
 - distribution: source-only branch `eng/c3b-c7-tools` at `f037e2e` / draft PR #3 avoids the protected runbook merge delta. [Guarded handoff](../comms/codex/archive/2026-10-31T2346--to-blender--c3b-source-only-handoff.md); [machine-A execution report](../comms/blender/archive/2026-10-31T2355--to-codex-communicator--c3b-b8-b9-results.md) is integrated, with 1,848 staged frame hashes verified locally. [Portable-source correction](../comms/codex/archive/2026-11-01T0145--to-all--c3b-portable-provenance.md) at engineering `9dd81ee`, consumer `01e9fbb` / PR #4: 21 publication and two review-export tests pass. B10 packaging is delivered; M19 source integration and separate face acceptance remain; no new artwork approval.
+
+## Claude (machine A): art-quality and local-generation tooling (2026-11-02)
+
+Filed from the local-generation build (directive 013) and the stand-in blender session. In
+order; C26 gates any regeneration of approved assets (blender B20).
+
+### C26 · Sprite readability: features survive the bake and pixelize step
+
+- status: open (first)
+- owner: claude
+- goal: a creature reads as itself at game size: Bramblefang's fangs and fire mane, Rivallie's crest and bib, Mireling's face and moss, a human's face and hair.
+- evidence of the problem: [comparison boards](../comms/blender/2026-11-02T0500--to-director--sprite-comparison-boards.md): every shipped body loses its defining features; the pixel grid is clean, so shapes are lost in bake/pixelize, not outline or palette.
+- work: (1) readability-first concept fields and template clause (oversized head and eyes, exaggerated signature features, ART-6.3/7.2) so the mesh carries chunky features; (2) feature-preserving pixelize: detail masks from the reference views (eyes, fangs, mane accents) kept as protected pixels, highlight/accent ramp steps on signature materials; (3) measure `heightArtPx` headroom per canvas; (4) creature face sidecars (C3b) as part of the answer.
+- done when: Bramblefang and Rivallie boards (reference beside idle s/e/n at 4x) show the signature features at 1x, director agrees
+- evidence:
+
+### C27 · Pose guides for every template
+
+- status: open
+- owner: claude
+- goal: `concept` gets the pose right for humans (A-pose), winged, shelled and mushroom-biped, as `pose-guides/quadruped.png` does for quadrupeds.
+- work: `forge.py pose-guide --template <t>` rendering the template's fixture (or an approved mesh) front/side/back as tight grey clay; guides committed in `art/source/style/pose-guides/`; recipes README and skill updated.
+- done when: one `concept` run per template keeps every view in the template pose
+- evidence:
+
+### C28 · Reference views at 1024 px or more
+
+- status: open
+- owner: claude
+- goal: generated views meet PRD-3.1 (today about 620 px tall on a 2304 × 1344 sheet).
+- work: per-view upscale pass (the edit model re-rendering each cropped view at 1024+ with the sheet as reference) or larger sheets within VRAM; keep identity.
+- done when: `views` writes every view ≥ 1024 px tall without `prep` warnings, `gen3d` unchanged or better
+- evidence:
+
+### C29 · Image model bake-off: klein 9B, klein 4B, Qwen-Image-2.1
+
+- status: done (2026-11-02, claude)
+- owner: claude
+- goal: the B19 bake-off has its other candidates ready.
+- result: **FLUX.2 [klein] 9B** is the only image model kept (4-bit transformer, 44–58 s per sheet, 14.2 GiB). Klein 4B was removed (upright drift). Qwen-Image-2.1 was removed (about 3.5 h per sheet on 16 GB). Qwen-Image-Edit-2511 and Z-Image were not downloaded (outranked, or no reference input). Registry `art/source/forge/models.json`; `forge.py doctor` fails on unregistered weights.
+- evidence: `docs/engineering/imagegen.md` (table), boards `docs/team/comms/claude/boards/2026-11-02-imagegen-rivallie-*.png`, doctrine L12
+
+### C30 · `forge.py portrait` (9 emotions) and `forge.py swatch` (tileforge)
+
+- status: open
+- owner: claude
+- goal: the static 2D classes generate locally too: portraits in all nine emotions kept on identity (contract-v2), seamless 1024² terrain swatches.
+- done when: Neris has nine emotion portraits at 96/128 px that pass the portrait contract; a grass swatch passes tileforge QA
+- evidence:
+
+### C31 · gen3d backends: Hunyuan3D-2.1 shape and TRELLIS.2
+
+- status: in progress (claude)
+- owner: claude
+- goal: compare single-image 3D against the current Hunyuan3D-2mv on the golden samples (L12).
+- work: recipe `gen3d.backend` (done: `forgelib/core.py` `GEN3D_BACKENDS`, default stays out of the digest), pinned setups (Blackwell cu128 builds), same `mesh.glb` contract.
+- progress:
+  - Hunyuan3D-2.1 ran on Rivallie, front-only in 189 s and side-only in 207 s, 7.7 GiB. It lost to 2mv and was removed (board `docs/team/comms/claude/boards/2026-11-02-gen3d-rivallie-hunyuan.png`).
+  - TRELLIS.2-4B: code cloned and its venv is ready. Its CUDA extensions need the CUDA 12.8 toolkit, and the director installs it (`cuda-toolkit-12-8`, WSL repo).
+- done when: Rivallie through TRELLIS.2 to a `gen3d` preview, timings recorded; the loser is removed from `models.json`
+- evidence:
 
 ## Waiting on the director
 

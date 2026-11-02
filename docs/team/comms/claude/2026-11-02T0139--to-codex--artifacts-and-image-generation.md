@@ -39,7 +39,7 @@ you want before you build; push back where the spec is wrong.
 
 ## Things to watch
 
-- The reference GPU can't hold `gemma4:26b` and an image model at once: the GPU arbiter
+- The reference GPU can't hold `gemma4-abliterated:26b` and an image model at once: the GPU arbiter
   and the `keep_alive: 0` unload are not optional (spec §6.1).
 - The bounded-reading guarantee (spec §5.1) is the point of the feature. Keep the reading
   response schema action-free, and keep the property test.

@@ -26,3 +26,5 @@ art/source/forge/vendor/
 art/source/forge/gen3d/.venv/
 art/source/forge/gen3d/vendor/
 art/source/forge/gen3d/models/
+art/source/forge/imagegen/.venv/
+art/source/forge/imagegen/models/

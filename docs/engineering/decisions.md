@@ -455,7 +455,7 @@ See [authored artifacts](authored-artifacts.md).
 ## ADR 032 — Conversation context and long-term memory are separate; compaction runs on Gemma 4 E4B at 75%
 
 **Decision:** a dialogue keeps its own transcript; when its prompt reaches 75% of the input
-budget, a background `gemma4:e4b` job (CPU by default) summarizes older turns into a
+budget, a background `gemma4-abliterated:e4b` job (CPU by default) summarizes older turns into a
 structured summary and keeps the last four turns verbatim; an overflow drops the oldest
 verbatim turns, never memory. Long-term memory becomes typed records with provenance and
 validity, written by simulation events and by a session-end extraction that proposes
@@ -465,7 +465,7 @@ The count-based `compaction` job that deleted memories into a summary string is 
 
 **Consequences:** villagers keep the thread within a conversation and keep structured
 facts across conversations; prompt size stays bounded by construction. A second model
-must be installed (`gemma4:e4b`, ~7–10 GB disk) and runs on the CPU unless the GPU holds
+must be installed (`gemma4-abliterated:e4b`, ~7–10 GB disk) and runs on the CPU unless the GPU holds
 both; embeddings need `embeddinggemma` (optional, keyword fallback). The save gains a
 version for typed memories. See [memory and context](memory-and-context.md).
 

@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "note": "Project style for locally generated reference art (forge `concept`, PRD-3, PRD-7, 2026-11-02). styleBlock is appended to every template prompt so all assets share one look; anchors are director-approved concept images passed as reference images (1-3 per call) once the golden-sample bake-off has produced them. The masters in art/source/masters are pixel-art paintings: use them as identity references for a specific asset, never as style anchors (pixel-art references push the model toward pixel art, which image-to-3D reconstructs badly).",
+  "model": "klein9b",
+  "styleBlock": "Clean painterly 3D-friendly concept art for a cosy fantasy adventure game: smooth soft shading, clear flat colour regions, rounded friendly shapes with chunky readable silhouettes, warm storybook palette, gentle rim of light on edges, no outlines, no pixel art, no texture noise.",
+  "negative": "pixel art, pixelated, dithering, photo, photorealistic, harsh shadows, cast shadow, text, watermark, signature, frame, border, cropped, extra limbs, blurry",
+  "anchors": [],
+  "anchorsPerCall": 2
+}

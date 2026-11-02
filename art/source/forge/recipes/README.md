@@ -50,6 +50,24 @@ spec (`../spec/`); a recipe never overrides spec numbers.
   `stem_mid`, `cap_base`, `crown`, `face`, `back_top`.
 - Changing a recipe re-runs only the stages it affects (`forge.py next` tells you).
 
+## Reference art: `concept` (local image generation, PRD-7)
+
+```json
+"concept": {
+  "template": "creature-v1",
+  "fields": { "species": "...", "element": "...", "size": "...", "stance": "...",
+              "description": "...", "anatomy": "...", "colours": "..." },
+  "references": ["public/assets/portraits/...", "art/source/masters/..."],
+  "model": "klein9b"
+}
+```
+
+- `template` and its fields: `art/source/forge/spec/concept_templates.json`; a missing field
+  fails loudly. `references` are identity sources passed as reference images.
+- `model` (optional) overrides `art/source/style/style.json`'s default.
+- `forge.py concept --asset <id>` then `forge.py views --asset <id> --pick <cand>`
+  (`reference-sheets` skill).
+
 ## Held-item recipes (C9b)
 
 ```json

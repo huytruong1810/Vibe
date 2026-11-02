@@ -247,7 +247,7 @@ seed, artifact id) for reproducibility.
 
 ### 6.1 GPU coordination with the LLM
 
-The reference GPU cannot hold `gemma4:26b` and an image model together. Protocol, owned by
+The reference GPU cannot hold `gemma4-abliterated:26b` and an image model together. Protocol, owned by
 a new main-thread `GpuArbiter` beside `InferenceScheduler`:
 
 1. Image jobs run through `InferenceScheduler.exclusive` so no chat request overlaps.
@@ -417,7 +417,8 @@ CPU contention with other world-generation tests. `npm test` runs both projects.
 | Provider adapters                    | Mocked fetch: success, HTTP error, oversize, timeout, abort; loopback URL rejection                                                                               |
 | GPU arbiter                          | Fake scheduler: dialogue preempts villager image job and requeues; player job not preempted; unload called                                                        |
 | Screens                              | Playwright: write a 3-page book, seal, reopen read-only; paint with a mocked provider, keep, hang on a hook, screenshot at 1080p (looked at, PRD-5)               |
-| Live smoke (machine A, real GPU)     | `npm run test:ollama` extended: one reading round-trip with `gemma4:26b`; one sd-server painting with Z-Image Turbo; AGT-7 timings recorded in `docs/operations/` |
+| Live smoke (machine A, real GPU)     | `npm run test:ollama` extended: one reading round-trip with `gemma4-abliterated:26b`; one sd-server painting with Z-Image Turbo; AGT-7 timings recorded in `docs/operations/` |
+
 
 Codex has no GPU (machine B): everything above except the live smoke runs on mocks; post a
 `--to-blender--test-` request for the live smoke on machine A.

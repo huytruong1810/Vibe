@@ -1,0 +1,88 @@
+# Local image generation for reference art (PRD-7, L12)
+
+Status: built 2026-11-02 (claude). Replaces the quota-bound image subagent. Code:
+`art/source/forge/imagegen/` (`setup.sh`, `run_image.py`), `art/source/forge/forgelib/concept.py`,
+`forge.py concept|views`, spec `art/source/forge/spec/concept_templates.json`, style
+`art/source/style/style.json`, pose guides `art/source/style/pose-guides/`. Procedure: the
+`reference-sheets` skill.
+
+## Pipeline
+
+1. **`forge.py concept --asset <id> [--n 4] [--model m] [--seed s]`.** Builds the prompt
+   from the recipe's `concept` block, a spec template and the style block. Renders N
+   candidate sheets, with all views side by side in one image so they share one identity.
+   Writes `work/<id>/concept/` and `contact.png`.
+2. **`forge.py views --asset <id> --pick <cand>`.** Splits the sheet into views on its flat
+   background (`split_views`). Writes `art/source/references/<id>/` with a `generator`
+   provenance block (model, revision, licence, seed, template, prompt, references, style
+   hash) and a ledger row.
+3. From `prep` on, the forge is unchanged.
+
+`run_image.py` runs in its own venv: torch 2.11 cu128, diffusers 0.41.0, transformers 5.19.0
+and bitsandbytes 0.50.2, all pinned. It loads the model once per batch, then exits so the GPU
+is free.
+
+## Model (bake-off 2026-11-02)
+
+Machine A keeps one image model: **FLUX.2 [klein] 9B**, transformer in 4-bit NF4 and text
+encoder in 8-bit. The registry `art/source/forge/models.json` lists it, and `forge.py doctor`
+fails on any other weights in the cache.
+
+Rivallie (`creature-v1`, quadruped pose guide), seeds 900–903, `forge.py concept --n 4`.
+Machine A: RTX 5080 Laptop (16 GB VRAM), WSL with 24 GB RAM.
+
+| Model                        | Setting                                                | Load  | Per 2304 × 1344 sheet | Peak VRAM | Peak RAM | Result                                                                                                                           |
+| ---------------------------- | ------------------------------------------------------ | ----- | --------------------- | --------- | -------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| **FLUX.2 [klein] 9B** (kept) | transformer 4-bit NF4, text encoder 8-bit, pre-encoded | 52 s  | 44–58 s               | 14.2 GiB  | 18.2 GB  | 2 of 4 clean (c901, c903): all views on all fours, crisp fin crest, paddle tail. c900 fused a second head; c902 splayed the tail |
+| same                         | transformer 8-bit                                      | 108 s | none                  | ~15 GB    |          | spilled to system memory: step 1 of 4 never finished in 5 min                                                                    |
+| FLUX.2 [klein] 4B (removed)  | text encoder 8-bit, pre-encoded                        | 29 s  | 23–33 s               | 11.8 GiB  | 10.2 GB  | 1 of 4 clean (c903); c902 stands upright and c900's back view half-upright despite the pose guide                                |
+| Qwen-Image-2.1 (removed)     | transformer 4-bit, text encoder 4-bit                  |       | ~3.5 h (projected)    | ~15.9 GB  |          | 5 of 40 steps in 24 min (321 s/step). It scales the output and every reference to `output_resolution²` (over 5 MP at 2304 px)    |
+
+Contact sheets: [klein 9B](../team/comms/claude/boards/2026-11-02-imagegen-rivallie-klein9b.png),
+[klein 4B](../team/comms/claude/boards/2026-11-02-imagegen-rivallie-klein4b.png).
+
+Not tried:
+
+- **Qwen-Image-Edit-2511:** the Artificial Analysis open-weights editing board ranks
+  klein 9B above it.
+- **Z-Image:** Turbo takes no reference images, and the edit model hasn't shipped.
+
+Licence: klein 9B is FLUX Non-Commercial. That's accepted under L12 while the project is
+personal; a commercial release regenerates with a commercial-safe model. In-game paintings
+(AGT-6.4) are a separate tool: stable-diffusion.cpp running an Apache-2.0 model on the
+player's machine.
+
+Earlier klein 4B measurements: the first attempt kept the text encoder resident and took
+172–216 s per sheet at 18.6 GiB (spilled). Klein 4B to Hunyuan3D-2mv on Rivallie (sheet
+`c602`) gave a clean single-body quadruped in 192 s (`work/rivallie/gen3d/preview.png`).
+
+## Findings
+
+- **Memory.** On 16 GB, the text encoder must not stay on the GPU while denoising a
+  3-megapixel sheet. `run_image.py` encodes every prompt first, drops the encoder and tiles
+  the VAE decode.
+- **Pose needs a pose guide.** Klein 4B ignores pose text when "otter" pulls toward the
+  cartoon upright pose, and upright identity references make it worse. Every quadruped
+  front view came out upright, and one candidate mixed upright and all-fours views (a hybrid
+  mesh risk). A **grey clay pose guide** passed as the first reference image (`poseGuide` in
+  the recipe, fixed `POSE_CLAUSE`) fixed it: all three views on all fours, design taken from
+  the text. `pose-guides/quadruped.png` is a grey render of the approved Rivallie mesh's rest
+  pose. Make one guide per skeleton template from a fixture or an approved mesh
+  (`blender/preview.py`, then grey it and crop each view tight).
+- **Upright masters are poor identity references for quadrupeds.** Use the text fields and
+  the pose guide; add a portrait only if identity drifts.
+- **View size.** With the pose guide, views land about 620 px tall on a 2304 × 1344 sheet
+  (the long side view limits the scale). `prep` warns under 1024 px, and `gen3d` still made
+  a clean mesh. Raising the sheet size, or adding an upscale pass, is open.
+
+## Open
+
+- **More pose guides:** humans (A-pose mannequin), winged, shelled and biped (C27).
+- **Views at 1024 px or more** (C28).
+- **Not built yet:** `portrait` (9 emotions by reference editing) and `swatch` (seamless
+  tileforge swatches) (C30).
+- **gen3d:** Hunyuan3D-2mv stays the default. Hunyuan3D-2.1 was tried and removed:
+  single-image only, so from the front it invents a spike tail, and from the side it gets the
+  body right but faces sideways and drops the whiskers
+  ([board](../team/comms/claude/boards/2026-11-02-gen3d-rivallie-hunyuan.png)). TRELLIS.2
+  waits on the CUDA 12.8 toolkit being installed for its extensions (C31).

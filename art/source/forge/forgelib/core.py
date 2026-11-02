@@ -24,6 +24,12 @@ APPROVALS = REPO / "docs" / "team" / "comms" / "director" / "approvals"
 GEN3D_DIR = FORGE / "gen3d"
 GEN3D_PY = GEN3D_DIR / ".venv" / "bin" / "python"
 GEN3D_HF_HOME = GEN3D_DIR / "models" / "hf"
+# gen3d.backend in a recipe -> (python, runner script); every runner writes the same mesh.glb contract (C31, L12)
+GEN3D_DEFAULT = "hunyuan-2mv"
+GEN3D_BACKENDS = {
+    "hunyuan-2mv": (GEN3D_PY, "run_shape.py"),
+    "trellis2": (GEN3D_DIR / "vendor" / "venv-trellis2" / "bin" / "python", "run_shape_trellis2.py"),
+}
 
 os.environ.setdefault("PYTHONDONTWRITEBYTECODE", "1")
 
@@ -56,8 +62,8 @@ def load_sheet(asset_id: str) -> dict:
     p = reference_dir(asset_id) / "sheet.json"
     if not p.exists():
         raise ForgeError(
-            f"No reference sheet at {p.relative_to(REPO)}. The communicator produces it with the "
-            "`reference-sheets` skill (PRD-3); request it in your comms folder."
+            f"No reference sheet at {p.relative_to(REPO)}. Generate it locally with `forge.py concept` "
+            "then `forge.py views` (`reference-sheets` skill, PRD-3)."
         )
     return json.loads(p.read_text())
 

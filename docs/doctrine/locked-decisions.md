@@ -132,3 +132,25 @@ deterministic CPU inference, frozen weights per release) on top of scripted floc
 predation movement, under a scripted combat director that guarantees fairness (CRM).
 Language models never run in the creature combat loop: hundreds of decisions per second
 with reproducible saves rule them out. Villagers stay "System 2" (AGT, L10).
+
+## L12 — Local generative models
+
+Reference art is generated on machine A by open-weight models through the forge (PRD-7).
+The project is personal until the director says otherwise, so non-commercial and research
+licences are accepted (director, 2026-11-02); every kept image records its model and
+revision, so a future commercial release regenerates anything made with a non-commercial
+model using a commercial-safe one. Machine A keeps only the most capable model per tool
+(director, 2026-11-02). The registry is `art/source/forge/models.json`, and `forge.py doctor`
+fails on anything it doesn't list. A bake-off ends by deleting the losers. Decided
+2026-11-02, recorded by claude on the director's instruction (evidence:
+`docs/engineering/imagegen.md`):
+
+- **Images: FLUX.2 [klein] 9B** (4-bit transformer).
+  - Klein 4B drifted to upright poses.
+  - Qwen-Image-2.1 can't make a sheet on 16 GB in useful time.
+- **Image-to-3D: Hunyuan3D-2mv** stays the default for now.
+  - Hunyuan3D-2.1 was removed: single image only, and it lost to multi-view.
+  - TRELLIS.2 (MIT) is the open trial.
+
+2D → 3D stays for everything that moves or turns (L5); only non-rotating classes (terrain
+swatches, portraits, icons, VFX concepts) go image → 2D tools.

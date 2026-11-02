@@ -61,10 +61,12 @@ Memory (across sessions):
   memory; formation in the hot path or in the background
   ([guide](https://langchain-ai.github.io/langmem/concepts/conceptual_guide/)).
 
-Local models (Ollama): `gemma4:e4b` (4.5B effective, 128K context, 6.6–9.5 GB, structured
+Local models (Ollama library, stock tags researched 2026-11-01): `gemma4:e4b` (4.5B effective, 128K context, 6.6–9.5 GB, structured
 output via `format`), `gemma4:26b` (MoE, 3.8B active, 256K context, 16–19 GB),
 `embeddinggemma` (768-d, Matryoshka 512/256/128) via `POST /api/embed`
 ([gemma4](https://ollama.com/library/gemma4), [structured outputs](https://docs.ollama.com/capabilities/structured-outputs.md)).
+The game runs abliterated builds of both as `gemma4-abliterated:26b` and `:e4b` (AGT-1.2;
+install recipe in `docs/operations/operations.md`).
 
 ## 3. Design
 
@@ -74,7 +76,7 @@ output via `format`), `gemma4:26b` (MoE, 3.8B active, 256K context, 16–19 GB),
 emotion?, tokens}[], summary: CompactionSummary | null, summarizedThrough: number,
 revision }`. Opened by `interact`, closed by `closeDialogue`; a reload ends it.
 - **Input budget** `B = contextTokens − replyReserve − 5%`. `contextTokens` is a setting
-  (default 8192 for `gemma4:26b`; `num_ctx` sent to Ollama is the same value, so the KV
+  (default 8192 for `gemma4-abliterated:26b`; `num_ctx` sent to Ollama is the same value, so the KV
   cache is sized deliberately). `replyReserve` = the job's `num_predict`.
 - **Token counting**: estimate as today, then calibrate per model from Ollama's reported
   `prompt_eval_count` (running ratio of real to estimated tokens), so the 75% trigger tracks
@@ -85,7 +87,7 @@ revision }`. Opened by `interact`, closed by `closeDialogue`; a reload ends it.
 - **Trigger**: after each completed turn, if the next prompt's projected size
   (current + one average turn) is ≥ 75% of `B`, enqueue a `compaction` job unless one is
   pending for the session.
-- **Job** (`gemma4:e4b`, priority below dialogue, above plans): input = previous summary +
+- **Job** (`gemma4-abliterated:e4b`, priority below dialogue, above plans): input = previous summary +
   turns `(summarizedThrough, n − K]` with **K = 4** recent turns kept verbatim. Output
   schema `CompactionSummary`: `{ gist ≤ 120 words, playerAsked[], villagerPromised[],
 decided[], open[], mood }`, each list ≤ 5 items of ≤ 20 words. Apply only if the session
@@ -94,7 +96,7 @@ decided[], open[], mood }`, each list ≤ 5 items of ≤ 20 words. Apply only if
 - **Overflow fallback**: if a turn must be sent at ≥ 95% and no summary covers enough, drop
   the oldest verbatim turns (deterministic) and mark the prompt `truncated` in the debug
   overlay. Never block, never fail a reply, never touch memory blocks.
-- **Model placement**: setting `backgroundModel` (default `gemma4:e4b`; falls back to the
+- **Model placement**: setting `backgroundModel` (default `gemma4-abliterated:e4b`; falls back to the
   dialogue model with a warning if not installed) and "Run background model on CPU"
   (default on: sends `options.num_gpu: 0`, so the 26B dialogue model stays resident in
   VRAM; measure CPU latency in the smoke and record it).
@@ -127,7 +129,7 @@ interface CoreBlocks {
 
 - **Deterministic writes** (no LLM): perception, gifts, battles, care, commitments: the
   existing `PerceptionSystem`/action paths write typed records directly.
-- **Extraction at session end** (`gemma4:e4b`, background): input = final
+- **Extraction at session end** (`gemma4-abliterated:e4b`, background): input = final
   `CompactionSummary` + last K turns + the top-10 most similar existing memories (ids) +
   core blocks. Output: `operations: ({op:'ADD', type, text, subjects, importance} | {op:
 'UPDATE', id, text, importance?} | {op:'INVALIDATE', id, reason} | {op:'NOOP'})[] ≤ 8`
@@ -162,11 +164,11 @@ validation (ADR 005/006). Player claims stay `told` until the simulation witness
 
 ## 4. Tests and evidence
 
-| Area                               | Test                                                                                                                                                                                                                         |
-| ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Budget and trigger                 | Unit: a session crosses 75% → exactly one compaction job; recent K turns verbatim; summary applied only on unchanged revision; ≥ 95% overflow drops oldest turns deterministically                                           |
-| No memory loss                     | Unit: compaction never changes `npc.memory`; property test: any session length keeps the prompt ≤ B                                                                                                                          |
-| Extraction                         | Unit per op: ADD/UPDATE/INVALIDATE/NOOP validation, foreign ids rejected, hearsay stays `told`, caps; injection text in a turn cannot create an action or a witnessed fact                                                   |
-| Retrieval                          | Golden ranking on a fixture with fixed vectors; keyword fallback; invalidated records excluded                                                                                                                               |
-| Migration                          | v-current → next save: counts, types, ids, summary record                                                                                                                                                                    |
-| Live smoke (machine A, blender B0) | `npm run test:ollama` extended: a 30-turn conversation with `gemma4:26b` + `gemma4:e4b` (CPU) stays coherent (the villager recalls a turn-3 promise at turn 28), compaction latency and reply latency recorded against AGT-7 |
+| Area                               | Test                                                                                                                                                                                                                                                 |
+| ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Budget and trigger                 | Unit: a session crosses 75% → exactly one compaction job; recent K turns verbatim; summary applied only on unchanged revision; ≥ 95% overflow drops oldest turns deterministically                                                                   |
+| No memory loss                     | Unit: compaction never changes `npc.memory`; property test: any session length keeps the prompt ≤ B                                                                                                                                                  |
+| Extraction                         | Unit per op: ADD/UPDATE/INVALIDATE/NOOP validation, foreign ids rejected, hearsay stays `told`, caps; injection text in a turn cannot create an action or a witnessed fact                                                                           |
+| Retrieval                          | Golden ranking on a fixture with fixed vectors; keyword fallback; invalidated records excluded                                                                                                                                                       |
+| Migration                          | v-current → next save: counts, types, ids, summary record                                                                                                                                                                                            |
+| Live smoke (machine A, blender B0) | `npm run test:ollama` extended: a 30-turn conversation with `gemma4-abliterated:26b` + `gemma4-abliterated:e4b` (CPU) stays coherent (the villager recalls a turn-3 promise at turn 28), compaction latency and reply latency recorded against AGT-7 |
