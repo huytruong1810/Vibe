@@ -41,8 +41,9 @@ endedness comes from living minds (AGT), ecology and player choices, not terrain
   (`art/source/world/regions/<region>.plan.json`) with landmark anchors, zones, routes,
   a subject for every screen and habitat regions. Bible and plan are doctrine-protected.
 - **WLD-4.2** Ground tiles, autotile rules and decoration sprites come from the
-  communicator (2D) and the Blender agent (3D-baked buildings, props, trees), all through
-  the doctrine pipelines.
+  Blender agent, which makes both the 2D art (tileforge) and the 3D-baked buildings,
+  props and trees, all through the doctrine pipelines (2D moved from the communicator
+  on 2026-11-02).
 - **WLD-4.3** The blender agent lays maps out (codex during worldforge bring-up, for the
   first golden map), but **only through `worldforge` passes**
   (`apply` → `render` → look → `check` → `packet`). It never hand-edits `.ldtk` JSON.

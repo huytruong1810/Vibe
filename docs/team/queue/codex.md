@@ -4,7 +4,7 @@ Read your brief `docs/team/briefs/codex.md` and [the queue rules](README.md) fir
 Finished tickets are in [archive/codex.md](archive/codex.md); open it only when a live ticket links there.
 
 **Who does what (directive 011, 2026-11-02, claude away until about 2026-11-09).** Codex
-owns this queue: **C22 → C17 → C18 → C19 → C20**, then C3g and C7, with C23 and C12
+owns this queue: **C22 → C24 → C25 → C17 → C18 → C19 → C20**, then C3g and C7, with C23 and C12
 standing (C19 can run beside C18; C21 only on the director's go). Machine B has no
 Blender or GPU: build against mocks and send live GPU smokes to blender as
 `--to-blender--test-` requests. The forge tickets under "Waiting for claude" need
@@ -30,7 +30,35 @@ Blender on machine A; leave them unless the director says otherwise.
 - done when: a green push to `studio/doctrine-v1` is live on the Pages URL with its sha within 15 minutes; the playtest template exists; the operations doc lists the jobs and the green-CI rule; claude's local check of `/Vibe/` asset loading is replaced by a CI browser test
 - evidence:
 
-### C17 · Artifact item class and save v4 (foundation for notes, books, paintings)
+### C24 · Conversation context and compaction on gemma4:e4b at 75%
+
+- status: open (after C22)
+- owner: codex
+- goal: a villager keeps the thread of a long conversation, and no prompt ever passes its budget, without compaction touching long-term memory.
+- spec: [memory and context](../../engineering/memory-and-context.md) §1, §2, §3.1, §4; doctrine AGT-1.3, AGT-10.1–10.2, AGT-7; ADR 032.
+- work:
+  1. `DialogueSession` with transcript in the worker; prompt order and fixed sub-budgets (§3.1); `contextTokens` setting (default 8192) sent as `num_ctx`; token estimate calibrated from Ollama's `prompt_eval_count`.
+  2. 75% trigger → one background `compaction` job on `backgroundModel` (`gemma4:e4b`, CPU via `options.num_gpu: 0` by default), `CompactionSummary` schema, K = 4 recent turns verbatim, revision-checked apply; ≥ 95% overflow drops oldest turns deterministically.
+  3. Settings: background model, "run on CPU", context size; model check in the setup dialog (`gemma4:e4b` missing → clear install line, fallback to the dialogue model with a warning).
+  4. Remove the count-based `needsCompaction` path and the deleting `MemoryRepository.compact`; until C25 lands, keep memory records as they are (no deletion).
+- done when: §4 rows "budget and trigger" and "no memory loss" pass in `npm run check`; the debug overlay shows prompt tokens, budget and compactions; blender's live smoke (B0) runs a 30-turn conversation where the villager recalls a turn-3 promise at turn 28, with compaction and reply latencies recorded in `docs/operations/`.
+- evidence:
+
+### C25 · Long-term memory v2: typed records, extraction operations, core blocks, embedding retrieval
+
+- status: open (after C24; before C18, whose `reading` memories use these types)
+- owner: codex
+- goal: villagers remember structured, sourced facts across conversations, update them when they change, and retrieve the right ones, the way current agent-memory systems do.
+- spec: [memory and context](../../engineering/memory-and-context.md) §2, §3.2, §3.3, §4; doctrine AGT-10.3–10.6; ADR 032.
+- work:
+  1. `MemoryRecordV2` and `CoreBlocks` with the next save version and the §3.2 migration.
+  2. Session-end extraction job on `gemma4:e4b`: ADD / UPDATE / INVALIDATE / NOOP against the top-10 similar memories plus core-block edits, validated (supplied ids only, grounding, `told` for player claims, caps) and applied with provenance.
+  3. Retrieval: recency (0.995 per game hour) + importance + relevance, min-max normalized, equal weights; `embeddinggemma` 256-d via `/api/embed`, cached in IndexedDB (not in saves), keyword fallback; invalidated records excluded; `lastAccessTick` updated.
+  4. Reflection at an importance-sum threshold (start 150) on the dialogue model when idle; capacity cap 400 with episodic folding (never semantic facts or commitments).
+- done when: §4 rows "extraction", "retrieval", "migration" pass; the C24 live smoke repeated across two conversations: the villager recalls a fact from the first in the second; soak (`npm run benchmark` or ecology soak) shows retrieval ≤ 5 ms per prompt.
+- evidence:
+
+### C17 · Artifact item class and its save version (foundation for notes, books, paintings)
 
 - status: open
 - owner: codex
@@ -40,7 +68,7 @@ Blender on machine A; leave them unless the director says otherwise.
   1. `src/domain/artifacts.ts`: types, `ArtifactStore` (create, get, update with revision bump, seal, remove), caps and the text sanitizer as pure functions.
   2. Items `note`, `book`, `canvas`, `painting` with icons from the UI kit placeholders; recipes `fiber+fiber→note`, `note+fiber→book`, `fiber+stick→canvas`; `ItemInstance.artifact?` and `GroundDrop.artifact?` carried through drop, pick-up, swap and give.
   3. Display furniture: `display` on scene props; one wall hook per home interior, three plus an easel (`interaction: 'paint'`) in Lark's home; `ArtifactPlacement`; commands `artifactDisplay`, `artifactTake`.
-  4. Save v4 with v3→v4 migration, zod caps, referential validation (§9); export/import round-trip.
+  4. The next save version (after C25's) with its migration, zod caps, referential validation (§9); export/import round-trip.
   5. Frame snapshot `ArtifactView` (metadata only) plus an on-demand content query.
 - out of scope: screens (C18, C20), villager actions, image generation.
 - done when: `npm run check` passes; unit tests for every cap, sanitizer case, command receipt, migration and referential rule; a 512-artifact save round-trips under 3 MB and validates in < 50 ms (test asserts both); existing saves load unchanged.
@@ -197,7 +225,7 @@ Forge work that needs Blender on machine A, in order: C9b `fit` → C9c → C3b 
 
 ### C11b · Terrain tiles in the renderer and worldforge renders
 
-- status: candidate (implementation and isolated golden proof; native M9 approval remains separate)
+- status: candidate (implementation and isolated golden proof; native terrain set (blender B17, formerly M9) approval remains separate)
 - goal: the game and worldforge draw what tileforge publishes, with the same composition as tileforge's previews.
 - inputs: `docs/engineering/tileforge.md` (runtime contract), `art/source/tiles/tools/tilelib/preview.py` (`TileSet.compose`, `variant_of`), `src/presentation/renderer.ts` `drawChunk`
 - work:

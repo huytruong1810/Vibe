@@ -403,7 +403,7 @@ vanishes against brown trousers in the s and n views, and the generic `strike` p
 the left hand while the right hand holds the item. Unit tests: `review_selftest.py`
 (`held_poses`), `presentation-v2.test.ts` (`heldLayerFrame`), `assets-v2.test.ts` (seven
 contract rejections). The game can't show a held item until a modular human body is
-integrated (M11 → B4); existing assets build byte-identical.
+integrated (blender B16 sheet → B4); existing assets build byte-identical.
 
 ### C3h creature templates (claude, 2026-11-02)
 

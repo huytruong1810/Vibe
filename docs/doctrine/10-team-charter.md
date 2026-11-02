@@ -2,13 +2,13 @@
 
 ## TEAM-1 Members and roles
 
-| Member         | Who                            | Machine | Role                                                                                                                                   |
-| -------------- | ------------------------------ | ------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| `director`     | Huy (human)                    | A       | Vision, approval, merges. The only approver (L7).                                                                                      |
-| `claude`       | Claude (Anthropic)             | A       | Senior game-dev counsel; doctrine author. On call only from 2026-10-31 (DOC-5).                                                        |
-| `codex`        | Codex Sol 6.1                  | B       | Senior engineer and system designer: simulation, renderer, tooling, tests, engineering docs, art contract.                             |
-| `communicator` | Gemini Flash 3.8 (Antigravity) | B       | Team hub: comms relay, status board, review digests, reference sheets and image generation, 2D art (terrain, UI, VFX, portraits).      |
-| `blender`      | Gemini Flash 3.8 (Antigravity) | A       | 3D production through the forge (gen3d, rigging, fitting, baking, environment models) and world layout through `worldforge` (WLD-4.3). |
+| Member         | Who                            | Machine | Role                                                                                                                                  |
+| -------------- | ------------------------------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `director`     | Huy (human)                    | A       | Vision, approval, merges. The only approver (L7).                                                                                     |
+| `claude`       | Claude (Anthropic)             | A       | Senior game-dev counsel; doctrine author. On call only from 2026-10-31 (DOC-5).                                                       |
+| `codex`        | Codex Sol 6.1                  | B       | Senior engineer and system designer: simulation, renderer, tooling, tests, engineering docs, art contract.                            |
+| `communicator` | Gemini Flash 3.8 (Antigravity) | B       | Team hub: comms relay, status board, review digests, manifest integration, music scores (AUD). No image generation since 2026-11-02.  |
+| `blender`      | Gemini Flash 3.8 (Antigravity) | A       | All art production: reference sheets and image generation, 2D art, 3D through the forge, world layout through `worldforge` (WLD-4.3). |
 
 Git is the only channel between machines A and B. Anything a member must know
 is committed and pushed.
@@ -24,8 +24,9 @@ is committed and pushed.
 | `art/source/forge/**` (code, except `work/`), worldforge and tileforge code                                  | ✅                                                          | ✅ owner (DOC-5)              | ❌                                                 | ❌                               |
 | `art/source/forge/work/**` (gitignored)                                                                      | ✅                                                          | ✅                            | ✅                                                 | ✅                               |
 | `art/source/blender/**`, `art/source/forge/recipes/**`                                                       | ✅                                                          | ❌                            | ❌                                                 | ✅                               |
-| `art/source/references/**`, `art/source/masters/**`                                                          | ✅                                                          | ❌                            | ✅                                                 | ❌ (request via comms)           |
-| `art/source/ui/**` (UI kit, fonts), `art/source/audio/**` (scores)                                           | ✅                                                          | ❌                            | ✅                                                 | ❌ (request via comms)           |
+| `art/source/references/**`, `art/source/masters/**`                                                          | ✅                                                          | ❌                            | ❌                                                 | ✅                               |
+| `art/source/ui/**` (UI kit, fonts), `art/source/tiles/sets/**`, `art/source/exports/portraits/**`            | ✅                                                          | ❌                            | ❌                                                 | ✅                               |
+| `art/source/audio/**` (scores)                                                                               | ✅                                                          | ❌                            | ✅                                                 | ❌                               |
 | `art/source/world/spec/**`, `art/source/world/regions/**` (world schema, region bibles' plans)               | ✅                                                          | ❌                            | ❌                                                 | ❌                               |
 | `art/source/world/**` (LDtk maps, passes; through `worldforge` per WLD-4.3)                                  | ✅                                                          | ❌                            | ❌ (request via comms)                             | ✅                               |
 | `art/review/**`                                                                                              | ✅                                                          | ❌                            | ✅ (digests)                                       | ✅ (packets, via forge)          |
@@ -53,15 +54,18 @@ missing from a branch, say so in your comms and continue with unblocked work.
 
 Split by **medium and machine**, because only machine A has Blender:
 
-- **blender (machine A):** everything 3D-baked: humans, creatures, garment and
-  held-item layers, weapons and their icons and ground views, buildings,
-  interior furniture models, cave and regional props, trees, and **world map layout**
-  in LDtk through `worldforge` passes against the region plan (WLD-4.3), since it
-  places the buildings, props and trees it makes.
-- **communicator (machine B):** everything 2D: reference sheets, 9-emotion
-  portraits, terrain and transition tiles, shore masks, UI kit extensions, VFX and
-  particle sprites, arrow flight art and music scores (AUD). Also **sole integrator** of `art/source/manifest.json`,
-  reconciling blender's staging records (codex's recommendation).
+- **blender (machine A): all art production** (director decision 2026-11-02, so one
+  agent holds the full context and reviews its own work end to end). Reference sheets
+  and every image-generation job (PRD-7 quota and ledger), 2D art (9-emotion portraits,
+  terrain and transition tiles through tileforge, shore masks, UI kit extensions, VFX and
+  particle sprites, arrow flight art), everything 3D-baked (humans, creatures, garment
+  and held-item layers, weapons and their icons and ground views, buildings, interior
+  furniture, props, trees) and **world map layout** in LDtk through `worldforge` passes
+  against the region plan (WLD-4.3).
+- **communicator (machine B):** the team hub. Relays between machines (TEAM-3.6), keeps
+  the status board and weekly review digests, writes music scores (AUD), and is the
+  **sole integrator** of `art/source/manifest.json` (`npm run art:integrate -- merge`),
+  reconciling blender's staging records. It no longer generates images or makes art.
 - **codex:** schemas, compiler, generated catalogs, `docs/art/approvals.json`
   ledger (transcribing director decisions only, L7).
 
