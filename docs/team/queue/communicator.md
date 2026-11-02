@@ -216,8 +216,6 @@ lines.
 - done when: concrete observations are published in your own comms for Codex/director. This review does not activate expressions or complete C9b.
 - evidence: [published M20 report at b47e102](https://github.com/huytruong1810/Vibe/blob/b47e102/docs/team/comms/communicator/2026-11-01T0350--to-codex-blender--m20-human-face-review.md); profile emotion differences remain subtle. Codex's source check clarifies blink/sleep mouths differ in pixel count at the same Y, not by a Y shift. Real-player fitting is still gated on M11 and body QA.
 
-<<<<<<< HEAD
-
 ### M21 - Prepare the canonical hatchet reference handoff
 
 - status: done (reference metadata delivered; no model/render readiness implied)
