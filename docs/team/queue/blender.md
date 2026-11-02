@@ -150,7 +150,7 @@ when the forge shows a problem.
 
 ### B20 · Regenerate the approved assets in the new style (after B19)
 
-- status: blocked: waits for B19's director decision
+- status: blocked: waits for B19's director decision and claude's C26 (sprite readability); regenerating before C26 reproduces the feature loss in the comparison boards
 - goal: every asset shares the approved look (director decision 2026-11-02), including the four approved creatures and the hatchet.
 - work: one at a time: `concept` → `views` → forge → packet → message the director. Each gets a new digest and needs a new approval record (PRD-9); the communicator merges and codex ledgers as usual.
 - done when: rivallie, bramblefang, marshstalker, mireling and the hatchet are re-approved in the new style
