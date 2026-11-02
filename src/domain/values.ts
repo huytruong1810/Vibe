@@ -11,6 +11,7 @@ export type Element = 'fire' | 'water' | 'wind';
 export interface WorldPosition {
   readonly x: number;
   readonly y: number;
+  readonly scene?: number;
 }
 export interface TileCoordinate {
   readonly tx: number;
@@ -24,7 +25,9 @@ export const entityId = (value: number): EntityId => value as EntityId;
 export const clamp = (value: number, min = 0, max = 1): number =>
   Math.max(min, Math.min(max, value));
 export const distanceSquared = (a: WorldPosition, b: WorldPosition): number =>
-  (a.x - b.x) ** 2 + (a.y - b.y) ** 2;
+  a.scene !== undefined && b.scene !== undefined && a.scene !== b.scene
+    ? Infinity
+    : (a.x - b.x) ** 2 + (a.y - b.y) ** 2;
 export const normalize = (x: number, y: number): WorldPosition => {
   const length = Math.hypot(x, y);
   return length > 0.0001 ? { x: x / length, y: y / length } : { x: 0, y: 0 };
@@ -38,9 +41,6 @@ export function need(value: number): Need {
 export const CONFIG = Object.freeze({
   worldSize: 512,
   chunkSize: 32,
-  tileSize: 16,
-  nativeWidth: 480,
-  nativeHeight: 270,
   tickRate: 30,
   daySeconds: 1440,
   seasonDays: 7,
@@ -48,8 +48,8 @@ export const CONFIG = Object.freeze({
   creatureCapacity: 2048,
   population: 1000,
   generatorVersion: 1,
-  contentVersion: 2,
-  saveVersion: 3,
+  contentVersion: 3,
+  saveVersion: 5,
   memoryLimit: 256,
   eventLimit: 128,
 });

@@ -1,0 +1,22 @@
+{
+  "asset": "creature:mireling",
+  "kind": "creature",
+  "species": "mireling",
+  "stance": "quadruped",
+  "identitySources": [
+    "public/assets/portraits/creatures/portrait_mireling_128.png"
+  ],
+  "views": {
+    "front": "front.png",
+    "left": "left.png",
+    "back": "back.png"
+  },
+  "ramps": {
+    "shell": "basalt",
+    "moss": "moss",
+    "skin": "reed",
+    "flowers": "blossom"
+  },
+  "generations": 3,
+  "ledger": "docs/team/comms/communicator/image-ledger.md#mireling"
+}

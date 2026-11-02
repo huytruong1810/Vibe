@@ -1,0 +1,342 @@
+{
+  "recordedAt": "2026-10-30T18:16:30.022Z",
+  "browser": "155.0.8059.80",
+  "viewport": {
+    "width": 1920,
+    "height": 1080
+  },
+  "inference": "live local Ollama qwen2.5:3b; natural budgeted background planning",
+  "sampleCount": 600,
+  "requests": [
+    {
+      "start": 25196.8799,
+      "end": 37919.0996
+    },
+    {
+      "start": 47941.7109,
+      "end": 49213.4292
+    },
+    {
+      "start": 82720.5503,
+      "end": 126024.4723
+    },
+    {
+      "start": 128909.8837,
+      "end": 130534.9394
+    },
+    {
+      "start": 161798.8472,
+      "end": null
+    }
+  ],
+  "samples": [
+    {
+      "dense": false,
+      "quality": "high",
+      "sampleStart": 54684.2306,
+      "sampleEnd": 64926.7029,
+      "longTasks": {
+        "count": 0,
+        "totalMs": 0
+      },
+      "stats": {
+        "sprites": 85,
+        "chunks": 6,
+        "fps": 59.880239520968516,
+        "renderMs": 0.3999999761581421,
+        "loadMs": 1559.8999999761581,
+        "textureBytes": 43524376,
+        "atlasBytes": 1311000,
+        "cacheBytes": 25624576,
+        "framebufferBytes": 16588800,
+        "framebufferScale": 1,
+        "textureResolution": 1,
+        "gpu": "ANGLE (Intel, Intel(R) Iris(R) Xe Graphics (0x0000A7A1) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "assetError": "",
+        "prototypeActors": 28,
+        "hudMs": 0.5
+      },
+      "villagers": 30,
+      "creatures": 1000,
+      "detailed": 16,
+      "frameIntervalMs": {
+        "median": 16.699999928474426,
+        "p95": 20.399999976158142,
+        "max": 39.800000071525574
+      },
+      "renderCpuMs": {
+        "median": 0.5,
+        "p95": 1.100000023841858,
+        "max": 4.899999976158142
+      },
+      "hudUpdateMs": {
+        "median": 0.6999999284744263,
+        "p95": 1.5,
+        "max": 2.899999976158142
+      },
+      "simulationMs": {
+        "median": 0.6999999284744263,
+        "p95": 21.299999952316284,
+        "max": 30.5
+      },
+      "inferenceOverlapMs": 0
+    },
+    {
+      "dense": false,
+      "quality": "medium",
+      "sampleStart": 66935.9747,
+      "sampleEnd": 77207.537,
+      "longTasks": {
+        "count": 0,
+        "totalMs": 0
+      },
+      "stats": {
+        "sprites": 83,
+        "chunks": 6,
+        "fps": 59.880239520968516,
+        "renderMs": 0.30000007152557373,
+        "loadMs": 1559.8999999761581,
+        "textureBytes": 43524376,
+        "atlasBytes": 1311000,
+        "cacheBytes": 25624576,
+        "framebufferBytes": 16588800,
+        "framebufferScale": 1,
+        "textureResolution": 1,
+        "gpu": "ANGLE (Intel, Intel(R) Iris(R) Xe Graphics (0x0000A7A1) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "assetError": "",
+        "prototypeActors": 26,
+        "hudMs": 1.7000000476837158
+      },
+      "villagers": 30,
+      "creatures": 1000,
+      "detailed": 15,
+      "frameIntervalMs": {
+        "median": 16.699999928474426,
+        "p95": 20.5,
+        "max": 32.799999952316284
+      },
+      "renderCpuMs": {
+        "median": 0.3999999761581421,
+        "p95": 1,
+        "max": 5.400000095367432
+      },
+      "hudUpdateMs": {
+        "median": 0.6999999284744263,
+        "p95": 1.5,
+        "max": 1.7000000476837158
+      },
+      "simulationMs": {
+        "median": 0.6000000238418579,
+        "p95": 6.399999976158142,
+        "max": 12.600000023841858
+      },
+      "inferenceOverlapMs": 0
+    },
+    {
+      "dense": false,
+      "quality": "low",
+      "sampleStart": 79684.7188,
+      "sampleEnd": 91667.3421,
+      "longTasks": {
+        "count": 2,
+        "totalMs": 252
+      },
+      "stats": {
+        "sprites": 82,
+        "chunks": 6,
+        "fps": 60.240963855400565,
+        "renderMs": 0.30000007152557373,
+        "loadMs": 1559.8999999761581,
+        "textureBytes": 43906044,
+        "atlasBytes": 1692668,
+        "cacheBytes": 25624576,
+        "framebufferBytes": 16588800,
+        "framebufferScale": 1,
+        "textureResolution": 0.5,
+        "gpu": "ANGLE (Intel, Intel(R) Iris(R) Xe Graphics (0x0000A7A1) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "assetError": "",
+        "prototypeActors": 25,
+        "hudMs": 2.700000047683716
+      },
+      "villagers": 30,
+      "creatures": 1000,
+      "detailed": 15,
+      "frameIntervalMs": {
+        "median": 16.699999928474426,
+        "p95": 20.799999952316284,
+        "max": 155.19999992847443
+      },
+      "renderCpuMs": {
+        "median": 0.3999999761581421,
+        "p95": 1.0999999046325684,
+        "max": 6.5
+      },
+      "hudUpdateMs": {
+        "median": 0.6999999284744263,
+        "p95": 2.700000047683716,
+        "max": 3.399999976158142
+      },
+      "simulationMs": {
+        "median": 0.6000000238418579,
+        "p95": 157.29999995231628,
+        "max": 157.29999995231628
+      },
+      "inferenceOverlapMs": 8946.791799999992
+    },
+    {
+      "dense": true,
+      "quality": "high",
+      "sampleStart": 137763.0612,
+      "sampleEnd": 148047.9584,
+      "longTasks": {
+        "count": 1,
+        "totalMs": 68
+      },
+      "stats": {
+        "sprites": 211,
+        "chunks": 6,
+        "fps": 60.240963855400565,
+        "renderMs": 0.7999999523162842,
+        "loadMs": 1559.8999999761581,
+        "textureBytes": 43906044,
+        "atlasBytes": 1692668,
+        "cacheBytes": 25624576,
+        "framebufferBytes": 16588800,
+        "framebufferScale": 1,
+        "textureResolution": 1,
+        "gpu": "ANGLE (Intel, Intel(R) Iris(R) Xe Graphics (0x0000A7A1) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "assetError": "",
+        "prototypeActors": 154,
+        "hudMs": 2.5
+      },
+      "villagers": 30,
+      "creatures": 1000,
+      "detailed": 128,
+      "frameIntervalMs": {
+        "median": 16.899999976158142,
+        "p95": 21.399999976158142,
+        "max": 81.60000002384186
+      },
+      "renderCpuMs": {
+        "median": 1.100000023841858,
+        "p95": 2.899999976158142,
+        "max": 5.800000071525574
+      },
+      "hudUpdateMs": {
+        "median": 0.6000000238418579,
+        "p95": 1.2999999523162842,
+        "max": 2.5
+      },
+      "simulationMs": {
+        "median": 0.8000000715255737,
+        "p95": 14.799999952316284,
+        "max": 30.299999952316284
+      },
+      "inferenceOverlapMs": 0
+    },
+    {
+      "dense": true,
+      "quality": "medium",
+      "sampleStart": 150211.7512,
+      "sampleEnd": 160630.9967,
+      "longTasks": {
+        "count": 0,
+        "totalMs": 0
+      },
+      "stats": {
+        "sprites": 210,
+        "chunks": 6,
+        "fps": 59.17159763315647,
+        "renderMs": 1.3000000715255737,
+        "loadMs": 1559.8999999761581,
+        "textureBytes": 43906044,
+        "atlasBytes": 1692668,
+        "cacheBytes": 25624576,
+        "framebufferBytes": 16588800,
+        "framebufferScale": 1,
+        "textureResolution": 1,
+        "gpu": "ANGLE (Intel, Intel(R) Iris(R) Xe Graphics (0x0000A7A1) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "assetError": "",
+        "prototypeActors": 153,
+        "hudMs": 0.5
+      },
+      "villagers": 30,
+      "creatures": 1000,
+      "detailed": 128,
+      "frameIntervalMs": {
+        "median": 16.700000047683716,
+        "p95": 21.5,
+        "max": 43.59999990463257
+      },
+      "renderCpuMs": {
+        "median": 1.3000000715255737,
+        "p95": 3.100000023841858,
+        "max": 5.399999976158142
+      },
+      "hudUpdateMs": {
+        "median": 0.7000000476837158,
+        "p95": 1.5999999046325684,
+        "max": 3.9000000953674316
+      },
+      "simulationMs": {
+        "median": 1.100000023841858,
+        "p95": 22.600000023841858,
+        "max": 39.200000047683716
+      },
+      "inferenceOverlapMs": 0
+    },
+    {
+      "dense": true,
+      "quality": "low",
+      "sampleStart": 162906.8085,
+      "sampleEnd": 175875.7991,
+      "longTasks": {
+        "count": 0,
+        "totalMs": 0
+      },
+      "stats": {
+        "sprites": 210,
+        "chunks": 6,
+        "fps": 60.240963855400565,
+        "renderMs": 0.7999999523162842,
+        "loadMs": 1559.8999999761581,
+        "textureBytes": 43906044,
+        "atlasBytes": 1692668,
+        "cacheBytes": 25624576,
+        "framebufferBytes": 16588800,
+        "framebufferScale": 1,
+        "textureResolution": 0.5,
+        "gpu": "ANGLE (Intel, Intel(R) Iris(R) Xe Graphics (0x0000A7A1) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "assetError": "",
+        "prototypeActors": 153,
+        "hudMs": 0.6000000238418579
+      },
+      "villagers": 30,
+      "creatures": 1000,
+      "detailed": 128,
+      "frameIntervalMs": {
+        "median": 16.700000047683716,
+        "p95": 22.200000047683716,
+        "max": 100.89999997615814
+      },
+      "renderCpuMs": {
+        "median": 1.8000000715255737,
+        "p95": 5.799999952316284,
+        "max": 9.699999928474426
+      },
+      "hudUpdateMs": {
+        "median": 1.0999999046325684,
+        "p95": 3.200000047683716,
+        "max": 3.9000000953674316
+      },
+      "simulationMs": {
+        "median": 0.8999999761581421,
+        "p95": 197.80000007152557,
+        "max": 197.80000007152557
+      },
+      "inferenceOverlapMs": 12968.99059999999
+    }
+  ],
+  "failures": [],
+  "limitations": "Fixed rAF sample count per scene/tier, warmed prototype assets; CPU render preparation is not GPU draw timing. Tracked texture estimates exclude driver/geometry/fonts. HD production residency and sustained minimum hardware performance require requalification with approved source art."
+}

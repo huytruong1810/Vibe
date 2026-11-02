@@ -1,0 +1,112 @@
+name: Reference game checks
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 8 * * 1'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Classify source-only art pull request
+        id: art-scope
+        shell: bash
+        env:
+          EVENT: ${{ github.event_name }}
+          BASE: ${{ github.event.pull_request.base.sha }}
+        run: |
+          source_only=false
+          if [ "$EVENT" = pull_request ] && git cat-file -e "$BASE^{commit}" 2>/dev/null; then
+            changed=$(git diff --name-only "$BASE" HEAD)
+            if [ -n "$changed" ]; then
+              source_only=true
+              while IFS= read -r path; do
+                case "$path" in
+                  art/source/legacy-bindings.json|art/source/legacy-portraits.json) source_only=false ;;
+                  art/source/*) ;;
+                  docs/art/handoff.md|docs/art/handover-context.md|docs/art/art-engineering-handoff.md|docs/art/team-coordination-hub.md) ;;
+                  *) source_only=false ;;
+                esac
+              done <<< "$changed"
+            fi
+          fi
+          echo "source_only=$source_only" >> "$GITHUB_OUTPUT"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install uv==0.13.6
+      - run: npm run assets:build
+      - run: npm run check:assets
+      - run: python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p review_selftest.py
+      - run: python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p finish_selftest.py
+      - run: python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p human_faces_selftest.py
+      - run: python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p items_selftest.py
+      - run: python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p item_render_selftest.py
+      - run: python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p item_orient_selftest.py
+      - run: python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p gaits_selftest.py
+      - run: python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p pixelize_selftest.py
+      - run: python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/world/tools/worldlib -p worldforge_selftest.py
+      - run: python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/world/tools/worldlib -p terrain_selftest.py
+      - run: node --test .agents/hooks/test/hooks.test.mjs
+      - run: npm run check:packets
+      - run: npm run check:world -- --region aqualia --level aqualia_village
+      - run: npm run world:build -- --region aqualia --level aqualia_village
+      - name: Require reproducible engineering integration bundles
+        if: steps.art-scope.outputs.source_only != 'true'
+        run: git diff --exit-code -- public/assets/generated docs/art/asset-catalog.schema.json docs/art/source-manifest.schema.json docs/art/art-approval-record.schema.json docs/art/candidates.json docs/art/coverage.json docs/art/coverage.md
+      - run: npm run check
+      - run: npm run format:check
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:browser
+      - run: npm run benchmark
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: verification-artifacts
+          path: |
+            artifacts/
+            test-results/
+  ecology-soak:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: scope
+        shell: bash
+        env:
+          EVENT: ${{ github.event_name }}
+          BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          if [ "$EVENT" = schedule ] || [ "$EVENT" = workflow_dispatch ] || ! git cat-file -e "$BASE^{commit}" 2>/dev/null; then
+            echo 'run=true' >> "$GITHUB_OUTPUT"
+          elif git diff --name-only "$BASE" HEAD -- src/domain src/worker src/content scripts/soak.ts | read -r changed; then
+            echo 'run=true' >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/setup-node@v4
+        if: steps.scope.outputs.run == 'true'
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+        if: steps.scope.outputs.run == 'true'
+      - run: npm run soak
+        if: steps.scope.outputs.run == 'true'
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.scope.outputs.run == 'true'
+        with:
+          name: ecology-soak
+          path: artifacts/soak.json

@@ -11,24 +11,38 @@
     "preview": "vite preview --host 127.0.0.1",
     "test": "vitest run",
     "test:watch": "vitest",
-    "format": "prettier --write src tests scripts docs README.md *.json *.ts index.html",
-    "format:check": "prettier --check src tests scripts docs README.md *.json *.ts index.html",
+    "format": "prettier --write src tests scripts docs art/source .github README.md *.json *.ts index.html gallery.html",
+    "format:check": "prettier --check src tests scripts docs art/source .github README.md *.json *.ts index.html gallery.html",
     "test:ollama": "tsx scripts/ollama-smoke.ts",
     "test:browser": "playwright test",
     "benchmark": "tsx scripts/benchmark.ts",
     "soak": "tsx scripts/soak.ts",
     "check:architecture": "tsx scripts/check-architecture.ts",
-    "check": "npm run typecheck && npm run check:architecture && npm test && vite build"
+    "check:hygiene": "node .agents/hygiene/check.mjs --ci",
+    "check": "npm run check:hygiene && npm run typecheck && npm run check:architecture && npm run check:assets && npm test && vite build",
+    "assets:build": "tsx scripts/assets-build.ts",
+    "assets:schemas": "tsx scripts/assets-schemas.ts",
+    "assets:coverage": "tsx scripts/assets-coverage.ts",
+    "terrain:proof": "tsx scripts/terrain-proof.ts",
+    "ui:build": "tsx scripts/ui-build.ts",
+    "check:assets": "tsx scripts/assets-check.ts",
+    "check:packets": "tsx scripts/check-packets.ts",
+    "world:build": "tsx scripts/world-build.ts",
+    "check:world": "tsx scripts/world-build.ts --check",
+    "check:assets:hd": "tsx scripts/assets-check.ts --require-hd",
+    "benchmark:render": "tsx scripts/render-benchmark.ts"
   },
   "dependencies": {
     "pixi.js": "^8.14.0",
     "zod": "^4.1.0"
   },
   "devDependencies": {
+    "@assetpack/core": "^1.7.0",
     "@playwright/test": "^1.56.0",
     "@types/node": "^22.18.0",
     "fake-indexeddb": "^6.2.0",
     "prettier": "^3.9.10",
+    "sharp": "^0.35.5",
     "tsx": "^4.20.0",
     "typescript": "~5.9.3",
     "vite": "^7.2.0",
@@ -36,5 +50,14 @@
   },
   "engines": {
     "node": ">=22.12.0"
+  },
+  "overrides": {
+    "@assetpack/core": {
+      "sharp": "0.35.5",
+      "minimatch": "10.2.6"
+    },
+    "gpu-tex-enc": {
+      "sharp": "0.35.5"
+    }
   }
 }

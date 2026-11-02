@@ -1,0 +1,272 @@
+{
+  "schemaVersion": 1,
+  "rigId": "ual2-humanoid",
+  "doctrine": [
+    "L6",
+    "ART-9.2",
+    "CMB-3"
+  ],
+  "note": "Human clip sources. Each clip samples its segments (normalised range within each action; segments are joined in proportion to their frame lengths) at the clip's frame count from render_spec. Loops sample i/N, once and combat clips i/(N-1). Keys are constant (ART-9.2). A recipe may override any clip under clips.<name>.segments (for example work -> TreeChopping_Loop for the hatchet). Protected spec: change under DOC-5.",
+  "libraries": {
+    "ual2": {
+      "glb": "vendor/ual/ual2/Universal Animation Library 2 [Standard]/Unreal-Godot/UAL2_Standard.glb",
+      "armature": "Armature",
+      "actionSuffix": "_Armature",
+      "boneMap": null
+    },
+    "ual1": {
+      "glb": "vendor/ual/ual1/Animation Library[Standard]/Godot/AnimationLibrary_Godot_Standard.glb",
+      "armature": "Rig",
+      "actionSuffix": "_Rig",
+      "boneMap": "bone_maps/ual1_to_ual2.json"
+    }
+  },
+  "clips": {
+    "idle": {
+      "segments": [
+        {
+          "lib": "ual1",
+          "action": "Idle_Loop",
+          "range": [
+            0.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    "walk": {
+      "segments": [
+        {
+          "lib": "ual1",
+          "action": "Walk_Loop",
+          "range": [
+            0.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    "run": {
+      "segments": [
+        {
+          "lib": "ual1",
+          "action": "Jog_Fwd_Loop",
+          "range": [
+            0.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    "strike": {
+      "segments": [
+        {
+          "lib": "ual1",
+          "action": "Punch_Jab",
+          "range": [
+            0.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    "element": {
+      "segments": [
+        {
+          "lib": "ual1",
+          "action": "Spell_Simple_Shoot",
+          "range": [
+            0.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    "guard": {
+      "segments": [
+        {
+          "lib": "ual2",
+          "action": "Sword_Block",
+          "range": [
+            0.25,
+            0.75
+          ]
+        }
+      ]
+    },
+    "hit": {
+      "segments": [
+        {
+          "lib": "ual1",
+          "action": "Hit_Chest",
+          "range": [
+            0.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    "dash": {
+      "segments": [
+        {
+          "lib": "ual1",
+          "action": "Roll",
+          "range": [
+            0.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    "eat": {
+      "segments": [
+        {
+          "lib": "ual2",
+          "action": "Consume",
+          "range": [
+            0.2,
+            0.8
+          ]
+        }
+      ]
+    },
+    "drink": {
+      "segments": [
+        {
+          "lib": "ual2",
+          "action": "Consume",
+          "range": [
+            0.3,
+            0.9
+          ]
+        }
+      ]
+    },
+    "bathe": {
+      "segments": [
+        {
+          "lib": "ual1",
+          "action": "Swim_Idle_Loop",
+          "range": [
+            0.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    "work": {
+      "segments": [
+        {
+          "lib": "ual2",
+          "action": "Farm_Harvest",
+          "range": [
+            0.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    "social": {
+      "segments": [
+        {
+          "lib": "ual1",
+          "action": "Idle_Talking_Loop",
+          "range": [
+            0.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    "sleep": {
+      "segments": [
+        {
+          "lib": "ual2",
+          "action": "LayToIdle",
+          "range": [
+            0.0,
+            0.08
+          ]
+        }
+      ]
+    },
+    "downed": {
+      "segments": [
+        {
+          "lib": "ual1",
+          "action": "Death01",
+          "range": [
+            0.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    "recovery": {
+      "segments": [
+        {
+          "lib": "ual2",
+          "action": "LayToIdle",
+          "range": [
+            0.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    "sword_slash": {
+      "segments": [
+        {
+          "lib": "ual2",
+          "action": "Sword_Regular_A",
+          "range": [
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "lib": "ual2",
+          "action": "Sword_Regular_A_Rec",
+          "range": [
+            0.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    "spear_thrust": {
+      "segments": [
+        {
+          "lib": "ual2",
+          "action": "Sword_Regular_C",
+          "range": [
+            0.0,
+            0.6
+          ]
+        }
+      ],
+      "note": "No spear in UAL; a sword thrust window stands in. Director review."
+    },
+    "bow_shot": {
+      "segments": [
+        {
+          "lib": "ual1",
+          "action": "Pistol_Aim_Neutral",
+          "range": [
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "lib": "ual1",
+          "action": "Pistol_Shoot",
+          "range": [
+            0.0,
+            1.0
+          ]
+        }
+      ],
+      "note": "No bow in UAL; two-handed aim then shoot stands in until a bow pose is authored. Director review."
+    }
+  }
+}

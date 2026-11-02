@@ -1,0 +1,97 @@
+{
+  "doctrine": "TEAM-9",
+  "description": "Workspace hygiene policy enforced by .agents/hygiene/check.mjs (npm run check:hygiene). Doctrine-protected: only director/claude edit.",
+  "rootAllowlist": [
+    ".agents",
+    ".gitattributes",
+    ".github",
+    ".gitignore",
+    ".npmrc",
+    ".prettierignore",
+    ".prettierrc.json",
+    ".vscode",
+    "AGENTS.md",
+    "README.md",
+    "art",
+    "docs",
+    "gallery.html",
+    "index.html",
+    "package-lock.json",
+    "package.json",
+    "playwright.config.ts",
+    "public",
+    "scripts",
+    "src",
+    "tests",
+    "tsconfig.json",
+    "vite.config.ts"
+  ],
+  "approvedIgnoredRoots": [
+    "node_modules/",
+    "dist/",
+    ".cache/",
+    ".assetpack/",
+    "artifacts/",
+    "test-results/",
+    "playwright-report/",
+    ".agents/state/",
+    "art/source/forge/work/",
+    "art/source/forge/.venv/",
+    "art/source/forge/gen3d/.venv/",
+    "art/source/forge/gen3d/models/",
+    "art/source/forge/vendor/",
+    "art/source/forge/gen3d/vendor/",
+    "art/source/world/work/"
+  ],
+  "forbiddenNamePatterns": [
+    "(^|/)\\.DS_Store$",
+    "(^|/)Thumbs\\.db$",
+    "(^|/)desktop\\.ini$",
+    "\\.(bak|orig|rej|tmp|temp|swp|swo)$",
+    "~$",
+    "\\.blend\\d+$",
+    "(^|/)__pycache__/",
+    "\\.py[co]$",
+    "(^|/)nohup\\.out$",
+    "\\.log$",
+    "(^|/)(tmp|temp|scratch|junk|untitled)([-_.0-9][^/]*)?$",
+    "(^|/)(tmp|temp|scratch|junk)/",
+    "[-_ ](old|new|final|backup|bkp|copy|draft\\d*|wip)(\\.[^/]+)?$",
+    "(^|/)copy of ",
+    " \\(\\d+\\)(\\.[^/]+)?$",
+    "(^|/)(test|debug|check|verify|try)_[^/]*\\.(py|js|mjs|ts|png|json|txt)$"
+  ],
+  "forbiddenNameExceptions": ["^tests/", "^node_modules/", "^docs/team/comms/[^/]+/tmp/"],
+  "largeFileBytes": 8000000,
+  "largeFileAllowlist": [
+    "^art/source/masters/",
+    "^art/source/blender/models/",
+    "^art/source/references/",
+    "^public/assets/generated/",
+    "^package-lock\\.json$"
+  ],
+  "docs": {
+    "roots": ["README.md", "AGENTS.md", "docs/README.md"],
+    "exemptFromOrphanCheck": [
+      "^docs/team/comms/",
+      "^docs/team/proposals/",
+      "^docs/art/coverage\\.md$",
+      "(^|/)AGENTS\\.md$"
+    ]
+  },
+  "tools": {
+    "packageScriptDirs": ["scripts/"],
+    "pythonRoots": ["art/source/"],
+    "entrypoints": [
+      "art/source/pipeline/rebuild.py",
+      "art/source/forge/forge.py",
+      "art/source/forge/tools/gen_palette.py",
+      "art/source/forge/gen3d/run_shape.py",
+      "art/source/world/tools/worldforge.py"
+    ]
+  },
+  "comms": {
+    "tempSubdir": "tmp",
+    "staleTempDays": 7
+  }
+}

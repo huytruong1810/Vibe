@@ -1,0 +1,12 @@
+{
+  "asset": "mannequin:sturdy",
+  "kind": "mannequin",
+  "bodyType": "sturdy",
+  "proportions": "4.5-5 heads",
+  "views": {
+    "front": "front.png",
+    "back": "back.png"
+  },
+  "generations": 2,
+  "ledger": "docs/team/comms/communicator/image-ledger.md#mannequin-sturdy"
+}

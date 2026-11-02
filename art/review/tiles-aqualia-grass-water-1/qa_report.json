@@ -1,0 +1,190 @@
+{
+  "schemaVersion": 1,
+  "set": "aqualia-grass-water",
+  "status": "candidate",
+  "buildDigest": "24fdac8d97bea1f2a086f3f68a432e1977a14d16e180b8caa90ff21231ab48f3",
+  "checks": [
+    {
+      "check": "grass.palette",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 pixels outside ['foliage-deep.shadow', 'foliage-deep.mid', 'moss.mid', 'reed.mid']"
+    },
+    {
+      "check": "grass.valueCount",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "4 values (limit 4)"
+    },
+    {
+      "check": "grass.seamless",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst seam step / roughest interior line 1.00 (limit 1.35; every variant beside every other)"
+    },
+    {
+      "check": "grass.variantBorders",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "3 variants; 0 border pixels differ from the base"
+    },
+    {
+      "check": "grass.orphans",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst isolated-pixel fraction 0.003 (limit 0.01)"
+    },
+    {
+      "check": "grass.lowFrequency",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "largest tile-scale lighting wave 0.010 (limit 0.02); a higher value shows as a grid when tiled; raise flatten or use an evenly lit swatch"
+    },
+    {
+      "check": "grass.proportions",
+      "rule": "recipe",
+      "pass": true,
+      "hard": false,
+      "detail": "value shares [0.11, 0.74, 0.11, 0.04] vs recipe [0.12, 0.7, 0.13, 0.05]"
+    },
+    {
+      "check": "freshwater.palette",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 pixels outside ['water.shadow', 'water.mid', 'water.light', 'water.highlight']"
+    },
+    {
+      "check": "freshwater.valueCount",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "4 values (limit 4)"
+    },
+    {
+      "check": "freshwater.seamless",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst seam step / roughest interior line 0.65 (limit 1.35; every variant beside every other)"
+    },
+    {
+      "check": "freshwater.variantBorders",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "2 variants; 0 border pixels differ from the base"
+    },
+    {
+      "check": "freshwater.orphans",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst isolated-pixel fraction 0.001 (limit 0.01)"
+    },
+    {
+      "check": "freshwater.lowFrequency",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "largest tile-scale lighting wave 0.014 (limit 0.02); a higher value shows as a grid when tiled; raise flatten or use an evenly lit swatch"
+    },
+    {
+      "check": "freshwater.proportions",
+      "rule": "recipe",
+      "pass": true,
+      "hard": false,
+      "detail": "value shares [0.23, 0.5, 0.18, 0.08] vs recipe [0.22, 0.5, 0.2, 0.08]"
+    },
+    {
+      "check": "cliff.palette",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 pixels outside ['stone.deep', 'stone.shadow', 'stone.mid', 'moss.mid']"
+    },
+    {
+      "check": "cliff.valueCount",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "4 values (limit 4)"
+    },
+    {
+      "check": "cliff.seamless",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst seam step / roughest interior line 0.96 (limit 1.35; every variant beside every other)"
+    },
+    {
+      "check": "cliff.variantBorders",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 variants; 0 border pixels differ from the base"
+    },
+    {
+      "check": "cliff.orphans",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst isolated-pixel fraction 0.000 (limit 0.01)"
+    },
+    {
+      "check": "grass.actorContrast",
+      "rule": "ART-7.3",
+      "pass": false,
+      "hard": false,
+      "detail": "lightness gap to actor body tones {'teal.mid': 0.152, 'foliage.mid': 0.114, 'basalt.mid': 0.02, 'skin-warm.mid': 0.257, 'timber.mid': 0.035}; below 0.12: ['basalt.mid', 'foliage.mid', 'timber.mid']"
+    },
+    {
+      "check": "pair.grass-freshwater",
+      "rule": "WLD-3.3",
+      "pass": true,
+      "hard": false,
+      "detail": "median lightness gap 0.214 (want >= 0.06)"
+    },
+    {
+      "check": "freshwater_shore.palette",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 opaque pixels outside ['water.shadow', 'water.mid', 'water.light', 'water.highlight', 'timber.deep']"
+    },
+    {
+      "check": "freshwater_shore.hardAlpha",
+      "rule": "ART-1",
+      "pass": true,
+      "hard": true,
+      "detail": "0 semi-transparent pixels"
+    },
+    {
+      "check": "freshwater_shore.bodyMatch",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 body pixels differ from freshwater.png (the full tile must match the body)"
+    },
+    {
+      "check": "freshwater_shore.cornerBits",
+      "rule": "autotiler.ts",
+      "pass": true,
+      "hard": true,
+      "detail": "corners disagreeing with their mask bit: none"
+    },
+    {
+      "check": "freshwater_shore.edgeContinuity",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst shared-edge excess 0 px at 11/2 over the tiles' own neighbouring lines (limit 1; every legal neighbour pair, transparent/edge band/inside compared)"
+    }
+  ]
+}

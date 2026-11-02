@@ -1,0 +1,890 @@
+{
+  "schemaVersion": 1,
+  "region": "aqualia",
+  "bible": "docs/doctrine/regions/aqualia.md",
+  "doctrine": ["WLD-3", "WLD-4.1", "WLD-4.3", "ART-13", "AMB-1", "LIF-4.2", "AGT-3.1", "PIL-1"],
+  "note": "Composition plan for the Aqualia region (protected). Coordinates are level-local tiles (x right, y down). worldforge check holds every map to this plan: landmarks within tolerance, a subject on every screen, routes connected, zones at their density tier.",
+  "levels": [
+    {
+      "id": "aqualia_village",
+      "size": [90, 68],
+      "world": [0, 0],
+      "biome": "riverlands",
+      "ambience": "aqualia-canals",
+      "music": "aqualia-day",
+      "spawn": {
+        "id": "new-game",
+        "at": [66, 60],
+        "note": "Arrival by Neris's ferry at dawn (PIL-1)."
+      },
+      "zones": [
+        {
+          "id": "shrine-hill",
+          "kind": "village",
+          "density": "medium",
+          "polygon": [
+            [0, 0],
+            [26, 0],
+            [26, 17],
+            [0, 17]
+          ],
+          "elevation": "e1 hill, e2 ridge along the north edge"
+        },
+        {
+          "id": "canal-quarter",
+          "kind": "village",
+          "density": "dense",
+          "polygon": [
+            [26, 0],
+            [66, 0],
+            [66, 52],
+            [26, 52]
+          ]
+        },
+        {
+          "id": "weavers-west",
+          "kind": "village",
+          "density": "dense",
+          "polygon": [
+            [0, 17],
+            [26, 17],
+            [26, 50],
+            [0, 50]
+          ]
+        },
+        {
+          "id": "herb-wetland",
+          "kind": "village",
+          "density": "medium",
+          "polygon": [
+            [0, 50],
+            [34, 50],
+            [34, 68],
+            [0, 68]
+          ]
+        },
+        {
+          "id": "landing",
+          "kind": "village",
+          "density": "dense",
+          "polygon": [
+            [34, 52],
+            [70, 52],
+            [70, 68],
+            [34, 68]
+          ]
+        },
+        {
+          "id": "the-wend",
+          "kind": "water",
+          "density": "calm",
+          "polygon": [
+            [66, 0],
+            [81, 0],
+            [81, 68],
+            [66, 68]
+          ]
+        },
+        {
+          "id": "east-bank",
+          "kind": "wild",
+          "density": "calm",
+          "polygon": [
+            [81, 0],
+            [90, 0],
+            [90, 68],
+            [81, 68]
+          ]
+        }
+      ],
+      "landmarks": [
+        { "id": "spring-shrine", "name": "Spring Shrine", "at": [15, 9], "tolerance": 3 },
+        {
+          "id": "cave-mouth",
+          "name": "Aqualia cave mouth",
+          "at": [7, 4],
+          "tolerance": 2,
+          "entrance": "cave:aqualia"
+        },
+        { "id": "gauge-tower", "name": "Caelum's gauge tower", "at": [48, 9], "tolerance": 3 },
+        { "id": "mill", "name": "Oren's mill and waterwheel", "at": [63, 6], "tolerance": 2 },
+        { "id": "sluice-gate", "name": "Finn's sluice gate", "at": [67, 13], "tolerance": 1 },
+        { "id": "weir-walk", "name": "Weir walk", "at": [75, 8], "tolerance": 2 },
+        { "id": "weavers-row", "name": "Weavers' Row", "at": [14, 23], "tolerance": 3 },
+        { "id": "lantern-bridge", "name": "Lantern Bridge", "at": [44, 25], "tolerance": 1 },
+        { "id": "larks-studio", "name": "Lark's studio", "at": [63, 23], "tolerance": 3 },
+        {
+          "id": "reedwater-confluence",
+          "name": "Reedwater confluence",
+          "at": [84, 28],
+          "tolerance": 3
+        },
+        { "id": "courier-post", "name": "Dara's courier post", "at": [21, 43], "tolerance": 3 },
+        { "id": "village-waystone", "name": "Village waystone", "at": [25, 40], "tolerance": 2 },
+        { "id": "grain-plots", "name": "Reed's grain plots", "at": [7, 45], "tolerance": 4 },
+        { "id": "hearth", "name": "Hearth Island fire", "at": [44, 41], "tolerance": 1 },
+        { "id": "fishing-pier", "name": "Fishing pier", "at": [70, 42], "tolerance": 2 },
+        {
+          "id": "herb-wetland",
+          "name": "Willa's stilt hut and herb beds",
+          "at": [13, 58],
+          "tolerance": 3
+        },
+        { "id": "divers-pool", "name": "Diver's Pool", "at": [44, 58], "tolerance": 2 },
+        { "id": "ferry-landing", "name": "Ferry landing", "at": [68, 59], "tolerance": 1 },
+        { "id": "ferry-east-dock", "name": "East ferry dock", "at": [84, 59], "tolerance": 1 }
+      ],
+      "screens": [
+        {
+          "cell": [0, 0],
+          "subject": "spring-shrine",
+          "depth": 3,
+          "note": "Shrine on the e1 hill, cave mouth in the e2 ridge behind; stone stair ramp at the south-east."
+        },
+        {
+          "cell": [1, 0],
+          "subject": "gauge-tower",
+          "depth": 3,
+          "note": "Canal basin with the gauge tower; Caelum's house; West Cut leaves the basin."
+        },
+        {
+          "cell": [2, 0],
+          "subject": "mill",
+          "depth": 3,
+          "note": "Waterwheel on the mill race; sluice gate and weir walk across the Wend."
+        },
+        {
+          "cell": [0, 1],
+          "subject": "weavers-row",
+          "depth": 3,
+          "note": "Homes facing the West Cut; reed drying racks and laundry lines (AMB-1)."
+        },
+        {
+          "cell": [1, 1],
+          "subject": "lantern-bridge",
+          "depth": 3,
+          "note": "Arched stone bridge over the Mill Canal; lanterns on both parapets; Finn's house."
+        },
+        {
+          "cell": [2, 1],
+          "subject": "reedwater-confluence",
+          "depth": 3,
+          "note": "Riverside boardwalk past Lark's studio; across the Wend the Reedwater joins."
+        },
+        {
+          "cell": [0, 2],
+          "subject": "courier-post",
+          "depth": 3,
+          "note": "Dara's post with the village waystone; Reed's house and grain plots to the west."
+        },
+        {
+          "cell": [1, 2],
+          "subject": "hearth",
+          "depth": 3,
+          "note": "Hearth Island: communal fire, well and notice board; four bridges. The village square."
+        },
+        {
+          "cell": [2, 2],
+          "subject": "fishing-pier",
+          "depth": 3,
+          "note": "Mira's house and the pier into the Wend."
+        },
+        {
+          "cell": [0, 3],
+          "subject": "herb-wetland",
+          "depth": 3,
+          "note": "Reedbeds, herb beds, Willa's stilt hut; Reedhaven road leaves south-west."
+        },
+        {
+          "cell": [1, 3],
+          "subject": "divers-pool",
+          "depth": 3,
+          "note": "Deep pool where the Mill Canal widens; Marina's dive platform."
+        },
+        {
+          "cell": [2, 3],
+          "subject": "ferry-landing",
+          "depth": 3,
+          "note": "Arrival screen: ferry, dock lanterns, Neris's ferry house; the boardwalk curves west toward the pool."
+        }
+      ],
+      "routes": [
+        {
+          "id": "the-wend",
+          "kind": "river",
+          "width": 9,
+          "deepWidth": 5,
+          "points": [
+            [73, 0],
+            [72, 12],
+            [75, 24],
+            [76, 34],
+            [73, 46],
+            [73, 58],
+            [75, 67]
+          ]
+        },
+        {
+          "id": "reedwater-mouth",
+          "kind": "river",
+          "width": 5,
+          "deepWidth": 2,
+          "points": [
+            [90, 27],
+            [84, 28],
+            [78, 28]
+          ]
+        },
+        {
+          "id": "mill-canal",
+          "kind": "canal",
+          "width": 3,
+          "points": [
+            [69, 13],
+            [60, 13],
+            [50, 14],
+            [45, 20],
+            [44, 30]
+          ]
+        },
+        {
+          "id": "island-west-arm",
+          "kind": "canal",
+          "width": 3,
+          "points": [
+            [44, 30],
+            [36, 33],
+            [35, 41],
+            [36, 48],
+            [44, 51]
+          ]
+        },
+        {
+          "id": "island-east-arm",
+          "kind": "canal",
+          "width": 3,
+          "points": [
+            [44, 30],
+            [52, 33],
+            [53, 41],
+            [52, 48],
+            [44, 51]
+          ]
+        },
+        {
+          "id": "pool-outflow",
+          "kind": "canal",
+          "width": 3,
+          "points": [
+            [44, 51],
+            [44, 56],
+            [50, 60],
+            [60, 62],
+            [70, 63]
+          ]
+        },
+        {
+          "id": "west-cut",
+          "kind": "canal",
+          "width": 3,
+          "points": [
+            [50, 14],
+            [38, 15],
+            [27, 18],
+            [19, 26],
+            [17, 34],
+            [19, 46],
+            [16, 54],
+            [12, 60]
+          ]
+        },
+        {
+          "id": "arrival-way",
+          "kind": "path",
+          "surface": "boardwalk",
+          "points": [
+            [66, 60],
+            [60, 57],
+            [52, 55],
+            [47, 53],
+            [44, 49]
+          ],
+          "note": "Dawn arrival: curves west so the fire is revealed over the pool (WLD-3.2)."
+        },
+        {
+          "id": "north-way",
+          "kind": "path",
+          "surface": "stone",
+          "points": [
+            [44, 33],
+            [44, 25],
+            [46, 17],
+            [50, 11],
+            [58, 8],
+            [66, 8]
+          ]
+        },
+        {
+          "id": "weir-way",
+          "kind": "path",
+          "surface": "bridge",
+          "points": [
+            [66, 8],
+            [82, 8],
+            [90, 8]
+          ]
+        },
+        {
+          "id": "west-lane",
+          "kind": "path",
+          "surface": "dirt",
+          "points": [
+            [35, 41],
+            [28, 40],
+            [21, 43],
+            [12, 40],
+            [11, 30],
+            [14, 23],
+            [20, 16],
+            [16, 10],
+            [8, 5]
+          ]
+        },
+        {
+          "id": "wetland-way",
+          "kind": "path",
+          "surface": "boardwalk",
+          "points": [
+            [21, 43],
+            [17, 51],
+            [13, 58],
+            [6, 64],
+            [2, 67]
+          ],
+          "note": "Leads on to Reedhaven (planned, not yet authored)."
+        },
+        {
+          "id": "riverside-walk",
+          "kind": "path",
+          "surface": "boardwalk",
+          "points": [
+            [53, 41],
+            [62, 40],
+            [70, 42],
+            [64, 32],
+            [63, 23],
+            [66, 15]
+          ]
+        },
+        {
+          "id": "east-bank-path",
+          "kind": "path",
+          "surface": "dirt",
+          "points": [
+            [82, 8],
+            [85, 20],
+            [86, 34],
+            [85, 48],
+            [84, 59],
+            [90, 60]
+          ]
+        },
+        {
+          "id": "ferry",
+          "kind": "ferry",
+          "points": [
+            [68, 59],
+            [84, 59]
+          ],
+          "note": "Service by npc:neris; crossing is a ferry, not a path."
+        },
+        {
+          "id": "reedlight-float",
+          "kind": "festival",
+          "festival": "reedlight-float",
+          "points": [
+            [50, 14],
+            [45, 20],
+            [44, 30],
+            [36, 33],
+            [35, 41],
+            [36, 48],
+            [44, 51],
+            [44, 56],
+            [50, 60],
+            [60, 62],
+            [70, 63]
+          ],
+          "note": "Lantern boats at dusk (LIF-4.2): basin, around Hearth Island, through the pool, out to the Wend."
+        }
+      ],
+      "storySpots": [
+        { "id": "dawn-arrival", "at": [64, 58], "subject": "ferry-landing" },
+        { "id": "hearth-circle", "at": [44, 43], "subject": "hearth" },
+        { "id": "reedlight-view", "at": [44, 55], "subject": "divers-pool" },
+        { "id": "mill-at-dawn", "at": [61, 8], "subject": "mill" },
+        { "id": "shrine-overlook", "at": [18, 11], "subject": "spring-shrine" },
+        {
+          "id": "ferry-at-dusk",
+          "at": [80, 61],
+          "subject": "ferry-east-dock",
+          "note": "Lark paints the ferry at dusk (AGT-6.1)."
+        }
+      ],
+      "buildings": [
+        {
+          "sceneId": "settlement:aqualia:home:0",
+          "kind": "home",
+          "owner": "npc:caelum",
+          "at": [40, 7],
+          "footprint": [3, 2]
+        },
+        {
+          "sceneId": "settlement:aqualia:home:1",
+          "kind": "home",
+          "owner": "npc:marina",
+          "at": [11, 20],
+          "footprint": [3, 2]
+        },
+        {
+          "sceneId": "settlement:aqualia:home:2",
+          "kind": "ferry-house",
+          "owner": "npc:neris",
+          "at": [62, 54],
+          "footprint": [4, 3]
+        },
+        {
+          "sceneId": "settlement:aqualia:home:3",
+          "kind": "home",
+          "owner": "npc:reed",
+          "at": [7, 40],
+          "footprint": [3, 2]
+        },
+        {
+          "sceneId": "settlement:aqualia:home:4",
+          "kind": "home",
+          "owner": "npc:willa",
+          "at": [15, 56],
+          "footprint": [3, 2]
+        },
+        {
+          "sceneId": "settlement:aqualia:home:5",
+          "kind": "mill",
+          "owner": "npc:oren",
+          "at": [60, 3],
+          "footprint": [5, 4]
+        },
+        {
+          "sceneId": "settlement:aqualia:home:6",
+          "kind": "home",
+          "owner": "npc:mira",
+          "at": [61, 36],
+          "footprint": [3, 2]
+        },
+        {
+          "sceneId": "settlement:aqualia:home:7",
+          "kind": "home",
+          "owner": "npc:lark",
+          "at": [61, 21],
+          "footprint": [3, 2]
+        },
+        {
+          "sceneId": "settlement:aqualia:home:8",
+          "kind": "home",
+          "owner": "npc:dara",
+          "at": [19, 40],
+          "footprint": [3, 2]
+        },
+        {
+          "sceneId": "settlement:aqualia:home:9",
+          "kind": "home",
+          "owner": "npc:finn",
+          "at": [53, 20],
+          "footprint": [3, 2]
+        }
+      ],
+      "services": [
+        { "kind": "hearth", "at": [44, 41] },
+        { "kind": "well", "at": [47, 38] },
+        { "kind": "board", "at": [41, 38] },
+        { "kind": "ferry", "at": [68, 59], "npcId": "npc:neris" },
+        { "kind": "crafting", "at": [62, 8], "npcId": "npc:oren" }
+      ],
+      "villagers": [
+        { "npcId": "npc:caelum", "home": "settlement:aqualia:home:0", "work": "gauge-tower" },
+        { "npcId": "npc:marina", "home": "settlement:aqualia:home:1", "work": "weavers-row" },
+        { "npcId": "npc:neris", "home": "settlement:aqualia:home:2", "work": "ferry-landing" },
+        { "npcId": "npc:reed", "home": "settlement:aqualia:home:3", "work": "grain-plots" },
+        { "npcId": "npc:willa", "home": "settlement:aqualia:home:4", "work": "herb-wetland" },
+        { "npcId": "npc:oren", "home": "settlement:aqualia:home:5", "work": "mill" },
+        {
+          "npcId": "npc:mira",
+          "home": "settlement:aqualia:home:6",
+          "work": "fishing-pier",
+          "note": "Surveys the nesting banks in the Riverlands on survey days."
+        },
+        {
+          "npcId": "npc:lark",
+          "home": "settlement:aqualia:home:7",
+          "work": "larks-studio",
+          "note": "Paints at Lark's Bend in the Riverlands."
+        },
+        { "npcId": "npc:dara", "home": "settlement:aqualia:home:8", "work": "courier-post" },
+        { "npcId": "npc:finn", "home": "settlement:aqualia:home:9", "work": "sluice-gate" }
+      ],
+      "square": "hearth",
+      "shrine": "spring-shrine",
+      "habitats": [
+        {
+          "species": ["rivallie"],
+          "density": "sparse",
+          "rect": [66, 24, 15, 30],
+          "note": "Rivallie seen in the Wend from the boardwalk; the herds are in the Riverlands."
+        },
+        { "species": ["mireling"], "density": "sparse", "rect": [0, 52, 26, 16] }
+      ],
+      "ambienceEmitters": [
+        { "set": "laundry", "rect": [4, 18, 22, 10] },
+        { "set": "lily-pads", "rect": [36, 52, 18, 10] },
+        { "set": "fish-ripples", "rect": [66, 0, 15, 68] },
+        { "set": "dragonflies", "rect": [0, 50, 34, 18] },
+        { "set": "willow-leaves", "rect": [30, 28, 30, 24] },
+        { "set": "frogs", "rect": [0, 50, 34, 18], "phases": ["night"] },
+        { "set": "fireflies", "rect": [0, 0, 90, 68], "phases": ["dusk", "night"] }
+      ]
+    },
+    {
+      "id": "aqualia_riverlands",
+      "size": [120, 68],
+      "world": [90, 0],
+      "biome": "riverlands",
+      "ambience": "riverlands",
+      "music": "riverlands-day",
+      "zones": [
+        {
+          "id": "north-meadow",
+          "kind": "wild",
+          "density": "calm",
+          "polygon": [
+            [0, 0],
+            [60, 0],
+            [60, 20],
+            [0, 20]
+          ]
+        },
+        {
+          "id": "warm-terrace",
+          "kind": "wild",
+          "density": "medium",
+          "polygon": [
+            [60, 0],
+            [96, 0],
+            [96, 16],
+            [60, 16]
+          ],
+          "elevation": "e1 terrace with a ramp at its south-west corner"
+        },
+        {
+          "id": "upper-reedwater",
+          "kind": "wild",
+          "density": "medium",
+          "polygon": [
+            [96, 0],
+            [120, 0],
+            [120, 34],
+            [96, 34]
+          ]
+        },
+        {
+          "id": "reedwater-banks",
+          "kind": "wild",
+          "density": "medium",
+          "polygon": [
+            [0, 20],
+            [60, 20],
+            [60, 16],
+            [96, 16],
+            [96, 50],
+            [0, 50]
+          ]
+        },
+        {
+          "id": "south-fen",
+          "kind": "wild",
+          "density": "calm",
+          "polygon": [
+            [0, 50],
+            [120, 50],
+            [120, 68],
+            [0, 68]
+          ],
+          "biome": "swamp",
+          "ambience": "wetlands"
+        },
+        {
+          "id": "east-flats",
+          "kind": "wild",
+          "density": "calm",
+          "polygon": [
+            [96, 34],
+            [120, 34],
+            [120, 50],
+            [96, 50]
+          ]
+        }
+      ],
+      "landmarks": [
+        { "id": "weir-waystone", "name": "Weir waystone", "at": [4, 8], "tolerance": 2 },
+        { "id": "kite-oak", "name": "Kite Oak", "at": [44, 8], "tolerance": 3 },
+        { "id": "warm-spring", "name": "Warm spring", "at": [76, 7], "tolerance": 3 },
+        {
+          "id": "stepping-stones",
+          "name": "Reedwater stepping stones",
+          "at": [106, 14],
+          "tolerance": 3
+        },
+        {
+          "id": "confluence-sandbar",
+          "name": "Confluence sandbar",
+          "at": [12, 24],
+          "tolerance": 3
+        },
+        { "id": "survey-hide", "name": "Mira's survey hide", "at": [40, 22], "tolerance": 3 },
+        { "id": "willow-footbridge", "name": "Willow footbridge", "at": [76, 31], "tolerance": 1 },
+        { "id": "heron-rock", "name": "Heron rock", "at": [106, 26], "tolerance": 3 },
+        { "id": "ferry-bell", "name": "Ferry bell post", "at": [5, 44], "tolerance": 2 },
+        { "id": "larks-bend", "name": "Lark's Bend", "at": [55, 44], "tolerance": 2 },
+        { "id": "nesting-banks", "name": "Rivallie nesting banks", "at": [74, 44], "tolerance": 3 },
+        { "id": "drowned-tree", "name": "Drowned tree", "at": [104, 42], "tolerance": 3 },
+        { "id": "old-boathouse", "name": "Old boathouse", "at": [8, 59], "tolerance": 3 },
+        { "id": "fungi-ring", "name": "Fungi ring", "at": [44, 60], "tolerance": 3 },
+        { "id": "sunken-gauge", "name": "Sunken gauge post", "at": [74, 60], "tolerance": 3 },
+        {
+          "id": "tidecross-stones",
+          "name": "Tidecross road stones",
+          "at": [113, 63],
+          "tolerance": 3
+        }
+      ],
+      "screens": [
+        {
+          "cell": [0, 0],
+          "subject": "weir-waystone",
+          "depth": 2,
+          "note": "Weir walk lands on the east bank; Dara's first waystone."
+        },
+        {
+          "cell": [1, 0],
+          "subject": "kite-oak",
+          "depth": 2,
+          "note": "Open meadow, wind-bent oak; zephyrit graze. Calm ground for fights."
+        },
+        {
+          "cell": [2, 0],
+          "subject": "warm-spring",
+          "depth": 2,
+          "note": "Steaming pool on the e1 terrace; steamshell bask on the rim."
+        },
+        {
+          "cell": [3, 0],
+          "subject": "stepping-stones",
+          "depth": 2,
+          "note": "Upper Reedwater rapids; stepping stones lead north (future region edge)."
+        },
+        {
+          "cell": [0, 1],
+          "subject": "confluence-sandbar",
+          "depth": 2,
+          "note": "Sandbar where the Reedwater meets the Wend."
+        },
+        {
+          "cell": [1, 1],
+          "subject": "survey-hide",
+          "depth": 2,
+          "note": "Reed blind overlooking the meanders."
+        },
+        {
+          "cell": [2, 1],
+          "subject": "willow-footbridge",
+          "depth": 2,
+          "note": "The road crosses the Reedwater under a willow."
+        },
+        {
+          "cell": [3, 1],
+          "subject": "heron-rock",
+          "depth": 2,
+          "note": "Reed flats with a lone rock."
+        },
+        {
+          "cell": [0, 2],
+          "subject": "ferry-bell",
+          "depth": 2,
+          "note": "Bell post that calls Neris's ferry; meadow down to the Wend."
+        },
+        {
+          "cell": [1, 2],
+          "subject": "larks-bend",
+          "depth": 2,
+          "note": "The Reedwater's U-bend under an old willow; Lark's painting spot."
+        },
+        {
+          "cell": [2, 2],
+          "subject": "nesting-banks",
+          "depth": 2,
+          "note": "Sandy banks with Rivallie burrows; the densest Rivallie habitat."
+        },
+        {
+          "cell": [3, 2],
+          "subject": "drowned-tree",
+          "depth": 2,
+          "note": "Dead tree standing in a fen pool."
+        },
+        {
+          "cell": [0, 3],
+          "subject": "old-boathouse",
+          "depth": 2,
+          "note": "Derelict boathouse on the Wend bank; fen begins."
+        },
+        {
+          "cell": [1, 3],
+          "subject": "fungi-ring",
+          "depth": 2,
+          "note": "Mireling hollow; glowing fungi at night (AMB-1)."
+        },
+        {
+          "cell": [2, 3],
+          "subject": "sunken-gauge",
+          "depth": 2,
+          "note": "Old gauge post in the fen, Caelum's grandmother's; marshstalker country."
+        },
+        {
+          "cell": [3, 3],
+          "subject": "tidecross-stones",
+          "depth": 2,
+          "note": "Road leaves south-east toward Tidecross (planned, not yet authored)."
+        }
+      ],
+      "routes": [
+        {
+          "id": "reedwater",
+          "kind": "river",
+          "width": 5,
+          "deepWidth": 2,
+          "points": [
+            [120, 18],
+            [104, 20],
+            [92, 27],
+            [78, 30],
+            [70, 36],
+            [62, 42],
+            [52, 43],
+            [46, 37],
+            [44, 30],
+            [36, 26],
+            [22, 28],
+            [10, 27],
+            [0, 27]
+          ]
+        },
+        {
+          "id": "east-road",
+          "kind": "path",
+          "surface": "dirt",
+          "points": [
+            [0, 8],
+            [18, 12],
+            [40, 14],
+            [62, 20],
+            [76, 31],
+            [86, 40],
+            [96, 52],
+            [110, 61],
+            [120, 66]
+          ],
+          "note": "Weir walk to Tidecross; crosses the Reedwater at the willow footbridge."
+        },
+        {
+          "id": "terrace-path",
+          "kind": "path",
+          "surface": "stone",
+          "points": [
+            [62, 20],
+            [66, 15],
+            [76, 9]
+          ],
+          "note": "Ramp onto the e1 terrace at its south-west corner."
+        },
+        {
+          "id": "ferry-meadow-path",
+          "kind": "path",
+          "surface": "dirt",
+          "points": [
+            [0, 60],
+            [5, 44],
+            [20, 36],
+            [40, 34],
+            [55, 40]
+          ],
+          "note": "Ferry east dock to Lark's Bend."
+        },
+        {
+          "id": "fen-boardwalk",
+          "kind": "path",
+          "surface": "boardwalk",
+          "points": [
+            [20, 36],
+            [30, 52],
+            [44, 60],
+            [60, 58],
+            [74, 60],
+            [86, 54],
+            [96, 52]
+          ]
+        },
+        {
+          "id": "upper-trail",
+          "kind": "path",
+          "surface": "dirt",
+          "points": [
+            [86, 40],
+            [100, 30],
+            [106, 14],
+            [110, 0]
+          ]
+        }
+      ],
+      "storySpots": [
+        {
+          "id": "larks-bend-view",
+          "at": [55, 47],
+          "subject": "larks-bend",
+          "note": "Lark paints the same bend every season (AGT-6.1)."
+        },
+        { "id": "nesting-watch", "at": [72, 41], "subject": "nesting-banks" },
+        { "id": "spring-steam", "at": [74, 10], "subject": "warm-spring" },
+        { "id": "fungi-night", "at": [44, 63], "subject": "fungi-ring" }
+      ],
+      "habitats": [
+        { "species": ["rivallie"], "density": "dense", "rect": [64, 36, 24, 14] },
+        { "species": ["rivallie"], "density": "common", "rect": [0, 20, 64, 14] },
+        { "species": ["steamshell"], "density": "common", "rect": [62, 0, 34, 16] },
+        { "species": ["zephyrit"], "density": "common", "rect": [24, 0, 36, 20] },
+        { "species": ["mireling"], "density": "common", "rect": [28, 52, 32, 16] },
+        {
+          "species": ["marshstalker"],
+          "density": "sparse",
+          "rect": [60, 52, 44, 16],
+          "phases": ["dusk", "night"]
+        }
+      ],
+      "ambienceEmitters": [
+        { "set": "reed-sway", "rect": [0, 20, 96, 30] },
+        { "set": "butterflies", "rect": [0, 0, 60, 20], "phases": ["day"] },
+        { "set": "rivallie-splashes", "rect": [40, 30, 50, 20], "phases": ["dawn", "day"] },
+        { "set": "glowing-fungi", "rect": [28, 52, 32, 16], "phases": ["dusk", "night"] },
+        { "set": "mist-bands", "rect": [0, 50, 120, 18], "phases": ["dawn", "night"] },
+        { "set": "fireflies", "rect": [0, 20, 120, 48], "phases": ["dusk", "night"] }
+      ]
+    }
+  ]
+}

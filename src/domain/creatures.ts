@@ -3,7 +3,7 @@ import { SeededRandom } from './core';
 import { SpatialIndex, NavigationService } from './navigation';
 import { ResourceLocator, ResourceStore } from './resources';
 import { ChunkStore, SurfaceRules, TileFlag, type Traversal } from './world';
-import { CONFIG, clamp, normalize, type WorldPosition } from './values';
+import { CONFIG, clamp, normalize, distanceSquared, type WorldPosition } from './values';
 import { TwoSlotInventory } from './inventory';
 
 export enum CreatureMode {
@@ -97,8 +97,8 @@ export class SimulationTierManager {
     const eligible: { i: number; distance: number }[] = [];
     for (let i = 0; i < store.count; i++) {
       if (!store.alive[i]) continue;
-      const distance = Math.hypot(store.x[i]! - player.x, store.y[i]! - player.y);
-      const owned = store.owner[i] === 0;
+      const distance = Math.sqrt(distanceSquared(store.position(i), player));
+      const owned = store.owner[i] === 0 && store.scene[i] === (player.scene ?? 0);
       if (owned || distance < (store.tier[i] ? 28 : 23))
         eligible.push({ i, distance: owned ? -1 : distance });
       store.tier[i] = 0;
@@ -121,7 +121,7 @@ export class SteeringSystem {
       cx = 0,
       cy = 0,
       count = 0;
-    for (const other of index.query(store.x[i]!, store.y[i]!, 4, 32)) {
+    for (const other of index.query(store.x[i]!, store.y[i]!, 4, 32, store.scene[i]!)) {
       if (
         other === i ||
         store.isHuman(other) ||
@@ -292,6 +292,7 @@ export class CreatureDecisionSystem {
     const speed =
       s.definition(i).speed *
       WellbeingPolicy.speed(s.wellbeing(i)) *
+      s.movementFactor(i) *
       (s.mode[i] === CreatureMode.Wander ? 0.5 : 1);
     const before = s.position(i),
       after = moveOnTerrain(
@@ -323,6 +324,14 @@ export class CreatureDecisionSystem {
     this.paths.clear();
     this.failures.clear();
   }
+  pruneRetired(): void {
+    for (const map of [this.paths, this.failures])
+      for (const id of map.keys())
+        if (this.store.slot(id) === undefined) {
+          map.delete(id);
+          this.navigation.cancel(`entity:${id}`);
+        }
+  }
   debugPaths(observer: WorldPosition): { actor: string; points: readonly WorldPosition[] }[] {
     return [...this.paths]
       .filter(
@@ -330,7 +339,7 @@ export class CreatureDecisionSystem {
           points[0] && Math.hypot(points[0].x - observer.x, points[0].y - observer.y) < 40,
       )
       .slice(0, 12)
-      .map(([id, points]) => ({ actor: `creature:${id}`, points: points.slice(0, 48) }));
+      .map(([id, points]) => ({ actor: `entity:${id}`, points: points.slice(0, 48) }));
   }
 }
 
@@ -348,6 +357,7 @@ export class CareInteractionSystem {
       i < 0 ||
       i >= s.count ||
       !s.alive[i] ||
+      s.scene[i] !== (position.scene ?? 0) ||
       Math.hypot(s.x[i]! - position.x, s.y[i]! - position.y) > 3
     )
       return 'Move closer to a creature first.';
@@ -413,6 +423,7 @@ export class PartnershipService {
       i < 0 ||
       i >= s.count ||
       !s.alive[i] ||
+      s.scene[i] !== (player.scene ?? 0) ||
       s.owner[i] !== -1 ||
       s.hp[i]! <= 0 ||
       Math.hypot(s.x[i]! - player.x, s.y[i]! - player.y) > 3
@@ -497,6 +508,7 @@ export class PopulationDirector {
     for (let i = 0; i < store.count; i++)
       if (
         store.alive[i] &&
+        store.scene[i] === 0 &&
         !store.tier[i] &&
         store.owner[i] === -1 &&
         store.hp[i]! > 0 &&
@@ -555,7 +567,7 @@ export class HerdController {
     // At most eight herd decisions per second. Local collision remains authoritative.
     for (let count = 0; count < 8; count++) {
       const i = this.cursor++ % store.count;
-      if (!store.alive[i] || store.owner[i] !== -1) continue;
+      if (!store.alive[i] || store.scene[i] !== 0 || store.owner[i] !== -1) continue;
       const herd = store.herd[i]!,
         current = this.goals.get(herd);
       if (current && current.until > now && current.season === season) continue;

@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "title": "Hearthwild Motif (reference statement)",
+  "composer": "claude",
+  "doctrine": ["AUD-1", "AUD-3.1"],
+  "bpm": 96,
+  "timeSig": [4, 4],
+  "key": "D major",
+  "loop": true,
+  "notes": "Original 8-bar main theme: a rising 'hearth' phrase (bars 1-4) answered by a homecoming phrase (bars 5-8). Village themes quote bars 1-2.",
+  "tracks": [
+    {
+      "name": "melody",
+      "instrument": "pulse25",
+      "stem": "melody",
+      "volume": 0.42,
+      "notes": "D5:1 E5:0.5 F#5:0.5 A5:2 | G5:1 F#5:0.5 E5:0.5 D5:1 B4:1 | A4:1 D5:1 F#5:1 E5:1 | E5:3 r:1 | D5:1 E5:0.5 F#5:0.5 A5:1.5 B5:0.5 | A5:1 G5:0.5 F#5:0.5 E5:1 C#5:1 | D5:1 B4:1 A4:1 C#5:1 | D5:3 r:1"
+    },
+    {
+      "name": "harp",
+      "instrument": "harp",
+      "stem": "colour",
+      "volume": 0.38,
+      "notes": "D4:0.5 A4:0.5 D5:0.5 F#5:0.5 A4:0.5 D5:0.5 F#4:0.5 A4:0.5 | G3:0.5 D4:0.5 G4:0.5 B4:0.5 D4:0.5 G4:0.5 B3:0.5 D4:0.5 | F#3:0.5 A3:0.5 D4:0.5 F#4:0.5 A3:0.5 D4:0.5 F#3:0.5 A3:0.5 | A3:0.5 E4:0.5 A4:0.5 C#5:0.5 E4:0.5 A4:0.5 C#4:0.5 E4:0.5 | D4:0.5 A4:0.5 D5:0.5 F#5:0.5 A4:0.5 D5:0.5 F#4:0.5 A4:0.5 | G3:0.5 D4:0.5 G4:0.5 B4:0.5 A3:0.5 E4:0.5 A4:0.5 C#5:0.5 | B3:0.5 F#4:0.5 B4:0.5 D5:0.5 A3:0.5 E4:0.5 A4:0.5 C#5:0.5 | D4:0.5 A4:0.5 D5:0.5 F#5:0.5 D5:2"
+    },
+    {
+      "name": "strings",
+      "instrument": "strings",
+      "stem": "colour",
+      "volume": 0.3,
+      "notes": "D4+F#4+A4:4 | G3+B3+D4:4 | F#3+A3+D4:4 | E3+A3+C#4:4 | D4+F#4+A4:4 | G3+B3+D4:2 A3+C#4+E4:2 | B3+D4+F#4:2 A3+C#4+E4:2 | D4+F#4+A4:4"
+    },
+    {
+      "name": "bass",
+      "instrument": "triangle",
+      "stem": "base",
+      "volume": 0.5,
+      "notes": "D3:2 A2:2 | G2:2 D3:2 | F#2:2 D3:2 | A2:2 E3:2 | D3:2 A2:2 | G2:2 A2:2 | B2:2 A2:2 | D3:4"
+    },
+    {
+      "name": "drums",
+      "instrument": "noise",
+      "stem": "percussion",
+      "volume": 0.22,
+      "notes": "k:1 h:0.5 h:0.5 s:1 h:1 | k:1 h:0.5 h:0.5 s:1 h:1 | k:1 h:0.5 h:0.5 s:1 h:1 | k:1 h:1 s:1 k:1 | k:1 h:0.5 h:0.5 s:1 h:1 | k:1 h:0.5 h:0.5 s:1 h:1 | k:1 h:0.5 h:0.5 s:1 h:0.5 h:0.5 | k:2 s:2"
+    }
+  ]
+}

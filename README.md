@@ -2,7 +2,7 @@
 
 A single-player, top-down pixel world with terrain height, three elemental villages, six outposts, 30 villagers, and 1,000 persistent creatures. Local language models propose villager dialogue and plans; a deterministic simulation validates and executes them.
 
-This is a runnable reference game with original code-drawn placeholder art and representative content. It is also the implementation companion to the [master plan](docs/master_plan.md).
+This is a runnable reference game with original code-drawn placeholder art and representative content. It is also the implementation companion to the [master plan](docs/engineering/master-plan.md).
 
 ## Run locally
 
@@ -16,7 +16,7 @@ npm run dev
 
 Open the URL printed by Vite, normally **http://127.0.0.1:5173**. Start Ollama if it is not running. Choose **Find models**, select an installed model, pick an origin, and connect. The selected model must pass a real structured-output check before starting or resuming a session. Models are never installed automatically.
 
-If the browser reports a cross-origin failure, add the exact development origin to `OLLAMA_ORIGINS` and restart Ollama. For example, set `OLLAMA_ORIGINS=http://127.0.0.1:5173` in the environment used by Ollama. This setting belongs to **the Ollama server**, not Vite. A hosted build may also require browser permission for loopback access. See [local AI setup](docs/operations.md).
+If the browser reports a cross-origin failure, add the exact development origin to `OLLAMA_ORIGINS` and restart Ollama. For example, set `OLLAMA_ORIGINS=http://127.0.0.1:5173` in the environment used by Ollama. This setting belongs to **the Ollama server**, not Vite. A hosted build may also require browser permission for loopback access. See [local AI setup](docs/operations/operations.md).
 
 ```powershell
 # Windows: set for the current terminal, then start the server there.
@@ -73,19 +73,23 @@ The checked-in lockfile is the dependency source of truth. `.npmrc` uses the leg
 
 ## Architecture and documentation
 
-- [Architecture, ownership, patterns, and public contracts](docs/architecture.md)
-- [Unified entities, sleep, Nature, predation and save-v3 compatibility](docs/unified_entities.md)
-- [Master roadmap and corrected game rules](docs/master_plan.md)
-- [Foundation, clocks, persistence, and lifecycle](docs/foundation.md)
-- [Phase 1 — world and rendering](docs/phases/01-world.md)
-- [Phase 2 — resources and reactions](docs/phases/02-environment.md)
-- [Phase 3 — calendar, herds, and simulation tiers](docs/phases/03-ecology.md)
-- [Phase 4 — care, needs, and partnerships](docs/phases/04-creatures.md)
-- [Phase 5 — inventory, settlements, and schedules](docs/phases/05-settlements.md)
-- [Phase 6 — agentic villagers and memory](docs/phases/06-agents.md)
-- [Phase 7 — combat and progression](docs/phases/07-combat.md)
-- [Phase 8 — weather, lighting, audio, and UI](docs/phases/08-presentation.md)
-- [Decision records](docs/decisions.md), [operations](docs/operations.md), and [verification results](docs/verification.md)
+Start at the [documentation index](docs/README.md). The [doctrine](docs/doctrine/README.md) is the binding creative and production law; every agent reads [AGENTS.md](AGENTS.md) first.
+
+- [Architecture, ownership, patterns, and public contracts](docs/engineering/architecture.md)
+- [Unified entities, sleep, Nature, predation and save-v3 compatibility](docs/engineering/unified-entities.md)
+- [Master roadmap and corrected game rules](docs/engineering/master-plan.md)
+- [Full-world presentation, modular equipment, portrait expressions and pocket scenes](docs/engineering/full-world-presentation.md)
+- [Height, mass, recoil, footprints and accessible camera shake](docs/engineering/physical-presence.md)
+- [Foundation, clocks, persistence, and lifecycle](docs/engineering/foundation.md)
+- [Phase 1 — world and rendering](docs/engineering/phases/01-world.md)
+- [Phase 2 — resources and reactions](docs/engineering/phases/02-environment.md)
+- [Phase 3 — calendar, herds, and simulation tiers](docs/engineering/phases/03-ecology.md)
+- [Phase 4 — care, needs, and partnerships](docs/engineering/phases/04-creatures.md)
+- [Phase 5 — inventory, settlements, and schedules](docs/engineering/phases/05-settlements.md)
+- [Phase 6 — agentic villagers and memory](docs/engineering/phases/06-agents.md)
+- [Phase 7 — combat and progression](docs/engineering/phases/07-combat.md)
+- [Phase 8 — weather, lighting, audio, and UI](docs/engineering/phases/08-presentation.md)
+- [Decision records](docs/engineering/decisions.md), [operations](docs/operations/operations.md), and [verification results](docs/operations/verification.md)
 
 The source files are complete reference implementations, not documentation pseudocode. The phase documents describe the same modules and their tests. Extend data definitions for new content; keep simulation code free of rendering, storage, and network dependencies.
 
@@ -96,3 +100,9 @@ The world has one traversable height surface per tile, not stacked floors or a 3
 Placeholder art, synthesized audio, schedules, and eight nonhuman species are included. Production art, extensive authored stories, mobile controls, hosted inference, multiplayer, and a backend are outside this reference implementation.
 
 All 1,031 initial actors share health, elemental affinity, five needs and combat rules. The needs panel offers finite settlement meals, spring water, washing, Rest and safe 8× sleep. Villager inspection shows the same meters. Wildlife hunts according to diet and hunger; humans and bonded companions cannot be consumed. Player assaults on villagers are nonlethal, remembered and grant no XP. Existing v2 saves migrate to v3 without regenerating terrain or replacing their populations.
+
+## HD presentation integration
+
+The [Aqualia HD slice specification](docs/engineering/hd-presentation.md) separates runtime readiness from native art approval. Run `npm run assets:build` and `npm run check:assets` to compile/validate the shared catalog. `npm run check:assets:hd` is the stricter visual completion gate. Review assets with `npm run dev` at `http://127.0.0.1:5173/?gallery=1`; this development-only gallery does not require Ollama. The playable game retains its local-model entry check. I opens inventory, F inspection, and L the journal. Current prototype artwork is explicitly labeled and cannot count as approved native HD coverage.
+
+The [full-world production update](docs/engineering/full-world-presentation.md#production-method-and-content-scope) now combines reviewed master artwork and Blender pixel bakes with pinned, offline asset ingestion. Art-branch frame counts and prototype atlas measurements remain separate from full animation coverage and native-art approval.

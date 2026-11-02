@@ -1,0 +1,218 @@
+{
+  "recordedAt": "2026-10-30T12:22:54.378Z",
+  "days": 28,
+  "ticks": 1209600,
+  "checkpoints": 672,
+  "elapsedMs": 536877.32,
+  "villagers": 30,
+  "creatures": 987,
+  "livingEntities": 1018,
+  "minimumWildlife": 742,
+  "maximumWildlife": 1000,
+  "daily": [
+    {
+      "day": 1,
+      "population": 983,
+      "species": [157, 160, 155, 158, 154, 159, 20, 20],
+      "deaths": 57,
+      "births": 40
+    },
+    {
+      "day": 2,
+      "population": 996,
+      "species": [159, 160, 160, 159, 158, 160, 20, 20],
+      "deaths": 377,
+      "births": 373
+    },
+    {
+      "day": 3,
+      "population": 997,
+      "species": [160, 160, 160, 159, 159, 159, 20, 20],
+      "deaths": 510,
+      "births": 507
+    },
+    {
+      "day": 4,
+      "population": 986,
+      "species": [155, 157, 158, 159, 158, 159, 20, 20],
+      "deaths": 603,
+      "births": 589
+    },
+    {
+      "day": 5,
+      "population": 992,
+      "species": [160, 157, 159, 159, 158, 159, 20, 20],
+      "deaths": 681,
+      "births": 673
+    },
+    {
+      "day": 6,
+      "population": 991,
+      "species": [157, 158, 160, 158, 159, 159, 20, 20],
+      "deaths": 748,
+      "births": 739
+    },
+    {
+      "day": 7,
+      "population": 999,
+      "species": [160, 160, 160, 160, 160, 159, 20, 20],
+      "deaths": 805,
+      "births": 804
+    },
+    {
+      "day": 8,
+      "population": 990,
+      "species": [159, 159, 157, 158, 158, 159, 20, 20],
+      "deaths": 874,
+      "births": 864
+    },
+    {
+      "day": 9,
+      "population": 989,
+      "species": [159, 157, 156, 158, 159, 160, 20, 20],
+      "deaths": 928,
+      "births": 917
+    },
+    {
+      "day": 10,
+      "population": 995,
+      "species": [160, 160, 157, 160, 158, 160, 20, 20],
+      "deaths": 983,
+      "births": 978
+    },
+    {
+      "day": 11,
+      "population": 998,
+      "species": [160, 160, 159, 159, 160, 160, 20, 20],
+      "deaths": 1043,
+      "births": 1041
+    },
+    {
+      "day": 12,
+      "population": 993,
+      "species": [160, 160, 158, 158, 158, 160, 20, 19],
+      "deaths": 1093,
+      "births": 1086
+    },
+    {
+      "day": 13,
+      "population": 997,
+      "species": [159, 160, 159, 159, 160, 160, 20, 20],
+      "deaths": 1137,
+      "births": 1134
+    },
+    {
+      "day": 14,
+      "population": 990,
+      "species": [160, 160, 155, 158, 157, 160, 20, 20],
+      "deaths": 1199,
+      "births": 1189
+    },
+    {
+      "day": 15,
+      "population": 998,
+      "species": [160, 160, 160, 160, 159, 160, 20, 19],
+      "deaths": 1248,
+      "births": 1246
+    },
+    {
+      "day": 16,
+      "population": 988,
+      "species": [158, 159, 157, 159, 156, 160, 20, 19],
+      "deaths": 1316,
+      "births": 1304
+    },
+    {
+      "day": 17,
+      "population": 986,
+      "species": [158, 156, 157, 158, 160, 160, 20, 17],
+      "deaths": 1369,
+      "births": 1355
+    },
+    {
+      "day": 18,
+      "population": 996,
+      "species": [159, 160, 159, 159, 159, 160, 20, 20],
+      "deaths": 1416,
+      "births": 1412
+    },
+    {
+      "day": 19,
+      "population": 997,
+      "species": [160, 160, 160, 160, 159, 160, 20, 18],
+      "deaths": 1471,
+      "births": 1468
+    },
+    {
+      "day": 20,
+      "population": 989,
+      "species": [159, 159, 158, 158, 156, 159, 20, 20],
+      "deaths": 1529,
+      "births": 1518
+    },
+    {
+      "day": 21,
+      "population": 987,
+      "species": [157, 160, 157, 157, 159, 160, 19, 18],
+      "deaths": 1595,
+      "births": 1582
+    },
+    {
+      "day": 22,
+      "population": 987,
+      "species": [154, 160, 159, 156, 158, 160, 20, 20],
+      "deaths": 1655,
+      "births": 1642
+    },
+    {
+      "day": 23,
+      "population": 990,
+      "species": [154, 159, 159, 159, 159, 160, 20, 20],
+      "deaths": 1740,
+      "births": 1730
+    },
+    {
+      "day": 24,
+      "population": 992,
+      "species": [158, 158, 160, 159, 158, 160, 19, 20],
+      "deaths": 1811,
+      "births": 1803
+    },
+    {
+      "day": 25,
+      "population": 993,
+      "species": [158, 159, 159, 159, 159, 160, 20, 19],
+      "deaths": 1882,
+      "births": 1875
+    },
+    {
+      "day": 26,
+      "population": 992,
+      "species": [155, 160, 160, 158, 159, 160, 20, 20],
+      "deaths": 1942,
+      "births": 1934
+    },
+    {
+      "day": 27,
+      "population": 987,
+      "species": [159, 160, 157, 157, 154, 160, 20, 20],
+      "deaths": 2023,
+      "births": 2010
+    },
+    {
+      "day": 28,
+      "population": 987,
+      "species": [158, 157, 158, 157, 157, 160, 20, 20],
+      "deaths": 2085,
+      "births": 2072
+    }
+  ],
+  "deaths": 2085,
+  "births": 2072,
+  "maximumDetailed": 25,
+  "maximumReactions": 0,
+  "finalDay": 28,
+  "finalSeason": 0,
+  "passed": true,
+  "note": "Accelerated full-tick simulation with deterministic inference outages; live LLM believability is a separate manual evaluation."
+}

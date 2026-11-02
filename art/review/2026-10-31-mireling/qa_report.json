@@ -1,0 +1,107 @@
+{
+ "asset": "mireling",
+ "status": "candidate",
+ "maxStatus": "candidate",
+ "checks": [
+  {
+   "check": "clipMatrix",
+   "rule": "render_spec clips",
+   "pass": true,
+   "hard": true,
+   "detail": "15 clips as specified"
+  },
+  {
+   "check": "canvas",
+   "rule": "spec canvases",
+   "pass": true,
+   "hard": true,
+   "detail": "every frame on its clip's spec canvas"
+  },
+  {
+   "check": "margins",
+   "rule": "contract margins",
+   "pass": true,
+   "hard": true,
+   "detail": "smallest transparent margin 4px (need >= 2)"
+  },
+  {
+   "check": "anchorDrift",
+   "rule": "L2",
+   "pass": true,
+   "hard": true,
+   "detail": "max root drift 0.000px"
+  },
+  {
+   "check": "height",
+   "rule": "ART-6.1",
+   "pass": true,
+   "hard": true,
+   "detail": "tallest extent above anchor in idle 28px (target 26 +/- 2, outline adds 1)"
+  },
+  {
+   "check": "facingSilhouetteRatio",
+   "rule": "ART-7",
+   "pass": true,
+   "hard": true,
+   "detail": "area / median per facing {'e': 1.08, 'n': 0.92, 'ne': 1.0, 'nw': 0.95, 's': 0.89, 'se': 1.05, 'sw': 1.0, 'w': 1.01}"
+  },
+  {
+   "check": "paletteMembership",
+   "rule": "ART-4.1",
+   "pass": true,
+   "hard": true,
+   "detail": "0 off-palette colours"
+  },
+  {
+   "check": "colorCount",
+   "rule": "ART-4.4",
+   "pass": true,
+   "hard": true,
+   "detail": "8 colours (limit 20)"
+  },
+  {
+   "check": "outlineContinuity",
+   "rule": "ART-5.1",
+   "pass": true,
+   "hard": true,
+   "detail": "0 silhouette pixels not in an outline step"
+  },
+  {
+   "check": "orphans",
+   "rule": "ART-5.4",
+   "pass": true,
+   "hard": true,
+   "detail": "0 orphan interior pixels"
+  },
+  {
+   "check": "idleFlicker",
+   "rule": "ART-9.3",
+   "pass": true,
+   "hard": false,
+   "detail": "max changed fraction between frames 0.026"
+  },
+  {
+   "check": "valueContrast",
+   "rule": "ART-7.3",
+   "pass": false,
+   "hard": false,
+   "detail": "median L delta vs ground {'ground_grass': 0.047, 'ground_dirt': 0.249, 'ground_sand': 0.127, 'ground_freshwater': 0.066} (need >= 0.12)"
+  },
+  {
+   "check": "referenceFidelity",
+   "rule": "PRD-3.5",
+   "pass": true,
+   "hard": true,
+   "detail": "hue/chroma distance to reference 0.047"
+  },
+  {
+   "check": "castDistinctness",
+   "rule": "ART-7.1",
+   "pass": true,
+   "hard": true,
+   "detail": "distinct from all other assets"
+  }
+ ],
+ "colors": 8,
+ "frames": 616
+}

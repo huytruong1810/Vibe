@@ -73,8 +73,25 @@ import {
 import { CONFIG, clamp, distanceSquared, normalize, type WorldPosition } from './values';
 import { migrateSave, type GameSave } from './save-schema';
 import { WorldQuery } from './query';
+import { ArtifactStore, type ArtifactPlacement } from './artifacts';
 import { EntityStore, bindBody, NatureRules, SleepSystem } from './entities';
 import { SurvivalController, EcologyService } from './survival';
+import type { ActorPresentation, PresentationCue } from './presentation-contract';
+import { EquipmentService } from './equipment';
+import { SceneRegistry } from './scenes';
+import { PhysiquePolicy } from './physique';
+
+interface SceneSystems {
+  world: ChunkStore;
+  resources: ResourceStore;
+  locator: ResourceLocator;
+  navigation: NavigationService;
+  survival: SurvivalController;
+  decisions: CreatureDecisionSystem;
+  harvest: HarvestSystem;
+  regrowth: RegrowthSystem;
+  reactions: EnvironmentalReactionSystem;
+}
 
 export class SimulationHost {
   readonly world: ChunkStore;
@@ -91,6 +108,19 @@ export class SimulationHost {
     return this.acceleration;
   }
   readonly inventory = new TwoSlotInventory();
+  readonly equipment = new EquipmentService(this.inventory);
+  readonly scenes: SceneRegistry;
+  readonly artifacts = new ArtifactStore();
+  readonly placements: ArtifactPlacement[] = [];
+  private readonly sceneSystems = new Map<number, SceneSystems>();
+  private readonly portalPaths = new Map<
+    number,
+    { scene: number; goal: string; points: readonly WorldPosition[] }
+  >();
+  private readonly motion = new Map<
+    number,
+    { x: number; y: number; scene: number; distance: number; discontinuity: number }
+  >();
   readonly resources: ResourceStore;
   readonly locator: ResourceLocator;
   readonly navigation: NavigationService;
@@ -129,6 +159,18 @@ export class SimulationHost {
   private movement = { x: 0, y: 0 };
   private debugEnabled = false;
   private eventSerial = 0;
+  private cueSerial = 0;
+  private readonly presentationCues = new RingBuffer<PresentationCue & { readonly scene: number }>(
+    64,
+  );
+  private readonly presentationPositions = new Map<
+    number,
+    { x: number; y: number; moving: boolean; tick: number; hp: number; recoveryUntil: number }
+  >();
+  private readonly presentationActions = new Map<
+    number,
+    { pose: ActorPresentation['pose']; until: number }
+  >();
   tick = 0;
   dialogue: DialogueState | null = null;
   stepMs = 0;
@@ -165,6 +207,7 @@ export class SimulationHost {
         dashUntil: 0,
         dashReadyAt: 0,
         attack: null,
+        guarding: false,
         invulnerableUntil: 0,
       } as PlayerState,
       this.entities,
@@ -173,6 +216,8 @@ export class SimulationHost {
     this.navigation = new NavigationService(this.world);
     this.resources = new ResourceStore(this.world);
     this.locator = new ResourceLocator(this.resources);
+    this.scenes = new SceneRegistry(this.world, this.resources);
+    this.scenes.bindOverworldNavigation(this.navigation);
     this.population = new PopulationDirector(this.world, this.ecologyRandom, this.locator);
     this.population.seed(
       this.creatures,
@@ -204,7 +249,13 @@ export class SimulationHost {
       this.entities.restrictDiet(body, profile.dietRestrictions ?? []);
       bindBody(npc, this.entities, npc.entityId);
     }
-    this.query = new WorldQuery(this.npcs, this.creatures, this.calendar);
+    this.query = new WorldQuery(
+      this.npcs,
+      this.creatures,
+      this.calendar,
+      this.resources,
+      (scene) => this.systems(scene).resources,
+    );
     for (let i = 0; i < this.npcs.length; i++) {
       const profile = NPC_PROFILES[i]!,
         npc = this.npcs[i]!;
@@ -232,22 +283,54 @@ export class SimulationHost {
     this.harvest = new HarvestSystem(this.resources);
     this.regrowth = new RegrowthSystem(this.world);
     this.reactions = new EnvironmentalReactionSystem(this.world);
-    this.schedules = new ScheduleExecutor(this.world, this.navigation, this.entities);
+    this.schedules = new ScheduleExecutor(this.world, this.navigation, this.entities, (id) =>
+      this.equipment.movement(id),
+    );
+    const homes = new Map(
+      this.npcs.map((npc, index) => [npc.entityId, new SettlementPlanner().locations(index).home]),
+    );
     this.survival = new SurvivalController(
       this.entities,
       this.world,
       this.resources,
       this.locator,
       this.navigation,
+      (id) => homes.get(id),
+      (id) => this.equipment.movement(id),
     );
     this.ecology = new EcologyService(
       this.entities,
       this.world,
       this.resources,
       this.ecologyRandom,
+      (scene) => this.systems(scene).resources,
+      (slot) => this.allocateCaveHabitat(slot),
     );
     this.ecology.target = population;
-    this.combat = new CombatSystem(this.creatures, this.player, this.npcs, this.world);
+    this.sceneSystems.set(0, {
+      world: this.world,
+      resources: this.resources,
+      locator: this.locator,
+      navigation: this.navigation,
+      survival: this.survival,
+      decisions: this.decisions,
+      harvest: this.harvest,
+      regrowth: this.regrowth,
+      reactions: this.reactions,
+    });
+    this.equipment.initialize(origin);
+    if (population > 0)
+      for (const i of this.entities.slots())
+        if (!this.entities.protected(i)) this.allocateCaveHabitat(i);
+    this.combat = new CombatSystem(
+      this.creatures,
+      this.player,
+      this.npcs,
+      this.world,
+      (id) => this.systems(this.entities.scene[this.entities.require(id)]!).survival.feeding(id),
+      this.equipment,
+      (scene) => this.scenes.context(scene).world,
+    );
     this.rebuildSpatial();
     this.tiers.update(this.creatures, this.player);
     this.emit(
@@ -260,6 +343,149 @@ export class SimulationHost {
   }
   get session(): string {
     return this.dispatcher.session;
+  }
+  get sceneId(): string {
+    return this.scenes.id(this.entities.scene[this.entities.require(0)]!);
+  }
+  private allocateCaveHabitat(i: number): void {
+    const s = this.entities;
+    if (this.ecologyRandom.next() > 0.04 || s.protected(i)) return;
+    for (const cave of this.scenes.definitions.filter((d) => d.kind === 'cave')) {
+      let residents = 0,
+        prey = 0;
+      for (const j of s.slots())
+        if (s.scene[j] === cave.code) {
+          residents++;
+          if (s.definition(i).prey?.includes(s.definition(j).id)) prey++;
+        }
+      if (residents >= 8 || (s.definition(i).prey?.length && prey < 2)) continue;
+      const context = this.systems(cave.code),
+        world = context.world,
+        definition = s.definition(i);
+      if (!definition.habitat.includes(world.biome[world.index(10, 10)]!)) continue;
+      const candidate = context.locator
+        .find({ x: 24.5, y: 16.5 }, s.diet(i), s.id(i), this.calendar.elapsedSeconds, 8)
+        .find((p) =>
+          SurfaceRules.walkable(world, p.x, p.y, {
+            water: true,
+            lava: definition.elements.includes('fire'),
+          }),
+        );
+      if (!candidate && !definition.prey?.length) continue;
+      const point = candidate ?? { x: 24.5, y: 16.5 };
+      s.scene[i] = cave.code;
+      s.x[i] = s.targetX[i] = point.x;
+      s.y[i] = s.targetY[i] = point.y;
+      return;
+    }
+  }
+  private systems(scene: number): SceneSystems {
+    const cached = this.sceneSystems.get(scene);
+    if (cached) return cached;
+    const context = this.scenes.context(scene),
+      locator = new ResourceLocator(context.resources);
+    const system = {
+      ...context,
+      locator,
+      survival: new SurvivalController(
+        this.entities,
+        context.world,
+        context.resources,
+        locator,
+        context.navigation,
+        () => ({ x: 3.5, y: 4.5 }),
+        (id) => this.equipment.movement(id),
+      ),
+      decisions: new CreatureDecisionSystem(
+        this.entities,
+        context.world,
+        context.resources,
+        locator,
+        context.navigation,
+        this.ecologyRandom,
+      ),
+      harvest: new HarvestSystem(context.resources),
+      regrowth: new RegrowthSystem(context.world),
+      reactions: new EnvironmentalReactionSystem(context.world),
+    };
+    this.sceneSystems.set(scene, system);
+    return system;
+  }
+  private transfer(entityId: number, portalId: string): string | null {
+    const i = this.entities.require(entityId),
+      oldScene = this.entities.scene[i]!;
+    const result = this.scenes.transfer(this.entities, entityId, portalId, this.calendar.day);
+    if (result) return result;
+    this.combat.cancelAction(entityId);
+    this.systems(oldScene).survival.cancel(entityId);
+    this.portalPaths.delete(entityId);
+    if (entityId === 0) {
+      this.movement = { x: 0, y: 0 };
+      this.player.guarding = false;
+      this.acceleration = 1;
+      this.sentDeltas.clear();
+    }
+    this.systems(this.entities.scene[i]!);
+    this.rebuildSpatial();
+    return null;
+  }
+  private followPortal(i: number, targetScene: number, dt: number): boolean {
+    const s = this.entities,
+      id = s.id(i),
+      scene = s.scene[i]!;
+    if (scene === targetScene) return false;
+    const portal = this.scenes.portals.find(
+      (p) => p.source === scene && (scene === 0 ? p.target === targetScene : p.target === 0),
+    );
+    if (
+      !portal ||
+      !this.scenes.allowed(portal, s.owner[i]! >= 0 ? s.owner[i]! : id, this.calendar.day)
+    )
+      return true;
+    if (distanceSquared(s.position(i), portal) <= 1) {
+      this.transfer(id, portal.id);
+      return true;
+    }
+    const context = this.systems(scene),
+      key = `portal:${id}`;
+    let cached = this.portalPaths.get(id);
+    if (!cached || cached.scene !== scene || cached.goal !== portal.id) {
+      cached = { scene, goal: portal.id, points: [] };
+      this.portalPaths.set(id, cached);
+      context.navigation.request({ id: key, start: s.position(i), goal: portal });
+    }
+    const result = context.navigation.take(key);
+    if (result.status === 'found') cached.points = result.points;
+    while (cached.points[0] && distanceSquared(s.position(i), cached.points[0]) < 0.12)
+      cached.points = cached.points.slice(1);
+    const goal = cached.points[0];
+    if (!goal) return true;
+    const dx = goal.x - s.x[i]!,
+      dy = goal.y - s.y[i]!,
+      length = Math.hypot(dx, dy),
+      step = Math.min(
+        length,
+        dt *
+          s.definition(i).speed *
+          Math.max(
+            0.25,
+            WellbeingPolicy.speed(s.wellbeing(i)) *
+              s.movementFactor(i) *
+              this.equipment.movement(id),
+          ),
+      );
+    const p = moveOnTerrain(
+      context.world,
+      s.position(i),
+      (dx / Math.max(0.001, length)) * step,
+      (dy / Math.max(0.001, length)) * step,
+      { water: true, lava: false },
+    );
+    s.x[i] = p.x;
+    s.y[i] = p.y;
+    s.facingX[i] = dx / Math.max(0.001, length);
+    s.facingY[i] = dy / Math.max(0.001, length);
+    return true;
   }
   submit(input: WorldCommand): CommandResult {
     const parsed = WorldCommandSchema.safeParse(input);
@@ -283,6 +509,8 @@ export class SimulationHost {
       'agentFailure',
       'pause',
       'resume',
+      'invite',
+      'guard',
     ];
     if (this.pauses.paused && !allowedPaused.includes(c.type))
       return {
@@ -291,9 +519,55 @@ export class SimulationHost {
         message: 'Close the conversation or menu before acting.',
       };
     const playerSlot = this.entities.require(this.player.entityId);
+    const current = this.systems(this.entities.scene[playerSlot]!);
+    if (c.type === 'dash' && (this.player.attack || this.player.guarding))
+      return {
+        id: envelope.id,
+        ok: false,
+        message: 'Finish the attack or release guard before dashing.',
+      };
+    if (c.type === 'guard' && c.active && this.pauses.paused)
+      return { id: envelope.id, ok: false, message: 'Close the menu before guarding.' };
+    if (
+      [
+        'equip',
+        'unequip',
+        'combine',
+        'drop',
+        'swap',
+        'use',
+        'enterPortal',
+        'artifactDisplay',
+        'artifactTake',
+      ].includes(c.type) &&
+      (this.player.attack || this.equipment.hasReservation(0))
+    )
+      return {
+        id: envelope.id,
+        ok: false,
+        message: 'Finish the current attack before changing equipment or entering.',
+      };
     if (
       (this.entities.sleeping[playerSlot] || this.player.hp <= 0) &&
-      ['move', 'attack', 'dash', 'harvest', 'travel', 'interact', 'care', 'tame'].includes(c.type)
+      [
+        'move',
+        'attack',
+        'dash',
+        'harvest',
+        'travel',
+        'interact',
+        'care',
+        'tame',
+        'use',
+        'service',
+        'equip',
+        'unequip',
+        'enterPortal',
+        'furniture',
+        'artifactDisplay',
+        'artifactTake',
+        'reaction',
+      ].includes(c.type)
     )
       return {
         id: envelope.id,
@@ -305,6 +579,179 @@ export class SimulationHost {
     let message = '',
       ok = true;
     switch (c.type) {
+      case 'artifactDisplay':
+      case 'artifactTake': {
+        const scene = this.scenes.definitions[this.entities.scene[playerSlot]!]!;
+        const prop = scene.props.find((p) => p.id === c.propId);
+        if (
+          !prop?.display ||
+          c.displaySlot >= prop.display.slots ||
+          distanceSquared(this.player, prop) > 2.25 ||
+          this.combat.active(0)
+        ) {
+          ok = false;
+          message = 'Move closer to an available display.';
+          break;
+        }
+        const index = this.placements.findIndex(
+          (p) => p.sceneId === scene.id && p.propId === prop.id && p.slot === c.displaySlot,
+        );
+        if (c.type === 'artifactDisplay') {
+          const item = this.inventory.state[c.slot],
+            record = item?.artifact && this.artifacts.get(item.artifact);
+          if (
+            !item ||
+            !record ||
+            record.kind !== item.id ||
+            !prop.display.accepts.includes(record.kind) ||
+            index >= 0
+          ) {
+            ok = false;
+            message = 'That artifact cannot occupy this display slot.';
+            break;
+          }
+          this.placements.push({
+            artifactId: record.id,
+            sceneId: scene.id,
+            propId: prop.id,
+            slot: c.displaySlot,
+            item: { ...item },
+          });
+          this.inventory.remove(c.slot);
+          message = 'Artifact displayed.';
+        } else {
+          const placement = this.placements[index];
+          if (!placement || !this.inventory.insert(placement.item)) {
+            ok = false;
+            message = placement ? 'Both hands are full.' : 'That display slot is empty.';
+            break;
+          }
+          this.placements.splice(index, 1);
+          message = 'Artifact taken.';
+        }
+        break;
+      }
+      case 'furniture': {
+        const prop = this.scenes.definitions[this.entities.scene[playerSlot]!]!.props.find(
+          (p) => p.id === c.propId,
+        );
+        if (
+          !prop?.interaction ||
+          distanceSquared(this.player, prop) > 2.25 ||
+          this.combat.active(0)
+        ) {
+          ok = false;
+          message = 'Move closer to an available furnishing.';
+          break;
+        }
+        if (prop.interaction === 'rest') {
+          if (this.combat.danger(0)) {
+            ok = false;
+            message = 'Find safety before resting.';
+          } else {
+            ok = SleepSystem.begin(this.entities, playerSlot);
+            message = ok ? 'You settle down to rest.' : 'Recover before resting.';
+          }
+        } else if (prop.interaction === 'work') {
+          message = this.crafting.combine(this.inventory);
+          ok = message.startsWith('Crafted');
+          if (ok) this.presentationActions.set(0, { pose: 'work', until: this.tick + 30 });
+        } else if (prop.interaction === 'wash') {
+          this.entities.cleanliness[playerSlot] = 1;
+          message = 'You wash at the basin.';
+          this.presentationActions.set(0, { pose: 'bathe', until: this.tick + 24 });
+        } else if (prop.interaction === 'eat') {
+          const pantry = current.resources.supply(this.player),
+            item =
+              pantry &&
+              this.entities
+                .diet(playerSlot)
+                .find(
+                  (id) =>
+                    NatureRules.canConsume(this.entities, playerSlot, { id }) &&
+                    (pantry.stock[id] ?? 0) > 0,
+                );
+          if (!pantry || !item || !current.resources.consumeSupply(pantry, item)) {
+            ok = false;
+            message = 'The pantry has no suitable food.';
+          } else {
+            this.entities.food[playerSlot] = clamp(
+              this.entities.food[playerSlot]! + (ITEMS[item].food ?? 0),
+            );
+            message = 'You eat from the finite settlement supply.';
+            this.presentationActions.set(0, { pose: 'eat', until: this.tick + 24 });
+          }
+        } else if (prop.interaction === 'paint') {
+          ok = false;
+          message = 'The painting screen is not available yet.';
+        } else
+          message =
+            'Use the equipment panel to change carried garments; this wardrobe has no storage.';
+        break;
+      }
+      case 'guard':
+        if (
+          c.active &&
+          (this.player.attack ||
+            this.player.hp <= 0 ||
+            this.entities.sleeping[playerSlot] ||
+            this.player.stamina <= 0)
+        ) {
+          ok = false;
+          message = 'Recover before guarding.';
+        } else this.player.guarding = c.active;
+        break;
+      case 'equip':
+        message = this.equipment.equip(c.slot);
+        ok = message.startsWith('Equipped');
+        break;
+      case 'unequip':
+        message = this.equipment.unequip(
+          c.slot,
+          c.drop ? (item) => current.resources.dropItem(item, this.player) : undefined,
+        );
+        ok = message.startsWith('Unequipped');
+        break;
+      case 'enterPortal': {
+        if (c.expectedScene !== this.sceneId) {
+          ok = false;
+          message = 'That entrance belongs to an obsolete scene.';
+          break;
+        }
+        const portal = this.scenes.portals.find((p) => p.id === c.portalId);
+        const companions = [...this.entities.slots()].filter(
+          (i) =>
+            this.entities.owner[i] === 0 &&
+            portal &&
+            distanceSquared(this.entities.position(i), portal) <= 2.25,
+        );
+        const failure = this.transfer(0, c.portalId);
+        if (failure) {
+          ok = false;
+          message = failure;
+          break;
+        }
+        if (portal) for (const i of companions) this.transfer(this.entities.id(i), portal.id);
+        message = `Entered ${this.scenes.definitions[this.entities.scene[playerSlot]!]!.id}.`;
+        break;
+      }
+      case 'invite': {
+        const npc = this.npcs.find((n) => n.profileId === c.npcId);
+        if (
+          !npc ||
+          this.dialogue?.npcId !== c.npcId ||
+          distanceSquared(npc, this.player) > 9 ||
+          npc.affinity < 5 ||
+          this.combat.active(npc.entityId)
+        ) {
+          ok = false;
+          message = 'Ask a nearby trusted resident while talking with them.';
+        } else {
+          this.dialogue.invitePending = true;
+          message = 'Your visit request will be checked when the conversation closes.';
+        }
+        break;
+      }
       case 'sleep':
         if (this.combat.danger(this.player.entityId)) {
           ok = false;
@@ -312,7 +759,8 @@ export class SimulationHost {
         } else {
           ok = SleepSystem.begin(this.entities, playerSlot);
           this.movement = { x: 0, y: 0 };
-          this.player.attack = null;
+          this.combat.cancelAction(0);
+          this.player.guarding = false;
           message = 'You settle down to rest.';
         }
         break;
@@ -332,7 +780,7 @@ export class SimulationHost {
         } else this.acceleration = c.factor;
         break;
       case 'service': {
-        const supply = this.resources.supply(this.player);
+        const supply = current.resources.supply(this.player);
         if (!supply || distanceSquared(supply, this.player) > 9) {
           ok = false;
           message = 'Move to a settlement service point by the waystone.';
@@ -346,7 +794,7 @@ export class SimulationHost {
                 NatureRules.canConsume(this.entities, playerSlot, { id }) &&
                 (supply.stock[id] ?? 0) > 0,
             );
-          if (!item || !this.resources.consumeSupply(supply, item)) {
+          if (!item || !current.resources.consumeSupply(supply, item)) {
             ok = false;
             message = 'The pantry is empty.';
           } else {
@@ -391,8 +839,8 @@ export class SimulationHost {
       case 'attack':
         ok = this.combat.attack(c.kind, this.tick);
         if (ok && c.kind === 'element')
-          this.reactions.enqueue({
-            index: this.world.index(
+          current.reactions.enqueue({
+            index: current.world.index(
               this.player.x + this.player.facingX * 2,
               this.player.y + this.player.facingY * 2,
             ),
@@ -401,7 +849,7 @@ export class SimulationHost {
           });
         break;
       case 'harvest': {
-        const result = this.harvest.harvest(
+        const result = current.harvest.harvest(
           this.player,
           this.inventory,
           this.calendar.elapsedSeconds,
@@ -423,14 +871,11 @@ export class SimulationHost {
         const item = this.inventory.state[c.slot];
         if (
           !item ||
-          !this.resources.drop(
-            item.id,
-            {
-              x: this.player.x + this.player.facingX * 0.6,
-              y: this.player.y + this.player.facingY * 0.6,
-            },
-            item.originSpecies,
-          )
+          !current.resources.dropItem(item, {
+            x: this.player.x + this.player.facingX * 0.6,
+            y: this.player.y + this.player.facingY * 0.6,
+            scene: this.entities.scene[playerSlot]!,
+          })
         ) {
           ok = false;
           message = 'Nothing can be dropped here.';
@@ -445,6 +890,11 @@ export class SimulationHost {
         if (!item) {
           ok = false;
           message = 'That hand is empty.';
+          break;
+        }
+        if (ITEMS[item.id].garment) {
+          message = this.equipment.equip(c.slot);
+          ok = message.startsWith('Equipped');
           break;
         }
         if (
@@ -464,6 +914,10 @@ export class SimulationHost {
             this.entities.water[playerSlot]! + (ITEMS[item.id].water ?? 0),
           );
           this.player.stamina = Math.min(100, this.player.stamina + 15);
+          this.presentationActions.set(0, {
+            pose: ITEMS[item.id].water ? 'drink' : 'eat',
+            until: this.tick + 24,
+          });
           message = `Used ${ITEMS[item.id].name}.`;
         } else {
           ok = false;
@@ -477,17 +931,17 @@ export class SimulationHost {
           c.action,
           this.inventory,
           this.player,
-          this.world,
+          current.world,
         );
         ok = /enjoyed|feels better|leans into|clean and content/.test(message);
-        if (ok) this.emit('care', message, this.player, ['player', `creature:${c.creature}`], 4);
+        if (ok) this.emit('care', message, this.player, ['player', `entity:${c.creature}`], 4);
         break;
       case 'tame': {
         const before = this.partnership.partner;
         message = this.partnership.tame(this.entities.slot(c.creature) ?? -1, this.player);
         ok = before === null && this.creatures.owner[this.entities.slot(c.creature) ?? -1] === 0;
         if (ok)
-          this.emit('partnership', message, this.player, ['player', `creature:${c.creature}`], 8);
+          this.emit('partnership', message, this.player, ['player', `entity:${c.creature}`], 8);
         break;
       }
       case 'release':
@@ -518,6 +972,7 @@ export class SimulationHost {
             {
               speaker: 'npc',
               text: `${NPC_PROFILES.find((p) => p.id === npc.profileId)!.name} turns to greet you. The world rests while you talk.`,
+              emotion: 'neutral',
             },
           ],
           staged: [],
@@ -618,8 +1073,8 @@ export class SimulationHost {
       case 'reaction': {
         const x = Math.floor(this.player.x + this.player.facingX * 2),
           y = Math.floor(this.player.y + this.player.facingY * 2);
-        ok = this.reactions.enqueue({
-          index: this.world.index(x, y),
+        ok = current.reactions.enqueue({
+          index: current.world.index(x, y),
           type: c.reaction,
           remaining: c.reaction === 'shock' ? 3 : 2,
         });
@@ -630,6 +1085,7 @@ export class SimulationHost {
         const destination = SETTLEMENTS.find((s) => s.id === c.settlementId)!,
           nearest = nearestSettlement(this.player);
         if (
+          this.entities.scene[playerSlot] !== 0 ||
           distanceSquared(nearest, this.player) > 6 ** 2 ||
           this.combat.encounters.target !== null
         ) {
@@ -642,6 +1098,7 @@ export class SimulationHost {
         this.movement = { x: 0, y: 0 };
         const partner = this.partnership.partner;
         if (partner !== null) {
+          this.creatures.scene[partner] = 0;
           this.creatures.x[partner] = this.player.x + 1;
           this.creatures.y[partner] = this.player.y;
         }
@@ -649,6 +1106,19 @@ export class SimulationHost {
         this.emit('travel', message, this.player, ['player'], 4);
         break;
       }
+    }
+    if (ok) {
+      const pose: ActorPresentation['pose'] | null =
+        c.type === 'service'
+          ? c.action === 'wash'
+            ? 'bathe'
+            : c.action
+          : c.type === 'harvest' || c.type === 'combine'
+            ? 'work'
+            : c.type === 'care'
+              ? 'social'
+              : null;
+      if (pose) this.presentationActions.set(0, { pose, until: this.tick + 24 });
     }
     return { id: envelope.id, ok, message };
   }
@@ -680,7 +1150,11 @@ export class SimulationHost {
         });
         return { ok: false, message: 'Invalid structured dialogue rejected.' };
       }
-      this.dialogue.lines.push({ speaker: 'npc', text: parsed.data.dialogue });
+      this.dialogue.lines.push({
+        speaker: 'npc',
+        text: parsed.data.dialogue,
+        emotion: parsed.data.emotion,
+      });
       this.memories.append(npc, {
         kind: 'conversation',
         text: `${NPC_PROFILES.find((p) => p.id === npc.profileId)!.name} said: ${parsed.data.dialogue} (proposed action: ${parsed.data.action.type}; not yet executed)`,
@@ -763,13 +1237,25 @@ export class SimulationHost {
   private commitConversation(dialogue: DialogueState): string {
     const npc = this.npcs.find((n) => n.profileId === dialogue.npcId)!;
     const receipts: string[] = [];
+    const local = this.systems(this.entities.scene[this.entities.require(npc.entityId)]!);
+    if (dialogue.invitePending) {
+      if (
+        npc.revision === dialogue.revision &&
+        npc.affinity >= 5 &&
+        distanceSquared(npc, this.player) <= 9 &&
+        !this.combat.active(npc.entityId)
+      ) {
+        this.scenes.invite(npc.entityId, this.calendar.day);
+        receipts.push('Your visit is welcome until the end of today.');
+      } else receipts.push('The visit invitation could not be confirmed.');
+    }
     if (npc.revision === dialogue.revision)
       for (const action of dialogue.staged) {
         const receipt = this.validator.execute(npc, action, {
           calendar: this.calendar,
-          world: this.world,
-          resources: this.resources,
-          locator: this.locator,
+          world: local.world,
+          resources: local.resources,
+          locator: local.locator,
           npcs: this.npcs,
           player: this.player,
           markers: this.markers,
@@ -809,6 +1295,7 @@ export class SimulationHost {
       text,
       x: at.x,
       y: at.y,
+      scene: at.scene ?? 0,
       tick: this.tick,
       day: this.calendar.day,
       subjects,
@@ -821,7 +1308,12 @@ export class SimulationHost {
     this.spatial.clear();
     for (const i of this.entities.slots())
       if (this.creatures.alive[i])
-        this.spatial.insert(i, this.creatures.x[i]!, this.creatures.y[i]!);
+        this.spatial.insert(
+          i,
+          this.creatures.x[i]!,
+          this.creatures.y[i]!,
+          this.creatures.scene[i]!,
+        );
   }
   step(): void {
     if (this.disposed || this.pauses.paused) return;
@@ -834,7 +1326,8 @@ export class SimulationHost {
         this.acceptInference(envelope.command.jobId, envelope.command.output);
     this.tick++;
     this.calendar.advance(dt);
-    this.navigation.advance(800);
+    for (const system of this.sceneSystems.values())
+      system.navigation.advance(Math.max(16, Math.floor(800 / this.sceneSystems.size)));
     const input = normalize(this.movement.x, this.movement.y),
       dash = this.player.dashUntil > this.tick;
     if (input.x || input.y) {
@@ -848,14 +1341,21 @@ export class SimulationHost {
         : dash
           ? { x: this.player.facingX, y: this.player.facingY }
           : input;
-    const tile = this.world.index(this.player.x, this.player.y),
-      swimming = this.world.fluid[tile] === 1 || this.world.fluid[tile] === 2;
+    const active = this.systems(this.entities.scene[playerSlot]!),
+      tile = active.world.index(this.player.x, this.player.y),
+      swimming = active.world.fluid[tile] === 1 || active.world.fluid[tile] === 2;
     const speed =
       (dash ? 12 : 4.2) *
-      WellbeingPolicy.speed(this.entities.wellbeing(playerSlot)) *
+      Math.max(
+        0.25,
+        WellbeingPolicy.speed(this.entities.wellbeing(playerSlot)) *
+          this.entities.movementFactor(playerSlot) *
+          this.equipment.movement(0),
+      ) *
+      (this.player.guarding ? 0.5 : 1) *
       (swimming ? (this.player.origin === 1 ? 0.9 : 0.65) : 1);
     const moved = moveOnTerrain(
-      this.world,
+      active.world,
       this.player,
       direction.x * speed * dt,
       direction.y * speed * dt,
@@ -875,46 +1375,106 @@ export class SimulationHost {
         if (s.id(i) === 0) continue;
         const scheduled = s.isHuman(i) && (this.calendar.hour < 6 || this.calendar.hour >= 22);
         if (!this.combat.active(s.id(i)) || s.water[i]! < 0.08 || s.food[i]! < 0.08)
-          this.survival.decide(i, now, scheduled);
+          this.systems(s.scene[i]!).survival.decide(i, now, scheduled);
         SleepSystem.update(s, i, 0, now, this.combat.danger(s.id(i)));
       }
     for (const i of this.tiers.detailed) {
       if (this.combat.active(s.id(i))) continue;
-      if (this.survival.active(i)) this.survival.move(i, dt, now);
+      if (s.owner[i] === 0 && s.scene[i] !== s.scene[playerSlot]) {
+        this.followPortal(i, s.scene[playerSlot]!, dt);
+        continue;
+      }
+      const system = this.systems(s.scene[i]!);
+      if (system.survival.active(i)) system.survival.move(i, dt, now);
       else {
-        if (this.tick % 30 === i % 30) this.decisions.decide(i, now, this.player);
-        this.decisions.move(i, dt, now, this.spatial);
+        if (this.tick % 30 === i % 30) system.decisions.decide(i, now, this.player);
+        system.decisions.move(i, dt, now, this.spatial);
       }
     }
     for (let i = 0; i < this.npcs.length; i++) {
       const npc = this.npcs[i]!,
         body = s.require(npc.entityId);
+      const pursuit = this.combat.pursuits.get(npc.entityId),
+        target = pursuit && s.slot(pursuit.target);
+      const home = this.scenes.home(npc.entityId);
+      const rest =
+        (this.calendar.hour < 6 ||
+          this.calendar.hour >= 22 ||
+          s.rest[body]! < 0.2 ||
+          !!s.forcedRest[body]) &&
+        s.food[body]! > 0.12 &&
+        s.water[body]! > 0.12;
+      const desired =
+        typeof target === 'number'
+          ? s.scene[target]!
+          : npc.followingUntil > now
+            ? s.scene[playerSlot]!
+            : rest
+              ? (home?.code ?? 0)
+              : 0;
+      const routing = s.hp[body]! > 0 && !s.sleeping[body] && this.followPortal(body, desired, dt);
       if (s.hp[body]! > 0 && !this.combat.active(npc.entityId)) {
-        if (this.survival.active(body)) {
-          this.survival.move(body, dt, now);
+        const system = this.systems(s.scene[body]!);
+        if (routing) npc.activity = rest ? 'Returning home to rest' : 'Walking through an entrance';
+        else if (system.survival.active(body)) {
+          system.survival.move(body, dt, now);
           npc.activity = s.sleeping[body] ? 'Sleeping' : `Seeking ${CreatureMode[s.mode[body]!]}`;
-        } else if (this.combat.encounters.duel !== i)
+        } else if (s.scene[body] !== 0) npc.activity = 'Resting at home';
+        else if (this.combat.encounters.duel !== i)
           this.schedules.advance(npc, i, this.calendar, this.player, dt);
+      }
+      if (this.tick % 300 === 0 && s.hp[body]! > 0) {
+        const account = this.systems(s.scene[body]!).resources;
+        const supply = account.supply(npc);
+        if (supply && distanceSquared(npc, supply) < 9)
+          this.equipment.resupply(npc.entityId, () =>
+            account.consumeSupply(supply, 'arrow-bundle'),
+          );
       }
       const partner = npc.partner === null ? undefined : s.slot(npc.partner);
       if (
         partner !== undefined &&
         s.hp[partner]! > 0 &&
         !this.combat.active(s.id(partner)) &&
-        !this.survival.active(partner)
+        !this.systems(s.scene[partner]!).survival.active(partner)
       ) {
+        if (s.scene[partner] !== s.scene[body]) {
+          this.followPortal(partner, s.scene[body]!, dt);
+          continue;
+        }
         s.mode[partner] = CreatureMode.Follow;
         s.targetX[partner] = npc.x + 0.6;
         s.targetY[partner] = npc.y + 0.6;
-        if (!s.tier[partner]) this.decisions.move(partner, dt, now, this.spatial);
+        if (!s.tier[partner])
+          this.systems(s.scene[partner]!).decisions.move(partner, dt, now, this.spatial);
       }
     }
     if (this.tick % 30 === 0)
       for (let i = 0; i < s.count; i++)
         if (s.alive[i] && !s.tier[i] && !this.combat.active(s.id(i))) {
-          if (this.survival.active(i)) this.survival.move(i, 1, now);
+          const system = this.systems(s.scene[i]!);
+          if (s.owner[i] === 0 && s.scene[i] !== s.scene[playerSlot])
+            this.followPortal(i, s.scene[playerSlot]!, 1);
+          else if (s.owner[i] === -1 && this.scenes.definitions[s.scene[i]!]!.kind === 'building')
+            this.followPortal(i, 0, 1);
+          else if (system.survival.active(i)) system.survival.move(i, 1, now);
+          else if (s.scene[i] !== 0) {
+            this.systems(s.scene[i]!).decisions.decide(i, now, s.position(i));
+            this.systems(s.scene[i]!).decisions.move(i, 1, now, this.spatial);
+          }
         }
+    this.rebuildSpatial();
     for (const event of this.combat.advance(this.tick, this.spatial, now)) {
+      if (event.type === 'hit' || event.type === 'hunt' || event.type === 'victory')
+        this.presentationCues.push({
+          sequence: ++this.cueSerial,
+          tick: this.tick,
+          actor: event.actor ?? 0,
+          target: event.target,
+          kind: event.type === 'hit' ? 'hit' : 'defeat',
+          strength: event.impact,
+          scene: s.scene[s.require(event.target ?? event.actor ?? 0)]!,
+        });
       this.emit(
         event.type,
         event.text,
@@ -933,6 +1493,25 @@ export class SimulationHost {
         event.type === 'victory' ? 7 : 2,
       );
       if (event.type === 'rescue') this.rescue();
+      if (event.type === 'assault' && event.target !== null) this.scenes.revoke(event.target);
+    }
+    // Recoil is a short, collision-constrained impulse, never a teleport through terrain.
+    for (const i of s.slots()) {
+      const rx = s.recoilX[i]!,
+        ry = s.recoilY[i]!;
+      if (Math.abs(rx) + Math.abs(ry) < 0.01) {
+        s.recoilX[i] = s.recoilY[i] = 0;
+        continue;
+      }
+      const world = this.systems(s.scene[i]!).world;
+      const moved = moveOnTerrain(world, s.position(i), rx * dt, ry * dt, {
+        water: true,
+        lava: s.definition(i).elements.includes('fire'),
+      });
+      s.x[i] = moved.x;
+      s.y[i] = moved.y;
+      s.recoilX[i] = rx * Math.exp(-12 * dt);
+      s.recoilY[i] = ry * Math.exp(-12 * dt);
     }
     if (this.tick % 30 === 0) {
       for (const i of this.needs.advance(s, 1, now, this.player, !!(input.x || input.y)))
@@ -940,19 +1519,32 @@ export class SimulationHost {
           'partnership-lost',
           `${s.definition(i).name} has returned to the wild. Care can earn its trust again.`,
           s.position(i),
-          ['player', `creature:${i}`],
+          ['player', `entity:${s.id(i)}`],
           8,
         );
       // Coarse ecology keeps identity and uses the same resource quantities.
       this.population.migrate(s, this.calendar.season, 1, now);
       if (this.tick % 300 === 0) this.resources.replenish(this.locator, now);
       this.ecology.replenish(now);
-      if (this.world.flags[this.world.index(this.player.x, this.player.y)]! & 32) {
+      if (active.world.flags[active.world.index(this.player.x, this.player.y)]! & 32) {
         this.player.hp = Math.max(0, this.player.hp - (this.player.origin === 0 ? 0.5 : 1));
         SleepSystem.interrupt(s, playerSlot, now);
         s.lastDamageAt[playerSlot] = this.tick;
       }
-      this.regrowth.advance(now, this.calendar.season);
+      for (const [scene, system] of this.sceneSystems) {
+        system.regrowth.advance(
+          now,
+          this.calendar.season,
+          Math.max(1, Math.floor(64 / this.sceneSystems.size)),
+        );
+        if (scene !== 0)
+          for (let j = system.resources.carrion.length - 1; j >= 0; j--)
+            if (
+              system.resources.carrion[j]!.expiresAt <= now ||
+              system.resources.carrion[j]!.remaining <= 0
+            )
+              system.resources.carrion.splice(j, 1);
+      }
       const social = this.social.advance(this.npcs, now, this.tick, this.calendar.day);
       if (social) {
         // Social speech is already attributed in memory; do not broadcast it as an omniscient fact.
@@ -965,32 +1557,45 @@ export class SimulationHost {
           text: social.text,
           x: a.x,
           y: a.y,
+          scene: a.scene ?? 0,
           subjects: [social.a, social.b],
           importance: 3,
         });
       }
     }
-    for (const index of this.reactions.advance(now))
-      for (const i of this.spatial.query(
-        index % this.world.size,
-        Math.floor(index / this.world.size),
-        1.5,
-        16,
-      )) {
-        if (
-          distanceSquared(s.position(i), {
-            x: index % this.world.size,
-            y: Math.floor(index / this.world.size),
-          }) < 3
-        )
-          s.hp[i] = Math.max(0, s.hp[i]! - 2);
-      }
+    for (const [scene, system] of this.sceneSystems)
+      for (const index of system.reactions.advance(
+        now,
+        Math.max(1, Math.floor(64 / this.sceneSystems.size)),
+      ))
+        for (const i of this.spatial.query(
+          index % system.world.size,
+          Math.floor(index / system.world.size),
+          1.5,
+          16,
+          scene,
+        )) {
+          if (
+            distanceSquared(s.position(i), {
+              x: index % system.world.size,
+              y: Math.floor(index / system.world.size),
+              scene,
+            }) < 3
+          )
+            s.hp[i] = Math.max(0, s.hp[i]! - 2);
+        }
     for (const i of s.slots())
       if (s.hp[i]! <= 0) {
         s.sleeping[i] = 0;
         if (s.protected(i)) s.downed[i] = 1;
       }
     this.ecology.resolveDeaths(now);
+    if (this.tick % 30 === 0) {
+      for (const system of this.sceneSystems.values()) {
+        system.survival.pruneRetired();
+        system.decisions.pruneRetired();
+      }
+    }
     this.combat.pruneRetired();
     SleepSystem.update(s, playerSlot, 0, now, this.combat.danger(0));
     if (
@@ -1006,6 +1611,21 @@ export class SimulationHost {
       if (job) this.queueJob(job);
     }
     this.stepMs = performance.now() - started;
+    for (const i of s.slots()) {
+      const id = s.id(i),
+        before = this.motion.get(id),
+        scene = s.scene[i]!,
+        d = before ? Math.hypot(s.x[i]! - before.x, s.y[i]! - before.y) : 0;
+      this.motion.set(id, {
+        x: s.x[i]!,
+        y: s.y[i]!,
+        scene,
+        distance: (before?.distance ?? 0) + (before?.scene === scene && d < 4 ? d : 0),
+        discontinuity:
+          (before?.discontinuity ?? 0) + (before && (before.scene !== scene || d >= 4) ? 1 : 0),
+      });
+    }
+    for (const id of this.motion.keys()) if (s.slot(id) === undefined) this.motion.delete(id);
   }
   advance(ticks: number): void {
     for (let i = 0; i < ticks; i++) this.step();
@@ -1016,8 +1636,11 @@ export class SimulationHost {
     this.player.y = v.y + 2.5;
     this.player.hp = this.player.maxHp;
     this.player.stamina = 100;
-    this.player.attack = null;
+    this.combat.cancelAction(0);
     const body = this.entities.require(0);
+    this.entities.scene[body] = 0;
+    this.player.guarding = false;
+    this.sentDeltas.clear();
     this.entities.downed[body] = 0;
     this.entities.recoverAt[body] = 0;
     this.entities.food[body] = Math.max(0.5, this.entities.food[body]!);
@@ -1026,6 +1649,7 @@ export class SimulationHost {
     this.movement = { x: 0, y: 0 };
     const partner = this.partnership.partner;
     if (partner !== null) {
+      this.creatures.scene[partner] = 0;
       this.creatures.x[partner] = this.player.x + 1;
       this.creatures.y[partner] = this.player.y;
       this.creatures.hp[partner] = this.creatures.maxHp(partner) * 0.65;
@@ -1033,19 +1657,22 @@ export class SimulationHost {
     }
   }
   terrain(): TerrainView {
+    const world = this.systems(this.entities.scene[this.entities.require(0)]!).world;
     return {
-      size: this.world.size,
+      size: world.size,
       seed: this.seed,
-      biome: this.world.biome.slice(),
-      elevation: this.world.elevation.slice(),
-      fluid: this.world.fluid.slice(),
-      flags: this.world.flags.slice(),
-      resource: this.world.resource.slice(),
-      quantity: this.world.quantity.slice(),
-      buildings: this.world.buildings.map((b) => ({ ...b })),
+      biome: world.biome.slice(),
+      elevation: world.elevation.slice(),
+      fluid: world.fluid.slice(),
+      flags: world.flags.slice(),
+      resource: world.resource.slice(),
+      quantity: world.quantity.slice(),
+      buildings: world.buildings.map((b) => ({ ...b })),
     };
   }
   frame(buffer?: ArrayBuffer): RenderSnapshot {
+    const activeScene = this.entities.scene[this.entities.require(0)]!,
+      local = this.systems(activeScene);
     const capacity = (1 + this.npcs.length + this.creatures.count) * ENTITY_STRIDE;
     const byteLength = capacity * 4 + (capacity / ENTITY_STRIDE) * 4;
     const transport =
@@ -1066,9 +1693,11 @@ export class SimulationHost {
       vx: number,
       vy: number,
     ): void => {
+      const slot = this.entities.slot(id);
+      if (slot === undefined || this.entities.scene[slot] !== activeScene) return;
       ids[count] = id;
       const at = count++ * ENTITY_STRIDE,
-        elevation = this.world.elevation[this.world.index(x, y)] ?? 0;
+        elevation = local.world.elevation[local.world.index(x, y)] ?? 0;
       packed.set([0, kind, x, y, elevation, color, hp, profile, flags, mode, vx, vy], at);
     };
     pack(
@@ -1104,7 +1733,7 @@ export class SimulationHost {
     const visible: CreatureView[] = [],
       s = this.creatures;
     for (let i = 0; i < s.count; i++)
-      if (s.alive[i]) {
+      if (s.alive[i] && s.scene[i] === activeScene) {
         const gesture =
           s.owner[i]! > 0 &&
           (this.npcs.find((n) => n.entityId === s.owner[i])?.gestureUntil ?? 0) >
@@ -1131,6 +1760,8 @@ export class SimulationHost {
             id: s.id(i),
             name: s.definition(i).name,
             species: s.definition(i).id,
+            heightMeters: s.heightMeters[i]!,
+            massKg: s.massKg[i]!,
             elements: s.definition(i).elements,
             owner: s.owner[i]!,
             hp: s.hp[i]!,
@@ -1156,14 +1787,153 @@ export class SimulationHost {
             y: s.y[i]!,
           });
       }
-    const deltas = this.world.deltas().filter((delta) => {
+    const deltas = local.world.deltas().filter((delta) => {
       const signature = `${delta.quantity}:${delta.flags}:${delta.fluid}`;
       if (this.sentDeltas.get(delta.index) === signature) return false;
       this.sentDeltas.set(delta.index, signature);
       return true;
     });
     const jobs = this.outgoingJobs.splice(0).filter((job) => this.pendingJobs.has(job.id));
+    const actors: ActorPresentation[] = [];
+    for (const slot of s.slots()) {
+      if (s.scene[slot] !== activeScene) continue;
+      if (distanceSquared(s.position(slot), this.player) > 36 ** 2 && s.owner[slot] !== 0) continue;
+      const id = s.id(slot),
+        npc = this.npcs.find((n) => n.entityId === id),
+        x = s.x[slot]!,
+        y = s.y[slot]!;
+      const previous = this.presentationPositions.get(id);
+      const moving =
+        previous?.tick === this.tick
+          ? previous.moving
+          : !!previous && Math.hypot(x - previous.x, y - previous.y) > 0.001;
+      const recoveryUntil =
+        previous && previous.hp <= 0 && s.hp[slot]! > 0
+          ? this.tick + 24
+          : (previous?.recoveryUntil ?? 0);
+      this.presentationPositions.set(id, {
+        x,
+        y,
+        moving,
+        tick: this.tick,
+        hp: s.hp[slot]!,
+        recoveryUntil,
+      });
+      const task = local.survival.activity(id),
+        action = this.combat.presentation(id, this.tick);
+      const mode = s.mode[slot],
+        recent = this.presentationActions.get(id);
+      if (recent && recent.until <= this.tick) this.presentationActions.delete(id);
+      const atGoal =
+        distanceSquared(s.position(slot), { x: s.targetX[slot]!, y: s.targetY[slot]! }) < 1;
+      const pose: ActorPresentation['pose'] =
+        s.hp[slot]! <= 0
+          ? 'downed'
+          : action
+            ? 'attack'
+            : id === 0 && this.player.dashUntil > this.tick
+              ? 'dash'
+              : s.sleeping[slot]
+                ? 'sleep'
+                : recoveryUntil > this.tick
+                  ? 'recovery'
+                  : this.combat.presentationGuard(id, this.tick)
+                    ? 'guard'
+                    : moving
+                      ? 'walk'
+                      : task === 'food' || (mode === CreatureMode.Feed && atGoal)
+                        ? 'eat'
+                        : task === 'water' || (mode === CreatureMode.Drink && atGoal)
+                          ? 'drink'
+                          : task === 'clean' || (mode === CreatureMode.Bathe && atGoal)
+                            ? 'bathe'
+                            : task === 'social' || (mode === CreatureMode.Socialize && atGoal)
+                              ? 'social'
+                              : recent && recent.until > this.tick
+                                ? recent.pose
+                                : npc
+                                  ? this.schedules.presentation(
+                                      npc,
+                                      this.npcs.indexOf(npc),
+                                      this.calendar,
+                                    )
+                                  : 'idle';
+      actors.push({
+        physique: {
+          ...s.physique(slot),
+          strideTiles: PhysiquePolicy.stride(s.physique(slot)),
+          grounded: s.definition(slot).id !== 'cindermoth',
+        },
+        activityInstanceId: recent ? `${id}:${recent.pose}:${recent.until}` : undefined,
+        activityVariant: npc ? NPC_PROFILES.find((p) => p.id === npc.profileId)?.role : undefined,
+        sceneId: this.scenes.id(activeScene),
+        rigId: s.isHuman(slot) ? 'human_standard_v1' : s.definition(slot).id,
+        appearanceRevision: JSON.stringify(this.equipment.view(id).worn)
+          .split('')
+          .reduce((hash, c) => (Math.imul(hash, 31) + c.charCodeAt(0)) >>> 0, 0),
+        equipment: Object.fromEntries(
+          Object.entries(this.equipment.view(id).worn).map(([key, value]) => [
+            key,
+            value?.id ?? null,
+          ]),
+        ),
+        held: this.equipment.held(id).map((item) => item?.id ?? null) as [
+          string | null,
+          string | null,
+        ],
+        locomotion: {
+          gait: 'walk',
+          distance: this.motion.get(id)?.distance ?? 0,
+          discontinuity: this.motion.get(id)?.discontinuity ?? 0,
+        },
+        reaction:
+          s.lastDamageAt[slot]! > 0 && this.tick - s.lastDamageAt[slot]! < 5
+            ? {
+                id: `hit:${id}:${s.lastDamageAt[slot]}`,
+                startedAt: s.lastDamageAt[slot]!,
+                endsAt: s.lastDamageAt[slot]! + 5,
+              }
+            : undefined,
+        id,
+        appearanceKind: id === 0 ? 'origin' : npc ? 'npc' : 'species',
+        appearanceId:
+          id === 0
+            ? ['pyrador', 'aqualia', 'zephyria'][this.player.origin]!
+            : (npc?.profileId ?? s.definition(slot).id),
+        x,
+        y,
+        elevation: local.world.elevation[local.world.index(x, y)] ?? 0,
+        facingX: id === 0 ? this.player.facingX : (npc?.facingX ?? s.vx[slot]!),
+        facingY: id === 0 ? this.player.facingY : (npc?.facingY ?? s.vy[slot]!),
+        pose,
+        protected: s.isHuman(slot) || s.owner[slot]! >= 0,
+        action,
+      });
+    }
+    const presentIds = new Set(actors.map((a) => a.id));
+    for (const id of this.presentationPositions.keys())
+      if (!presentIds.has(id)) this.presentationPositions.delete(id);
     return {
+      equipment: this.equipment.view(),
+      artifacts: this.artifacts.views(),
+      placements: structuredClone(this.placements),
+      scene: this.scenes.presentation(activeScene, 0, this.calendar.day),
+      projectiles: this.combat.projectiles
+        .snapshot()
+        .arrows.filter((a) => a.scene === activeScene)
+        .map((a) => ({
+          id: a.id,
+          sceneId: this.scenes.id(a.scene),
+          x: a.x,
+          y: a.y,
+          facingX: a.vx / Math.hypot(a.vx, a.vy),
+          facingY: a.vy / Math.hypot(a.vx, a.vy),
+          kind: 'arrow' as const,
+        })),
+      actors,
+      cues: [...this.presentationCues.values()]
+        .filter((cue) => cue.scene === activeScene)
+        .map(({ scene: _scene, ...cue }) => cue),
       debugEnabled: this.debugEnabled,
       debugPaths: this.debugEnabled
         ? [...this.schedules.debugPaths(this.player), ...this.decisions.debugPaths(this.player)]
@@ -1188,9 +1958,11 @@ export class SimulationHost {
           forcedRest: !!s.forcedRest[i],
           nature: s.displayNature(i),
           elements: s.definition(i).elements,
+          heightMeters: s.heightMeters[i]!,
+          massKg: s.massKg[i]!,
         })),
-      carrion: this.resources.carrion.map((c) => ({ ...c })),
-      supplies: this.resources.supplies.map((p) => ({ ...p, stock: { ...p.stock } })),
+      carrion: local.resources.carrion.map((c) => ({ ...c })),
+      supplies: local.resources.supplies.map((p) => ({ ...p, stock: { ...p.stock } })),
       ecology: {
         deaths: this.ecology.deaths,
         births: this.ecology.births,
@@ -1234,16 +2006,18 @@ export class SimulationHost {
       },
       inventory: this.inventory.state,
       creatures: visible,
-      npcs: this.npcs.map((n) =>
-        structuredClone({
-          ...n,
-          memory: { ...n.memory, records: n.memory.records.slice(-12) },
-          heard: [],
-        }),
-      ),
+      npcs: this.npcs
+        .filter((n) => this.entities.scene[this.entities.require(n.entityId)] === activeScene)
+        .map((n) =>
+          structuredClone({
+            ...n,
+            memory: { ...n.memory, records: n.memory.records.slice(-12) },
+            heard: [],
+          }),
+        ),
       events: [...this.events.values()].slice(-18),
-      drops: this.resources.drops.slice(),
-      markers: this.markers.slice(),
+      drops: local.resources.drops.slice(),
+      markers: this.markers.filter((m) => (m.scene ?? 0) === activeScene),
       dialogue: this.dialogue ? structuredClone(this.dialogue) : null,
       duel: this.combat.encounters.duel,
       deltas,
@@ -1252,9 +2026,18 @@ export class SimulationHost {
         stepMs: this.stepMs,
         detailed: this.tiers.detailed.length,
         population: s.wildlifeCount,
-        paths: this.navigation.pending,
-        expansions: this.navigation.expansions,
-        reactions: this.reactions.pending,
+        paths: [...this.sceneSystems.values()].reduce(
+          (sum, system) => sum + system.navigation.pending,
+          0,
+        ),
+        expansions: [...this.sceneSystems.values()].reduce(
+          (sum, system) => sum + system.navigation.expansions,
+          0,
+        ),
+        reactions: [...this.sceneSystems.values()].reduce(
+          (sum, system) => sum + system.reactions.pending,
+          0,
+        ),
         inferencePending: this.pendingJobs.size,
       },
     };
@@ -1262,6 +2045,9 @@ export class SimulationHost {
   snapshot(): GameSave {
     return structuredClone({
       version: CONFIG.saveVersion,
+      artifacts: this.artifacts.snapshot(),
+      artifactSequence: this.artifacts.serial,
+      placements: this.placements,
       generatorVersion: CONFIG.generatorVersion,
       contentVersion: CONFIG.contentVersion,
       seed: this.seed,
@@ -1278,6 +2064,8 @@ export class SimulationHost {
       },
       inventory: this.inventory.state,
       inventorySerial: this.inventory.serial,
+      equipment: this.equipment.snapshot(),
+      scenes: this.scenes.snapshot(),
       entities: this.entities.snapshot(),
       supplies: this.resources.supplies,
       carrion: this.resources.carrion,
@@ -1288,8 +2076,19 @@ export class SimulationHost {
         replacements: this.ecology.replacements,
       },
       npcs: this.npcs.map((n) => {
-        const { x, y, facingX, facingY, hp, maxHp, stamina, experience, level, ...metadata } =
-          n as NpcState & PlayerState;
+        const {
+          x,
+          y,
+          scene,
+          facingX,
+          facingY,
+          hp,
+          maxHp,
+          stamina,
+          experience,
+          level,
+          ...metadata
+        } = n as NpcState & PlayerState;
         return metadata;
       }),
       worldDeltas: this.world.deltas(),
@@ -1303,6 +2102,10 @@ export class SimulationHost {
     }) as unknown as GameSave;
   }
   restore(save: GameSave): void {
+    this.presentationCues.clear();
+    this.cueSerial = 0;
+    this.presentationPositions.clear();
+    this.presentationActions.clear();
     save = migrateSave(save);
     if (save.seed !== this.seed)
       throw new Error('Restore requires a host generated with the saved seed');
@@ -1315,6 +2118,9 @@ export class SimulationHost {
       ? { ...save.player.attack, hit: [...save.player.attack.hit] }
       : null;
     this.inventory.restore(save.inventory, save.inventorySerial);
+    this.artifacts.restore(save.artifacts, save.artifactSequence);
+    this.placements.splice(0, this.placements.length, ...structuredClone(save.placements));
+    this.equipment.restore(save.equipment);
     this.entities.restore(save.entities);
     for (let i = 0; i < this.npcs.length; i++)
       Object.assign(this.npcs[i]!, structuredClone(save.npcs[i]));
@@ -1340,11 +2146,38 @@ export class SimulationHost {
     this.acceleration = 1;
     this.world.restore(save.worldDeltas);
     this.resources.restore(save.drops);
-    this.markers.splice(0, this.markers.length, ...structuredClone(save.markers));
+    for (const [code, system] of this.sceneSystems) {
+      system.survival.clear();
+      if (code !== 0) this.sceneSystems.delete(code);
+    }
+    this.scenes.restore(save.scenes);
+    for (const i of this.entities.slots())
+      this.entities.scene[i] = this.scenes.remap(save.scenes, this.entities.scene[i]!);
+    this.portalPaths.clear();
+    this.motion.clear();
+    this.player.guarding = false;
+    this.markers.splice(
+      0,
+      this.markers.length,
+      ...save.markers.map((m) => ({
+        ...structuredClone(m),
+        scene: this.scenes.remap(save.scenes, m.scene ?? 0),
+      })),
+    );
     this.reactions.restore(save.reactions);
-    this.combat.restore(save.combat);
+    this.combat.restore({
+      ...save.combat,
+      projectiles: {
+        ...save.combat.projectiles,
+        arrows: save.combat.projectiles.arrows.map((a) => ({
+          ...a,
+          scene: this.scenes.remap(save.scenes, a.scene),
+        })),
+      },
+    });
     this.events.clear();
-    for (const event of save.events) this.events.push(event);
+    for (const event of save.events)
+      this.events.push({ ...event, scene: this.scenes.remap(save.scenes, event.scene ?? 0) });
     this.eventSerial = save.eventSerial;
     this.journal.clear();
     for (const event of save.journal) this.journal.add(event);

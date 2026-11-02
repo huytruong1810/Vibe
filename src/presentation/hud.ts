@@ -1,11 +1,14 @@
+import { mountHudView, escapeHtml } from './ui/view';
 import {
-  ITEMS,
-  NPC_PROFILES,
-  RECIPES,
-  SETTLEMENTS,
-  SPECIES,
-  VILLAGES,
-} from '../content/definitions';
+  commandForIntent,
+  hudViewState,
+  type UiIntent,
+  type Overlay,
+  type HudViewState,
+} from './ui/state';
+import { patchView } from './ui/patch';
+import { AppearanceResolver, type AssetCatalog } from './assets/catalog';
+import { ITEMS, NPC_PROFILES, SETTLEMENTS, SPECIES, VILLAGES } from '../content/definitions';
 import type {
   CommandPayload,
   CommandResult,
@@ -13,25 +16,16 @@ import type {
   RenderSnapshot,
   TerrainView,
 } from '../domain/contracts';
-import { BIOME_COLORS, BIOME_NAMES, nearestSettlement } from '../domain/world';
+import { BIOME_COLORS, BIOME_NAMES, nearestSettlement, TileFlag } from '../domain/world';
 import type { InferenceUsage, ModelInfo } from '../adapters/inference';
 import type { Quality } from './renderer';
+import { GARMENT_SLOTS, type GearSlot } from '../domain/equipment';
+import { latestNpcEmotion } from './ui/dialogue';
+import { updateExploration } from './ui/exploration';
+import { meterMarkup, refreshMeters } from './ui/meters';
 
-const icons = {
-  leaf: '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M19 4C9 3 4 8 5 14c1 5 7 7 11 3 3-3 4-8 3-13Z" fill="currentColor"/><path d="M4 21 15 9" stroke="var(--ink)" stroke-width="1.6"/></svg>',
-  map: '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m3 5 6-2 6 3 6-2v15l-6 2-6-3-6 2V5Z" stroke="currentColor" stroke-width="1.5"/><path d="M9 3v15M15 6v15" stroke="currentColor" stroke-width="1.5"/></svg>',
-  sun: '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3M5 5l2 2m10 10 2 2M5 19l2-2M17 7l2-2" stroke="currentColor" stroke-width="1.5"/></svg>',
-  settings:
-    '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 17h16" stroke="currentColor" stroke-width="1.5"/><circle cx="9" cy="7" r="3" fill="var(--ink)" stroke="currentColor" stroke-width="1.5"/><circle cx="15" cy="17" r="3" fill="var(--ink)" stroke="currentColor" stroke-width="1.5"/></svg>',
-};
-export const escapeHtml = (s: unknown): string =>
-  String(s).replace(
-    /[&<>"']/g,
-    (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!,
-  );
 const percent = (n: number): number => Math.round(Math.max(0, Math.min(1, n)) * 100);
-const meter = (label: string, value: number, color = 'sage'): string =>
-  `<div class="need"><span>${label}</span><div class="meter ${color}"><i style="width:${percent(value)}%"></i></div><small>${percent(value)}%</small></div>`;
+const meter = (label: string, value: number, _color = 'sage'): string => meterMarkup(label, value);
 
 export interface HudHandlers {
   send(command: CommandPayload): Promise<CommandResult>;
@@ -62,37 +56,17 @@ export class HudPresenter {
   private dialogSignature = '';
   private toastTimer: ReturnType<typeof setTimeout> | null = null;
   private mapBackground: HTMLCanvasElement | null = null;
+  private worldMapBackground: HTMLCanvasElement | null = null;
+  private worldMapPlayer: { x: number; y: number } | null = null;
+  private mapLayer: 'world' | 'local' = 'local';
+  private mapScene = '';
   private readonly handlers: HudHandlers;
+  private appearance: AppearanceResolver | null = null;
+  private viewState: HudViewState | null = null;
+  private readonly overlayFocus = new Map<Overlay, HTMLElement>();
   constructor(root: HTMLElement, handlers: HudHandlers) {
     this.handlers = handlers;
-    root.innerHTML = `
-      <header class="masthead"><a class="brand" href="./" aria-label="Hearthwild home"><span class="brand-mark">${icons.leaf}</span><span>hearthwild<small>A LIVING LITTLE WORLD</small></span></a>
-        <div class="header-center"><span class="live-dot"></span> YOUR OWN CORNER OF THE WILD</div>
-        <div class="header-actions"><button class="quiet" id="save-button">Save journey <span>↗</span></button><button class="icon-button" id="settings-button" aria-label="Settings">${icons.settings}</button></div>
-      </header>
-      <main class="shell">
-        <section class="play-column" aria-label="Game">
-          <div class="world-heading"><div><div class="eyebrow">THE OVERWORLD <span class="small-dot">·</span> SINGLE PLAYER</div><h1 id="location-title">Aqualia <span>and the riverlands</span></h1></div><div class="season-badge">${icons.sun}<span id="season-label">Spring, day 1</span></div></div>
-          <div class="world-frame"><div class="game-viewport" id="game-viewport"></div><div class="canvas-top"><div class="player-hud"><span class="clock-badge" id="clock">MON · 08:00</span><div class="player-vitals"><span>HP</span><div class="vital-track" id="health-track" role="progressbar" aria-label="Player health" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><i id="player-health"></i></div><span>ST</span><div class="vital-track stamina" id="stamina-track" role="progressbar" aria-label="Player stamina" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><i id="player-stamina"></i></div><b id="player-level">LV 1</b></div></div><span class="world-status" id="world-status"><i></i> THE WORLD IS WAKING UP</span></div>
-            <div class="canvas-bottom"><span class="area-label" id="area-label">WANDER. NOTICE. BELONG.</span><button id="map-button" class="map-button">${icons.map} World map <kbd>M</kbd></button></div><div class="pause-banner" id="pause-banner" hidden>THE WORLD IS RESTING</div>
-          </div>
-          <div class="control-strip"><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> move</span><span><kbd>E</kbd> talk / gather</span><span><kbd>J</kbd> strike <kbd>K</kbd> element</span><span><kbd>SPACE</kbd> dash</span></div>
-          <section class="physiology-panel" aria-label="Human needs"><div id="human-needs"></div><p id="rest-status" role="status"></p><div class="button-row"><button class="secondary" data-action="sleep" id="sleep-button">Rest</button><button class="secondary" data-action="wake" id="wake-button">Wake</button><button class="secondary" data-action="accelerate" data-id="8" id="accelerate-button">Sleep at 8×</button><button class="secondary" data-action="service" data-service="eat">Eat at pantry</button><button class="secondary" data-action="service" data-service="drink">Drink at spring</button><button class="secondary" data-action="service" data-service="wash">Wash</button></div></section>
-          <section class="inventory-section" aria-label="Two-slot inventory"><div class="inventory-intro"><div class="eyebrow">TRAVEL LIGHT</div><h2>Two hands.<br>Endless possibilities.</h2><p>Gather a little. Make something useful.</p></div><div class="inventory-hands" id="inventory"></div><button id="combine-button" class="combine-button"><span>⇄</span> Combine <kbd>C</kbd></button></section>
-          <section class="world-log" aria-label="Recent world events"><div class="log-title"><span class="live-dot"></span> LIFE AROUND YOU</div><p id="world-event">The villagers are starting their day.</p><button class="text-button" id="journal-button">Open field journal ↗</button></section>
-        </section>
-        <aside class="field-panel"><div class="field-heading"><span class="eyebrow">YOUR FIELD NOTES</span><span class="chapter-mark">I</span></div><h2>A world worth<br>getting to know.</h2><p class="field-subtitle">Small discoveries. Lasting connections.</p>
-          <div class="panel-tabs" role="tablist" aria-label="Field notes"><button role="tab" data-panel="journey" aria-selected="true">Journey</button><button role="tab" data-panel="companion" aria-selected="false">Creatures</button><button role="tab" data-panel="people" aria-selected="false">Villagers</button></div>
-          <div id="panel-content" class="panel-content" role="tabpanel"></div>
-          <div class="panel-bottom"><span class="connection-dot"></span><span id="connection-label">LOCAL AI · NOT CONNECTED</span><span id="performance-mini"></span></div>
-        </aside>
-      </main>
-      <footer class="page-footer"><span>THREE VILLAGES. COUNTLESS LITTLE STORIES.</span><span>Built to wander in. <span class="footer-leaf">✦</span></span></footer>
-      <div id="toast" class="toast" role="status" hidden></div>
-      <dialog id="setup-dialog" class="setup-dialog"><div class="setup-landscape"><span class="setup-star">✦</span><div class="pixel-hill one"></div><div class="pixel-hill two"></div><span class="setup-tree">♣</span><div class="setup-art-title">A little wild.<br>A little wonder.</div></div><div class="setup-content"><div class="eyebrow">WELCOME TO HEARTHWILD</div><h2>Every little life<br>has a story.</h2><p>A single-player wilderness of curious creatures and villagers who remember. Connect your local Ollama to begin.</p><form id="setup-form"><label>Local Ollama address<input id="endpoint" type="url" value="http://127.0.0.1:11434" required /></label><div class="model-row"><label>Installed model<select id="model"><option value="qwen2.5:3b">qwen2.5:3b</option></select></label><button type="button" class="secondary" id="discover-button">Find models</button></div><div class="setup-options"><label>Your hometown<select id="origin"><option value="0">Pyrador · Fire</option><option value="1" selected>Aqualia · Water</option><option value="2">Zephyria · Wind</option></select></label><label>World seed<input id="seed" type="number" value="42" min="0" max="2147483647" required /></label></div><p id="setup-status" class="setup-status" role="status">Your world stays on this browser. No account needed.</p><button class="primary" id="enter-button" type="submit">Connect & begin journey <span>→</span></button><button class="text-button resume-button" id="resume-button" type="button">Connect & resume saved journey</button></form><p class="setup-footnote">Need a small model? Run <code>ollama pull qwen2.5:3b</code> in your terminal. Allow this page’s origin in Ollama if your browser blocks access.</p></div></dialog>
-      <dialog id="conversation-dialog" class="conversation-dialog"><div class="conversation-heading"><span class="portrait" id="portrait">C</span><div><span class="eyebrow">A MOMENT TOGETHER</span><h2 id="conversation-name"></h2><small id="conversation-role"></small></div><button class="icon-button" id="close-conversation" aria-label="Finish conversation">×</button></div><div id="conversation-lines" class="conversation-lines" aria-live="polite"></div><div id="staged-note" class="staged-note" hidden></div><form id="dialogue-form"><label class="sr-only" for="dialogue-input">Your message</label><input id="dialogue-input" autocomplete="off" maxlength="1200" placeholder="Ask about their day, or offer an adventure…" required/><button class="primary" id="send-dialogue" type="submit">Send ↗</button></form><div class="conversation-footer"><span id="conversation-state">The world is paused while you talk.</span><button id="dialogue-battle" class="text-button">Partner battle →</button></div></dialog>
-      <dialog id="map-dialog" class="map-dialog"><div class="modal-heading"><div><div class="eyebrow">YOUR CORNER OF THE WORLD</div><h2>The elemental wilds</h2></div><button class="icon-button" data-close="map-dialog" aria-label="Close map">×</button></div><div class="map-layout"><canvas id="world-map" width="512" height="512" aria-label="Map of villages and outposts"></canvas><div><p class="muted">Roads connect three villages and six outposts. At a settlement waystone, travel to any other settlement.</p><div id="settlement-list"></div><p class="map-legend"><i></i> YOUR LOCATION <span>✦</span> VILLAGE</p></div></div></dialog>
-      <dialog id="settings-dialog" class="settings-dialog"><div class="modal-heading"><div><div class="eyebrow">MAKE YOURSELF AT HOME</div><h2>Settings & journal</h2></div><button class="icon-button" data-close="settings-dialog" aria-label="Close settings">×</button></div><div class="settings-grid"><section><h3>Presentation</h3><label>Visual quality<select id="quality"><option value="low">Low · fewer effects</option><option value="medium" selected>Balanced</option><option value="high">High · more weather</option></select></label><label class="checkbox"><input type="checkbox" id="reduced-motion"/> Reduce motion</label><label class="checkbox"><input type="checkbox" id="debug"/> Developer overlay</label><button class="secondary" id="audio-button">Enable sound</button><h3>Save your journey</h3><div class="button-row"><button class="secondary" id="load-button">Load checkpoint</button><button class="secondary" id="export-button">Export save</button><label class="secondary file-label">Import save<input type="file" id="import-input" accept="application/json,.json"/></label></div><p class="muted">Only committed actions are saved. Unfinished dialogue offers are canceled when loading.</p></section><section><h3>Field recipes</h3><div class="recipe-list">${RECIPES.map((r) => `<p><span>${escapeHtml(ITEMS[r.a].name)} + ${escapeHtml(ITEMS[r.b].name)}</span><b>→ ${escapeHtml(ITEMS[r.result].name)}</b></p>`).join('')}</div><h3>Elemental circle</h3><p class="muted">Water → Fire → Wind → Water<br>Strong attacks deal 1.5×; physical strikes stay neutral.</p><div id="debug-stats" class="debug-stats"></div></section></div></dialog>`;
+    mountHudView(root);
     this.gameElement = root.querySelector<HTMLElement>('#game-viewport')!;
     this.bind();
     this.renderEmpty();
@@ -117,6 +91,13 @@ export class HudPresenter {
     return document.getElementById(id) as T;
   }
   private bind(): void {
+    for (const button of document.querySelectorAll<HTMLButtonElement>('[data-combat]'))
+      button.addEventListener('click', () => {
+        const kind = button.dataset.combat;
+        if (kind === 'dash') void this.command({ type: 'dash' });
+        else if (kind === 'strike' || kind === 'element')
+          void this.command({ type: 'attack', kind });
+      });
     this.el('setup-form').addEventListener('submit', (event) => {
       event.preventDefault();
       void this.enter(false);
@@ -144,19 +125,60 @@ export class HudPresenter {
       if (file) void this.run(() => this.handlers.import(file), 'Journey imported.');
     });
     this.el('map-button').addEventListener('click', () => this.openMenu('map-dialog'));
+    this.el('map-world-layer').addEventListener('click', () => {
+      this.mapLayer = 'world';
+      this.drawMap();
+    });
+    this.el('map-local-layer').addEventListener('click', () => {
+      this.mapLayer = 'local';
+      this.drawMap();
+    });
     this.el('settings-button').addEventListener('click', () => this.openMenu('settings-dialog'));
-    this.el('journal-button').addEventListener('click', () => this.openMenu('settings-dialog'));
-    for (const button of document.querySelectorAll<HTMLButtonElement>('[data-panel]'))
+    this.el('inventory-button').addEventListener('click', () =>
+      this.intent({ type: 'toggle', overlay: 'inventory' }),
+    );
+    this.el('inspection-button').addEventListener('click', () =>
+      this.intent({ type: 'toggle', overlay: 'inspection' }),
+    );
+    this.el('field-journal-button').addEventListener('click', () =>
+      this.intent({ type: 'toggle', overlay: 'journal' }),
+    );
+    for (const overlay of ['inventory', 'inspection'] as const)
+      this.el(`close-${overlay}`).addEventListener('click', () =>
+        this.intent({ type: 'toggle', overlay }),
+      );
+    for (const button of document.querySelectorAll<HTMLButtonElement>('[data-panel]')) {
+      button.tabIndex = button.getAttribute('aria-selected') === 'true' ? 0 : -1;
       button.addEventListener('click', () =>
         this.showPanel(button.dataset.panel as typeof this.panel),
       );
+      button.addEventListener('keydown', (event) => {
+        if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+        event.preventDefault();
+        event.stopPropagation();
+        const tabs = [...document.querySelectorAll<HTMLButtonElement>('[data-panel]')];
+        const index = tabs.indexOf(button),
+          next =
+            event.key === 'Home'
+              ? 0
+              : event.key === 'End'
+                ? tabs.length - 1
+                : (index + (event.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
+        const target = tabs[next]!;
+        this.showPanel(target.dataset.panel as typeof this.panel);
+        target.focus();
+      });
+    }
     for (const button of document.querySelectorAll<HTMLButtonElement>('[data-close]'))
       button.addEventListener('click', () =>
         this.el<HTMLDialogElement>(button.dataset.close!).close(),
       );
-    for (const id of ['map-dialog', 'settings-dialog'])
+    for (const id of ['map-dialog', 'settings-dialog', 'journal-dialog'])
       this.el<HTMLDialogElement>(id).addEventListener('close', () => {
-        void this.command({ type: 'resume', token: 'menu' });
+        if (
+          !document.querySelector('#map-dialog[open],#settings-dialog[open],#journal-dialog[open]')
+        )
+          void this.command({ type: 'resume', token: 'menu' });
       });
     this.el('close-conversation').addEventListener(
       'click',
@@ -181,6 +203,32 @@ export class HudPresenter {
         void this.command({ type: 'closeDialogue' }).then(() =>
           this.command({ type: 'battle', npcId }),
         );
+    });
+    this.el('dialogue-invite').addEventListener('click', () => {
+      const npcId = this.frame?.dialogue?.npcId;
+      if (npcId) void this.command({ type: 'invite', npcId });
+    });
+    this.el('inventory-panel').addEventListener('keydown', (event) => {
+      if (event.ctrlKey || event.metaKey || event.altKey || event.repeat) return;
+      const target = event.target as HTMLElement;
+      const carried = target.closest<HTMLElement>('[data-carry-slot]');
+      const worn = target.closest<HTMLElement>('[data-gear-slot]');
+      const key = event.key.toLowerCase();
+      let intent: UiIntent | null = null;
+      if (carried && key === 'e')
+        intent = { type: 'equip', slot: Number(carried.dataset.carrySlot) as 0 | 1 };
+      else if (carried && key === 'delete')
+        intent = { type: 'drop', slot: Number(carried.dataset.carrySlot) as 0 | 1 };
+      else if (worn && (key === 'u' || key === 'delete'))
+        intent = {
+          type: 'unequip',
+          slot: worn.dataset.gearSlot as GearSlot,
+          ...(key === 'delete' ? { drop: true } : {}),
+        };
+      if (!intent) return;
+      event.preventDefault();
+      event.stopPropagation();
+      this.intent(intent);
     });
     this.el('audio-button').addEventListener(
       'click',
@@ -234,7 +282,14 @@ export class HudPresenter {
         void this.command({ type: 'resume', token: 'menu' }).then(() =>
           this.command({ type: 'travel', settlementId: button.dataset.settlement! }),
         );
-      } else if (action === 'use' || action === 'drop')
+      } else if (action === 'equip') this.intent({ type: 'equip', slot: id as 0 | 1 });
+      else if (action === 'unequip')
+        this.intent({
+          type: 'unequip',
+          slot: button.dataset.slot as GearSlot,
+          ...(button.dataset.drop === 'true' ? { drop: true } : {}),
+        });
+      else if (action === 'use' || action === 'drop')
         void this.command({ type: action, slot: id as 0 | 1 });
       else if (action === 'gather') void this.command({ type: 'harvest' });
       else if (action === 'reaction')
@@ -350,27 +405,54 @@ export class HudPresenter {
   update(
     frame: RenderSnapshot,
     usage: InferenceUsage | null,
-    stats: { fps: number; sprites: number; chunks: number },
+    stats: {
+      fps: number;
+      sprites: number;
+      chunks: number;
+      textureBytes?: number;
+      renderMs?: number;
+      loadMs?: number;
+      framebufferScale?: number;
+      gpu?: string;
+      assetError?: string;
+      prototypeActors?: number;
+    },
   ): void {
+    if (this.frame?.session !== frame.session) {
+      this.worldMapBackground = null;
+      this.worldMapPlayer = null;
+    }
     this.frame = frame;
+    if (frame.scene.id !== this.mapScene) {
+      this.mapScene = frame.scene.id;
+      this.mapLayer = 'local';
+    }
+    if (frame.scene.outside && this.mapBackground) {
+      this.worldMapBackground = this.mapBackground;
+      this.worldMapPlayer = { x: frame.player.x, y: frame.player.y };
+    }
+    this.viewState = hudViewState(frame);
+    this.el('interaction-prompt').textContent = this.viewState.prompt;
+    this.setHtml(
+      'journal-entries',
+      frame.journal.map((text) => `<p>${escapeHtml(text)}</p>`).join('') ||
+        '<p>Your field journal will fill as you explore.</p>',
+    );
     const settlement = nearestSettlement(frame.player),
       distance = Math.hypot(settlement.x - frame.player.x, settlement.y - frame.player.y);
     const i = this.terrain
       ? Math.floor(frame.player.y) * this.terrain.size + Math.floor(frame.player.x)
       : 0;
     const biome = this.terrain?.biome[i] ?? 0;
-    const name = distance < 25 ? settlement.name : BIOME_NAMES[biome];
+    const name = frame.scene.outside
+      ? distance < 25
+        ? settlement.name
+        : BIOME_NAMES[biome]
+      : (frame.scene.name ?? 'Interior');
     this.el('location-title').innerHTML =
-      `${escapeHtml(name)} <span>${distance < 25 ? ['among the mountain paths', 'and the riverlands', 'where the sea meets sky'][settlement.village] : 'beyond the village paths'}</span>`;
+      `${escapeHtml(name)} <span>${!frame.scene.outside ? 'inside the elemental wilds' : distance < 25 ? ['among the mountain paths', 'and the riverlands', 'where the sea meets sky'][settlement.village] : 'beyond the village paths'}</span>`;
     this.el('season-label').textContent =
       `${['Spring', 'Summer', 'Autumn', 'Winter'][frame.season]}, day ${frame.day + 1}`;
-    this.el('clock').textContent = frame.calendar.toUpperCase();
-    const hp = percent(frame.player.hp / frame.player.maxHp),
-      stamina = percent(frame.player.stamina / 100);
-    this.el('player-health').style.width = `${hp}%`;
-    this.el('player-stamina').style.width = `${stamina}%`;
-    this.el('health-track').setAttribute('aria-valuenow', String(hp));
-    this.el('stamina-track').setAttribute('aria-valuenow', String(stamina));
     this.el('player-level').textContent = `LV ${frame.player.level}`;
     this.el('world-status').innerHTML =
       `<i></i> ${frame.paused.length ? 'A MOMENT OF STILLNESS' : 'A WORLD IN MOTION'}`;
@@ -384,6 +466,8 @@ export class HudPresenter {
     this.el('performance-mini').textContent = `${Math.round(stats.fps)} FPS`;
     this.el('debug-stats').textContent =
       `Tick ${frame.tick} · simulation ${frame.performance.stepMs.toFixed(2)} ms · ${frame.performance.detailed} detailed creatures · ${frame.performance.paths} pending paths · ${stats.sprites} sprites · ${stats.chunks} chunks\nAI: ${usage?.requests ?? 0} requests · ${usage?.queued ?? 0} queued · ${usage?.errors ?? 0} errors · ${Math.round(usage?.lastMs ?? 0)} ms last request`;
+    this.el('debug-stats').textContent +=
+      `\nRender CPU ${stats.renderMs?.toFixed(2) ?? '?'} ms · load ${stats.loadMs?.toFixed(0) ?? '?'} ms · tracked textures ${((stats.textureBytes ?? 0) / 1048576).toFixed(1)} MiB · framebuffer ${stats.framebufferScale ?? 1} · prototype actors ${stats.prototypeActors ?? 0}\nGPU: ${stats.gpu ?? 'unreported'}${stats.assetError ? `\n${stats.assetError}` : ''}`;
     if (this.el<HTMLInputElement>('debug').checked)
       this.el('debug-stats').textContent += this.diagnostics(frame);
     const human = frame.humanNeeds.find((h) => h.id === 0)!;
@@ -395,25 +479,37 @@ export class HudPresenter {
       ? `${human.forcedRest ? 'Exhausted · resting until 50%' : 'Sleeping'} · world at ${frame.timeScale}×`
       : human.rest < 0.2
         ? 'You feel tired. Find a safe place to rest.'
-        : `Human · ${human.elements.join(' / ')} · ${human.nature.join(', ')}`;
+        : `Human · ${human.elements.join(' / ')} · ${human.heightMeters.toFixed(2)} m ? ${human.massKg.toFixed(1)} kg ? ${human.nature.join(', ')}`;
     this.el<HTMLButtonElement>('sleep-button').disabled = human.sleeping;
     this.el<HTMLButtonElement>('wake-button').disabled = !human.sleeping || human.forcedRest;
     this.el<HTMLButtonElement>('accelerate-button').disabled =
       !human.sleeping || frame.paused.length > 0;
     this.renderInventory();
+    updateExploration(frame, this.appearance, this.mapBackground);
     this.renderPanel();
     this.renderConversation();
     if (this.el<HTMLDialogElement>('map-dialog').open) this.drawMap();
+    refreshMeters();
   }
   private renderInventory(): void {
     const frame = this.frame!;
     const html = frame.inventory
       .map(
         (item, i) =>
-          `<div class="hand-slot ${item ? 'filled' : ''}"><span class="slot-number">0${i + 1} <span>${i === 0 ? 'LEFT' : 'RIGHT'} HAND</span></span><div class="slot-item">${item ? `<span class="item-pixel" style="--item:#${ITEMS[item.id].color.toString(16)}"></span><b>${escapeHtml(ITEMS[item.id].name)}</b>` : '<span class="empty-hand">+</span><span>Room for a discovery</span>'}</div>${item ? `<div class="slot-actions"><button data-action="use" data-id="${i}">Use</button><button data-action="drop" data-id="${i}">Drop</button></div>` : ''}</div>`,
+          `<div class="hand-slot ${item ? 'filled' : ''}" data-key="carry:${i}" data-carry-slot="${i}" tabindex="0" role="group" aria-label="Carried slot ${i + 1}: ${item ? escapeHtml(ITEMS[item.id].name) : 'empty'}"><span class="slot-number">0${i + 1} <span>${i === 0 ? 'LEFT' : 'RIGHT'} HAND</span></span><div class="slot-item">${item ? `<span class="item-pixel" style="--item:#${ITEMS[item.id].color.toString(16)}"></span><b>${escapeHtml(ITEMS[item.id].name)}</b>${item.charges !== undefined ? `<small>${item.charges} charges remaining</small>` : ''}` : '<span class="empty-hand">+</span><span>Room for a discovery</span>'}</div>${item ? `<div class="slot-actions"><button data-action="use" data-id="${i}">Use</button>${ITEMS[item.id].garment ? `<button data-action="equip" data-id="${i}" aria-label="Equip ${escapeHtml(ITEMS[item.id].name)}">Equip</button>` : ''}<button data-action="drop" data-id="${i}">Drop</button></div>` : ''}</div>`,
       )
       .join('');
     this.setHtml('inventory', html);
+    this.setHtml(
+      'equipment',
+      GARMENT_SLOTS.map((slot) => {
+        const item = frame.equipment.worn[slot];
+        const name = item ? ITEMS[item.id].name : 'Empty';
+        return `<div class="equipment-slot" data-key="gear:${slot}" data-gear-slot="${slot}" tabindex="0" role="group" aria-label="Worn ${slot}: ${escapeHtml(name)}"><span class="slot-number">${slot.toUpperCase()}</span><b>${escapeHtml(name)}</b>${item ? `<div class="slot-actions"><button data-key="unequip:${slot}" data-action="unequip" data-slot="${slot}" aria-label="Unequip ${escapeHtml(name)}">Unequip</button><button data-key="drop-worn:${slot}" data-action="unequip" data-slot="${slot}" data-drop="true" aria-label="Drop worn ${escapeHtml(name)}">Drop</button></div>` : ''}</div>`;
+      }).join(''),
+    );
+    this.el('ammunition-status').textContent =
+      `Ammunition: ${frame.equipment.ammo} · finite charges in carried slot 2`;
     this.el<HTMLButtonElement>('combine-button').disabled =
       !frame.inventory[0] || !frame.inventory[1] || frame.paused.length > 0;
   }
@@ -475,9 +571,13 @@ export class HudPresenter {
     return lines.join('\n');
   }
   showPanel(panel: typeof this.panel): void {
+    this.el('inspection-panel').hidden = false;
+    this.el('inspection-button').setAttribute('aria-expanded', 'true');
     this.panel = panel;
-    for (const button of document.querySelectorAll<HTMLButtonElement>('[data-panel]'))
+    for (const button of document.querySelectorAll<HTMLButtonElement>('[data-panel]')) {
       button.setAttribute('aria-selected', String(button.dataset.panel === panel));
+      button.tabIndex = button.dataset.panel === panel ? 0 : -1;
+    }
     this.renderPanel();
   }
   selectCreature(id: number): void {
@@ -533,14 +633,14 @@ export class HudPresenter {
       html += `<h4 class="list-heading">NEARBY IN THE WILD</h4><div class="creature-list">${nearby.map((c) => `<button data-action="select" data-id="${c.id}"><span class="creature-dot" style="background:#${SPECIES.find((s) => s.id === c.species)!.color.toString(16)}"></span><span>${c.name}<small>${c.elements.join(' · ')}</small></span><span>↗</span></button>`).join('') || '<p class="muted">No creatures in sight. Wander a little farther.</p>'}</div>`;
     } else {
       const nearby = frame.npcs
-        .map((npc, index) => ({
+        .map((npc) => ({
           npc,
-          index,
+          index: NPC_PROFILES.findIndex((p) => p.id === npc.profileId),
           distance: Math.hypot(npc.x - frame.player.x, npc.y - frame.player.y),
         }))
         .sort((a, b) => a.distance - b.distance)
         .slice(0, 10);
-      html = `<div class="journal-intro compact"><div class="eyebrow">FAMILIAR FACES</div><h3>Everyone has a rhythm.</h3><p>Villagers work, wander, share news, and make plans. Stop by and say hello.</p></div><div class="people-list">${nearby.map(({ npc, index, distance }) => `<div class="person-card"><span class="person-avatar village-${NPC_PROFILES[index]!.village}">${NPC_PROFILES[index]!.name[0]}</span><div><h4>${escapeHtml(NPC_PROFILES[index]!.name)} <small>${npc.partner !== null ? '✧' : ''}</small></h4><p>${escapeHtml(NPC_PROFILES[index]!.role)}</p><small>${escapeHtml(npc.activity)}</small></div><button class="person-talk" data-action="talk" data-id="${index}" ${distance > 3 ? 'disabled' : ''} aria-label="Talk to ${escapeHtml(NPC_PROFILES[index]!.name)}">${distance <= 3 ? 'Talk ↗' : `${Math.round(distance)}m`}</button></div>`).join('')}</div>`;
+      html = `<div class="journal-intro compact"><div class="eyebrow">FAMILIAR FACES</div><h3>Everyone has a rhythm.</h3><p>Villagers work, wander, share news, and make plans. Stop by and say hello.</p></div><div class="people-list">${nearby.map(({ npc, index, distance }) => `<div class="person-card" data-key="${escapeHtml(npc.profileId)}"><span class="person-avatar village-${NPC_PROFILES[index]!.village}">${NPC_PROFILES[index]!.name[0]}</span><div><h4>${escapeHtml(NPC_PROFILES[index]!.name)} <small>${npc.partner !== null ? '✧' : ''}</small></h4><p>${escapeHtml(NPC_PROFILES[index]!.role)}</p><small>${escapeHtml(npc.activity)}</small></div><button class="person-talk" data-action="talk" data-id="${index}" ${distance > 3 ? 'disabled' : ''} aria-label="Talk to ${escapeHtml(NPC_PROFILES[index]!.name)}">${distance <= 3 ? 'Talk ↗' : `${Math.round(distance)}m`}</button></div>`).join('')}</div>`;
     }
     if (this.panel === 'people') {
       const human =
@@ -560,8 +660,9 @@ export class HudPresenter {
   }
   private creatureCard(creature: CreatureView): string {
     const definition = SPECIES.find((s) => s.id === creature.species)!,
-      tamed = creature.owner === 0;
-    return `<div class="creature-card"><div class="creature-art creature-art-${creature.species}" style="--creature:#${definition.color.toString(16)}"><span class="creature-ear left"></span><span class="creature-ear right"></span><span class="creature-face"><i></i><i></i></span><span class="creature-spark">✧</span></div><div class="creature-title"><div><div class="eyebrow">${tamed ? 'YOUR COMPANION' : creature.owner > 0 ? 'VILLAGER COMPANION' : 'A WILD LITTLE WONDER'}</div><h3>${creature.name}</h3></div><span class="element-tag">${creature.elements.join(' / ')}</span></div><p class="creature-description">${definition.description}</p><p class="creature-diet"><b>Likes</b> ${definition.diet.map((id) => ITEMS[id].name).join(', ')} <span>·</span> <b>Bathes in</b> ${definition.bath}</p>${tamed ? `<div class="creature-stats"><span>LV ${creature.level}</span><span>HP ${Math.ceil(creature.hp)} / ${creature.maxHp}</span><span>ATK ${creature.attack}</span><span>DEF ${creature.defense}</span></div>${meter('Food', creature.food)}${meter('Water', creature.water, 'water')}${meter('Recreation', creature.recreation)}${meter('Cleanliness', creature.cleanliness, 'water')}${meter('Rest', creature.rest, 'warm')}${meter('Wildness', creature.wildness, 'warm')}` : `<div class="wild-stats"><span>HP ???</span><span>ATK ???</span><span>DEF ???</span></div>${meter('Trust', creature.trust, 'warm')}`}<p class="creature-mode">${escapeHtml(creature.mode)} · ${escapeHtml(creature.nature.join(', '))} · ${Math.round(Math.hypot(creature.x - this.frame!.player.x, creature.y - this.frame!.player.y))} tiles away</p><div class="care-buttons">${(['feed', 'water', 'pet', 'bathe', 'heal'] as const).map((action) => `<button data-action="care" data-care="${action}" data-id="${creature.id}">${action[0]!.toUpperCase() + action.slice(1)}</button>`).join('')}</div><button class="wide-secondary" data-action="${tamed ? 'release' : 'tame'}" data-id="${creature.id}">${tamed ? 'Release to the wild' : 'Form a partnership'} <span>♡</span></button></div>`;
+      tamed = creature.owner === 0,
+      portrait = this.appearance?.portrait('species', creature.species);
+    return `<div class="creature-card"><div class="creature-art creature-art-${creature.species}" style="--creature:#${definition.color.toString(16)}">${portrait ? `<img src="${escapeHtml(portrait.hud128)}" alt="${escapeHtml(creature.name)} portrait" width="128" height="128"/>` : `<span class="creature-ear left"></span><span class="creature-ear right"></span><span class="creature-face"><i></i><i></i></span>`}<span class="creature-spark">✧</span></div><div class="creature-title"><div><div class="eyebrow">${tamed ? 'YOUR COMPANION' : creature.owner > 0 ? 'VILLAGER COMPANION' : 'A WILD LITTLE WONDER'}</div><h3>${creature.name}</h3></div><span class="element-tag">${creature.elements.join(' / ')}</span></div><p class="creature-description">${definition.description}</p><p class="creature-diet"><b>Likes</b> ${definition.diet.map((id) => ITEMS[id].name).join(', ')} <span>·</span> <b>Bathes in</b> ${definition.bath}</p>${tamed ? `<div class="creature-stats"><span>LV ${creature.level}</span><span>HP ${Math.ceil(creature.hp)} / ${creature.maxHp}</span><span>ATK ${creature.attack}</span><span>DEF ${creature.defense}</span></div>${meter('Food', creature.food)}${meter('Water', creature.water, 'water')}${meter('Recreation', creature.recreation)}${meter('Cleanliness', creature.cleanliness, 'water')}${meter('Rest', creature.rest, 'warm')}${meter('Wildness', creature.wildness, 'warm')}` : `<div class="wild-stats"><span>HP ???</span><span>ATK ???</span><span>DEF ???</span></div>${meter('Trust', creature.trust, 'warm')}`}<p class="creature-mode">${escapeHtml(creature.mode)} · ${escapeHtml(creature.nature.join(', '))} · ${Math.round(Math.hypot(creature.x - this.frame!.player.x, creature.y - this.frame!.player.y))} tiles away</p><div class="care-buttons">${(['feed', 'water', 'pet', 'bathe', 'heal'] as const).map((action) => `<button data-action="care" data-care="${action}" data-id="${creature.id}">${action[0]!.toUpperCase() + action.slice(1)}</button>`).join('')}</div><button class="wide-secondary" data-action="${tamed ? 'release' : 'tame'}" data-id="${creature.id}">${tamed ? 'Release to the wild' : 'Form a partnership'} <span>♡</span></button></div>`;
   }
   private renderConversation(): void {
     const frame = this.frame!,
@@ -577,8 +678,28 @@ export class HudPresenter {
     this.el('conversation-name').textContent = profile.name;
     this.el('conversation-role').textContent =
       `${profile.role} · ${VILLAGES[profile.village]!.name}`;
-    this.el('portrait').textContent = profile.name[0]!;
-    const signature = `${conversation.lines.length}:${conversation.pendingJob}`;
+    const emotion = latestNpcEmotion(conversation.lines);
+    const portrait = this.appearance?.portrait('npc', profile.id, emotion);
+    this.el('portrait').dataset.emotion = emotion;
+    this.el('portrait').dataset.portraitEmotion = portrait?.resolvedEmotion ?? 'neutral';
+    this.el('portrait').setAttribute(
+      'title',
+      portrait
+        ? `${profile.name} · ${portrait.resolvedEmotion ?? 'neutral'} portrait expression`
+        : `${profile.name} · portrait pending`,
+    );
+    this.el('conversation-emotion').textContent = emotion;
+    this.setHtml(
+      'portrait',
+      portrait
+        ? `<img data-key="portrait:${escapeHtml(profile.id)}" src="${escapeHtml(portrait.hud128)}" width="96" height="96" alt="${escapeHtml(profile.name)} portrait"/>`
+        : `<span data-key="portrait-pending:${escapeHtml(profile.id)}" aria-label="${escapeHtml(profile.name)} · portrait pending">${escapeHtml(profile.name[0]!)}</span>`,
+    );
+    const signature = JSON.stringify([
+      conversation.npcId,
+      conversation.lines,
+      conversation.pendingJob,
+    ]);
     if (signature !== this.dialogSignature) {
       this.el('conversation-lines').innerHTML =
         conversation.lines
@@ -597,21 +718,69 @@ export class HudPresenter {
     this.el<HTMLButtonElement>('send-dialogue').disabled = !!conversation.pendingJob;
     this.el<HTMLInputElement>('dialogue-input').disabled = !!conversation.pendingJob;
     this.el<HTMLButtonElement>('dialogue-battle').hidden = profile.partner === null;
+    this.el<HTMLButtonElement>('dialogue-invite').disabled = conversation.invitePending === true;
     const staged = this.el('staged-note');
-    staged.hidden = conversation.staged.length === 0;
-    staged.textContent = `${conversation.staged.length} offer(s) will be checked and carried out when you finish talking.`;
+    const offers = conversation.staged.length + (conversation.invitePending ? 1 : 0);
+    staged.hidden = offers === 0;
+    staged.textContent = `${offers} offer(s)${conversation.invitePending ? ', including your visit request,' : ''} will be checked and carried out when you finish talking.`;
   }
   private setHtml(id: string, html: string): void {
     const el = this.el(id);
     if (el.dataset.rendered === html) return;
-    el.innerHTML = html;
+    patchView(el, html);
     el.dataset.rendered = html;
   }
-  openMenu(id: 'map-dialog' | 'settings-dialog'): void {
+  openMenu(id: 'map-dialog' | 'settings-dialog' | 'journal-dialog'): void {
     if (!this.frame || this.frame.dialogue) return;
+    if (document.querySelector('dialog[open]')) return;
     void this.command({ type: 'pause', token: 'menu' });
     this.el<HTMLDialogElement>(id).showModal();
     if (id === 'map-dialog') this.drawMap();
+  }
+  setAssets(catalog: AssetCatalog): void {
+    this.appearance = new AppearanceResolver(catalog);
+  }
+  closeOverlay(): boolean {
+    for (const overlay of ['inventory', 'inspection'] as const)
+      if (!this.el(`${overlay}-panel`).hidden) {
+        this.intent({ type: 'toggle', overlay });
+        return true;
+      }
+    return false;
+  }
+  openInventory(): void {
+    if (this.el('inventory-panel').hidden) this.intent({ type: 'toggle', overlay: 'inventory' });
+  }
+  intent(intent: UiIntent): void {
+    const command = commandForIntent(intent);
+    if (command) {
+      void this.command(command);
+      return;
+    }
+    if (intent.type !== 'toggle' || !this.frame || this.frame.dialogue) return;
+    if (intent.overlay === 'journal' || intent.overlay === 'map' || intent.overlay === 'settings') {
+      this.openMenu(
+        `${intent.overlay === 'map' ? 'map' : intent.overlay === 'journal' ? 'journal' : 'settings'}-dialog`,
+      );
+      return;
+    }
+    const panel = this.el(`${intent.overlay}-panel`);
+    const opening = panel.hidden;
+    panel.hidden = !opening;
+    this.el(`${intent.overlay === 'inventory' ? 'inventory' : 'inspection'}-button`).setAttribute(
+      'aria-expanded',
+      String(opening),
+    );
+    if (opening) {
+      const active = document.activeElement;
+      this.overlayFocus.set(
+        intent.overlay,
+        active instanceof HTMLElement && active !== document.body
+          ? active
+          : this.el(`${intent.overlay}-button`),
+      );
+      panel.querySelector<HTMLElement>('button')?.focus();
+    } else this.overlayFocus.get(intent.overlay)?.focus();
   }
   setTerrain(terrain: TerrainView): void {
     this.terrain = terrain;
@@ -641,9 +810,86 @@ export class HudPresenter {
   private drawMap(): void {
     const canvas = this.el<HTMLCanvasElement>('world-map'),
       context = canvas.getContext('2d')!;
-    if (!this.mapBackground) return;
-    context.drawImage(this.mapBackground, 0, 0);
-    context.font = '11px monospace';
+    const frame = this.frame;
+    if (!frame) return;
+    const local = !frame.scene.outside && this.mapLayer === 'local';
+    this.el('map-title').textContent = local
+      ? (frame.scene.name ?? 'Interior')
+      : 'The elemental wilds';
+    this.el('map-local-layer').textContent = frame.scene.outside
+      ? 'Overworld'
+      : (frame.scene.name ?? 'Interior');
+    this.el('map-local-layer').setAttribute(
+      'aria-current',
+      local || frame.scene.outside ? 'location' : 'false',
+    );
+    this.el('map-world-layer').setAttribute('aria-current', !local ? 'location' : 'false');
+    this.el('map-scene-status').textContent = frame.scene.outside
+      ? 'World / Overworld'
+      : `World / ${frame.scene.name ?? 'Interior'}${local ? '' : ' · last observed outdoor context'}`;
+    this.el('settlement-list').hidden = !frame.scene.outside;
+    this.el('map-guidance').textContent = local
+      ? 'Current-scene terrain, walls, props and doorways. Explore on foot; the map does not move you.'
+      : !frame.scene.outside
+        ? this.worldMapBackground
+          ? 'World context from your last outdoor view. Return through a doorway to travel.'
+          : 'World terrain is unavailable until you return outdoors. Settlement markers show authored world locations.'
+        : 'Roads connect three villages and six outposts. At a settlement waystone, travel to any other settlement.';
+    canvas.setAttribute(
+      'aria-label',
+      local ? `Local map of ${frame.scene.name ?? 'Interior'}` : 'Map of villages and outposts',
+    );
+    context.fillStyle = '#233d36';
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    if (local && this.terrain) {
+      const margin = 32;
+      const scale = Math.min(
+        (canvas.width - margin * 2) / frame.scene.width,
+        (canvas.height - margin * 2) / frame.scene.height,
+      );
+      const originX = (canvas.width - frame.scene.width * scale) / 2;
+      const originY = (canvas.height - frame.scene.height * scale) / 2;
+      context.imageSmoothingEnabled = false;
+      for (let y = 0; y < frame.scene.height; y++)
+        for (let x = 0; x < frame.scene.width; x++) {
+          const at = y * this.terrain.size + x;
+          context.fillStyle =
+            this.terrain.flags[at]! & TileFlag.Solid
+              ? '#142b27'
+              : this.terrain.fluid[at]
+                ? '#689d9d'
+                : '#9caa86';
+          context.fillRect(originX + x * scale, originY + y * scale, scale, scale);
+        }
+      for (const prop of frame.scene.props) {
+        context.fillStyle = prop.layer === 'ground' ? '#adbb95' : '#53694f';
+        context.fillRect(originX + prop.x * scale - 3, originY + prop.y * scale - 3, 6, 6);
+      }
+      context.font = '38px Silver';
+      context.textAlign = 'center';
+      for (const portal of frame.scene.portals) {
+        const x = originX + portal.x * scale,
+          y = originY + portal.y * scale;
+        context.fillStyle = portal.allowed ? '#a9dfc9' : '#c18e79';
+        context.fillRect(x - 5, y - 5, 10, 10);
+        context.fillStyle = '#f2ead3';
+        context.fillText(portal.name, x, y - 12);
+      }
+      context.fillStyle = '#fff1be';
+      context.beginPath();
+      context.arc(
+        originX + frame.player.x * scale,
+        originY + frame.player.y * scale,
+        5,
+        0,
+        Math.PI * 2,
+      );
+      context.fill();
+      return;
+    }
+    const background = frame.scene.outside ? this.mapBackground : this.worldMapBackground;
+    if (background) context.drawImage(background, 0, 0, canvas.width, canvas.height);
+    context.font = '38px Silver';
     context.textAlign = 'center';
     for (const s of SETTLEMENTS) {
       context.fillStyle = '#243f36';
@@ -656,15 +902,16 @@ export class HudPresenter {
       context.fillStyle = '#f2e9c9';
       context.fillText(s.name, s.x, s.y - 10);
     }
-    if (this.frame) {
+    const player = frame.scene.outside ? frame.player : this.worldMapPlayer;
+    if (player) {
       context.fillStyle = '#fff1be';
       context.beginPath();
-      context.arc(this.frame.player.x, this.frame.player.y, 4, 0, Math.PI * 2);
+      context.arc(player.x, player.y, 4, 0, Math.PI * 2);
       context.fill();
       context.strokeStyle = '#355046';
       context.lineWidth = 2;
       context.stroke();
-      for (const marker of this.frame.markers) {
+      for (const marker of frame.markers) {
         context.strokeStyle = '#f0d49a';
         context.strokeRect(marker.x - 3, marker.y - 3, 6, 6);
       }

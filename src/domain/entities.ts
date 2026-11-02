@@ -6,6 +6,7 @@ import {
   type ItemId,
 } from '../content/definitions';
 import { CONFIG, clamp, type WorldPosition } from './values';
+import { PHYSIQUES, PhysiquePolicy, validatePhysique, type Physique } from './physique';
 
 export interface AggressionRule {
   readonly target: SpeciesId | 'nonhuman';
@@ -61,6 +62,11 @@ export type EntityRecord = Record<FloatColumn | ByteColumn, number> & {
   slot: number;
   owner: number;
   herd: number;
+  scene: number;
+  heightMeters: number;
+  massKg: number;
+  recoilX: number;
+  recoilY: number;
   nature: NaturePolicy;
   preferences: readonly ItemId[];
   restrictions: readonly ItemId[];
@@ -124,11 +130,17 @@ export class EntityStore {
   readonly ids: Uint32Array;
   readonly owner: Int32Array;
   readonly herd: Uint16Array;
+  readonly scene: Uint16Array;
+  readonly heightMeters: Float32Array;
+  readonly massKg: Float32Array;
+  readonly recoilX: Float32Array;
+  readonly recoilY: Float32Array;
   private readonly byId = new Map<number, number>();
   private readonly policies = new Map<number, NaturePolicy>();
   private readonly restrictions = new Map<number, readonly ItemId[]>();
   private readonly preferences = new Map<number, readonly ItemId[]>();
   private nextId = 100;
+  private humanCount = 0;
   count = 0;
   readonly capacity: number;
   constructor(readonly wildlifeCapacity: number = CONFIG.creatureCapacity) {
@@ -144,6 +156,11 @@ export class EntityStore {
     this.owner = new Int32Array(this.capacity);
     this.owner.fill(-1);
     this.herd = new Uint16Array(this.capacity);
+    this.scene = new Uint16Array(this.capacity);
+    this.heightMeters = new Float32Array(this.capacity);
+    this.massKg = new Float32Array(this.capacity);
+    this.recoilX = new Float32Array(this.capacity);
+    this.recoilY = new Float32Array(this.capacity);
   }
   private initialize(
     slot: number,
@@ -156,6 +173,7 @@ export class EntityStore {
     for (const k of FLOAT_COLUMNS) this[k][slot] = 0;
     for (const k of BYTE_COLUMNS) this[k][slot] = 0;
     this.ids[slot] = id;
+    this.scene[slot] = 0;
     this.byId.set(id, slot);
     this.species[slot] = species;
     this.owner[slot] = owner;
@@ -172,6 +190,10 @@ export class EntityStore {
       this.rest[slot] =
         0.85;
     this.hp[slot] = this.definition(slot).hp;
+    const physique = PHYSIQUES[this.definition(slot).id];
+    this.heightMeters[slot] = physique.heightMeters;
+    this.massKg[slot] = physique.massKg;
+    this.recoilX[slot] = this.recoilY[slot] = 0;
     this.herd[slot] = Math.floor(slot / 6);
     this.policies.set(id, species === 2 || species === 4 ? PASSIVE : NEUTRAL);
     if (owner >= 0) this.policies.set(id, NEUTRAL);
@@ -179,7 +201,7 @@ export class EntityStore {
   spawn(species: number, x: number, y: number, owner = -1): number {
     let slot = 0;
     while (slot < this.count && this.alive[slot]) slot++;
-    if (slot >= this.wildlifeCapacity || this.nextId > 0xffffffff)
+    if (slot >= this.wildlifeCapacity || this.nextId >= 0xffffffff)
       throw new Error('Entity capacity or identity space exhausted');
     this.count = Math.max(this.count, slot + 1);
     this.initialize(slot, this.nextId++, species, x, y, owner);
@@ -190,11 +212,14 @@ export class EntityStore {
       throw new Error('Invalid human identity');
     const slot = this.wildlifeCapacity + id;
     this.initialize(slot, id, 8, x, y, -1);
+    this.humanCount++;
     this.affinity[slot] = affinity;
     this.policies.set(id, NEUTRAL);
     return slot;
   }
   retire(slot: number): void {
+    if (!this.alive[slot]) return;
+    if (this.isHuman(slot)) throw new Error('Authored human identities cannot be retired');
     const id = this.ids[slot]!;
     this.alive[slot] = 0;
     this.sleeping[slot] = 0;
@@ -222,9 +247,7 @@ export class EntityStore {
     return this.byId.size;
   }
   get wildlifeCount(): number {
-    let count = 0;
-    for (let i = 0; i < this.count; i++) if (this.alive[i]) count++;
-    return count;
+    return this.byId.size - this.humanCount;
   }
   isHuman(slot: number): boolean {
     return this.species[slot] === 8;
@@ -235,8 +258,19 @@ export class EntityStore {
   definition(slot: number): CreatureDefinition {
     return this.isHuman(slot) ? humans[this.affinity[slot]!]! : SPECIES[this.species[slot]!]!;
   }
+  physique(slot: number): Physique {
+    return { heightMeters: this.heightMeters[slot]!, massKg: this.massKg[slot]! };
+  }
+  setPhysique(slot: number, body: Physique): void {
+    validatePhysique(body);
+    this.heightMeters[slot] = body.heightMeters;
+    this.massKg[slot] = body.massKg;
+  }
+  movementFactor(slot: number): number {
+    return PhysiquePolicy.movement(this.physique(slot), PHYSIQUES[this.definition(slot).id]);
+  }
   position(slot: number): WorldPosition {
-    return { x: this.x[slot]!, y: this.y[slot]! };
+    return { x: this.x[slot]!, y: this.y[slot]!, scene: this.scene[slot]! };
   }
   wellbeing(slot: number): number {
     return (
@@ -296,6 +330,11 @@ export class EntityStore {
             id: this.id(slot),
             owner: this.owner[slot]!,
             herd: this.herd[slot]!,
+            scene: this.scene[slot]!,
+            heightMeters: this.heightMeters[slot]!,
+            massKg: this.massKg[slot]!,
+            recoilX: this.recoilX[slot]!,
+            recoilY: this.recoilY[slot]!,
             nature: this.nature(slot),
             preferences: this.preferences.get(this.id(slot)) ?? [],
             restrictions: this.restrictions.get(this.id(slot)) ?? [],
@@ -306,17 +345,25 @@ export class EntityStore {
   restore(snapshot: EntitySnapshot): void {
     for (const k of [...FLOAT_COLUMNS, ...BYTE_COLUMNS]) this[k].fill(0);
     this.owner.fill(-1);
+    this.scene.fill(0);
     this.byId.clear();
     this.policies.clear();
     this.restrictions.clear();
     this.preferences.clear();
     this.count = snapshot.count;
+    this.humanCount = snapshot.records.filter((r) => r.species === 8).length;
     this.nextId = snapshot.nextId;
     for (const r of snapshot.records) {
       for (const k of [...FLOAT_COLUMNS, ...BYTE_COLUMNS]) this[k][r.slot] = r[k];
       this.ids[r.slot] = r.id;
       this.owner[r.slot] = r.owner;
       this.herd[r.slot] = r.herd;
+      this.scene[r.slot] = r.scene ?? 0;
+      const baseline = PHYSIQUES[this.definition(r.slot).id];
+      this.heightMeters[r.slot] = r.heightMeters ?? baseline.heightMeters;
+      this.massKg[r.slot] = r.massKg ?? baseline.massKg;
+      this.recoilX[r.slot] = r.recoilX ?? 0;
+      this.recoilY[r.slot] = r.recoilY ?? 0;
       this.byId.set(r.id, r.slot);
       this.policies.set(r.id, r.nature);
       this.preferences.set(r.id, r.preferences);
@@ -329,6 +376,9 @@ export class EntityStore {
     for (const i of this.slots()) {
       if (this.owner[i] === 0) partners++;
       if (!this.definition(i)) throw new Error('Missing entity definition');
+      validatePhysique(this.physique(i));
+      if (!Number.isFinite(this.recoilX[i]) || !Number.isFinite(this.recoilY[i]))
+        throw Error('Invalid recoil');
       for (const k of FLOAT_COLUMNS)
         if (!Number.isFinite(this[k][i]))
           throw new Error(`Non-finite ${k} for entity ${this.id(i)}`);
@@ -353,6 +403,7 @@ export function bindBody<T extends object>(target: T, store: EntityStore, id: nu
     'level',
     'facingX',
     'facingY',
+    'scene',
   ] as const)
     Object.defineProperty(target, key, {
       configurable: true,
@@ -381,9 +432,10 @@ export class NatureRules {
       !s.sleeping[actor]
     );
   }
-  static canHunt(s: EntityStore, actor: number, target: number): boolean {
+  static canHunt(s: EntityStore, actor: number, target: number, continuing = false): boolean {
     return (
       this.canAttack(s, actor, target) &&
+      (s.food[actor]! < 0.4 || (continuing && s.food[actor]! <= 0.8)) &&
       !s.protected(target) &&
       s.definition(actor).id !== s.definition(target).id &&
       !!s.definition(actor).prey?.includes(s.definition(target).id)
@@ -399,6 +451,7 @@ export class NatureRules {
     return (
       !!s.alive[actor] &&
       s.hp[actor]! > 0 &&
+      !s.sleeping[actor] &&
       remaining > 0 &&
       s.diet(actor).includes(food.id) &&
       ((food.id !== 'meat' && food.id !== 'meal') || origins.length > 0) &&

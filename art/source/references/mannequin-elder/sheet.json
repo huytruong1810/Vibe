@@ -1,0 +1,12 @@
+{
+  "asset": "mannequin:elder",
+  "kind": "mannequin",
+  "bodyType": "elder",
+  "proportions": "4.5 heads",
+  "views": {
+    "front": "front.png",
+    "back": "back.png"
+  },
+  "generations": 2,
+  "ledger": "docs/team/comms/communicator/image-ledger.md#mannequin-elder"
+}

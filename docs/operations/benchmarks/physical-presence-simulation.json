@@ -1,0 +1,49 @@
+{
+  "recordedAt": "2026-10-31T05:30:06.981Z",
+  "runtime": "v22.22.3",
+  "platform": "win32 x64",
+  "cpu": "13th Gen Intel(R) Core(TM) i7-1365U",
+  "logicalCpus": 12,
+  "systemMemoryGiB": 39.7,
+  "seed": 42,
+  "villagers": 30,
+  "creatures": 1000,
+  "livingEntities": 1031,
+  "measuredTicks": 3000,
+  "warmupTicks": 300,
+  "generationMs": 592.07,
+  "simulation": {
+    "meanMs": 0.564,
+    "p95Ms": 1.451,
+    "maxMs": 4.619
+  },
+  "renderSnapshot": {
+    "meanMs": 1.745,
+    "p95Ms": 2.73,
+    "maxMs": 7.147
+  },
+  "structuredClone": {
+    "meanMs": 1.077,
+    "p95Ms": 1.581,
+    "maxMs": 4.049
+  },
+  "maximumDetailed": 16,
+  "maximumPaths": 1,
+  "denseSimulation": {
+    "meanMs": 0.825,
+    "p95Ms": 1.815,
+    "maxMs": 6.974
+  },
+  "denseMaximumDetailed": 128,
+  "activeCombat": {
+    "meanMs": 1.19,
+    "p95Ms": 3.277,
+    "maxMs": 18.865
+  },
+  "activeCombatActors": 128,
+  "activeCombatFixture": "64 paired territorial encounters; needs, stamina and HP refill between ordinary ticks; no rendering or inference.",
+  "checkpointMs": 101.69,
+  "checkpointBytes": 802929,
+  "nodeRssMiB": 242.2,
+  "limitations": "Headless Node CPU measurements; excludes GPU, browser rendering, and live model inference. Maxima include garbage collection. This is a measured host, not an ordinary-laptop guarantee."
+}

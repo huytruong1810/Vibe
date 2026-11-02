@@ -19,9 +19,47 @@ export const itemIds = [
   'ore',
   'meat',
   'meal',
+  'sword',
+  'spear',
+  'bow',
+  'arrow-bundle',
+  'pyrador-hood',
+  'pyrador-coat',
+  'pyrador-gloves',
+  'pyrador-trousers',
+  'pyrador-boots',
+  'pyrador-cape',
+  'aqualia-hat',
+  'aqualia-poncho',
+  'aqualia-gloves',
+  'aqualia-trousers',
+  'aqualia-boots',
+  'aqualia-cape',
+  'zephyria-cap',
+  'zephyria-tunic',
+  'zephyria-gloves',
+  'zephyria-trousers',
+  'zephyria-shoes',
+  'zephyria-cloak',
+  'note',
+  'book',
+  'canvas',
+  'painting',
 ] as const;
 export type ItemId = (typeof itemIds)[number];
 export const ItemIdSchema = z.enum(itemIds);
+export const ARTIFACT_LIMITS = Object.freeze({
+  title: 48,
+  line: 96,
+  lines: 24,
+  pages: 48,
+  records: 512,
+  textBytes: 2 * 1024 * 1024,
+  width: 48,
+  height: 32,
+  colors: 16,
+});
+export type GarmentSlot = 'head' | 'torso' | 'hands' | 'legs' | 'feet' | 'back';
 export interface ItemDefinition {
   readonly id: ItemId;
   readonly name: string;
@@ -29,8 +67,19 @@ export interface ItemDefinition {
   readonly food?: number;
   readonly water?: number;
   readonly tool?: boolean;
+  readonly garment?: {
+    readonly slot: GarmentSlot;
+    readonly defense: number;
+    readonly speedMultiplier: number;
+  };
+  readonly weapon?: 'sword' | 'spear' | 'bow';
+  readonly ammo?: { readonly capacity: number };
 }
 export const ITEMS: Readonly<Record<ItemId, ItemDefinition>> = {
+  note: { id: 'note', name: 'Note', color: 0xd7c894 },
+  book: { id: 'book', name: 'Book', color: 0xb58a63 },
+  canvas: { id: 'canvas', name: 'Blank canvas', color: 0xd7c894 },
+  painting: { id: 'painting', name: 'Painting', color: 0x80c3c6 },
   berries: { id: 'berries', name: 'Sunberries', color: 0xd87572, food: 0.35 },
   reeds: { id: 'reeds', name: 'River reeds', color: 0x99b780, food: 0.25 },
   wheat: { id: 'wheat', name: 'Wild wheat', color: 0xe8c577, food: 0.3 },
@@ -47,6 +96,41 @@ export const ITEMS: Readonly<Record<ItemId, ItemDefinition>> = {
   ore: { id: 'ore', name: 'Copper ore', color: 0xc78a66 },
   meat: { id: 'meat', name: 'Wild meat', color: 0xb96665, food: 0.4 },
   meal: { id: 'meal', name: 'Nectar roast', color: 0xc99a68, food: 0.65 },
+  sword: { id: 'sword', name: 'Copper sword', color: 0xc78a66, weapon: 'sword' },
+  spear: { id: 'spear', name: 'Hunting spear', color: 0xa4b3ba, weapon: 'spear' },
+  bow: { id: 'bow', name: 'Shortbow', color: 0xb58a63, weapon: 'bow' },
+  'arrow-bundle': {
+    id: 'arrow-bundle',
+    name: 'Arrow bundle',
+    color: 0xd7c894,
+    ammo: { capacity: 12 },
+  },
+  ...(Object.fromEntries(
+    (
+      [
+        ['pyrador', ['hood', 'coat', 'gloves', 'trousers', 'boots', 'cape'], 0xdfa17c],
+        ['aqualia', ['hat', 'poncho', 'gloves', 'trousers', 'boots', 'cape'], 0x80c3c6],
+        ['zephyria', ['cap', 'tunic', 'gloves', 'trousers', 'shoes', 'cloak'], 0xd7d698],
+      ] as const
+    ).flatMap(([region, names, color]) =>
+      names.map((name, index) => {
+        const id = `${region}-${name}` as ItemId;
+        return [
+          id,
+          {
+            id,
+            name: `${region[0]!.toUpperCase()}${region.slice(1)} ${name}`,
+            color,
+            garment: {
+              slot: (['head', 'torso', 'hands', 'legs', 'feet', 'back'] as const)[index]!,
+              defense: index === 1 ? (region === 'pyrador' ? 3 : 2) : 1,
+              speedMultiplier: region === 'pyrador' && index === 1 ? 0.95 : 1,
+            },
+          },
+        ];
+      }),
+    ),
+  ) as Record<Extract<ItemId, `${'pyrador' | 'aqualia' | 'zephyria'}-${string}`>, ItemDefinition>),
 };
 export interface Recipe {
   readonly a: ItemId;
@@ -54,12 +138,41 @@ export interface Recipe {
   readonly result: ItemId;
 }
 export const RECIPES: readonly Recipe[] = [
+  { a: 'fiber', b: 'fiber', result: 'note' },
+  { a: 'note', b: 'fiber', result: 'book' },
+  { a: 'note', b: 'stick', result: 'canvas' },
   { a: 'flint', b: 'stick', result: 'tool-head' },
   { a: 'tool-head', b: 'fiber', result: 'hatchet' },
   { a: 'reeds', b: 'reeds', result: 'fiber' },
   { a: 'berries', b: 'fungi', result: 'poultice' },
   { a: 'reeds', b: 'nectar', result: 'water' },
   { a: 'meat', b: 'nectar', result: 'meal' },
+  { a: 'ore', b: 'tool-head', result: 'sword' },
+  { a: 'stick', b: 'tool-head', result: 'spear' },
+  { a: 'stick', b: 'fiber', result: 'bow' },
+  { a: 'flint', b: 'reeds', result: 'arrow-bundle' },
+  ...(
+    [
+      ['ashgrass', 'fiber', 'pyrador-hood'],
+      ['ashgrass', 'ore', 'pyrador-coat'],
+      ['ashgrass', 'reeds', 'pyrador-gloves'],
+      ['ashgrass', 'wheat', 'pyrador-trousers'],
+      ['ashgrass', 'stick', 'pyrador-boots'],
+      ['ashgrass', 'nectar', 'pyrador-cape'],
+      ['reeds', 'wheat', 'aqualia-hat'],
+      ['reeds', 'fiber', 'aqualia-poncho'],
+      ['reeds', 'fungi', 'aqualia-gloves'],
+      ['reeds', 'ore', 'aqualia-trousers'],
+      ['reeds', 'stick', 'aqualia-boots'],
+      ['water', 'fiber', 'aqualia-cape'],
+      ['wheat', 'fiber', 'zephyria-cap'],
+      ['wheat', 'nectar', 'zephyria-tunic'],
+      ['wheat', 'fungi', 'zephyria-gloves'],
+      ['wheat', 'ore', 'zephyria-trousers'],
+      ['wheat', 'stick', 'zephyria-shoes'],
+      ['nectar', 'fiber', 'zephyria-cloak'],
+    ] as const
+  ).map(([a, b, result]) => ({ a, b, result })),
 ];
 export type SpeciesId =
   | 'ignicap'

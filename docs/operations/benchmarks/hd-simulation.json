@@ -1,0 +1,42 @@
+{
+  "recordedAt": "2026-10-30T12:28:03.282Z",
+  "runtime": "v22.22.3",
+  "platform": "win32 x64",
+  "cpu": "13th Gen Intel(R) Core(TM) i7-1365U",
+  "logicalCpus": 12,
+  "systemMemoryGiB": 39.7,
+  "seed": 42,
+  "villagers": 30,
+  "creatures": 1000,
+  "livingEntities": 1031,
+  "measuredTicks": 3000,
+  "warmupTicks": 300,
+  "generationMs": 1292.82,
+  "simulation": {
+    "meanMs": 0.194,
+    "p95Ms": 0.596,
+    "maxMs": 4.349
+  },
+  "renderSnapshot": {
+    "meanMs": 1.638,
+    "p95Ms": 3.328,
+    "maxMs": 8.676
+  },
+  "structuredClone": {
+    "meanMs": 0.868,
+    "p95Ms": 1.667,
+    "maxMs": 4.924
+  },
+  "maximumDetailed": 16,
+  "maximumPaths": 2,
+  "denseSimulation": {
+    "meanMs": 0.302,
+    "p95Ms": 1.262,
+    "maxMs": 4.399
+  },
+  "denseMaximumDetailed": 128,
+  "checkpointMs": 80.19,
+  "checkpointBytes": 706049,
+  "nodeRssMiB": 113.2,
+  "limitations": "Headless Node CPU measurements; excludes GPU, browser rendering, and live model inference. Maxima include garbage collection. This is a measured host, not an ordinary-laptop guarantee."
+}

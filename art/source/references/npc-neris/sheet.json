@@ -1,0 +1,25 @@
+{
+  "asset": "npc:neris",
+  "kind": "human",
+  "bodyType": "elder",
+  "identitySources": [
+    "public/assets/portraits/characters/portrait_npc_neris_128.png",
+    "art/source/masters/aqualia_villagers_lineup_a.jpg"
+  ],
+  "views": {
+    "front": "front.png",
+    "back": "back.png"
+  },
+  "props": {
+    "ferry-pole": "prop-ferry-pole.png"
+  },
+  "ramps": {
+    "skin": "skin-warm",
+    "hair": "hair-silver",
+    "vest": "moss",
+    "shirt": "navy",
+    "boots": "leather"
+  },
+  "generations": 1,
+  "ledger": "docs/team/comms/communicator/image-ledger.md#npc-neris"
+}

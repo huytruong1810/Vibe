@@ -149,7 +149,7 @@ describe('integrated simulation lifecycle', () => {
     malformed.entities.records[0]!.owner = 0;
     malformed.entities.records[1]!.owner = 0;
     expect(() => migrateSave(malformed)).toThrow();
-    expect(migrateSave(save).version).toBe(3);
+    expect(migrateSave(save).version).toBe(5);
   });
   it('keeps world state finite and capacity bounded under sustained movement', () => {
     const host = new SimulationHost(83, 1, 100);

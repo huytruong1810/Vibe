@@ -3,7 +3,7 @@ import { EntityStore, NatureRules, SleepSystem } from './entities';
 import { moveOnTerrain, WellbeingPolicy, creatureTraversal, CreatureMode } from './creatures';
 import { ResourceStore, ResourceLocator } from './resources';
 import { NavigationService } from './navigation';
-import { SettlementPlanner, SurfaceRules, TileFlag, type ChunkStore } from './world';
+import { SurfaceRules, TileFlag, type ChunkStore } from './world';
 import { CONFIG, clamp, distanceSquared, type WorldPosition } from './values';
 import { SeededRandom } from './core';
 
@@ -21,6 +21,9 @@ type SurvivalTask = {
 /** Shared deterministic survival overrides schedules, plans, and following. No inventory
  * is created for NPCs: food is reserved and consumed at its actual source. */
 export class SurvivalController {
+  activity(id: number): SurvivalTask['kind'] | undefined {
+    return this.tasks.get(id)?.kind;
+  }
   private readonly tasks = new Map<number, SurvivalTask>();
   private readonly paths = new Map<number, readonly WorldPosition[]>();
   private readonly failedUntil = new Map<number, number>();
@@ -30,6 +33,8 @@ export class SurvivalController {
     private readonly resources: ResourceStore,
     private readonly locator: ResourceLocator,
     private readonly navigation: NavigationService,
+    private readonly homeFor: (id: number) => WorldPosition | undefined = () => undefined,
+    private readonly movementFor: (id: number) => number = () => 1,
   ) {}
 
   decide(i: number, now: number, scheduledRest = false): boolean {
@@ -58,7 +63,7 @@ export class SurvivalController {
         .find((c) => SurfaceRules.walkable(this.world, c.x, c.y, creatureTraversal(s, i)));
       if (well) task = { ...base, kind: 'water', goal: well, source: well.index };
     }
-    if (!task && s.food[i]! < 0.6) {
+    if (!task && s.food[i]! < (s.definition(i).prey?.length ? 0.8 : 0.6)) {
       const corpse = this.resources.carrion
         .filter((c) =>
           NatureRules.canConsume(s, i, { id: 'meat', originSpecies: [c.species] }, c.remaining),
@@ -94,8 +99,7 @@ export class SurvivalController {
     }
     if (!task && (s.rest[i]! < 0.2 || scheduledRest || s.forcedRest[i])) {
       const humanOwner = s.isHuman(i) ? id : s.owner[i]!;
-      const home =
-        humanOwner > 0 ? new SettlementPlanner().locations(humanOwner - 1).home : position;
+      const home = this.homeFor(humanOwner) ?? position;
       task = { ...base, kind: 'rest', goal: home };
     }
     if (!task && s.cleanliness[i]! < 0.45) {
@@ -127,6 +131,9 @@ export class SurvivalController {
   }
   active(i: number): boolean {
     return !!this.s.sleeping[i] || this.tasks.has(this.s.id(i));
+  }
+  feeding(id: number): boolean {
+    return this.tasks.get(id)?.kind === 'food';
   }
   move(i: number, dt: number, now: number): void {
     const s = this.s,
@@ -199,7 +206,11 @@ export class SurvivalController {
       distance = Math.hypot(goal.x - s.x[i]!, goal.y - s.y[i]!);
     const step = Math.min(
       distance,
-      dt * s.definition(i).speed * WellbeingPolicy.speed(s.wellbeing(i)),
+      dt *
+        s.definition(i).speed *
+        WellbeingPolicy.speed(s.wellbeing(i)) *
+        s.movementFactor(i) *
+        this.movementFor(id),
     );
     const p = moveOnTerrain(
       this.world,
@@ -232,11 +243,31 @@ export class SurvivalController {
     this.tasks.delete(id);
     this.paths.delete(id);
     this.failedUntil.set(id, now + 0.5);
+    this.navigation.cancel(`survival:${id}`);
+  }
+  pruneRetired(): void {
+    for (const [id, task] of this.tasks)
+      if (this.s.slot(id) === undefined) {
+        if (task.source !== undefined) this.locator.release(task.source, id);
+        this.tasks.delete(id);
+        this.navigation.cancel(`survival:${id}`);
+      }
+    for (const map of [this.paths, this.failedUntil])
+      for (const id of map.keys()) if (this.s.slot(id) === undefined) map.delete(id);
   }
   clear(): void {
+    for (const id of this.tasks.keys()) this.cancel(id);
     this.tasks.clear();
     this.paths.clear();
     this.failedUntil.clear();
+  }
+  cancel(id: number): void {
+    const task = this.tasks.get(id);
+    if (task?.source !== undefined) this.locator.release(task.source, id);
+    this.tasks.delete(id);
+    this.paths.delete(id);
+    this.failedUntil.delete(id);
+    this.navigation.cancel(`survival:${id}`);
   }
 }
 
@@ -255,13 +286,15 @@ export class EcologyService {
     private readonly world: ChunkStore,
     private readonly resources: ResourceStore,
     private readonly random: SeededRandom,
+    private readonly resourcesFor?: (scene: number) => ResourceStore,
+    private readonly onBirth?: (slot: number) => void,
   ) {}
   resolveDeaths(now: number): void {
     for (let i = 0; i < this.s.count; i++)
       if (this.s.alive[i] && this.s.hp[i]! <= 0 && !this.s.protected(i) && !this.s.downed[i]) {
         const id = this.s.id(i),
           species = this.s.species[i]!;
-        this.resources.addCarrion({
+        (this.resourcesFor?.(this.s.scene[i]!) ?? this.resources).addCarrion({
           sourceId: id,
           species: this.s.definition(i).id,
           ...this.s.position(i),
@@ -315,16 +348,22 @@ export class EcologyService {
       let neighbors = 0,
         prey = 0;
       for (let i = 0; i < this.s.count; i++)
-        if (this.s.alive[i] && distanceSquared(this.s.position(i), { x, y }) < 16 ** 2) {
+        if (this.s.alive[i] && distanceSquared(this.s.position(i), { x, y, scene: 0 }) < 16 ** 2) {
           if (this.s.species[i] === species) neighbors++;
-          if (definition.prey?.includes(this.s.definition(i).id)) prey++;
+          if (
+            !this.s.protected(i) &&
+            this.s.hp[i]! > 0 &&
+            definition.prey?.includes(this.s.definition(i).id)
+          )
+            prey++;
         }
       if (
         neighbors >= 24 ||
         (definition.prey?.length ? prey < 2 : !this.foodNearby(x, y, definition.diet))
       )
         continue;
-      this.s.spawn(species, x + 0.5, y + 0.5);
+      const newborn = this.s.spawn(species, x + 0.5, y + 0.5);
+      this.onBirth?.(newborn);
       this.replacements.splice(vacancy, 1);
       this.births++;
       break;
@@ -333,6 +372,7 @@ export class EcologyService {
   private foodNearby(x: number, y: number, diet: readonly ItemId[]): boolean {
     for (let dy = -8; dy <= 8; dy += 2)
       for (let dx = -8; dx <= 8; dx += 2) {
+        if (!this.world.contains(x + dx, y + dy)) continue;
         const i = this.world.index(x + dx, y + dy);
         if (this.world.quantity[i] && diet.includes(this.resources.item(i)!)) return true;
       }

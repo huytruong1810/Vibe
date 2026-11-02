@@ -1,0 +1,720 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "schemaVersion": { "type": "number", "const": 1 },
+        "frames": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string", "pattern": "^[A-Za-z0-9_-]+$" },
+              "path": { "type": "string", "pattern": "^[A-Za-z0-9_./ -]+\\.png$" },
+              "anchor": {
+                "type": "object",
+                "properties": {
+                  "x": { "type": "number", "minimum": 0, "maximum": 1 },
+                  "y": { "type": "number", "minimum": 0, "maximum": 1 }
+                },
+                "required": ["x", "y"],
+                "additionalProperties": false
+              }
+            },
+            "required": ["id", "path", "anchor"],
+            "additionalProperties": false
+          }
+        },
+        "appearances": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string", "minLength": 1, "maxLength": 160 },
+              "kind": {
+                "type": "string",
+                "enum": ["species", "npc", "origin", "item", "environment", "fallback", "layer"]
+              },
+              "contentId": { "type": "string", "minLength": 1, "maxLength": 160 },
+              "quality": { "type": "string", "enum": ["prototype", "hd"] },
+              "clipIds": {
+                "type": "array",
+                "items": { "type": "string", "minLength": 1, "maxLength": 160 }
+              },
+              "frameId": { "type": "string", "minLength": 1, "maxLength": 160 },
+              "fallbackId": { "type": "string", "minLength": 1, "maxLength": 160 }
+            },
+            "required": ["id", "kind", "contentId", "quality", "clipIds"],
+            "additionalProperties": false
+          }
+        },
+        "clips": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string", "minLength": 1, "maxLength": 160 },
+              "appearanceId": { "type": "string", "minLength": 1, "maxLength": 160 },
+              "state": {
+                "type": "string",
+                "enum": [
+                  "idle",
+                  "walk",
+                  "run",
+                  "attack",
+                  "guard",
+                  "hit",
+                  "dash",
+                  "eat",
+                  "drink",
+                  "bathe",
+                  "work",
+                  "social",
+                  "sleep",
+                  "downed",
+                  "recovery"
+                ]
+              },
+              "facing": { "type": "string", "enum": ["n", "ne", "e", "se", "s", "sw", "w", "nw"] },
+              "frameIds": {
+                "minItems": 1,
+                "maxItems": 256,
+                "type": "array",
+                "items": { "type": "string", "minLength": 1, "maxLength": 160 }
+              },
+              "fps": { "type": "number", "exclusiveMinimum": 0, "maximum": 120 },
+              "playback": { "type": "string", "enum": ["loop", "once", "distance", "combat"] },
+              "stride": { "type": "number", "exclusiveMinimum": 0 },
+              "moveId": { "type": "string", "minLength": 1, "maxLength": 160 },
+              "phases": {
+                "type": "object",
+                "properties": {
+                  "windup": {
+                    "type": "array",
+                    "prefixItems": [
+                      { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+                      { "type": "integer", "exclusiveMinimum": 0, "maximum": 9007199254740991 }
+                    ],
+                    "items": false,
+                    "minItems": 2,
+                    "maxItems": 2
+                  },
+                  "active": {
+                    "type": "array",
+                    "prefixItems": [
+                      { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+                      { "type": "integer", "exclusiveMinimum": 0, "maximum": 9007199254740991 }
+                    ],
+                    "items": false,
+                    "minItems": 2,
+                    "maxItems": 2
+                  },
+                  "recovery": {
+                    "type": "array",
+                    "prefixItems": [
+                      { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+                      { "type": "integer", "exclusiveMinimum": 0, "maximum": 9007199254740991 }
+                    ],
+                    "items": false,
+                    "minItems": 2,
+                    "maxItems": 2
+                  }
+                },
+                "required": ["windup", "active", "recovery"],
+                "additionalProperties": false
+              }
+            },
+            "required": ["id", "appearanceId", "state", "facing", "frameIds", "fps", "playback"],
+            "additionalProperties": false
+          }
+        },
+        "portraits": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": { "type": "string", "enum": ["species", "npc", "origin"] },
+              "contentId": { "type": "string", "minLength": 1, "maxLength": 160 },
+              "hud96": { "type": "string", "pattern": "^[A-Za-z0-9_./ -]+\\.png$" },
+              "hud128": { "type": "string", "pattern": "^[A-Za-z0-9_./ -]+\\.png$" }
+            },
+            "required": ["kind", "contentId", "hud96", "hud128"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": ["schemaVersion", "frames", "appearances", "clips"],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "schemaVersion": { "type": "number", "const": 2 },
+        "frames": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "id": { "type": "string", "pattern": "^[A-Za-z0-9_-]+$" },
+                  "path": { "type": "string", "pattern": "^[A-Za-z0-9_./ -]+\\.png$" },
+                  "sourceSize": {
+                    "type": "object",
+                    "properties": {
+                      "w": {
+                        "type": "integer",
+                        "exclusiveMinimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "h": { "type": "integer", "exclusiveMinimum": 0, "maximum": 9007199254740991 }
+                    },
+                    "required": ["w", "h"],
+                    "additionalProperties": false
+                  },
+                  "anchorPx": {
+                    "type": "object",
+                    "properties": {
+                      "x": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+                      "y": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 }
+                    },
+                    "required": ["x", "y"],
+                    "additionalProperties": false
+                  },
+                  "rigId": { "type": "string", "minLength": 1, "maxLength": 160 },
+                  "sockets": {
+                    "type": "object",
+                    "propertyNames": { "type": "string", "minLength": 1, "maxLength": 160 },
+                    "additionalProperties": {
+                      "type": "object",
+                      "properties": {
+                        "x": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+                        "y": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 }
+                      },
+                      "required": ["x", "y"],
+                      "additionalProperties": false
+                    }
+                  },
+                  "stage": { "type": "string", "enum": ["proof", "candidate"] }
+                },
+                "required": ["id", "path", "sourceSize", "anchorPx", "stage"],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "id": { "type": "string", "pattern": "^[A-Za-z0-9_-]+$" },
+                  "path": { "type": "string", "pattern": "^[A-Za-z0-9_./ -]+\\.png$" },
+                  "anchor": {
+                    "type": "object",
+                    "properties": {
+                      "x": { "type": "number", "minimum": 0, "maximum": 1 },
+                      "y": { "type": "number", "minimum": 0, "maximum": 1 }
+                    },
+                    "required": ["x", "y"],
+                    "additionalProperties": false
+                  },
+                  "legacy": { "type": "boolean", "const": true }
+                },
+                "required": ["id", "path", "anchor", "legacy"],
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "appearances": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "id": { "type": "string", "minLength": 1, "maxLength": 160 },
+                  "kind": {
+                    "type": "string",
+                    "enum": ["species", "npc", "origin", "item", "environment", "fallback", "layer"]
+                  },
+                  "contentId": { "type": "string", "minLength": 1, "maxLength": 160 },
+                  "quality": { "type": "string", "enum": ["prototype", "hd"] },
+                  "clipIds": {
+                    "type": "array",
+                    "items": { "type": "string", "minLength": 1, "maxLength": 160 }
+                  },
+                  "frameId": { "type": "string", "minLength": 1, "maxLength": 160 },
+                  "fallbackId": { "type": "string", "minLength": 1, "maxLength": 160 },
+                  "recipeId": { "type": "string", "minLength": 1, "maxLength": 160 },
+                  "stage": { "type": "string", "enum": ["proof", "candidate"] },
+                  "provenanceId": { "type": "string", "minLength": 1, "maxLength": 160 }
+                },
+                "required": ["id", "kind", "contentId", "quality", "clipIds", "stage"],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "id": { "type": "string", "minLength": 1, "maxLength": 160 },
+                  "kind": {
+                    "type": "string",
+                    "enum": ["species", "npc", "origin", "item", "environment", "fallback", "layer"]
+                  },
+                  "contentId": { "type": "string", "minLength": 1, "maxLength": 160 },
+                  "quality": { "type": "string", "enum": ["prototype", "hd"] },
+                  "clipIds": {
+                    "type": "array",
+                    "items": { "type": "string", "minLength": 1, "maxLength": 160 }
+                  },
+                  "frameId": { "type": "string", "minLength": 1, "maxLength": 160 },
+                  "fallbackId": { "type": "string", "minLength": 1, "maxLength": 160 },
+                  "legacy": { "type": "boolean", "const": true }
+                },
+                "required": ["id", "kind", "contentId", "quality", "clipIds", "legacy"],
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "clips": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string", "minLength": 1, "maxLength": 160 },
+              "appearanceId": { "type": "string", "minLength": 1, "maxLength": 160 },
+              "state": {
+                "type": "string",
+                "enum": [
+                  "idle",
+                  "walk",
+                  "run",
+                  "attack",
+                  "guard",
+                  "hit",
+                  "dash",
+                  "eat",
+                  "drink",
+                  "bathe",
+                  "work",
+                  "social",
+                  "sleep",
+                  "downed",
+                  "recovery"
+                ]
+              },
+              "facing": { "type": "string", "enum": ["n", "ne", "e", "se", "s", "sw", "w", "nw"] },
+              "frameIds": {
+                "minItems": 1,
+                "maxItems": 256,
+                "type": "array",
+                "items": { "type": "string", "minLength": 1, "maxLength": 160 }
+              },
+              "fps": { "type": "number", "exclusiveMinimum": 0, "maximum": 120 },
+              "playback": { "type": "string", "enum": ["loop", "once", "distance", "combat"] },
+              "stride": { "type": "number", "exclusiveMinimum": 0 },
+              "moveId": { "type": "string", "minLength": 1, "maxLength": 160 },
+              "phases": {
+                "type": "object",
+                "properties": {
+                  "windup": {
+                    "type": "array",
+                    "prefixItems": [
+                      { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+                      { "type": "integer", "exclusiveMinimum": 0, "maximum": 9007199254740991 }
+                    ],
+                    "items": false,
+                    "minItems": 2,
+                    "maxItems": 2
+                  },
+                  "active": {
+                    "type": "array",
+                    "prefixItems": [
+                      { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+                      { "type": "integer", "exclusiveMinimum": 0, "maximum": 9007199254740991 }
+                    ],
+                    "items": false,
+                    "minItems": 2,
+                    "maxItems": 2
+                  },
+                  "recovery": {
+                    "type": "array",
+                    "prefixItems": [
+                      { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+                      { "type": "integer", "exclusiveMinimum": 0, "maximum": 9007199254740991 }
+                    ],
+                    "items": false,
+                    "minItems": 2,
+                    "maxItems": 2
+                  }
+                },
+                "required": ["windup", "active", "recovery"],
+                "additionalProperties": false
+              }
+            },
+            "required": ["id", "appearanceId", "state", "facing", "frameIds", "fps", "playback"],
+            "additionalProperties": false
+          }
+        },
+        "portraits": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": { "type": "string", "enum": ["species", "npc", "origin"] },
+              "contentId": { "type": "string", "minLength": 1, "maxLength": 160 },
+              "hud96": { "type": "string", "pattern": "^[A-Za-z0-9_./ -]+\\.png$" },
+              "hud128": { "type": "string", "pattern": "^[A-Za-z0-9_./ -]+\\.png$" }
+            },
+            "required": ["kind", "contentId", "hud96", "hud128"],
+            "additionalProperties": false
+          }
+        },
+        "rigs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "canvas": {
+                "type": "object",
+                "properties": {
+                  "w": { "type": "integer", "exclusiveMinimum": 0, "maximum": 9007199254740991 },
+                  "h": { "type": "integer", "exclusiveMinimum": 0, "maximum": 9007199254740991 }
+                },
+                "required": ["w", "h"],
+                "additionalProperties": false
+              },
+              "anchorPx": {
+                "type": "object",
+                "properties": {
+                  "x": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+                  "y": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 }
+                },
+                "required": ["x", "y"],
+                "additionalProperties": false
+              },
+              "id": { "type": "string", "minLength": 1, "maxLength": 160 },
+              "socketIds": {
+                "type": "array",
+                "items": { "type": "string", "minLength": 1, "maxLength": 160 }
+              },
+              "registrations": {
+                "minItems": 1,
+                "maxItems": 64,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "canvas": {
+                      "type": "object",
+                      "properties": {
+                        "w": {
+                          "type": "integer",
+                          "exclusiveMinimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "h": {
+                          "type": "integer",
+                          "exclusiveMinimum": 0,
+                          "maximum": 9007199254740991
+                        }
+                      },
+                      "required": ["w", "h"],
+                      "additionalProperties": false
+                    },
+                    "anchorPx": {
+                      "type": "object",
+                      "properties": {
+                        "x": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+                        "y": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 }
+                      },
+                      "required": ["x", "y"],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": ["canvas", "anchorPx"],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": ["canvas", "anchorPx", "id", "socketIds"],
+            "additionalProperties": false
+          }
+        },
+        "buildProfiles": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string", "minLength": 1, "maxLength": 160 },
+              "rigId": { "type": "string", "minLength": 1, "maxLength": 160 },
+              "label": { "type": "string", "minLength": 1, "maxLength": 100 }
+            },
+            "required": ["id", "rigId", "label"],
+            "additionalProperties": false
+          }
+        },
+        "layerSets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string", "minLength": 1, "maxLength": 160 },
+              "rigId": { "type": "string", "minLength": 1, "maxLength": 160 },
+              "buildProfileIds": {
+                "minItems": 1,
+                "type": "array",
+                "items": { "type": "string", "minLength": 1, "maxLength": 160 }
+              },
+              "slot": {
+                "type": "string",
+                "enum": ["body", "hair", "face", "garment", "held", "overlay"]
+              },
+              "appearanceId": { "type": "string", "minLength": 1, "maxLength": 160 },
+              "stage": { "type": "string", "enum": ["proof", "candidate"] }
+            },
+            "required": ["id", "rigId", "buildProfileIds", "slot", "appearanceId", "stage"],
+            "additionalProperties": false
+          }
+        },
+        "recipes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string", "minLength": 1, "maxLength": 160 },
+              "rigId": { "type": "string", "minLength": 1, "maxLength": 160 },
+              "buildProfileId": { "type": "string", "minLength": 1, "maxLength": 160 },
+              "layers": {
+                "minItems": 1,
+                "maxItems": 16,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "layerSetId": { "type": "string", "minLength": 1, "maxLength": 160 },
+                    "z": { "type": "integer", "minimum": -100, "maximum": 100 },
+                    "required": { "type": "boolean" },
+                    "gearSlot": { "type": "string", "minLength": 1, "maxLength": 160 },
+                    "heldSlot": {
+                      "anyOf": [
+                        { "type": "number", "const": 0 },
+                        { "type": "number", "const": 1 }
+                      ]
+                    },
+                    "itemId": { "type": "string", "minLength": 1, "maxLength": 160 },
+                    "socketId": { "type": "string", "minLength": 1, "maxLength": 160 }
+                  },
+                  "required": ["layerSetId", "z", "required"],
+                  "additionalProperties": false
+                }
+              },
+              "stage": { "type": "string", "enum": ["proof", "candidate"] }
+            },
+            "required": ["id", "rigId", "buildProfileId", "layers", "stage"],
+            "additionalProperties": false
+          }
+        },
+        "portraitSets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string", "minLength": 1, "maxLength": 160 },
+              "kind": { "type": "string", "enum": ["species", "npc", "origin"] },
+              "contentId": { "type": "string", "minLength": 1, "maxLength": 160 },
+              "expressions": {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string",
+                  "enum": [
+                    "neutral",
+                    "warm",
+                    "thoughtful",
+                    "curious",
+                    "concerned",
+                    "amused",
+                    "angry",
+                    "sad",
+                    "fearful"
+                  ]
+                },
+                "additionalProperties": {
+                  "type": "object",
+                  "properties": {
+                    "hud96": { "type": "string", "pattern": "^[A-Za-z0-9_./ -]+\\.png$" },
+                    "hud128": { "type": "string", "pattern": "^[A-Za-z0-9_./ -]+\\.png$" }
+                  },
+                  "required": ["hud96", "hud128"],
+                  "additionalProperties": false
+                }
+              },
+              "stage": { "type": "string", "enum": ["proof", "candidate"] },
+              "provenanceId": { "type": "string", "minLength": 1, "maxLength": 160 }
+            },
+            "required": ["id", "kind", "contentId", "expressions", "stage"],
+            "additionalProperties": false
+          }
+        },
+        "effects": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string", "minLength": 1, "maxLength": 160 },
+              "clipId": { "type": "string", "minLength": 1, "maxLength": 160 },
+              "trigger": {
+                "type": "string",
+                "enum": ["attack", "hit", "heal", "weather", "ambient"]
+              },
+              "moveId": { "type": "string", "minLength": 1, "maxLength": 160 },
+              "attachment": { "type": "string", "enum": ["world", "actor", "socket"] },
+              "rigId": { "type": "string", "minLength": 1, "maxLength": 160 },
+              "socketId": { "type": "string", "minLength": 1, "maxLength": 160 },
+              "lifetimeTicks": { "type": "integer", "exclusiveMinimum": 0, "maximum": 1800 },
+              "maxInstances": { "type": "integer", "exclusiveMinimum": 0, "maximum": 256 },
+              "essential": { "type": "boolean" },
+              "blendMode": { "type": "string", "enum": ["normal", "add"] },
+              "stage": { "type": "string", "enum": ["proof", "candidate"] }
+            },
+            "required": [
+              "id",
+              "clipId",
+              "trigger",
+              "attachment",
+              "lifetimeTicks",
+              "maxInstances",
+              "essential",
+              "blendMode",
+              "stage"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "furniture": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string", "minLength": 1, "maxLength": 160 },
+              "appearanceId": { "type": "string", "minLength": 1, "maxLength": 160 },
+              "footprintTiles": {
+                "type": "object",
+                "properties": {
+                  "w": { "type": "integer", "exclusiveMinimum": 0, "maximum": 9007199254740991 },
+                  "h": { "type": "integer", "exclusiveMinimum": 0, "maximum": 9007199254740991 }
+                },
+                "required": ["w", "h"],
+                "additionalProperties": false
+              },
+              "service": {
+                "type": "string",
+                "enum": ["none", "rest", "eat", "drink", "wash", "work", "social"]
+              },
+              "occlusion": { "type": "string", "enum": ["none", "roof", "canopy"] },
+              "stage": { "type": "string", "enum": ["proof", "candidate"] }
+            },
+            "required": ["id", "appearanceId", "footprintTiles", "service", "occlusion", "stage"],
+            "additionalProperties": false
+          }
+        },
+        "sceneAssets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string", "minLength": 1, "maxLength": 160 },
+              "appearanceId": { "type": "string", "minLength": 1, "maxLength": 160 },
+              "category": {
+                "type": "string",
+                "enum": [
+                  "ground",
+                  "shore",
+                  "cliff",
+                  "ramp",
+                  "canopy",
+                  "building",
+                  "prop",
+                  "weather"
+                ]
+              },
+              "stage": { "type": "string", "enum": ["proof", "candidate"] }
+            },
+            "required": ["id", "appearanceId", "category", "stage"],
+            "additionalProperties": false
+          }
+        },
+        "authoringProvenance": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string", "minLength": 1, "maxLength": 160 },
+              "method": {
+                "type": "string",
+                "enum": ["pillow", "blender-bake", "master-ingestion"]
+              },
+              "inputs": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "path": { "type": "string", "pattern": "^[A-Za-z0-9_./ -]+$" },
+                    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+                    "role": {
+                      "type": "string",
+                      "enum": [
+                        "master",
+                        "model",
+                        "script",
+                        "material",
+                        "pose-config",
+                        "palette",
+                        "dependency-lock",
+                        "bake"
+                      ]
+                    }
+                  },
+                  "required": ["path", "sha256", "role"],
+                  "additionalProperties": false
+                }
+              },
+              "toolchain": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string", "minLength": 1, "maxLength": 160 },
+                    "version": {
+                      "type": "string",
+                      "pattern": "^\\d+\\.\\d+\\.\\d+(?:[-+][A-Za-z0-9.-]+)?$"
+                    },
+                    "binarySha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+                  },
+                  "required": ["name", "version"],
+                  "additionalProperties": false
+                }
+              },
+              "command": { "type": "string", "minLength": 1, "maxLength": 2000 },
+              "settings": {
+                "type": "object",
+                "propertyNames": { "type": "string", "minLength": 1, "maxLength": 160 },
+                "additionalProperties": {
+                  "anyOf": [
+                    { "type": "string", "maxLength": 500 },
+                    { "type": "number" },
+                    { "type": "boolean" }
+                  ]
+                }
+              }
+            },
+            "required": ["id", "method", "inputs", "toolchain", "command"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": ["schemaVersion", "frames", "appearances", "clips"],
+      "additionalProperties": false
+    }
+  ]
+}

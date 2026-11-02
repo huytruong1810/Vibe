@@ -1,10 +1,14 @@
 import { defineConfig } from '@playwright/test';
+const port = Number(process.env.PLAYWRIGHT_PORT ?? 4173);
+if (!Number.isInteger(port) || port < 1024 || port > 65535) throw Error('Invalid Playwright port');
 
 export default defineConfig({
   testDir: './tests/browser',
-  timeout: 60_000,
+  workers: 1,
+  timeout: 120_000,
+  expect: { timeout: 15_000 },
   use: {
-    baseURL: 'http://127.0.0.1:4173',
+    baseURL: `http://127.0.0.1:${port}`,
     viewport: { width: 1440, height: 1000 },
     trace: 'retain-on-failure',
     channel:
@@ -12,8 +16,8 @@ export default defineConfig({
     launchOptions: process.env.CI ? { args: ['--enable-unsafe-swiftshader'] } : {},
   },
   webServer: {
-    command: 'npm run dev -- --port 4173 --strictPort',
-    url: 'http://127.0.0.1:4173',
+    command: `npm run dev -- --port ${port} --strictPort`,
+    url: `http://127.0.0.1:${port}`,
     reuseExistingServer: !process.env.CI,
   },
   reporter: [['list']],

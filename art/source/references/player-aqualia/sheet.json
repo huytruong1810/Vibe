@@ -1,0 +1,25 @@
+{
+  "asset": "player-aqualia",
+  "kind": "human",
+  "bodyType": "slender",
+  "identitySources": [
+    "public/assets/portraits/characters/portrait_player_aqualia_128.png",
+    "art/source/masters/player_aqualia_turnaround_master.jpg"
+  ],
+  "views": {
+    "front": "front.png",
+    "back": "back.png"
+  },
+  "props": {
+    "hatchet": "prop-hatchet.png"
+  },
+  "ramps": {
+    "skin": "skin-porcelain",
+    "hair": "hair-teal",
+    "tunic": "teal",
+    "trousers": "navy",
+    "accents": "sand"
+  },
+  "generations": 1,
+  "ledger": "docs/team/comms/communicator/image-ledger.md#player-aqualia"
+}

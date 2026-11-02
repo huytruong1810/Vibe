@@ -7,6 +7,7 @@ import type {
   ToWorker,
 } from '../domain/contracts';
 import { migrateSave, type GameSave } from '../domain/save-schema';
+import type { Artifact } from '../domain/artifacts';
 
 export class WorkerBridge {
   private readonly worker = new Worker(new URL('../worker/simulation.worker.ts', import.meta.url), {
@@ -31,38 +32,48 @@ export class WorkerBridge {
   onError: (message: string) => void = () => undefined;
   constructor() {
     this.worker.onmessage = (event: MessageEvent<FromWorker>): void => {
-      const message = event.data;
-      switch (message.type) {
-        case 'ready':
-        case 'restored':
-          this.session = message.frame.session;
-          this.onFrame(message.frame, message.terrain);
-          if (message.type === 'restored') this.resolve(message.requestId, undefined);
-          else if (this.start) {
-            clearTimeout(this.start.timeout);
-            this.start.resolve();
-            this.start = null;
+      try {
+        const message = event.data;
+        switch (message.type) {
+          case 'ready':
+          case 'restored':
+            this.session = message.frame.session;
+            this.onFrame(message.frame, message.terrain);
+            if (message.type === 'restored') this.resolve(message.requestId, undefined);
+            else if (this.start) {
+              clearTimeout(this.start.timeout);
+              this.start.resolve();
+              this.start = null;
+            }
+            break;
+          case 'frame':
+            if (message.frame.session === this.session)
+              this.onFrame(message.frame, message.terrain);
+            break;
+          case 'result':
+            this.resolve(message.result.id, message.result);
+            break;
+          case 'checkpoint':
+            this.resolve(message.requestId, message.snapshot);
+            break;
+          case 'artifactContent':
+            this.resolve(message.requestId, message.artifact);
+            break;
+          case 'error': {
+            const error = new Error(message.message);
+            if (message.requestId) this.reject(message.requestId, error);
+            else if (this.start) {
+              clearTimeout(this.start.timeout);
+              this.start.reject(error);
+              this.start = null;
+            } else this.onError(message.message);
+            break;
           }
-          break;
-        case 'frame':
-          if (message.frame.session === this.session) this.onFrame(message.frame);
-          break;
-        case 'result':
-          this.resolve(message.result.id, message.result);
-          break;
-        case 'checkpoint':
-          this.resolve(message.requestId, message.snapshot);
-          break;
-        case 'error': {
-          const error = new Error(message.message);
-          if (message.requestId) this.reject(message.requestId, error);
-          else if (this.start) {
-            clearTimeout(this.start.timeout);
-            this.start.reject(error);
-            this.start = null;
-          } else this.onError(message.message);
-          break;
         }
+      } catch (error) {
+        const failure = error instanceof Error ? error : new Error(String(error));
+        this.failPending(failure);
+        this.onError(`Presentation failed: ${failure.message}`);
       }
     };
     this.worker.onerror = (event) => {
@@ -128,6 +139,11 @@ export class WorkerBridge {
     if (!this.session) throw new Error('Start a journey before saving');
     const requestId = `checkpoint:${++this.serial}`;
     return migrateSave(await this.request(requestId, { type: 'checkpoint', requestId }));
+  }
+  artifactContent(artifactId: string): Promise<Artifact | null> {
+    if (!this.session) return Promise.reject(new Error('Start a journey before reading'));
+    const requestId = `artifact:${++this.serial}`;
+    return this.request(requestId, { type: 'artifactContent', requestId, artifactId });
   }
   restore(snapshot: GameSave): Promise<void> {
     const requestId = `restore:${++this.serial}`;

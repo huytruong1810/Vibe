@@ -6,6 +6,9 @@ import { moveOnTerrain, creatureTraversal } from './creatures';
 import type { ChunkStore } from './world';
 import { SpatialIndex } from './navigation';
 import { clamp, distanceSquared, type Element, type WorldPosition } from './values';
+import { EquipmentService } from './equipment';
+import { ProjectileSystem, type ProjectileSnapshot } from './projectiles';
+import { PHYSIQUES, PhysiquePolicy } from './physique';
 
 export interface AttackDefinition {
   readonly id: string;
@@ -28,12 +31,47 @@ export const ATTACKS: Readonly<Record<'strike' | 'element', AttackDefinition>> =
     range: 3.5,
   },
 };
+export const WEAPON_ATTACKS: Readonly<Record<string, AttackDefinition>> = {
+  sword_slash: {
+    id: 'sword_slash',
+    windup: 6,
+    active: 3,
+    recovery: 12,
+    power: 14,
+    stamina: 8,
+    range: 2.4,
+  },
+  spear_thrust: {
+    id: 'spear_thrust',
+    windup: 8,
+    active: 2,
+    recovery: 14,
+    power: 16,
+    stamina: 10,
+    range: 3.2,
+  },
+  bow_shot: {
+    id: 'bow_shot',
+    windup: 12,
+    active: 1,
+    recovery: 12,
+    power: 12,
+    stamina: 8,
+    range: 12,
+  },
+};
+export const attackDefinition = (attack: AttackState): AttackDefinition =>
+  (attack.moveId && WEAPON_ATTACKS[attack.moveId]) || ATTACKS[attack.kind];
 export interface AttackState {
   kind: 'strike' | 'element';
   startedAt: number;
   hit: number[];
+  moveId?: string;
+  instanceId?: string;
+  released?: boolean;
 }
 export interface PlayerState extends WorldPosition {
+  guarding?: boolean;
   readonly entityId: number;
   x: number;
   y: number;
@@ -58,6 +96,8 @@ export interface Encounter {
   readonly startedAt: number;
 }
 export interface CombatSnapshot {
+  projectiles?: ProjectileSnapshot;
+  hunting: number[];
   serial: number;
   encounters: Encounter[];
   nextAttack: [number, number][];
@@ -120,7 +160,7 @@ export class CombatStateMachine {
   }
   phase(player: PlayerState, tick: number): 'idle' | 'windup' | 'active' | 'recovery' {
     if (!player.attack) return 'idle';
-    const definition = ATTACKS[player.attack.kind],
+    const definition = attackDefinition(player.attack),
       elapsed = tick - player.attack.startedAt;
     if (elapsed < definition.windup) return 'windup';
     if (elapsed < definition.windup + definition.active) return 'active';
@@ -156,6 +196,8 @@ export class EncounterService {
     if (
       opponent === undefined ||
       distanceSquared(npc, this.player) > 16 ||
+      distanceSquared(this.store.position(opponent), this.player) > 16 ||
+      distanceSquared(this.store.position(partner), this.player) > 16 ||
       this.store.hp[opponent]! <= 0 ||
       this.store.hp[partner]! <= 0
     )
@@ -224,7 +266,7 @@ export class PartnerCombatController {
 }
 export class HitDetectionSystem {
   targets(store: EntityStore, player: PlayerState, spatial: SpatialIndex, range: number): number[] {
-    return spatial.query(player.x, player.y, range, 128).filter((i) => {
+    return spatial.query(player.x, player.y, range, 128, player.scene ?? 0).filter((i) => {
       const dx = store.x[i]! - player.x,
         dy = store.y[i]! - player.y;
       return (
@@ -234,6 +276,7 @@ export class HitDetectionSystem {
   }
 }
 export interface CombatEvent {
+  readonly impact?: number;
   readonly type: 'hit' | 'victory' | 'rescue' | 'assault' | 'hunt';
   readonly text: string;
   readonly target: number | null;
@@ -241,6 +284,35 @@ export interface CombatEvent {
 }
 /** Combat, threats and hit windows operate on stable entity IDs for every controller. */
 export class CombatSystem {
+  readonly projectiles = new ProjectileSystem();
+  presentationGuard(id: number, tick: number): boolean {
+    if (id === 0) return !!this.player.guarding;
+    const slot = this.store.slot(id);
+    return (
+      slot !== undefined &&
+      ((id === 0 && !!this.player.guarding) || this.active(id)) &&
+      this.defense.defended(this.store.definition(slot), tick)
+    );
+  }
+  /** Pure projection: unlike advancing a combat state machine this never expires attacks. */
+  presentation(id: number, tick: number): import('./presentation-contract').ActionTiming | null {
+    const attack = id === 0 ? this.player.attack : this.attacks.get(id);
+    if (!attack) return null;
+    const definition = attackDefinition(attack);
+    const activeAt = attack.startedAt + definition.windup;
+    const recoveryAt = activeAt + definition.active;
+    const endsAt = recoveryAt + definition.recovery;
+    return tick >= endsAt
+      ? null
+      : {
+          move: attack.moveId ?? attack.kind,
+          instanceId: attack.instanceId ?? `action:${id}:${attack.startedAt}`,
+          startedAt: attack.startedAt,
+          activeAt,
+          recoveryAt,
+          endsAt,
+        };
+  }
   readonly stateMachine = new CombatStateMachine();
   readonly encounters: EncounterService;
   readonly pursuits = new Map<number, Pursuit>();
@@ -258,17 +330,47 @@ export class CombatSystem {
     private readonly player: PlayerState,
     private readonly npcs: readonly NpcState[],
     private readonly world?: ChunkStore,
+    private readonly foodAvailable: (id: number) => boolean = () => false,
+    private readonly equipment?: EquipmentService,
+    private readonly worldFor?: (scene: number) => ChunkStore,
   ) {
     this.encounters = new EncounterService(store, player, npcs);
   }
   attack(kind: 'strike' | 'element', tick: number): boolean {
     const i = this.store.slot(this.player.entityId);
-    return (
-      i !== undefined && !this.store.sleeping[i] && this.stateMachine.start(this.player, kind, tick)
-    );
+    if (
+      i === undefined ||
+      this.store.sleeping[i] ||
+      this.player.guarding ||
+      this.player.attack ||
+      this.player.hp <= 0
+    )
+      return false;
+    const weapon = kind === 'strike' ? this.equipment?.held(0)[0]?.id : undefined;
+    const moveId =
+      weapon && ['sword', 'spear', 'bow'].includes(weapon)
+        ? `${weapon}_${weapon === 'sword' ? 'slash' : weapon === 'spear' ? 'thrust' : 'shot'}`
+        : kind;
+    const definition = WEAPON_ATTACKS[moveId] ?? ATTACKS[kind],
+      instanceId = `action:0:${tick}`;
+    if (this.player.stamina < definition.stamina) return false;
+    if (
+      moveId === 'bow_shot' &&
+      (this.projectiles.size >= 64 || !this.equipment?.reserve(0, instanceId))
+    )
+      return false;
+    this.player.stamina -= definition.stamina;
+    this.player.attack = { kind, startedAt: tick, hit: [], moveId, instanceId };
+    return true;
   }
   active(id: number): boolean {
     return this.pursuits.has(id) || [...this.pursuits.values()].some((p) => p.target === id);
+  }
+  cancelAction(id: number): void {
+    const action = id === 0 ? this.player.attack : this.attacks.get(id);
+    if (action?.instanceId) this.equipment?.cancel(action.instanceId);
+    if (id === 0) this.player.attack = null;
+    else this.attacks.delete(id);
   }
   danger(id: number, radius = 6): boolean {
     const s = this.store,
@@ -301,11 +403,12 @@ export class CombatSystem {
       const prey =
         !!definition.prey?.length &&
         this.hunting.has(id) &&
+        !this.foodAvailable(id) &&
         (this.failedHunts.get(id) ?? 0) <= tick;
       const aggression = s.nature(i).aggression;
       if (!prey && !aggression.length) continue;
       const nearby = spatial
-        .query(s.x[i]!, s.y[i]!, Math.max(6, ...aggression.map((r) => r.radius)), 128)
+        .query(s.x[i]!, s.y[i]!, Math.max(6, ...aggression.map((r) => r.radius)), 128, s.scene[i]!)
         .filter((j) => j !== i && s.alive[j] && s.hp[j]! > 0)
         .sort(
           (a, b) =>
@@ -315,7 +418,7 @@ export class CombatSystem {
       for (const j of nearby) {
         const other = s.id(j),
           distance = distanceSquared(s.position(i), s.position(j));
-        if (prey && distance <= 36 && NatureRules.canHunt(s, i, j)) {
+        if (prey && distance <= 36 && NatureRules.canHunt(s, i, j, this.hunting.has(id))) {
           const reserved = this.huntReservations.get(other);
           if (reserved && reserved.until > tick && reserved.actor !== id) continue;
           this.huntReservations.set(other, { actor: id, until: tick + 600 });
@@ -342,11 +445,18 @@ export class CombatSystem {
     power: number,
     tick: number,
     events: CombatEvent[],
+    attackScene?: number,
   ): void {
     const s = this.store,
       a = s.slot(actor),
       b = s.slot(target);
-    if (a === undefined || b === undefined || !NatureRules.canAttack(s, a, b)) return;
+    if (
+      a === undefined ||
+      b === undefined ||
+      s.scene[b] !== (attackScene ?? s.scene[a]) ||
+      !NatureRules.canAttack(s, a, b)
+    )
+      return;
     if (
       target === this.player.entityId &&
       (tick < this.player.invulnerableUntil || tick < this.player.dashUntil)
@@ -361,22 +471,36 @@ export class CombatSystem {
       : 1;
     const damage = DamagePolicy.damage(
       power,
-      attack.attack + (s.level[a]! - 1),
-      defend.defense,
+      (attack.attack + (s.level[a]! - 1)) *
+        PhysiquePolicy.attack(s.physique(a), PHYSIQUES[attack.id]),
+      defend.defense * PhysiquePolicy.defense(s.physique(b), PHYSIQUES[defend.id]) +
+        (this.equipment?.defense(target) ?? 0),
       multiplier,
       WellbeingPolicy.multiplier(s.wellbeing(a)),
-      this.defense.defended(defend, tick),
+      target === 0 ? !!this.player.guarding : this.defense.defended(defend, tick),
     );
     s.hp[b] = Math.max(0, s.hp[b]! - damage);
     s.lastDamageAt[b] = tick;
+    const guarded = target === 0 ? !!this.player.guarding : this.defense.defended(defend, tick);
+    const impulse = PhysiquePolicy.impact(s.physique(a), s.physique(b), guarded);
+    const dx = s.x[b]! - s.x[a]!,
+      dy = s.y[b]! - s.y[a]!,
+      length = Math.hypot(dx, dy);
+    const nx = length > 0.001 ? dx / length : s.facingX[a]!,
+      ny = length > 0.001 ? dy / length : s.facingY[a]!;
+    s.recoilX[b] = clamp(s.recoilX[b]! + nx * impulse, -4, 4);
+    s.recoilY[b] = clamp(s.recoilY[b]! + ny * impulse, -4, 4);
+    const reaction = clamp(((impulse * s.massKg[b]!) / s.massKg[a]!) * 0.12, 0, 0.5);
+    s.recoilX[a] = clamp(s.recoilX[a]! - nx * reaction, -4, 4);
+    s.recoilY[a] = clamp(s.recoilY[a]! - ny * reaction, -4, 4);
     SleepSystem.interrupt(s, b, this.now);
     if (s.hp[b]! <= 0 && s.protected(b)) {
       s.downed[b] = 1;
       s.recoverAt[b] = this.now + 60;
     }
     if (target === this.player.entityId) this.player.invulnerableUntil = tick + 20;
-    if (s.nature(b).response === 'retaliate') this.pursue(target, actor, 'retaliate', tick);
-    else this.pursue(target, actor, 'retaliate', tick); // Same threat record; avoid policy selects flee below.
+    // Preserve an existing hunt/duel against the same attacker; Nature chooses flight or retaliation.
+    if (this.pursuits.get(target)?.target !== actor) this.pursue(target, actor, 'retaliate', tick);
     if (actor === this.player.entityId && s.isHuman(b)) {
       if ((this.assaults.get(target) ?? -Infinity) + 2700 <= tick) {
         this.assaults.set(target, tick);
@@ -395,11 +519,22 @@ export class CombatSystem {
     } else if (
       actor === this.player.entityId &&
       !s.isHuman(b) &&
-      (s.owner[b] === -1 || this.encounters.duel !== null)
+      (s.owner[b] === -1 ||
+        (this.encounters.duel !== null && this.npcs[this.encounters.duel]?.partner === target))
     ) {
-      this.encounters.open(target, this.encounters.duel, tick);
+      const duel =
+        this.encounters.duel !== null && this.npcs[this.encounters.duel]?.partner === target
+          ? this.encounters.duel
+          : null;
+      this.encounters.open(target, duel, tick);
     }
-    events.push({ type: 'hit', actor, target, text: `${defend.name} took ${damage} damage.` });
+    events.push({
+      type: 'hit',
+      actor,
+      target,
+      impact: impulse,
+      text: `${defend.name} took ${damage} damage.`,
+    });
     if (s.hp[b]! <= 0 && this.pursuits.get(actor)?.cause === 'hunt')
       events.push({
         type: 'hunt',
@@ -413,22 +548,57 @@ export class CombatSystem {
     const events: CombatEvent[] = [],
       s = this.store,
       player = this.player;
+    if (player.guarding) {
+      player.stamina = Math.max(0, player.stamina - 0.45);
+      if (player.stamina <= 0 || player.hp <= 0 || s.sleeping[s.require(0)])
+        player.guarding = false;
+    }
     for (const i of s.slots()) if (s.hp[i]! > 0) s.stamina[i] = Math.min(100, s.stamina[i]! + 0.3);
     if (tick % 30 === 0) this.autonomous(tick, spatial);
+    const previousAttack = player.attack;
+    if (player.hp <= 0 || s.sleeping[s.require(0)]) player.attack = null;
     const phase = this.stateMachine.phase(player, tick);
+    if (previousAttack && !player.attack && previousAttack.instanceId)
+      this.equipment?.cancel(previousAttack.instanceId);
     if (phase === 'active' && player.attack) {
-      const move = ATTACKS[player.attack.kind];
-      for (const i of this.hitDetection.targets(s, player, spatial, move.range)) {
-        const id = s.id(i);
-        if (
-          id === player.entityId ||
-          s.owner[i] === player.entityId ||
-          player.attack.hit.includes(id)
-        )
-          continue;
-        player.attack.hit.push(id);
-        this.hit(player.entityId, id, player.attack.kind, move.power, tick, events);
-      }
+      const move = attackDefinition(player.attack);
+      if (player.attack.moveId === 'bow_shot') {
+        if (!player.attack.released) {
+          player.attack.released = true;
+          if (this.equipment?.release(player.attack.instanceId!))
+            this.projectiles.spawn(
+              0,
+              s.scene[s.require(0)]!,
+              player.x,
+              player.y,
+              player.facingX,
+              player.facingY,
+              tick,
+              move.power,
+            );
+        }
+      } else
+        for (const i of this.hitDetection.targets(s, player, spatial, move.range)) {
+          const id = s.id(i);
+          if (
+            id === player.entityId ||
+            s.owner[i] === player.entityId ||
+            player.attack.hit.includes(id)
+          )
+            continue;
+          const dx = s.x[i]! - player.x,
+            dy = s.y[i]! - player.y;
+          const forward = dx * player.facingX + dy * player.facingY;
+          if (player.attack.moveId === 'sword_slash' && forward < Math.hypot(dx, dy) * Math.SQRT1_2)
+            continue;
+          if (
+            player.attack.moveId === 'spear_thrust' &&
+            (forward < 0 || Math.abs(dx * player.facingY - dy * player.facingX) > 0.45)
+          )
+            continue;
+          player.attack.hit.push(id);
+          this.hit(player.entityId, id, player.attack.kind, move.power, tick, events);
+        }
     }
     const partner = new PartnershipService(s).partner,
       target = this.encounters.target;
@@ -449,14 +619,23 @@ export class CombatSystem {
         s.hp[a]! <= 0 ||
         s.hp[b]! <= 0 ||
         p.until <= tick ||
-        distanceSquared(s.position(a), s.position(b)) > 144 ||
-        (p.cause === 'hunt' && (!NatureRules.canHunt(s, a, b) || !this.hunting.has(id)))
+        (s.scene[a] === s.scene[b] && distanceSquared(s.position(a), s.position(b)) > 144) ||
+        (p.cause === 'hunt' &&
+          (!NatureRules.canHunt(s, a, b, this.hunting.has(id)) || !this.hunting.has(id)))
       ) {
         this.pursuits.delete(id);
+        const cancelled = this.attacks.get(id);
+        if (cancelled?.instanceId) this.equipment?.cancel(cancelled.instanceId);
         this.attacks.delete(id);
         this.huntReservations.delete(p.target);
         this.failedHunts.set(id, tick + 150);
         if (a !== undefined) s.mode[a] = CreatureMode.Wander;
+        continue;
+      }
+      if (s.scene[a] !== s.scene[b]) {
+        const cancelled = this.attacks.get(id);
+        if (cancelled?.instanceId) this.equipment?.cancel(cancelled.instanceId);
+        this.attacks.delete(id);
         continue;
       }
       SleepSystem.interrupt(s, a, this.now);
@@ -465,14 +644,34 @@ export class CombatSystem {
       const delta = { x: s.x[b]! - s.x[a]!, y: s.y[b]! - s.y[a]! },
         distance = Math.hypot(delta.x, delta.y),
         move = CREATURE_MOVES[s.definition(a).id];
+      s.facingX[a] = delta.x / Math.max(0.001, distance);
+      s.facingY[a] = delta.y / Math.max(0.001, distance);
+      const held = this.equipment?.held(id)[0]?.id;
+      const usableWeapon =
+        s.isHuman(a) &&
+        held &&
+        ['sword', 'spear', 'bow'].includes(held) &&
+        (held !== 'bow' || (this.equipment!.held(id)[1]?.charges ?? 0) > 0);
+      const moveId = usableWeapon
+        ? `${held}_${held === 'sword' ? 'slash' : held === 'spear' ? 'thrust' : 'shot'}`
+        : 'element';
+      const weaponMove = WEAPON_ATTACKS[moveId],
+        range = weaponMove?.range ?? move.range;
       s.targetX[a] = flee ? s.x[a]! - delta.x : s.x[b]!;
       s.targetY[a] = flee ? s.y[a]! - delta.y : s.y[b]!;
-      if (id !== player.entityId && this.world && distance > (flee ? 0 : move.range * 0.85)) {
+      const combatWorld = this.worldFor?.(s.scene[a]!) ?? this.world;
+      if (id !== player.entityId && combatWorld && distance > (flee ? 0 : range * 0.85)) {
         const step =
-          Math.min(distance, (s.definition(a).speed * WellbeingPolicy.speed(s.wellbeing(a))) / 30) *
-          (flee ? -1 : 1);
+          Math.min(
+            distance,
+            (s.definition(a).speed *
+              WellbeingPolicy.speed(s.wellbeing(a)) *
+              s.movementFactor(a) *
+              (this.equipment?.movement(id) ?? 1)) /
+              30,
+          ) * (flee ? -1 : 1);
         const position = moveOnTerrain(
-          this.world,
+          combatWorld,
           s.position(a),
           (delta.x / Math.max(0.001, distance)) * step,
           (delta.y / Math.max(0.001, distance)) * step,
@@ -487,29 +686,76 @@ export class CombatSystem {
       let attack = this.attacks.get(id);
       if (
         !attack &&
-        distance <= move.range &&
+        distance <= range &&
         (this.nextAttack.get(id) ?? 0) <= tick &&
-        s.stamina[a]! >= 5
+        s.stamina[a]! >= (weaponMove?.stamina ?? 5)
       ) {
-        attack = { kind: 'element', startedAt: tick, hit: [] };
+        const instanceId = `action:${id}:${tick}`;
+        if (
+          moveId === 'bow_shot' &&
+          (this.projectiles.size >= 64 || !this.equipment?.reserve(id, instanceId))
+        )
+          continue;
+        attack = {
+          kind: usableWeapon ? 'strike' : 'element',
+          startedAt: tick,
+          hit: [],
+          moveId,
+          instanceId,
+        };
         this.attacks.set(id, attack);
-        s.stamina[a]! -= 5;
-        this.nextAttack.set(id, tick + move.cooldownTicks);
+        s.stamina[a]! -= weaponMove?.stamina ?? 5;
+        this.nextAttack.set(
+          id,
+          tick +
+            Math.max(
+              move.cooldownTicks,
+              weaponMove ? weaponMove.windup + weaponMove.active + weaponMove.recovery : 26,
+            ),
+        );
       }
       if (attack) {
         const elapsed = tick - attack.startedAt;
+        const definition = attackDefinition(attack);
+        if (attack.moveId === 'bow_shot' && elapsed >= definition.windup && !attack.released) {
+          attack.released = true;
+          if (this.equipment?.release(attack.instanceId!))
+            this.projectiles.spawn(
+              id,
+              s.scene[a]!,
+              s.x[a]!,
+              s.y[a]!,
+              s.facingX[a]!,
+              s.facingY[a]!,
+              tick,
+              definition.power,
+            );
+        }
         if (
-          elapsed >= 7 &&
-          elapsed < 10 &&
+          attack.moveId !== 'bow_shot' &&
+          elapsed >= definition.windup &&
+          elapsed < definition.windup + definition.active &&
           !attack.hit.includes(p.target) &&
-          distance <= move.range
+          distance <= (weaponMove?.range ?? move.range)
         ) {
           attack.hit.push(p.target);
-          this.hit(id, p.target, 'element', move.power, tick, events);
+          this.hit(id, p.target, attack.kind, weaponMove?.power ?? move.power, tick, events);
         }
-        if (elapsed >= 26) this.attacks.delete(id);
+        if (elapsed >= definition.windup + definition.active + definition.recovery) {
+          this.equipment?.cancel(attack.instanceId!);
+          this.attacks.delete(id);
+        }
       }
     }
+    if (this.worldFor || this.world)
+      this.projectiles.advance(
+        tick,
+        s,
+        spatial,
+        (scene) => this.worldFor?.(scene) ?? this.world!,
+        (actor, target, power, scene) =>
+          this.hit(actor, target, 'strike', power, tick, events, scene),
+      );
     for (const encounter of this.encounters.encounters) {
       if (encounter.resolved) continue;
       const targetSlot = s.slot(encounter.target);
@@ -544,6 +790,17 @@ export class CombatSystem {
         if (until <= tick || s.slot(id) === undefined) this.failedHunts.delete(id);
     for (const [id, r] of this.huntReservations)
       if (r.until <= tick) this.huntReservations.delete(id);
+    for (const [id, action] of this.attacks) {
+      const slot = s.slot(id),
+        definition = attackDefinition(action);
+      if (
+        !this.pursuits.has(id) ||
+        slot === undefined ||
+        s.hp[slot]! <= 0 ||
+        tick >= action.startedAt + definition.windup + definition.active + definition.recovery
+      )
+        this.cancelAction(id);
+    }
     return events;
   }
   pruneRetired(): void {
@@ -552,10 +809,13 @@ export class CombatSystem {
         this.pursuits.delete(id);
     for (const map of [this.attacks, this.nextAttack, this.failedHunts, this.huntReservations])
       for (const id of map.keys()) if (this.store.slot(id) === undefined) map.delete(id);
+    for (const id of this.attacks.keys()) if (!this.pursuits.has(id)) this.cancelAction(id);
     for (const id of this.hunting) if (this.store.slot(id) === undefined) this.hunting.delete(id);
   }
   snapshot(): CombatSnapshot {
     return {
+      projectiles: this.projectiles.snapshot(),
+      hunting: [...this.hunting],
       ...this.encounters.snapshot(),
       nextAttack: [...this.nextAttack],
       pursuits: [...this.pursuits],
@@ -564,6 +824,7 @@ export class CombatSystem {
     };
   }
   restore(snapshot: CombatSnapshot): void {
+    this.projectiles.restore(snapshot.projectiles ?? { serial: 0, arrows: [] });
     this.encounters.restore(snapshot);
     for (const [map, entries] of [
       [this.nextAttack, snapshot.nextAttack],
@@ -577,5 +838,9 @@ export class CombatSystem {
     this.huntReservations.clear();
     this.failedHunts.clear();
     this.hunting.clear();
+    for (const id of snapshot.hunting) this.hunting.add(id);
+    for (const [id, pursuit] of this.pursuits)
+      if (pursuit.cause === 'hunt')
+        this.huntReservations.set(pursuit.target, { actor: id, until: pursuit.until });
   }
 }

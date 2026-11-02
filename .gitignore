@@ -4,8 +4,25 @@ dist/
 test-results/
 playwright-report/
 artifacts/
-docs/
-.github/
+docs/archive/
 *.local
 .env*
 !.env.example
+__pycache__/
+*.py[cod]
+*.blend1
+art/source/blender/renders_modular/
+art/source/blender/renders_test/
+
+# Hearthwild agent harness (machine-local state) and forge scratch
+.agents/state/
+art/source/forge/work/
+art/source/world/work/
+art/source/tiles/work/
+art/source/forge/.venv/
+
+# Sprite Forge vendored third-party inputs and gen3d environment (machine A only)
+art/source/forge/vendor/
+art/source/forge/gen3d/.venv/
+art/source/forge/gen3d/vendor/
+art/source/forge/gen3d/models/

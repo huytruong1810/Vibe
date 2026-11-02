@@ -1,0 +1,63 @@
+[
+  { "name": "flat", "from": [0, 0], "to": [1, 0], "water": false, "expected": true },
+  {
+    "name": "solid target",
+    "from": [0, 0],
+    "to": [1, 0],
+    "solid": [[1, 0]],
+    "water": false,
+    "expected": false
+  },
+  {
+    "name": "unramped step",
+    "from": [0, 0],
+    "to": [1, 0],
+    "heights": [[1, 0, 1]],
+    "water": false,
+    "expected": false
+  },
+  {
+    "name": "ramped step",
+    "from": [0, 0],
+    "to": [1, 0],
+    "heights": [[1, 0, 1]],
+    "ramps": [[1, 0]],
+    "water": false,
+    "expected": true
+  },
+  {
+    "name": "two elevations",
+    "from": [0, 0],
+    "to": [1, 0],
+    "heights": [[1, 0, 2]],
+    "ramps": [[1, 0]],
+    "water": false,
+    "expected": false
+  },
+  {
+    "name": "water on foot",
+    "from": [0, 0],
+    "to": [1, 0],
+    "fluid": [[1, 0]],
+    "water": false,
+    "expected": false
+  },
+  {
+    "name": "water swimmer",
+    "from": [0, 0],
+    "to": [1, 0],
+    "fluid": [[1, 0]],
+    "water": true,
+    "expected": true
+  },
+  {
+    "name": "bridge over water",
+    "from": [0, 0],
+    "to": [1, 0],
+    "fluid": [[1, 0]],
+    "bridges": [[1, 0]],
+    "water": false,
+    "expected": true
+  },
+  { "name": "edge", "from": [0, 0], "to": [-1, 0], "water": false, "expected": false }
+]

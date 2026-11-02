@@ -1,0 +1,503 @@
+/* Isolated visual ownership: controller/state.ts owns rules and keyboard intents. */
+.hd-game {
+  position: relative;
+  width: 100vw;
+  height: 100dvh;
+  overflow: hidden;
+  background: #102b28;
+}
+body:has(.hd-game) {
+  min-width: 680px;
+  overflow: hidden;
+}
+.hd-game .shell,
+.hd-game .play-column {
+  display: contents;
+}
+.hd-game .world-frame {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: #16332c;
+  aspect-ratio: auto;
+}
+.hd-game .game-viewport {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.hd-game .game-viewport canvas {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.hd-game .masthead {
+  position: absolute;
+  z-index: 8;
+  left: 22px;
+  right: 22px;
+  top: 18px;
+  height: auto;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  pointer-events: none;
+}
+.hd-game .masthead > * {
+  pointer-events: auto;
+}
+.hd-game .brand {
+  font-size: 20px;
+  gap: 10px;
+}
+.hd-game .brand small,
+.hd-game .header-center,
+.hd-game .page-footer,
+.hd-game .control-strip {
+  display: none;
+}
+.hd-game .brand-mark {
+  width: 34px;
+  height: 34px;
+}
+.hd-game .header-actions {
+  margin-left: auto;
+}
+.hd-game .header-actions button {
+  background: #102c28e8;
+  box-shadow: 0 2px 12px #081c2580;
+  border: 1px solid #779f8644;
+}
+.hd-game .world-heading {
+  position: absolute;
+  z-index: 7;
+  top: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  text-align: center;
+  display: block;
+  pointer-events: none;
+  text-shadow: 0 2px 7px #102c28;
+}
+.hd-game .world-heading .eyebrow,
+.hd-game .world-heading h1 span {
+  display: none;
+}
+.hd-game .world-heading h1 {
+  font-size: 23px;
+  line-height: 1.2;
+  color: #f4eac9;
+}
+.hd-game .season-badge {
+  padding: 5px 0;
+  background: none;
+  border: none;
+  justify-content: center;
+  font-size: 11px;
+}
+.hd-game .season-badge svg {
+  width: 15px;
+  height: 15px;
+}
+.hd-game .canvas-top {
+  inset: 76px auto auto 22px;
+  padding: 0;
+  z-index: 5;
+}
+.hd-game .player-hud {
+  background: #102c28dd;
+  border: 1px solid #b6c89540;
+  border-radius: 10px;
+  padding: 9px 12px;
+  box-shadow: 0 6px 22px #081b2833;
+}
+.hd-game .clock-badge {
+  font-size: 10px;
+}
+.hd-game .world-status {
+  display: none;
+}
+.hd-game .canvas-bottom {
+  left: auto;
+  bottom: 24px;
+  right: 22px;
+  padding: 0;
+  gap: 10px;
+  align-items: flex-end;
+}
+.hd-game .area-label {
+  display: none;
+}
+.hd-game .map-button {
+  background: #102c28e8;
+}
+.hd-game .physiology-panel {
+  position: absolute;
+  z-index: 6;
+  bottom: 86px;
+  left: 22px;
+  margin: 0;
+  padding: 10px 12px;
+  width: min(460px, 48vw);
+  background: #102c28dc;
+  border: 1px solid #b6c89533;
+  border-radius: 10px;
+}
+.hd-game #human-needs {
+  display: flex;
+  gap: 10px;
+}
+.hd-game #human-needs .need {
+  display: block;
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-size: 10px;
+}
+.hd-game #human-needs .need .meter {
+  margin-top: 5px;
+  height: 4px;
+}
+.hd-game #human-needs .need small {
+  display: none;
+}
+.hd-game #rest-status {
+  font-size: 10px;
+  margin: 8px 0;
+  color: #d9ddbd;
+}
+.hd-game .physiology-panel .button-row {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.hd-game .physiology-panel button {
+  font-size: 10px;
+  padding: 5px 7px;
+  min-height: 26px;
+}
+.hd-game .hud-toolbar {
+  position: absolute;
+  z-index: 8;
+  left: 22px;
+  bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.hd-game .hud-toolbar button,
+.hd-game .map-button {
+  border: 1px solid #97b18d66;
+  border-radius: 7px;
+  padding: 10px 13px;
+  background: #102c28eb;
+  color: #e4e7d3;
+  font-size: 12px;
+}
+.hd-game .hud-toolbar kbd {
+  margin-left: 6px;
+  font-size: 10px;
+}
+.hd-game #interaction-prompt {
+  position: fixed;
+  left: 50%;
+  bottom: 84px;
+  transform: translateX(-50%);
+  padding: 7px 13px;
+  border-radius: 20px;
+  background: #102c28cb;
+  color: #f0e7bf;
+  font-size: 12px;
+  pointer-events: none;
+}
+.hd-game #inventory-panel {
+  position: absolute;
+  z-index: 10;
+  left: 22px;
+  bottom: 220px;
+  display: block;
+  margin: 0;
+  padding: 22px;
+  width: min(520px, calc(100vw - 44px));
+  background: #16372ff5;
+  border: 1px solid #b6c89566;
+  border-radius: 12px;
+  box-shadow: 0 20px 70px #08201a99;
+  max-height: calc(100dvh - 300px);
+  overflow: auto;
+}
+.hd-game .equipment-help {
+  font-size: 11px;
+  line-height: 1.4;
+  color: #b6c6ad;
+  margin: 6px 0;
+}
+.hd-game .ammunition-status {
+  font-size: 12px;
+  color: #e1c690;
+  margin: 8px 0;
+}
+.hd-game .worn-equipment {
+  margin-top: 18px;
+  border-top: 1px solid #71896a66;
+  padding-top: 14px;
+}
+.hd-game .worn-equipment h3 {
+  font-size: 15px;
+}
+.hd-game .equipment-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+  margin-top: 12px;
+}
+.hd-game .equipment-slot {
+  padding: 10px;
+  border: 1px solid #71896a66;
+  border-radius: 7px;
+  min-width: 0;
+}
+.hd-game .equipment-slot b {
+  display: block;
+  font-size: 12px;
+  margin: 5px 0;
+  overflow-wrap: anywhere;
+}
+.hd-game .equipment-slot .slot-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.hd-game .equipment-slot button {
+  padding: 5px 7px;
+  font-size: 11px;
+}
+.hd-game .conversation-emotion {
+  display: block;
+  text-transform: capitalize;
+  color: #a9c8a4;
+  font-size: 11px;
+}
+.hd-game .conversation-footer {
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.hd-game .map-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.hd-game .map-breadcrumb [aria-current='location'] {
+  color: #ead79c;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.hd-game #map-scene-status {
+  margin-bottom: 12px;
+  font-size: 12px;
+}
+.hd-game .inventory-intro {
+  margin-bottom: 16px;
+}
+.hd-game .inventory-intro h2 {
+  font-size: 20px;
+  line-height: 1.2;
+}
+.hd-game .inventory-intro h2 br {
+  display: none;
+}
+.hd-game .inventory-intro p {
+  display: none;
+}
+.hd-game .inventory-hands {
+  width: 100%;
+  margin: 12px 0;
+}
+.hd-game .hand-slot {
+  min-height: 110px;
+  padding: 10px;
+}
+.hd-game #combine-button {
+  width: 100%;
+  height: 38px;
+}
+.hd-game #inspection-panel {
+  position: absolute;
+  z-index: 9;
+  top: 76px;
+  bottom: 86px;
+  right: 22px;
+  width: 340px;
+  padding: 20px;
+  overflow: auto;
+  margin: 0;
+  background: #16372ff5;
+  border: 1px solid #b6c89566;
+  border-radius: 12px;
+  box-shadow: 0 20px 70px #08201a99;
+  min-height: 0;
+}
+.hd-game .people-list,
+.hd-game .creature-list {
+  display: block;
+  max-height: none;
+  overflow: visible;
+}
+.hd-game .person-card > div {
+  min-width: 0;
+  flex: 1;
+}
+.hd-game .person-card p,
+.hd-game .person-card small {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.hd-game .human-selector {
+  max-height: 112px;
+}
+.hd-game .creature-art img {
+  width: 128px;
+  height: 128px;
+  object-fit: contain;
+  position: relative;
+  z-index: 1;
+}
+.hd-game .field-heading,
+.hd-game .field-panel > h2,
+.hd-game .field-subtitle {
+  display: none;
+}
+.hd-game .panel-tabs {
+  margin: 18px 0 12px;
+}
+.hd-game .panel-content {
+  overflow: visible;
+  max-height: none;
+}
+.hd-game .panel-bottom {
+  position: static;
+  margin-top: 20px;
+}
+.hd-game .panel-close {
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  background: none;
+  border: 0;
+  font-size: 21px;
+  color: #d2d9bd;
+}
+.hd-game dialog {
+  max-height: calc(100dvh - 36px);
+  overflow: auto;
+  box-shadow: 0 25px 100px #061a22aa;
+  border-color: #a7bc8655;
+}
+.hd-game #journal-dialog {
+  width: 600px;
+  max-width: 90vw;
+  padding: 28px;
+  color: var(--paper);
+  background: #19392f;
+  border-radius: 14px;
+}
+.hd-game #journal-entries p {
+  padding: 15px 0;
+  border-top: 1px solid #95ab7c33;
+  line-height: 1.6;
+}
+.hd-game .conversation-dialog {
+  position: fixed;
+  top: auto;
+  bottom: 32px;
+  margin: 0 auto;
+  width: 760px;
+  max-width: calc(100vw - 44px);
+}
+.hd-game #portrait {
+  width: 96px;
+  height: 96px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.hd-game #portrait img {
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+  image-rendering: auto;
+}
+.hd-game .conversation-lines {
+  max-height: 25vh;
+}
+.hd-game .toast {
+  position: absolute;
+  top: 155px;
+  bottom: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  max-width: 480px;
+  font-size: 12px;
+}
+@media (max-height: 760px) {
+  .hd-game #inspection-panel {
+    top: 65px;
+    bottom: 65px;
+  }
+  .hd-game .field-panel .panel-tabs {
+    margin-top: 14px;
+  }
+  .hd-game .conversation-dialog {
+    bottom: 12px;
+  }
+  .hd-game .setup-dialog {
+    max-height: 95dvh;
+  }
+  .hd-game #inventory-panel {
+    bottom: 210px;
+  }
+  .hd-game .physiology-panel {
+    bottom: 74px;
+  }
+}
+@media (max-width: 1000px) {
+  .hd-game .world-heading {
+    left: 48%;
+  }
+  .hd-game .header-actions #save-button {
+    font-size: 11px;
+    padding: 7px;
+  }
+  .hd-game #inspection-panel {
+    width: 310px;
+    right: 12px;
+  }
+  .hd-game .physiology-panel {
+    width: 360px;
+    left: 12px;
+  }
+  .hd-game .hud-toolbar {
+    left: 12px;
+    gap: 5px;
+  }
+  .hd-game .hud-toolbar button {
+    padding: 10px;
+  }
+  .hd-game #interaction-prompt {
+    bottom: 230px;
+  }
+  .hd-game .brand {
+    font-size: 16px;
+  }
+  .hd-game .world-heading h1 {
+    font-size: 19px;
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "set": "aqualia-terrain",
+  "region": "aqualia",
+  "notes": "What this set is for, which map layers it covers, and the look you are aiming at.",
+  "materials": [
+    {
+      "id": "grass",
+      "runtimeId": "ground_grass",
+      "binds": {
+        "layer": "ground",
+        "values": [
+          "grass"
+        ]
+      },
+      "swatch": "swatches/grass.png",
+      "swatchTilePx": 128,
+      "values": [
+        "foliage.shadow",
+        "foliage.mid",
+        "reed.mid",
+        "reed.light"
+      ],
+      "proportions": [
+        0.18,
+        0.42,
+        0.28,
+        0.12
+      ],
+      "variants": 3
+    }
+  ],
+  "overlays": [],
+  "pairs": [],
+  "preview": {
+    "level": "aqualia_village",
+    "rect": [
+      20,
+      20,
+      30,
+      17
+    ]
+  }
+}

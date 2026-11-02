@@ -1,383 +1,588 @@
 import { z } from 'zod';
-import { ItemIdSchema, NPC_PROFILES, SPECIES, SETTLEMENTS } from '../content/definitions';
-import {
-  GameSaveSchema as LegacySchema,
-  migrateSave as parseLegacy,
-  npcState,
-} from './legacy-save';
-import { EntityStore, FLOAT_COLUMNS, BYTE_COLUMNS } from './entities';
+import { ITEMS, ItemIdSchema } from '../content/definitions';
+import { GameSaveV3Schema, migrateSaveV3, type GameSaveV3 } from './save-v3';
+import { EquipmentService, GARMENT_SLOTS } from './equipment';
+import { TwoSlotInventory } from './inventory';
+import { SceneRegistry, sceneSaveLayouts, artifactDisplaySpec } from './scenes';
+import { ArtifactIdSchema, ArtifactRecordsSchema } from './artifacts';
+import { ResourceStore } from './resources';
+import { WorldGenerator } from './world';
 import { CONFIG } from './values';
+import { PHYSIQUES } from './physique';
+import { SPECIES } from '../content/definitions';
+import { ATTACKS, WEAPON_ATTACKS } from './combat';
 
-const finite = z.number().finite(),
-  uint = z.number().int().min(0).max(0xffffffff),
-  need = finite.min(0).max(1);
-const species = z.enum([
-  'human',
-  'ignicap',
-  'rivallie',
-  'zephyrit',
-  'mireling',
-  'cindermoth',
-  'steamshell',
-  'bramblefang',
-  'marshstalker',
-]);
-const animalSpecies = species.exclude(['human']);
-const position = {
-  x: finite.min(1).max(CONFIG.worldSize - 1),
-  y: finite.min(1).max(CONFIG.worldSize - 1),
-};
-const nature = z
-  .object({
-    response: z.enum(['avoid', 'retaliate']),
-    aggression: z
-      .array(
-        z
-          .object({ target: species.or(z.literal('nonhuman')), radius: finite.min(0.5).max(12) })
-          .strict(),
-      )
-      .max(12),
-  })
-  .strict();
-const fields = Object.fromEntries(
-  [...FLOAT_COLUMNS, ...BYTE_COLUMNS].map((k) => [k, finite]),
-) as Record<(typeof FLOAT_COLUMNS)[number] | (typeof BYTE_COLUMNS)[number], typeof finite>;
-const entity = z
-  .object({
-    ...fields,
-    ...position,
-    id: uint,
-    slot: uint.max(CONFIG.creatureCapacity + 30),
-    owner: z.number().int().min(-1).max(30),
-    herd: uint.max(65535),
-    nature,
-    preferences: z.array(ItemIdSchema).max(16),
-    restrictions: z.array(ItemIdSchema).max(16),
-    food: need,
-    water: need,
-    recreation: need,
-    cleanliness: need,
-    rest: need,
-    trust: need,
-    hp: finite.nonnegative(),
-    stamina: finite.min(0).max(100),
-    experience: finite.nonnegative(),
-    wildness: finite.min(0).max(1.02),
-    level: uint.min(1).max(50),
-    species: uint.max(8),
-    alive: z.literal(1),
-    mode: uint.max(8),
-    tier: uint.max(1),
-    sleeping: uint.max(1),
-    forcedRest: uint.max(1),
-    voluntaryRest: uint.max(1),
-    downed: uint.max(1),
-    affinity: uint.max(2),
-  })
-  .strict();
+export { GameSaveV3Schema } from './save-v3';
+const uint = z.number().int().min(0).max(0xffffffff);
+const finite = z.number().finite();
+const sceneCode = uint.max(65535);
+const instance = z
+  .string()
+  .regex(/^item:\d+$/)
+  .max(40);
+const legacy = GameSaveV3Schema.shape;
 const item = z
   .object({
     id: ItemIdSchema,
-    instance: z
-      .string()
-      .regex(/^item:\d+$/)
-      .max(40),
-    originSpecies: z.array(animalSpecies).min(1).max(8).optional(),
+    instance,
+    originSpecies: legacy.inventory._def.items[0].unwrap().shape.originSpecies,
+    charges: uint.max(12).optional(),
+    artifact: ArtifactIdSchema.optional(),
   })
   .strict();
-const attack = z
+const nullableItem = item.nullable();
+const attack = legacy.player.shape.attack.unwrap().extend({
+  moveId: z.enum(['strike', 'element', 'sword_slash', 'spear_thrust', 'bow_shot']).optional(),
+  instanceId: z
+    .string()
+    .regex(/^action:\d+:\d+$/)
+    .max(120)
+    .optional(),
+  released: z.boolean().optional(),
+});
+const drop = legacy.drops.element.extend({
+  artifact: ArtifactIdSchema.optional(),
+  scene: sceneCode.optional(),
+  instance: instance.optional(),
+  charges: uint.max(12).optional(),
+});
+const carrion = legacy.carrion.element.extend({ scene: sceneCode.optional() });
+const equipment = z
   .object({
-    kind: z.enum(['strike', 'element']),
-    startedAt: uint,
-    hit: z.array(uint).max(CONFIG.creatureCapacity + 31),
+    loadouts: z
+      .array(
+        z
+          .object({
+            entityId: uint.max(30),
+            worn: z
+              .object({
+                head: nullableItem,
+                torso: nullableItem,
+                hands: nullableItem,
+                legs: nullableItem,
+                feet: nullableItem,
+                back: nullableItem,
+              })
+              .strict(),
+            combat: z.tuple([nullableItem, nullableItem]),
+          })
+          .strict(),
+      )
+      .length(31),
+    reservations: z
+      .array(
+        z
+          .object({
+            id: z
+              .string()
+              .regex(/^action:\d+:\d+$/)
+              .max(120),
+            entityId: uint.max(30),
+            instance,
+          })
+          .strict(),
+      )
+      .max(31),
   })
   .strict();
-const legacy = LegacySchema.shape;
-const combat = z
+const scenes = z
+  .object({
+    bindings: z
+      .array(z.object({ code: sceneCode, id: z.string().min(1).max(200) }).strict())
+      .min(1)
+      .max(256),
+    states: z
+      .array(
+        z
+          .object({
+            id: z.string().min(1).max(200),
+            deltas: legacy.worldDeltas,
+            drops: z.array(drop).max(512),
+            carrion: z.array(carrion).max(CONFIG.creatureCapacity * 2),
+          })
+          .strict(),
+      )
+      .max(255),
+    invitations: z.array(z.object({ owner: uint.min(1).max(30), untilDay: uint }).strict()).max(30),
+  })
+  .strict();
+const projectiles = z
   .object({
     serial: uint,
-    encounters: legacy.combat.shape.encounters,
-    nextAttack: z.array(z.tuple([uint, uint])).max(CONFIG.creatureCapacity + 31),
-    duel: uint.max(29).nullable(),
-    target: uint.nullable(),
-    pursuits: z
-      .array(
-        z.tuple([
-          uint,
-          z
-            .object({
-              target: uint,
-              cause: z.enum(['hunt', 'retaliate', 'territory', 'duel', 'assist']),
-              until: uint,
-            })
-            .strict(),
-        ]),
-      )
-      .max(CONFIG.creatureCapacity + 31),
-    attacks: z.array(z.tuple([uint, attack])).max(CONFIG.creatureCapacity + 31),
-    assaults: z.array(z.tuple([uint, uint])).max(30),
-  })
-  .strict();
-export const GameSaveSchema = z
-  .object({
-    ...legacy,
-    version: z.literal(3),
-    contentVersion: z.literal(2),
-    player: z
-      .object({
-        entityId: z.literal(0),
-        origin: uint.max(2),
-        dashUntil: uint,
-        dashReadyAt: uint,
-        attack: attack.nullable(),
-        invulnerableUntil: uint,
-      })
-      .strict(),
-    entities: z
-      .object({
-        count: uint.max(CONFIG.creatureCapacity),
-        nextId: uint.min(100),
-        records: z.array(entity).max(CONFIG.creatureCapacity + 31),
-      })
-      .strict(),
-    npcs: z
-      .array(
-        npcState
-          .omit({ x: true, y: true, facingX: true, facingY: true })
-          .extend({ entityId: uint.min(1).max(30), partner: uint.nullable() }),
-      )
-      .length(30),
-    inventory: z.tuple([item.nullable(), item.nullable()]),
-    drops: z
+    arrows: z
       .array(
         z
           .object({
             id: uint.min(1),
-            item: ItemIdSchema,
-            ...position,
-            originSpecies: z.array(animalSpecies).min(1).max(8).optional(),
+            actor: uint,
+            scene: sceneCode,
+            x: finite.min(0).max(CONFIG.worldSize),
+            y: finite.min(0).max(CONFIG.worldSize),
+            vx: finite.min(-18).max(18),
+            vy: finite.min(-18).max(18),
+            expiresAt: uint,
+            power: finite.min(0).max(100),
+          })
+          .strict(),
+      )
+      .max(64),
+  })
+  .strict();
+
+/** v4 persists explicit scene membership, finite equipment and in-flight projectiles. */
+export const GameSaveSchema = z
+  .object({
+    ...legacy,
+    version: z.literal(5),
+    artifacts: ArtifactRecordsSchema,
+    artifactSequence: z.number().int().min(0).max(Number.MAX_SAFE_INTEGER),
+    placements: z
+      .array(
+        z
+          .object({
+            artifactId: ArtifactIdSchema,
+            sceneId: z.string().min(1).max(200),
+            propId: z.string().min(1).max(200),
+            slot: uint.max(511),
+            item,
           })
           .strict(),
       )
       .max(512),
-    carrion: z
-      .array(
-        z
-          .object({
-            sourceId: uint.min(100),
-            species: animalSpecies,
-            ...position,
-            remaining: uint.max(4),
-            expiresAt: finite.nonnegative(),
-          })
-          .strict(),
-      )
-      .max(CONFIG.creatureCapacity),
-    supplies: z
-      .array(
-        z
-          .object({
-            id: z.string().max(100),
-            ...position,
-            stock: z.partialRecord(ItemIdSchema, uint.max(64)),
-          })
-          .strict(),
-      )
-      .length(9),
-    ecology: z
-      .object({
-        target: uint.max(CONFIG.creatureCapacity),
-        deaths: uint,
-        births: uint,
-        replacements: z
-          .array(
-            z
-              .object({ species: uint.max(7), due: finite.nonnegative(), sourceId: uint.min(100) })
-              .strict(),
-          )
-          .max(CONFIG.creatureCapacity),
-      })
-      .strict(),
-    combat,
+    contentVersion: z.literal(3),
+    entities: legacy.entities.extend({
+      records: z
+        .array(
+          legacy.entities.shape.records.element.extend({
+            scene: sceneCode,
+            heightMeters: finite.min(0.1).max(4),
+            massKg: finite.min(0.2).max(1000),
+            recoilX: finite.min(-4).max(4),
+            recoilY: finite.min(-4).max(4),
+          }),
+        )
+        .max(CONFIG.creatureCapacity + 31),
+    }),
+    player: legacy.player.extend({ attack: attack.nullable(), guarding: z.boolean().optional() }),
+    inventory: z.tuple([nullableItem, nullableItem]),
+    equipment,
+    scenes,
+    drops: z.array(drop).max(512),
+    carrion: z.array(carrion).max(CONFIG.creatureCapacity * 2),
+    supplies: z.array(legacy.supplies.element.extend({ scene: sceneCode.optional() })).length(9),
+    combat: legacy.combat.extend({
+      attacks: z.array(z.tuple([uint, attack])).max(CONFIG.creatureCapacity + 31),
+      projectiles,
+    }),
+    events: z
+      .array(legacy.events.element.extend({ scene: sceneCode.optional() }))
+      .max(CONFIG.eventLimit),
+    markers: z.array(legacy.markers.element.extend({ scene: sceneCode.optional() })).max(16),
   })
-  .omit({ creatures: true })
   .strict()
   .superRefine((save, ctx) => {
-    const fail = (message: string): void => {
-      ctx.addIssue({ code: 'custom', message });
+    const fail = (message: string): void => ctx.addIssue({ code: 'custom', message });
+    // Retain the established entity/ecology/social invariants across the additive schema change.
+    const old = GameSaveV3Schema.safeParse(v3Projection(save));
+    if (!old.success)
+      for (const issue of old.error.issues)
+        ctx.addIssue({ code: 'custom', path: issue.path, message: issue.message });
+    validateV4(save, fail);
+    const artifacts = new Map(save.artifacts.map((a) => [a.id, a]));
+    const refs = new Map<string, number>();
+    const reference = (id: string | undefined, kind: string, hasInstance = true): void => {
+      if (!id) {
+        if (kind === 'painting') fail('Painting item needs an artifact');
+        return;
+      }
+      const record = artifacts.get(id);
+      if (!record || record.kind !== kind || !hasInstance)
+        fail('Dangling or mismatched artifact reference');
+      refs.set(id, (refs.get(id) ?? 0) + 1);
     };
-    const records = save.entities.records,
-      ids = new Set(records.map((r) => r.id)),
-      slots = new Set(records.map((r) => r.slot));
-    if (ids.size !== records.length || slots.size !== records.length)
-      fail('Duplicate entity ID or slot');
-    if (records.filter((r) => r.species === 8).length !== 31 || !ids.has(0))
-      fail('All 31 humans must be present');
-    if (records.filter((r) => r.owner === 0).length > 1) fail('Multiple player partnerships');
-    for (const r of records) {
-      if (r.id >= save.entities.nextId && r.species !== 8)
-        fail('Next identity would reuse a persistent ID');
-      if (
-        r.species === 8
-          ? r.slot !== CONFIG.creatureCapacity + r.id || r.id > 30 || r.owner !== -1
-          : r.slot >= save.entities.count || r.id < 100
-      )
-        fail('Entity kind/slot/identity mismatch');
-      const maxHp = (r.species === 8 ? 100 : SPECIES[r.species]!.hp) + (r.level - 1) * 5;
-      if (r.hp > maxHp + 0.01) fail('Entity exceeds durable maximum HP');
-      if (r.owner > 0 && !save.npcs.some((n) => n.entityId === r.owner && n.partner === r.id))
-        fail('Companion owner mismatch');
-      if (r.sleeping && (r.hp === 0 || r.downed)) fail('Downed actors cannot sleep');
+    save.inventory.forEach((i) => i && reference(i.artifact, i.id));
+    for (const loadout of save.equipment.loadouts) {
+      Object.values(loadout.worn).forEach((i) => i && reference(i.artifact, i.id));
+      loadout.combat.forEach((i) => i && reference(i.artifact, i.id));
     }
-    for (let i = 0; i < save.npcs.length; i++) {
-      const n = save.npcs[i]!,
-        profile = NPC_PROFILES[i]!;
-      if (n.profileId !== profile.id || n.entityId !== i + 1) fail('Villager identity mismatch');
-      const companion = records.find((r) => r.id === n.partner);
+    [...save.drops, ...save.scenes.states.flatMap((s) => s.drops)].forEach((d) =>
+      reference(d.artifact, d.item, Boolean(d.instance)),
+    );
+    const occupied = new Set<string>();
+    for (const p of save.placements) {
+      reference(p.artifactId, p.item.id);
+      const record = artifacts.get(p.artifactId),
+        spec = artifactDisplaySpec(p.sceneId, p.propId);
+      const key = JSON.stringify([p.sceneId, p.propId, p.slot]);
       if (
-        (profile.partner === null) !== (n.partner === null) ||
-        (n.partner !== null &&
-          (!companion ||
-            companion.owner !== n.entityId ||
-            SPECIES[companion.species]?.id !== profile.partner))
+        !save.scenes.bindings.some((b) => b.id === p.sceneId) ||
+        !spec ||
+        p.slot >= spec.slots ||
+        !record ||
+        !spec.accepts.includes(record.kind)
       )
-        fail('Permanent authored bond changed');
-      if (new Set(n.memory.records.map((m) => m.id)).size !== n.memory.records.length)
-        fail('Duplicate memory identities');
+        fail('Invalid artifact display destination');
+      if (p.item.artifact !== p.artifactId)
+        fail('Placement item has a mismatched artifact reference');
+      if (occupied.has(key)) fail('Duplicate artifact display slot');
+      occupied.add(key);
     }
-    if (
-      new Set(save.carrion.map((c) => c.sourceId)).size !== save.carrion.length ||
-      save.carrion.some((c) => ids.has(c.sourceId))
-    )
-      fail('Carrion duplicates a living entity');
-    if (
-      new Set(save.ecology.replacements.map((r) => r.sourceId)).size !==
-        save.ecology.replacements.length ||
-      save.ecology.replacements.some((r) => ids.has(r.sourceId))
-    )
-      fail('Replacement identity has not retired');
-    if (
-      new Set(save.supplies.map((s) => s.id)).size !== 9 ||
-      save.supplies.some((s) => !SETTLEMENTS.some((t) => t.id === s.id))
-    )
-      fail('Invalid settlement supplies');
-    if (save.combat.target !== null && !ids.has(save.combat.target)) fail('Invalid combat target');
-    if (save.combat.pursuits.some(([id, p]) => !ids.has(id) || !ids.has(p.target)))
-      fail('Invalid pursuit entity');
-    for (const values of [
-      save.worldDeltas.map((d) => d.index),
-      save.drops.map((d) => d.id),
-      save.inventory.filter(Boolean).map((i) => i!.instance),
-    ])
-      if (new Set<string | number>(values).size !== values.length)
-        fail('Duplicate saved resource identity');
-    for (const food of [
-      ...save.inventory.filter(Boolean),
-      ...save.drops.map((d) => ({ id: d.item, originSpecies: d.originSpecies })),
-    ])
-      if (food && ['meat', 'meal'].includes(food.id) && !food.originSpecies?.length)
-        fail('Animal food lost species provenance');
+    for (const a of save.artifacts) {
+      if (
+        Number(a.id.slice(4)) > save.artifactSequence ||
+        !Number.isSafeInteger(Number(a.id.slice(4)))
+      )
+        fail('Artifact allocation counter would reuse identity');
+      if (refs.get(a.id) !== 1) fail('Artifact must be referenced exactly once');
+    }
   });
 export type GameSave = z.infer<typeof GameSaveSchema>;
 
-/** v2 indices become persistent IDs once. Historical event IDs and terrain are retained. */
+function v3Attack(value: GameSave['player']['attack']): GameSaveV3['player']['attack'] {
+  return value ? { kind: value.kind, startedAt: value.startedAt, hit: value.hit } : null;
+}
+function v3Projection(save: GameSave): unknown {
+  const {
+    equipment: _equipment,
+    scenes: _scenes,
+    artifacts: _artifacts,
+    placements: _placements,
+    artifactSequence: _sequence,
+    ...base
+  } = save;
+  const { guarding: _guarding, ...player } = save.player;
+  const { projectiles: _projectiles, ...combat } = save.combat;
+  const oldItem = (value: GameSave['inventory'][number]) => {
+    if (!value) return null;
+    const { charges: _charges, artifact: _artifact, ...old } = value;
+    return old;
+  };
+  return {
+    ...base,
+    version: 3,
+    contentVersion: 2,
+    player: { ...player, attack: v3Attack(player.attack) },
+    entities: {
+      ...save.entities,
+      records: save.entities.records.map(
+        ({
+          scene: _scene,
+          heightMeters: _height,
+          massKg: _mass,
+          recoilX: _rx,
+          recoilY: _ry,
+          ...record
+        }) => record,
+      ),
+    },
+    inventory: [oldItem(save.inventory[0]), oldItem(save.inventory[1])],
+    drops: save.drops.map(
+      ({ scene: _scene, instance: _instance, charges: _charges, artifact: _artifact, ...value }) =>
+        value,
+    ),
+    carrion: save.carrion.map(({ scene: _scene, ...value }) => value),
+    supplies: save.supplies.map(({ scene: _scene, ...value }) => value),
+    events: save.events.map(({ scene: _scene, ...value }) => value),
+    markers: save.markers.map(({ scene: _scene, ...value }) => value),
+    combat: { ...combat, attacks: save.combat.attacks.map(([id, value]) => [id, v3Attack(value)]) },
+  };
+}
+
+function validateV4(save: GameSave, fail: (message: string) => void): void {
+  const records = new Map(save.entities.records.map((r) => [r.id, r]));
+  const bindings = new Map(save.scenes.bindings.map((b) => [b.code, b.id]));
+  const layouts = new Map(sceneSaveLayouts().map((layout) => [layout.id, layout]));
+  const codes = new Map(save.scenes.bindings.map((binding) => [binding.id, binding.code]));
+  if (
+    bindings.size !== save.scenes.bindings.length ||
+    new Set(bindings.values()).size !== bindings.size ||
+    bindings.get(0) !== 'overworld'
+  )
+    fail('Duplicate or invalid scene bindings');
+  if (bindings.size !== layouts.size || [...bindings.values()].some((id) => !layouts.has(id)))
+    fail('Saved scene bindings must cover the canonical scene registry');
+  const inside = (point: { x: number; y: number }, code: number): boolean => {
+    const layout = layouts.get(bindings.get(code) ?? '');
+    return (
+      !!layout && point.x >= 0 && point.y >= 0 && point.x < layout.width && point.y < layout.height
+    );
+  };
+  for (const entity of records.values()) {
+    if (!bindings.has(entity.scene)) fail('Entity refers to an unknown scene');
+    else if (!inside(entity, entity.scene)) fail('Entity position is outside its scene');
+  }
+  for (const scoped of [...save.events, ...save.markers])
+    if (!inside(scoped, scoped.scene ?? 0))
+      fail('Event or marker refers to an invalid scene or position');
+  const allocated = new Set<string>();
+  const checkItem = (
+    value: {
+      id: keyof typeof ITEMS;
+      instance?: string;
+      charges?: number;
+      originSpecies?: readonly string[];
+    } | null,
+  ): void => {
+    if (!value) return;
+    const capacity = ITEMS[value.id].ammo?.capacity;
+    if (
+      capacity !== undefined
+        ? value.charges === undefined || value.charges > capacity
+        : value.charges !== undefined
+    )
+      fail('Invalid finite ammunition charges');
+    if (value.instance) {
+      const counter = Number(value.instance.slice(5));
+      if (!Number.isSafeInteger(counter) || counter < 1 || counter > save.inventorySerial)
+        fail('Item allocation counter would reuse an identity');
+      if (allocated.has(value.instance))
+        fail('Duplicate item instance across carried, worn, loadout or dropped items');
+      allocated.add(value.instance);
+    }
+    if (['meat', 'meal'].includes(value.id) && !value.originSpecies?.length)
+      fail('Animal food lost species provenance');
+  };
+  save.inventory.forEach(checkItem);
+  save.placements.forEach((p) => checkItem(p.item));
+  const loadouts = new Map(save.equipment.loadouts.map((l) => [l.entityId, l]));
+  if (loadouts.size !== 31 || [...loadouts.keys()].some((id) => records.get(id)?.species !== 8))
+    fail('Equipment must bind exactly the 31 humans');
+  for (const loadout of save.equipment.loadouts) {
+    for (const slot of GARMENT_SLOTS) {
+      const value = loadout.worn[slot];
+      checkItem(value);
+      if (value && ITEMS[value.id].garment?.slot !== slot)
+        fail('Garment does not fit its worn slot');
+    }
+    loadout.combat.forEach(checkItem);
+    if (loadout.entityId === 0 && loadout.combat.some(Boolean))
+      fail('Player combat equipment must use the two carried slots');
+    if (
+      loadout.entityId !== 0 &&
+      ((loadout.combat[0] && !ITEMS[loadout.combat[0].id].weapon) ||
+        (loadout.combat[1] &&
+          (loadout.combat[0]?.id !== 'bow' || loadout.combat[1].id !== 'arrow-bundle')))
+    )
+      fail('NPC combat loadout cannot store resources');
+  }
+  const actions = new Map<number, NonNullable<GameSave['player']['attack']>>(save.combat.attacks);
+  if (actions.size !== save.combat.attacks.length || actions.has(0))
+    fail('Duplicate or invalid NPC attack actor');
+  if (save.player.attack) {
+    if (actions.has(0)) fail('Duplicate player attack');
+    actions.set(0, save.player.attack);
+  }
+  const actionIds = new Set<string>();
+  for (const [actor, action] of actions) {
+    const move = action.moveId ?? action.kind;
+    const definition = WEAPON_ATTACKS[move] ?? ATTACKS[action.kind];
+    if (
+      !records.has(actor) ||
+      action.startedAt > save.tick ||
+      save.tick >= action.startedAt + definition.windup + definition.active + definition.recovery
+    )
+      fail('Invalid active attack actor or time');
+    if (!action.moveId || !action.instanceId)
+      fail('Active attacks require a move and instance identity');
+    if ((action.kind === 'element') !== (move === 'element')) fail('Attack kind and move disagree');
+    const requiredWeapon =
+      move === 'sword_slash'
+        ? 'sword'
+        : move === 'spear_thrust'
+          ? 'spear'
+          : move === 'bow_shot'
+            ? 'bow'
+            : null;
+    const held = actor === 0 ? save.inventory : loadouts.get(actor)?.combat;
+    if (requiredWeapon && (records.get(actor)?.species !== 8 || held?.[0]?.id !== requiredWeapon))
+      fail('Weapon attack has no matching carried weapon');
+    if (
+      action.released &&
+      (move !== 'bow_shot' || save.tick < action.startedAt + definition.windup)
+    )
+      fail('Invalid projectile release phase');
+    if (
+      action.instanceId &&
+      (actionIds.has(action.instanceId) ||
+        action.instanceId !== `action:${actor}:${action.startedAt}`)
+    )
+      fail('Duplicate or mismatched attack instance');
+    if (action.instanceId) actionIds.add(action.instanceId);
+    if (new Set(action.hit).size !== action.hit.length) fail('Duplicate hit identity in an attack');
+    if (action.hit.some((id) => !records.has(id) && (id < 100 || id >= save.entities.nextId)))
+      fail('Attack hit references an unallocated identity');
+  }
+  const reservations = new Set<string>(),
+    reservingActors = new Set<number>();
+  for (const reservation of save.equipment.reservations) {
+    const action = actions.get(reservation.entityId);
+    const held =
+      reservation.entityId === 0 ? save.inventory : loadouts.get(reservation.entityId)?.combat;
+    if (
+      reservations.has(reservation.id) ||
+      reservingActors.has(reservation.entityId) ||
+      !action ||
+      action.instanceId !== reservation.id ||
+      action.moveId !== 'bow_shot' ||
+      action.released ||
+      held?.[0]?.id !== 'bow' ||
+      held[1]?.id !== 'arrow-bundle' ||
+      held[1].instance !== reservation.instance ||
+      !held[1].charges
+    )
+      fail('Invalid or duplicate ammunition reservation');
+    reservations.add(reservation.id);
+    reservingActors.add(reservation.entityId);
+  }
+  for (const [actor, action] of actions)
+    if (action.moveId === 'bow_shot' && !action.released && !reservingActors.has(actor))
+      fail('Unreleased bow attack has no ammunition reservation');
+  const projectileIds = new Set<number>();
+  for (const arrow of save.combat.projectiles.arrows) {
+    if (
+      projectileIds.has(arrow.id) ||
+      arrow.id > save.combat.projectiles.serial ||
+      records.get(arrow.actor)?.species !== 8 ||
+      !bindings.has(arrow.scene) ||
+      !inside(arrow, arrow.scene) ||
+      arrow.expiresAt <= save.tick ||
+      arrow.expiresAt > save.tick + 20 ||
+      Math.abs(Math.hypot(arrow.vx, arrow.vy) - 18) > 0.001 ||
+      arrow.power !== WEAPON_ATTACKS.bow_shot!.power
+    )
+      fail('Invalid projectile identity, scene, lifetime or velocity');
+    projectileIds.add(arrow.id);
+  }
+  const seenStates = new Set<string>();
+  const carrionSources = new Set<number>();
+  const checkCarrion = (value: GameSave['carrion'][number], scope: number): void => {
+    if (
+      records.has(value.sourceId) ||
+      carrionSources.has(value.sourceId) ||
+      value.sourceId >= save.entities.nextId
+    )
+      fail('Carrion duplicates a living, protected, retired or unallocated identity');
+    carrionSources.add(value.sourceId);
+    if ((value.scene !== undefined && value.scene !== scope) || !inside(value, scope))
+      fail('Carrion refers to a different or invalid scene');
+  };
+  const checkDrops = (values: readonly GameSave['drops'][number][], scope: number): void => {
+    const ids = new Set<number>();
+    for (const value of values) {
+      if (ids.has(value.id)) fail('Duplicate scene-local ground drop identity');
+      ids.add(value.id);
+      if ((value.scene !== undefined && value.scene !== scope) || !inside(value, scope))
+        fail('Ground drop refers to a different or invalid scene');
+      checkItem({ ...value, id: value.item });
+    }
+  };
+  for (const state of save.scenes.states) {
+    if (
+      state.id === 'overworld' ||
+      seenStates.has(state.id) ||
+      ![...bindings.values()].includes(state.id)
+    )
+      fail('Invalid or duplicate pocket-scene state');
+    seenStates.add(state.id);
+    const code = codes.get(state.id);
+    const layout = layouts.get(state.id);
+    if (code === undefined || !layout) continue;
+    const side = 2 ** Math.ceil(Math.log2(Math.max(layout.width, layout.height)));
+    if (
+      state.deltas.some((delta) => delta.index >= side * side) ||
+      new Set(state.deltas.map((delta) => delta.index)).size !== state.deltas.length
+    )
+      fail('Invalid or duplicate local terrain delta');
+    checkDrops(state.drops, code);
+    for (const value of state.carrion) checkCarrion(value, code);
+  }
+  for (const record of records.values())
+    if (record.scene !== 0 && !seenStates.has(bindings.get(record.scene) ?? ''))
+      fail('Occupied pocket scene is missing its saved state');
+  checkDrops(save.drops, 0);
+  for (const value of save.carrion) checkCarrion(value, 0);
+  if (new Set(save.scenes.invitations.map((i) => i.owner)).size !== save.scenes.invitations.length)
+    fail('Duplicate scene invitation');
+}
+
+/** One-time upgrade. Existing geography, identity, social history and carried items remain intact. */
 export function migrateSave(input: unknown): GameSave {
   if (!input || typeof input !== 'object') throw new Error('Save must be an object');
   let candidate = input as Record<string, unknown>;
-  if (candidate.version === 1 || candidate.version === 2) {
-    const old = parseLegacy(candidate),
-      store = new EntityStore(),
-      c = old.creatures;
-    store.spawnHuman(0, old.player.origin, old.player.x, old.player.y);
-    const p = store.require(0);
-    for (const k of ['hp', 'stamina', 'experience', 'level', 'facingX', 'facingY'] as const)
-      store[k][p] = old.player[k];
-    for (let i = 0; i < 30; i++) {
-      const n = old.npcs[i]!;
-      store.spawnHuman(i + 1, NPC_PROFILES[i]!.village, n.x, n.y);
-      const b = store.require(i + 1);
-      store.facingX[b] = n.facingX;
-      store.facingY[b] = n.facingY;
-    }
-    for (let i = 0; i < c.count; i++) {
-      const slot = store.spawn(c.bytes.species[i]!, c.floats.x[i]!, c.floats.y[i]!, c.owner[i]!);
-      for (const k of FLOAT_COLUMNS)
-        if (k in c.floats) store[k][slot] = (c.floats as Record<string, number[]>)[k]![i]!;
-      for (const k of ['mode', 'tier', 'level'] as const) store[k][slot] = c.bytes[k][i]!;
-      store.herd[slot] = c.herd[i]!;
-      if (store.hp[slot] === 0) {
-        store.downed[slot] = 1;
-        store.recoverAt[slot] = Math.max(old.elapsedSeconds + 1, store.recoverAt[slot]!);
-      }
-    }
-    if (store.hp[p] === 0) {
-      store.downed[p] = 1;
-      store.recoverAt[p] = old.elapsedSeconds + 1;
-    }
-    const key = (id: number): number => 100 + id;
-    const reference = (value: string): string =>
-      /^creature:\d+$/.test(value) ? `entity:${100 + Number(value.slice(9))}` : value;
-    const npcs = old.npcs.map((n, i) => {
-      const { x, y, facingX, facingY, ...metadata } = n;
-      return {
-        ...metadata,
-        entityId: i + 1,
-        partner: n.partner === null ? null : key(n.partner),
-        memory: {
-          ...n.memory,
-          records: n.memory.records.map((m) => ({ ...m, subjects: m.subjects.map(reference) })),
-        },
-      };
-    });
-    const { creatures: unused, player: previous, npcs: oldNpcs, ...rest } = old;
+  if (candidate.version === 1 || candidate.version === 2 || candidate.version === 3) {
+    const old = migrateSaveV3(candidate);
+    const inventory = new TwoSlotInventory();
+    inventory.restore(
+      old.inventory,
+      Math.max(old.inventorySerial, ...old.inventory.map((i) => Number(i?.instance.slice(5)) || 0)),
+    );
+    const service = new EquipmentService(inventory);
+    service.initialize(old.player.origin);
+    const world = new WorldGenerator().generate(old.seed);
+    const registry = new SceneRegistry(world, new ResourceStore(world));
+    const upgradeAttack = (value: GameSaveV3['player']['attack'], actor: number) =>
+      value
+        ? { ...value, moveId: value.kind, instanceId: `action:${actor}:${value.startedAt}` }
+        : null;
     candidate = {
-      ...rest,
-      version: 3,
-      contentVersion: 2,
-      player: {
-        entityId: 0,
-        origin: previous.origin,
-        dashUntil: previous.dashUntil,
-        dashReadyAt: previous.dashReadyAt,
-        attack: previous.attack ? { ...previous.attack, hit: previous.attack.hit.map(key) } : null,
-        invulnerableUntil: previous.invulnerableUntil,
+      ...old,
+      version: 4,
+      contentVersion: 3,
+      entities: {
+        ...old.entities,
+        records: old.entities.records.map((record) => ({ ...record, scene: 0 })),
       },
-      entities: store.snapshot(),
-      npcs,
-      carrion: [],
-      supplies: SETTLEMENTS.map((s) => ({
-        id: s.id,
-        x: s.x + 0.5,
-        y: s.y + 2.5,
-        stock: {
-          berries: 12,
-          reeds: 8,
-          wheat: 8,
-          nectar: 8,
-          ashgrass: 8,
-          fungi: 8,
-          water: 12,
-          fiber: 4,
-        },
-      })),
-      ecology: { target: c.count, deaths: 0, births: 0, replacements: [] },
+      player: { ...old.player, attack: upgradeAttack(old.player.attack, 0) },
+      inventorySerial: inventory.serial,
+      equipment: service.snapshot(),
+      scenes: registry.snapshot(),
+      drops: old.drops.map((value) => ({ ...value, scene: 0 })),
+      events: old.events.map((value) => ({ ...value, scene: 0 })),
+      markers: old.markers.map((value) => ({ ...value, scene: 0 })),
       combat: {
         ...old.combat,
-        target: old.combat.target === null ? null : key(old.combat.target),
-        encounters: old.combat.encounters.map((e) => ({ ...e, target: key(e.target) })),
-        nextAttack: old.combat.nextAttack.map(([id, tick]) => [key(id), tick]),
-        pursuits: [],
-        attacks: [],
-        assaults: [],
+        attacks: old.combat.attacks.map(([actor, value]) => [actor, upgradeAttack(value, actor)]),
+        projectiles: { serial: 0, arrows: [] },
       },
     };
+  }
+  // Additive defaults also accept development v4 checkpoints made before physique was introduced.
+  if (candidate.version === 4 && candidate.entities && typeof candidate.entities === 'object') {
+    const entities = candidate.entities as { records?: unknown[] };
+    if (Array.isArray(entities.records))
+      candidate = {
+        ...candidate,
+        entities: {
+          ...entities,
+          records: entities.records.map((value) => {
+            if (!value || typeof value !== 'object') return value;
+            const record = value as Record<string, unknown>,
+              index = record.species;
+            const id =
+              index === 8 ? 'human' : typeof index === 'number' ? SPECIES[index]?.id : undefined;
+            const body = PHYSIQUES[id ?? 'human'];
+            return {
+              heightMeters: Math.fround(body.heightMeters),
+              massKg: Math.fround(body.massKg),
+              recoilX: 0,
+              recoilY: 0,
+              ...record,
+            };
+          }),
+        },
+      };
+  }
+  if (candidate.version === 4) {
+    if (['artifacts', 'placements', 'artifactSequence'].some((key) => key in candidate))
+      throw Error('Save v4 cannot contain v5 artifact fields');
+    candidate = { ...candidate, version: 5, artifacts: [], placements: [], artifactSequence: 0 };
   }
   const result = GameSaveSchema.safeParse(candidate);
   if (!result.success)
     throw new Error(
       `Save is incompatible or damaged: ${result.error.issues
         .slice(0, 3)
-        .map((i) => i.path.join('.') + ': ' + i.message)
+        .map((i) => `${i.path.join('.')}: ${i.message}`)
         .join('; ')}`,
     );
   return result.data;
