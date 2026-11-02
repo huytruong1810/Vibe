@@ -47,7 +47,7 @@ and local-generation tickets (C26–C31) sit in their own section.
 
 ### C25 · Long-term memory v2: typed records, extraction operations, core blocks, embedding retrieval
 
-- status: open (after C24; before C18, whose `reading` memories use these types)
+- status: candidate (2026-11-02; local checks pass; machine-A B0 and director review pending)
 - owner: codex
 - goal: villagers remember structured, sourced facts across conversations, update them when they change, and retrieve the right ones, the way current agent-memory systems do.
 - spec: [memory and context](../../engineering/memory-and-context.md) §2, §3.2, §3.3, §4; doctrine AGT-10.3–10.6; ADR 032.
@@ -57,7 +57,7 @@ and local-generation tickets (C26–C31) sit in their own section.
   3. Retrieval: recency (0.995 per game hour) + importance + relevance, min-max normalized, equal weights; `embeddinggemma` 256-d via `/api/embed`, cached in IndexedDB (not in saves), keyword fallback; invalidated records excluded; `lastAccessTick` updated.
   4. Reflection at an importance-sum threshold (start 150) on the dialogue model when idle; capacity cap 400 with episodic folding (never semantic facts or commitments).
 - done when: §4 rows "extraction", "retrieval", "migration" pass; the C24 live smoke repeated across two conversations: the villager recalls a fact from the first in the second; soak (`npm run benchmark` or ecology soak) shows retrieval ≤ 5 ms per prompt.
-- evidence:
+- evidence: 2026-11-02: code **68af413**, full check **388 tests / 30 files**, four relevant browser checks; retrieval **1.242 ms p95 / 2.177 ms max** at 400 records. [Candidate report](../comms/codex/2026-11-02T2155--to-all--c25-memory-candidate.md); [B0 request](../comms/codex/2026-11-02T2155--to-blender--test-c25-memory.md); [benchmark receipt](../comms/codex/c25-benchmark.json). Live recall/timing acceptance remains pending.
 
 ### C14 · Combat director and telegraphs: fair fights first (CRM-4, CMB-4)
 

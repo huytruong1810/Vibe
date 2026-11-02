@@ -1,139 +1,56 @@
 # Codex session handoff
 
-## Next: C25; C24 candidate awaits machine-A B0
+## Next: C14; C25 candidate awaits machine-A B0
 
-The director requested a fresh handoff for the next outstanding queue item: **C25,
-long-term memory v2**. C22 and C24 remain candidates awaiting external acceptance;
-C25 is the next open implementation under TEAM-8.4. No C25 runtime work has started.
-Do not redo C24 or reopen C17. Claude is away until about November 9.
+C25 implementation is **68af413** on `eng/hd-presentation`. The director requested this
+slice only; no C14 work started. C22, C24 and C25 remain candidates with separate external
+acceptance. Claude is away until about November 9. Preserve C17 artifacts and C24 context.
 
-## Integrated baseline
+## Evidence and requests
 
-- Engineering branch: `eng/hd-presentation`. Studio through **8085a9e** is integrated
-  in merge **f309370**. C24 code is **84f08a3**. The final pull also fetched published
-  studio **d9a62b2** (briefing/approval docs only), integrated in **9a376d7**.
-  Workspace was clean at this handoff start; engineering pull was up to date.
-  Studio d9a62b2 CI **41523150519 completed/success**, independently rechecked.
-  C24 PR run 41524008070 succeeded; code push 41523994321 and engineering-tip
-  runs 41524329426 / 41524315612 were still running when checked. Recheck actual
-  CI at startup; a red studio takes priority. Do not infer success from these pending runs.
-- Preserve C17/save v5, note/stick canvas and bow recipe correction, C22 fallback play,
-  asset base-path handling, held-layer compositor, AssetPack 1.7.0 pin and ordered adapter.
-- The only merge conflict was the authored-artifacts test table: save v5 and current
-  abliterated model tags were both retained. Protected inputs came from published history.
-- Directives 012/013 read. Latest model aliases are `gemma4-abliterated:26b` and
-  `gemma4-abliterated:e4b`; use the operations pull/copy recipe, never pull a local alias.
+- `npm run check`: **388 tests / 30 files**, architecture, assets and production build;
+  run with `VITEST_MAX_WORKERS=4` to limit contention. The 512-artifact <50 ms gate passed;
+  canonical-text memoization preserves all field-specific rules and has a regression test.
+- Browser: long dialogue plus extraction/core recall in a second conversation/save-resume;
+  interior save/load; production beta **2/2 at `/`**. Screenshots were inspected.
+- [C25 candidate digest](2026-11-02T2155--to-all--c25-memory-candidate.md).
+- [C25 machine-A B0 request](2026-11-02T2155--to-blender--test-c25-memory.md):
+  `npm run test:ollama -- gemma4-abliterated:26b --memory`; CPU E4B, 30 exchanges then recall
+  in a second conversation. No live inference result has been claimed on machine B.
+- [Benchmark receipt](c25-benchmark.json): 400 records, cached 256-d vectors, retrieval
+  **1.242 ms p95 / 2.177 ms max**; full prompt **1.935 ms p95 / 3.416 ms max**.
+- Normal asset validation: 3908 frames, five full pages, 79.84 MiB full / 19.88 MiB half.
+  HD gate still rejects **1515** requirements; approval coverage **4/41**. No art changes.
+- Remote baseline CI checked via GitHub API: engineering ce647ff runs 41527051387 /
+  41527038967 and studio d9a62b2 run 41523150519 completed/success. New C25 CI must be
+  checked after push; do not inherit baseline success as evidence for the new commit.
 
-## C25 binding inputs and intended result
+## C25 implementation and preservation notes
 
-Read `docs/team/queue/codex.md` C25, `docs/engineering/memory-and-context.md`
-sections 2, 3.2, 3.3 and 4, ADR 032, and AGT-10.3 through AGT-10.6 / AGT-7.
-AGT-10.3: **"Memories are invalidated, never silently deleted."** AGT-10.2 still
-protects C24: **"Compaction changes nothing in long-term memory."**
-
-- Add `MemoryRecordV2` and `CoreBlocks` exactly as specified: six memory types,
-  provenance/confidence, importance, created/access ticks, invalidation/supersession,
-  and bounded self/player/relationship blocks. Deterministic simulation events write
-  typed records directly; only validated memory operations change core blocks.
-- Current save version is **5** (`save-schema.ts`); C25 introduces **v6** and the spec's
-  legacy migration. Preserve IDs and provenance; map old kinds as specified, preserve
-  the old summary as an episodic record (importance 5), and seed core blocks from profiles.
-  Retain all earlier migrations and C17 artifacts/placements/recipe corrections.
-- At conversation end, enqueue at most one extraction on `gemma4-abliterated:e4b`.
-  Input: final summary, last four entries, top-10 similar existing records with IDs,
-  and core blocks. Output: at most eight ADD/UPDATE/INVALIDATE/NOOP operations and
-  two block edits. Validate supplied IDs, entity grounding, caps and revisions before
-  applying with session provenance. Player claims stay `told`; text cannot execute actions.
-- Retrieval: recency `0.995^(game hours since last access)`, importance and relevance,
-  min-max normalized with equal weights. Exclude invalid records; update last access
-  only for selected records. `embeddinggemma` uses 256 dimensions via `/api/embed`;
-  keyword overlap is the no-model fallback. Cache embeddings in IndexedDB by model,
-  dimensions, record ID and text hash; embeddings are never save data.
-- Reflection uses the dialogue model while idle at importance sum 150, producing at
-  most three sourced records. At the 400-valid-record cap, fold lowest-scoring episodic
-  records into an episodic digest and invalidate originals with `supersededBy`.
-  Never fold semantic facts or commitments, and never restore C24's old deleting path.
-
-## C25 entry points and implementation traps
-
-- `src/domain/agents.ts`: current `MemoryRecord`/`MemoryState`, `MemoryRepository`,
-  `MemoryRetriever`, event/perception/social writes, `PlanService`, `ReflectionService`.
-  Current capacity is 256; append can delete low-importance facts or refuse writes.
-  Current retrieval uses unequal keyword/importance/recency weights, and reflection
-  triggers from record counts/time. These are C25 replacement points, not completed v2.
-- `src/domain/conversation.ts` and `simulation.ts`: `closeDialogue` currently discards
-  the worker context immediately. Capture the extraction snapshot before that discard.
-  A summary may lag recent turns when compaction failed or was stale; account for that
-  without unbounded prompts or claiming omitted turns were processed. Conversation IDs
-  are worker-local; persistent provenance must distinguish sessions across reloads.
-- Extend job kinds/response validation, receipt routing and background scheduling for
-  extraction/folding as needed. Preserve cancellation, stale receipt rejection, dialogue
-  preemption, CPU/model settings and no-Ollama play. Check the existing two-per-minute
-  background quota against AGT-7's extraction deadline (30 seconds after close).
-- `src/adapters/inference.ts` owns loopback network I/O; `persistence.ts` owns browser
-  storage. Domain code cannot use network or IndexedDB. Thread embedding results into
-  worker-owned retrieval through validated interfaces; preserve save checkpoint stores.
-- Search all old memory-kind/summary/source-ID consumers, including save validation,
-  diagnostics and tests. C24 currently inserts provisional old summary/commitment context;
-  replace it with typed core blocks within the existing core/memory prompt budgets.
-- C18 needs the `reading` type; sight needs `sight`. Do not implement those tickets,
-  C14 combat, C19 painting infrastructure, or art regeneration during this C25 slice.
-
-## C25 acceptance and machine-A handoff
-
-- Unit tests: every extraction operation and block edit, foreign/stale IDs, grounding,
-  player claims remain told, malformed/over-cap outputs, and injection text changes no
-  actions or witnessed facts. Test at most one extraction per closed conversation.
-- Golden retrieval rankings with fixed vectors; keyword fallback, invalidation exclusion,
-  last-access updates and cache invalidation after text/model/dimension changes.
-- Migration fixtures from v5 plus older supported saves: record counts/types/IDs,
-  preserved summary/provenance, artifacts and round trips. Test reflection threshold,
-  sourced insights and episodic folding without semantic/commitment loss.
-- Keep C24 budget, stale-session, no-memory-mutation and long-dialogue tests green.
-  Run `npm run check`, relevant browser journeys, formatting and hygiene; preserve
-  the serialized 512-artifact <50 ms gate and HD gate. Run benchmark/ecology soak
-  with retrieval measured at no more than 5 ms per prompt; avoid competing timing work.
-- Machine B uses mocks. Once concrete, extend the existing B0 smoke to two conversations:
-  a fact from the first is recalled in the second. Send Blender a test request through
-  own comms with model tags, CPU placement and AGT-7 measurements. No C25 live result
-  or migration is claimed in this handoff; C24's existing B0 request remains pending.
-
-## C24 implementation and interfaces (preserve)
-
-- `src/domain/conversation.ts`: worker-owned `DialogueSession`, strict summary schema,
-  bounded prompt sections, 75% projected trigger, four recent speaker entries retained,
-  revision/session checks and deterministic 95% oldest-entry omission. Compaction never
-  accesses persistent memory (AGT-10.2).
-- `PlanService.compaction` builds dedicated jobs. The deleting `MemoryRepository.compact`
-  and count-based trigger are gone. Full memory no longer refuses a dialogue.
-- `configureContext` command carries context size, dialogue/background model and CPU
-  preference. `InferenceJob` carries model/context/output/CPU options and compaction target;
-  `agentResult` can carry prompt token counts for model-specific calibration.
-- Defaults: 8192 context tokens, background CPU on, current model aliases. Input reserves
-  reply tokens plus 5%; summaries are conservatively bounded for future calibration.
-  See memory-and-context implementation notes for caps and calibration guardrails.
-- UI setup has Conversation settings and missing-model warning/install guidance. Background
-  jobs fall back to the dialogue model when missing. Frames transport 32 recent lines;
-  worker context retains history. Debug shows tokens, budget, compactions and truncation.
-- Session context ends on close/reload; save schema stays v5. C25 owns typed records,
-  extraction, embeddings, persistent core blocks and the next save migration.
-
-## Preserved C24 evidence and remaining acceptance
-
-- `npm run check`: **365 tests / 29 files**, including serialized artifact validation
-  below 50 ms, asset validation, architecture and production build.
-- **23 focused context/memory/inference tests**; **19 browser journeys**; final long
-  conversation journey rerun passed. Production beta **2/2 at `/` and 2/2 at `/Vibe/`**.
-- `npm run assets:build` reproduced tracked generated outputs unchanged: 3908 frames,
-  five full pages, 79.84 MiB full / 19.88 MiB half. Packet and scoped village checks pass.
-- `npm run format:check` passes. HD gate still rejects **1515 slice requirements**;
-  approval coverage **4/41**. Do not weaken it.
-- B0 request: [2026-11-02T2056--to-blender--test-c24-conversation.md](2026-11-02T2056--to-blender--test-c24-conversation.md). Run
-  `npm run test:ollama -- gemma4-abliterated:26b --conversation` on machine A; CPU e4b
-  compaction, 30 exchanges, turn-3 promise recalled at turn 28. Receipt defaults to OS temp
-  `hearthwild-ollama-smoke/conversation-smoke.json`; retain it in the replying member's comms.
-  This harness measures full responses, not AGT-7's first streamed token. No live result yet.
-- Candidate digest: [2026-11-02T2056--to-all--c24-context-candidate.md](2026-11-02T2056--to-all--c24-context-candidate.md).
+- `src/domain/memory.ts` owns MemoryRecordV2/CoreBlocks schemas, validated operations,
+  migration, retrieval and sourced synthesis. Save **v6** retains all older migrations,
+  IDs/provenance, legacy summaries and artifact/placement/recipe behavior. Long old texts
+  split into 280-character records; the first keeps its ID. Embeddings never enter saves.
+- At most one extraction per nonempty closed session, using a world-unique conversation
+  ID, summary, last four entries, top-ten similar records and core blocks. A bounded tail
+  covers uncompacted entries; omitted entries are explicit. Too-large inputs are skipped
+  with a notice while existing conversation records remain. Stale revisions are rejected.
+- Capture precedes close; a close under another pause preserves its snapshot until staged
+  actions commit on resume. Extraction bypasses routine quota, preempts lower priorities,
+  and resumes after dialogue preemption within its original enqueue-to-30-second deadline.
+- Retrieval normalizes recency/importance/relevance equally and touches only supplied
+  records. Uncached queries use keywords; optional CPU embedding jobs warm worker/IndexedDB
+  caches for subsequent identical queries. Text changes trigger refresh; model/dimension/
+  record/text keys isolate persistent vectors. IDB vectors use a separate database.
+- Reflect at accumulated importance 150 while idle; at most three sourced insights. Fold
+  only low-scoring episodic records, invalidating originals with supersededBy. Admit at
+  most 400 valid records; excess validated writes persist in pending storage, excluded from
+  retrieval. If no eligible episodic records exist, pending writes remain visible in debug.
+  Historical and pending storage can grow; frames carry bounded records and backlog counts.
+- C24 compaction still never changes persistent memory. Keep its budget, overflow,
+  revision/calibration, cancellation, model/CPU settings and no-Ollama play tests intact.
+- Current aliases: `gemma4-abliterated:26b` and `gemma4-abliterated:e4b`. Operations has
+  the alias install recipe; never pull the alias itself. No learned-brain/art/painting work.
 
 ## Standing follow-ups
 
