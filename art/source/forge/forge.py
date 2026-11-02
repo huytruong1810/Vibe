@@ -111,11 +111,17 @@ def st_gen3d(asset: str) -> str:
     out = wd / "gen3d" / "mesh.glb"
     out.parent.mkdir(exist_ok=True)
     extra = {"views": views, "seed": g.get("seed", 1234), "steps": g.get("steps", 50)}
+    backend = g.get("backend", core.GEN3D_DEFAULT)
+    if backend not in core.GEN3D_BACKENDS:
+        raise ForgeError(f"gen3d.backend {backend!r} unknown; one of {sorted(core.GEN3D_BACKENDS)}")
+    if backend != core.GEN3D_DEFAULT:
+        extra["backend"] = backend  # the default stays out of the key so existing digests hold
     if core.is_fresh(asset, "gen3d", inputs, extra):
         return "fresh (cached)"
-    if not core.GEN3D_PY.exists():
-        raise ForgeError("gen3d environment missing (art/source/forge/gen3d/.venv). Run doctor; ask claude to run setup.")
-    cmd = [str(core.GEN3D_PY), str(core.GEN3D_DIR / "run_shape.py"), "--views",
+    py, script = core.GEN3D_BACKENDS[backend]
+    if not py.exists():
+        raise ForgeError(f"gen3d environment for {backend} missing ({_rel(py)}). Run doctor; ask claude to run gen3d/setup.sh.")
+    cmd = [str(py), str(core.GEN3D_DIR / script), "--views",
            *[f"{v}={wd / 'prep' / f'{v}.png'}" for v in views], "--out", str(out),
            "--seed", str(extra["seed"]), "--steps", str(extra["steps"])]
     log = wd / "logs" / "gen3d.log"
@@ -1026,13 +1032,15 @@ def doctor() -> int:
     chk("Quaternius UAL (humans)", (core.VENDOR / "ual").exists(), "Ask claude to run setup (vendor/ual)")
     ig_py = core.FORGE / "imagegen" / ".venv" / "bin" / "python"
     chk("imagegen venv (local reference art)", ig_py.exists(), "bash art/source/forge/imagegen/setup.sh")
-    style_model = json.loads((REPO / "art/source/style/style.json").read_text()).get("model", "klein4b")
-    repos = {"klein4b": "black-forest-labs--FLUX.2-klein-4B", "klein9b": "black-forest-labs--FLUX.2-klein-9B",
-             "qwen21": "Qwen--Qwen-Image-2.1", "qwen21turbo": "Qwen--Qwen-Image-2.1-Turbo"}
+    style_model = json.loads((REPO / "art/source/style/style.json").read_text()).get("model", "klein9b")
+    repos = {m: s["repo"].replace("/", "--")
+             for m, s in json.loads((core.FORGE / "models.json").read_text())["tools"]["imagegen"]["models"].items()}
     hub = core.FORGE / "imagegen" / "models" / "hf" / "hub" / f"models--{repos.get(style_model, '?')}"
     complete = (any(p.exists() for p in hub.glob("snapshots/*/transformer/*.safetensors"))
                 and not any(hub.glob("blobs/*.incomplete")))
     chk(f"imagegen weights ({style_model})", complete, f"bash art/source/forge/imagegen/setup.sh {style_model} (or wait for it to finish)")
+    for name, ok, fix in registry_checks():
+        chk(name, ok, fix)
     for name, ok, fix in checks:
         print(f"  [{'ok' if ok else 'FAIL'}] {name}" + ("" if ok else f"  -> {fix}"))
     bad = [c for c in checks if not c[1]]
@@ -1044,6 +1052,30 @@ def doctor() -> int:
         extra += f" (templates: {', '.join(c['templates'])})" if len(c["templates"]) > 1 and cls == "creatures" else ""
         print(f"  {cls:12s} {state}{extra}" + (f" ({c['ticket']})" if not c["ready"] else ""))
     return 1 if bad or not any(c["ready"] for c in CLASSES.values()) else 0
+
+
+def registry_checks() -> list[tuple[str, bool, str]]:
+    """models.json is the registry of what machine A keeps installed (one most-capable model per tool).
+    Any weights, vendored code or venv on disk that it doesn't list fails doctor; open trials are reported."""
+    reg = json.loads((core.FORGE / "models.json").read_text())
+    out = []
+    for tool, t in reg["tools"].items():
+        models = t["models"]
+        trials = sorted(m for m, s in models.items() if s["status"] == "trial")
+        if trials:
+            out.append((f"{tool}: bake-off open ({', '.join(trials)} on trial vs {t['default']})", True, ""))
+        if "cache" not in t:
+            continue
+        listed = {"models--" + s["repo"].replace("/", "--") for s in models.values() if "repo" in s}
+        hub = REPO / t["cache"]
+        strays = sorted(p.name for p in hub.glob("models--*") if p.name not in listed) if hub.exists() else []
+        local = {REPO / s[k] for s in models.values() for k in ("venv", "code") if k in s}
+        vendor = core.GEN3D_DIR / "vendor"
+        if tool == "gen3d" and vendor.exists():
+            strays += sorted(_rel(p) for p in vendor.iterdir() if p.is_dir() and p not in local)
+        out.append((f"{tool}: only registered models installed", not strays,
+                    f"not in art/source/forge/models.json: {', '.join(strays)}; delete them or register them"))
+    return out
 
 
 def _invalidate_after(asset: str, stage: str) -> None:

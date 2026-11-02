@@ -285,14 +285,13 @@ order; C26 gates any regeneration of approved assets (blender B20).
 - done when: `views` writes every view ≥ 1024 px tall without `prep` warnings, `gen3d` unchanged or better
 - evidence:
 
-### C29 · Qwen-Image-2.1 and klein 9B fit tests
+### C29 · Image model bake-off: klein 9B, klein 4B, Qwen-Image-2.1
 
-- status: open (needs the director's Hugging Face token for klein 9B)
+- status: done (2026-11-02, claude)
 - owner: claude
 - goal: the B19 bake-off has its other candidates ready.
-- work: finish `setup.sh qwen21` (paused at about 0.8 GB of 33), measure 4-bit/8-bit loading on 16 GB and 15 GB RAM, then klein 9B; record numbers in `docs/engineering/imagegen.md`.
-- done when: both produce a Rivallie sheet through `forge.py concept --model ...` with timings and peak VRAM recorded
-- evidence:
+- result: **FLUX.2 [klein] 9B** is the only image model kept (4-bit transformer, 44–58 s per sheet, 14.2 GiB). Klein 4B was removed (upright drift). Qwen-Image-2.1 was removed (about 3.5 h per sheet on 16 GB). Qwen-Image-Edit-2511 and Z-Image were not downloaded (outranked, or no reference input). Registry `art/source/forge/models.json`; `forge.py doctor` fails on unregistered weights.
+- evidence: `docs/engineering/imagegen.md` (table), boards `docs/team/comms/claude/boards/2026-11-02-imagegen-rivallie-*.png`, doctrine L12
 
 ### C30 · `forge.py portrait` (9 emotions) and `forge.py swatch` (tileforge)
 
@@ -302,13 +301,16 @@ order; C26 gates any regeneration of approved assets (blender B20).
 - done when: Neris has nine emotion portraits at 96/128 px that pass the portrait contract; a grass swatch passes tileforge QA
 - evidence:
 
-### C31 · gen3d backends: Hunyuan3D-2.1 shape and TRELLIS
+### C31 · gen3d backends: Hunyuan3D-2.1 shape and TRELLIS.2
 
-- status: open
+- status: in progress (claude)
 - owner: claude
 - goal: compare single-image 3D against the current Hunyuan3D-2mv on the golden samples (L12).
-- work: recipe `gen3d.backend`, pinned setups (Blackwell cu128 builds), same `mesh.glb` contract.
-- done when: Rivallie through each backend to a `gen3d` preview, timings recorded, director picks the default
+- work: recipe `gen3d.backend` (done: `forgelib/core.py` `GEN3D_BACKENDS`, default stays out of the digest), pinned setups (Blackwell cu128 builds), same `mesh.glb` contract.
+- progress:
+  - Hunyuan3D-2.1 ran on Rivallie, front-only in 189 s and side-only in 207 s, 7.7 GiB. It lost to 2mv and was removed (board `docs/team/comms/claude/boards/2026-11-02-gen3d-rivallie-hunyuan.png`).
+  - TRELLIS.2-4B: code cloned and its venv is ready. Its CUDA extensions need the CUDA 12.8 toolkit, and the director installs it (`cuda-toolkit-12-8`, WSL repo).
+- done when: Rivallie through TRELLIS.2 to a `gen3d` preview, timings recorded; the loser is removed from `models.json`
 - evidence:
 
 ## Waiting on the director

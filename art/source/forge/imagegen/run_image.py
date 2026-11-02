@@ -1,7 +1,7 @@
 """imagegen: batch local image generation for reference art (PRD-3, PRD-7, PRD-8).
 
   python run_image.py <job.json>
-job: {"model": "klein4b" | "klein9b" | "qwen21" | "qwen21turbo",
+job: {"model": "klein9b",
       "outDir": "<dir>", "width": 1024, "height": 1024, "steps": null, "guidance": null,
       "items": [{"id": "c0", "prompt": "...", "negative": "", "seed": 7,
                  "references": ["<png>", ...]}]}
@@ -30,18 +30,11 @@ os.environ.setdefault("HF_HUB_OFFLINE", "1")  # weights come from setup.sh, neve
 
 # repo, revision, pipeline class, components to quantize, defaults
 MODELS = {
-    "klein4b": {"repo": "black-forest-labs/FLUX.2-klein-4B", "rev": "e7b7dc27f91deacad38e78976d1f2b499d76a294",
-                "pipeline": "Flux2KleinPipeline", "quant": {"text_encoder": "8bit"}, "steps": 4, "guidance": 1.0,
-                "licence": "Apache-2.0"},
-    "klein9b": {"repo": "black-forest-labs/FLUX.2-klein-9B", "rev": "main", "pipeline": "Flux2KleinPipeline",
-                "quant": {"text_encoder": "8bit", "transformer": "8bit"}, "steps": 4, "guidance": 1.0,
-                "licence": "FLUX Non-Commercial v2.1"},
-    "qwen21": {"repo": "Qwen/Qwen-Image-2.1", "rev": "d26bb61231c349cf6b7896fa83353113880e1ba3",
-               "pipeline": "QwenImage21Pipeline", "quant": {"text_encoder": "4bit", "transformer": "8bit"},
-               "steps": 40, "guidance": None, "licence": "Qwen Research License"},
-    "qwen21turbo": {"repo": "Qwen/Qwen-Image-2.1-Turbo", "rev": "fc13ba1986fcb905854dc8de2f52eee395f49b5b",
-                    "pipeline": "QwenImage21Pipeline", "quant": {"text_encoder": "4bit", "transformer": "8bit"},
-                    "steps": None, "guidance": None, "licence": "Qwen Research License"},
+    # The one image model machine A keeps (art/source/forge/models.json; bake-off 2026-11-02 in
+    # docs/engineering/imagegen.md). The 9B transformer must load 4-bit: at 8-bit it spills past 16 GB.
+    "klein9b": {"repo": "black-forest-labs/FLUX.2-klein-9B", "rev": "92196c8e11f7b6cf2b7493e037d8c5345c559216",
+                "pipeline": "Flux2KleinPipeline", "quant": {"text_encoder": "8bit", "transformer": "4bit"},
+                "steps": 4, "guidance": 1.0, "licence": "FLUX Non-Commercial v2.1"},
 }
 
 
@@ -101,12 +94,8 @@ def main() -> int:
             kw["num_inference_steps"] = steps
         if guidance is not None and "guidance_scale" in params:
             kw["guidance_scale"] = guidance
-        if guidance is not None and "true_cfg_scale" in params:  # Qwen 2.1: CFG only with a negative prompt
-            kw["true_cfg_scale"] = guidance
         if item.get("negative") and "negative_prompt" in params and (guidance or 1.0) > 1.0:
             kw["negative_prompt"] = item["negative"]
-        if "output_resolution" in params:  # Qwen 2.1 derives size and resizes references from this
-            kw["output_resolution"] = max(kw["width"], kw["height"])
         if item["id"] in embeds:
             kw["prompt"], kw["prompt_embeds"] = None, embeds[item["id"]]
         refs = [Image.open(p).convert("RGB") for p in item.get("references", [])]

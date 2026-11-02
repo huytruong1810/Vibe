@@ -58,7 +58,7 @@ spec (`../spec/`); a recipe never overrides spec numbers.
   "fields": { "species": "...", "element": "...", "size": "...", "stance": "...",
               "description": "...", "anatomy": "...", "colours": "..." },
   "references": ["public/assets/portraits/...", "art/source/masters/..."],
-  "model": "klein4b"
+  "model": "klein9b"
 }
 ```
 

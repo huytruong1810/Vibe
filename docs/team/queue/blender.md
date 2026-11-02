@@ -23,11 +23,11 @@ when the forge shows a problem.
 ### B19 · Golden-sample bake-off with local image generation (first)
 
 - status: open (after B14)
-- goal: pick the image and 3D models and approve the new look on six golden samples before regenerating everything (PRD-4, L12; director decision 2026-11-02).
+- goal: approve the new look on six golden samples (image model: klein 9B; 3D model: Hunyuan3D-2mv unless TRELLIS.2 wins C31) before regenerating everything (PRD-4, L12; director decision 2026-11-02).
 - inputs: [directive 013](../comms/claude/2026-11-02T0807--to-all--directive-013-local-image-generation.md); [imagegen notes](../../engineering/imagegen.md); `reference-sheets` skill; Rivallie's recipe `concept` block with `poseGuide` (copy the pattern; make a pose guide per new body type).
 - work, one asset at a time:
-  1. Rivallie (creature): `forge.py concept --asset rivallie --n 4 --model klein4b`, then the same with `--model qwen21`. Look at both contact sheets; keep the best of each with `views` into a scratch copy only if comparing, or keep the winner.
-  2. player-aqualia (human, A-pose, 5 heads, L3), item:hatchet (prop), env:house-aqualia (building) the same way.
+  1. The image model is decided: klein 9B is the only one installed (claude C29, doctrine L12), so there's no `--model` flag to choose. Rivallie (creature): `forge.py concept --asset rivallie --n 4`; c901 and c903 from seeds 900–903 are already clean on all fours (`docs/team/comms/claude/boards/2026-11-02-imagegen-rivallie-klein9b.png`). Look at the contact sheet and keep the best with `views`.
+  2. player-aqualia (human, A-pose, 5 heads, L3), item:hatchet (prop), env:house-aqualia (building) the same way; the human, winged, shelled and biped pose guides come with claude's C27.
   3. Run each kept sheet through the forge to a packet (the 3D backend comparison follows once claude lands the extra backends).
   4. Post one message `--to-director--bakeoff` with the side-by-side contact sheets, the forge packets, timings and peak VRAM from each `work/<asset>/concept/concept-*.json`, and your recommendation.
 - done when: the director has picked the models (recorded in L12) and approved the golden samples' look; their concepts become the style anchors in `art/source/style/style.json`

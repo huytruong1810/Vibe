@@ -24,6 +24,12 @@ APPROVALS = REPO / "docs" / "team" / "comms" / "director" / "approvals"
 GEN3D_DIR = FORGE / "gen3d"
 GEN3D_PY = GEN3D_DIR / ".venv" / "bin" / "python"
 GEN3D_HF_HOME = GEN3D_DIR / "models" / "hf"
+# gen3d.backend in a recipe -> (python, runner script); every runner writes the same mesh.glb contract (C31, L12)
+GEN3D_DEFAULT = "hunyuan-2mv"
+GEN3D_BACKENDS = {
+    "hunyuan-2mv": (GEN3D_PY, "run_shape.py"),
+    "trellis2": (GEN3D_DIR / "vendor" / "venv-trellis2" / "bin" / "python", "run_shape_trellis2.py"),
+}
 
 os.environ.setdefault("PYTHONDONTWRITEBYTECODE", "1")
 

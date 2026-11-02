@@ -10,7 +10,7 @@ prompt, references), then prep takes over as before.
 Recipe:
   "concept": {"template": "creature-v1", "fields": {"species": "...", ...},
               "poseGuide": "art/source/style/pose-guides/quadruped.png",
-              "references": ["art/source/masters/..."], "model": "klein4b"}
+              "references": ["art/source/masters/..."], "model": "klein9b"}
 """
 from __future__ import annotations
 

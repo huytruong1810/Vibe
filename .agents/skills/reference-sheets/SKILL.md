@@ -36,7 +36,7 @@ templates and `art/source/style/style.json`, so never write free-form prompts.
    `human-apose-v1` (front, back), `prop-v1` (three-quarter), `building-v1` (front, left).
    `stance`: quadruped and shelled "standing on all four paws with its body horizontal, never sitting or standing upright", winged "in flight with both
    wings spread wide", mushroom-biped "standing upright on two legs".
-3. **Generate:** `forge.py concept --asset <id> [--n 4] [--model klein4b|qwen21]`. It writes
+3. **Generate:** `forge.py concept --asset <id> [--n 4]` (model: `klein9b`, the only one installed). It writes
    `work/<id>/concept/` and a contact sheet.
 4. **Look at the contact sheet** (`read_file`) and run the checklist below on each
    candidate. None passes? Fix the fields or references and run `concept` again; don't just
