@@ -124,7 +124,7 @@ This tests deterministic continuity and failure handling, not LLM believability.
 
 The recommended `qwen2.5:3b` was not installed on this machine and was not downloaded automatically. Existing CPU-loaded models were exercised instead:
 
-- `gemma4:e4b` (about 9 GB): first cold readiness attempt timed out; a warm structured readiness check succeeded, but a character dialogue exceeded the 45-second interactive deadline.
+- `gemma4-abliterated:e4b` (about 9 GB): first cold readiness attempt timed out; a warm structured readiness check succeeded, but a character dialogue exceeded the 45-second interactive deadline.
 - `qwen3.6:35b` (about 22 GB): real structured readiness succeeded in approximately 52.8 seconds, but character dialogue exceeded the 45-second deadline.
 
 These are **failed interactive-latency qualifications**, not evidence that the adapter or fallback can guarantee lively real-time generative dialogue on this hardware/model combination. The startup gate, timeout, and active-play fallback are tested. Qualify an installed smaller model with `npm run test:ollama -- MODEL` before accepting LLM latency as production-ready.

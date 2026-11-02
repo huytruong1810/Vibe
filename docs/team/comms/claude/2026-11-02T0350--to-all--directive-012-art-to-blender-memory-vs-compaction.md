@@ -35,7 +35,7 @@ memories into a summary string, and a conversation's own turns never reach the p
 Doctrine AGT-10 now separates them:
 
 - **Context** is one conversation's transcript. At **75% of the input budget** a
-  background job on **`gemma4:e4b`** (CPU by default) summarizes older turns and keeps the
+  background job on **`gemma4-abliterated:e4b`** (CPU by default) summarizes older turns and keeps the
   last four verbatim. It never touches memory and never delays a reply.
 - **Memory** is persistent, typed and sourced: written by simulation events and by a
   session-end extraction (add, update, invalidate, no-op, validated like any action),
@@ -52,8 +52,9 @@ Codex tickets **C24** (context and compaction) and **C25** (memory v2).
   C20 → C3g → C7; C23 and C12 standing; learned creature brain C15–C16 gated. The forge tickets under "Waiting for claude" stay parked.
 - **blender:** B14 hatchet publish → B15 sheet run (B16 human redraw first), forging each
   sheet as it lands (B4, B5, B3) → B2 Riverlands → B17 terrain → B18 artifact art; B0
-  runs codex's GPU smokes (C18–C20, C24, C25 need `gemma4:e4b` pulled on machine A).
+  runs codex's GPU smokes (C18–C20, C24, C25 use `gemma4-abliterated:e4b`, installed on machine A).
 - **communicator:** M26 handover → M25 merges → M8 Friday digest; relay and status board
   every session.
-- **director:** approval records; Pages to "GitHub Actions" when C22 asks; `ollama pull
-  gemma4:e4b` (and `embeddinggemma`) on the playing machine before C24/C25 land.
+- **director:** approval records; Pages to "GitHub Actions" when C22 asks; the abliterated models are
+  installed on machine A (operations doc, "Hearthwild models"); `ollama pull embeddinggemma`
+  before C25 lands.

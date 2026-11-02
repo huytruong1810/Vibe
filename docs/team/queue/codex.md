@@ -30,7 +30,7 @@ Blender on machine A; leave them unless the director says otherwise.
 - done when: a green push to `studio/doctrine-v1` is live on the Pages URL with its sha within 15 minutes; the playtest template exists; the operations doc lists the jobs and the green-CI rule; claude's local check of `/Vibe/` asset loading is replaced by a CI browser test
 - evidence:
 
-### C24 · Conversation context and compaction on gemma4:e4b at 75%
+### C24 · Conversation context and compaction on gemma4-abliterated:e4b at 75%
 
 - status: open (after C22)
 - owner: codex
@@ -38,8 +38,8 @@ Blender on machine A; leave them unless the director says otherwise.
 - spec: [memory and context](../../engineering/memory-and-context.md) §1, §2, §3.1, §4; doctrine AGT-1.3, AGT-10.1–10.2, AGT-7; ADR 032.
 - work:
   1. `DialogueSession` with transcript in the worker; prompt order and fixed sub-budgets (§3.1); `contextTokens` setting (default 8192) sent as `num_ctx`; token estimate calibrated from Ollama's `prompt_eval_count`.
-  2. 75% trigger → one background `compaction` job on `backgroundModel` (`gemma4:e4b`, CPU via `options.num_gpu: 0` by default), `CompactionSummary` schema, K = 4 recent turns verbatim, revision-checked apply; ≥ 95% overflow drops oldest turns deterministically.
-  3. Settings: background model, "run on CPU", context size; model check in the setup dialog (`gemma4:e4b` missing → clear install line, fallback to the dialogue model with a warning).
+  2. 75% trigger → one background `compaction` job on `backgroundModel` (`gemma4-abliterated:e4b`, CPU via `options.num_gpu: 0` by default), `CompactionSummary` schema, K = 4 recent turns verbatim, revision-checked apply; ≥ 95% overflow drops oldest turns deterministically.
+  3. Settings: background model, "run on CPU", context size; model check in the setup dialog (`gemma4-abliterated:e4b` missing → clear install line, fallback to the dialogue model with a warning).
   4. Remove the count-based `needsCompaction` path and the deleting `MemoryRepository.compact`; until C25 lands, keep memory records as they are (no deletion).
 - done when: §4 rows "budget and trigger" and "no memory loss" pass in `npm run check`; the debug overlay shows prompt tokens, budget and compactions; blender's live smoke (B0) runs a 30-turn conversation where the villager recalls a turn-3 promise at turn 28, with compaction and reply latencies recorded in `docs/operations/`.
 - evidence:
@@ -52,7 +52,7 @@ Blender on machine A; leave them unless the director says otherwise.
 - spec: [memory and context](../../engineering/memory-and-context.md) §2, §3.2, §3.3, §4; doctrine AGT-10.3–10.6; ADR 032.
 - work:
   1. `MemoryRecordV2` and `CoreBlocks` with the next save version and the §3.2 migration.
-  2. Session-end extraction job on `gemma4:e4b`: ADD / UPDATE / INVALIDATE / NOOP against the top-10 similar memories plus core-block edits, validated (supplied ids only, grounding, `told` for player claims, caps) and applied with provenance.
+  2. Session-end extraction job on `gemma4-abliterated:e4b`: ADD / UPDATE / INVALIDATE / NOOP against the top-10 similar memories plus core-block edits, validated (supplied ids only, grounding, `told` for player claims, caps) and applied with provenance.
   3. Retrieval: recency (0.995 per game hour) + importance + relevance, min-max normalized, equal weights; `embeddinggemma` 256-d via `/api/embed`, cached in IndexedDB (not in saves), keyword fallback; invalidated records excluded; `lastAccessTick` updated.
   4. Reflection at an importance-sum threshold (start 150) on the dialogue model when idle; capacity cap 400 with episodic folding (never semantic facts or commitments).
 - done when: §4 rows "extraction", "retrieval", "migration" pass; the C24 live smoke repeated across two conversations: the villager recalls a fact from the first in the second; soak (`npm run benchmark` or ecology soak) shows retrieval ≤ 5 ms per prompt.
@@ -150,7 +150,7 @@ Blender on machine A; leave them unless the director says otherwise.
   4. Painting screen (§8.2) from the easel or a blank canvas: prompt, chips, progress, Cancel, palette preview at 4× beside the raw output, Keep / Retry / Discard.
   5. Rendering: LRU texture cache (32), framed display on hooks, inventory thumbnail, pending easel.
 - out of scope: pixel editing (C21); painting sizes other than 48×32.
-- done when: unit tests for brief validation, rates, allowlist rejections (lettering, URL, brand list), pending-survives-reload; Playwright with a mocked provider paints, keeps, hangs the painting on a hook and captures it at 1080p (look at it, PRD-5); blender's live smoke on machine A: Lark paints overnight during sleep acceleration with `gemma4:26b` and `sd-server`, the painting hangs, a villager's next dialogue can mention it from the caption; contact capture attached to the reply.
+- done when: unit tests for brief validation, rates, allowlist rejections (lettering, URL, brand list), pending-survives-reload; Playwright with a mocked provider paints, keeps, hangs the painting on a hook and captures it at 1080p (look at it, PRD-5); blender's live smoke on machine A: Lark paints overnight during sleep acceleration with `gemma4-abliterated:26b` and `sd-server`, the painting hangs, a villager's next dialogue can mention it from the caption; contact capture attached to the reply.
 - evidence:
 
 ### C21 · Player pixel touch-up for paintings (optional)

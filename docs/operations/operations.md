@@ -27,6 +27,28 @@ The application discovers `/api/tags` and performs a real schema-constrained `/a
 
 The check must succeed before a new or resumed session. During play, a timeout, HTTP error, malformed response, or canceled background request is bounded and reported; deterministic schedules and dialogue fallback keep the session usable. The fallback cannot waive action prerequisites.
 
+### Hearthwild models (abliterated, 2026-11-02)
+
+The game's villagers run abliterated Gemma 4 builds (AGT-1.2): refusals removed so a
+character never steps out of the story, capability kept. Install them under the names the
+game and docs use (the `gemma4` prefix also keeps thinking disabled in the adapter):
+
+```sh
+ollama pull hf.co/HauhauCS/Gemma4-26B-A4B-QAT-Uncensored-HauhauCS-Balanced-MTP:Q4_K_M
+ollama cp hf.co/HauhauCS/Gemma4-26B-A4B-QAT-Uncensored-HauhauCS-Balanced-MTP:Q4_K_M gemma4-abliterated:26b
+ollama pull hf.co/llmfan46/gemma-4-E4B-it-ultra-uncensored-heretic-GGUF:Q5_K_M
+ollama cp hf.co/llmfan46/gemma-4-E4B-it-ultra-uncensored-heretic-GGUF:Q5_K_M gemma4-abliterated:e4b
+ollama rm hf.co/HauhauCS/Gemma4-26B-A4B-QAT-Uncensored-HauhauCS-Balanced-MTP:Q4_K_M hf.co/llmfan46/gemma-4-E4B-it-ultra-uncensored-heretic-GGUF:Q5_K_M
+```
+
+Both include the vision projector. Measured on machine A (RTX 5080 Laptop 16 GB, a
+schema-constrained in-character reply, cold load included): `e4b` 55 tokens/s, 12 s for a
+137-token reply; `26b` 4.4 tokens/s, 66 s for 150 tokens (17 GB doesn't fit 16 GB VRAM, so
+layers spill to the CPU; the stock `gemma4:26b` measured 6.3 tokens/s the same way). For
+responsive play on this laptop pick `gemma4-abliterated:e4b`; the 26B gives richer
+characters at much slower replies. Neither refused the in-character threat test the stock
+26B softened.
+
 ### Browser origins and permissions
 
 Use the exact development URL printed by Vite. If it changes ports, the Ollama allowlist must match. On Windows, quit a running tray server before starting another server with modified environment variables:
