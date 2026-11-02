@@ -1,154 +1,65 @@
 # Codex session handoff
 
-Prepared for a fresh agent on the director's request. This is a navigation aid;
-read the current constitution, doctrine, branch history and directives themselves.
+Current continuation: C17 artifact foundation, implemented under directive 010.
+Read the current constitution, brief, live queue and directives before acting.
 
-## Immediate instructions
+## Current orders
 
-1. Read `AGENTS.md`, `docs/team/briefs/codex.md`, the `team-comms` and
-   `doctrine-lookup` skills, and relevant doctrine before making decisions.
-2. Inspect `git status`, fetch, read new comms, and integrate published work through
-   the normal studio → art → engineering flow. Preserve dirty work. Do not operate
-   on `Vibe-art` or old review worktrees to make engineering integration easier.
-3. **Directives 008 and 009 supersede this session's earlier pending-ticket order.**
-   Claude has continued implementation on Machine A. Review/integrate those
-   changes before selecting a ticket; do not independently rebuild C3f or items.
-4. **Hourly automation is cancelled at the user's request.** Windows task
-   `Hearthwild-Codex-Hourly-Comms` was removed and verified absent. Do not recreate
-   it, schedule another wakeup or treat old hourly prompts as current authorization.
-5. Finish this handoff's documentation commit/push if it remains dirty after an
-   interrupted publication. Never reset or discard the two preexisting local edits.
+- Directive 010 assigns Codex C17, C18, C19, C20; C21 only on director go.
+- C17 is complete and archived in `docs/team/queue/archive/codex.md`.
+  Next open Codex ticket: C18. Claude retains C9b, C9c, C3b, C3g and C7.
+- Read `docs/engineering/authored-artifacts.md` and the live queue. The director
+  confirmed save v5 and note + stick for canvas, preserving the existing bow recipe.
+- Hourly automation remains cancelled. Never recreate it from historical prompts.
+- New process: archive closed own messages each session, about ten live messages;
+  completed tickets go to queue archives; target live queues under 250 lines.
 
-## Workspace, branches and publication
+## Integration and C17
 
-- Engineering: `C:\Users\htruong\source\repos\Vibe`, PowerShell,
-  branch `eng/hd-presentation`; published baseline when checked: **c0adba8**.
-  The handoff commit follows it. Check actual HEAD rather than assuming this hash.
-- Separate art checkout: `C:\Users\htruong\source\repos\Vibe-art`.
-  Its local HEAD was **eca5994**, while published art/studio had advanced to
-  **d8381ca**. Do not touch its branch, index or local files.
-- Fetched `origin/art/hd-aqualia-slice` and `origin/studio/doctrine-v1`:
-  **d8381ca**. These contain the engineering baseline as an ancestor, but new
-  handoff commits may require a normal merge rather than a fast-forward.
-- Consumer `eng/c11b-consumers`: **1208560**, normally pushed; code **0575294**.
-  This source-only lane avoided protected-runbook merge deltas for art agents.
-  Do not overwrite the newer studio tooling with its older implementation.
-- Draft engineering PR: https://github.com/huytruong1810/Vibe/pull/1
-- Draft consumer PR: https://github.com/huytruong1810/Vibe/pull/4
-  Both descriptions were updated for the older C9b increment, before the latest
-  Claude changes were integrated. Refresh descriptions after reviewing those changes.
-- Preexisting `.cache/art-review-src` and `.cache/hd-integration` worktrees remain.
-  This session's OS-temp consumer worktree was verified clean/pushed and removed.
-  No owned test server or PR-helper script remains. Keep secrets out of outputs.
+- Engineering checkout: C:/Users/htruong/source/repos/Vibe, eng/hd-presentation.
+- Published art/studio 0d4a430 merged at ad0d38b; the only conflict was the
+  communicator queue. Retained the upstream cleaned queue. Handoff docs preserved.
+- Source work from C3f/M19, item/environment/template tooling and Mireling is
+  integrated. Do not recreate those tasks from historical queue entries.
+- C17 adds src/domain/artifacts.ts, bounded records/store, recipes, item references,
+  identity-preserving display/take, home hooks/tables and Lark's easel, metadata
+  snapshots, correlated worker content queries, and save v5 with older migrations.
+- ArtifactPlacement retains its complete item instance; content remains out of
+  frames. Authored ingredients cannot be crafted away. No writing/painting screen,
+  villager action or generation provider is implemented in this increment.
+- Save validation requires one reference per artifact, across inventory, equipment,
+  all scene drops and placements, and rejects invalid furniture destinations.
+- Existing NPC combat loadouts are not general storage; C18 must address NPC
+  possession explicitly rather than bypass the existing restrictions.
 
-## Local work delivered and verified before the new remote work
+## Evidence and gaps
 
-- **7586e49**: transactional held-item renderer and QA, common Blender baker
-  integration, CLI `items` and `selftest --kind item`, PRD-2 cuboid fixture,
-  CI tests, engineering guide and ADR 030.
-  Files include `forgelib/item_render.py`, `item_render_selftest.py`,
-  `blender/fixture_item.py`, `blender/bake.py` and `forge.py` under the forge root.
-- It renders 8 facings × 8 grip buckets plus an icon from a rigid existing mesh,
-  snapshots source input, pins dependencies, checks projected root/sockets,
-  margins, exact 2x blocks, palette and raw-silhouette thin spurs, installs hashed
-  immutable output, then atomically changes `items.json`. Cache validation checks
-  corruption and preserves pointer bytes. Failures preserve the old pointer.
-- Thin-spur QA does not certify internal straps, material details, readability or
-  facing flicker. Do not equate fixture success with approved production art.
-- **49 Python forge tests passed** locally and independently in the temporary
-  consumer checkout. **305 TypeScript tests / 23 suites**, types, architecture,
-  structural assets and production build passed. Hygiene passed on both checkouts.
-- Blender 4.2 is absent locally. B13 subsequently reports real Machine-A calibration
-  success; that receipt is remote evidence, not a new local execution/inspection.
-- Prior C3e browser run: 18 initial journeys passed; one setup timeout then passed
-  alone unchanged. No full-first-run green claim. No new browser/soak run for the
-  item tooling. Existing global formatting/atlas drift gates were not weakened.
-- **6e956cc** merged M19's old digest/audit report; **c0adba8** published handoff
-  and queues. One residual `<<<<<<< HEAD` marker in the communicator queue was
-  caught afterwards. Its removal and a corrected session record are included in
-  the handoff documentation changes. Verify publication; do not reintroduce it.
+- `npm run check` passes: hygiene, types, architecture, structural assets,
+  345 TypeScript tests / 25 files and production build.
+- `python -m uv run --project art/source/forge python -B -m unittest discover
+  -s art/source/forge/forgelib -p '*selftest.py'`: 60 tests pass locally.
+  uv is available through system Python's module entrypoint, not PATH or the venv.
+- 512-artifact fixture: 1,195,812 bytes; isolated validation 23.29 ms. The final
+  full check passes its unchanged <50 ms assertion. One earlier concurrent run
+  exceeded that budget; timings are machine/load dependent.
+- Structural asset check: 3,908 frames, five full pages, 79.84 MiB decoded;
+  full-world approval coverage 4/41 and 1,515 slice gaps. Do not weaken HD gates.
+- No new browser journey, GPU smoke, visual acceptance or Blender execution claimed.
+  Machine B uses mocks; send live C18-C20 smokes to Blender through own comms.
+- Hatchet approval covers held-item/icon packet 89102c20...; publication is B14,
+  runtime composition belongs to Claude. Faces and Riverlands remain changes-requested.
+  Claude's standing approval delegation is recorded in the approval README;
+  Codex has no independent visual approval grant.
+- Current session/report: session-2026-11-01.md and
+  2026-11-02T0206--to-all--re-directive-010.md in this folder.
 
-## New remote history: inspect before picking work
+## Publication discipline
 
-These were read through `git show origin/art/hd-aqualia-slice:<path>` but have
-**not been integrated or independently tested in this engineering checkout**.
-
-- `docs/team/comms/claude/2026-11-01T2240--to-all--directive-008-beta-slice.md`:
-  director-authorized Claude takeover of C3f/M19; faces and Riverlands require fixes.
-- `2026-11-01T2302--to-all--beta-slice-landed.md` in the same folder:
-  **3298147 C3f** preserves V1 rows within V2 using `legacy: true`, no anchor
-  rounding, with digest/build preservation tests. **0a5e5c6 M19** integrates three
-  approved body/clip sets and ledger records; multi-page atlases are supported.
-  Reported check: 309 tests, structural assets pass, HD coverage still fails.
-  **C7 activation was NOT delivered**; procedural world remains active.
-- `2026-11-01T2310--to-all--directive-009-unblock-production.md`:
-  Claude takes open engineering work while Codex is away; approval README now
-  records the director's standing delegation to Claude. Do not contradict that
-  newer record with the older "Claude unavailable / no delegated approvals" text.
-  Codex still has no independent visual approval grant.
-- **5710b5c**: item source prep/orient/icon/packet/publish; later go-items message
-  `2026-11-02T0000--to-blender--go-items.md`. Golden hatchet packet exists.
-  Earlier local "items not ready / no go-items" evidence is historical now.
-- **ed32dab**: human publication; **722f0e6**: environment kind and calibration;
-  `2026-11-02T0100--to-blender--go-environment.md` opens environment production.
-  Garment fit and runtime composition still need current-code inspection.
-- **776eb0f / d8381ca**: shelled, winged and mushroom-biped templates, reported
-  calibration QA, template-to-species map and go-creature-templates message.
-  **f1ded41** integrates Mireling following the new delegated approval record.
-- Read actual approval files and scope/digests. Faces remain changes-requested;
-  village layout approved, Riverlands changes-requested. Do not infer map readiness
-  or approvals from a packet title, hash report or a passing test.
-- B13 receipt: `docs/team/comms/blender/2026-11-01T0630--to-codex-director--b13-item-calibration-results.md`.
-  Reports Blender 4.2.3, 65 poses, QA success and stable cache. Work artifacts are
-  Machine-A ignored files; do not claim personally opening them on Machine B.
-- The requested candidate graph is now published remotely at
-  `docs/team/comms/communicator/candidate-quadrupeds-v2.json`; the old local
-  "actual graph still missing" task is superseded. M19 integration is also done.
-
-## Suggested next session sequence
-
-1. Verify handoff publication, fetch, read all newer addressed comms and reread the
-   **upstream** Codex queue. Coordinate with Claude so there is one implementation
-   owner; directive 009 says Claude is actively handling the remaining forge work.
-2. Normally integrate art history, preserving local documentation. Review C3f as
-   steward: legacy normalized anchors/digests/identity fallback must remain exact,
-   while native V2 registration stays integer-strict. Review actual frame hashes,
-   closure and approval records rather than transcribing preliminary reports.
-3. Validate the merged implementation before declaring it locally passing. Read
-   current CI commands; run relevant Python tests plus `npm run check`. Broaden
-   browser/soak verification only when changed runtime scope requires it.
-4. Pick the highest-priority unclaimed item from the refreshed queue. Likely next
-   areas are C3b face placement, C3g atlas-gallery/budget, C9c motion polish or C7
-   map-driven activation; confirm Claude has not already picked them up.
-5. C3b: registered decals currently overhang the crown; read the changes-requested
-   record, face point offset/silhouette QA and profile hurt/fear readability tasks.
-   Re-packet sidecars on the approved body; do not regenerate approved bodies.
-6. C3g: gallery still describes page 0 as a single page; show every page. Reported
-   decoded atlas memory grew ~15 → 64 MiB. Budget/measure before optimizing; avoid
-   shrinking creature anatomy to match oversized legacy humans.
-7. C7 is a larger separate change: map-driven settlements/player spawn, explicit
-   worldSource save/versioning, absent-region population handling, then beta toggle.
-   Existing 30-human fixed village positions cannot be spawned into authored void.
-   Do not activate the candidate map by replacing only the terrain generator.
-
-## Permissions, failures and operating discipline
-
-- Automatic review rejected an optional edit to the protected sprite-forge skill
-  during the earlier C9b increment. It was left unchanged; the guide carried the
-  API instead. Do not bypass a rejected edit through another tool. Claude's newer
-  published changes may legitimately update it; inspect their authority/history.
-- Another commit/push attempt was not executed because automatic review hit a
-  usage limit. That was an infrastructure failure, not an unsafe-action finding.
-  Keep session claims accurate about what actually executed.
-- Normal Git writes/network and some Node Git subprocesses need escalation in this
-  sandbox. User already authorizes normal testing/commit/push; no force pushes,
-  history rewrites, main merge, arbitrary protected edits or external-worktree edits.
-- Read `.agents/skills/sprite-forge/SKILL.md` for forge work, and the corresponding
-  world/tile skills for those tasks. No unrequested subagent or concurrent worker.
-- Use pinned `uv` project tooling; local fallback interpreter is
-  `art/source/forge/.venv/Scripts/python.exe`. CI shows exact unittest discovery
-  patterns. Tests snapshot tool hashes: do not mutate tools while these tests run.
-- Write messages in own comms, ≤40 lines each, with evidence and honest gaps.
-  Keep C12 queues evidence-based. Never stage director approval/protected records
-  manually or turn candidates into approvals. Keep global gates intact.
-- End with Changed / Evidence / Gaps. No timer should be restored during handoff.
+- Check actual git status/log and upstream before the next integration. The C17
+  implementation follows merge ad0d38b; do not assume a commit hash from this aid.
+- Only director merges main. Keep PR #1 aligned with the engineering branch;
+  source-only consumer PR #4 retains its narrower historical scope.
+- Separate Vibe-art checkout and preexisting .cache review worktrees were untouched.
+- Never reset dirty work, force-push, skip hooks, manually stage approval records,
+  or write protected doctrine. Use DOC-5 only within its actual scope.
+- Record evidence and gaps, run hygiene before each push, stop owned processes.

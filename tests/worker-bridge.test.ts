@@ -9,7 +9,10 @@ class TestWorker {
   constructor() {
     TestWorker.latest = this;
   }
-  postMessage(): void {}
+  messages: unknown[] = [];
+  postMessage(message: unknown): void {
+    this.messages.push(message);
+  }
   terminate(): void {}
   ready(): void {
     this.onmessage?.({
@@ -19,6 +22,39 @@ class TestWorker {
 }
 afterEach(() => vi.unstubAllGlobals());
 describe('worker presentation failure boundary', () => {
+  it('queries artifact content on demand and correlates null or content responses', async () => {
+    vi.stubGlobal('Worker', TestWorker);
+    const bridge = new WorkerBridge();
+    await expect(bridge.artifactContent('art:1')).rejects.toThrow(/journey/);
+    const initializing = bridge.initialize(42, 1);
+    TestWorker.latest.ready();
+    await initializing;
+    const first = bridge.artifactContent('art:1'),
+      second = bridge.artifactContent('art:2');
+    const requests = TestWorker.latest.messages.filter(
+      (m) => (m as { type: string }).type === 'artifactContent',
+    ) as { requestId: string; artifactId: string }[];
+    expect(requests.map((r) => r.artifactId)).toEqual(['art:1', 'art:2']);
+    TestWorker.latest.onmessage?.({
+      data: { type: 'artifactContent', requestId: requests[1]!.requestId, artifact: null },
+    } as MessageEvent<FromWorker>);
+    const artifact = {
+      id: 'art:1',
+      kind: 'note',
+      title: 'Hello',
+      author: { kind: 'player' },
+      createdDay: 0,
+      revision: 1,
+      sealed: false,
+      lines: ['Hi'],
+    } as const;
+    TestWorker.latest.onmessage?.({
+      data: { type: 'artifactContent', requestId: requests[0]!.requestId, artifact },
+    } as unknown as MessageEvent<FromWorker>);
+    expect(await first).toEqual(artifact);
+    expect(await second).toBeNull();
+    bridge.dispose();
+  });
   it('rejects startup immediately when a presentation consumer fails instead of timing out', async () => {
     vi.stubGlobal('Worker', TestWorker);
     const bridge = new WorkerBridge(),

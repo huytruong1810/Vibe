@@ -59,7 +59,13 @@ describe('durable physique and bounded motion', () => {
     const bad = heavy.snapshot();
     bad.entities.records.find((r) => r.id === 0)!.massKg = -1;
     expect(() => migrateSave(bad)).toThrow();
-    const old = structuredClone(heavy.snapshot()) as unknown as {
+    const {
+      artifacts: _artifacts,
+      placements: _placements,
+      artifactSequence: _serial,
+      ...v4
+    } = structuredClone(heavy.snapshot());
+    const old = { ...v4, version: 4 } as unknown as {
       entities: { records: Record<string, unknown>[] };
     };
     for (const body of old.entities.records) {

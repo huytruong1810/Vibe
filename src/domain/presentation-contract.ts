@@ -72,7 +72,11 @@ export interface ScenePropPresentation {
   readonly elevation?: number;
   readonly layer: 'ground' | 'object' | 'roof' | 'canopy';
   readonly variant?: string;
-  readonly interaction?: 'rest' | 'work' | 'wash' | 'eat' | 'equip';
+  readonly interaction?: 'rest' | 'work' | 'wash' | 'eat' | 'equip' | 'paint';
+  readonly display?: {
+    readonly slots: number;
+    readonly accepts: readonly ('note' | 'book' | 'painting')[];
+  };
 }
 export interface PortalPresentation {
   readonly id: string;

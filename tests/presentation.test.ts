@@ -156,7 +156,7 @@ describe('HD projection, poses and animation boundaries', () => {
     expect(frame.actors.find((e) => e.id === 0)?.appearanceId).toBe('aqualia');
     expect(frame.actors.find((e) => e.appearanceKind === 'npc')?.appearanceId).toMatch(/^npc:/);
     expect(frame.actors.every((e) => Number.isSafeInteger(e.id))).toBe(true);
-    expect(a.snapshot().version).toBe(4);
+    expect(a.snapshot().version).toBe(5);
     expect(a.snapshot()).not.toHaveProperty('cues');
     a.dispose();
     b.dispose();

@@ -1,4 +1,4 @@
-import { SETTLEMENTS, VILLAGES, itemIds } from '../content/definitions';
+import { SETTLEMENTS, VILLAGES, NPC_PROFILES, itemIds } from '../content/definitions';
 import { ChunkStore, Fluid, SurfaceRules, TileFlag, type WorldDelta } from './world';
 import { NavigationService } from './navigation';
 import { ResourceStore, type GroundDrop, type Carrion } from './resources';
@@ -39,6 +39,42 @@ export interface SceneContext {
 const buildingDimensions = (capital: boolean, local: number) =>
   capital || local === 1 ? { width: 16, height: 12 } : { width: 20, height: 14 };
 const CAVE_DIMENSIONS = Object.freeze({ width: 48, height: 32 });
+/** Shared runtime/save metadata: no world generation during validation. */
+export function artifactFurniture(sceneId: string, owner: number | null): ScenePropPresentation[] {
+  const painter = owner !== null && NPC_PROFILES[owner - 1]?.name === 'Lark';
+  const hooks: ScenePropPresentation[] = Array.from({ length: painter ? 3 : 1 }, (_, i) => ({
+    id: `${sceneId}:hook:${i}`,
+    contentId: 'furniture_wardrobe',
+    x: 6.5 + i * 2,
+    y: 2.5,
+    layer: 'object',
+    display: { slots: 1, accepts: ['painting'] },
+  }));
+  if (painter)
+    hooks.push({
+      id: `${sceneId}:easel`,
+      contentId: 'furniture_workbench',
+      x: 8.5,
+      y: 5.5,
+      layer: 'object',
+      interaction: 'paint',
+    });
+  return hooks;
+}
+export function artifactDisplaySpec(
+  sceneId: string,
+  propId: string,
+): ScenePropPresentation['display'] {
+  const layout = SAVE_LAYOUTS.find((s) => s.id === sceneId);
+  if (!layout || !sceneId.includes(':home:')) return undefined;
+  if (propId === `${sceneId}:table`) return { slots: 2, accepts: ['note', 'book'] };
+  const settlement = SETTLEMENTS.find((s) => sceneId.startsWith(`${s.id}:home:`));
+  if (!settlement) return undefined;
+  const owner = settlement.capital
+    ? settlement.village * 10 + Number(sceneId.split(':').at(-1)) + 1
+    : null;
+  return artifactFurniture(sceneId, owner).find((p) => p.id === propId)?.display;
+}
 const SAVE_LAYOUTS = Object.freeze([
   Object.freeze({ id: 'overworld', width: CONFIG.worldSize, height: CONFIG.worldSize }),
   ...SETTLEMENTS.flatMap((settlement) =>
@@ -101,6 +137,7 @@ export class SceneRegistry {
         {
           id: `${building.id}:table`,
           contentId: 'furniture_table',
+          display: { slots: 2, accepts: ['note', 'book'] },
           x: width - 5.5,
           y: 4.5,
           layer: 'object',
@@ -138,6 +175,7 @@ export class SceneRegistry {
           interaction: 'equip',
         },
       ];
+      props.push(...artifactFurniture(building.id, owner));
       this.definitions.push({
         id: building.id,
         code,

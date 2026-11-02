@@ -3,7 +3,8 @@ import { ITEMS, ItemIdSchema } from '../content/definitions';
 import { GameSaveV3Schema, migrateSaveV3, type GameSaveV3 } from './save-v3';
 import { EquipmentService, GARMENT_SLOTS } from './equipment';
 import { TwoSlotInventory } from './inventory';
-import { SceneRegistry, sceneSaveLayouts } from './scenes';
+import { SceneRegistry, sceneSaveLayouts, artifactDisplaySpec } from './scenes';
+import { ArtifactIdSchema, ArtifactRecordsSchema } from './artifacts';
 import { ResourceStore } from './resources';
 import { WorldGenerator } from './world';
 import { CONFIG } from './values';
@@ -26,6 +27,7 @@ const item = z
     instance,
     originSpecies: legacy.inventory._def.items[0].unwrap().shape.originSpecies,
     charges: uint.max(12).optional(),
+    artifact: ArtifactIdSchema.optional(),
   })
   .strict();
 const nullableItem = item.nullable();
@@ -39,6 +41,7 @@ const attack = legacy.player.shape.attack.unwrap().extend({
   released: z.boolean().optional(),
 });
 const drop = legacy.drops.element.extend({
+  artifact: ArtifactIdSchema.optional(),
   scene: sceneCode.optional(),
   instance: instance.optional(),
   charges: uint.max(12).optional(),
@@ -130,7 +133,22 @@ const projectiles = z
 export const GameSaveSchema = z
   .object({
     ...legacy,
-    version: z.literal(4),
+    version: z.literal(5),
+    artifacts: ArtifactRecordsSchema,
+    artifactSequence: z.number().int().min(0).max(Number.MAX_SAFE_INTEGER),
+    placements: z
+      .array(
+        z
+          .object({
+            artifactId: ArtifactIdSchema,
+            sceneId: z.string().min(1).max(200),
+            propId: z.string().min(1).max(200),
+            slot: uint.max(511),
+            item,
+          })
+          .strict(),
+      )
+      .max(512),
     contentVersion: z.literal(3),
     entities: legacy.entities.extend({
       records: z
@@ -170,6 +188,53 @@ export const GameSaveSchema = z
       for (const issue of old.error.issues)
         ctx.addIssue({ code: 'custom', path: issue.path, message: issue.message });
     validateV4(save, fail);
+    const artifacts = new Map(save.artifacts.map((a) => [a.id, a]));
+    const refs = new Map<string, number>();
+    const reference = (id: string | undefined, kind: string, hasInstance = true): void => {
+      if (!id) {
+        if (kind === 'painting') fail('Painting item needs an artifact');
+        return;
+      }
+      const record = artifacts.get(id);
+      if (!record || record.kind !== kind || !hasInstance)
+        fail('Dangling or mismatched artifact reference');
+      refs.set(id, (refs.get(id) ?? 0) + 1);
+    };
+    save.inventory.forEach((i) => i && reference(i.artifact, i.id));
+    for (const loadout of save.equipment.loadouts) {
+      Object.values(loadout.worn).forEach((i) => i && reference(i.artifact, i.id));
+      loadout.combat.forEach((i) => i && reference(i.artifact, i.id));
+    }
+    [...save.drops, ...save.scenes.states.flatMap((s) => s.drops)].forEach((d) =>
+      reference(d.artifact, d.item, Boolean(d.instance)),
+    );
+    const occupied = new Set<string>();
+    for (const p of save.placements) {
+      reference(p.artifactId, p.item.id);
+      const record = artifacts.get(p.artifactId),
+        spec = artifactDisplaySpec(p.sceneId, p.propId);
+      const key = JSON.stringify([p.sceneId, p.propId, p.slot]);
+      if (
+        !save.scenes.bindings.some((b) => b.id === p.sceneId) ||
+        !spec ||
+        p.slot >= spec.slots ||
+        !record ||
+        !spec.accepts.includes(record.kind)
+      )
+        fail('Invalid artifact display destination');
+      if (p.item.artifact !== p.artifactId)
+        fail('Placement item has a mismatched artifact reference');
+      if (occupied.has(key)) fail('Duplicate artifact display slot');
+      occupied.add(key);
+    }
+    for (const a of save.artifacts) {
+      if (
+        Number(a.id.slice(4)) > save.artifactSequence ||
+        !Number.isSafeInteger(Number(a.id.slice(4)))
+      )
+        fail('Artifact allocation counter would reuse identity');
+      if (refs.get(a.id) !== 1) fail('Artifact must be referenced exactly once');
+    }
   });
 export type GameSave = z.infer<typeof GameSaveSchema>;
 
@@ -177,12 +242,19 @@ function v3Attack(value: GameSave['player']['attack']): GameSaveV3['player']['at
   return value ? { kind: value.kind, startedAt: value.startedAt, hit: value.hit } : null;
 }
 function v3Projection(save: GameSave): unknown {
-  const { equipment: _equipment, scenes: _scenes, ...base } = save;
+  const {
+    equipment: _equipment,
+    scenes: _scenes,
+    artifacts: _artifacts,
+    placements: _placements,
+    artifactSequence: _sequence,
+    ...base
+  } = save;
   const { guarding: _guarding, ...player } = save.player;
   const { projectiles: _projectiles, ...combat } = save.combat;
   const oldItem = (value: GameSave['inventory'][number]) => {
     if (!value) return null;
-    const { charges: _charges, ...old } = value;
+    const { charges: _charges, artifact: _artifact, ...old } = value;
     return old;
   };
   return {
@@ -205,7 +277,8 @@ function v3Projection(save: GameSave): unknown {
     },
     inventory: [oldItem(save.inventory[0]), oldItem(save.inventory[1])],
     drops: save.drops.map(
-      ({ scene: _scene, instance: _instance, charges: _charges, ...value }) => value,
+      ({ scene: _scene, instance: _instance, charges: _charges, artifact: _artifact, ...value }) =>
+        value,
     ),
     carrion: save.carrion.map(({ scene: _scene, ...value }) => value),
     supplies: save.supplies.map(({ scene: _scene, ...value }) => value),
@@ -270,6 +343,7 @@ function validateV4(save: GameSave, fail: (message: string) => void): void {
       fail('Animal food lost species provenance');
   };
   save.inventory.forEach(checkItem);
+  save.placements.forEach((p) => checkItem(p.item));
   const loadouts = new Map(save.equipment.loadouts.map((l) => [l.entityId, l]));
   if (loadouts.size !== 31 || [...loadouts.keys()].some((id) => records.get(id)?.species !== 8))
     fail('Equipment must bind exactly the 31 humans');
@@ -497,6 +571,11 @@ export function migrateSave(input: unknown): GameSave {
           }),
         },
       };
+  }
+  if (candidate.version === 4) {
+    if (['artifacts', 'placements', 'artifactSequence'].some((key) => key in candidate))
+      throw Error('Save v4 cannot contain v5 artifact fields');
+    candidate = { ...candidate, version: 5, artifacts: [], placements: [], artifactSequence: 0 };
   }
   const result = GameSaveSchema.safeParse(candidate);
   if (!result.success)

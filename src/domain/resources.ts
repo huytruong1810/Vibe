@@ -17,6 +17,7 @@ export interface GroundDrop extends WorldPosition {
   readonly originSpecies?: readonly SpeciesId[];
   readonly instance?: string;
   readonly charges?: number;
+  readonly artifact?: string;
 }
 export interface Carrion extends WorldPosition {
   readonly sourceId: number;
@@ -83,6 +84,7 @@ export class ResourceStore {
     this.drops.push({
       ...previous,
       instance: item.instance,
+      ...(item.artifact ? { artifact: item.artifact } : {}),
       ...(item.charges !== undefined ? { charges: item.charges } : {}),
     });
     return true;
@@ -230,6 +232,7 @@ export class HarvestSystem {
           ? inventory.insert({
               id: drop.item,
               instance: drop.instance,
+              ...(drop.artifact ? { artifact: drop.artifact } : {}),
               ...(drop.originSpecies ? { originSpecies: drop.originSpecies } : {}),
               ...(drop.charges !== undefined ? { charges: drop.charges } : {}),
             })

@@ -7,6 +7,7 @@ import type {
   ToWorker,
 } from '../domain/contracts';
 import { migrateSave, type GameSave } from '../domain/save-schema';
+import type { Artifact } from '../domain/artifacts';
 
 export class WorkerBridge {
   private readonly worker = new Worker(new URL('../worker/simulation.worker.ts', import.meta.url), {
@@ -54,6 +55,9 @@ export class WorkerBridge {
             break;
           case 'checkpoint':
             this.resolve(message.requestId, message.snapshot);
+            break;
+          case 'artifactContent':
+            this.resolve(message.requestId, message.artifact);
             break;
           case 'error': {
             const error = new Error(message.message);
@@ -135,6 +139,11 @@ export class WorkerBridge {
     if (!this.session) throw new Error('Start a journey before saving');
     const requestId = `checkpoint:${++this.serial}`;
     return migrateSave(await this.request(requestId, { type: 'checkpoint', requestId }));
+  }
+  artifactContent(artifactId: string): Promise<Artifact | null> {
+    if (!this.session) return Promise.reject(new Error('Start a journey before reading'));
+    const requestId = `artifact:${++this.serial}`;
+    return this.request(requestId, { type: 'artifactContent', requestId, artifactId });
   }
   restore(snapshot: GameSave): Promise<void> {
     const requestId = `restore:${++this.serial}`;

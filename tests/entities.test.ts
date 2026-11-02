@@ -474,7 +474,7 @@ describe('save v4 compatibility', () => {
   it('migrates a real v2 checkpoint retaining progress, bonds, terrain and memories', () => {
     const migrated = migrateSave(legacy),
       p = migrated.entities.records.find((e) => e.id === 0)!;
-    expect(migrated.version).toBe(4);
+    expect(migrated.version).toBe(5);
     expect(migrated.contentVersion).toBe(3);
     expect(migrated.generatorVersion).toBe(1);
     expect(p.hp).toBe(73);

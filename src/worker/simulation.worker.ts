@@ -59,6 +59,14 @@ worker.onmessage = (message: MessageEvent<ToWorker>): void => {
         if (host)
           send({ type: 'checkpoint', requestId: data.requestId, snapshot: host.snapshot() });
         break;
+      case 'artifactContent':
+        if (!host) throw Error('Start a journey before reading');
+        send({
+          type: 'artifactContent',
+          requestId: data.requestId,
+          artifact: host.artifacts.get(data.artifactId),
+        });
+        break;
       case 'restore': {
         const save = migrateSave(data.snapshot);
         const restored = new SimulationHost(save.seed, save.player.origin, 0);

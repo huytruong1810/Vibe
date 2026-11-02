@@ -10,11 +10,27 @@ import type { DebugPath, NpcId, WorldPosition } from './values';
 import type { WeatherState } from './core';
 import type { DialogueEmotion } from './dialogue';
 import type { EquipmentView } from './equipment';
+import type { Artifact, ArtifactView, ArtifactPlacement } from './artifacts';
 import type { ScenePresentation, ProjectilePresentation } from './presentation-contract';
 
 const npc = z.enum(NPC_PROFILES.map((n) => n.id) as [NpcId, ...NpcId[]]);
 const slot = z.union([z.literal(0), z.literal(1)]);
 export const CommandPayloadSchema = z.discriminatedUnion('type', [
+  z
+    .object({
+      type: z.literal('artifactDisplay'),
+      slot,
+      propId: z.string().min(1).max(200),
+      displaySlot: z.number().int().min(0).max(511),
+    })
+    .strict(),
+  z
+    .object({
+      type: z.literal('artifactTake'),
+      propId: z.string().min(1).max(200),
+      displaySlot: z.number().int().min(0).max(511),
+    })
+    .strict(),
   z.object({ type: z.literal('furniture'), propId: z.string().min(1).max(200) }).strict(),
   z.object({ type: z.literal('equip'), slot }).strict(),
   z
@@ -195,6 +211,8 @@ export interface RenderSnapshot {
   readonly paused: readonly string[];
   readonly player: PlayerState;
   readonly inventory: InventoryState;
+  readonly artifacts: readonly ArtifactView[];
+  readonly placements: readonly ArtifactPlacement[];
   readonly creatures: readonly CreatureView[];
   readonly npcs: readonly NpcState[];
   readonly events: readonly DomainEvent[];
@@ -240,6 +258,7 @@ export interface TerrainView {
   readonly buildings: readonly Building[];
 }
 export type ToWorker =
+  | { type: 'artifactContent'; requestId: string; artifactId: string }
   | { type: 'initialize'; seed: number; origin: number; population?: number }
   | { type: 'command'; envelope: WorldCommand }
   | { type: 'checkpoint'; requestId: string }
@@ -247,6 +266,7 @@ export type ToWorker =
   | { type: 'recycle'; buffer: ArrayBuffer }
   | { type: 'dispose' };
 export type FromWorker =
+  | { type: 'artifactContent'; requestId: string; artifact: Artifact | null }
   | { type: 'ready'; terrain: TerrainView; frame: RenderSnapshot }
   | { type: 'frame'; frame: RenderSnapshot; terrain?: TerrainView }
   | { type: 'result'; result: CommandResult }

@@ -73,6 +73,7 @@ import {
 import { CONFIG, clamp, distanceSquared, normalize, type WorldPosition } from './values';
 import { migrateSave, type GameSave } from './save-schema';
 import { WorldQuery } from './query';
+import { ArtifactStore, type ArtifactPlacement } from './artifacts';
 import { EntityStore, bindBody, NatureRules, SleepSystem } from './entities';
 import { SurvivalController, EcologyService } from './survival';
 import type { ActorPresentation, PresentationCue } from './presentation-contract';
@@ -109,6 +110,8 @@ export class SimulationHost {
   readonly inventory = new TwoSlotInventory();
   readonly equipment = new EquipmentService(this.inventory);
   readonly scenes: SceneRegistry;
+  readonly artifacts = new ArtifactStore();
+  readonly placements: ArtifactPlacement[] = [];
   private readonly sceneSystems = new Map<number, SceneSystems>();
   private readonly portalPaths = new Map<
     number,
@@ -526,7 +529,17 @@ export class SimulationHost {
     if (c.type === 'guard' && c.active && this.pauses.paused)
       return { id: envelope.id, ok: false, message: 'Close the menu before guarding.' };
     if (
-      ['equip', 'unequip', 'combine', 'drop', 'swap', 'use', 'enterPortal'].includes(c.type) &&
+      [
+        'equip',
+        'unequip',
+        'combine',
+        'drop',
+        'swap',
+        'use',
+        'enterPortal',
+        'artifactDisplay',
+        'artifactTake',
+      ].includes(c.type) &&
       (this.player.attack || this.equipment.hasReservation(0))
     )
       return {
@@ -551,6 +564,8 @@ export class SimulationHost {
         'unequip',
         'enterPortal',
         'furniture',
+        'artifactDisplay',
+        'artifactTake',
         'reaction',
       ].includes(c.type)
     )
@@ -564,6 +579,58 @@ export class SimulationHost {
     let message = '',
       ok = true;
     switch (c.type) {
+      case 'artifactDisplay':
+      case 'artifactTake': {
+        const scene = this.scenes.definitions[this.entities.scene[playerSlot]!]!;
+        const prop = scene.props.find((p) => p.id === c.propId);
+        if (
+          !prop?.display ||
+          c.displaySlot >= prop.display.slots ||
+          distanceSquared(this.player, prop) > 2.25 ||
+          this.combat.active(0)
+        ) {
+          ok = false;
+          message = 'Move closer to an available display.';
+          break;
+        }
+        const index = this.placements.findIndex(
+          (p) => p.sceneId === scene.id && p.propId === prop.id && p.slot === c.displaySlot,
+        );
+        if (c.type === 'artifactDisplay') {
+          const item = this.inventory.state[c.slot],
+            record = item?.artifact && this.artifacts.get(item.artifact);
+          if (
+            !item ||
+            !record ||
+            record.kind !== item.id ||
+            !prop.display.accepts.includes(record.kind) ||
+            index >= 0
+          ) {
+            ok = false;
+            message = 'That artifact cannot occupy this display slot.';
+            break;
+          }
+          this.placements.push({
+            artifactId: record.id,
+            sceneId: scene.id,
+            propId: prop.id,
+            slot: c.displaySlot,
+            item: { ...item },
+          });
+          this.inventory.remove(c.slot);
+          message = 'Artifact displayed.';
+        } else {
+          const placement = this.placements[index];
+          if (!placement || !this.inventory.insert(placement.item)) {
+            ok = false;
+            message = placement ? 'Both hands are full.' : 'That display slot is empty.';
+            break;
+          }
+          this.placements.splice(index, 1);
+          message = 'Artifact taken.';
+        }
+        break;
+      }
       case 'furniture': {
         const prop = this.scenes.definitions[this.entities.scene[playerSlot]!]!.props.find(
           (p) => p.id === c.propId,
@@ -614,6 +681,9 @@ export class SimulationHost {
             message = 'You eat from the finite settlement supply.';
             this.presentationActions.set(0, { pose: 'eat', until: this.tick + 24 });
           }
+        } else if (prop.interaction === 'paint') {
+          ok = false;
+          message = 'The painting screen is not available yet.';
         } else
           message =
             'Use the equipment panel to change carried garments; this wardrobe has no storage.';
@@ -1845,6 +1915,8 @@ export class SimulationHost {
       if (!presentIds.has(id)) this.presentationPositions.delete(id);
     return {
       equipment: this.equipment.view(),
+      artifacts: this.artifacts.views(),
+      placements: structuredClone(this.placements),
       scene: this.scenes.presentation(activeScene, 0, this.calendar.day),
       projectiles: this.combat.projectiles
         .snapshot()
@@ -1973,6 +2045,9 @@ export class SimulationHost {
   snapshot(): GameSave {
     return structuredClone({
       version: CONFIG.saveVersion,
+      artifacts: this.artifacts.snapshot(),
+      artifactSequence: this.artifacts.serial,
+      placements: this.placements,
       generatorVersion: CONFIG.generatorVersion,
       contentVersion: CONFIG.contentVersion,
       seed: this.seed,
@@ -2043,6 +2118,8 @@ export class SimulationHost {
       ? { ...save.player.attack, hit: [...save.player.attack.hit] }
       : null;
     this.inventory.restore(save.inventory, save.inventorySerial);
+    this.artifacts.restore(save.artifacts, save.artifactSequence);
+    this.placements.splice(0, this.placements.length, ...structuredClone(save.placements));
     this.equipment.restore(save.equipment);
     this.entities.restore(save.entities);
     for (let i = 0; i < this.npcs.length; i++)

@@ -360,3 +360,19 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 - work: per template, `spec/skeletons/<template>.json` (bones, sockets, landmark rules, gait parameters), landmark detection in `rig.py`, parametric clips in `gaits.py` for the full creature clip matrix (winged: hover idle and wing-beat locomotion; shelled: withdraw for guard and sleep; biped: a waddle), a fixture mesh and a `selftest --kind creature-<template>`.
 - done when: each template's selftest reaches QA candidate with drift 0; doctor lists the templates; the `sprite-forge` skill names the species-to-template map
 - evidence: `spec/skeletons/{shelled,winged,mushroom-biped}.json`, `blender/rig_winged.py`, `blender/rig_biped.py`, `blender/gaits.py` (SHELLED, WINGED, BIPED), `blender/fixture_creature.py`; `forge.py selftest --kind creature-<template>` PASS for all three (QA candidate, drift 0); `selftest --kind creature` (Rivallie) still PASS; `forgelib/gaits_selftest.py` OK; doctor lists the four templates; `sprite-forge` skill names the species-to-template map
+
+### C17 · Artifact item class and save v5 (foundation for notes, books, paintings)
+
+- status: done
+- owner: codex
+- goal: one `artifact` record behind notes, books and paintings: carried, dropped, displayed and saved with hard caps, so C18 and C20 only add behaviour.
+- spec: [authored artifacts](../../../engineering/authored-artifacts.md) §3, §4 (`artifactDisplay`/`artifactTake`), §9, §10; doctrine AGT-9, AGT-8.1; ADR 031.
+- work:
+  1. `src/domain/artifacts.ts`: types, `ArtifactStore` (create, get, update with revision bump, seal, remove), caps and the text sanitizer as pure functions.
+  2. Items `note`, `book`, `canvas`, `painting` with icons from the UI kit placeholders; recipes `fiber+fiber→note`, `note+fiber→book`, `note+stick→canvas`; `ItemInstance.artifact?` and `GroundDrop.artifact?` carried through drop, pick-up, swap and existing transfers.
+  3. Display furniture: `display` on scene props; one wall hook per home interior, three plus an easel (`interaction: 'paint'`) in Lark's home; `ArtifactPlacement`; commands `artifactDisplay`, `artifactTake`.
+  4. Save v5 with v4→v5 migration, retaining earlier migrations, zod caps, referential validation (§9); export/import round-trip.
+  5. Frame snapshot `ArtifactView` (metadata only) plus an on-demand content query.
+- out of scope: screens (C18, C20), villager actions, image generation.
+- done when: `npm run check` passes; unit tests for every cap, sanitizer case, command receipt, migration and referential rule; a 512-artifact save round-trips under 3 MB and validates in < 50 ms (test asserts both); existing saves load unchanged.
+- evidence: 2026-11-01: [C17 implementation and local checks](../../comms/codex/2026-11-02T0206--to-all--re-directive-010.md); 345 TypeScript tests and 60 forge tests pass; 512-artifact save 1,195,812 bytes, isolated validation 23.29 ms.

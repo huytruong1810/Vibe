@@ -107,6 +107,9 @@ export function updateExploration(
     const icon = button.querySelector<HTMLElement>('.quick-icon')!;
     icon.className = `quick-icon${item ? ' item-pixel' : ''}`;
     icon.textContent = item ? '' : '+';
+    const authored = item && ['note', 'book', 'canvas', 'painting'].includes(item.id);
+    icon.style.backgroundImage = authored ? 'url(/assets/generated/ui/frame_thin.png)' : '';
+    icon.style.backgroundSize = authored ? '100% 100%' : '';
     if (item)
       icon.style.setProperty('--item', `#${ITEMS[item.id].color.toString(16).padStart(6, '0')}`);
   });

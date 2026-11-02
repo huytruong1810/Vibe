@@ -11,22 +11,6 @@ tickets under "Claude (machine A)"; don't take those unless claude hands one ove
 
 ## Now: codex
 
-### C17 · Artifact item class and save v4 (foundation for notes, books, paintings)
-
-- status: open
-- owner: codex
-- goal: one `artifact` record behind notes, books and paintings: carried, dropped, displayed and saved with hard caps, so C18 and C20 only add behaviour.
-- spec: [authored artifacts](../../engineering/authored-artifacts.md) §3, §4 (`artifactDisplay`/`artifactTake`), §9, §10; doctrine AGT-9, AGT-8.1; ADR 031.
-- work:
-  1. `src/domain/artifacts.ts`: types, `ArtifactStore` (create, get, update with revision bump, seal, remove), caps and the text sanitizer as pure functions.
-  2. Items `note`, `book`, `canvas`, `painting` with icons from the UI kit placeholders; recipes `fiber+fiber→note`, `note+fiber→book`, `fiber+stick→canvas`; `ItemInstance.artifact?` and `GroundDrop.artifact?` carried through drop, pick-up, swap and give.
-  3. Display furniture: `display` on scene props; one wall hook per home interior, three plus an easel (`interaction: 'paint'`) in Lark's home; `ArtifactPlacement`; commands `artifactDisplay`, `artifactTake`.
-  4. Save v4 with v3→v4 migration, zod caps, referential validation (§9); export/import round-trip.
-  5. Frame snapshot `ArtifactView` (metadata only) plus an on-demand content query.
-- out of scope: screens (C18, C20), villager actions, image generation.
-- done when: `npm run check` passes; unit tests for every cap, sanitizer case, command receipt, migration and referential rule; a 512-artifact save round-trips under 3 MB and validates in < 50 ms (test asserts both); existing saves load unchanged.
-- evidence:
-
 ### C18 · The written word: book screen, villager reading and writing
 
 - status: open (after C17)
