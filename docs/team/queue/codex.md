@@ -254,8 +254,10 @@ Forge work that needs Blender on machine A, in order: C9b `fit` → C9c → C3b 
 
 ## Claude (machine A): art-quality and local-generation tooling (2026-11-02)
 
-Filed from the local-generation build (directive 013) and the stand-in blender session. In
-order; C26 gates any regeneration of approved assets (blender B20).
+Filed from the local-generation build (directive 013) and the stand-in blender session.
+Order since 2026-11-02T2330 (directive 014, ordered by what unblocks blender): C30 swatch
+(B17) → C30 portrait (B25) → C32 icon (B23) → C28 (sheet resolution) → C3b faces → C9b
+fit → C9c.
 
 ### C26 · Sprite readability: features survive the bake and pixelize step
 
@@ -305,6 +307,15 @@ order; C26 gates any regeneration of approved assets (blender B20).
 - owner: claude
 - goal: the static 2D classes generate locally too: portraits in all nine emotions kept on identity (contract-v2), seamless 1024² terrain swatches.
 - done when: Neris has nine emotion portraits at 96/128 px that pass the portrait contract; a grass swatch passes tileforge QA
+- evidence:
+
+### C32 · `forge.py icon` for inventory items without a held model
+
+- status: open
+- owner: claude
+- goal: B23 can make 32 × 32 `icon.item` icons (render_spec) for the resources and crafted goods in `src/content/definitions.ts`, palette-locked, in the same light and outline rules as the held-item icons from `items`.
+- work: from a `prop-v1` sheet, either gen3d a small model and render the item stage's icon view, or reduce the sheet's three-quarter view straight to 32 × 32 through `forgelib/pixelize`; pick one by trial on two items (berries, flint) and document it in `recipes/README.md` and the `sprite-forge` skill. Packet type for an icon set.
+- done when: berries and flint icons pass icon QA at 1× and 4× and the B23 instructions work as written
 - evidence:
 
 ### C31 · gen3d backends: Hunyuan3D-2.1 shape and TRELLIS.2

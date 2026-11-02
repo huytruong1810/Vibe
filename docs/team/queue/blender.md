@@ -11,26 +11,31 @@ review your own results. Make a sheet, forge it straight away, and fix the sheet
 when the forge shows a problem. Start with the welcome-back message
 `docs/team/comms/claude/*--to-blender--welcome-back-art-overhaul.md`.
 
-**Order of work:**
+**Order of work** (directive 014: claude reviews your packets under the director's standing
+delegation, so post every packet `--to-claude-director--` and keep going on the next ticket
+while it waits):
 
-1. **B19 golden samples, then the director's look approval.**
-   - Rivallie, the hatchet and the house can start now.
-   - Player-aqualia waits for claude's human pose guide (C27).
-2. **B15 sheets** once the look is approved.
-   - Quadrupeds, props and buildings first.
-   - Humans, winged, shelled and biped follow as claude's C27 pose guides land.
-3. **B16, B3, B4, B5:** forge each sheet as it lands.
-4. **B17 swatches** after claude's `forge.py swatch` (C30).
-5. **B18** after B15 step 3.
-6. **B20** after B19 and claude's C26.
+1. **B19 golden samples**, then the look review. Every pose guide is in (C27, all five
+   templates), so all four samples can start now.
+2. **Anything that doesn't depend on the look, while B19 waits:** B16 step 2–3 metadata,
+   B11, drafting every B15/B21–B25 prompt into its recipe `concept` block (no generation),
+   and B26 planning.
+3. **B15 sheets** once the look is approved: quadrupeds, props and buildings first, then
+   humans, winged, shelled and biped (their concept templates are in the recipes README).
+4. **Forge each sheet as it lands:** B16/B4 (player, Neris) → B21 (9 villagers), B3
+   (creatures), B5 (environment kit), B24 (flora states), B22 (tools and weapons).
+5. **B20** regenerate the approved assets in the new style (C26 readability fields).
+6. **B17 terrain** once claude's `forge.py swatch` lands (C30); **B25 portraits** once
+   `forge.py portrait` lands (C30); **B23 icons** once `forge.py icon` lands (C32).
+7. **B18** after B15 step 3; **B26** dress the maps once B5 packets are approved.
 
-B0 is standing; B2 and B14 wait on the director.
+B0 is standing.
 
 ## Now
 
 ### B14 · Publish the approved hatchet
 
-- status: candidate
+- status: done (published 2026-11-02 by the stand-in session); move to the archive at the next queue tidy
 - goal: stage the director-approved golden held item so the runtime can draw it once C9b's held-layer composition lands.
 - inputs: [approval record](../comms/director/approvals/item-hatchet--2026-11-01-item-hatchet.md) (digest 89102c20…, scope held-item and icon).
 - work: `uv run --project art/source/forge python art/source/forge/forge.py publish --asset item:hatchet`; don't re-run any hatchet stage first (a new digest voids the approval, PRD-9).
@@ -39,14 +44,14 @@ B0 is standing; B2 and B14 wait on the director.
 
 ### B19 · Golden samples with local image generation (first)
 
-- status: open (first; B14 is done)
+- status: open (first; every pose guide is in: C27 done 2026-11-02)
 - goal: approve the new look on six golden samples (image model: klein 9B; 3D model: Hunyuan3D-2mv, decided in C31) before regenerating everything (PRD-4, L12; director decision 2026-11-02).
 - inputs: [directive 013](../comms/claude/2026-11-02T0807--to-all--directive-013-local-image-generation.md); [imagegen notes](../../engineering/imagegen.md); `reference-sheets` skill; Rivallie's recipe `concept` block with `poseGuide` (copy the pattern; claude makes the pose guides for other body types in C27, so don't make your own).
 - work, one asset at a time:
   1. The image model is decided: klein 9B is the only one installed (claude C29, doctrine L12), so there's no `--model` flag to choose. Rivallie (creature): `forge.py concept --asset rivallie --n 4`; c901 and c903 from seeds 900–903 are already clean on all fours (`docs/team/comms/claude/boards/2026-11-02-imagegen-rivallie-klein9b.png`). Look at the contact sheet and keep the best with `views`.
   2. player-aqualia (human, A-pose, 5 heads, L3), item:hatchet (prop), env:house-aqualia (building) the same way; the human, winged, shelled and biped pose guides come with claude's C27.
   3. Run each kept sheet through the forge to a packet with the 3D backend (Hunyuan3D-2mv; TRELLIS.2 lost C31 and is removed).
-  4. Post one message `--to-director--golden-samples` with the contact sheets, the forge packets and what you saw in each; the director approves the look.
+  4. Post one message `--to-claude-director--golden-samples` with the contact sheets, the forge packets and what you saw in each. Claude reviews the look under the director's standing delegation (directive 014) and records the decision.
 - done when: the director has approved the golden samples' look (the models are already recorded in L12); their concepts become the style anchors in `art/source/style/style.json`
 - evidence:
 
@@ -71,7 +76,7 @@ B0 is standing; B2 and B14 wait on the director.
 ### B16 · Redraw the human sheets; fix ramp names on every sheet
 
 - moved: from the communicator's M11 on 2026-11-02 (all art is blender's, TEAM-1). Since directive 013 generate **locally** with the forge after B19's decision; quota limits no longer apply.
-- status: in_progress (palette ramps and metadata schemas normalized; 3-view redraw resumes with local generation once the C27 human pose guide lands)
+- status: in_progress (palette ramps and metadata schemas normalized; the human pose guide is in (C27): the 3-view redraw runs with B19's player sample and then B15)
 - goal: bring every reference sheet up to PRD-3 and L3 (director decision via directive 006).
 - work:
   1. **Human sheets: player-aqualia, npc-neris, and the four mannequins (standard, sturdy, slender, elder).**
@@ -103,16 +108,67 @@ B0 is standing; B2 and B14 wait on the director.
 ### B5 · Aqualia environment kit
 
 - status: blocked: waiting for your own B15 step 3 reference sheets (env-house-aqualia, env-tree-oak, env-well); go-environment directive received from claude
-- goal: in the order the region bible lists landmarks: a house, the ferry and dock, the mill and waterwheel, a willow, boardwalk pieces, lanterns, the sluice gate. Use the `environment-forge` skill.
-- done when: a packet per asset
+- goal: every Aqualia building, landmark and large prop the maps need (region bible AQ-2), one at a time with the `environment-forge` skill. Golden three first (B15 step 3): `env:house-aqualia`, `env:tree-oak` (trunk + canopy), `env:well`. Then the runtime gaps in `docs/art/coverage.md`: `landmark_waystone`, `prop_hearth` (the Hearth Island fire). Then AQ-2 in this order:
+  - [ ] village: notice board, ferry landing and dock, Diver's Pool platform, Lantern Bridge (with parapet lanterns), Oren's mill and waterwheel, Finn's sluice gate, Caelum's gauge tower, weir walk, Spring Shrine and cave mouth, Weavers' Row porch, reed drying racks and laundry lines, Dara's courier post, Willa's stilt hut and herb beds, fishing pier, Lark's studio;
+  - [ ] riverlands: willow (Lark's Bend), Kite Oak, willow footbridge, ferry bell post, fungi ring, sunken gauge post, drowned tree, warm-spring rim rocks;
+  - [ ] kit pieces reused everywhere: boardwalk straight/corner/end, lantern post, fence, crate and barrel, reed clump, rock large/small.
+- done when: a packet per asset, each `candidate`, posted `--to-claude-director--`
 - evidence:
 
 ### B3 · Remaining creatures, one at a time
 
 - status: mireling published and integrated in the build (f1ded41). C3h templates are built (776eb0f, `go-creature-templates`): steamshell, zephyrit, cindermoth and ignicap wait only for their sheets (your B15 step 4)
-- goal: quadruped species first, in this order: bramblefang, marshstalker, mireling. steamshell (shelled), zephyrit and cindermoth (winged) and ignicap (mushroom-biped) wait for codex templates. Each needs its reference sheet from the communicator (all-fours pose for quadrupeds, same pose in every view).
+- goal: the four non-quadruped T0 species, one at a time after their B15 step 4 sheets: steamshell (shelled, `creature-v1` + `shelled.png`), zephyrit and cindermoth (winged, `creature-winged-v1` + `winged.png`), ignicap (mushroom-biped, `creature-biped-v1` + `mushroom-biped.png`). Their rig templates are built (C3h). The four quadrupeds are redone in the new style in B20.
 - done when: a packet per species, each `candidate`
 - evidence: rivallie, bramblefang, marshstalker, mireling approved, published and in the build (full history in [archive/blender.md](archive/blender.md#b3-evidence-to-2026-11-02)).
+
+### B21 · The other nine Aqualia villagers (after B4)
+
+- status: blocked: waits for B4's player and Neris packets (the human golden pair sets the body and outfit rules)
+- goal: every villager walks in game: today `docs/art/coverage.md` lists `npc:reed`, `npc:willa`, `npc:oren`, `npc:lark`, `npc:dara`, `npc:finn` (and Neris, B4) as missing sprite identities.
+- work, one villager at a time: recipe with a `concept` block (`human-apose-v1`, `poseGuide` `human.png`, identity from `public/assets/portraits/` and the villager's row in `src/content/villagers.ts`: age, role and personality), `concept` → `views` → forge (`sprite-forge`, human kind) → packet. Order: Caelum, Marina, Reed, Willa, Oren, Mira, Lark, Dara, Finn. Body type per `body_types.json` `aqualiaCast`. Run `faces` after each body (B11 grammar).
+- done when: nine packets `candidate`, posted `--to-claude-director--`
+- evidence:
+
+### B22 · Held tools and weapons (items kind)
+
+- status: blocked: waits for B19's look decision (the hatchet golden sample set the item pipeline: `art/review/2026-11-01-item-hatchet`)
+- goal: every held item in `src/content/definitions.ts` that a hand carries has its held poses and icon: fishing rod, hoe, ferry pole (B15 step 5), copper sword, hunting spear, shortbow (T0 combat). The hatchet is redone in B20.
+- work, one item at a time: `prop-v1` concept → `views` → `prep → gen3d → clean → texture → orient → items → packet` (`sprite-forge` items section, recipe like `recipes/item-hatchet.json`). Look at all 65 poses on the contact sheet.
+- done when: six packets `candidate`, posted `--to-claude-director--`
+- evidence:
+
+### B23 · Inventory icons for resources and crafted goods (after C32)
+
+- status: blocked: waits for claude's `forge.py icon` (C32)
+- goal: every inventory item without a held model gets a 32 × 32 `icon.item` icon in the project palette: sunberries, river reeds, wild wheat, nectar blossom, ash grass, spore fungi, river flint, hardwood stick, reed fiber, tool head (WIP), herbal poultice, spring water, copper ore, wild meat, nectar roast, arrow bundle, garment.
+- work: one `prop-v1` concept per item, then `forge.py icon` (C32 says how); look at every icon at 1× and 4×.
+- done when: one icons packet `candidate`, posted `--to-claude-director--`
+- evidence:
+
+### B24 · Flora in three states (environment kind)
+
+- status: blocked: waits for B19's look decision and the B5 golden three (small props follow the building and tree rules)
+- goal: the six gatherable flora show their state in game, as `docs/art/coverage.md` requires: `flora_{berries,reeds,wheat,nectar,ashgrass,fungi}_{healthy,harvested,burnt}` (18 sprites).
+- work, one flora at a time: the healthy sheet first (`prop-v1`, front and left views, plain background), forged as a 1 × 1 environment asset. Make the harvested and burnt sheets with `concept`, using the healthy sheet as the first reference so the plant stays the same, then forge each one. If the environment kind refuses a 1 × 1 footprint or a state variant, message claude with the exact output; don't work around it.
+- done when: 18 sprites in packets `candidate`, posted `--to-claude-director--`
+- evidence:
+
+### B25 · Portraits and expression sets (after C30)
+
+- status: blocked: waits for claude's `forge.py portrait` (C30) and B19's look decision
+- goal: the 19 Aqualia actors (the player, 10 villagers, 8 species) each have the nine-emotion portrait set (portrait contract v2); coverage shows 0 complete expression sets today. The status board asks for a restyle check of the approved portraits against ART-14 once the golden samples set the look.
+- work: `forge.py portrait --asset <id>` per actor (C30 documents it), the player and Neris first; look at all nine emotions at 96 and 128 px against the neutral portrait for identity.
+- done when: 19 sets `candidate`, posted `--to-claude-director--`
+- evidence:
+
+### B26 · Dress the village and the Riverlands with the new kit (after B5)
+
+- status: blocked: waits for approved B5 assets
+- goal: the approved maps (village-2, riverlands-2, layout scope) show the new buildings, landmarks, kit pieces and flora at their AQ-2 positions.
+- work: `world-builder` skill, one pass per area: place the approved environment assets at their landmarks, `apply`, `render`, open every screen crop, `check`, fix. Layout changes need a new layout packet; dressing alone is a dressing packet.
+- done when: a packet per level `candidate`, posted `--to-claude-director--`
+- evidence:
 
 ## Next
 
