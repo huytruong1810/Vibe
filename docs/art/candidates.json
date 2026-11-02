@@ -345,9 +345,9 @@
   {
     "subjectKind": "appearance",
     "subjectId": "species:mireling",
-    "digest": "a35d9e6155876db5bc1287e19dc109030fbed308173623027fef964a241c7f4a",
-    "approvalMatches": false,
-    "runtimeStage": "candidate"
+    "digest": "fa52c6000baa2f4b37f8afcf105911b9e9cb807a18bb7b12869ee281602f06d5",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
   },
   {
     "subjectKind": "appearance",

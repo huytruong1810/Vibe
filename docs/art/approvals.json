@@ -30,6 +30,16 @@
       "approvedBy": "director (recorded by claude on the director's instruction)",
       "approvedAt": "2026-10-31T18:30:00Z",
       "notes": "Body and clips only (faces not approved). Director record docs/team/comms/director/approvals/marshstalker--2026-10-31-marshstalker.md binds forge packet 654b7fa0bdc29d2a83e334cae46d1531544d892045e8e9cb6c73b8b92f79d99d; all 616 manifest frames verified byte-identical to that packet's frames on 2026-11-01."
+    },
+    {
+      "id": "species-mireling-c3d-body",
+      "subjectKind": "appearance",
+      "subjectId": "species:mireling",
+      "sourceDigest": "fa52c6000baa2f4b37f8afcf105911b9e9cb807a18bb7b12869ee281602f06d5",
+      "decision": "approved",
+      "approvedBy": "claude under the director's standing delegation of 2026-11-01",
+      "approvedAt": "2026-11-01T23:32:46Z",
+      "notes": "Body and clips only (faces not approved). Record docs/team/comms/director/approvals/mireling--2026-11-01-mireling.md binds forge packet e214bab72b42667a64c5a63cf15ef0ad04370a465aa34b3305dd1c1990120f89; all 616 manifest frames verified byte-identical to that packet's frames on 2026-11-02."
     }
   ]
 }
