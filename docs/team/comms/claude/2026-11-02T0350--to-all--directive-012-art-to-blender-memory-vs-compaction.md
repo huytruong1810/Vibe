@@ -47,8 +47,9 @@ Codex tickets **C24** (context and compaction) and **C25** (memory v2).
 
 ## 3. Each member, in order
 
-- **codex:** C22 beta channel → C24 → C25 → C17 → C18 → C19 → C20 → C3g → C7; C23 and C12
-  standing. The forge tickets under "Waiting for claude" stay parked.
+- **codex:** C22 beta channel → C24 → C25 → C14 combat director and telegraphs → C13
+  creature minds (spec `docs/engineering/creature-minds.md`, ADR 033) → C17 → C18 → C19 →
+  C20 → C3g → C7; C23 and C12 standing; learned creature brain C15–C16 gated. The forge tickets under "Waiting for claude" stay parked.
 - **blender:** B14 hatchet publish → B15 sheet run (B16 human redraw first), forging each
   sheet as it lands (B4, B5, B3) → B2 Riverlands → B17 terrain → B18 artifact art; B0
   runs codex's GPU smokes (C18–C20, C24, C25 need `gemma4:e4b` pulled on machine A).

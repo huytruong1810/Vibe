@@ -21,6 +21,12 @@ rules the world already has. Director decision, 2026-11-01 (L11).
   stack (AGT, L10), for example "stay near the ferry today". Those goals become
   observation inputs to System 1, never per-tick control.
 - **CRM-1.3** Ambient creatures (AMB-1) are presentation only and have no brain.
+- **CRM-1.4 The brain runs only when it matters.** A creature's everyday life (feeding,
+  drinking, bathing, wandering, sleeping, herding) stays on the needs-driven utility
+  system and the movement layer. The System 1 brain switches on when the creature
+  becomes **alert** (it perceives a threat, prey it means to hunt, an attacker, or its
+  partner's command) and switches off after a calm period with no threat in sight. Most
+  creatures most of the time cost no brain work at all (2026-11-02).
 
 ## CRM-2 Movement layer
 
@@ -36,7 +42,11 @@ rules the world already has. Director decision, 2026-11-01 (L11).
 - **CRM-2.3** **Herd and territory:** home ranges come from map `Habitat` regions
   (WLD-M2). Creatures drift back when no intent pulls them away.
 - **CRM-2.4** **Pathing:** movement respects collision, elevation and ramps exactly as
-  the player does (`SurfaceRules`), and the creature's medium (water or land).
+  the player does (`SurfaceRules`), and the creature's medium: land, water, lava (fire
+  species) or **air**. Winged species (zephyrit, cindermoth) fly: they cross water and
+  steps of up to two elevation levels, never walls or interiors' solid tiles, and land to
+  eat, drink, bathe and sleep (C3h `winged` clips). Flying is movement, not invisibility:
+  they cast a shadow and can be hit like anyone else.
 
 ## CRM-3 System 1 brain
 
@@ -107,7 +117,9 @@ rules the world already has. Director decision, 2026-11-01 (L11).
 ## CRM-6 Training: fun, not winning
 
 - **CRM-6.1 Scripted brain first.** A hand-written utility brain implements the same
-  observation and intent interfaces. It is:
+  observation and intent interfaces. The learned brain (CRM-6.2 onward) starts only after
+  the scripted brain has shipped in a playtested build and the director asks for it. It
+  is:
   - the shipping baseline;
   - the teacher for imitation;
   - the far-away fallback (CRM-8.2);
@@ -129,12 +141,21 @@ rules the world already has. Director decision, 2026-11-01 (L11).
   are scripted player bots plus recorded player traces.
 
 - **CRM-6.4 Species identity tests.** Each species has written behaviour assertions that
-  run in CI on the trained model. Examples:
-  - Rivallie disengages and seeks water below 30% health.
-  - Bramblefang packs flank before they strike.
-  - Mireling ambush from reeds at dusk.
-
-  A model that fails them doesn't ship.
+  run in CI on whichever brain ships, scripted or learned. A brain that fails them doesn't
+  ship. The starting set (engineering adds cases, never removes them):
+  - **Rivallie:** disengages below 30% health and heads for water; fights near water.
+  - **Bramblefang:** packs gather and flank before the first strike; a downed leader
+    breaks the pack.
+  - **Marshstalker:** waits hidden in reeds or shallows near dusk and opens with a
+    lunge; gives up a chase that leaves its marsh.
+  - **Mireling:** slow and stubborn: guards more than it strikes and seldom flees.
+  - **Steamshell:** withdraws into its shell (guard) when hit hard, then vents (element)
+    at whoever is closest.
+  - **Zephyrit:** hit and run: strikes, flies off past its readiness ring, returns.
+  - **Cindermoth:** erratic flutter at range; prefers element over strike; drawn to fire
+    and light at night.
+  - **Ignicap:** peaceable; retaliates once, then retreats toward warm ground; a cornered
+    Ignicap bursts (element).
 
 ## CRM-7 Frozen at release, adaptive in play
 
@@ -169,6 +190,27 @@ rules the world already has. Director decision, 2026-11-01 (L11).
 - **CRM-9.2** An observation inspector shows one creature's full input vector live.
 - **CRM-9.3** A per-species switch toggles between the scripted and learned brain at
   runtime, for comparison and as a safety valve.
+
+## CRM-10 Presence: how a fight reads
+
+The brain exists to make fights feel like meeting animals, not bots. Every engagement
+moves through readable beats, each with its own body language (C3h clips) so the player
+can read it at a glance:
+
+1. **Notice.** The creature stops, turns its head toward the threat and holds a beat
+   (`guard` or `idle`) before acting. Prey bolt; predators hold still.
+2. **Stalk or warn.** Predators approach low and slow and circle at their readiness
+   ring; territorial species posture (`social`) at the edge of their territory before
+   committing; packs call (`social`) and gather.
+3. **Commit.** Only creatures holding an attack token strike, one after another rather
+   than all at once; each strike shows its telegraph (CMB-4) from the start of windup.
+   Others circle, feint (a short approach then back) or guard.
+4. **Break.** Hurt creatures disengage and seek their safe medium (Rivallie to water,
+   Ignicap to warm ground); a pack whose leader falls loses heart; prey that escapes is let
+   go. Fights end; they don't grind.
+
+A fight against a pack should feel dangerous and fair at once: lots of motion around
+the player, one or two clear threats at a time.
 
 ## Engineering mandates
 

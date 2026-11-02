@@ -4,7 +4,7 @@ Read your brief `docs/team/briefs/codex.md` and [the queue rules](README.md) fir
 Finished tickets are in [archive/codex.md](archive/codex.md); open it only when a live ticket links there.
 
 **Who does what (directive 011, 2026-11-02, claude away until about 2026-11-09).** Codex
-owns this queue: **C22 → C24 → C25 → C17 → C18 → C19 → C20**, then C3g and C7, with C23 and C12
+owns this queue: **C22 → C24 → C25 → C14 → C13 → C17 → C18 → C19 → C20**, then C3g and C7, with C23 and C12
 standing (C19 can run beside C18; C21 only on the director's go). Machine B has no
 Blender or GPU: build against mocks and send live GPU smokes to blender as
 `--to-blender--test-` requests. The forge tickets under "Waiting for claude" need
@@ -56,6 +56,38 @@ Blender on machine A; leave them unless the director says otherwise.
   3. Retrieval: recency (0.995 per game hour) + importance + relevance, min-max normalized, equal weights; `embeddinggemma` 256-d via `/api/embed`, cached in IndexedDB (not in saves), keyword fallback; invalidated records excluded; `lastAccessTick` updated.
   4. Reflection at an importance-sum threshold (start 150) on the dialogue model when idle; capacity cap 400 with episodic folding (never semantic facts or commitments).
 - done when: §4 rows "extraction", "retrieval", "migration" pass; the C24 live smoke repeated across two conversations: the villager recalls a fact from the first in the second; soak (`npm run benchmark` or ecology soak) shows retrieval ≤ 5 ms per prompt.
+- evidence:
+
+### C14 · Combat director and telegraphs: fair fights first (CRM-4, CMB-4)
+
+- status: open (after C25)
+- owner: codex
+- goal: no matter how many hostiles, the player faces one or two clear threats at a time, every heavy attack is telegraphed, and nothing attacks from off screen.
+- spec: [creature minds](../../engineering/creature-minds.md) §1, §2, §7, §10 (partner icon), §11 rows "director" and "telegraphs"; doctrine CRM-4, CRM-10.3, CMB-4; ADR 033.
+- work:
+  1. Token pools per target (player 2 melee / 1 ranged-element, partner 2/1, villager 1/1; none wild-vs-wild), held windup→recovery, priority grants with ≥ 8 ticks between grants on a target, no player tokens outside the 30 × 17 tile view rectangle.
+  2. Gate today's `CombatSystem.advance` attack start on a token; creatures without one hold at their readiness ring (`max(range + 1.5, kiteRange)`) and circle (a minimal orbit is enough until C13).
+  3. Telegraphs for every creature attack over 15% of the target's max HP from windup tick 0 (`ground` arc or `glint`), drawn in the effect layer under VFX, plus the predator crouch-and-shiver on windup frames.
+  4. Difficulty knobs (token counts, grant spacing, aggression bias) in settings.
+  5. Partner intent icon slot in the HUD (shows `attack`/`guard`/`follow` from today's state until C13 provides intents).
+- done when: unit and browser tests from §11 "director" and "telegraphs" pass; a Playwright journey with 20 hostile Bramblefang shows at most the token count in windup or active at any tick; a 1080p capture of that fight is looked at (PRD-5) and attached; `npm run benchmark` unchanged within 5%.
+- evidence:
+
+### C13 · Creature minds v1: engagement, perception, intents, scripted brain, flight (CRM-1…3, CRM-10)
+
+- status: open (after C14)
+- owner: codex
+- goal: creatures notice, stalk, commit and break like animals, each species recognisably itself, within budget and deterministic.
+- spec: [creature minds](../../engineering/creature-minds.md) §2–§6, §8–§11; doctrine CRM-1.4, CRM-2 (incl. flight), CRM-3, CRM-6.1, CRM-6.4, CRM-8, CRM-9, CRM-10; ADR 033.
+- work:
+  1. Engagement state machine (calm/alert/engaged/disengaging) with the notice beat; calm creatures keep the current utility system.
+  2. `PerceptionGrid` (typed arrays, no allocation) and the `crm-obs-1` observation; `crm-cond-1` conditioning for later.
+  3. Intents, masking, executor (§5.3) with the clip mapping (C3h clips), readiness ring, flank orbits, feints, safe-medium flight to water/lava, pack calls.
+  4. Scripted utility brain with `CREATURE_TACTICS` for all 8 species, hysteresis, commitment, jitter, staggered cadence and reaction delays.
+  5. Movement: intercept/evade, per-species boids weights, `Traversal.air` for winged species (landing for eat/drink/bathe/sleep), home ranges (spawn point until C7's `Habitat`).
+  6. Engaged tier (cap 48) and the 2 Hz scripted fallback; save the brain state; debug overlay, observation inspector.
+  7. Partner: `focus`/`regroup` commands with bond-scaled weight; real intents on the HUD icon.
+- done when: §11 rows "determinism", "masking and reaction", "species identity" (all 8 species) and "budget" (`engagedCombat150` in the benchmark, asserted on CI) pass; a mid-fight save replays to identical intents; 1080p captures of a 6-Bramblefang pack fight and a Zephyrit skirmish for the director show notice, stalk, staggered strikes and break.
 - evidence:
 
 ### C17 · Artifact item class and its save version (foundation for notes, books, paintings)
@@ -239,7 +271,7 @@ Forge work that needs Blender on machine A, in order: C9b `fit` → C9c → C3b 
 
 ## Later
 
-Creature minds (C13–C16) start after C7; C8 holds the remaining brief P0 rows.
+C8 holds the remaining brief P0 rows; the learned creature brain (C15, C16) is gated on playtests of C13.
 
 ### C8 · Existing P0s from your brief
 
@@ -248,46 +280,22 @@ Creature minds (C13–C16) start after C7; C8 holds the remaining brief P0 rows.
 - done when: the acceptance column of each row in `docs/team/briefs/codex.md`
 - evidence: [C8 implementation and validation](../comms/codex/archive/2026-10-31T1040--to-all--c8-ui-packet-gallery.md); [ADR 019](../../engineering/decisions.md#adr-019--director-ui-kit-and-isolated-candidate-packet-preview). This slice does not complete the remaining C8 gates.
 
-### C13 · Creature movement layer and brain interface (CRM-M1, CRM-M2)
+### C15 · Learned brain: headless training bridge (CRM-6.2, CRM-M4) — gated
 
-- status: open
-- goal: creatures flock, hunt and flee by scripted movement, and a scripted utility brain drives combat through the fixed observation and intent interface that the learned brain will later plug into.
-- inputs: `docs/doctrine/14-creature-minds.md` CRM-1…CRM-3, CRM-6.1, CRM-8; the existing predation and disposition code in `src/domain/` (creatures, combat, simulation); `Habitat` regions (C7).
-- work:
-  - per-species flocking weights and predation pursuit/evasion;
-  - the observation vector and the masked intent space as a versioned schema;
-  - decisions staggered every 3–6 ticks, with a reaction delay;
-  - LOD by distance (CRM-8.2);
-  - an ADR in `docs/engineering/decisions.md`.
-- done when: deterministic soak unchanged; benchmark shows 150 creatures within CRM-8.1 for movement and the scripted brain; unit tests for masking and reaction delay
+- status: blocked: starts only after C13 ships in a playtested build and the director asks (CRM-6.1)
+- owner: codex
+- goal: a vectorized multi-agent environment over the deterministic Node simulation for PufferLib or CleanRL; imitation of the C13 scripted brain, then PPO with shared parameters and the CRM-6.3 reward; reproducible runs (seed, config, data hash, weight hash).
+- spec: [creature minds](../../engineering/creature-minds.md) §5, §12; doctrine CRM-6, CRM-7.3.
+- done when: an imitation policy matches the scripted brain's intents on a held-out set above a threshold you set and record; training runs on machine A through blender's B0
 - evidence:
 
-### C14 · Combat director and partner intent (CRM-M3)
+### C16 · Learned brain v1 in the game (CRM-M5…M7) — gated
 
-- status: open
-- goal: attack tokens (2 melee and 1 ranged/element against the player to start), a readiness ring, no off-screen attacks, difficulty knobs, and the partner's intent icon in the HUD.
-- done when: a browser journey with 20 hostiles shows at most the token count attacking at once; partner icon visible; tests green
-- evidence:
-
-### C15 · Headless training bridge (CRM-M4)
-
-- status: open
-- goal: the deterministic Node simulation exposed as a multi-agent environment to PufferLib or CleanRL. Pin the versions; Python tooling runs through `uv` like the forge. The pipeline is imitation of the C13 scripted brain, then PPO with shared parameters. Training runs record seed, config, data hash and weight hash (CRM-7.3).
-- inputs: C13. Training can run on machine A's GPU; ask blender to run long jobs through `--to-blender--test-` if needed.
-- done when: an imitation-trained policy matches the scripted brain's intent choices on a held-out set to a threshold you set and record
-- evidence:
-
-### C16 · Learned System 1 policy v1 (CRM-M5…M7)
-
-- status: open
-- goal: ship the learned brain behind the scripted/learned switch:
-  - deterministic CPU inference (float32 or int8);
-  - weights as versioned content with a save hash;
-  - memory counters;
-  - species identity tests in CI (CRM-6.4);
-  - debug overlay and observation inspector;
-  - a model card.
-- done when: 150 creatures in combat within CRM-8.1; species tests green; a save replays to identical decisions; the director reviews a capture of a 20-creature fight (scripted vs learned side by side)
+- status: blocked: after C15
+- owner: codex
+- goal: the learned brain behind the per-species scripted/learned switch: deterministic CPU inference (≤ 32k parameters, float32 or int8, ≤ 30 µs per pass), weights as versioned content with a save hash, memory counters, a model card.
+- spec: [creature minds](../../engineering/creature-minds.md) §9, §10, §12; doctrine CRM-3.5, CRM-7, CRM-8.
+- done when: the C13 identity tests and budget pass with the learned brain; a save replays identically; the director compares scripted and learned captures of the same 20-creature fight
 - evidence:
 
 ## Standing
