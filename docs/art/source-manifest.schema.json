@@ -196,6 +196,19 @@
                       "additionalProperties": false
                     }
                   },
+                  "held": {
+                    "type": "object",
+                    "propertyNames": { "type": "string", "minLength": 1, "maxLength": 160 },
+                    "additionalProperties": {
+                      "type": "object",
+                      "properties": {
+                        "bucket": { "type": "integer", "minimum": 0, "maximum": 7 },
+                        "behind": { "type": "boolean" }
+                      },
+                      "required": ["bucket", "behind"],
+                      "additionalProperties": false
+                    }
+                  },
                   "stage": { "type": "string", "enum": ["proof", "candidate"] }
                 },
                 "required": ["id", "path", "sourceSize", "anchorPx", "stage"],

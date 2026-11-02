@@ -12,6 +12,7 @@ import {
   FurnitureDefinitionSchema,
   SceneAssetSchema,
   PixelPointSchema,
+  HeldPoseSchema,
   AuthoringProvenanceSchema,
   normalizedAnchor,
   validateV2Graph,
@@ -39,6 +40,7 @@ export const SourceFrameV2Schema = z
     anchorPx: PixelPointSchema,
     rigId: Id.optional(),
     sockets: z.record(Id, PixelPointSchema).optional(),
+    held: z.record(Id, HeldPoseSchema).optional(),
     stage: SourceArtStageSchema,
   })
   .strict()
@@ -48,6 +50,9 @@ export const SourceFrameV2Schema = z
     for (const [id, socket] of Object.entries(f.sockets ?? {}))
       if (socket.x > f.sourceSize.w || socket.y > f.sourceSize.h)
         ctx.addIssue({ code: 'custom', message: `Socket outside untrimmed source: ${f.id}/${id}` });
+    for (const id of Object.keys(f.held ?? {}))
+      if (!f.sockets?.[id])
+        ctx.addIssue({ code: 'custom', message: `Held pose without its socket: ${f.id}/${id}` });
   });
 const SourceAppearanceV1Schema = AssetAppearanceSchema.omit({
   stage: true,

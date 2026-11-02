@@ -168,6 +168,27 @@ arm = next((o for o in scene.objects if o.type == "ARMATURE"), None)
 if P.get("itemPoses") and arm:
     raise SystemExit("Item rendering requires a separate static prop mesh, not an actor armature")
 
+def held_tracks(arm, px) -> dict:
+    """C9b: how each hand would hold an item in this frame. A fist closes around a haft that
+    runs along the knuckle line, the head beyond the index finger, so the item's on-screen
+    direction is pinky base -> index base (degrees clockwise from up, the item renders' grip
+    convention). depth > 0 means the hand is farther from the camera than the chest, measured on
+    the ground plane. Rigs without finger bones (every creature) get no track."""
+    chest = arm.pose.bones.get("spine_03")
+    out = {}
+    for socket, side in (("Socket_Hand.R", "r"), ("Socket_Hand.L", "l")):
+        pinky, index, hand = (arm.pose.bones.get(n) for n in (f"pinky_01_{side}", f"index_01_{side}", socket))
+        if not (pinky and index and hand and chest):
+            continue
+        a, b = px(arm.matrix_world @ pinky.head), px(arm.matrix_world @ index.head)
+        angle = math.degrees(math.atan2(b[0] - a[0], -(b[1] - a[1]))) % 360
+        # Ground-plane depth only: the camera looks toward +Y, and a camera-space depth would
+        # count a hand that is merely lower than the chest (30 deg elevation) as behind it.
+        depth = (arm.matrix_world @ hand.head).y - (arm.matrix_world @ chest.head).y
+        out[socket] = {"angleDeg": round(angle, 2), "depth": round(depth, 4)}
+    return out
+
+
 tracks = {"canvas": [W, H], "anchor": [AX, AY], "clips": {}, "canvases": {}}
 for clip in P["clips"]:
     cv = clip.get("canvas") or {"size": P["canvas"], "anchor": P["anchor"]}
@@ -214,6 +235,9 @@ for clip in P["clips"]:
                     pb = arm.pose.bones.get(b)
                     if pb:
                         entry[b] = px(arm.matrix_world @ pb.head)
+                held = held_tracks(arm, px)
+                if held:
+                    entry["held"] = held
             ftrack.append(entry)
 
 # Blender appends the frame number to file-output names; normalise them.

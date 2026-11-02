@@ -89,7 +89,7 @@ In order: C9b (runtime held-layer composition, then `fit`) → C9c → C3b faces
 
 ### C9b · Items, fit, human faces
 
-- status: in-progress (claude). **Items done 2026-11-01:** source prep, orient, icon scale, packet and publish; doctor `items: READY`; golden hatchet **director-approved 2026-11-02** (blender B14 publishes it). Human `publish` done (ed32dab). Open: runtime held-layer composition (the hatchet reaches the game through it), then `fit` (garments)
+- status: in-progress (claude). **Items done 2026-11-01:** source prep, orient, icon scale, packet and publish; doctor `items: READY`; golden hatchet **director-approved 2026-11-02** (blender B14 publishes it). Human `publish` done (ed32dab). Runtime held-layer composition done 2026-11-02 (hand grip and occlusion tracks, held clip contract, compositor; see hd-presentation C9b runtime held-item composition): the hatchet shows once a modular human body is integrated. Open: `fit` (garments)
 - goal: the remaining human-class stages.
   - `items`: 8 facings × 8 grip angles plus an inventory icon from one mesh (ART-15), registered to `Socket_Hand.*`.
   - `fit`: garment parts (Surface Deform or Shrinkwrap, weights from the body, hidden body faces masked, PRD-1).
@@ -110,6 +110,7 @@ In order: C9b (runtime held-layer composition, then `fit`) → C9c → C3b faces
   2. **Weak combat reads:** strike (UAL1 Punch_Jab), element (Spell_Simple_Shoot) and bow_shot (a two-handed pistol aim as a stand-in) barely move at 56 px. Add authored pose overlays: bone rotations at given frames, layered after the retarget and declared in `spec/clips/humanoid.json`. Give each one a readable windup, active and recovery (CMB-3, ART-9.2). bow_shot needs a real draw: left arm forward, right hand to the ear, release.
   3. **eat and drink:** the hand stays at chest height. Pick the Consume window by eye, or add an overlay to bring the hand to the mouth.
   4. **Contract docs:** update `docs/art/contract.md`, `contract-v2.md` and `docs/engineering/hd-presentation.md` for the human canvases now in `render_spec.json`.
+- added 2026-11-02 (from the C9b held-item overlay): while an item is held, idle and walk should carry it away from the leg (it vanishes against the trousers in s and n), and `strike` must swing the item hand, not punch with the free one. Either item-aware clip variants or an arm offset in the held clips; prove it on the hatchet overlay.
 - done when: in `forge.py selftest --kind human`, the strike, element and bow_shot strips read at 1×; packet review.json frames register on their own canvases; tests green
 - evidence:
 

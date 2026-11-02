@@ -484,6 +484,7 @@ for (const atlas of atlases.filter((a) => a.resolution === 1)) {
             anchorPx: source.source.anchorPx,
             rigId: source.source.rigId,
             sockets: source.source.sockets,
+            ...('held' in source.source && source.source.held ? { held: source.source.held } : {}),
           }
         : {}),
     });
