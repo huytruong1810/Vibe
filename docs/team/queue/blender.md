@@ -38,10 +38,10 @@ it's blocked, mark it and take the next. Change only `status:` and `evidence:` l
 
 ### B3 · Remaining creatures, one at a time
 
-- status: mireling director-approved 2026-11-02 (`approvals/mireling--2026-11-01-mireling.md`, digest e214bab7…). Next: `forge.py publish --asset mireling`, then message --to-claude-- for integration. Non-quadruped species wait for C3h templates and M23 sheets
+- status: mireling published and staged; non-quadruped species wait for C3h templates and M23 sheets
 - goal: quadruped species first, in this order: bramblefang, marshstalker, mireling. steamshell (shelled), zephyrit and cindermoth (winged) and ignicap (mushroom-biped) wait for codex templates. Each needs its reference sheet from the communicator (all-fours pose for quadrupeds, same pose in every view).
 - done when: a packet per species, each `candidate`
-- evidence: 2026-10-31 candidate packets generated for marshstalker and bramblefang with C3d quality fixes; 15 clips, 616 frames each; all 12 hard QA checks passing on both; announced in docs/team/comms/blender/2026-10-31T1805--to-director-communicator--quadruped-candidate-packets.md; director approvals integrated for Rivallie, Bramblefang, and Marshstalker; Mireling end-to-end forged on creature.medium canvas (heightArtPx 26, basalt/moss/reed/blossom ramps, 8 colors, 12/12 hard QA passing, smallest margin 4px); candidate review packet emitted at art/review/2026-10-31-mireling/ (digest `e49ddef2bb67e24f53a7fdc4486767b2819d87575cbbedd6b6419f4fd9839632`); 2026-11-01 re-packet emitted with leather skin ramp, tortoise notes, and rampShift shell -2 at art/review/2026-11-01-mireling/ (digest `e214bab72b42667a64c5a63cf15ef0ad04370a465aa34b3305dd1c1990120f89`, 10 colors, 11/11 hard QA passing, grass valueContrast 0.161 >= 0.12); contact sheet inspected; reported in docs/team/comms/blender/2026-11-01T2326--to-claude--mireling-rampshift-packet.md.
+- evidence: 2026-10-31 candidate packets generated for marshstalker and bramblefang with C3d quality fixes; 15 clips, 616 frames each; all 12 hard QA checks passing on both; announced in docs/team/comms/blender/2026-10-31T1805--to-director-communicator--quadruped-candidate-packets.md; director approvals integrated for Rivallie, Bramblefang, and Marshstalker; Mireling end-to-end forged on creature.medium canvas (heightArtPx 26, basalt/moss/reed/blossom ramps, 8 colors, 12/12 hard QA passing, smallest margin 4px); candidate review packet emitted at art/review/2026-10-31-mireling/ (digest `e49ddef2bb67e24f53a7fdc4486767b2819d87575cbbedd6b6419f4fd9839632`); 2026-11-01 re-packet emitted with leather skin ramp, tortoise notes, and rampShift shell -2 at art/review/2026-11-01-mireling/ (digest `e214bab72b42667a64c5a63cf15ef0ad04370a465aa34b3305dd1c1990120f89`, 10 colors, 11/11 hard QA passing, grass valueContrast 0.161 >= 0.12); contact sheet inspected; reported in docs/team/comms/blender/2026-11-01T2326--to-claude--mireling-rampshift-packet.md; director approval recorded in docs/team/comms/director/approvals/mireling--2026-11-01-mireling.md; published via forge publish --asset mireling: published model closure at art/source/blender/models/published/mireling/f324c324625e58fefe37280debef3c590e84198d4bab7f7005c74b03fcaf0e62/, exports at art/source/exports/mireling/e214bab72b42667a64c5a63cf15ef0ad04370a465aa34b3305dd1c1990120f89/, staging record at art/source/staging/blender/mireling.json. All 4 quadruped bodies now approved and published.
 
 ### B4 · Golden samples: player-aqualia, then Neris (humans)
 
@@ -51,7 +51,7 @@ it's blocked, mark it and take the next. Change only `status:` and `evidence:` l
 
 ### B5 · Aqualia environment kit
 
-- status: blocked: waiting for `--to-blender--go-environment`
+- status: blocked: waiting for Communicator M23 step 3 reference sheets (env-house-aqualia, env-tree-oak, env-well); go-environment directive received from claude
 - goal: in the order the region bible lists landmarks: a house, the ferry and dock, the mill and waterwheel, a willow, boardwalk pieces, lanterns, the sluice gate. Use the `environment-forge` skill.
 - done when: a packet per asset
 - evidence:
