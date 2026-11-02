@@ -9,12 +9,23 @@ cancel anything.
 - [blender](blender.md): forge production and world layout (machine A)
 - [communicator](communicator.md): hub, reference sheets, 2D, music, digests (machine B)
 
+## Keep the boards small (agents read them every session)
+
+- A live queue holds only `open`, `in-progress`, `blocked` and `candidate` tickets,
+  grouped under short headings (Now, waiting on inputs, waiting on the director, later).
+- When a ticket is `done`, the queue's maintainer moves it, unchanged, to
+  `archive/<member>.md` (newest batch at the bottom) within a day. Links to it point there.
+- Status and evidence lines stay one or two sentences; long histories go to the archive or
+  a comms message, linked.
+- Target: each live queue under about 250 lines.
+
 ## Ticket format
 
 ```markdown
 ### X9 · Short title
 
 - status: open | in-progress | blocked: <reason> | candidate | done
+- owner: <member> (when the queue holds tickets for more than one member)
 - goal: one sentence
 - inputs: files, messages, approvals it needs
 - done when: a command that must pass, or an evidence path that must exist

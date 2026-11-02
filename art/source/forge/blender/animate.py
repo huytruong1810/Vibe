@@ -4,7 +4,7 @@ blender -b --factory-startup -P animate.py -- <rig.blend> <animate.blend> <param
 params: {"template": {...}, "clips": [{"name": "idle", "frames": 6, "facings": [...], "phases": {...},
          "playback": "loop", "segments": [...] (humans)}], "library": ual_library.blend (humans),
          "boneMapUal1": {...}, "libraries": {...}}
-Creatures: parametric gaits (gaits.py). Humans: UAL2/UAL1 actions retargeted (retarget.py).
+Creatures: parametric gaits (gaits.py, one clip set per skeleton template). Humans: UAL2/UAL1 actions retargeted (retarget.py).
 Writes animate.blend with one action per clip (named exactly after the clip) and prints
 "ANIMATE {json}" listing clip, action, frame numbers and facings for the bake stage.
 Every pose bone is keyed on every frame, so switching actions never leaks a pose.
@@ -56,7 +56,7 @@ else:
         b.rotation_mode = "XYZ"
     rest_inv = {b.name: b.matrix_local.to_3x3().inverted() for b in bones}
     for clip in P["clips"]:
-        fn = gaits.CLIPS[clip["name"]]
+        fn = gaits.clips_for(P["template"])[clip["name"]]
         n = clip["frames"]
         poses = fn(ctx, n, clip["phases"]) if clip["name"] in gaits.PHASED else fn(ctx, n)
         if len(poses) != n:

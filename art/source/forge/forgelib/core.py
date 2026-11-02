@@ -69,13 +69,17 @@ def load_recipe(asset_id: str) -> dict:
     return json.loads(p.read_text())
 
 
+# Template selftest fixtures (selftest-creature-<template>) bake on their species' canvas.
+SELFTEST_TEMPLATE_CANVAS = {"shelled": "creature.large", "winged": "creature.small", "mushroom-biped": "creature.small"}
+
+
 def asset_kind(asset_id: str) -> str:
     """human | creature | item | environment, from the id and spec canvases."""
     if asset_id.startswith("item:"):
         return "item"
     if asset_id.startswith("env:"):
         return "environment"
-    if asset_id == "selftest-creature":
+    if asset_id.startswith("selftest-creature"):
         return "creature"
     rs = spec("render_spec")["canvases"]
     for key, c in rs.items():
@@ -87,8 +91,9 @@ def asset_kind(asset_id: str) -> str:
 def canvas_for(asset_id: str, state: str = "idle") -> tuple[str, dict]:
     rs = spec("render_spec")["canvases"]
     kind = asset_kind(asset_id)
-    if asset_id == "selftest-creature":
-        return "creature.medium", rs["creature.medium"]
+    if asset_id.startswith("selftest-creature"):
+        key = SELFTEST_TEMPLATE_CANVAS.get(asset_id.removeprefix("selftest-creature-"), "creature.medium")
+        return key, rs[key]
     if kind == "creature":
         for key, c in rs.items():
             if key.startswith("creature.") and asset_id in c.get("species", []):

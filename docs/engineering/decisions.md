@@ -432,3 +432,22 @@ real Blender run. A calibration proxy is allowed under PRD-2; it cannot become
 production art. Silhouette thickness QA has explicit internal-material/readability
 limits. Source generation, publication and runtime item selection remain separate
 gates. See [item rendering](hd-presentation.md#c9b-item-rendering-and-silhouette-qa).
+
+## ADR 031 — Authored artifacts are one bounded item class; images come from a loopback provider
+
+**Decision:** notes, books and paintings are one `artifact` record referenced by an item
+instance, with hard content caps (24×96 per page, 48 pages, 48×32 ≤ 16-colour paintings,
+512 artifacts and 2 MB text per save). Villagers read through a two-step job: a validated
+`READ_TEXT` range (≤ 2 pages or 48 lines, ≤ 600 tokens) feeds one action-free reading
+prompt whose ≤ 40-word summary becomes a `reading` memory; text never re-enters later
+prompts. Images come from a provider adapter on a loopback endpoint, stable-diffusion.cpp
+`sd-server` first, because Ollama removed its experimental image generation in v0.32.6
+(2026-08-04) and never documented an HTTP contract. A GPU arbiter serializes image jobs
+with chat inference and unloads the chat model (`keep_alive: 0`) when configured.
+
+**Consequences:** prompt size is independent of what the player writes; injection text
+can't cause actions; saves stay small. Paintings depend on a separately installed server
+(documented in operations); without it the game runs and shows existing paintings.
+Unloading the LLM costs a reload on the next dialogue, measured against the AGT-7 player
+painting budget. Models are limited to Apache-2.0 weights (Z-Image Turbo, FLUX.2 klein 4B).
+See [authored artifacts](authored-artifacts.md).

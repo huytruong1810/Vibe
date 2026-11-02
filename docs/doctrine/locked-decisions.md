@@ -121,7 +121,8 @@ generator (`art/source/ui/`). Every screen uses these frames, tokens and font.
 
 Villager minds run locally through Ollama with **Gemma 4 26B** as the reference model
 (vision included). Voices use the three tiers in AGT-4 (blips, Kokoro, Chatterbox).
-Generated imagery is limited to asynchronous decorative paintings (AGT-6). Runtime
+Generated imagery is limited to asynchronous decorative paintings (AGT-6), rendered by a
+local loopback image server (stable-diffusion.cpp reference; Apache-2.0 models only). Runtime
 combat effects are never diffusion-generated (CMB-9).
 
 ## L11 — Creature minds are System 1

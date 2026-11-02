@@ -1,0 +1,15 @@
+{
+  "asset": "item:hatchet",
+  "kind": "item",
+  "ramps": { "blade": "iron", "haft": "wood", "grip": "leather", "lashing": "reed" },
+  "gen3d": { "seed": 1234, "steps": 50 },
+  "orient": { "lengthArtPx": 13, "gripFraction": 0.15 },
+  "item": {
+    "model": "auto",
+    "grip": "auto",
+    "socket": "Socket_Hand.R",
+    "iconPivot": "auto",
+    "iconScale": "auto"
+  },
+  "notes": "Golden held-item sample (claude, C9b). lengthArtPx 13 = about 0.23 of the player's 58 px, a 40 cm hatchet beside a 1.7 m adult. Grip 15% up from the butt, inside the leather wrap."
+}

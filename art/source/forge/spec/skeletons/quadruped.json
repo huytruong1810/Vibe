@@ -1,13 +1,7 @@
 {
   "schemaVersion": 1,
   "rigId": "quadruped-v1",
-  "doctrine": [
-    "L6",
-    "ART-9.2",
-    "ART-9.3",
-    "ART-9.4",
-    "CMB-3"
-  ],
+  "doctrine": ["L6", "ART-9.2", "ART-9.3", "ART-9.4", "CMB-3"],
   "note": "Creature template for four-legged species. The rig stage orients the mesh (head to -Y, south), detects landmarks, fits these bones, weights them on a voxel proxy and transfers the weights to the mesh. The animate stage drives them with the gait parameters below. Protected spec: change under DOC-5.",
   "orientation": {
     "forward": "-Y",
@@ -229,10 +223,7 @@
   ],
   "landmarks": {
     "note": "Detected from the oriented mesh. Heights are fractions of the mesh height H, lengths of its length L. A recipe may override any landmark with model-space [x, y, z] under rig.landmarks.",
-    "legColumnBand": [
-      0.02,
-      0.22
-    ],
+    "legColumnBand": [0.02, 0.22],
     "legColumnCellFraction": 0.035,
     "kneeFraction": 0.5,
     "ankleHeight": 0.06,
@@ -249,10 +240,7 @@
     "artPxPerUnit": 32,
     "idle": {
       "breathPx": 1,
-      "breathFrames": [
-        3,
-        4
-      ],
+      "breathFrames": [3, 4],
       "tailSwayDeg": 3,
       "headTurnDeg": 0,
       "note": "Idle must stay under QA idleFlicker (0.08 changed fraction): breathing on the back only, a small tail sway, no head turn."
@@ -304,7 +292,7 @@
     "zephyrit": "winged",
     "cindermoth": "winged",
     "ignicap": "mushroom-biped",
-    "note": "Template per species (L6). mireling: quadruped until its sheet says otherwise. Only quadruped is built (2026-11-01); the others are codex tickets."
+    "note": "Template per species (L6). mireling: quadruped until its sheet says otherwise. All four templates are built (C3h, 2026-11-02): spec/skeletons/<template>.json, rig.py (quadruped, shelled), rig_winged.py, rig_biped.py and the clip sets in blender/gaits.py."
   },
   "ik": [
     {

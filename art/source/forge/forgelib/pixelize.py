@@ -34,10 +34,17 @@ def _linear_to_srgb8(c: np.ndarray) -> np.ndarray:
 
 
 class RampSet:
-    def __init__(self, ramps: dict[str, str]):
+    def __init__(self, ramps: dict[str, str], shift: dict[str, int] | None = None):
         if not ramps:
             raise ForgeError("No palette ramps assigned. Map every material slot to a ramp in the recipe (ART-4.1).")
         self.slots = list(ramps)
+        # rampShift: a dark (or pale) material keeps its lighting bands but sits lower (or
+        # higher) on its ramp, e.g. a charcoal shell whose sunlit top must stay dark. Input
+        # lever only; deep stays reserved for outlines and interior lines (ART-5).
+        shift = shift or {}
+        if set(shift) - set(self.slots) or any(type(v) is not int or v not in (-2, -1, 1) for v in shift.values()):
+            raise ForgeError("rampShift maps recipe material slots to -2, -1 or 1")
+        self.shift = np.array([shift.get(s, 0) for s in self.slots], dtype=np.int64)
         self.names = [ramps[s] for s in self.slots]
         self.rgb = np.array([[ramp(n)[st] for st in STEPS] for n in self.names], dtype=np.uint8)  # (R,5,3)
         lab = rgb8_to_oklab(self.rgb)
@@ -126,6 +133,8 @@ def pixelize_frame(albedo_p: Path, normal_p: Path, depth_p: Path, ramps: RampSet
     b = rs["light"]["bands"]
     step = np.where(ndl < b["shadowBelow"], 1, np.where(ndl < b["lightAbove"], 2, 3))
     step = _majority(step - 1, mask, 3) + 1  # no single-pixel band speckle
+    if ramps.shift.any():
+        step = np.clip(step + ramps.shift[labels], 1, 3)
     gloss = ramps.glossy[labels] & (ndl >= b["highlightAbove"])
     step = np.where(gloss, 4, step)
 
@@ -217,8 +226,9 @@ def upscale2(img: np.ndarray) -> np.ndarray:
     return img.repeat(k, axis=0).repeat(k, axis=1)
 
 
-def run_dir(bake_dir: Path, out_dir: Path, ramps_map: dict[str, str], detail_slots: list[str] | None = None) -> dict:
-    ramps = RampSet(ramps_map)
+def run_dir(bake_dir: Path, out_dir: Path, ramps_map: dict[str, str], detail_slots: list[str] | None = None,
+            ramp_shift: dict[str, int] | None = None) -> dict:
+    ramps = RampSet(ramps_map, ramp_shift)
     detail = {ramps.slots.index(sl) for sl in (detail_slots or []) if sl in ramps.slots}
     tracks = json.loads((bake_dir / "tracks.json").read_text())
     summary = {}

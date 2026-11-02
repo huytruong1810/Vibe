@@ -9,10 +9,36 @@ description: >-
 
 # Environment forge (doctrine ART-2.3, ART-11, AMB-3.2)
 
-> **Not available yet.** The `environment` asset kind (depth stretch, base/roof and
-> trunk/canopy layers, footprint QA, contact shadow, `lightPool` tag) is **not built**.
-> Don't run this skill until `forge.py doctor` reports `environment` ready and a
-> `--to-blender--go-environment-` message exists. Codex removes this note when it lands.
+Built 2026-11-01 (C10). Stages: `prep → gen3d → clean → texture → layout → bake →
+pixelize → qa → packet → publish`; `all --asset env:<id>` runs through `qa`. Start
+only after a `--to-blender--go-environment` message.
+
+Recipe (`recipes/env-<id>.json`):
+
+```json
+{
+  "asset": "env:house-aqualia",
+  "kind": "environment",
+  "ramps": { "walls": "timber", "roof": "teal", "trim": "wood", "windows": "glass" },
+  "gen3d": { "seed": 1234, "steps": 50, "views": ["front", "left"] },
+  "environment": {
+    "footprint": [3, 2],
+    "split": { "layer": "roof", "aboveFraction": 0.55 },
+    "lightPools": [{ "x": 10, "y": -18, "radiusTiles": 2 }]
+  }
+}
+```
+
+- `footprint` `[w, d]` in whole tiles. The model is scaled so its ground contact is `w`
+  tiles wide; QA `footprint` fails when the contact depth is more than 0.35 tile off `d`.
+  Fix it in the recipe (the right footprint) or in the sheet, never by squashing.
+- `split.aboveFraction`: faces above this fraction of the height go to the `roof` (or
+  `canopy`) layer. Look at `layout_preview.png`, then the contact sheet's last columns:
+  the roof layer must hold the whole roof and nothing below the eaves.
+- `lightPools`: art px from the anchor (footprint south-edge centre). Metadata only; no
+  glow is baked.
+- `contactShadow` (default true) adds the `shadow` layer.
+- `rampShift` works as for actors.
 
 Same gate and loop as `sprite-forge` (read it first), with the asset kind
 `environment`:

@@ -18,7 +18,9 @@ doesn't know it.
 1. `git pull`
 2. Find new messages for you (replace `<you>`):
    - bash: `ls docs/team/comms/*/ | grep -E -- '--to-(<you>|all)--'`
-   - PowerShell: `Get-ChildItem docs/team/comms -Recurse -Filter *--to-* | Where-Object Name -match '--to-(<you>|all)--'`
+   - PowerShell: `Get-ChildItem docs/team/comms/*/ -File -Filter *--to-* | Where-Object Name -match '--to-(<you>|all)--'`
+   - Both list only each folder's top level: `archive/` holds closed threads and is
+     never part of your reading list.
 3. Read those newer than `docs/team/comms/<you>/.last-read`, then write the
    current UTC time (`YYYY-MM-DDTHHMM`) into `.last-read`.
 
@@ -40,6 +42,15 @@ What happened. What you saw (describe images concretely). What you need, from wh
 
 At most 40 lines. Link files; don't paste big logs. Then
 `git add docs/team/comms/<you>/ && git commit -m "docs(team): <topic>" && git pull && git push`.
+
+## Archive (keep everyone's reading list short)
+
+- A message is **closed** when its request is done, answered or superseded by a directive
+  or a queue ticket. Work that is still needed lives in a queue ticket, never only in an
+  old message.
+- Move your own closed messages to `docs/team/comms/<you>/archive/` with `git mv` at the end
+  of each session and fix links to them. Keep at most about 10 live messages in your folder.
+- Claude archives directives when a newer directive restates the current orders.
 
 ## Status board (communicator owns it)
 

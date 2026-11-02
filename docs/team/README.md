@@ -4,12 +4,12 @@ The mutable part of the docs. Rules: [team charter](../doctrine/10-team-charter.
 
 | Path                                                            | Who writes                                             | What                                                     |
 | --------------------------------------------------------------- | ------------------------------------------------------ | -------------------------------------------------------- |
-| [comms/&lt;member&gt;/](comms/)                                 | that member only                                       | Messages, session logs, image ledger, temp docs (TEAM-3) |
+| [comms/&lt;member&gt;/](comms)                                 | that member only                                       | Messages, session logs, image ledger, temp docs (TEAM-3) |
 | [comms/director/approvals/](comms/director/approvals/README.md) | director (or claude on instruction)                    | The only valid approval records (L7)                     |
 | [status-board.md](status-board.md)                              | communicator (director, claude)                        | Asset and workstream status; every line cites evidence   |
 | [queue/](queue/README.md)                                       | codex maintains; each member updates own ticket status | Ordered work per member (TEAM-8.4)                       |
 | [proposals/](proposals/README.md)                               | anyone                                                 | Doctrine change proposals (TEAM-6)                       |
-| [briefs/](briefs/)                                              | director + claude only                                 | Role briefs (doctrine-protected, DOC-1)                  |
+| [briefs/](briefs)                                              | director + claude only                                 | Role briefs (doctrine-protected, DOC-1)                  |
 
 ## Daily loop for every agent
 

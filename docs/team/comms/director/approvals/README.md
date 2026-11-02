@@ -3,6 +3,11 @@
 The only valid approval records (doctrine L7, TEAM-4). Written by the director, or by
 Claude on the director's explicit instruction. **No agent writes here.**
 
+**Standing delegation (2026-11-01):** the director has given Claude standing authority
+to review candidate packets and write `director-approved` or `changes-requested` records,
+marked `recordedBy: claude under the director's standing delegation of 2026-11-01`.
+The director can overturn any record.
+
 File name: `<asset-id>--<packet-id>.md`
 
 The file starts with the front matter itself (no code fence):

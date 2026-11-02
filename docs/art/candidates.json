@@ -330,13 +330,6 @@
   },
   {
     "subjectKind": "appearance",
-    "subjectId": "species:rivallie",
-    "digest": "4e3bf976e126fe92c2be25279977d77b37f5b0bb1f115ca222f48c6e230c5dca",
-    "approvalMatches": false,
-    "runtimeStage": "candidate"
-  },
-  {
-    "subjectKind": "appearance",
     "subjectId": "species:ignicap",
     "digest": "7022421b16e7c472e1d71f479a06124244c32b7ae1f043ac8b3db97a6e0cc8fe",
     "approvalMatches": false,
@@ -352,9 +345,9 @@
   {
     "subjectKind": "appearance",
     "subjectId": "species:mireling",
-    "digest": "a35d9e6155876db5bc1287e19dc109030fbed308173623027fef964a241c7f4a",
-    "approvalMatches": false,
-    "runtimeStage": "candidate"
+    "digest": "fa52c6000baa2f4b37f8afcf105911b9e9cb807a18bb7b12869ee281602f06d5",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
   },
   {
     "subjectKind": "appearance",
@@ -367,20 +360,6 @@
     "subjectKind": "appearance",
     "subjectId": "species:steamshell",
     "digest": "4ac00bc677a99d92bec197abe07e39b9e133cfad9253603c3654edccceb77344",
-    "approvalMatches": false,
-    "runtimeStage": "candidate"
-  },
-  {
-    "subjectKind": "appearance",
-    "subjectId": "species:bramblefang",
-    "digest": "64853366b94c79c5c892207115dc51f72b8f972fb526857d8f1edb2e1da6e643",
-    "approvalMatches": false,
-    "runtimeStage": "candidate"
-  },
-  {
-    "subjectKind": "appearance",
-    "subjectId": "species:marshstalker",
-    "digest": "79e490b69073ec6321610a991f435d277b4f4572153cbcba7f3c328bfffff784",
     "approvalMatches": false,
     "runtimeStage": "candidate"
   },
@@ -593,5 +572,26 @@
     "digest": "f815c456b2e66aaf6a901d8438d7a3ec5b573f4e166c1ab97be007eb6158e53c",
     "approvalMatches": false,
     "runtimeStage": "candidate"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "species:rivallie",
+    "digest": "081a7f661d34b4d8738f2262fad74f6a11d9212833862d9dff0466d2e79a8611",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "species:bramblefang",
+    "digest": "f731cfbaf1a3fee932e783aa983345c4ae54a51cc6a4886ed9ac97af367889ca",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "species:marshstalker",
+    "digest": "3e88e7fb5a77ae1f45c0c469c3d4bf293a3a408e32042160c898d4d1fc09e567",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
   }
 ]

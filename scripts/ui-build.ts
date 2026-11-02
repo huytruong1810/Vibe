@@ -51,22 +51,21 @@ export async function buildUi(): Promise<void> {
   const font = join(source, 'fonts/Silver.ttf');
   await copyFile(font, join(output, 'Silver-full.ttf'));
   await copyFile(join(source, 'fonts/LICENSE.md'), join(output, 'LICENSE.md'));
-  const python = process.env.PYTHON ?? 'python';
-  const result = spawnSync(
-    python,
-    [
-      '-m',
-      'uv',
-      'run',
-      '--project',
-      join(root, 'art/source/forge'),
-      'python',
-      join(root, 'art/source/forge/tools/subset_font.py'),
-      font,
-      join(output, 'Silver-core.woff2'),
-    ],
-    { stdio: 'inherit' },
-  );
+  const uvArgs = [
+    'run',
+    '--project',
+    join(root, 'art/source/forge'),
+    'python',
+    join(root, 'art/source/forge/tools/subset_font.py'),
+    font,
+    join(output, 'Silver-core.woff2'),
+  ];
+  // Prefer a standalone uv (machine A has no `python` binary); fall back to the pip module.
+  const standalone = process.env.PYTHON ? null : spawnSync('uv', uvArgs, { stdio: 'inherit' });
+  const result =
+    standalone && !standalone.error
+      ? standalone
+      : spawnSync(process.env.PYTHON ?? 'python', ['-m', 'uv', ...uvArgs], { stdio: 'inherit' });
   if (result.status !== 0)
     throw new Error('Font subset failed; install uv with python -m pip install uv==0.13.6.');
   const files = (await readdir(join(source, 'kit/export')))

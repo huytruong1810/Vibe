@@ -71,6 +71,10 @@ def run(asset_id: str) -> dict:
     out = work_dir(asset_id) / "prep"
     out.mkdir(exist_ok=True)
     views = sheet.get("views", {})
+    if sheet.get("kind") == "item" and set(views) == {"threeQuarter"}:
+        # Prop sheets are one object in three-quarter view (PRD-3.3). gen3d and texture
+        # treat it as their single front view; orient then finds the item's own axes.
+        views = {"front": views["threeQuarter"]}
     if "front" not in views:
         raise ForgeError("sheet.json must define a 'front' view (PRD-3.1).")
     warnings, inputs, outputs, heights = [], [ref / "sheet.json"], [], {}

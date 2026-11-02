@@ -336,6 +336,91 @@ the Blender integration or artistic quality. Machine B currently has no Blender
 The protected sprite-forge runbook remains unchanged; this guide does not override
 its production gate or authorize item asset production.
 
+### C10 environment kind (claude, 2026-11-01)
+
+`env:<id>` assets run `prep → gen3d → clean → texture → layout → bake → pixelize → qa →
+packet → publish` (`forgelib/environment.py`, `blender/env_layout.py`).
+
+- **layout** scales the textured model uniformly so its ground contact (the lowest 4% of
+  its height) is `footprint[0]` tiles wide (1 tile = 1 world unit = 32 art px). It grounds
+  and centres it, and splits faces above `split.aboveFraction` of the height into the
+  `roof`/`canopy` layer (ART-11.1). It computes one canvas for all layers: width a
+  multiple of 32, anchor at the footprint's south-edge centre.
+- **bake** reuses `bake.py`'s explicit pose path, one render per layer: matrix `diag(1, 2, 1)` is
+  the 1/sin 30° world-Y depth stretch (ART-2.3), and the translation puts the anchor point on the
+  world origin, which `set_canvas` projects to the anchor pixel.
+- **pixelize** per layer (with `rampShift`), plus an optional `shadow` layer: a footprint
+  ellipse in `outline-neutral` deep at alpha 96 (ART-3.4).
+- **qa**: footprint depth within 0.35 tile (ART-11.4), width multiple of 32, margins,
+  palette membership, 32-colour budget (ART-4.4), exact 2x blocks.
+- **packet/publish**: `review.json` lists every layer with its hash, the footprint and
+  `lightPools` (AMB-3.2); `publish_env` mirrors body publication.
+- `forge.py selftest --kind environment` runs a PRD-2 calibration house (box and prism roof,
+  never art) and asserts base and roof on a shared canvas, the roof above the base, and every QA
+  check. Runtime use (roof fade when actors stand under it) is engine work for the catalog.
+
+### C3h creature templates (claude, 2026-11-02)
+
+Every creature species maps to a skeleton template (`spec/skeletons/quadruped.json`
+`species`); each template is one spec file, one rig script and one clip set in
+`blender/gaits.py` (`gaits.clips_for(template)`), all covering the same 15-clip creature
+matrix.
+
+| Template            | Species                                       | Rig script                                                        | Notes                                                                                                                                         |
+| ------------------- | --------------------------------------------- | ----------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `quadruped-v1`      | rivallie, bramblefang, marshstalker, mireling | `rig.py`                                                          | unchanged                                                                                                                                     |
+| `shelled-v1`        | steamshell                                    | `rig.py` (`orientation.headEnd: front`, `landmarks.tailOptional`) | `shell` bone; guard, sleep, downed withdraw the head under the shell; tailless bodies keep tail bones without weights                         |
+| `winged-v1`         | zephyrit, cindermoth                          | `rig_winged.py`                                                   | core + head + 2 tail bones + 2x2 wing bones; airborne clips hover `gait.hoverPx` (4) above the ground anchor; QA height target adds the hover |
+| `mushroom-biped-v1` | ignicap                                       | `rig_biped.py`                                                    | pelvis/stem/cap vertical chain, IK legs; waddle locomotion                                                                                    |
+
+`rig_winged.py` and `rig_biped.py` keep the sheet's front view facing -Y (a wingspan or a
+round cap defeats the PCA long axis) and share `riglib.front_mesh`, `build_armature`,
+`set_pose`. The quadruped path in `rig.py` is unchanged except for template-guarded
+branches; `selftest --kind creature` still passes on the Rivallie copy.
+
+Selftests: `forge.py selftest --kind creature-shelled|creature-winged|creature-mushroom-biped`
+run PRD-2 primitive bodies (`blender/fixture_creature.py`) through the real clean, rig,
+animate, bake, pixelize and QA stages; each reaches QA `candidate` with anchor drift 0.
+Soft checks that fail on the fixtures and are expected: `idleFlicker` on winged (0.24, a
+hovering idle beats its wings) and on mushroom-biped (0.11, a 1 px breath moves the wide
+cap), and `valueContrast` on sand (fixture colours). `gaits_selftest.py` (no Blender)
+checks each clip set covers the matrix with its own bones.
+
+Integration: the new rig ids need `rigs` entries in the manifest when the first species
+of each template is published (same three creature sockets `Socket_Back`, `Socket_Head`,
+`Socket_Mouth`; default canvas from the species' `creature.*` canvas at 2x; registrations as
+the staging record's frames show, per C3e).
+
+### C9b item source, packet and publication (claude, 2026-11-01)
+
+Held items now run end to end: `prep → gen3d → clean → texture → orient → items →
+packet → publish` (`forge.py all --asset item:<id>` runs through `items`).
+
+- **Source.** A prop sheet is one object in three-quarter view (PRD-3.3); prep feeds it
+  to gen3d and texture as their single front view. `orient` (`blender/item_orient.py`,
+  maths in `forgelib/item_orient.py`) finds the haft as the longest principal axis, the
+  head as the wider end (+Z), the working edge as the head's farthest perpendicular
+  point (−Y), puts the grip on the haft axis at `gripFraction` from the butt (origin),
+  and scales uniformly to `lengthArtPx`. It never mirrors. Thin hafts are inflated
+  along normals to 1.25× the ART-6.3 minimum. The recipe's `item` block takes
+  `"auto"` for model, grip, icon pivot and icon scale.
+- **Icon.** The planner's icon pose is the se facing at grip bucket 1 (45°) with its own
+  uniform `scale` (`iconScale`, 1–4). It is computed by orient so the diagonal item fills
+  the 32×32 slot. Held poses stay rigid with scale one; rotation rows stay orthonormal and
+  `transform_point` and `bake.py` apply the icon scale.
+- **Packet.** The renderer's `item-review.json` becomes the packet's `review.json`; its
+  `sourceDigest` covers frame metadata, QA and every file hash, so an approval binds
+  exactly what was reviewed. Approval scope is `[held-item, icon]`.
+- **Publish.** `publish_item` mirrors body publication: digest-bound approval,
+  immutable `exports/item-<id>/<digest>/`, a self-contained source bundle (model,
+  orient record and params, recipe, spec, tools, lock), and an atomic staging record
+  `staging/blender/item-<id>.json`. Tested with a scratch approval (published, then
+  removed), and refused for a wrong scope and a wrong digest.
+- **Still open:** runtime composition of held layers on bodies (needs hand-socket body
+  frames, i.e. new humans) and the manifest/catalog item layer. Golden sample:
+  `art/review/2026-11-01-item-hatchet/`.
+- Tests: `item_orient_selftest.py` (5), `items_selftest.py` (9), `forge.py selftest --kind item`.
+
 ### C3e explicit rig registrations
 
 `RigDefinition` keeps its existing default `canvas`, `anchorPx` and `socketIds`.

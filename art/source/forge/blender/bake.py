@@ -185,7 +185,8 @@ for clip in P["clips"]:
         if item_pose:
             rotation = item_pose["rotation"]
             translation = item_pose["translation"]
-            pivot.matrix_world = Matrix([list(row) + [translation[i]] for i, row in enumerate(rotation)] + [[0, 0, 0, 1]])
+            k = item_pose.get("scale", 1.0)  # inventory icon only; held poses stay rigid
+            pivot.matrix_world = Matrix([[k * v for v in row] + [translation[i]] for i, row in enumerate(rotation)] + [[0, 0, 0, 1]])
         else:
             pivot.rotation_euler = (0, 0, math.radians(deg))
         ftrack = ctrack.setdefault(facing, [])

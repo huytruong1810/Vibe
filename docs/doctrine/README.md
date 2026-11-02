@@ -63,7 +63,7 @@ director, Huy, and ratified by the director on 2026-10-31.
 | [regions/aqualia.md](regions/aqualia.md)                           | `AQ`   | Aqualia region bible: landmarks, routes, story spots, habitats, screens     |
 
 Machine-readable doctrine lives in
-[`art/source/forge/spec/`](../../art/source/forge/spec/): `render_spec.json`,
+[`art/source/forge/spec/`](../../art/source/forge/spec): `render_spec.json`,
 `palette.json`, `body_types.json` and `ui_theme.json`. Those numbers are the only valid source for
 canvas sizes, anchors, camera, light, bands, outline and QA limits. Prose that
 quotes a number defers to the spec.

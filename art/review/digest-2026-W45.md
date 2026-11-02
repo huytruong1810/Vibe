@@ -26,14 +26,14 @@ This digest compiles all candidate deliverables, proposals, and packets currentl
   - Day Score: [`art/source/audio/scores/aqualia-day.json`](file:///c:/Users/htruong/source/repos/Vibe-art/art/source/audio/scores/aqualia-day.json) (preview: `art/source/forge/work/audio/aqualia-day.preview.wav`)
   - Night Score: [`art/source/audio/scores/aqualia-night.json`](file:///c:/Users/htruong/source/repos/Vibe-art/art/source/audio/scores/aqualia-night.json) (preview: `art/source/forge/work/audio/aqualia-night.preview.wav`)
   - Report: `render_score.py` exits 0 for both (0 errors, 14 semitone range, shared 15.7s duration).
-  - Comms notice: [`docs/team/comms/communicator/2026-10-31T1850--to-director--aqualia-scores-revised.md`](file:///c:/Users/htruong/source/repos/Vibe-art/docs/team/comms/communicator/2026-10-31T1850--to-director--aqualia-scores-revised.md).
+  - Comms notice: [`docs/team/comms/communicator/archive/2026-10-31T1850--to-director--aqualia-scores-revised.md`](file:///c:/Users/htruong/source/repos/Vibe-art/docs/team/comms/communicator/archive/2026-10-31T1850--to-director--aqualia-scores-revised.md).
 - **Ask**: Listening approval on Day and Night theme arrangements and stem balance.
 
 ### 3. Communicator M14: Proposal 002 Revision 2 (Aqualia Voice Casting Sheet)
 - **Deliverable**: Authored voice profiles for the 10 Aqualia slice villagers under AGT-4.2.
 - **Evidence**:
   - Proposal document: [`docs/team/proposals/002-aqualia-voice-casting.md`](file:///c:/Users/htruong/source/repos/Vibe-art/docs/team/proposals/002-aqualia-voice-casting.md)
-  - Comms notice: [`docs/team/comms/communicator/2026-10-31T1847--to-director--aqualia-voice-recast-proposal.md`](file:///c:/Users/htruong/source/repos/Vibe-art/docs/team/comms/communicator/2026-10-31T1847--to-director--aqualia-voice-recast-proposal.md).
+  - Comms notice: [`docs/team/comms/communicator/archive/2026-10-31T1847--to-director--aqualia-voice-recast-proposal.md`](file:///c:/Users/htruong/source/repos/Vibe-art/docs/team/comms/communicator/archive/2026-10-31T1847--to-director--aqualia-voice-recast-proposal.md).
 - **Key Changes**: Eliminated all pronoun/gender inferences from casting; rationales grounded strictly in age, role, and personality; Mira, Dara, and Finn re-anchored to `src/content/villagers.ts`; Kokoro-82M v0.19 / v1.0 library cited.
 - **Ask**: Approve Proposal 002 Revision 2 as the baseline for voice and syllable blip synthesis.
 
@@ -44,7 +44,7 @@ This digest compiles all candidate deliverables, proposals, and packets currentl
   - Source Digest: `e49ddef2bb67e24f53a7fdc4486767b2819d87575cbbedd6b6419f4fd9839632`
   - Frame Count: 15 clips, 616 frames total, 8 palette colors.
   - QA report: 12/12 hard checks passing; margins 4px (threshold $\ge 2\text{px}$); anchor drift 0.000px.
-  - Comms notice: [`docs/team/comms/blender/2026-10-31T1845--to-director-communicator--mireling-packet.md`](file:///c:/Users/htruong/source/repos/Vibe-art/docs/team/comms/blender/2026-10-31T1845--to-director-communicator--mireling-packet.md).
+  - Comms notice: [`docs/team/comms/blender/archive/2026-10-31T1845--to-director-communicator--mireling-packet.md`](file:///c:/Users/htruong/source/repos/Vibe-art/docs/team/comms/blender/archive/2026-10-31T1845--to-director-communicator--mireling-packet.md).
 - **Ask**: Review contact sheet (`contact.png`), turntable (`turntable.gif`), and walk/run clips for Director approval.
 
 ### 5. Blender B2: Riverlands Map Layout Candidate Packet
@@ -54,7 +54,7 @@ This digest compiles all candidate deliverables, proposals, and packets currentl
   - Canonical project digest: `e0584b254976740835de3882531f27e9fcc09347ea8d45a16cb455ba04536c1a`
   - Review Renders: 18 inspected images (`overview.png`, `before-overview.png`, 16 screen crops `screen-0-0.png` through `screen-3-3.png`).
   - QA Evidence: `worldforge check` reports 0 findings on `aqualia_riverlands` and 0 findings on full-region `aqualia`. All 16 landmarks, 4 story spots, 6 habitats, 6 ambience emitters, warm-terrace elevation, and 5 routes placed.
-  - Comms notice: [`docs/team/comms/blender/2026-10-31T1829--to-director-communicator--riverlands-candidate-packet.md`](file:///c:/Users/htruong/source/repos/Vibe-art/docs/team/comms/blender/2026-10-31T1829--to-director-communicator--riverlands-candidate-packet.md).
+  - Comms notice: [`docs/team/comms/blender/archive/2026-10-31T1829--to-director-communicator--riverlands-candidate-packet.md`](file:///c:/Users/htruong/source/repos/Vibe-art/docs/team/comms/blender/archive/2026-10-31T1829--to-director-communicator--riverlands-candidate-packet.md).
 - **Scope Note**: Approval covers layout, routes, landmarks, and collisions only; terrain swatches and environment dressing remain preliminary pending C11/M9 and C10 kits.
 - **Ask**: Review topological layout and landmark placement for Director layout approval.
 

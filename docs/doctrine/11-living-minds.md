@@ -101,26 +101,39 @@ voice prosody (AGT-4.3). No subsystem picks its own emotion.
 
 ## AGT-6 Agentic creativity: paintings
 
-- **AGT-6.1** Villagers with artistic roles (Lark, the wetland painter, first) can create a
-  **painting**, a decorative item class, through a new validated action `CREATE_PAINTING`.
-  The subject comes from their memories and sight notes ("the ferry at dusk", "Rivallie by
-  the reeds").
-- **AGT-6.2 Pipeline (asynchronous, never real time).** The LLM writes a structured brief
-  (title, subject, palette mood, composition). A local image model renders it at low
+- **AGT-6.1 Who paints.** Any human can make a **painting**, a decorative artifact (AGT-9).
+  Villagers do it through the validated action `CREATE_PAINTING`; artistic roles (Lark,
+  the wetland painter, first) paint often, everyone else rarely (AGT-6.3). The subject
+  comes from their memories and sight notes ("the ferry at dusk", "Rivallie by the
+  reeds"). The **player** paints at an easel or on a blank canvas through a painting
+  screen: they write the prompt, see a preview in the game palette, then keep or retry.
+- **AGT-6.2 Pipeline (asynchronous, never real time).** A villager's LLM writes a
+  structured brief (title, subject, palette mood, composition); the player's screen
+  writes the same brief from the player's text. A local image model renders it at low
   resolution. A deterministic post-process downsamples to 48×32 art px, quantizes to the
-  doctrine palette (at most 16 colours), and adds a frame. The result becomes an item with
-  provenance (painter, day, title, brief).
-- **AGT-6.3 Scheduling.** It runs only when no dialogue is active and the GPU is free:
-  during sleep acceleration or pause, with the LLM unloaded if VRAM requires it. One
-  painting per painter per game day. While work is pending the item shows "in progress".
-- **AGT-6.4 Platform reality.** Ollama's image generation is experimental and was
-  macOS-first when this doctrine was written. Until it ships on Windows and Linux, the
-  engine supports a configurable loopback image endpoint and degrades gracefully: no
-  endpoint means no paintings, never a broken game.
+  doctrine palette (at most 16 colours) and the renderer adds a frame. The result becomes
+  a painting artifact with provenance (painter, day, title, brief, model, seed).
+- **AGT-6.3 Scheduling.** Villager paintings run only when no dialogue is active and the
+  GPU is free: during sleep acceleration or pause, with the LLM unloaded if VRAM requires
+  it. Artists paint at most one painting per game day, other villagers at most one per
+  seven days. A player painting runs on request; dialogue and villager jobs wait for it.
+  While work is pending the artifact shows "in progress"; it survives a save and reload.
+- **AGT-6.4 Platform reality.** Image generation goes through a configurable **loopback
+  image endpoint**, not through Ollama: Ollama's experimental image generation was
+  macOS-first and was removed in v0.32.6 (August 2026). The reference provider is the
+  stable-diffusion.cpp server (MIT; CUDA, Vulkan, Metal; Linux, Windows, macOS) with an
+  Apache-2.0 model (Z-Image Turbo or FLUX.2 klein 4B); never a non-commercial model. No
+  endpoint means no new paintings, never a broken game: existing paintings still show.
 - **AGT-6.5 Content rules.** Allowed subjects are landscapes, creatures, objects and
   villagers (portrait requests pass through the subject's affinity). No text in images,
   no real-world people or brands. A brief that fails the allowlist is rejected with a
-  receipt.
+  receipt. The player's prompt passes the same rules.
+- **AGT-6.6 Seeing a painting.** A villager perceives a painting through its **caption**,
+  a sight note (AGT-3.3) made once when the painting is finished, never by resending the
+  image. Hanging a painting is a notice event (AGT-3.2).
+- **AGT-6.7 No pixel drawing by models.** Language models never place pixels: a 48×32
+  painting is 1,536 decisions, far beyond a villager's context budget. A player-only
+  pixel touch-up tool on the palette grid is allowed (it needs no model).
 
 ## AGT-7 Performance budgets (reference machine: RTX 5080 laptop, `gemma4:26b`)
 
@@ -130,19 +143,55 @@ voice prosody (AGT-4.3). No subsystem picks its own emotion.
 | Dialogue: player sends → first voiced audio (Spoken tier)               | ≤ 3.0 s                                            |
 | Dialogue with sight (first turn)                                        | ≤ +1.5 s over text-only                            |
 | Background jobs                                                         | Never delay or block a dialogue (preemption stays) |
+| Reading (`READ_TEXT` reaction) after the read is proposed               | ≤ 2.0 s to first streamed token warm               |
+| Player painting: Generate → palette preview                             | ≤ 30 s, including unloading and reloading the LLM  |
+| Opening a 48-page book on the book screen                               | ≤ 100 ms                                           |
 | Main thread cost of AI subsystems (capture, chunking, audio scheduling) | ≤ 1 ms per frame average                           |
 | TTS on main thread                                                      | 0 (worker only)                                    |
 
 These are product targets measured by the smoke and benchmark scripts. Missing one is a
 bug to fix or a tier to downgrade, never a reason to block the game.
 
+## AGT-8 The written word: notes and books
+
+- **AGT-8.1 What exists.** A **note** is one page; a **book** is pages bound together.
+  Both are artifacts (AGT-9) with a title and an author. Limits: a page holds 24 lines of
+  at most 96 characters; a book holds at most 48 pages. Anyone can read; only the author
+  writes until they **seal** it, and a sealed text never changes.
+- **AGT-8.2 The player** reads and writes on a book screen: a page spread, page turns,
+  a typed editor with the line limits visible, title and seal. Text the player writes is
+  data to every villager, never instructions.
+- **AGT-8.3 Villagers read in ranges.** A villager reads with `READ_TEXT`, naming a page
+  range of a book or a line range of a note. One read returns at most 2 pages or 48 lines
+  and at most 600 tokens; longer ranges are cut with a visible marker. The excerpt
+  appears in exactly one prompt, whose answer is a reaction and a summary of at most 40
+  words; the summary becomes a `reading` memory with its source and range. Later prompts
+  use the summary, never the text again, so context stays bounded no matter how long
+  the book is.
+- **AGT-8.4 Villagers write.** A villager writes a note with `WRITE_NOTE` (at most 12
+  lines: letters, recipes, a gift card) and may add one page per game day to a book
+  they own with `WRITE_PAGE` (a diary, a ledger). Writing follows the same grounding rules
+  as speech: it can't create facts, items or promises the simulation doesn't hold.
+- **AGT-8.5 Finding things to read.** A villager's world facts list at most five
+  readable artifacts within reach (carried, displayed within 2 tiles, or in their home),
+  as title, kind, author and length, never content.
+
+## AGT-9 Artifacts: authored items
+
+Notes, books and paintings are one item class, the **artifact**: an item instance that
+points at an authored record (kind, title, author, created day, revision, sealed flag,
+content). Artifacts can be carried, dropped, given, displayed on furniture (wall hooks,
+shelves, lecterns) and saved. Their content is bounded (AGT-8.1, AGT-6.2) so a save with
+hundreds of them stays small, and every one carries provenance like a memory does.
+
 ## Engineering mandates
 
-| ID     | Mandate                                                                                                                                                                                                                   |
-| ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| AGT-M1 | Streaming structured dialogue (dialogue field first) with incremental JSON parsing and validation on completion.                                                                                                          |
-| AGT-M2 | World-layer snapshot capture (no HUD), view-cone crop, nearest downscale, off-main-thread encode; images attached via Ollama's chat `images` field with an image token budget.                                            |
-| AGT-M3 | `sight` memory kind with entity-grounding filter, salience-triggered notice events, daily look; settings toggle and eye glyph.                                                                                            |
-| AGT-M4 | Voice system: blip synthesizer, Kokoro worker (WebGPU/WASM), optional Chatterbox loopback adapter, authored voice profiles in content, emotion→prosody presets, sentence-streamed playback with ducking and instant skip. |
-| AGT-M5 | `CREATE_PAINTING` action, brief schema and allowlist, async image job against a configurable loopback endpoint, palette quantization, painting item class with provenance and persistence.                                |
-| AGT-M6 | Measure AGT-7 budgets in `npm run test:ollama` and the benchmark; record results in operations docs.                                                                                                                      |
+| ID     | Mandate                                                                                                                                                                                                                                      |
+| ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| AGT-M1 | Streaming structured dialogue (dialogue field first) with incremental JSON parsing and validation on completion.                                                                                                                             |
+| AGT-M2 | World-layer snapshot capture (no HUD), view-cone crop, nearest downscale, off-main-thread encode; images attached via Ollama's chat `images` field with an image token budget.                                                               |
+| AGT-M3 | `sight` memory kind with entity-grounding filter, salience-triggered notice events, daily look; settings toggle and eye glyph.                                                                                                               |
+| AGT-M4 | Voice system: blip synthesizer, Kokoro worker (WebGPU/WASM), optional Chatterbox loopback adapter, authored voice profiles in content, emotion→prosody presets, sentence-streamed playback with ducking and instant skip.                    |
+| AGT-M5 | `CREATE_PAINTING` action, brief schema and allowlist, async image job against a configurable loopback image endpoint (provider adapters, stable-diffusion.cpp first), palette quantization, player painting screen, captions as sight notes. |
+| AGT-M7 | Artifact item class (notes, books, paintings) with bounded content, provenance, display furniture and save migration; book screen; `READ_TEXT`, `WRITE_NOTE`, `WRITE_PAGE` with range and token caps and `reading` memories.                 |
+| AGT-M6 | Measure AGT-7 budgets in `npm run test:ollama` and the benchmark; record results in operations docs.                                                                                                                                         |

@@ -19,7 +19,7 @@ Claude is on call only. You are **doctrine steward** (DOC-5) and the team's
 keep the skills truthful, and maintain every member's queue in `docs/team/queue/`
 (TEAM-8.4). Your own ordered work is `docs/team/queue/codex.md`; the backlog table
 below is the source it was cut from. Directive 004
-(`docs/team/comms/claude/2026-11-01T0100--to-all--directive-004-handoff.md`) explains
+(`docs/team/comms/claude/archive/2026-11-01T0100--to-all--directive-004-handoff.md`) explains
 the hand-off. When a tool or skill you build is ready, you post the matching
 `--to-blender--go-<class>-` message.
 
