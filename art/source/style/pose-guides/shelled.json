@@ -1,0 +1,12 @@
+{
+  "template": "shelled",
+  "conceptTemplate": "creature-v1",
+  "views": ["front", "left", "back"],
+  "size": [2304, 1344],
+  "source": "art/source/forge/work/selftest-creature-shelled/texture.blend",
+  "sourceSha256": "74db250af140074168b9bb7e745bfc4613b70a2e0837531a1c2de57a0a4410b4",
+  "script": "art/source/forge/blender/pose_guide.py",
+  "blender": "4.2.3",
+  "command": "uv run --project art/source/forge python art/source/forge/forge.py pose-guide --template shelled",
+  "at": "2026-11-02T22:41:35Z"
+}

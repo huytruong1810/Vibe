@@ -1,0 +1,12 @@
+{
+  "template": "mushroom-biped",
+  "conceptTemplate": "creature-biped-v1",
+  "views": ["front", "left", "back"],
+  "size": [2304, 1344],
+  "source": "art/source/forge/work/selftest-creature-mushroom-biped/texture.blend",
+  "sourceSha256": "05605e39f913d2b49d0326b431a6c431101989d9df057ac436cd12fadd9d6527",
+  "script": "art/source/forge/blender/pose_guide.py",
+  "blender": "4.2.3",
+  "command": "uv run --project art/source/forge python art/source/forge/forge.py pose-guide --template mushroom-biped",
+  "at": "2026-11-02T23:25:57Z"
+}

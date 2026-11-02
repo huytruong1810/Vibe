@@ -274,12 +274,13 @@ order; C26 gates any regeneration of approved assets (blender B20).
 
 ### C27 · Pose guides for every template
 
-- status: open
+- status: done (2026-11-02, claude)
 - owner: claude
 - goal: `concept` gets the pose right for humans (A-pose), winged, shelled and mushroom-biped, as `pose-guides/quadruped.png` does for quadrupeds.
 - work: `forge.py pose-guide --template <t>` rendering the template's fixture (or an approved mesh) front/side/back as tight grey clay; guides committed in `art/source/style/pose-guides/`; recipes README and skill updated.
 - done when: one `concept` run per template keeps every view in the template pose
-- evidence:
+- result: guides `art/source/style/pose-guides/{human,shelled,winged,mushroom-biped}.png` (+ provenance JSON) from `forge.py pose-guide --template <t>` (`blender/pose_guide.py`). Trials (`--try`, 4 candidates each), pose held in every view: human 4/4 (A-pose front and back); shelled 4/4 (`creature-v1`; one front view at three-quarter); winged 4/4 and mushroom-biped 4/4 with the new spec templates `creature-winged-v1` and `creature-biped-v1`. With `creature-v1`, winged hung vertically and its views drifted, and bipeds grew tails from the fixed tail clause. The winged guide uses the hover clip's wings-up frame.
+- evidence: board `docs/team/comms/claude/boards/2026-11-02-c27-pose-guides.png`; `docs/engineering/imagegen.md` (findings); `recipes/README.md` (guide table)
 
 ### C28 · Reference views at 1024 px or more
 
