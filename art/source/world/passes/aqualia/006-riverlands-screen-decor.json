@@ -1,0 +1,1465 @@
+{
+ "version": 1,
+ "id": "aqualia-riverlands-screen-decor-006",
+ "region": "aqualia",
+ "level": "aqualia_riverlands",
+ "baseDigest": "2c9793c2731a512ee5cfc20abae77bc9c5a129e5e9d045a225e762346a8d485a",
+ "operations": [
+  {
+   "op": "place",
+   "id": "decor/rl-00-0-00-tree_oak",
+   "entity": "Decor",
+   "at": [
+    9,
+    5
+   ],
+   "fields": {
+    "asset": "env:tree_oak",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-00-0-01-tree_oak",
+   "entity": "Decor",
+   "at": [
+    9,
+    0
+   ],
+   "fields": {
+    "asset": "env:tree_oak",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-00-0-02-tree_oak",
+   "entity": "Decor",
+   "at": [
+    7,
+    2
+   ],
+   "fields": {
+    "asset": "env:tree_oak",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-00-0-03-tree_oak",
+   "entity": "Decor",
+   "at": [
+    6,
+    5
+   ],
+   "fields": {
+    "asset": "env:tree_oak",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-00-0-04-tree_oak",
+   "entity": "Decor",
+   "at": [
+    11,
+    3
+   ],
+   "fields": {
+    "asset": "env:tree_oak",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-00-1-00-rock_pebbles",
+   "entity": "Decor",
+   "at": [
+    20,
+    8
+   ],
+   "fields": {
+    "asset": "env:rock_pebbles",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-00-1-01-rock_pebbles",
+   "entity": "Decor",
+   "at": [
+    21,
+    6
+   ],
+   "fields": {
+    "asset": "env:rock_pebbles",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-00-1-02-rock_pebbles",
+   "entity": "Decor",
+   "at": [
+    19,
+    5
+   ],
+   "fields": {
+    "asset": "env:rock_pebbles",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-10-0-00-tree_oak",
+   "entity": "Decor",
+   "at": [
+    36,
+    4
+   ],
+   "fields": {
+    "asset": "env:tree_oak",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-10-0-01-tree_oak",
+   "entity": "Decor",
+   "at": [
+    35,
+    1
+   ],
+   "fields": {
+    "asset": "env:tree_oak",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-10-0-02-tree_oak",
+   "entity": "Decor",
+   "at": [
+    38,
+    1
+   ],
+   "fields": {
+    "asset": "env:tree_oak",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-10-1-00-tree_oak",
+   "entity": "Decor",
+   "at": [
+    52,
+    11
+   ],
+   "fields": {
+    "asset": "env:tree_oak",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-10-1-01-tree_oak",
+   "entity": "Decor",
+   "at": [
+    54,
+    13
+   ],
+   "fields": {
+    "asset": "env:tree_oak",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-20-0-00-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    82,
+    10
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-20-0-01-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    82,
+    13
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-20-0-02-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    79,
+    12
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-20-0-03-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    80,
+    14
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-20-1-00-rock_pebbles",
+   "entity": "Decor",
+   "at": [
+    68,
+    4
+   ],
+   "fields": {
+    "asset": "env:rock_pebbles",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-20-1-01-rock_pebbles",
+   "entity": "Decor",
+   "at": [
+    65,
+    5
+   ],
+   "fields": {
+    "asset": "env:rock_pebbles",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-20-1-02-rock_pebbles",
+   "entity": "Decor",
+   "at": [
+    66,
+    2
+   ],
+   "fields": {
+    "asset": "env:rock_pebbles",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-30-0-00-rock_pebbles",
+   "entity": "Decor",
+   "at": [
+    99,
+    5
+   ],
+   "fields": {
+    "asset": "env:rock_pebbles",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-30-0-01-rock_pebbles",
+   "entity": "Decor",
+   "at": [
+    103,
+    6
+   ],
+   "fields": {
+    "asset": "env:rock_pebbles",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-30-0-02-rock_pebbles",
+   "entity": "Decor",
+   "at": [
+    100,
+    8
+   ],
+   "fields": {
+    "asset": "env:rock_pebbles",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-30-0-03-rock_pebbles",
+   "entity": "Decor",
+   "at": [
+    101,
+    6
+   ],
+   "fields": {
+    "asset": "env:rock_pebbles",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-30-1-00-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    112,
+    4
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-30-1-01-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    112,
+    2
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-30-1-02-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    112,
+    6
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-30-2-00-tree_oak",
+   "entity": "Decor",
+   "at": [
+    118,
+    8
+   ],
+   "fields": {
+    "asset": "env:tree_oak",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-30-2-01-tree_oak",
+   "entity": "Decor",
+   "at": [
+    116,
+    13
+   ],
+   "fields": {
+    "asset": "env:tree_oak",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-01-0-00-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    5,
+    21
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-01-0-01-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    7,
+    20
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-01-0-02-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    5,
+    23
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-01-0-03-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    9,
+    22
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-01-0-04-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    7,
+    22
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-01-1-00-rock_pebbles",
+   "entity": "Decor",
+   "at": [
+    21,
+    19
+   ],
+   "fields": {
+    "asset": "env:rock_pebbles",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-01-1-01-rock_pebbles",
+   "entity": "Decor",
+   "at": [
+    19,
+    19
+   ],
+   "fields": {
+    "asset": "env:rock_pebbles",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-01-1-02-rock_pebbles",
+   "entity": "Decor",
+   "at": [
+    20,
+    22
+   ],
+   "fields": {
+    "asset": "env:rock_pebbles",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-11-0-00-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    33,
+    22
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-11-0-01-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    35,
+    18
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-11-0-02-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    36,
+    21
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-11-0-03-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    34,
+    20
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-11-1-00-tree_oak",
+   "entity": "Decor",
+   "at": [
+    49,
+    19
+   ],
+   "fields": {
+    "asset": "env:tree_oak",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-11-1-01-tree_oak",
+   "entity": "Decor",
+   "at": [
+    52,
+    20
+   ],
+   "fields": {
+    "asset": "env:tree_oak",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-21-0-00-tree_oak",
+   "entity": "Decor",
+   "at": [
+    68,
+    20
+   ],
+   "fields": {
+    "asset": "env:tree_oak",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-21-1-00-tree_oak",
+   "entity": "Decor",
+   "at": [
+    82,
+    21
+   ],
+   "fields": {
+    "asset": "env:tree_oak",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-21-1-01-tree_oak",
+   "entity": "Decor",
+   "at": [
+    85,
+    21
+   ],
+   "fields": {
+    "asset": "env:tree_oak",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-31-0-00-rock_pebbles",
+   "entity": "Decor",
+   "at": [
+    97,
+    18
+   ],
+   "fields": {
+    "asset": "env:rock_pebbles",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-31-0-01-rock_pebbles",
+   "entity": "Decor",
+   "at": [
+    95,
+    19
+   ],
+   "fields": {
+    "asset": "env:rock_pebbles",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-31-1-00-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    112,
+    23
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-31-1-01-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    110,
+    22
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-31-1-02-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    114,
+    22
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-02-0-00-tree_oak",
+   "entity": "Decor",
+   "at": [
+    17,
+    40
+   ],
+   "fields": {
+    "asset": "env:tree_oak",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-02-0-01-tree_oak",
+   "entity": "Decor",
+   "at": [
+    14,
+    41
+   ],
+   "fields": {
+    "asset": "env:tree_oak",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-02-1-00-flora_berries",
+   "entity": "Decor",
+   "at": [
+    20,
+    46
+   ],
+   "fields": {
+    "asset": "env:flora_berries_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-02-1-01-flora_berries",
+   "entity": "Decor",
+   "at": [
+    17,
+    48
+   ],
+   "fields": {
+    "asset": "env:flora_berries_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-02-1-02-flora_berries",
+   "entity": "Decor",
+   "at": [
+    15,
+    46
+   ],
+   "fields": {
+    "asset": "env:flora_berries_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-02-1-03-flora_berries",
+   "entity": "Decor",
+   "at": [
+    18,
+    46
+   ],
+   "fields": {
+    "asset": "env:flora_berries_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-02-1-04-flora_berries",
+   "entity": "Decor",
+   "at": [
+    20,
+    44
+   ],
+   "fields": {
+    "asset": "env:flora_berries_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-12-0-00-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    47,
+    45
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-12-0-01-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    51,
+    46
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-12-0-02-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    47,
+    48
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-12-0-03-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    49,
+    45
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-12-0-04-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    49,
+    48
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-12-1-00-tree_oak",
+   "entity": "Decor",
+   "at": [
+    42,
+    41
+   ],
+   "fields": {
+    "asset": "env:tree_oak",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-12-1-01-tree_oak",
+   "entity": "Decor",
+   "at": [
+    40,
+    39
+   ],
+   "fields": {
+    "asset": "env:tree_oak",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-12-1-02-tree_oak",
+   "entity": "Decor",
+   "at": [
+    40,
+    43
+   ],
+   "fields": {
+    "asset": "env:tree_oak",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-22-0-00-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    64,
+    49
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-22-0-01-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    67,
+    47
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-22-0-02-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    65,
+    45
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-22-0-03-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    67,
+    45
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-22-0-04-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    66,
+    50
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-22-1-00-rock_pebbles",
+   "entity": "Decor",
+   "at": [
+    82,
+    42
+   ],
+   "fields": {
+    "asset": "env:rock_pebbles",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-22-1-01-rock_pebbles",
+   "entity": "Decor",
+   "at": [
+    80,
+    42
+   ],
+   "fields": {
+    "asset": "env:rock_pebbles",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-22-1-02-rock_pebbles",
+   "entity": "Decor",
+   "at": [
+    81,
+    40
+   ],
+   "fields": {
+    "asset": "env:rock_pebbles",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-22-1-03-rock_pebbles",
+   "entity": "Decor",
+   "at": [
+    79,
+    40
+   ],
+   "fields": {
+    "asset": "env:rock_pebbles",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-22-2-00-flora_berries",
+   "entity": "Decor",
+   "at": [
+    80,
+    46
+   ],
+   "fields": {
+    "asset": "env:flora_berries_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-22-2-01-flora_berries",
+   "entity": "Decor",
+   "at": [
+    80,
+    50
+   ],
+   "fields": {
+    "asset": "env:flora_berries_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-22-2-02-flora_berries",
+   "entity": "Decor",
+   "at": [
+    82,
+    48
+   ],
+   "fields": {
+    "asset": "env:flora_berries_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-32-0-00-tree_oak",
+   "entity": "Decor",
+   "at": [
+    110,
+    37
+   ],
+   "fields": {
+    "asset": "env:tree_oak",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-32-0-01-tree_oak",
+   "entity": "Decor",
+   "at": [
+    113,
+    38
+   ],
+   "fields": {
+    "asset": "env:tree_oak",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-32-0-02-tree_oak",
+   "entity": "Decor",
+   "at": [
+    110,
+    34
+   ],
+   "fields": {
+    "asset": "env:tree_oak",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-32-1-00-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    97,
+    39
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-32-1-01-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    97,
+    37
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-32-1-02-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    99,
+    38
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-03-0-00-flora_fungi",
+   "entity": "Decor",
+   "at": [
+    18,
+    62
+   ],
+   "fields": {
+    "asset": "env:flora_fungi_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-03-0-01-flora_fungi",
+   "entity": "Decor",
+   "at": [
+    15,
+    63
+   ],
+   "fields": {
+    "asset": "env:flora_fungi_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-03-0-02-flora_fungi",
+   "entity": "Decor",
+   "at": [
+    16,
+    65
+   ],
+   "fields": {
+    "asset": "env:flora_fungi_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-03-0-03-flora_fungi",
+   "entity": "Decor",
+   "at": [
+    14,
+    66
+   ],
+   "fields": {
+    "asset": "env:flora_fungi_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-03-1-00-rock_boulder",
+   "entity": "Decor",
+   "at": [
+    24,
+    57
+   ],
+   "fields": {
+    "asset": "env:rock_boulder_rich",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-03-1-01-rock_boulder",
+   "entity": "Decor",
+   "at": [
+    24,
+    54
+   ],
+   "fields": {
+    "asset": "env:rock_boulder_rich",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-03-2-00-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    5,
+    53
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-03-2-01-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    4,
+    56
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-13-0-00-flora_fungi",
+   "entity": "Decor",
+   "at": [
+    44,
+    56
+   ],
+   "fields": {
+    "asset": "env:flora_fungi_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-13-0-01-flora_fungi",
+   "entity": "Decor",
+   "at": [
+    46,
+    57
+   ],
+   "fields": {
+    "asset": "env:flora_fungi_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-13-0-02-flora_fungi",
+   "entity": "Decor",
+   "at": [
+    46,
+    63
+   ],
+   "fields": {
+    "asset": "env:flora_fungi_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-13-0-03-flora_fungi",
+   "entity": "Decor",
+   "at": [
+    42,
+    63
+   ],
+   "fields": {
+    "asset": "env:flora_fungi_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-23-0-00-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    68,
+    56
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-23-0-01-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    66,
+    55
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-23-0-02-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    64,
+    54
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-23-0-03-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    64,
+    52
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-23-0-04-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    68,
+    52
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-23-1-00-rock_boulder",
+   "entity": "Decor",
+   "at": [
+    83,
+    67
+   ],
+   "fields": {
+    "asset": "env:rock_boulder_rich",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-23-1-01-rock_boulder",
+   "entity": "Decor",
+   "at": [
+    86,
+    66
+   ],
+   "fields": {
+    "asset": "env:rock_boulder_rich",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-33-0-00-rock_pebbles",
+   "entity": "Decor",
+   "at": [
+    103,
+    66
+   ],
+   "fields": {
+    "asset": "env:rock_pebbles",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-33-0-01-rock_pebbles",
+   "entity": "Decor",
+   "at": [
+    100,
+    67
+   ],
+   "fields": {
+    "asset": "env:rock_pebbles",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-33-0-02-rock_pebbles",
+   "entity": "Decor",
+   "at": [
+    102,
+    64
+   ],
+   "fields": {
+    "asset": "env:rock_pebbles",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-33-0-03-rock_pebbles",
+   "entity": "Decor",
+   "at": [
+    104,
+    64
+   ],
+   "fields": {
+    "asset": "env:rock_pebbles",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-33-1-00-tree_oak",
+   "entity": "Decor",
+   "at": [
+    96,
+    57
+   ],
+   "fields": {
+    "asset": "env:tree_oak",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-33-1-01-tree_oak",
+   "entity": "Decor",
+   "at": [
+    96,
+    60
+   ],
+   "fields": {
+    "asset": "env:tree_oak",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-33-2-00-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    110,
+    56
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-33-2-01-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    108,
+    54
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  },
+  {
+   "op": "place",
+   "id": "decor/rl-33-2-02-flora_reeds",
+   "entity": "Decor",
+   "at": [
+    108,
+    56
+   ],
+   "fields": {
+    "asset": "env:flora_reeds_healthy",
+    "blocks": false
+   }
+  }
+ ]
+}

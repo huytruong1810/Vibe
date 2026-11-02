@@ -88,11 +88,11 @@ when the forge shows a problem.
 
 ### B2 · Riverlands map
 
-- status: open: changes requested 2026-11-01 (`docs/team/comms/director/approvals/world-aqualia--world-aqualia-aqualia_riverlands-1.md`): fill empty screens, remove staircase river and road edges, give the rectangle zones shapes. Add passes 004+ and re-packet. Edit only the Riverlands level; the village level is approved and in the beta build
+- status: candidate (revision 2, 2026-11-02, stand-in session; answers the 2026-11-01 changes-requested record) 2026-11-01 (`docs/team/comms/director/approvals/world-aqualia--world-aqualia-aqualia_riverlands-1.md`): fill empty screens, remove staircase river and road edges, give the rectangle zones shapes. Add passes 004+ and re-packet. Edit only the Riverlands level; the village level is approved and in the beta build
 - goal: lay out level `aqualia_riverlands` from the region bible, following the codex golden village as your example.
 - work: `world-builder` skill. One pass per idea: write the pass, `apply`, `render`, open every screen crop, `check`, fix. Never edit `.ldtk` JSON by hand.
 - done when: `worldforge check` passes, the packet is in `art/review/`, and the ticket is `candidate`
-- evidence: Pass `003-riverlands-layout.json` authored and applied; 120x68 level layout complete with 16 landmarks, 4 story spots, 6 habitats, 6 ambience emitters, music zone, all 5 routes, warm-terrace elevation and collision ramps; worldforge check clean (0 findings on level and region); candidate packet in art/review/world-aqualia-aqualia_riverlands-1/; overview and all 16 screen crops inspected; announced in docs/team/comms/blender/archive/2026-10-31T1829--to-director-communicator--riverlands-candidate-packet.md.
+- evidence (revision 2): passes 004 (water and roads), 005 (zones), 006 (screen decor) applied; packet art/review/world-aqualia-aqualia_riverlands-2/ (candidate, no findings); message docs/team/comms/blender/2026-11-02T0430--to-director-communicator--riverlands-revision-2.md. Revision 1 evidence follows: Pass `003-riverlands-layout.json` authored and applied; 120x68 level layout complete with 16 landmarks, 4 story spots, 6 habitats, 6 ambience emitters, music zone, all 5 routes, warm-terrace elevation and collision ramps; worldforge check clean (0 findings on level and region); candidate packet in art/review/world-aqualia-aqualia_riverlands-1/; overview and all 16 screen crops inspected; announced in docs/team/comms/blender/archive/2026-10-31T1829--to-director-communicator--riverlands-candidate-packet.md.
 
 ### B17 · Aqualia terrain set through tileforge (long design session)
 

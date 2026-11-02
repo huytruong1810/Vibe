@@ -1,0 +1,34 @@
+{
+  "dependenciesDigest": "91a1be793162fdc6148e402edcb4f5574903d8037c57e0ae3a169e3e73301305",
+  "images": {
+    "overview.png": "6dc24989b15fa96c20f47949e9014c13427d2031131882118701bae040596ef0",
+    "screen-0-0.png": "8b54676b40dc868b423dd1066a98c25bba1076fdfca4f6e0c3d9440dc578cff5",
+    "screen-0-1.png": "e72cf9c7b7fb918664b0bf20b0f47648ba734a19046a0e744bb94c4ea7ceed1d",
+    "screen-0-2.png": "c779d77c4d017ce5631c02f1eb9771eb08ae41b002e53c8217b1cef1d7bd8e19",
+    "screen-0-3.png": "70332a1ae1bfcc2be5df90e7e15cd467e437eb878a39bdd1150f6a51baeda52c",
+    "screen-1-0.png": "58c43e3b2c99895867bedc266a69839a422b4fe1d62a71752a4619469b8505cb",
+    "screen-1-1.png": "322447ad4a4dc634780e88af6a4d2666799571edfa43e51c2d0c2ddb00e75249",
+    "screen-1-2.png": "f10681d7e055ccbb555b012d3367395ba97e3665ed718616e56079ccdb10f06f",
+    "screen-1-3.png": "1f6abb056f5e06dc38b730af12320f5aa22d81b6acbe3949a41533dbda14ef60",
+    "screen-2-0.png": "f41f632dc99c561a9fec3ddd9066003c2f868225da7102fde8691dd3c9a1db13",
+    "screen-2-1.png": "3d03cb41c4a0bcdbf638800fc1616acb0d8e2078192fe08b7d99077e030632b7",
+    "screen-2-2.png": "54c0e415974612dad7df378871b619f9e3b66cff1efd7fa9bdcad67618c7302d",
+    "screen-2-3.png": "8a71b84cc0f375aaa67248f7b093892a15ef3917df0307589ca4f28cf457f496",
+    "screen-3-0.png": "03642335b16d0d366449d49d5138622ed30e4faa6cd2235dac0a592cfd0ec16c",
+    "screen-3-1.png": "1d3ba32ecb91c01fcf644689b62f8cf87873bbf18649b06fcd76b7cae14085d8",
+    "screen-3-2.png": "b81650aa40cdc1d9e282d6aed1f7d05e600369a31ae830abfe85f73a62edf58a",
+    "screen-3-3.png": "59fd96c9a3cbd80ff56511a38435fc8ee0bbee24e74fe8a7ddfb56194ac51e06"
+  },
+  "level": "aqualia_riverlands",
+  "limitations": [
+    "17 tiles are 544 art pixels; bottom four pixels are outside the 540-pixel viewport",
+    "Draft Riverlands excluded",
+    "Preview art and FG placeholders are not visual approval"
+  ],
+  "planDigest": "b7ddc5c78cabc62a384010129efb0f7a301151b64008e68e7beec8fffcab1560",
+  "projectDigest": "b55ad9de356fe9ef65276e7e282ac99fd43eaee797d3d88ec508ca5349a6d81b",
+  "screenPixels": [
+    960,
+    540
+  ]
+}
