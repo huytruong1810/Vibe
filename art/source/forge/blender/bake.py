@@ -7,6 +7,8 @@ params: {"canvas": [w, h], "anchor": [ax, ay], "artPxPerUnit": 32, "elevationDeg
 Writes <out_dir>/<clip>/<facing>_<i>_{albedo,normal,depth}.png (16-bit, raw/linear) and
 <out_dir>/tracks.json with projected root/socket positions in art pixels (doctrine L2, L4, ART-2).
 One sample at the pixel centre with a 0.01 px filter: no anti-aliasing, fully deterministic.
+Optional "supersample": K (C26) also writes <facing>_<i>_albedo_ss.png at K x K samples per art
+pixel (same camera), so pixelize can keep features smaller than one art pixel (fangs, eyes).
 """
 
 import json
@@ -157,6 +159,16 @@ for name in ("albedo", "normal", "depth"):
     ct.links.new(rl.outputs["Alpha"], sa.inputs["Alpha"])
     fo.file_slots.new(name)
     ct.links.new(sa.outputs[0], fo.inputs[name])
+SS = int(P.get("supersample", 1))
+if SS > 1:
+    fo_ss = ct.nodes.new("CompositorNodeOutputFile")
+    fo_ss.format.file_format = "PNG"
+    fo_ss.format.color_depth = "16"
+    fo_ss.format.color_mode = "RGBA"
+    fo_ss.file_slots.clear()
+    fo_ss.file_slots.new("albedo_ss")
+    ct.links.new(fo.inputs["albedo"].links[0].from_socket, fo_ss.inputs["albedo_ss"])
+    fo_ss.mute = True
 
 # --- turntable root: rotate the whole model, keep camera and light fixed ---------------
 pivot = bpy.data.objects.new("ForgePivot", None)
@@ -218,6 +230,14 @@ for clip in P["clips"]:
             for slot, name in zip(fo.file_slots, ("albedo", "normal", "depth")):
                 slot.path = f"{facing}_{i}_{name}_"
             bpy.ops.render.render(write_still=False)
+            if SS > 1:  # second pass: albedo only, K x K samples per art pixel, same framing
+                fo.mute, fo_ss.mute = True, False
+                fo_ss.base_path = fo.base_path
+                fo_ss.file_slots[0].path = f"{facing}_{i}_albedo_ss_"
+                scene.render.resolution_x, scene.render.resolution_y = W * SS, H * SS
+                bpy.ops.render.render(write_still=False)
+                scene.render.resolution_x, scene.render.resolution_y = W, H
+                fo.mute, fo_ss.mute = False, True
 
             def px(world):
                 c = world_to_camera_view(scene, cam, world)

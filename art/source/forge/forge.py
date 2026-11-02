@@ -310,6 +310,8 @@ def st_bake(asset: str) -> str:
     params = {"canvas": cv["size"], "anchor": cv["anchor"], "artPxPerUnit": rs["camera"]["artPixelsPerWorldUnit"],
               "elevationDeg": rs["camera"]["elevationDeg"], "facings": rs["facings"]["zRotationDeg"],
               "clips": clips, "sockets": rs["bake"]["exportSocketTracks"]}
+    if _recipe(asset).get("supersample", 1) > 1:  # C26; absent keeps existing params and caches
+        params["supersample"] = _recipe(asset)["supersample"]
     pfile = wd / "bake_params.json"
     pfile.write_text(json.dumps(params))
     out = wd / "bake"
@@ -329,12 +331,15 @@ def st_pixelize(asset: str) -> str:
     extra = {"ramps": r["ramps"], "detailSlots": r.get("detailSlots", [])}
     if r.get("rampShift"):  # only when used, so existing caches and digests are unchanged
         extra["rampShift"] = r["rampShift"]
+    if r.get("supersample", 1) > 1:  # C26 feature-preserving pixelize, same rule
+        extra["supersample"], extra["features"] = r["supersample"], r.get("features", {})
     out = wd / "pix"
     code = [core.FORGE / "forgelib" / "pixelize.py"]
     if core.is_fresh(asset, "pixelize", bake_files + code + [core.SPEC_DIR / "render_spec.json", core.SPEC_DIR / "palette.json"], extra):
         return "fresh (cached)"
     shutil.rmtree(out, ignore_errors=True)
-    pixelize.run_dir(wd / "bake", out, r["ramps"], r.get("detailSlots", []), r.get("rampShift"))
+    pixelize.run_dir(wd / "bake", out, r["ramps"], r.get("detailSlots", []), r.get("rampShift"),
+                     r.get("supersample", 1), r.get("features"))
     record(asset, "pixelize", bake_files + code + [core.SPEC_DIR / "render_spec.json", core.SPEC_DIR / "palette.json"],
            sorted(out.rglob("*.png")), extra)
     return f"{len(list((out).glob('*/*.png')))} frames"

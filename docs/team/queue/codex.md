@@ -259,13 +259,18 @@ order; C26 gates any regeneration of approved assets (blender B20).
 
 ### C26 · Sprite readability: features survive the bake and pixelize step
 
-- status: open (first)
+- status: candidate (see status line below)
 - owner: claude
 - goal: a creature reads as itself at game size: Bramblefang's fangs and fire mane, Rivallie's crest and bib, Mireling's face and moss, a human's face and hair.
 - evidence of the problem: [comparison boards](../comms/blender/2026-11-02T0500--to-director--sprite-comparison-boards.md): every shipped body loses its defining features; the pixel grid is clean, so shapes are lost in bake/pixelize, not outline or palette.
 - work: (1) readability-first concept fields and template clause (oversized head and eyes, exaggerated signature features, ART-6.3/7.2) so the mesh carries chunky features; (2) feature-preserving pixelize: detail masks from the reference views (eyes, fangs, mane accents) kept as protected pixels, highlight/accent ramp steps on signature materials; (3) measure `heightArtPx` headroom per canvas; (4) creature face sidecars (C3b) as part of the answer.
 - done when: Bramblefang and Rivallie boards (reference beside idle s/e/n at 4x) show the signature features at 1x, director agrees
-- evidence:
+- status 2026-11-02: candidate, awaiting the director's agreement before B20 (claude)
+- cause found: the bake renders one albedo sample per art pixel, so a fang or an eye (2–4 samples wide at 4×) never reaches pixelize. Then `_majority` and `_min_regions` remove what is left, and dark materials sit on pale `light` steps (Bramblefang's basalt coat reads lavender-grey).
+- result: opt-in recipe fields `supersample` (extra 4× albedo pass in `blender/bake.py`) and `features` (`forgelib/pixelize.py` `_ss_labels`: a slot wins a pixel near a socket and on a host region; at least 2 px, never an orphan; hidden from behind), plus the existing `rampShift`. Without them every published creature re-pixelizes pixel-identical (2,464 frames). Eyes stay out: creature faces are runtime decals (ART-8.1), so that part belongs to C3b. A 2-px eye decal at the mouth/head anchor reads at 1× (tried and removed).
+- proof recipes (for blender in B20, after the director agrees): Bramblefang `"supersample": 4, "rampShift": {"pelt": -1, "mane": -1}, "features": {"fangs": {"minSamples": 1, "on": ["pelt", "edge"], "near": ["Socket_Mouth"], "radiusPx": 4, "maxPx": 2}}`; Rivallie `"supersample": 4, "rampShift": {"body": -1, "fins": 1}`.
+- evidence: boards `docs/team/comms/claude/boards/2026-11-02-c26-bramblefang.png`, `…-c26-bramblefang-run.png` (fang in every face-facing run frame), `…-c26-rivallie.png`; QA palette/colour/outline/orphan checks pass on the proof frames (9 and 12 colours of 20, 0 orphans); `pixelize_selftest.py` 6/6
+- open: `heightArtPx` headroom per canvas and the concept-template clause (oversized head and signature features) are not done; creature face decals are C3b.
 
 ### C27 · Pose guides for every template
 
@@ -303,7 +308,7 @@ order; C26 gates any regeneration of approved assets (blender B20).
 
 ### C31 · gen3d backends: Hunyuan3D-2.1 shape and TRELLIS.2
 
-- status: in progress (claude)
+- status: blocked: the director accepts the gated `facebook/dinov3-vitl16-pretrain-lvd1689m` licence on huggingface.co (403 on 2026-11-02; TRELLIS.2's image encoder, no way round it). `briaai/RMBG-2.0` can be skipped: the runner sets `rembg_model = None` because prep views carry alpha. Director chose C26 first.
 - owner: claude
 - goal: compare single-image 3D against the current Hunyuan3D-2mv on the golden samples (L12).
 - work: recipe `gen3d.backend` (done: `forgelib/core.py` `GEN3D_BACKENDS`, default stays out of the digest), pinned setups (Blackwell cu128 builds), same `mesh.glb` contract.
