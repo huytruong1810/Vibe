@@ -1,5 +1,6 @@
+import { MemoryStateSchema, migrateMemory } from './memory';
 import { z } from 'zod';
-import { ITEMS, ItemIdSchema } from '../content/definitions';
+import { ITEMS, ItemIdSchema, NPC_PROFILES } from '../content/definitions';
 import { GameSaveV3Schema, migrateSaveV3, type GameSaveV3 } from './save-v3';
 import { EquipmentService, GARMENT_SLOTS } from './equipment';
 import { TwoSlotInventory } from './inventory';
@@ -133,7 +134,8 @@ const projectiles = z
 export const GameSaveSchema = z
   .object({
     ...legacy,
-    version: z.literal(5),
+    version: z.literal(6),
+    npcs: z.array(legacy.npcs.element.extend({ memory: MemoryStateSchema })).length(30),
     artifacts: ArtifactRecordsSchema,
     artifactSequence: z.number().int().min(0).max(Number.MAX_SAFE_INTEGER),
     placements: z
@@ -260,6 +262,16 @@ function v3Projection(save: GameSave): unknown {
   return {
     ...base,
     version: 3,
+    npcs: save.npcs.map((n) => ({
+      ...n,
+      memory: {
+        revision: n.memory.revision,
+        serial: n.memory.serial,
+        summary: '',
+        records: [],
+        lastReflection: n.memory.lastReflection,
+      },
+    })),
     contentVersion: 2,
     player: { ...player, attack: v3Attack(player.attack) },
     entities: {
@@ -576,6 +588,17 @@ export function migrateSave(input: unknown): GameSave {
     if (['artifacts', 'placements', 'artifactSequence'].some((key) => key in candidate))
       throw Error('Save v4 cannot contain v5 artifact fields');
     candidate = { ...candidate, version: 5, artifacts: [], placements: [], artifactSequence: 0 };
+  }
+  if (candidate.version === 5 && Array.isArray(candidate.npcs)) {
+    candidate = {
+      ...candidate,
+      version: 6,
+      npcs: candidate.npcs.map((value, i) => {
+        const n = value as Record<string, unknown>;
+        const oldMemory = legacy.npcs.element.shape.memory.parse(n.memory);
+        return { ...n, memory: migrateMemory(NPC_PROFILES[i]!, oldMemory) };
+      }),
+    };
   }
   const result = GameSaveSchema.safeParse(candidate);
   if (!result.success)

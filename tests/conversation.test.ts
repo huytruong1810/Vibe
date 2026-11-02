@@ -178,12 +178,13 @@ describe('conversation context', () => {
       const npc = host.npcs[10]!;
       npc.memory.records = Array.from({ length: CONFIG.memoryLimit }, (_, i) => ({
         id: `retained:${i}`,
-        tick: 0,
-        day: 0,
-        kind: 'conversation',
+        createdTick: 0,
+        lastAccessTick: 0,
+        type: 'episodic',
+        confidence: 'told',
         text: 'retained',
         subjects: [],
-        sourceIds: [],
+        source: { kind: 'session', ids: [] },
         importance: 5,
       }));
       const before = structuredClone(npc.memory);
@@ -213,13 +214,22 @@ describe('conversation context', () => {
         ).toBe(true);
         const compact = host.frame().jobs.find((j) => j.kind === 'compaction');
         if (compact) {
+          const memoryBeforeCompaction = structuredClone(npc.memory);
           expect(
             send(host, { type: 'agentResult', jobId: compact.id, output: summary }, 'inference').ok,
           ).toBe(true);
+          expect(npc.memory).toEqual(memoryBeforeCompaction);
         }
         expect(host.frame().dialogue!.lines.length).toBeLessThanOrEqual(32);
       }
-      expect(npc.memory).toEqual(before);
+      expect(npc.memory.records).toEqual(before.records);
+      expect(npc.memory.pending.length).toBeGreaterThan(0);
+      const view = host.frame().npcs.find((n) => n.profileId === npc.profileId)!;
+      expect(view.memory.pending).toEqual([]);
+      expect(view.memoryCounts).toEqual({
+        active: CONFIG.memoryLimit,
+        pending: npc.memory.pending.length,
+      });
       expect(host.frame().performance.context!.compactions).toBeGreaterThan(0);
     } finally {
       host.dispose();

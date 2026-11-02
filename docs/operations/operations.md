@@ -63,8 +63,7 @@ lines. At projected 75% input usage, one background compaction summarizes older 
 and retains four recent speaker entries verbatim. An unchanged conversation revision is
 required to apply it, even while the world is paused for dialogue. At 95%, oldest verbatim
 entries are omitted deterministically; Developer overlay shows tokens, budget, applied
-compactions, and `truncated`. Compaction never writes persistent memory. C25 supplies typed
-memory, extraction and migration separately.
+compactions, and `truncated`. Compaction never writes persistent memory. C25 adds typed long-term memory independently.
 
 Machine-A B0 command (requires both installed aliases):
 
@@ -82,6 +81,42 @@ recall check is preliminary; the director reviews the two turns. This nonstreami
 does not measure AGT-7's first streamed token target, and awaits compaction between turns
 only for measurement. Runtime cancellation/preemption is covered by mocked tests.
 No live C24 hardware result is claimed yet.
+
+### Long-term memory (C25)
+
+Saves migrate to v6 automatically, preserving older supported migrations, memory IDs and
+provenance, artifact contents and placements. Core self/player/relationship blocks persist.
+The Developer overlay shows active memory count, deferred writes, record types and sources.
+Invalidated records remain in saves but cannot enter retrieval. If folding is unavailable,
+new writes wait in saved pending storage rather than deleting earlier memories.
+
+For optional local embedding relevance, install `embeddinggemma` and reconnect:
+
+```sh
+ollama pull embeddinggemma
+```
+
+The application discovers the model at connection time. Uncached queries use keywords
+immediately while CPU embedding requests warm a separate IndexedDB cache. Repeated queries
+can then use 256-dimensional vectors. Cache loss does not affect saves or fallback play.
+
+Machine-A B0 cross-conversation smoke:
+
+```sh
+npm run test:ollama -- gemma4-abliterated:26b --memory
+```
+
+This retains C24's 30-exchange/promise check, adds a plant preference at turn 29, closes and
+extracts on CPU E4B, then asks for that preference in a second conversation. Retain
+`memory-smoke.json` from the OS temp directory's `hearthwild-ollama-smoke/` (or set
+`OLLAMA_SMOKE_DIR` to your own comms folder). Record hardware, installed tags, CPU settings,
+extraction latency against 30 seconds, and the actual extraction and recall text. The
+harness still measures full responses, not first streamed tokens. Live acceptance is
+pending until machine A returns evidence.
+
+`npm run benchmark` includes a separate warmed 400-record fixture with cached 256-dimensional
+vectors and full prompt construction. It reports p95 and maximum timing and fails when
+p95 exceeds the 5 ms retrieval budget. Run it without competing timing work.
 
 ### Browser origins and permissions
 
@@ -106,7 +141,7 @@ Do not turn the original draft's “>45 tokens/sec” into a product guarantee. 
 
 Manual save reports completion. Autosave runs every 30 seconds during active play. Two IndexedDB checkpoints rotate atomically; a damaged newest slot falls back to the previous valid one. Export JSON before clearing browser data or changing origins.
 
-Exports include the producing build SHA, branch and UTC build date; this metadata stays outside the strict save-v5 simulation payload. Older exports without it still import. Browser saves are scoped to the exact origin. `localhost`, `127.0.0.1`, and different ports have separate storage. If a save appears missing, return to the original URL or import an export. Browser quota/private-mode failures are surfaced, not silently treated as saved.
+Exports include the producing build SHA, branch and UTC build date; this metadata stays outside the strict save-v6 simulation payload. Older exports without it still import. Browser saves are scoped to the exact origin. `localhost`, `127.0.0.1`, and different ports have separate storage. If a save appears missing, return to the original URL or import an export. Browser quota/private-mode failures are surfaced, not silently treated as saved.
 
 Import validates size, versions, content IDs, array lengths, numbers, ownership, and references before replacing the world. Unfinished conversations and in-flight jobs are canceled; committed effects, memories, and future promises remain. There is no wall-clock catch-up for time spent closed.
 

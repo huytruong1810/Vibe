@@ -599,13 +599,16 @@ export class HudPresenter {
         lines.push(`Promise ${promise.id}: ${promise.status} · ${promise.location}`);
       lines.push(
         '\nMEMORY PROVENANCE',
-        npc.memory.summary
-          ? `Summary: ${npc.memory.summary.slice(0, 240)}`
-          : 'No compacted summary yet.',
+        npc.memory.core.self
+          ? `Self: ${npc.memory.core.self.slice(0, 240)}`
+          : 'No core self block yet.',
+      );
+      lines.push(
+        `Memory: ${npc.memoryCounts?.active ?? npc.memory.records.filter((m) => m.invalidAtTick === undefined).length}/400 active; ${npc.memoryCounts?.pending ?? npc.memory.pending.length} deferred writes`,
       );
       for (const memory of npc.memory.records.slice(-4))
         lines.push(
-          `${memory.kind} · ${memory.id}\n${memory.text.slice(0, 180)}\nSources: ${memory.sourceIds.join(', ').slice(0, 240) || 'direct conversation'}`,
+          `${memory.type} · ${memory.id}\n${memory.text.slice(0, 180)}\nSources: ${memory.source.ids.join(', ').slice(0, 240) || 'direct conversation'}`,
         );
     }
     return lines.join('\n');

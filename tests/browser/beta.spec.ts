@@ -42,7 +42,7 @@ test('production beta loads assets and supports fallback play, export, resume an
   const download = await downloadPromise;
   const contents = await readFile((await download.path())!, 'utf8');
   const exported = JSON.parse(contents);
-  expect(exported.version).toBe(5);
+  expect(exported.version).toBe(6);
   expect(exported.build.sha).toMatch(/^[a-f0-9]{40}$/);
   expect(await page.locator('#build-stamp').textContent()).toContain(exported.build.sha);
   await page.locator('#import-input').setInputFiles({

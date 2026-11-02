@@ -5,11 +5,23 @@ import { NavigationService } from '../../src/domain/navigation';
 
 const body = (save: GameSave, id = 0) => save.entities.records.find((e) => e.id === id)!;
 
-async function mockOllama(page: Page, valid = true): Promise<void> {
+async function mockOllama(
+  page: Page,
+  valid = true,
+  onRecall?: (grounded: boolean) => void,
+): Promise<void> {
   await page.route('http://127.0.0.1:11434/**', async (route) => {
     const data = route.request().postDataJSON() as {
-      format?: { properties?: { ready?: object; gist?: object } };
+      format?: { properties?: { ready?: object; gist?: object; operations?: object } };
+      messages?: { content: string }[];
     } | null;
+    const recall = data?.messages?.at(-1)?.content === 'What plant do I like?';
+    if (recall)
+      onRecall?.(
+        data!.messages!.some(
+          (m) => m.content.startsWith('core:') && m.content.includes('marsh lavender'),
+        ),
+      );
     const body = route.request().url().endsWith('/api/tags')
       ? { models: [{ name: 'gemma4-abliterated:26b', size: 1900000000 }] }
       : {
@@ -17,21 +29,40 @@ async function mockOllama(page: Page, valid = true): Promise<void> {
             content: JSON.stringify(
               data?.format?.properties?.ready
                 ? { ready: valid }
-                : data?.format?.properties?.gist
+                : data?.format?.properties?.operations
                   ? {
-                      gist: 'We discussed the river and a gift.',
-                      playerAsked: ['A gift'],
-                      villagerPromised: ['Berries after conversation'],
-                      decided: [],
-                      open: [],
-                      mood: 'warm',
+                      operations: [
+                        {
+                          op: 'ADD',
+                          type: 'semantic',
+                          text: 'Player says they like marsh lavender.',
+                          subjects: ['player'],
+                          importance: 7,
+                        },
+                      ],
+                      blocks: [{ block: 'player', value: 'Player likes marsh lavender.' }],
                     }
-                  : {
-                      dialogue:
-                        'I can offer a few sunberries. I will leave them nearby when we finish talking.',
-                      emotion: 'warm',
-                      action: { type: 'DROP_GIFT', itemId: 'berries' },
-                    },
+                  : recall
+                    ? {
+                        dialogue: 'You like marsh lavender.',
+                        emotion: 'warm',
+                        action: { type: 'NONE' },
+                      }
+                    : data?.format?.properties?.gist
+                      ? {
+                          gist: 'We discussed the river and a gift.',
+                          playerAsked: ['A gift'],
+                          villagerPromised: ['Berries after conversation'],
+                          decided: [],
+                          open: [],
+                          mood: 'warm',
+                        }
+                      : {
+                          dialogue:
+                            'I can offer a few sunberries. I will leave them nearby when we finish talking.',
+                          emotion: 'warm',
+                          action: { type: 'DROP_GIFT', itemId: 'berries' },
+                        },
             ),
           },
           eval_count: 32,
@@ -99,7 +130,10 @@ async function checkpoint(page: Page): Promise<GameSave> {
 test('full world, movement, grounded dialogue, save and resume', async ({ page }) => {
   const errors: string[] = [];
   page.on('pageerror', (error) => errors.push(error.message));
-  await mockOllama(page);
+  let recalledFromCore = false;
+  await mockOllama(page, true, (grounded) => {
+    recalledFromCore = grounded;
+  });
   await enter(page);
   const initial = await checkpoint(page);
   expect(initial.npcs).toHaveLength(30);
@@ -171,18 +205,30 @@ test('full world, movement, grounded dialogue, save and resume', async ({ page }
     }, turn);
     await expect
       .poll(() =>
-        page.evaluate(() => {
+        page.evaluate((n) => {
           const api = (
             window as unknown as {
               __hearthwild: {
-                frame(): { dialogue: { pendingJob: string | null; lines: unknown[] } };
+                frame(): {
+                  dialogue: {
+                    pendingJob: string | null;
+                    lines: { speaker: string; text: string }[];
+                  };
+                };
               };
             }
           ).__hearthwild;
-          return api.frame().dialogue.pendingJob;
-        }),
+          const dialogue = api.frame().dialogue;
+          return (
+            dialogue.pendingJob === null &&
+            dialogue.lines.some(
+              (line) => line.speaker === 'player' && line.text.startsWith(`Turn ${n}:`),
+            ) &&
+            dialogue.lines.at(-1)?.speaker === 'npc'
+          );
+        }, turn),
       )
-      .toBeNull();
+      .toBe(true);
   }
   const contextProof = await page.evaluate(() => {
     const f = (
@@ -205,6 +251,26 @@ test('full world, movement, grounded dialogue, save and resume', async ({ page }
   await page.getByRole('button', { name: 'Finish conversation' }).click();
   await expect(page.locator('#conversation-dialog')).not.toBeVisible();
   await expect.poll(async () => (await checkpoint(page)).drops.length).toBe(1);
+  await expect
+    .poll(async () =>
+      (await checkpoint(page)).npcs.some((n) => n.memory.core.player.includes('marsh lavender')),
+    )
+    .toBe(true);
+  const rememberedNpc = (await checkpoint(page)).npcs.find((n) =>
+    n.memory.core.player.includes('marsh lavender'),
+  )!;
+  await page.evaluate(async (npcId) => {
+    const api = (
+      window as unknown as { __hearthwild: { command(c: object): Promise<{ ok: boolean }> } }
+    ).__hearthwild;
+    if (!(await api.command({ type: 'interact', npcId })).ok)
+      throw Error('Second conversation did not open');
+    await api.command({ type: 'dialogue', text: 'What plant do I like?' });
+  }, rememberedNpc.profileId);
+  await expect(page.locator('#conversation-dialog')).toContainText('You like marsh lavender.');
+  expect(recalledFromCore).toBe(true);
+  await page.getByRole('button', { name: 'Finish conversation' }).click();
+
   await page.getByRole('button', { name: 'Save journey' }).click();
   await expect(page.locator('#toast')).toContainText('saved');
   const beforeMove = body(await checkpoint(page));

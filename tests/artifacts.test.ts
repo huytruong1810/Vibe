@@ -20,6 +20,18 @@ const note = (title = 'Field note'): NewArtifact => ({
   lines: ['By the river.'],
 });
 describe('bounded authored records', () => {
+  it('retains field limits and rejects noncanonical text across repeated validations', () => {
+    const store = new ArtifactStore();
+    const record = store.create({ ...note(), kind: 'note', lines: ['x'.repeat(96)] });
+    for (let repeat = 0; repeat < 3; repeat++) {
+      expect(ArtifactSchema.safeParse(record).success).toBe(true);
+      expect(ArtifactSchema.safeParse({ ...record, title: 'x'.repeat(96) }).success).toBe(false);
+      expect(ArtifactSchema.safeParse({ ...record, lines: ['e\u0301'] }).success).toBe(false);
+      expect(ArtifactSchema.safeParse({ ...record, lines: ['hidden\u0000control'] }).success).toBe(
+        false,
+      );
+    }
+  });
   it('normalizes NFC, tabs, line endings and controls without truncation', () => {
     expect(sanitizeArtifactText('e\u0301\tA\u0000\u0085\r\nB\rC')).toBe('é A\nB\nC');
     const store = new ArtifactStore();

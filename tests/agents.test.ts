@@ -18,7 +18,7 @@ describe('agent grounding and memory', () => {
   it('budgets complete Unicode memory records without truncating JSON or evicting unseen sources', () => {
     const npc = new NpcProfileRegistry().create()[0]!,
       memories = new MemoryRepository();
-    npc.memory.summary = '季'.repeat(1600);
+    npc.memory.core.self = '季'.repeat(300);
     for (let i = 0; i < 20; i++)
       memories.append(npc, {
         tick: i,
@@ -45,7 +45,7 @@ describe('agent grounding and memory', () => {
     expect(
       memories.estimateTokens(job.messages.map((m) => m.content).join('')),
     ).toBeLessThanOrEqual(2800);
-    expect(context.memories.every((m) => m.text.length === 1000)).toBe(true);
+    expect(context.memories.every((m) => m.text.length <= 280)).toBe(true);
   });
   it('covers NONE and every advertised action, and rejects arbitrary payloads', () => {
     const actions = [
@@ -97,7 +97,7 @@ describe('agent grounding and memory', () => {
       subjects: ['player'],
       importance: 7,
     });
-    expect(npcs[0]!.memory.records[0]?.sourceIds).toEqual(['e1']);
+    expect(npcs[0]!.memory.records[0]?.source.ids).toEqual(['e1']);
     expect(npcs[1]!.memory.records).toHaveLength(0);
     perception.observe(npcs, {
       id: 'e1',
@@ -165,8 +165,8 @@ describe('agent grounding and memory', () => {
       sourceIds: ['event:herb'],
     });
     expect(social.advance(npcs, 100, 2, 0)).not.toBeNull();
-    expect(npcs[1]!.memory.records[0]?.kind).toBe('hearsay');
-    expect(npcs[1]!.memory.records[0]?.sourceIds).toEqual(['event:herb']);
+    expect(npcs[1]!.memory.records[0]?.confidence).toBe('told');
+    expect(npcs[1]!.memory.records[0]?.source.ids).toEqual(['event:herb']);
     social.advance(npcs, 200, 3, 0);
     expect(npcs[1]!.memory.records).toHaveLength(1);
   });

@@ -24,7 +24,7 @@ try {
     host = new SimulationHost(42, 1, 0, 'world:smoke'),
     npc = host.npcs[10]!;
   ownedHost = host;
-  if (process.argv.includes('--conversation')) {
+  if (process.argv.includes('--conversation') || process.argv.includes('--memory')) {
     const backgroundModel = process.env.OLLAMA_BACKGROUND_MODEL ?? 'gemma4-abliterated:e4b';
     const settings = ContextSettingsSchema.parse({
       dialogueModel: model,
@@ -49,11 +49,13 @@ try {
     let recalled = false;
     for (let turn = 1; turn <= 30; turn++) {
       const text =
-        turn === 3
-          ? 'I promise to visit you at the square tomorrow after breakfast. Please remember this promise.'
-          : turn === 28
-            ? 'What did I promise you earlier in this conversation? Please recall the place and when.'
-            : `Let us keep talking about village life, turn ${turn}. ${'I enjoy noticing the river, weather, paths and little everyday changes around the village. '.repeat(9)}`;
+        process.argv.includes('--memory') && turn === 29
+          ? 'My favorite plant is marsh lavender. Please remember that for our next conversation.'
+          : turn === 3
+            ? 'I promise to visit you at the square tomorrow after breakfast. Please remember this promise.'
+            : turn === 28
+              ? 'What did I promise you earlier in this conversation? Please recall the place and when.'
+              : `Let us keep talking about village life, turn ${turn}. ${'I enjoy noticing the river, weather, paths and little everyday changes around the village. '.repeat(9)}`;
       if (!send({ type: 'dialogue', text }).ok) throw Error(`Conversation refused at turn ${turn}`);
       const job = host.frame().jobs.find((j) => j.kind === 'dialogue')!;
       const start = performance.now();
@@ -107,19 +109,69 @@ try {
       }
     }
     const applied = host.frame().performance.context!.compactions;
+    let crossConversation: object | null = null;
+    let memoryPassed = true;
+    if (process.argv.includes('--memory')) {
+      const closeStarted = performance.now();
+      send({ type: 'closeDialogue' });
+      const extraction = host.frame().jobs.find((j) => j.kind === 'extraction');
+      if (!extraction) throw Error('Session close did not produce an extraction');
+      const extracted = await adapter.generate(
+        extraction,
+        backgroundModel,
+        AbortSignal.timeout(30_000),
+      );
+      const receipt = send(
+        { type: 'agentResult', jobId: extraction.id, output: extracted.output },
+        'inference',
+      );
+      const extractionMs = performance.now() - closeStarted;
+      if (!receipt.ok) throw Error(receipt.message);
+      send({ type: 'interact', npcId: npc.profileId });
+      send({
+        type: 'dialogue',
+        text: 'What is my favorite plant, from our previous conversation?',
+      });
+      const second = host.frame().jobs.find((j) => j.kind === 'dialogue')!;
+      const start = performance.now();
+      const response = await adapter.generate(second, model, AbortSignal.timeout(90_000));
+      const dialogue = DialogueResponseSchema.parse(response.output);
+      const accepted = send(
+        {
+          type: 'agentResult',
+          jobId: second.id,
+          output: response.output,
+          promptTokens: response.promptTokens,
+        },
+        'inference',
+      );
+      const recalledFact = /marsh lavender/i.test(dialogue.dialogue);
+      memoryPassed = accepted.ok && recalledFact && extractionMs <= 30_000;
+      crossConversation = {
+        extractionMs,
+        extractionOutput: extracted.output,
+        recalledFact,
+        dialogue: dialogue.dialogue,
+        replyMs: performance.now() - start,
+        core: npc.memory.core,
+        validRecords: npc.memory.records.filter((r) => r.invalidAtTick === undefined).length,
+        pendingWrites: npc.memory.pending.length,
+      };
+    }
     report = {
       recordedAt: new Date().toISOString(),
       model,
       backgroundModel,
       settings,
-      passed: recalled && applied > 0,
+      passed: recalled && applied > 0 && memoryPassed,
+      crossConversation,
       recalled,
       appliedCompactions: applied,
       turns,
       compactions,
       note: 'Full response latency, not first streamed token. Compaction is awaited between turns only in this measurement harness; runtime preempts it. Director reviews turn 3 and 28 for semantic recall.',
     };
-    if (!recalled || !applied) process.exitCode = 1;
+    if (!recalled || !applied || !memoryPassed) process.exitCode = 1;
   } else {
     const plans = new PlanService(new MemoryRepository(), (id) => host.query.perceivedFacts(id));
     const job = plans.job(
@@ -164,7 +216,11 @@ await mkdir(outputDirectory, { recursive: true });
 await writeFile(
   join(
     outputDirectory,
-    process.argv.includes('--conversation') ? 'conversation-smoke.json' : 'ollama-smoke.json',
+    process.argv.includes('--memory')
+      ? 'memory-smoke.json'
+      : process.argv.includes('--conversation')
+        ? 'conversation-smoke.json'
+        : 'ollama-smoke.json',
   ),
   `${JSON.stringify(report, null, 2)}\n`,
 );

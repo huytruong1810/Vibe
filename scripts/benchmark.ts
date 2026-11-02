@@ -1,7 +1,9 @@
+import { NpcProfileRegistry, PlanService, MemoryRepository } from '../src/domain/agents';
 import { cpus, platform, arch, totalmem } from 'node:os';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { performance } from 'node:perf_hooks';
 import { SimulationHost } from '../src/domain/simulation';
+import { NPC_PROFILES } from '../src/content/definitions';
 import { migrateSave } from '../src/domain/save-schema';
 
 const samples = Number(process.env.BENCHMARK_TICKS ?? 3000);
@@ -91,6 +93,40 @@ for (let n = 0; n < Math.min(samples, 1500); n++) {
   host.step();
   activeCombat.push(performance.now() - before);
 }
+const memoryNpc = new NpcProfileRegistry().create()[0]!,
+  memoryRepository = new MemoryRepository();
+for (let i = 0; i < 400; i++)
+  memoryRepository.append(memoryNpc, {
+    type: 'episodic',
+    text: `River bridge observation ${i}`,
+    subjects: ['player'],
+    importance: 1 + (i % 10),
+    createdTick: i,
+    lastAccessTick: i,
+    confidence: 'witnessed',
+    source: { kind: 'event', ids: [`fixture:${i}`] },
+  });
+const memoryPlans = new PlanService(memoryRepository);
+const query = 'river bridge';
+memoryPlans.queries.set(query, [1, ...Array<number>(255).fill(0)]);
+for (const record of memoryNpc.memory.records)
+  memoryPlans.vectors.set(record.id, {
+    text: record.text,
+    vector: [1, ...Array<number>(255).fill(0)],
+  });
+const memoryTimings: number[] = [],
+  memoryPromptTimings: number[] = [];
+for (let i = 0; i < 1100; i++) {
+  const start = performance.now();
+  memoryPlans.retrieval.retrieve(memoryNpc, query, 1000, 12, {
+    query: memoryPlans.queries.get(query)!,
+    records: memoryPlans.vectors,
+  });
+  if (i >= 100) memoryTimings.push(performance.now() - start);
+  const promptStart = performance.now();
+  memoryPlans.job(memoryNpc, NPC_PROFILES[0]!, 'world:benchmark-memory', 1000, 'dialogue', query);
+  if (i >= 100) memoryPromptTimings.push(performance.now() - promptStart);
+}
 const report = {
   recordedAt: new Date().toISOString(),
   runtime: process.version,
@@ -116,6 +152,10 @@ const report = {
   activeCombatActors: fighters.length,
   activeCombatFixture:
     '64 paired territorial encounters; needs, stamina and HP refill between ordinary ticks; no rendering or inference.',
+  memoryRetrieval: summarize(memoryTimings),
+  memoryPrompt: summarize(memoryPromptTimings),
+  memoryFixture:
+    '400 valid records, cached 256-d embeddings, full prompt construction; 100 warmups and 1000 samples',
   checkpointMs: +saveMs.toFixed(2),
   checkpointBytes: Buffer.byteLength(serialized),
   nodeRssMiB: +(process.memoryUsage().rss / 2 ** 20).toFixed(1),
@@ -126,3 +166,7 @@ await mkdir('artifacts', { recursive: true });
 await writeFile('artifacts/benchmark.json', `${JSON.stringify(report, null, 2)}\n`);
 console.log(JSON.stringify(report, null, 2));
 host.dispose();
+if (summarize(memoryTimings).p95Ms > 5) {
+  console.error('Memory retrieval/prompt p95 exceeds 5 ms');
+  process.exitCode = 1;
+}

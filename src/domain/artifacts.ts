@@ -22,15 +22,21 @@ export function sanitizeArtifactText(text: string): string {
     .replace(/\t/g, ' ')
     .replace(/[\u0000-\u0009\u000b-\u001f\u007f-\u009f]/g, '');
 }
+// Immutable strings recur across pages and checkpoints. Cache only canonical form;
+// each field still applies its own length, minimum and whitespace rules below.
+const canonicalForms = new Map<string, boolean>();
+function isCanonicalText(value: string): boolean {
+  const cached = canonicalForms.get(value);
+  if (cached !== undefined) return cached;
+  const valid = !/[\u0000-\u001f\u007f-\u009f]/.test(value) && value === value.normalize('NFC');
+  if (value.length <= 2000) {
+    if (canonicalForms.size >= 256) canonicalForms.delete(canonicalForms.keys().next().value!);
+    canonicalForms.set(value, valid);
+  }
+  return valid;
+}
 const canonicalText = (max: number, min = 0) =>
-  z
-    .string()
-    .min(min)
-    .max(max)
-    .refine(
-      (value) => !/[\u0000-\u001f\u007f-\u009f]/.test(value) && value === value.normalize('NFC'),
-      'Invalid authored text',
-    );
+  z.string().min(min).max(max).refine(isCanonicalText, 'Invalid authored text');
 const title = canonicalText(LIMIT.title, 1).refine(
   (value) => value.trim().length > 0,
   'Empty title',

@@ -1,3 +1,5 @@
+import type { DialogueSession } from './conversation';
+import { applyExtraction, applySynthesis, validMemory } from './memory';
 import {
   NPC_PROFILES,
   SPECIES,
@@ -154,7 +156,9 @@ export class SimulationHost {
   private readonly pendingJobs = new Map<string, InferenceJob>();
   private readonly outgoingJobs: InferenceJob[] = [];
   private readonly deferredResults: WorldCommand[] = [];
-  private readonly deferredConversations: DialogueState[] = [];
+  private readonly deferredConversations: (DialogueState & {
+    memorySession?: DialogueSession | null;
+  })[] = [];
   private readonly sentDeltas = new Map<number, string>();
   private movement = { x: 0, y: 0 };
   private debugEnabled = false;
@@ -179,7 +183,7 @@ export class SimulationHost {
     readonly seed = 42,
     origin = 1,
     population: number = CONFIG.population,
-    session = `world:${Date.now()}:${seed}`,
+    session = `world:${crypto.randomUUID()}:${seed}`,
   ) {
     new ContentRegistry().validate();
     if (!Number.isInteger(origin) || origin < 0 || origin > 2 || !Number.isInteger(seed))
@@ -966,7 +970,7 @@ export class SimulationHost {
         this.pauses.acquire('dialogue');
         npc.facingX = this.player.x - npc.x;
         npc.facingY = this.player.y - npc.y;
-        this.plans.context.open(npc.profileId);
+        this.plans.context.open(npc.profileId, this.session);
         this.dialogue = {
           npcId: npc.profileId,
           revision: npc.revision,
@@ -1000,7 +1004,7 @@ export class SimulationHost {
           day: this.calendar.day,
           importance: 5,
           subjects: ['player'],
-          sourceIds: [],
+          sourceIds: [this.plans.context.session!.id],
         });
         this.dialogue.lines.push({ speaker: 'player', text: c.text });
         const job = this.plans.job(
@@ -1015,6 +1019,8 @@ export class SimulationHost {
         this.dialogue.lines.splice(0, Math.max(0, this.dialogue.lines.length - 32));
         this.dialogue.pendingJob = job.id;
         this.queueJob(job);
+        const embedding = this.plans.embedding(npc, this.session, c.text);
+        if (embedding) this.queueJob(embedding);
         break;
       }
       case 'closeDialogue':
@@ -1057,7 +1063,8 @@ export class SimulationHost {
           (this.pauses.paused || this.acceleration > 1) &&
           job &&
           job.kind !== 'dialogue' &&
-          job.kind !== 'compaction'
+          job.kind !== 'compaction' &&
+          job.kind !== 'embedding'
         ) {
           if (
             !this.deferredResults.some(
@@ -1156,6 +1163,60 @@ export class SimulationHost {
       };
     }
     const npc = this.npcs.find((n) => n.profileId === job.npcId)!;
+    if (job.kind === 'embedding') {
+      const value = output as { query?: unknown; records?: unknown };
+      const vector = (v: unknown): v is number[] =>
+        Array.isArray(v) &&
+        v.length === 256 &&
+        v.every((x) => typeof x === 'number' && Number.isFinite(x));
+      if (
+        !job.embeddingInput ||
+        !value ||
+        !vector(value.query) ||
+        !Array.isArray(value.records) ||
+        value.records.length !== job.embeddingInput.records.length
+      )
+        return { ok: false, message: 'Invalid embedding result ignored.' };
+      const records = value.records as { id: string; text: string; vector: unknown }[];
+      if (
+        records.some(
+          (r, i) =>
+            !r ||
+            !vector(r.vector) ||
+            r.id !== job.embeddingInput!.records[i]!.id ||
+            r.text !== job.embeddingInput!.records[i]!.text,
+        )
+      )
+        return { ok: false, message: 'Stale embedding result ignored.' };
+      this.plans.queries.set(job.embeddingInput.query, value.query);
+      if (this.plans.queries.size > 64)
+        this.plans.queries.delete(this.plans.queries.keys().next().value!);
+      for (const r of records)
+        if (npc.memory.records.some((m) => m.id === r.id && m.text === r.text && validMemory(m)))
+          this.plans.vectors.set(r.id, { text: r.text, vector: r.vector as number[] });
+      return { ok: true, message: '' };
+    }
+    if (job.kind === 'extraction' || job.kind === 'fold') {
+      const entities = new Set([
+        'player',
+        ...this.npcs.map((n) => n.profileId),
+        ...NPC_PROFILES.map((p) => p.name),
+        ...this.entities.snapshot().records.map((r) => `entity:${r.id}`),
+        ...Object.keys(ITEMS),
+        ...SPECIES.map((s) => s.id),
+      ]);
+      const applied =
+        !!job.memoryTarget &&
+        (job.kind === 'extraction'
+          ? applyExtraction(npc, job.memoryTarget, output, this.tick, entities)
+          : applySynthesis(npc, job.memoryTarget, output, this.tick, true));
+      return {
+        ok: applied,
+        message: applied
+          ? ''
+          : 'Stale or invalid memory proposal rejected; existing memories retained.',
+      };
+    }
     if (job.expectedRevision !== npc.revision)
       return this.failedDialogue(job, 'The villager’s state changed before the response arrived.');
     if (job.kind === 'dialogue') {
@@ -1182,7 +1243,7 @@ export class SimulationHost {
         day: this.calendar.day,
         importance: 5,
         subjects: ['player', npc.profileId],
-        sourceIds: [],
+        sourceIds: [this.plans.context.session!.id],
       });
       this.plans.context.append('npc', parsed.data.dialogue, parsed.data.emotion);
       this.dialogue.lines.splice(0, Math.max(0, this.dialogue.lines.length - 32));
@@ -1246,18 +1307,23 @@ export class SimulationHost {
   }
   private closeDialogue(): string {
     if (!this.dialogue) return '';
-    const dialogue = this.dialogue;
+    const dialogue = Object.assign(this.dialogue, { memorySession: this.plans.context.session });
     if (dialogue.pendingJob) this.pendingJobs.delete(dialogue.pendingJob);
-    this.plans.context.close();
     this.dialogue = null;
     this.pauses.release('dialogue');
     if (this.pauses.paused) {
       this.deferredConversations.push(dialogue);
+      this.plans.context.close();
       return 'Your offers will be checked when the world resumes.';
     }
-    return this.commitConversation(dialogue);
+    const message = this.commitConversation(dialogue);
+    this.plans.context.close();
+    return message;
   }
-  private commitConversation(dialogue: DialogueState): string {
+
+  private commitConversation(
+    dialogue: DialogueState & { memorySession?: DialogueSession | null },
+  ): string {
     const npc = this.npcs.find((n) => n.profileId === dialogue.npcId)!;
     const receipts: string[] = [];
     const local = this.systems(this.entities.scene[this.entities.require(npc.entityId)]!);
@@ -1283,7 +1349,7 @@ export class SimulationHost {
           player: this.player,
           markers: this.markers,
           sourceIds: npc.memory.records
-            .filter((m) => m.kind === 'conversation')
+            .filter((m) => validMemory(m) && m.source.kind === 'session')
             .slice(-4)
             .map((m) => m.id),
         });
@@ -1302,6 +1368,17 @@ export class SimulationHost {
     this.entities.recreation[body] = clamp(this.entities.recreation[body]! + 0.15);
     this.entities.recreation[playerBody] = clamp(this.entities.recreation[playerBody]! + 0.15);
     this.journal.add('conversation');
+    const extraction = this.plans.extraction(
+      npc,
+      this.session,
+      this.tick,
+      dialogue.memorySession ?? null,
+    );
+    if (extraction) this.queueJob(extraction);
+    else if (dialogue.memorySession?.turns.length)
+      receipts.push(
+        'Conversation records retained; increase Conversation context size to allow memory extraction.',
+      );
     return receipts.join(' ') || 'The world stirs again. Your conversation is remembered.';
   }
   private emit(
@@ -2034,7 +2111,11 @@ export class SimulationHost {
         .map((n) =>
           structuredClone({
             ...n,
-            memory: { ...n.memory, records: n.memory.records.slice(-12) },
+            memory: { ...n.memory, records: n.memory.records.slice(-12), pending: [] },
+            memoryCounts: {
+              active: n.memory.records.filter(validMemory).length,
+              pending: n.memory.pending.length,
+            },
             heard: [],
           }),
         ),
@@ -2209,8 +2290,10 @@ export class SimulationHost {
     this.outgoingJobs.length = 0;
     this.deferredResults.length = 0;
     this.deferredConversations.length = 0;
-    this.plans.context.close();
     this.dialogue = null;
+    this.plans.context.close();
+    this.plans.queries.clear();
+    this.plans.vectors.clear();
     this.pauses.clear();
     this.movement = { x: 0, y: 0 };
     this.navigation.invalidate();
@@ -2223,6 +2306,9 @@ export class SimulationHost {
   }
   dispose(): void {
     this.disposed = true;
+    this.plans.context.close();
+    this.plans.queries.clear();
+    this.plans.vectors.clear();
     this.pendingJobs.clear();
     this.outgoingJobs.length = 0;
     this.deferredConversations.length = 0;

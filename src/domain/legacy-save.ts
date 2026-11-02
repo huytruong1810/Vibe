@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { ItemIdSchema, NPC_PROFILES, SPECIES } from '../content/definitions';
 import { CONFIG as CURRENT_CONFIG } from './values';
-const CONFIG = { ...CURRENT_CONFIG, saveVersion: 2, contentVersion: 1 };
+const CONFIG = { ...CURRENT_CONFIG, saveVersion: 2, contentVersion: 1, memoryLimit: 256 };
 
 const finite = z.number().finite(),
   nonnegative = finite.nonnegative(),

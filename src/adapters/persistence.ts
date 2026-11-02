@@ -14,6 +14,74 @@ interface Checkpoint {
   checksum: number;
   payload: string;
 }
+/** Disposable embeddings live in a separate database; checkpoint storage is unchanged. */
+export class IndexedDbEmbeddingCache {
+  private database: Promise<IDBDatabase> | null = null;
+  constructor(
+    private readonly name = 'hearthwild-embeddings-v1',
+    private readonly factory: IDBFactory = indexedDB,
+  ) {}
+  private open(): Promise<IDBDatabase> {
+    if (!this.database)
+      this.database = new Promise((resolve, reject) => {
+        const opening = this.factory.open(this.name, 1);
+        opening.onupgradeneeded = () => opening.result.createObjectStore('vectors');
+        opening.onsuccess = () => {
+          const db = opening.result;
+          db.onversionchange = () => {
+            db.close();
+            this.database = null;
+          };
+          resolve(db);
+        };
+        opening.onerror = () => {
+          this.database = null;
+          reject(opening.error);
+        };
+        opening.onblocked = () => {
+          this.database = null;
+          reject(Error('Embedding cache is unavailable'));
+        };
+      });
+    return this.database;
+  }
+  private key(model: string, dimensions: number, id: string, text: string): string {
+    return JSON.stringify([model, dimensions, id, hashString(text)]);
+  }
+  async get(model: string, dimensions: number, id: string, text: string): Promise<number[] | null> {
+    const db = await this.open(),
+      tx = db.transaction('vectors', 'readonly'),
+      done = finished(tx);
+    const value = (await request(
+      tx.objectStore('vectors').get(this.key(model, dimensions, id, text)),
+    )) as { text: string; vector: number[] } | undefined;
+    await done;
+    return value?.text === text &&
+      value.vector.length === dimensions &&
+      value.vector.every(Number.isFinite)
+      ? value.vector
+      : null;
+  }
+  async put(
+    model: string,
+    dimensions: number,
+    id: string,
+    text: string,
+    vector: number[],
+  ): Promise<void> {
+    if (vector.length !== dimensions || !vector.every(Number.isFinite))
+      throw Error('Invalid embedding vector');
+    const db = await this.open(),
+      tx = db.transaction('vectors', 'readwrite'),
+      done = finished(tx);
+    tx.objectStore('vectors').put({ text, vector }, this.key(model, dimensions, id, text));
+    await done;
+  }
+  async dispose(): Promise<void> {
+    (await this.database)?.close();
+    this.database = null;
+  }
+}
 const request = <T>(r: IDBRequest<T>): Promise<T> =>
   new Promise((resolve, reject) => {
     r.onsuccess = () => resolve(r.result);

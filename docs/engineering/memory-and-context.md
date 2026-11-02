@@ -1,6 +1,6 @@
 # Villager memory and conversation context (AGT-10)
 
-Status: C24 candidate, 2026-11-02; live B0 acceptance pending. C25 remains specification.
+Status: C24 candidate; C25 candidate, 2026-11-02. Live B0 acceptance remains pending.
 Original spec by claude on the director's request. Implementation: C24 (context and
 compaction) and C25 (long-term memory). Doctrine:
 `docs/doctrine/11-living-minds.md` AGT-1.3, AGT-10, AGT-7; ADR 032.
@@ -168,6 +168,37 @@ interface CoreBlocks {
   `summary` string becomes one episodic record "Earlier, I remembered: …" (importance 5) and
   core blocks seed from the profile. C18's `reading` memories and AGT-3 `sight` notes use
   the new types.
+
+C25 implementation notes: saves use version 6. Legacy records longer than 280 characters
+are split into bounded records with unchanged provenance; the first retains the legacy ID.
+The legacy summary is preserved in the same way. The serial reserves all old IDs before
+allocating continuation records. Reflection/folding do not delete historical records.
+
+The 400-record limit applies to admitted, valid records. Additional validated writes wait
+in saved `pending` storage, excluded from retrieval until folding or invalidation frees
+capacity. If no episodic records can be folded, pending writes remain visible in diagnostics;
+semantic facts and commitments are never removed to make room. Historical and pending
+storage can grow, particularly without a working background model.
+
+Session provenance includes the unique world-session identifier. Closing under another
+pause captures the transcript and waits for simulation resume before committing staged
+actions and building extraction. Extraction includes the summary, four recent entries and
+a bounded tail of uncompacted entries; `omittedEntries` explicitly counts uncovered entries
+that did not fit. An extraction that cannot fit its configured context is skipped; existing
+conversation records remain. Extraction revisions reject intervening memory changes.
+
+Optional embeddings run at background priority with CPU placement and never delay a reply.
+The first uncached query uses keywords; a subsequent identical query can use its cached
+vector. Queries are bounded to 64 in worker memory. Persistent cache entries are keyed by
+model, dimensions, record ID and text hash, with full text checked on read, in a separate
+IndexedDB database. Missing models, failed storage and canceled embedding jobs keep keyword
+retrieval available. Vectors are excluded from save data.
+
+Extraction bypasses the routine background quota. Dialogue preemption requeues the same
+extraction within its original 30-second deadline; cancellation on world replacement drops
+it. The deadline is measured from enqueue (after resume for a paused close). Reflection
+starts at accumulated importance 150 and does not count its own generated insights or
+folded digests as new experience.
 
 ### 3.3 Safety
 

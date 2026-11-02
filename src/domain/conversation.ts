@@ -25,6 +25,7 @@ export const ContextSettingsSchema = z
     dialogueModel: z.string().min(1).max(200).default('gemma4-abliterated:26b'),
     backgroundModel: z.string().min(1).max(200).default('gemma4-abliterated:e4b'),
     backgroundCpu: z.boolean().default(true),
+    embeddingEnabled: z.boolean().default(false),
   })
   .strict();
 export type ContextSettings = z.infer<typeof ContextSettingsSchema>;
@@ -65,9 +66,9 @@ export class ConversationContext {
     if (this.session) this.session.revision++;
     return true;
   }
-  open(npcId: NpcId): void {
+  open(npcId: NpcId, scope = 'local'): void {
     this.session = {
-      id: `conversation:${++this.serial}`,
+      id: `${scope}:conversation:${++this.serial}`,
       npcId,
       turns: [],
       summary: null,

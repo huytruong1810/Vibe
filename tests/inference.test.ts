@@ -20,6 +20,41 @@ const job = (id: string, kind: InferenceJob['kind'] = 'plan'): InferenceJob => (
 });
 afterEach(() => vi.useRealTimers());
 describe('local inference adapter and scheduling', () => {
+  it('runs extraction despite the routine quota and resumes it after dialogue preemption', async () => {
+    vi.useFakeTimers();
+    let extractions = 0;
+    const receipts: InferenceReceipt[] = [];
+    const provider: InferenceProvider = {
+      models: async () => [],
+      capabilityCheck: async () => {},
+      generate: (request, _model, signal) => {
+        if (request.kind === 'extraction' && ++extractions === 1)
+          return new Promise((_resolve, reject) =>
+            signal.addEventListener('abort', () => reject(Error('preempted')), { once: true }),
+          );
+        return Promise.resolve({ output: { done: true }, tokens: 1 });
+      },
+    };
+    const scheduler = new InferenceScheduler(
+      provider,
+      'model',
+      (r) => receipts.push(r),
+      () => Date.now(),
+    );
+    scheduler.enqueue(job('routine1'));
+    await vi.advanceTimersByTimeAsync(1);
+    scheduler.enqueue(job('routine2'));
+    await vi.advanceTimersByTimeAsync(1);
+    scheduler.enqueue({ ...job('extract', 'extraction'), priority: 1 });
+    expect(extractions).toBe(1);
+    scheduler.enqueue(job('new-dialogue', 'dialogue'));
+    await vi.advanceTimersByTimeAsync(10);
+    expect(extractions).toBe(2);
+    expect(receipts.filter((r) => r.jobId === 'extract')).toEqual([
+      { jobId: 'extract', output: { done: true } },
+    ]);
+    scheduler.dispose();
+  });
   it('sends per-job context and CPU options and returns prompt token counts', async () => {
     let request: Record<string, unknown> = {};
     const adapter = new OllamaAdapter('http://localhost:11434', async (_url, init) => {

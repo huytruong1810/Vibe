@@ -222,7 +222,9 @@ export interface RenderSnapshot {
   readonly artifacts: readonly ArtifactView[];
   readonly placements: readonly ArtifactPlacement[];
   readonly creatures: readonly CreatureView[];
-  readonly npcs: readonly NpcState[];
+  readonly npcs: readonly (NpcState & {
+    readonly memoryCounts?: { active: number; pending: number };
+  })[];
   readonly events: readonly DomainEvent[];
   readonly drops: readonly GroundDrop[];
   readonly markers: readonly Marker[];

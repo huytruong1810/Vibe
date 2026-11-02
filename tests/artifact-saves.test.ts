@@ -127,7 +127,29 @@ describe('artifact simulation and save v5', () => {
     const host = new SimulationHost(42, 1, 0),
       current = host.snapshot();
     const { artifacts: _a, placements: _p, artifactSequence: _s, ...legacy } = current;
-    const upgraded = migrateSave({ ...legacy, version: 4 });
+    const upgraded = migrateSave({
+      ...legacy,
+      version: 4,
+      npcs: legacy.npcs.map((n) => ({
+        ...n,
+        memory: {
+          revision: n.memory.revision,
+          serial: n.memory.serial,
+          summary: '',
+          records: n.memory.records.map((r) => ({
+            id: r.id,
+            kind: 'fact',
+            tick: r.createdTick,
+            day: 0,
+            text: r.text,
+            subjects: r.subjects,
+            importance: r.importance,
+            sourceIds: r.source.ids,
+          })),
+          lastReflection: n.memory.lastReflection,
+        },
+      })),
+    });
     expect(upgraded).toEqual(current);
     carryNote(host);
     host.artifacts.remove(host.inventory.state[0]!.artifact!);

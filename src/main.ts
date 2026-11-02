@@ -1,7 +1,11 @@
 import { ContextSettingsSchema, type ContextSettings } from './domain/conversation';
 import './style.css';
 import { FallbackProvider, InferenceScheduler, OllamaAdapter } from './adapters/inference';
-import { IndexedDbSaveRepository, SaveCoordinator } from './adapters/persistence';
+import {
+  IndexedDbSaveRepository,
+  IndexedDbEmbeddingCache,
+  SaveCoordinator,
+} from './adapters/persistence';
 import { WorkerBridge } from './adapters/worker-bridge';
 import type { CommandPayload, RenderSnapshot } from './domain/contracts';
 import { AudioDirector } from './presentation/audio';
@@ -135,7 +139,9 @@ export class GameBootstrap {
     contextTokens: number;
   }): Promise<string | void> {
     await this.rendererReady;
-    const provider = options.offline ? new FallbackProvider() : new OllamaAdapter(options.endpoint);
+    const provider = options.offline
+      ? new FallbackProvider()
+      : new OllamaAdapter(options.endpoint, undefined, new IndexedDbEmbeddingCache());
     if (!options.offline) await provider.capabilityCheck(options.model);
     const context = ContextSettingsSchema.parse({
       dialogueModel: options.model,
@@ -146,6 +152,9 @@ export class GameBootstrap {
     let backgroundWarning = '';
     if (!options.offline) {
       const models = await provider.models();
+      context.embeddingEnabled = models.some(
+        (m) => m.name === 'embeddinggemma:latest' || m.name === 'embeddinggemma',
+      );
       if (!models.some((m) => m.name === context.backgroundModel)) {
         backgroundWarning = `Background model ${context.backgroundModel} is missing. Using ${options.model}. Install the source weights and create the local alias using the Install the background model link in Conversation settings.`;
         context.backgroundModel = options.model;

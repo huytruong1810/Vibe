@@ -39,6 +39,16 @@ export class OllamaAdapter implements InferenceProvider {
   constructor(
     endpoint = 'http://127.0.0.1:11434',
     private readonly fetcher: typeof fetch = (input, init) => fetch(input, init),
+    private readonly embeddings?: {
+      get(model: string, dimensions: number, id: string, text: string): Promise<number[] | null>;
+      put(
+        model: string,
+        dimensions: number,
+        id: string,
+        text: string,
+        vector: number[],
+      ): Promise<void>;
+    },
   ) {
     const url = new URL(endpoint);
     if (
@@ -72,7 +82,8 @@ export class OllamaAdapter implements InferenceProvider {
           : `Ollama returned HTTP ${response.status}. Check the selected model and local server.`,
       );
     const text = await response.text();
-    if (text.length > 128_000) throw new Error('Ollama response exceeded its size limit');
+    if (text.length > (path === '/api/embed' ? 512_000 : 128_000))
+      throw new Error('Ollama response exceeded its size limit');
     return JSON.parse(text);
   }
   async models(signal = AbortSignal.timeout(5000)): Promise<readonly ModelInfo[]> {
@@ -148,6 +159,62 @@ export class OllamaAdapter implements InferenceProvider {
     model: string,
     signal: AbortSignal,
   ): Promise<{ output: unknown; tokens: number; promptTokens?: number }> {
+    if (job.kind === 'embedding') {
+      if (!job.embeddingInput) throw Error('Missing embedding input');
+      const model = 'embeddinggemma',
+        dimensions = 256;
+      const entries = [
+        { id: '$query', text: job.embeddingInput.query },
+        ...job.embeddingInput.records,
+      ];
+      const cached = await Promise.all(
+        entries.map(
+          (e) => this.embeddings?.get(model, dimensions, e.id, e.text).catch(() => null) ?? null,
+        ),
+      );
+      const missing = entries.filter((_, i) => !cached[i]);
+      if (missing.length) {
+        const data = (await this.call('/api/embed', {
+          method: 'POST',
+          signal,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model,
+            input: missing.map((e) => e.text),
+            dimensions,
+            truncate: false,
+            options: { num_gpu: 0 },
+          }),
+        })) as { embeddings?: unknown };
+        if (
+          !Array.isArray(data.embeddings) ||
+          data.embeddings.length !== missing.length ||
+          data.embeddings.some(
+            (v) =>
+              !Array.isArray(v) ||
+              v.length !== dimensions ||
+              !v.every((x) => typeof x === 'number' && Number.isFinite(x)),
+          )
+        )
+          throw Error('Invalid embedding response');
+        let index = 0;
+        for (let i = 0; i < entries.length; i++)
+          if (!cached[i]) {
+            const vector = data.embeddings[index++] as number[];
+            cached[i] = vector;
+            await this.embeddings
+              ?.put(model, dimensions, entries[i]!.id, entries[i]!.text, vector)
+              .catch(() => {});
+          }
+      }
+      return {
+        output: {
+          query: cached[0],
+          records: entries.slice(1).map((e, i) => ({ ...e, vector: cached[i + 1] })),
+        },
+        tokens: 0,
+      };
+    }
     const response = await this.chat(
       model,
       job.messages,
@@ -178,7 +245,8 @@ export class InferenceScheduler {
   private readonly queue: InferenceJob[] = [];
   private readonly seen = new Set<string>();
   private readonly backgroundStarts: number[] = [];
-  private active: { job: InferenceJob; abort: AbortController } | null = null;
+  private active: { job: InferenceJob; abort: AbortController; preempted?: boolean } | null = null;
+  private readonly extractionDeadlines = new Map<string, number>();
   private timer: ReturnType<typeof setTimeout> | null = null;
   private session = '';
   private generation = 0;
@@ -224,14 +292,23 @@ export class InferenceScheduler {
     if (!this.session) this.session = job.session;
     if (job.session !== this.session || this.seen.has(job.id)) return;
     this.seen.add(job.id);
+    if (job.kind === 'extraction') this.extractionDeadlines.set(job.id, this.now() + 30_000);
     if (this.seen.size > 512) this.seen.delete(this.seen.values().next().value!);
     if (this.queue.length >= 16) {
       const evicted = this.queue.pop()!;
+      this.extractionDeadlines.delete(evicted.id);
       this.receipt({ jobId: evicted.id, error: 'Inference queue reached capacity' });
     }
     this.queue.push(job);
     this.queue.sort((a, b) => a.priority - b.priority);
-    if (job.kind === 'dialogue' && this.active?.job.kind !== 'dialogue') this.active?.abort.abort();
+    if (
+      (job.kind === 'dialogue' || job.kind === 'extraction') &&
+      this.active &&
+      this.active.job.priority > job.priority
+    ) {
+      this.active.preempted = true;
+      this.active.abort.abort();
+    }
     this.pump();
   }
   private pump(): void {
@@ -244,8 +321,23 @@ export class InferenceScheduler {
     while (this.backgroundStarts.length && now - this.backgroundStarts[0]! >= 60_000)
       this.backgroundStarts.shift();
     const first = this.queue[0]!;
+    if (first.kind === 'extraction' && now >= this.extractionDeadlines.get(first.id)!) {
+      this.queue.shift();
+      this.extractionDeadlines.delete(first.id);
+      this.errors++;
+      this.receipt({
+        jobId: first.id,
+        error: 'Memory extraction exceeded 30 seconds after enqueue',
+      });
+      this.pump();
+      return;
+    }
     if (this.backgroundDeferred && first.kind !== 'dialogue') return;
-    if (first.kind !== 'dialogue' && this.backgroundStarts.length >= 2) {
+    if (
+      first.kind !== 'dialogue' &&
+      first.kind !== 'extraction' &&
+      this.backgroundStarts.length >= 2
+    ) {
       this.timer = setTimeout(
         () => {
           this.timer = null;
@@ -259,13 +351,20 @@ export class InferenceScheduler {
       abort = new AbortController(),
       generation = this.generation;
     this.active = { job, abort };
-    if (job.kind !== 'dialogue') this.backgroundStarts.push(now);
+    if (job.kind !== 'dialogue' && job.kind !== 'extraction') this.backgroundStarts.push(now);
     this.requests++;
-    const timeout = setTimeout(() => abort.abort(), job.kind === 'dialogue' ? 45_000 : 30_000);
+    const remaining =
+      job.kind === 'extraction'
+        ? Math.max(1, this.extractionDeadlines.get(job.id)! - now)
+        : job.kind === 'dialogue'
+          ? 45_000
+          : 30_000;
+    const timeout = setTimeout(() => abort.abort(), remaining);
     this.settling = this.provider
       .generate(job, job.model ?? this.model, abort.signal)
       .then((response) => {
         if (generation !== this.generation) return;
+        if (abort.signal.aborted) throw Error('Inference request aborted');
         this.outputTokens += response.tokens;
         this.receipt({
           jobId: job.id,
@@ -275,6 +374,15 @@ export class InferenceScheduler {
       })
       .catch((error: unknown) => {
         if (generation !== this.generation) return;
+        if (
+          job.kind === 'extraction' &&
+          this.active?.preempted &&
+          this.now() < this.extractionDeadlines.get(job.id)!
+        ) {
+          this.queue.push(job);
+          this.queue.sort((a, b) => a.priority - b.priority);
+          return;
+        }
         this.errors++;
         this.receipt({
           jobId: job.id,
@@ -283,6 +391,8 @@ export class InferenceScheduler {
       })
       .finally(() => {
         clearTimeout(timeout);
+        if (!this.queue.some((queued) => queued.id === job.id))
+          this.extractionDeadlines.delete(job.id);
         this.settling = null;
         if (generation !== this.generation) {
           this.pump();
@@ -300,6 +410,7 @@ export class InferenceScheduler {
     this.queue.length = 0;
     this.seen.clear();
     this.backgroundStarts.length = 0;
+    this.extractionDeadlines.clear();
     this.session = session;
     if (this.timer) clearTimeout(this.timer);
     this.timer = null;

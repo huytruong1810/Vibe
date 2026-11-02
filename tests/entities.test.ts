@@ -421,7 +421,7 @@ describe('nature, social attacks and predation', () => {
     expect(npc.affinity).toBe(affinity - 10);
     expect(
       npc.memory.records.some(
-        (m) => m.text.includes('assault') && m.subjects.includes('player') && m.sourceIds.length,
+        (m) => m.text.includes('assault') && m.subjects.includes('player') && m.source.ids.length,
       ),
     ).toBe(true);
     expect(h.combat.active(npc.entityId)).toBe(true);
@@ -474,7 +474,7 @@ describe('save v4 compatibility', () => {
   it('migrates a real v2 checkpoint retaining progress, bonds, terrain and memories', () => {
     const migrated = migrateSave(legacy),
       p = migrated.entities.records.find((e) => e.id === 0)!;
-    expect(migrated.version).toBe(5);
+    expect(migrated.version).toBe(6);
     expect(migrated.contentVersion).toBe(3);
     expect(migrated.generatorVersion).toBe(1);
     expect(p.hp).toBe(73);
@@ -482,8 +482,14 @@ describe('save v4 compatibility', () => {
     expect(p.rest).toBeGreaterThan(0.8);
     expect(migrated.inventory.map((i) => i?.id)).toEqual(['flint', 'stick']);
     expect(migrated.entities.records.find((e) => e.id === 100)!.owner).toBe(0);
-    expect(migrated.npcs[10]!.memory.summary).toBe('The traveler helped at the canal.');
-    expect(migrated.npcs[10]!.memory.records.at(-1)!.subjects).toContain('entity:100');
+    expect(
+      migrated.npcs[10]!.memory.records.some(
+        (m) => m.text === 'Earlier, I remembered: The traveler helped at the canal.',
+      ),
+    ).toBe(true);
+    expect(migrated.npcs[10]!.memory.records.some((m) => m.subjects.includes('entity:100'))).toBe(
+      true,
+    );
     expect(migrated.worldDeltas).toEqual(legacy.worldDeltas);
     expect(migrated.entities.records.filter((e) => e.species < 8)).toHaveLength(24);
     expect(migrated.entities.records.some((e) => e.species === 6 || e.species === 7)).toBe(false);
