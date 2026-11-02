@@ -1,0 +1,35 @@
+{
+  "before": "b2afda6",
+  "after": "c33981f1dc0818294e9241475450eaf918aef33e",
+  "comparison": "SHA-256 of decoded RGBA frame-crop rows, plus source/trim dimensions",
+  "checks": [
+    {
+      "resolution": 1,
+      "unchangedFrameCrops": 3908,
+      "sourceAndTrimDimensionsEqual": true
+    },
+    {
+      "resolution": 0.5,
+      "unchangedFrameCrops": 3908,
+      "sourceAndTrimDimensionsEqual": true
+    }
+  ],
+  "inspectedPngs": [
+    "bundle-0.png",
+    "bundle-0@0.5x.png",
+    "bundle-1.png",
+    "bundle-1@0.5x.png",
+    "bundle-2.png",
+    "bundle-2@0.5x.png",
+    "bundle-3.png",
+    "bundle-3@0.5x.png",
+    "bundle-4.png",
+    "bundle-4@0.5x.png"
+  ],
+  "decodedMemoryMiB": {
+    "full": 79.84,
+    "half": 19.88
+  },
+  "status": "candidate",
+  "artApprovalGranted": false
+}

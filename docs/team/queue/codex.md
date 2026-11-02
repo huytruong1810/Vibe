@@ -3,8 +3,8 @@
 Read your brief `docs/team/briefs/codex.md` and [the queue rules](README.md) first.
 Finished tickets are in [archive/codex.md](archive/codex.md); open it only when a live ticket links there.
 
-**Who does what (directive 011, 2026-11-02, claude away until about 2026-11-09).** Codex
-owns this queue: **C22 → C24 → C25 → C14 → C13 → C17 → C18 → C19 → C20**, then C3g and C7, with C17 already shipped (save v5; see archive/codex.md), and C23 and C12
+**Who does what (directive 012, 2026-11-02, claude away until about 2026-11-09).** Codex
+owns this queue: **C22 → C24 → C25 → C14 → C13 → C18 → C19 → C20**, then C3g and C7, with C17 already shipped (save v5; see archive/codex.md), and C23 and C12
 standing (C19 can run beside C18; C21 only on the director's go). Machine B has no
 Blender or GPU: build against mocks and send live GPU smokes to blender as
 `--to-blender--test-` requests. The forge tickets under "Waiting for claude" need
@@ -14,7 +14,7 @@ Blender on machine A; leave them unless the director says otherwise.
 
 ### C22 · Beta channel: green CI, a deploy on every green push, a playtest loop
 
-- status: in-progress (first)
+- status: candidate (implementation; director Pages activation and live SHA/timing remain)
 - owner: codex
 - goal: the director plays the latest green build from a URL on any day, files playtest notes in one place, and they become tickets, without anyone on machine A.
 - context: CI was red for 100+ runs (`format:check` failed on machine-written sources, so browser tests and the benchmark never ran) until claude's `88b11ba`. The repo is public, so GitHub Pages is free.
@@ -28,7 +28,7 @@ Blender on machine A; leave them unless the director says otherwise.
 - out of scope: hosting Ollama or an image server anywhere but the player's machine.
 - note: editing `.github/workflows/` needs a token with the `workflow` scope on machine B.
 - done when: a green push to `studio/doctrine-v1` is live on the Pages URL with its sha within 15 minutes; the playtest template exists; the operations doc lists the jobs and the green-CI rule; claude's local check of `/Vibe/` asset loading is replaced by a CI browser test
-- evidence:
+- evidence: 2026-11-02: implementation b2afda6 and deterministic atlas fix c33981f; [candidate report](../comms/codex/2026-11-02T0716--to-all--c22-beta-candidate.md). Final local check: 355 tests / 28 files; [Final code CI](https://github.com/huytruong1810/Vibe/actions/runs/41404667063) is green, including Linux reproducibility, both production browser bases, existing journeys and benchmark. Live Pages acceptance awaits director setup.
 
 ### C24 · Conversation context and compaction on gemma4:e4b at 75%
 
@@ -92,7 +92,7 @@ Blender on machine A; leave them unless the director says otherwise.
 
 ### C18 · The written word: book screen, villager reading and writing
 
-- status: open (after C17)
+- status: open (after C25; C17 shipped)
 - owner: codex
 - goal: the player reads and writes notes and books on a book screen; villagers read bounded ranges, write notes and diary pages, and no prompt grows with what was written.
 - spec: [authored artifacts](../../engineering/authored-artifacts.md) §4 (`artifactWrite`, page add/remove, seal), §5 (actions, validation, grounding, the two-step reading job, `readables` world facts), §8.1, §11; doctrine AGT-8, AGT-7 budgets.
