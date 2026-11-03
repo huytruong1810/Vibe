@@ -18,7 +18,9 @@ Neris's profile motivates tide notices. No scripted model calls or written prose
 invalid-draft retention, keyboard/gamepad and focus checks pass. Full 48-page opening
 is 47.3 ms, mounting two pages. The capture shows the sealed diary title/provenance,
 two legible columns, page numbers and navigation. All 23 browser journeys and 464 unit
-tests pass; complete check/beta results are recorded in validation.
+tests pass; production beta2/2 passes at each base. Commit `8619e25` is pushed.
+[CI CPU checks](https://github.com/huytruong1810/Vibe/actions/runs/41686809511) pass,
+including full check and benchmark; remote browser/ecology are still pending.
 [Actual CPU reading](c18-live-reading.json) completes dialogue → READ_TEXT → sourced
 summary; the injection page changes no inventory. Strict response has no action field.
 
@@ -28,8 +30,9 @@ aggregate `verify`. Assertions and existing HD/artifact gates remain unchanged.
 
 **Gaps:** machine-A GPU reading latency is [requested](2026-11-03T1730--to-blender--test-c18-reading.md).
 The director clarified B requires functional checks only; CPU timings are diagnostic.
-The unchanged 50 ms artifact gate failed in the combined local check and passed its
-isolated rerun; final check/CI conclusions are in validation. Conservative
+Local full checks missed artifact timing (61.5/55.0ms), isolated artifact passed;
+local benchmark director p95 missed0.2ms at0.251ms. CI CPU gates pass unchanged.
+Full distributions/maxima/machine are [retained](c18-benchmark.json). Conservative
 grounding can reject ordinary unsupported words. Incremental HUD dialogue is C20.
 Director review, reference-machine playtests and existing authored-art/HD gaps remain.
 This is candidate evidence, never approval. C19 is next and has not started here.

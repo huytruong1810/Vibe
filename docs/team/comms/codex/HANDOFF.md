@@ -1,9 +1,9 @@
 # Codex session handoff
 
-## Current: C13 pushed; C18 implemented, final validation running
+## Current: C13 and C18 candidates pushed; remote journeys/soak pending
 
 Branch `eng/hd-presentation`, workspace `C:/Users/htruong/source/repos/Vibe`.
-C13 commits **9b229bd** and **de93730** are pushed. C18 is currently uncommitted;
+C13 commits **9b229bd** and **de93730**, C18 **8619e25** are pushed;
 follow [its plan](c18-plan.md), written before implementation. Codex reaches candidate
 at most; only the director approves. C19 is next after C18 delivery, not started here.
 
@@ -43,12 +43,19 @@ requested in [the Blender test message](2026-11-03T1730--to-blender--test-c18-re
 Buffered reading JSON transport is implemented; incremental HUD output remains C20.
 
 Latest full unit-only run: **464 tests / 34 files passed**, four workers, 104.68 s.
-Full browser suite passes **23/23** in8.9 minutes. Final book capture was copied and
-inspected; full48-page opening47.3 ms mounts two pages. The combined check passed464
-tests but failed the unchanged50ms artifact gate at61.4688ms with formatting overlap;
-isolated artifact project then passed1/1. A clean combined rerun remains to record.
-Types, architecture, assets, hygiene and formatting pass. Production root build and
-beta2/2 pass; subpath build/beta running. See [validation](c18-validation.json).
+Full browser suite passes **23/23** in 8.9 minutes. Final book capture was copied and
+inspected; full 48-page opening 47.3 ms mounts two pages. Both local combined checks
+passed464 tests but missed the unchanged50ms artifact gate (61.4688/54.962ms);
+isolated artifact project passed1/1. Types, architecture, assets, hygiene and formatting
+pass. Root and subpath production builds pass, beta2/2 at each. The standalone local
+benchmark misses director p95 (0.251ms >0.2), brain/movement pass. All measurements
+are retained; do not rerun model latency on B or relax gates.
+
+[Push CI41686809511](https://github.com/huytruong1810/Vibe/actions/runs/41686809511)
+CPU `checks` **passed**, including full check, artifact timing, formatting and benchmark.
+Both beta jobs passed; remote browser journeys and full ecology remain in progress.
+No full-workflow-green claim. See [validation](c18-validation.json) and
+[benchmark](c18-benchmark.json). C18 is candidate; A latency and director review remain.
 
 ## C13 evidence
 
@@ -72,9 +79,9 @@ All eight retained 1080p phase images were inspected; placeholder overlap remain
 Run [41665593398](https://github.com/huytruong1810/Vibe/actions/runs/41665593398)
 completed the full 28-day ecology soak successfully in **22m50s**, unchanged 25-minute
 limit. Both beta jobs passed. Its verify job exceeded 20 minutes in browser journeys.
-The current CI edit separates CPU checks and browser journeys into bounded 20-minute
-jobs and preserves required `verify` as an aggregate requiring both. This repair
-still needs remote verification; all tests, benchmark, HD/artifact gates remain.
+The pushed CI edit separates CPU checks and browser journeys into bounded 20-minute
+jobs and preserves required `verify` as an aggregate requiring both. CPU checks pass;
+the aggregate still awaits browser completion. All existing gates remain.
 
 Baseline run 41564371915 succeeded; 41564379329 failed its browser step. Public logs 403;
 automatic review rejected stored-credential access, none read. Isolated unchanged

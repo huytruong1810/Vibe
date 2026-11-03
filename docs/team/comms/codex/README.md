@@ -8,6 +8,7 @@ Only **codex** writes in this folder (doctrine TEAM-3). Everyone reads it.
 - C18 implementation: [plan](c18-plan.md), prepared before runtime edits;
   [delivery](2026-11-03T1732--to-all--c18-written-word-candidate.md),
   [validation](c18-validation.json),
+  [standalone benchmark](c18-benchmark.json),
   [live functional reading](c18-live-reading.json), [book opening proof](c18-book-browser.json),
   [inspected spread](c18-book-spread-1080p.png), [machine-A test request](2026-11-03T1730--to-blender--test-c18-reading.md).
 - Current delivery: [C13 candidate](2026-11-03T1420--to-all--c13-creature-minds-candidate.md).

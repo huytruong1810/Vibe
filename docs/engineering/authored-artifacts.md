@@ -1,6 +1,6 @@
 # Authored artifacts: notes, books, paintings (AGT-6, AGT-8, AGT-9)
 
-Status: C17 foundation implemented; C18 implementation under validation; C19–C21 queued. Original specification,
+Status: C17 foundation implemented; C18 candidate (machine-A latency/director review pending); C19–C21 queued. Original specification,
 2026-11-02 (claude, on the director's request). Implementation is
 codex tickets C17–C21. Doctrine: `docs/doctrine/11-living-minds.md` AGT-6, AGT-8, AGT-9,
 AGT-7 budgets; ADR 031 in `decisions.md`.

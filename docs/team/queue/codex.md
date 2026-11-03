@@ -93,7 +93,7 @@ and local-generation tickets (C26–C31) sit in their own section.
 
 ### C18 · The written word: book screen, villager reading and writing
 
-- status: in-progress (player book slice; implementation plan recorded before code)
+- status: candidate (functional implementation; machine-A GPU latency and director review remain)
 - owner: codex
 - goal: the player reads and writes notes and books on a book screen; villagers read bounded ranges, write notes and diary pages, and no prompt grows with what was written.
 - spec: [authored artifacts](../../engineering/authored-artifacts.md) §4 (`artifactWrite`, page add/remove, seal), §5 (actions, validation, grounding, the two-step reading job, `readables` world facts), §8.1, §11; doctrine AGT-8, AGT-7 budgets.
@@ -104,7 +104,7 @@ and local-generation tickets (C26–C31) sit in their own section.
   4. Give two villagers a reason to use it in content: Lark keeps a sketch diary (one `WRITE_PAGE` per day at home); the dock master posts a tide notice note on a shelf. Profile text only, no scripted calls.
 - out of scope: rich text, villagers editing others' text, sharing outside the save.
 - done when: unit tests in spec §11 rows "caps/commands", "`READ_TEXT` bounds" (property test: any content → reading prompt ≤ 2000 estimated tokens), "prompt injection" (a page ordering a gift changes no state), "writing grounding"; Playwright writes a 3-page book, seals it, reopens it read-only and captures the spread at 1080p (look at it, PRD-5); `npm run test:ollama` gains a reading round-trip that blender runs on machine A (`--to-blender--test-`), AGT-7 reading budget recorded in `docs/operations/`.
-- evidence:
+- evidence: [C18 candidate](../comms/codex/2026-11-03T1732--to-all--c18-written-word-candidate.md), [validation](../comms/codex/c18-validation.json), [live functional reading](../comms/codex/c18-live-reading.json); commit8619e25, save v9, 464 unit tests,23 browser journeys, root/subpath beta2/2 each. CI CPU checks pass; local timing misses and external acceptance remain recorded.
 
 ### C19 · Image provider adapter, GPU arbiter, palette quantizer, operations guide
 

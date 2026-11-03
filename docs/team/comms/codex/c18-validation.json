@@ -1,5 +1,5 @@
 {
-  "status": "validation-in-progress",
+  "status": "candidate; machine-A latency and director review pending",
   "recordedAt": "2026-11-03",
   "branch": "eng/hd-presentation",
   "unit": {
@@ -13,8 +13,8 @@
     "exitCode": 1,
     "testsPassed": 464,
     "testsFailed": 1,
-    "seconds": 84.84,
-    "failure": "Artifact validation 61.4688 ms against unchanged 50 ms limit; formatting overlapped measurement. Isolated project rerun passed."
+    "seconds": 99.8,
+    "failure": "Clean local rerun: artifact validation 54.962 ms against unchanged 50 ms limit. Earlier combined run 61.4688 ms with formatting overlap. Isolated project passed; CI checks job passed including full check and benchmark."
   },
   "typecheck": "passed",
   "architecture": "passed",
@@ -25,6 +25,23 @@
   "production": {
     "root": "build passed; beta 2/2 passed in 1.0 minute",
     "subpath": "build passed; beta 2/2 passed in 1.4 minutes"
+  },
+  "benchmark": {
+    "receipt": "c18-benchmark.json",
+    "exitCode": 1,
+    "engaged150BrainP95Ms": 0.952,
+    "engaged150MovementP95Ms": 0.701,
+    "engaged150DirectorP95Ms": 0.251,
+    "directorLimitMs": 0.2,
+    "note": "Standalone CPU run; brain/movement pass, director misses unchanged p95 gate. Full distributions, maxima and machine retained."
+  },
+  "remote": {
+    "commit": "8619e25",
+    "run": "https://github.com/huytruong1810/Vibe/actions/runs/41686809511",
+    "event": "push",
+    "beta": "both production bases passed",
+    "checks": "success; includes full check, formatting, artifact timing and benchmark assertions unchanged",
+    "browserEcology": "in progress; no full-workflow-green claim"
   },
   "book": {
     "receipt": "c18-book-browser.json",
@@ -41,7 +58,7 @@
     "latestIsolatedMs": 124.64,
     "passed": true,
     "isolatedRerun": "1/1 passed; 6.19 seconds total; assertion remains below 50 ms",
-    "note": "Full check timing failed at 61.4688 ms; isolated rerun passed. Earlier 124.64 ms failure retained; no gate relaxed."
+    "note": "Local combined checks failed at 61.4688 and 54.962 ms; isolated project passed. Earlier 124.64 ms failure retained. CI checks passed; no gate relaxed."
   },
   "liveReading": {
     "receipt": "c18-live-reading.json",
@@ -60,7 +77,7 @@
     "verify": "timed out in browser step; separate CPU/browser jobs now require remote verification"
   },
   "gaps": [
-    "Final check/browser/beta/build and remote CI outstanding",
+    "Local timing misses retained; CI CPU checks passed, remote browser/ecology pending",
     "Machine-A reading latency acceptance",
     "Conservative writing vocabulary rejects some ordinary words",
     "Incremental HUD dialogue remains C20",
