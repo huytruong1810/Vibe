@@ -143,6 +143,7 @@ class ItemPlanTest(unittest.TestCase):
     def test_cli_writes_draft_and_never_runs_blender(self):
         import forge
         with patch.object(forge, "REPO", self.repo), \
+             patch.object(core, "WORK", self.repo / "work"), \
              patch.object(forge, "_recipe", return_value={"kind": "item", "item": self.config}), \
              patch.object(forge, "work_dir", return_value=self.out.parent), \
              patch.object(forge, "_rel", side_effect=str), \
@@ -150,7 +151,10 @@ class ItemPlanTest(unittest.TestCase):
             self.assertIn("65 mesh poses", forge.st_item_plan("item:hatchet"))
         self.assertEqual(core.asset_kind("item:hatchet"), "item")
         self.assertEqual(core.canvas_for("item:hatchet")[0], "layer.heldItem")
-        with patch.object(core, "load_sheet", side_effect=core.ForgeError("no prop sheet")):
+        with patch.object(core, "RECIPES", self.repo / "recipes"), \
+             patch.object(core, "WORK", self.repo / "work"), \
+             patch.object(core, "run_blender", side_effect=AssertionError("CLI routing cannot render")), \
+             patch.object(core, "load_sheet", side_effect=core.ForgeError("no prop sheet")):
             self.assertIn("BLOCKED", forge.next_step("item:hatchet"))
             ran = []
             with patch.object(sys, "argv", ["forge.py", "all", "--asset", "item:hatchet"]), \
@@ -160,6 +164,30 @@ class ItemPlanTest(unittest.TestCase):
         # Items run their own source chain through render; never a body stage.
         self.assertEqual(ran, ["prep", "gen3d", "clean", "texture", "orient", "items"])
         self.assertFalse({"rig", "animate", "bake", "pixelize", "qa"} & set(ran))
+
+    def test_missing_sheet_routes_from_isolated_recipe_and_contact(self):
+        import forge
+        recipes = self.repo / "recipes"
+        recipes.mkdir()
+        recipe = recipes / "item-hatchet.json"
+        work = self.repo / "work"
+        with patch.object(forge, "REPO", self.repo), \
+             patch.object(core, "RECIPES", recipes), \
+             patch.object(core, "WORK", work), \
+             patch.object(core, "run_blender", side_effect=AssertionError("next cannot render")), \
+             patch.object(core, "load_sheet", side_effect=core.ForgeError("no prop sheet")):
+            self.assertIn("BLOCKED", forge.next_step("item:hatchet"))
+            recipe.write_text(json.dumps({"kind": "item"}))
+            self.assertIn("BLOCKED", forge.next_step("item:hatchet"))
+            recipe.write_text(json.dumps({"kind": "item", "concept": {"template": "prop-v1"}}))
+            self.assertEqual(forge.next_step("item:hatchet"), f"{forge.CMD} concept --asset item:hatchet")
+            contact = core.work_dir("item:hatchet") / "concept" / "contact.png"
+            contact.parent.mkdir()
+            contact.touch()  # Existence-only routing fixture, not generated artwork.
+            self.assertEqual(forge.next_step("item:hatchet"),
+                             f"OPEN {forge._rel(contact)} and pick the best candidate, then "
+                             f"{forge.CMD} views --asset item:hatchet --pick <id> "
+                             f"(or {forge.CMD} concept --asset item:hatchet for new candidates)")
 
 
 if __name__ == "__main__":
