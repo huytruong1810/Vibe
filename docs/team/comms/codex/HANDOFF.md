@@ -1,97 +1,95 @@
 # Codex session handoff
 
-## Current: C13 candidate; next implementation C18
+## Current: C13 pushed; C18 implemented, final validation running
 
 Branch `eng/hd-presentation`, workspace `C:/Users/htruong/source/repos/Vibe`.
-C13 runtime is implemented on pickup `692b4de`; no C18 runtime edits yet.
-[C18 implementation plan](c18-plan.md) was prepared before its code changes.
-Codex reaches candidate at most; only the director approves.
+C13 commits **9b229bd** and **de93730** are pushed. C18 is currently uncommitted;
+follow [its plan](c18-plan.md), written before implementation. Codex reaches candidate
+at most; only the director approves. C19 is next after C18 delivery, not started here.
 
 Use [team-comms](../../../../.agents/skills/team-comms/SKILL.md), pull only with a clean
 index, read new addressed messages and re-read `docs/team/briefs/codex.md` after compaction.
-Keep the existing [session log](session-2026-11-02.md) current. Leave Vibe-art and
-preexisting review worktrees alone. No alarm or hourly automation is scheduled.
+Keep the existing [session log](session-2026-11-02.md) current. Leave Vibe-art and other
+review worktrees alone. No alarm or hourly automation was scheduled.
 
-## C13 implementation
+## C18 implementation
 
-- `src/domain/creature-minds.ts`: honest scene-aware typed-array perception,
-  `crm-obs-1` (64 floats), `crm-cond-1` (30), interchangeable brain interface, scripted
-  rules/tactics identity, all 12 intents and all eight species. No learned policy.
-- Tick order: physiology, grid, engagement, director, brain, one intent movement step,
-  then attack resolution. Calm utility and human/NPC combat remain. Hunting, territory,
-  retaliation and reservations remain reasons to engage, governed by perception.
-- Transient selection negotiates the actual target/category. Held tokens commit only
-  after successful startup. C14 independent pools, spacing, costs and cues remain.
-- Reactions have a two-tick floor, six-tick commitment and hysteresis. At most 48 nearby
-  full-rate brains are selected by distance/stable ID; other loaded combatants decide at
-  2 Hz and continue executing every tick. The overworld is currently one loaded scene;
-  there is no new region streamer. Spawn/home radius is 12 until authored habitats activate.
-- Zephyrit/Cindermoth air traversal has separate navigation keys, solid collision,
-  ordinary hit eligibility and needs-activity landing. Partner focus/regroup goes through
-  worker commands; HUD uses actual intents; developer scores and live observation inspector.
-- Save v8 retains v1-v7 migrations, C14 director and C25 memory. It saves motion-driving
-  mind/RNG/history/home/pack state, failed-hunt state and separate 0-10 bond hearts
-  (old creatures migrate to zero; trust is independent). Stale lifecycle references clear.
-- Perception observation groups share one spatial pass. Flocking folds only valid visible
-  herd mates. Director cleanup visits tracked slots; no timing gate was relaxed.
+Strict worker edit/page/seal commands validate the complete replacement before changing
+the carried item. BookScreen supports notes, two-page spreads, single-page editing,
+500 ms debounce, serialized flush, rejected-draft retention, seal confirmation, focus
+return, keyboard and gamepad navigation. Frames contain metadata; content is on demand
+with authoritative reach validation. Only the current spread mounts.
 
-## C13 evidence and limitations
+LiteracyService owns NPC hands, reach, six daily reads, one daily note/page, and saved
+continuation offsets. READ_TEXT replaces its response's other effects and starts a
+second job: excerpt <=600 estimated tokens, complete prompt <=2000, JSON-quoted prose,
+strict response with no action. Applying a result rechecks world session, NPC revision,
+conversation, reach and artifact revision; memory pins the actual pages/line prefix.
+New dialogue preempts reading. Readables are metadata only, nearest five/120 tokens,
+and drop first from dialogue prompts. Grounded writing uses conservative vocabulary
+and canonical content names; unsupported ordinary words can also be rejected.
 
-Full four-worker `npm run check`: **444 tests / 32 files**, types, architecture, normal
-assets and build passed; artifact <50 ms gate retained. The 3,000-tick restored
-intent/motion hash is `d0c664d43d5cdd3110d6d3105c376d719589d609e15b34034e281ae8a599f10e`.
-Full browser suite passed **22/22** before the final performance-only optimization;
-Final focused C13 journeys pass **2/2**, C14 **1/1**, and production beta **2/2**
-at each of `/` and `/Vibe/`. See [candidate validation](c13-validation.json).
+Save v9 retains all older migrations, C13 motion, C14 director and C25 memory. Lark's
+blank diary is seeded on new game or legacy migration when capacity permits, never
+on v9 restore. Neris's ferry-keeper profile supplies the dock-master motivation.
+No scripted model calls or prose, painting provider, training, art production or approval.
 
-[Benchmark](c13-benchmark.json), i7-1365U, Node22.22.3, win32 x64, 39.7 GiB:
-engaged150 brain mean/p95/max **0.339/0.734/3.154 ms**, movement **0.290/0.563/6.094**,
-director **0.106/0.194/15.876**. All 150 execute; full-rate cap is 48. Assertions are p95,
-not an every-tick guarantee. [Failed measurements](c13-benchmark-history.json) are retained.
-C14 player/wild director p95 **0.168/0.145**; C25 retrieval/prompt **1.814/2.999**.
-Whole-simulation p95 **8.661 ms**, dense **9.799**, active128 **10.514**: no claim of
-unchanged overall throughput or reference-laptop acceptance. Run benchmarks alone.
+Actual `gemma4:e4b` CPU dialogue -> READ_TEXT -> sourced memory passed, including an
+injection page and unchanged inventory: [receipt](c18-live-reading.json). Ollama 0.40.9
+tuple transport compatibility was fixed without weakening domain validation. Model was
+unloaded; installation remains authorized. The director clarified B needs functional
+checks only. Do not repeat model latency testing here. Machine-A GPU acceptance is
+requested in [the Blender test message](2026-11-03T1730--to-blender--test-c18-reading.md).
+Buffered reading JSON transport is implemented; incremental HUD output remains C20.
 
-Captures show prototype sprites and crowd overlap; missing authored behavior clips
-are requested in [the Blender follow-up](2026-11-03T1417--to-blender--c13-behavior-clips.md).
-No art production, training, GPU inference or approval is included. Normal asset coverage
-remains 3908 frames, five pages, 79.84/19.88 MiB; HD gaps **1515**, approvals **4/41**.
-The HD gate is unchanged. Director review and reference-machine playtest remain external.
+Latest full unit-only run: **464 tests / 34 files passed**, four workers, 104.68 s.
+Full browser suite passes **23/23** in8.9 minutes. Final book capture was copied and
+inspected; full48-page opening47.3 ms mounts two pages. The combined check passed464
+tests but failed the unchanged50ms artifact gate at61.4688ms with formatting overlap;
+isolated artifact project then passed1/1. A clean combined rerun remains to record.
+Types, architecture, assets, hygiene and formatting pass. Production root build and
+beta2/2 pass; subpath build/beta running. See [validation](c18-validation.json).
 
-## Baseline CI prerequisite
+## C13 evidence
 
-Engineering `5b8e341`: [41564371915](https://github.com/huytruong1810/Vibe/actions/runs/41564371915)
-completed/success; [41564379329](https://github.com/huytruong1810/Vibe/actions/runs/41564379329)
-failed its verify browser step; beta and ecology jobs passed. Public logs returned 403.
-Automatic review rejected stored-credential access; no credential was read. Isolated
-unchanged baseline passed 19 browser cases plus terrain after export-junction correction.
-The exact remote failed test remains unknown; no repair claim is made from that result.
-Studio item-tool repair `83dd6f6 / 41563209207` remains successful.
+[Candidate](2026-11-03T1420--to-all--c13-creature-minds-candidate.md),
+[validation](c13-validation.json), [benchmark](c13-benchmark.json),
+[failed timing history](c13-benchmark-history.json).
+Scripted all-eight-species implementation, honest perception, 12 intents, reactions,
+commitment, cap 48 full-rate/2 Hz fallback, flight, partner commands and save v8.
+One loaded overworld scene remains; no new region streamer. Authored habitats still
+use spawn/home 12-radius fallback. The 3,000-tick exact restored intent/motion hash is
+`d0c664d43d5cdd3110d6d3105c376d719589d609e15b34034e281ae8a599f10e`.
 
-A dirty-tree pull was rejected by automatic review; safe `git fetch origin` succeeded,
-and HEAD/origin divergence was 0/0. Commit C13 before the next pull. Do not bypass the
-credential rejection or mix C18 code into the C13 commit. The isolated baseline export and owned scratch were removed after unlinking junctions.
-Production previews exited; formatting passes. Run hygiene before pushing.
+Pre-C18 full check 444/32; full browser22/22 before final performance optimization,
+focused C13 2/2 and C14 1/1 after it; beta 2/2 at each root and subpath. Standalone
+i7-1365U benchmark p95 brain/movement/director **0.734/0.563/0.194 ms**, maxima
+**3.154/6.094/15.876**. These are p95 assertions, not every-tick guarantees.
+No unchanged overall-throughput or reference-machine acceptance claim.
+All eight retained 1080p phase images were inspected; placeholder overlap remains.
+[Missing behavior clips](2026-11-03T1417--to-blender--c13-behavior-clips.md) are external.
 
-## Next: C18, then C19/C20/C3g/C7
+Run [41665593398](https://github.com/huytruong1810/Vibe/actions/runs/41665593398)
+completed the full 28-day ecology soak successfully in **22m50s**, unchanged 25-minute
+limit. Both beta jobs passed. Its verify job exceeded 20 minutes in browser journeys.
+The current CI edit separates CPU checks and browser journeys into bounded 20-minute
+jobs and preserves required `verify` as an aggregate requiring both. This repair
+still needs remote verification; all tests, benchmark, HD/artifact gates remain.
 
-Follow [the concrete C18 plan](c18-plan.md): first player write/page/seal plus a book
-screen and its three-page journey; then durable NPC quotas/reach, two-step bounded
-reading with sourced memories, grounded writing, metadata-only facts, profile motivation,
-save v9 and injection/budget/preemption tests. C18 is still open until implementation.
-Neris is the existing ferry keeper filling the requested dock-master role. No painting
-provider or C19 work belongs in that change. Machine-A live reading latency must be
-requested from Blender and reported as an external gap until measured.
+Baseline run 41564371915 succeeded; 41564379329 failed its browser step. Public logs 403;
+automatic review rejected stored-credential access, none read. Isolated unchanged
+baseline passed 19 journeys plus terrain; exact remote failure remains unknown.
+Do not bypass credential rejection. Fetch succeeded; compare remote parent before push.
 
 ## Standing boundaries
 
-- C22/C24/C25/C14 remain candidates with separate external acceptance. Only the director
-  merges main or activates Pages; draft PR #1 remains unmerged by this work.
-- C15/C16 need director go after C13 playtests; C21 also needs explicit go. C23/C12 stand.
-- Hatchet B14 remains staged; item sidecars need real integration support (C12/M25),
+- C22/C24/C25/C14 remain candidates with external acceptance. Only the director merges
+  main or activates Pages; draft PR 1 remains unmerged by this work.
+- C15/C16 need director go after C13 playtests; C21 needs explicit go. C23/C12 stand.
+- Hatchet B14 remains staged; item sidecars need real C12/M25 integration support,
   never fake NPC appearance overrides. Communicator owns manifest/status integration.
-- Riverlands revision2 approval is layout-only; preview placeholders are not approved
-  art and C7 activation remains gated. C32 is the previous-revision worldforge fix;
-  C33 is inventory icons. C31's Hunyuan3D-2mv-only backend direction remains integrated.
-- B19/B11 relays do not replace missing digest-bound approval records. Preserve HD,
-  artifact, C14 fairness and C25 memory gates. Do not edit doctrine or protected briefs.
+- Riverlands revision 2 approval is layout-only; placeholders are not approved art and
+  C7 activation remains gated. C32 worldforge revision fix, C33 inventory icons and
+  C31 Hunyuan3D-2mv-only backend direction remain integrated.
+- B19/B11 relays do not replace digest-bound approvals. Normal assets 3908 frames,
+  five pages 79.84/19.88 MiB; HD gaps 1515, approvals 4/41. Preserve all existing gates.

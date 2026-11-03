@@ -63,6 +63,7 @@ describe('durable physique and bounded motion', () => {
       artifacts: _artifacts,
       placements: _placements,
       artifactSequence: _serial,
+      literacy: _literacy,
       ...v4
     } = structuredClone(heavy.snapshot());
     const old = {

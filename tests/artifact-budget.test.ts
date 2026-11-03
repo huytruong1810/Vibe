@@ -16,6 +16,7 @@ it('round-trips 512 text artifacts below 3 MB with validation below 50 ms', () =
   });
   save.artifacts = Array.from({ length: 512 }, (_, i) => ({ ...a, id: `art:${i + 1}` }));
   save.artifactSequence = 512;
+  save.placements = [];
   save.drops = save.artifacts.map((record, i) => ({
     id: i + 1,
     item: 'note',

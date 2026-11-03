@@ -93,7 +93,7 @@ and local-generation tickets (C26–C31) sit in their own section.
 
 ### C18 · The written word: book screen, villager reading and writing
 
-- status: open (after C25; C17 shipped)
+- status: in-progress (player book slice; implementation plan recorded before code)
 - owner: codex
 - goal: the player reads and writes notes and books on a book screen; villagers read bounded ranges, write notes and diary pages, and no prompt grows with what was written.
 - spec: [authored artifacts](../../engineering/authored-artifacts.md) §4 (`artifactWrite`, page add/remove, seal), §5 (actions, validation, grounding, the two-step reading job, `readables` world facts), §8.1, §11; doctrine AGT-8, AGT-7 budgets.

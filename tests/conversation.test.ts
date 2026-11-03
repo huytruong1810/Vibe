@@ -29,6 +29,27 @@ function fill(context: ConversationContext, count = 18) {
     context.append(i % 2 ? 'npc' : 'player', `${i}: ${'river '.repeat(175)}`);
 }
 describe('conversation context', () => {
+  it('counts cached Unicode message bytes exactly like whole JSON, including calibration', () => {
+    const context = new ConversationContext();
+    const messages = Array.from({ length: 80 }, (_, n) => ({
+      role: n % 2 ? ('assistant' as const) : ('user' as const),
+      content: `${n}: "川🌿"\n\\`.repeat(n % 11),
+    }));
+    for (const sample of [[], messages.slice(0, 1), messages, messages])
+      expect(context.count(sample)).toBe(
+        context.estimate(JSON.stringify(sample)) + sample.length * 8,
+      );
+    context.calibrate(
+      context.settings.dialogueModel,
+      messages,
+      context.estimate(JSON.stringify(messages)) * 2,
+    );
+    expect(context.count(messages)).toBe(
+      context.estimate(JSON.stringify(messages)) + messages.length * 8,
+    );
+    const extended = [{ role: 'user' as const, content: messages[0]!.content, extra: '🌿' }];
+    expect(context.count(extended)).toBe(context.estimate(JSON.stringify(extended)) + 8);
+  });
   it('triggers once at projected 75%, retains four entries, and never mutates memory', () => {
     const { npc, context, plans } = setup();
     fill(context, 6);

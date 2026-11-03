@@ -1,4 +1,7 @@
 import { remapMindScenes } from './creature-minds';
+import { editCarriedArtifact } from './artifact-writing';
+import { LiteracyService } from './literacy';
+import { ReadingResponseSchema, type LiteracyAction } from './text-contracts';
 import type { DialogueSession } from './conversation';
 import { applyExtraction, applySynthesis, validMemory } from './memory';
 import {
@@ -116,6 +119,7 @@ export class SimulationHost {
   readonly scenes: SceneRegistry;
   readonly artifacts = new ArtifactStore();
   readonly placements: ArtifactPlacement[] = [];
+  readonly literacy: LiteracyService;
   private readonly sceneSystems = new Map<number, SceneSystems>();
   private readonly portalPaths = new Map<
     number,
@@ -152,7 +156,10 @@ export class SimulationHost {
   private readonly schedules: ScheduleExecutor;
   private readonly perception = new PerceptionSystem(this.memories);
   private readonly social = new SocialEncounterSystem(this.memories);
-  private readonly plans = new PlanService(this.memories, (id) => this.query.perceivedFacts(id));
+  private readonly plans = new PlanService(this.memories, (id) => ({
+    ...this.query.perceivedFacts(id),
+    ...this.literacy.facts(id, this.dialogue?.npcId === id),
+  }));
   private readonly reflections = new ReflectionService(this.memories);
   private readonly validator = new AgentActionValidator();
   private readonly pendingJobs = new Map<string, InferenceJob>();
@@ -326,6 +333,14 @@ export class SimulationHost {
       reactions: this.reactions,
     });
     this.equipment.initialize(origin);
+    this.literacy = new LiteracyService(
+      this.entities,
+      this.artifacts,
+      this.inventory,
+      this.placements,
+      this.scenes,
+    );
+    this.literacy.seedDiary(this.calendar.day);
     if (population > 0)
       for (const i of this.entities.slots())
         if (!this.entities.protected(i)) this.allocateCaveHabitat(i);
@@ -513,6 +528,10 @@ export class SimulationHost {
       'configureCombat',
       'inspectCreature',
       'partnerCommand',
+      'artifactWrite',
+      'artifactPageAdd',
+      'artifactPageRemove',
+      'artifactSeal',
       'move',
       'dialogue',
       'closeDialogue',
@@ -551,6 +570,10 @@ export class SimulationHost {
         'enterPortal',
         'artifactDisplay',
         'artifactTake',
+        'artifactWrite',
+        'artifactPageAdd',
+        'artifactPageRemove',
+        'artifactSeal',
       ].includes(c.type) &&
       (this.player.attack || this.equipment.hasReservation(0))
     )
@@ -579,6 +602,10 @@ export class SimulationHost {
         'artifactDisplay',
         'artifactTake',
         'reaction',
+        'artifactWrite',
+        'artifactPageAdd',
+        'artifactPageRemove',
+        'artifactSeal',
       ].includes(c.type)
     )
       return {
@@ -589,8 +616,25 @@ export class SimulationHost {
     if ((c.type === 'agentResult' || c.type === 'agentFailure') && envelope.issuer !== 'inference')
       return { id: envelope.id, ok: false, message: 'Inference receipt required.' };
     let message = '',
-      ok = true;
+      ok = true,
+      artifactId: string | undefined;
     switch (c.type) {
+      case 'artifactWrite':
+      case 'artifactPageAdd':
+      case 'artifactPageRemove':
+      case 'artifactSeal':
+        try {
+          artifactId = editCarriedArtifact(this.artifacts, this.inventory, c, this.calendar.day).id;
+          this.literacy.clearContinuation(artifactId);
+          message = c.type === 'artifactSeal' ? 'Text sealed.' : 'Page saved.';
+        } catch (error) {
+          ok = false;
+          message =
+            error instanceof Error && error.name !== 'ZodError'
+              ? error.message
+              : 'Keep text within 24 lines of 96 characters and use a title of at most 48 characters.';
+        }
+        break;
       case 'artifactDisplay':
       case 'artifactTake': {
         const scene = this.scenes.definitions[this.entities.scene[playerSlot]!]!;
@@ -1008,6 +1052,14 @@ export class SimulationHost {
         if (!ok) message = 'Close this conversation before reducing its context size.';
         break;
       case 'dialogue': {
+        if (
+          this.dialogue?.pendingJob &&
+          this.pendingJobs.get(this.dialogue.pendingJob)?.kind === 'reading'
+        ) {
+          this.pendingJobs.delete(this.dialogue.pendingJob);
+          this.dialogue.pendingJob = null;
+          this.dialogue.reading = false;
+        }
         if (!this.dialogue || this.dialogue.pendingJob) {
           ok = false;
           message = 'Wait for the villager’s response.';
@@ -1061,7 +1113,14 @@ export class SimulationHost {
       }
       case 'agentFailure': {
         const job = this.pendingJobs.get(c.jobId);
-        if (job?.kind === 'dialogue' && this.dialogue?.pendingJob === job.id) {
+        if (job?.kind === 'reading' && this.dialogue?.pendingJob === job.id) {
+          this.failedDialogue(
+            job,
+            'The reading could not finish. Please try another bounded range.',
+          );
+          this.pendingJobs.delete(job.id);
+          message = 'Reading failed; no reading memory was written.';
+        } else if (job?.kind === 'dialogue' && this.dialogue?.pendingJob === job.id) {
           const profile = NPC_PROFILES.find((p) => p.id === job.npcId)!;
           const lastLine =
             this.dialogue.lines.filter((l) => l.speaker === 'player').at(-1)?.text ?? '';
@@ -1081,7 +1140,8 @@ export class SimulationHost {
           job &&
           job.kind !== 'dialogue' &&
           job.kind !== 'compaction' &&
-          job.kind !== 'embedding'
+          job.kind !== 'embedding' &&
+          !(job.kind === 'reading' && job.readingTarget?.conversationId)
         ) {
           if (
             !this.deferredResults.some(
@@ -1153,7 +1213,19 @@ export class SimulationHost {
               : null;
       if (pose) this.presentationActions.set(0, { pose, until: this.tick + 24 });
     }
-    return { id: envelope.id, ok, message };
+    return { id: envelope.id, ok, message, ...(artifactId ? { artifactId } : {}) };
+  }
+  /** On-demand text is available only in the player's hands or a nearby display. */
+  artifactContent(id: string): import('./artifacts').Artifact | null {
+    if (this.inventory.state.some((item) => item?.artifact === id)) return this.artifacts.get(id);
+    const scene = this.scenes.definitions[this.entities.scene[this.entities.require(0)]!]!;
+    const reachable = this.placements.some(
+      (p) =>
+        p.artifactId === id &&
+        p.sceneId === scene.id &&
+        scene.props.some((prop) => prop.id === p.propId && distanceSquared(this.player, prop) <= 4),
+    );
+    return reachable ? this.artifacts.get(id) : null;
   }
   private queueJob(job: InferenceJob): void {
     if (this.pendingJobs.size >= 16) {
@@ -1236,11 +1308,56 @@ export class SimulationHost {
     }
     if (job.expectedRevision !== npc.revision)
       return this.failedDialogue(job, 'The villager’s state changed before the response arrived.');
+    if (job.kind === 'reading') {
+      const target = job.readingTarget,
+        parsed = ReadingResponseSchema.safeParse(output);
+      const foreground = !!target?.conversationId;
+      if (
+        !target ||
+        !parsed.success ||
+        !this.literacy.validateResult(npc.profileId, target, foreground) ||
+        (foreground &&
+          (!this.dialogue ||
+            this.dialogue.npcId !== npc.profileId ||
+            this.dialogue.pendingJob !== job.id ||
+            this.plans.context.session?.id !== target.conversationId))
+      )
+        return this.failedDialogue(
+          job,
+          'Stale or invalid reading response rejected; no memory was written.',
+        );
+      this.memories.append(npc, {
+        type: 'reading',
+        text: parsed.data.summary,
+        subjects: [npc.profileId],
+        importance: 4,
+        createdTick: this.tick,
+        lastAccessTick: this.tick,
+        confidence: 'told',
+        source: { kind: 'artifact', ids: [target.source.artifactId], reading: target.source },
+      });
+      this.literacy.finishRead(npc.profileId, target, parsed.data.wantsMore);
+      if (foreground && this.dialogue) {
+        this.dialogue.pendingJob = null;
+        this.dialogue.reading = false;
+        this.dialogue.lines.push({
+          speaker: 'npc',
+          text: parsed.data.dialogue,
+          emotion: parsed.data.emotion,
+        });
+        this.plans.context.append('npc', parsed.data.dialogue, parsed.data.emotion);
+        this.dialogue.lines.splice(0, Math.max(0, this.dialogue.lines.length - 32));
+        const compact = this.plans.compaction(npc, this.session);
+        if (compact) this.queueJob(compact);
+      }
+      return { ok: true, message: '' };
+    }
     if (job.kind === 'dialogue') {
       if (!this.dialogue || this.dialogue.npcId !== job.npcId || this.dialogue.pendingJob !== id)
         return { ok: false, message: 'Conversation ended before response arrived.' };
       const parsed = DialogueResponseSchema.safeParse(output);
       this.dialogue.pendingJob = null;
+      this.dialogue.reading = false;
       if (!parsed.success) {
         this.dialogue.lines.push({
           speaker: 'system',
@@ -1248,6 +1365,8 @@ export class SimulationHost {
         });
         return { ok: false, message: 'Invalid structured dialogue rejected.' };
       }
+      if (parsed.data.action.type === 'READ_TEXT')
+        return this.startReading(npc, parsed.data.action, true);
       this.dialogue.lines.push({
         speaker: 'npc',
         text: parsed.data.dialogue,
@@ -1281,6 +1400,18 @@ export class SimulationHost {
         parsed.data.sourceIds.some((source) => !job.sourceIds.includes(source))
       )
         return { ok: false, message: 'Ungrounded personal plan rejected.' };
+      if (parsed.data.action) {
+        if (parsed.data.action.type === 'READ_TEXT')
+          return this.startReading(npc, parsed.data.action, false);
+        const receipt = this.literacy.execute(
+          npc.profileId,
+          parsed.data.action,
+          this.calendar.day,
+          false,
+        );
+        if (receipt.ok) npc.revision++;
+        return receipt;
+      }
       const index = this.npcs.indexOf(npc),
         point = new SettlementPlanner().locations(index)[parsed.data.location];
       if (!SurfaceRules.walkable(this.world, point.x, point.y))
@@ -1318,9 +1449,41 @@ export class SimulationHost {
   private failedDialogue(job: InferenceJob, reason: string): { ok: boolean; message: string } {
     if (this.dialogue?.pendingJob === job.id) {
       this.dialogue.pendingJob = null;
+      this.dialogue.reading = false;
       this.dialogue.lines.push({ speaker: 'system', text: reason });
     }
     return { ok: false, message: reason };
+  }
+  private startReading(
+    npc: NpcState,
+    action: Extract<LiteracyAction, { type: 'READ_TEXT' }>,
+    foreground: boolean,
+  ): { ok: boolean; message: string } {
+    try {
+      const target = this.literacy.beginRead(
+        npc.profileId,
+        action,
+        this.calendar.day,
+        foreground ? this.plans.context.session?.id : undefined,
+      );
+      const job = this.plans.reading(
+        npc,
+        NPC_PROFILES.find((p) => p.id === npc.profileId)!,
+        this.session,
+        target,
+      );
+      this.queueJob(job);
+      if (foreground && this.dialogue) {
+        this.dialogue.pendingJob = job.id;
+        this.dialogue.reading = true;
+      }
+      return { ok: true, message: 'The villager is reading the selected range.' };
+    } catch (error) {
+      return {
+        ok: false,
+        message: error instanceof Error ? error.message : 'The reading proposal was rejected.',
+      };
+    }
   }
   private closeDialogue(): string {
     if (!this.dialogue) return '';
@@ -1358,6 +1521,12 @@ export class SimulationHost {
     if (npc.revision === dialogue.revision)
       for (const action of dialogue.staged) {
         const receipt = this.validator.execute(npc, action, {
+          literacy: {
+            validate: (proposal) =>
+              this.literacy.validate(npc.profileId, proposal, this.calendar.day, true),
+            execute: (proposal) =>
+              this.literacy.execute(npc.profileId, proposal, this.calendar.day, true),
+          },
           calendar: this.calendar,
           world: local.world,
           resources: local.resources,
@@ -2211,6 +2380,7 @@ export class SimulationHost {
       artifacts: this.artifacts.snapshot(),
       artifactSequence: this.artifacts.serial,
       placements: this.placements,
+      literacy: this.literacy.snapshot(),
       generatorVersion: CONFIG.generatorVersion,
       contentVersion: CONFIG.contentVersion,
       seed: this.seed,
@@ -2283,6 +2453,7 @@ export class SimulationHost {
     this.inventory.restore(save.inventory, save.inventorySerial);
     this.artifacts.restore(save.artifacts, save.artifactSequence);
     this.placements.splice(0, this.placements.length, ...structuredClone(save.placements));
+    this.literacy.restore(save.literacy);
     this.equipment.restore(save.equipment);
     this.entities.restore(save.entities);
     for (let i = 0; i < this.npcs.length; i++)

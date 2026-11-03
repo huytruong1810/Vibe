@@ -302,7 +302,7 @@ describe('typed persistent memory', () => {
     try {
       const save = h.snapshot();
       const v5 = {
-        ...save,
+        ...(({ literacy: _literacy, ...legacy }) => legacy)(save),
         version: 5,
         combat: (({ director: _director, ...legacy }) => legacy)(save.combat),
         npcs: save.npcs.map((n) => ({
@@ -328,7 +328,7 @@ describe('typed persistent memory', () => {
         })),
       };
       const migrated = migrateSave(v5);
-      expect(migrated.version).toBe(8);
+      expect(migrated.version).toBe(9);
       expect(migrated.npcs[0]!.memory.records).toHaveLength(2);
       expect(migrated.artifacts).toEqual(save.artifacts);
       const db = new IndexedDbSaveRepository('memory-migration', new IDBFactory());

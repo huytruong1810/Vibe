@@ -1,5 +1,25 @@
 import { RESPONSE_SCHEMAS, type InferenceJob } from '../domain/agents';
 
+/** Ollama rejects JSON-Schema tuple `items:false`. Homogeneous fixed tuples are
+ * exactly equivalent to one item schema with equal minItems/maxItems. */
+function ollamaResponseSchema(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(ollamaResponseSchema);
+  if (!value || typeof value !== 'object') return value;
+  const schema = Object.fromEntries(
+    Object.entries(value).map(([key, child]) => [key, ollamaResponseSchema(child)]),
+  );
+  if (Array.isArray(schema.prefixItems)) {
+    const items = schema.prefixItems;
+    if (items.some((item) => JSON.stringify(item) !== JSON.stringify(items[0])))
+      throw Error('Ollama response schema contains an unsupported heterogeneous tuple.');
+    schema.items = items[0] ?? {};
+    schema.minItems = items.length;
+    schema.maxItems = items.length;
+    delete schema.prefixItems;
+  }
+  return schema;
+}
+
 export interface ModelInfo {
   readonly name: string;
   readonly size: number;
@@ -18,7 +38,7 @@ export interface InferenceProvider {
     job: InferenceJob,
     model: string,
     signal: AbortSignal,
-  ): Promise<{ output: unknown; tokens: number; promptTokens?: number }>;
+  ): Promise<{ output: unknown; tokens: number; promptTokens?: number; firstTokenMs?: number }>;
 }
 
 /** Drives the normal failure receipts immediately, without network requests or fabricated actions. */
@@ -49,6 +69,7 @@ export class OllamaAdapter implements InferenceProvider {
         vector: number[],
       ): Promise<void>;
     },
+    private readonly cpuThreads?: number,
   ) {
     const url = new URL(endpoint);
     if (
@@ -63,7 +84,7 @@ export class OllamaAdapter implements InferenceProvider {
       throw new Error('Choose a loopback Ollama URL, such as http://127.0.0.1:11434');
     this.endpoint = url.origin;
   }
-  private async call(path: string, init: RequestInit): Promise<unknown> {
+  private async request(path: string, init: RequestInit): Promise<Response> {
     const origin =
       typeof location === 'undefined' ? 'https://huytruong1810.github.io' : location.origin;
     let response: Response;
@@ -75,12 +96,27 @@ export class OllamaAdapter implements InferenceProvider {
         `Could not reach local Ollama. Start Ollama; set OLLAMA_ORIGINS=${origin} in its service environment and restart it. Allow local-network access for this site in your browser. You can also choose Play without local AI.`,
       );
     }
-    if (!response.ok)
+    if (!response.ok) {
+      let detail = '';
+      if (response.status !== 403) {
+        try {
+          const body = await response.text();
+          const value = JSON.parse(body);
+          if (typeof value.error === 'string') detail = ` ${value.error.slice(0, 512)}`;
+        } catch {
+          /* Preserve the HTTP failure when no JSON detail is available. */
+        }
+      }
       throw new Error(
         response.status === 403
           ? `Ollama returned HTTP 403. Set OLLAMA_ORIGINS=${origin} in its service environment and restart Ollama. You can also choose Play without local AI.`
-          : `Ollama returned HTTP ${response.status}. Check the selected model and local server.`,
+          : `Ollama returned HTTP ${response.status}.${detail} Check the selected model and local server.`,
       );
+    }
+    return response;
+  }
+  private async call(path: string, init: RequestInit): Promise<unknown> {
+    const response = await this.request(path, init);
     const text = await response.text();
     if (text.length > (path === '/api/embed' ? 512_000 : 128_000))
       throw new Error('Ollama response exceeded its size limit');
@@ -96,7 +132,12 @@ export class OllamaAdapter implements InferenceProvider {
       .filter((m) => typeof m.name === 'string' && typeof m.size === 'number')
       .map((m) => ({ name: m.name as string, size: m.size as number }));
   }
-  async capabilityCheck(model: string, signal = AbortSignal.timeout(60_000)): Promise<void> {
+  async capabilityCheck(
+    model: string,
+    signal = AbortSignal.timeout(60_000),
+    numGpu?: number,
+    contextTokens = 8192,
+  ): Promise<void> {
     const models = await this.models(signal);
     if (!models.some((m) => m.name === model))
       throw new Error(
@@ -113,6 +154,8 @@ export class OllamaAdapter implements InferenceProvider {
       },
       32,
       signal,
+      contextTokens,
+      numGpu,
     );
     const output = JSON.parse(data.message.content) as { ready?: unknown };
     if (output.ready !== true)
@@ -126,16 +169,23 @@ export class OllamaAdapter implements InferenceProvider {
     signal: AbortSignal,
     contextTokens = 8192,
     numGpu?: number,
-  ): Promise<{ message: { content: string }; eval_count?: number; prompt_eval_count?: number }> {
-    const data = (await this.call('/api/chat', {
+    stream = false,
+  ): Promise<{
+    message: { content: string };
+    eval_count?: number;
+    prompt_eval_count?: number;
+    firstTokenMs?: number;
+  }> {
+    const started = performance.now();
+    const init: RequestInit = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       signal,
       body: JSON.stringify({
         model,
         messages,
-        format,
-        stream: false,
+        format: ollamaResponseSchema(format),
+        stream,
         ...(model.startsWith('qwen3') || model.startsWith('gemma4') ? { think: false } : {}),
         keep_alive: '5m',
         options: {
@@ -143,9 +193,76 @@ export class OllamaAdapter implements InferenceProvider {
           num_ctx: contextTokens,
           num_predict: outputLimit,
           ...(numGpu === undefined ? {} : { num_gpu: numGpu }),
+          ...(numGpu === 0 && this.cpuThreads ? { num_thread: this.cpuThreads } : {}),
         },
       }),
-    })) as { message?: { content?: unknown }; eval_count?: number; prompt_eval_count?: number };
+    };
+    if (stream) {
+      const response = await this.request('/api/chat', init),
+        reader = response.body?.getReader();
+      if (!reader) throw Error('Ollama returned no reading stream.');
+      const decoder = new TextDecoder();
+      let pending = '',
+        content = '',
+        bytes = 0,
+        done = false,
+        firstTokenMs: number | undefined,
+        evalCount: number | undefined,
+        promptCount: number | undefined;
+      const accept = (line: string) => {
+        if (!line.trim()) return;
+        const row = JSON.parse(line) as {
+          error?: string;
+          message?: { content?: unknown };
+          done?: boolean;
+          eval_count?: number;
+          prompt_eval_count?: number;
+        };
+        if (row.error) throw Error(row.error);
+        if (typeof row.message?.content === 'string') {
+          if (row.message.content.length && firstTokenMs === undefined)
+            firstTokenMs = performance.now() - started;
+          content += row.message.content;
+        }
+        if (row.done) {
+          done = true;
+          evalCount = row.eval_count;
+          promptCount = row.prompt_eval_count;
+        }
+      };
+      try {
+        while (true) {
+          const chunk = await reader.read();
+          if (chunk.done) break;
+          bytes += chunk.value.byteLength;
+          if (bytes > 128_000) throw Error('Ollama reading stream exceeded its size limit.');
+          pending += decoder.decode(chunk.value, { stream: true });
+          let newline: number;
+          while ((newline = pending.indexOf('\n')) >= 0) {
+            accept(pending.slice(0, newline));
+            pending = pending.slice(newline + 1);
+          }
+        }
+        pending += decoder.decode();
+        accept(pending);
+        if (!done || firstTokenMs === undefined)
+          throw Error('Ollama reading stream ended before a complete response.');
+        return {
+          message: { content },
+          eval_count: evalCount,
+          prompt_eval_count: promptCount,
+          firstTokenMs,
+        };
+      } finally {
+        await reader.cancel().catch(() => undefined);
+        reader.releaseLock();
+      }
+    }
+    const data = (await this.call('/api/chat', init)) as {
+      message?: { content?: unknown };
+      eval_count?: number;
+      prompt_eval_count?: number;
+    };
     if (typeof data.message?.content !== 'string')
       throw new Error('Ollama did not return message content');
     return data as {
@@ -158,7 +275,7 @@ export class OllamaAdapter implements InferenceProvider {
     job: InferenceJob,
     model: string,
     signal: AbortSignal,
-  ): Promise<{ output: unknown; tokens: number; promptTokens?: number }> {
+  ): Promise<{ output: unknown; tokens: number; promptTokens?: number; firstTokenMs?: number }> {
     if (job.kind === 'embedding') {
       if (!job.embeddingInput) throw Error('Missing embedding input');
       const model = 'embeddinggemma',
@@ -223,10 +340,12 @@ export class OllamaAdapter implements InferenceProvider {
       signal,
       job.contextTokens ?? 8192,
       job.numGpu,
+      job.kind === 'reading',
     );
     return {
       output: JSON.parse(response.message.content),
       tokens: response.eval_count ?? 0,
+      ...(response.firstTokenMs !== undefined ? { firstTokenMs: response.firstTokenMs } : {}),
       ...(Number.isInteger(response.prompt_eval_count) && response.prompt_eval_count! >= 0
         ? { promptTokens: response.prompt_eval_count }
         : {}),
@@ -291,6 +410,14 @@ export class InferenceScheduler {
   enqueue(job: InferenceJob): void {
     if (!this.session) this.session = job.session;
     if (job.session !== this.session || this.seen.has(job.id)) return;
+    if (job.kind === 'dialogue')
+      for (let n = this.queue.length - 1; n >= 0; n--) {
+        const queued = this.queue[n]!;
+        if (queued.kind === 'reading' && queued.readingTarget?.conversationId) {
+          this.queue.splice(n, 1);
+          this.receipt({ jobId: queued.id, error: 'Reading superseded by a new dialogue turn' });
+        }
+      }
     this.seen.add(job.id);
     if (job.kind === 'extraction') this.extractionDeadlines.set(job.id, this.now() + 30_000);
     if (this.seen.size > 512) this.seen.delete(this.seen.values().next().value!);
@@ -302,7 +429,9 @@ export class InferenceScheduler {
     this.queue.push(job);
     this.queue.sort((a, b) => a.priority - b.priority);
     if (
-      (job.kind === 'dialogue' || job.kind === 'extraction') &&
+      (job.kind === 'dialogue' ||
+        job.kind === 'extraction' ||
+        (job.kind === 'reading' && job.readingTarget?.conversationId)) &&
       this.active &&
       this.active.job.priority > job.priority
     ) {
@@ -332,10 +461,12 @@ export class InferenceScheduler {
       this.pump();
       return;
     }
-    if (this.backgroundDeferred && first.kind !== 'dialogue') return;
+    const foregroundReading = first.kind === 'reading' && !!first.readingTarget?.conversationId;
+    if (this.backgroundDeferred && first.kind !== 'dialogue' && !foregroundReading) return;
     if (
       first.kind !== 'dialogue' &&
       first.kind !== 'extraction' &&
+      !foregroundReading &&
       this.backgroundStarts.length >= 2
     ) {
       this.timer = setTimeout(
@@ -351,7 +482,8 @@ export class InferenceScheduler {
       abort = new AbortController(),
       generation = this.generation;
     this.active = { job, abort };
-    if (job.kind !== 'dialogue' && job.kind !== 'extraction') this.backgroundStarts.push(now);
+    if (job.kind !== 'dialogue' && job.kind !== 'extraction' && !foregroundReading)
+      this.backgroundStarts.push(now);
     this.requests++;
     const remaining =
       job.kind === 'extraction'

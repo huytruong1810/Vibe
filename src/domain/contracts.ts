@@ -20,6 +20,20 @@ const slot = z.union([z.literal(0), z.literal(1)]);
 export const CommandPayloadSchema = z.discriminatedUnion('type', [
   z
     .object({
+      type: z.literal('artifactWrite'),
+      slot,
+      title: z.string().min(1).max(48).optional(),
+      page: z.number().int().min(1).max(48).optional(),
+      lines: z.array(z.string().max(96)).max(24),
+    })
+    .strict(),
+  z.object({ type: z.literal('artifactPageAdd'), slot }).strict(),
+  z
+    .object({ type: z.literal('artifactPageRemove'), slot, page: z.number().int().min(1).max(48) })
+    .strict(),
+  z.object({ type: z.literal('artifactSeal'), slot }).strict(),
+  z
+    .object({
       type: z.literal('partnerCommand'),
       command: z.enum(['focus', 'regroup']),
       target: z.number().int().nonnegative().optional(),
@@ -144,6 +158,7 @@ export interface CommandResult {
   readonly id: string;
   readonly ok: boolean;
   readonly message: string;
+  readonly artifactId?: string;
 }
 export interface DialogueState {
   readonly npcId: NpcId;
@@ -156,6 +171,7 @@ export interface DialogueState {
   invitePending?: boolean;
   readonly staged: AgentAction[];
   pendingJob: string | null;
+  reading?: boolean;
 }
 export interface CreatureView {
   readonly heightMeters: number;

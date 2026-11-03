@@ -64,7 +64,7 @@ worker.onmessage = (message: MessageEvent<ToWorker>): void => {
         send({
           type: 'artifactContent',
           requestId: data.requestId,
-          artifact: host.artifacts.get(data.artifactId),
+          artifact: host.artifactContent(data.artifactId),
         });
         break;
       case 'restore': {

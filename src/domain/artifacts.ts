@@ -41,7 +41,12 @@ const title = canonicalText(LIMIT.title, 1).refine(
   (value) => value.trim().length > 0,
   'Empty title',
 );
-const page = z.array(canonicalText(LIMIT.line)).max(LIMIT.lines);
+// Canonical validation belongs to the page: one Zod refinement rather than a
+// separate refinement wrapper for every line in large collections of books.
+const page = z
+  .array(z.string().max(LIMIT.line))
+  .max(LIMIT.lines)
+  .refine((lines) => lines.every(isCanonicalText), 'Invalid authored text');
 export const PaintingBriefSchema = z
   .object({
     title,

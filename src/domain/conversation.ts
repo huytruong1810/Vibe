@@ -47,6 +47,8 @@ export interface CompactionTarget {
 
 /** Ephemeral worker context; deliberately has no persistent-memory reference. */
 export class ConversationContext {
+  private readonly encoder = new TextEncoder();
+  private readonly messageBytes = new Map<string, Map<string, number>>();
   settings = ContextSettingsSchema.parse({});
   session: DialogueSession | null = null;
   private serial = 0;
@@ -67,6 +69,7 @@ export class ConversationContext {
     return true;
   }
   open(npcId: NpcId, scope = 'local'): void {
+    this.messageBytes.clear();
     this.session = {
       id: `${scope}:conversation:${++this.serial}`,
       npcId,
@@ -79,15 +82,38 @@ export class ConversationContext {
     Object.assign(this.debug, { tokens: 0, budget: 0, compactions: 0, truncated: false });
   }
   close(): void {
+    this.messageBytes.clear();
     this.session = null;
   }
   estimate(text: string, model = this.settings.dialogueModel): number {
+    return this.estimateBytes(this.encoder.encode(text).length, model);
+  }
+  private estimateBytes(bytes: number, model: string): number {
     const sample = this.calibration.get(model);
     const ratio = sample ? Math.min(4, Math.max(1, sample.total / sample.estimated)) : 1;
-    return Math.ceil((new TextEncoder().encode(text).length / 3) * ratio);
+    return Math.ceil((bytes / 3) * ratio);
   }
   count(messages: readonly PromptMessage[], model = this.settings.dialogueModel): number {
-    return this.estimate(JSON.stringify(messages), model) + messages.length * 8;
+    let bytes = 2 + Math.max(0, messages.length - 1);
+    for (const message of messages) {
+      if (Object.keys(message).length !== 2) {
+        bytes += this.encoder.encode(JSON.stringify(message)).length;
+        continue;
+      }
+      let cache = this.messageBytes.get(message.role);
+      if (!cache) {
+        cache = new Map();
+        this.messageBytes.set(message.role, cache);
+      }
+      let size = cache.get(message.content);
+      if (size === undefined) {
+        size = this.encoder.encode(JSON.stringify(message)).length;
+        if (cache.size >= 256) cache.clear();
+        cache.set(message.content, size);
+      }
+      bytes += size;
+    }
+    return this.estimateBytes(bytes, model) + messages.length * 8;
   }
   calibrate(model: string, messages: readonly PromptMessage[], actual?: number): void {
     if (!actual || !Number.isFinite(actual) || actual < 0) return;
@@ -143,7 +169,19 @@ export class ConversationContext {
     for (const record of memories)
       if (this.estimate(JSON.stringify([...selected, record])) <= 600) selected.push(record);
     add('memories', JSON.stringify(selected));
-    add('worldFacts', this.capped(facts, 300));
+    const { readables, continueReading, ...ordinaryFacts } =
+      facts && typeof facts === 'object' && !Array.isArray(facts)
+        ? (facts as Record<string, unknown>)
+        : {};
+    add(
+      'worldFacts',
+      this.capped(
+        facts && typeof facts === 'object' && !Array.isArray(facts) ? ordinaryFacts : facts,
+        300,
+      ),
+    );
+    if (readables !== undefined || continueReading !== undefined)
+      add('readables', this.capped({ readables, continueReading }, 160));
     if (session?.summary) add('conversationSoFar', JSON.stringify(session.summary));
     const recent = (session?.turns.slice(session.summarizedThrough) ?? []).map(
       (turn): PromptMessage => ({
@@ -156,6 +194,14 @@ export class ConversationContext {
     const budget = this.budget();
     let messages = [...base, ...recent, line];
     let truncated = false;
+    if (this.count(messages) >= budget * 0.95) {
+      const optional = base.findIndex((m) => m.content.startsWith('readables:'));
+      if (optional >= 0) {
+        base.splice(optional, 1);
+        messages = [...base, ...recent, line];
+        truncated = true;
+      }
+    }
     if (this.count(messages) >= budget * 0.95) {
       while (recent.length && this.count([...base, ...recent, line]) >= budget * 0.95) {
         recent.shift();

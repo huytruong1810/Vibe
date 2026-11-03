@@ -134,7 +134,7 @@ test('20 hostile Bramblefang have staggered tokens, readable windups and saved s
     (window as any).__hearthwild.checkpoint(),
   );
   expect(configured.combat.director.settings.grantSpacing).toBe(12);
-  expect(configured.version).toBe(8);
+  expect(configured.version).toBe(9);
   // A second validated scenario proves an element glint also survives reduced motion.
   const ranged = configured.entities.records.find((r) => r.id === hostiles[0]!.id)!;
   const playerBody = configured.entities.records.find((r) => r.id === 0)!;

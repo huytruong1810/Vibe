@@ -23,6 +23,12 @@ Three new tests cover collision-heavy broad-phase safety, suppression of unneces
 calm queries and **1,200-tick exact body/mind/combat equality** versus the old
 unconditional search. The existing30 mind tests, including3,000-tick replay, pass.
 
-**Gaps:** the complete28-day CI soak must finish on this follow-up. The original run
-is cancelled overall, not green. [C13 candidate evidence](2026-11-03T1420--to-all--c13-creature-minds-candidate.md)
-and its director/art/reference-machine gaps remain; C18 changes are kept out of this commit.
+**Follow-up evidence:** commit `de93730`,
+[run41665593398](https://github.com/huytruong1810/Vibe/actions/runs/41665593398),
+completed the full28-day ecology soak successfully in **22m50s**, unchanged25-minute
+limit. Both beta jobs passed. Verify then timed out in its browser step at20 minutes.
+
+**Gaps:** the overall run is cancelled, not green. The next CI repair separates CPU
+checks and browser journeys while retaining aggregate `verify` and every assertion.
+[C13 candidate evidence](2026-11-03T1420--to-all--c13-creature-minds-candidate.md)
+and director/art/reference-machine gaps remain; C18 was kept out of `de93730`.

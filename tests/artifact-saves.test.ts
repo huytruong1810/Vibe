@@ -42,16 +42,16 @@ describe('artifact simulation and save v5', () => {
     host.player.y = table.y;
     expect(send(host, display).ok).toBe(true);
     expect(host.inventory.state[0]).toBeNull();
-    expect(host.placements[0]?.item).toEqual(item);
+    expect(host.placements.find((p) => p.artifactId === a.id)?.item).toEqual(item);
     const frame = host.frame();
-    expect(frame.artifacts[0]).toMatchObject({ id: a.id, length: 1 });
-    expect(frame.artifacts[0]).not.toHaveProperty('lines');
+    expect(frame.artifacts.find((r) => r.id === a.id)).toMatchObject({ id: a.id, length: 1 });
+    expect(frame.artifacts.find((r) => r.id === a.id)).not.toHaveProperty('lines');
     expect(send(host, display).ok).toBe(false);
     host.inventory.add('berries');
     host.inventory.add('fiber');
     const take = { type: 'artifactTake', propId: table.id, displaySlot: 0 } as const;
     expect(send(host, take)).toMatchObject({ ok: false, message: 'Both hands are full.' });
-    expect(host.placements).toHaveLength(1);
+    expect(host.placements.filter((p) => p.artifactId === a.id)).toHaveLength(1);
     const save = migrateSave(host.snapshot()),
       restored = new SimulationHost(42, 1, 0);
     restored.restore(save);
@@ -87,16 +87,17 @@ describe('artifact simulation and save v5', () => {
     expect(
       send(host, { type: 'artifactDisplay', slot: 0, propId: table.id, displaySlot: 0 }).ok,
     ).toBe(true);
-    carryNote(host);
+    const second = carryNote(host);
     expect(
       send(host, { type: 'artifactDisplay', slot: 0, propId: table.id, displaySlot: 0 }).ok,
     ).toBe(false);
-    expect(host.inventory.state[0]?.artifact).toBe('art:2');
+    expect(host.inventory.state[0]?.artifact).toBe(second.a.id);
     host.player.x += 2;
     expect(send(host, { type: 'artifactTake', propId: table.id, displaySlot: 0 }).ok).toBe(false);
   });
   it('keeps display transfers out of attacks, sleep and combat', () => {
     const host = new SimulationHost(42, 1, 0);
+    const before = structuredClone(host.placements);
     carryNote(host);
     const home = publicHome(host),
       table = home.props.find((p) => p.display?.accepts.includes('note'))!;
@@ -108,7 +109,7 @@ describe('artifact simulation and save v5', () => {
     host.player.attack = null;
     host.entities.sleeping[host.entities.require(0)] = 1;
     expect(send(host, command).ok).toBe(false);
-    expect(host.placements).toHaveLength(0);
+    expect(host.placements).toEqual(before);
   });
   it('gives every home a hook and only Lark three hooks plus an easel', () => {
     const host = new SimulationHost(42, 1, 0);
@@ -124,9 +125,17 @@ describe('artifact simulation and save v5', () => {
     ).toHaveLength(4);
   });
   it('migrates genuine v4 checkpoints and retains v5 contents, sequence and export/import', () => {
-    const host = new SimulationHost(42, 1, 0),
-      current = host.snapshot();
-    const { artifacts: _a, placements: _p, artifactSequence: _s, ...legacy } = current;
+    const host = new SimulationHost(42, 1, 0);
+    host.placements.length = 0;
+    host.artifacts.restore([], 0);
+    const current = host.snapshot();
+    const {
+      artifacts: _a,
+      placements: _p,
+      artifactSequence: _s,
+      literacy: _literacy,
+      ...legacy
+    } = current;
     const { director: _director, minds: _minds, ...legacyCombat } = current.combat;
     const upgraded = migrateSave({
       ...legacy,
@@ -152,13 +161,27 @@ describe('artifact simulation and save v5', () => {
         },
       })),
     });
-    expect(upgraded).toEqual(current);
+    expect({
+      ...upgraded,
+      artifacts: [],
+      placements: [],
+      artifactSequence: 0,
+      inventorySerial: current.inventorySerial,
+    }).toEqual(current);
+    expect(upgraded.artifacts).toContainEqual(
+      expect.objectContaining({
+        kind: 'book',
+        title: 'Sketch diary',
+        author: { kind: 'npc', id: 'npc:lark' },
+      }),
+    );
     carryNote(host);
     host.artifacts.remove(host.inventory.state[0]!.artifact!);
     host.inventory.remove(0);
     const next = new SimulationHost(42, 1, 0);
     next.restore(host.snapshot());
-    expect(carryNote(next).a.id).toBe('art:2');
+    const nextSerial = next.artifacts.serial;
+    expect(carryNote(next).a.id).toBe(`art:${nextSerial + 1}`);
     const repository = new IndexedDbSaveRepository('artifact-export', new IDBFactory());
     const save = next.snapshot();
     expect(repository.import(repository.export(save))).toEqual(save);
@@ -228,7 +251,10 @@ describe('artifact simulation and save v5', () => {
       { propId: `${home.id}:hook:0` },
     ]) {
       const save = structuredClone(baseline);
-      Object.assign(save.placements[0]!, change);
+      Object.assign(
+        save.placements.find((p) => p.artifactId === a.id)!,
+        change,
+      );
       expect(() => migrateSave(save)).toThrow();
     }
     const duplicate = structuredClone(baseline);

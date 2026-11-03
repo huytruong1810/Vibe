@@ -42,6 +42,7 @@ export class GameBootstrap {
       (command) => this.bridge.send(command),
     );
     this.hud = new HudPresenter(root, {
+      artifactContent: (id) => this.bridge.artifactContent(id),
       send: (command) => this.bridge.send(command),
       enter: (options) => this.enter(options),
       discover: (endpoint) => new OllamaAdapter(endpoint).models(),
@@ -265,14 +266,15 @@ export class GameBootstrap {
       if (key === 'r') this.send({ type: 'harvest' });
       if (key === 'c') this.send({ type: 'combine' });
       if (key === 'q') this.send({ type: 'swap' });
-      if (key === '1' || key === '2') this.send({ type: 'use', slot: key === '1' ? 0 : 1 });
+      if (key === '1' || key === '2') this.hud.useItem(key === '1' ? 0 : 1);
       if (key === 'j' || key === 'k')
         this.send({ type: 'attack', kind: key === 'j' ? 'strike' : 'element' });
       if (key === ' ') this.send({ type: 'dash' });
       if (key === 'g') this.updateGuard();
       if (key === 'm') this.hud.openMenu('map-dialog');
       if (key === 'i') this.hud.intent({ type: 'toggle', overlay: 'inventory' });
-      if (key === 'f') this.hud.intent({ type: 'toggle', overlay: 'inspection' });
+      if (key === 'f' && !this.hud.inspectText())
+        this.hud.intent({ type: 'toggle', overlay: 'inspection' });
       if (key === 'l') this.hud.intent({ type: 'toggle', overlay: 'journal' });
       if (key === 'escape' && !this.hud.closeOverlay()) this.hud.openMenu('settings-dialog');
     });

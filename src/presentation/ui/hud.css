@@ -528,3 +528,46 @@ body:has(.hd-game) {
   border: 6px solid transparent;
   border-image: url('/assets/generated/ui/frame_thin.png') 6 fill / 6px / 0 repeat;
 }
+.book-dialog {
+  width: min(1280px, calc(100vw - 64px));
+  max-height: calc(100vh - 64px);
+  padding: 32px;
+  overflow: auto;
+  background: var(--ui-panel);
+  color: var(--ui-text);
+  border: 16px solid transparent;
+  border-image: url('/assets/generated/ui/frame_standard.png') 16 fill / 16px / 0 repeat;
+}
+.book-spread:not([hidden]) {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+.book-spread article {
+  min-width: 0;
+  max-height: 50vh;
+  overflow: auto;
+  padding: 12px;
+}
+.book-spread article p {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  min-height: 180px;
+}
+#book-editor textarea {
+  display: block;
+  width: 100%;
+  resize: vertical;
+  min-height: 180px;
+  max-height: 42vh;
+  font-family: Silver;
+}
+@media (max-width: 800px) {
+  .book-dialog {
+    width: calc(100vw - 24px);
+    padding: 16px;
+  }
+  .book-spread:not([hidden]) {
+    grid-template-columns: 1fr;
+  }
+}

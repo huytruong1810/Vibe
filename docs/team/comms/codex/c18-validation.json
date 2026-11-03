@@ -1,0 +1,69 @@
+{
+  "status": "validation-in-progress",
+  "recordedAt": "2026-11-03",
+  "branch": "eng/hd-presentation",
+  "unit": {
+    "passed": 464,
+    "files": 34,
+    "workers": 4,
+    "seconds": 104.68
+  },
+  "fullCheck": {
+    "command": "VITEST_MAX_WORKERS=4 npm run check",
+    "exitCode": 1,
+    "testsPassed": 464,
+    "testsFailed": 1,
+    "seconds": 84.84,
+    "failure": "Artifact validation 61.4688 ms against unchanged 50 ms limit; formatting overlapped measurement. Isolated project rerun passed."
+  },
+  "typecheck": "passed",
+  "architecture": "passed",
+  "normalAssets": "passed; 3908 frames, 5 pages, HD gate unchanged",
+  "format": "passed",
+  "hygiene": "passed; 0 errors, 0 warnings",
+  "browser": "23/23 passed; 8.9 minutes",
+  "production": {
+    "root": "build passed; beta 2/2 passed in 1.0 minute",
+    "subpath": "build passed; beta 2/2 passed in 1.4 minutes"
+  },
+  "book": {
+    "receipt": "c18-book-browser.json",
+    "capture": "c18-book-spread-1080p.png",
+    "captureInspected": true,
+    "openingMs": 47.3,
+    "maximumPages": 48,
+    "mountedPages": 2,
+    "pageErrors": 0
+  },
+  "artifactTiming": {
+    "assertionMs": 50,
+    "unchanged": true,
+    "latestIsolatedMs": 124.64,
+    "passed": true,
+    "isolatedRerun": "1/1 passed; 6.19 seconds total; assertion remains below 50 ms",
+    "note": "Full check timing failed at 61.4688 ms; isolated rerun passed. Earlier 124.64 ms failure retained; no gate relaxed."
+  },
+  "liveReading": {
+    "receipt": "c18-live-reading.json",
+    "functionalPassed": true,
+    "model": "gemma4:e4b",
+    "ollama": "0.40.9",
+    "device": "CPU; machine B",
+    "inventoryUnchanged": true,
+    "latencyAcceptance": "Machine A GPU only, per director; no additional B model runs"
+  },
+  "c13Remote": {
+    "commit": "de93730",
+    "run": "https://github.com/huytruong1810/Vibe/actions/runs/41665593398",
+    "ecology": "full 28-day soak passed in 22m50s; 25-minute limit unchanged",
+    "beta": "both production bases passed",
+    "verify": "timed out in browser step; separate CPU/browser jobs now require remote verification"
+  },
+  "gaps": [
+    "Final check/browser/beta/build and remote CI outstanding",
+    "Machine-A reading latency acceptance",
+    "Conservative writing vocabulary rejects some ordinary words",
+    "Incremental HUD dialogue remains C20",
+    "Director review and existing HD/art gaps remain external"
+  ]
+}

@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { ReadingProvenanceSchema } from './text-contracts';
 import { CONFIG } from './values';
 import type { NpcProfile } from '../content/definitions';
 
@@ -27,12 +28,25 @@ export const MemoryRecordV2Schema = z
       .object({
         kind: z.enum(['event', 'session', 'reflection', 'sight', 'artifact']),
         ids: z.array(id).max(256),
+        reading: ReadingProvenanceSchema.optional(),
       })
       .strict(),
     invalidAtTick: tick.optional(),
     supersededBy: id.optional(),
   })
-  .strict();
+  .strict()
+  .superRefine((record, ctx) => {
+    if (
+      record.source.reading &&
+      (record.type !== 'reading' ||
+        record.source.kind !== 'artifact' ||
+        !record.source.ids.includes(record.source.reading.artifactId))
+    )
+      ctx.addIssue({
+        code: 'custom',
+        message: 'Reading provenance must bind a reading memory to its artifact source',
+      });
+  });
 export type MemoryType = z.infer<typeof MemoryTypeSchema>;
 export type MemoryRecordV2 = z.infer<typeof MemoryRecordV2Schema>;
 export const CoreBlocksSchema = z

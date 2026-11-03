@@ -292,7 +292,11 @@ describe('combat director', () => {
     expect(b.snapshot().combat).toEqual(a.snapshot().combat);
     expect(b.player.hp).toBe(a.player.hp);
     const { director: _director, minds: _minds, ...legacyCombat } = saved.combat;
-    const old = { ...saved, version: 6, combat: legacyCombat };
+    const old = {
+      ...(({ literacy: _literacy, ...legacy }) => legacy)(saved),
+      version: 6,
+      combat: legacyCombat,
+    };
     const migrated = migrateSave(old);
     expect(migrated.combat.attacks).toEqual(saved.combat.attacks);
     expect(migrated.combat.director.holds.length).toBe(saved.combat.attacks.length);

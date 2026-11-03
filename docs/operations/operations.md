@@ -2,6 +2,25 @@
 
 ## Development and clean installation
 
+### Written-word functional smoke (C18)
+
+`npm run test:ollama -- --reading` exercises real dialogue proposing READ_TEXT,
+the bounded second job, sourced reading memory and a page containing an instruction
+to give ore. The receipt requires unchanged inventory and saves prompt/output counts.
+Use `OLLAMA_MODEL` to select an installed model and `OLLAMA_SMOKE_DIR` for receipts.
+The script defaults to OS temporary storage. Machine A should run the normal GPU path
+with its reference model and record warm first-token latency against AGT-7's 2 seconds.
+
+Machine B has CPU only. The director requested functional checks there, with no local
+latency acceptance run. Its authorized `gemma4:e4b` smoke used `--reading --cpu`
+(four threads, GPU disabled, 4096 context and a smoke-only 300-second deadline).
+[Functional receipt](../team/comms/codex/c18-live-reading.json): dialogue proposed pages
+1–2, reading produced a 26-word sourced summary, and inventory stayed unchanged despite
+the injection page. Ollama 0.40.9 required tuple schemas converted to equivalent fixed
+homogeneous arrays at transport; strict domain tuples remain. Recorded CPU durations
+are diagnostics, not acceptance. Runtime deadlines are unchanged. Incremental HUD text
+and voice remain C20; this reading transport buffers bounded streamed JSON for validation.
+
 Use Node 22.12+ and the committed npm lockfile:
 
 ```sh
@@ -183,8 +202,11 @@ workflow runs on pushes, pull requests, manual dispatch and nightly at 08:00 UTC
 Scheduled runs explicitly check out studio, regardless of the default branch.
 Jobs:
 
-- `verify`: asset compilation and reproducibility, forge/world self-tests, hook tests,
-  packet/world validation, engineering checks, formatting, browser journeys and benchmark.
+- `checks`: asset compilation and reproducibility, forge/world self-tests, hook tests,
+  packet/world validation, engineering checks, formatting and benchmark (20 minutes).
+- `browser-journeys`: the complete journey suite, with independently compiled assets
+  and world data (20 minutes). This separates the growing browser suite from CPU checks.
+- `verify`: aggregate requiring both jobs to succeed; the required gate remains intact.
 - `ecology-soak`: domain/content/worker changes, nightly and manual runs.
 - `beta-browser`: production browser smoke at both `/` and `/Vibe/`, including fonts,
   UI, portraits, atlas dependencies, fallback play, save import/export and resume.

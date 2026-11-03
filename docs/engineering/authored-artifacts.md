@@ -1,6 +1,6 @@
 # Authored artifacts: notes, books, paintings (AGT-6, AGT-8, AGT-9)
 
-Status: C17 foundation implemented; C18–C21 remain queued. Original specification,
+Status: C17 foundation implemented; C18 implementation under validation; C19–C21 queued. Original specification,
 2026-11-02 (claude, on the director's request). Implementation is
 codex tickets C17–C21. Doctrine: `docs/doctrine/11-living-minds.md` AGT-6, AGT-8, AGT-9,
 AGT-7 budgets; ADR 031 in `decisions.md`.
@@ -395,6 +395,29 @@ The 512-artifact capacity test runs in Vitest's `artifact-budget` project after 
 parallel `unit` project completes. It retains the full dataset, 3 MB size cap and
 single warmed validation assertion below 50 ms; isolating timing avoids measuring
 CPU contention with other world-generation tests. `npm test` runs both projects.
+
+### 9.2 C18 implementation contract
+
+Save **v9** adds validated literacy state (NPC hands, independent daily quotas and
+continuation ranges/offsets), retaining all v1–v8 migrations and creature, director and
+memory state. Legacy upgrades seed a blank NPC-authored Lark diary only when a home
+display and capacity are available. Restoring an existing v9 save is pure. NPC hands
+participate in unique item/artifact reference validation, independently of combat gear.
+
+Player edit/page/seal commands validate a complete detached replacement before mutation.
+Book content is queried on demand with authoritative reach validation; frames remain
+metadata only. The UI mounts one note or the current two-page spread, serializes edits
+and retains rejected drafts. NPC actions use the literacy service's reach and quotas.
+
+Reading records pin artifact ID/revision and the actual line prefix read, including
+partial-page continuation. The excerpt is JSON-quoted and bounded to600 estimated tokens;
+the complete reading prompt is bounded to2000. A separate strict response has no action
+field. Session, NPC, reach and artifact revision are rechecked before applying memory.
+New dialogue preempts reading. Metadata readables drop before ordinary prompt facts.
+Conservative writing vocabulary includes canonical content names and ordinary diary
+words; rejection can include unsupported ordinary words. This is not general entity
+recognition. Incremental HUD text remains C20. See ADR035 and the
+[C18 plan](../team/comms/codex/c18-plan.md).
 
 ## 10. Security and safety
 

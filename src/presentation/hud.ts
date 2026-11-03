@@ -1,4 +1,6 @@
 import { appUrl } from './assets/url';
+import { BookScreen } from './ui/book';
+import type { Artifact } from '../domain/artifacts';
 import { mountHudView, loadBetaNotes, escapeHtml } from './ui/view';
 import {
   commandForIntent,
@@ -29,6 +31,7 @@ const percent = (n: number): number => Math.round(Math.max(0, Math.min(1, n)) * 
 const meter = (label: string, value: number, _color = 'sage'): string => meterMarkup(label, value);
 
 export interface HudHandlers {
+  artifactContent(id: string): Promise<Artifact | null>;
   send(command: CommandPayload): Promise<CommandResult>;
   enter(options: {
     endpoint: string;
@@ -66,12 +69,19 @@ export class HudPresenter {
   private mapLayer: 'world' | 'local' = 'local';
   private mapScene = '';
   private readonly handlers: HudHandlers;
+  private readonly book: BookScreen;
   private appearance: AppearanceResolver | null = null;
   private viewState: HudViewState | null = null;
   private readonly overlayFocus = new Map<Overlay, HTMLElement>();
   constructor(root: HTMLElement, handlers: HudHandlers) {
     this.handlers = handlers;
     mountHudView(root);
+    this.book = new BookScreen(root, {
+      frame: () => this.frame,
+      send: (command) => this.handlers.send(command),
+      content: (id) => this.handlers.artifactContent(id),
+      notify: (message) => this.notify(message),
+    });
     void loadBetaNotes(root);
     this.gameElement = root.querySelector<HTMLElement>('#game-viewport')!;
     this.bind();
@@ -345,8 +355,8 @@ export class HudPresenter {
           slot: button.dataset.slot as GearSlot,
           ...(button.dataset.drop === 'true' ? { drop: true } : {}),
         });
-      else if (action === 'use' || action === 'drop')
-        void this.command({ type: action, slot: id as 0 | 1 });
+      else if (action === 'use') this.useItem(id as 0 | 1);
+      else if (action === 'drop') void this.command({ type: 'drop', slot: id as 0 | 1 });
       else if (action === 'gather') void this.command({ type: 'harvest' });
       else if (action === 'reaction')
         void this.command({
@@ -499,6 +509,7 @@ export class HudPresenter {
       this.worldMapPlayer = null;
     }
     this.frame = frame;
+    this.book.update(frame);
     if (frame.scene.id !== this.mapScene) {
       this.mapScene = frame.scene.id;
       this.mapLayer = 'local';
@@ -796,6 +807,7 @@ export class HudPresenter {
       conversation.npcId,
       conversation.lines,
       conversation.pendingJob,
+      conversation.reading,
     ]);
     if (signature !== this.dialogSignature) {
       this.el('conversation-lines').innerHTML =
@@ -806,14 +818,16 @@ export class HudPresenter {
           )
           .join('') +
         (conversation.pendingJob
-          ? '<div class="thinking"><span></span><span></span><span></span><small>Gathering a thought…</small></div>'
+          ? `<div class="thinking"><span></span><span></span><span></span><small>${conversation.reading ? 'Reading… You can ask another question.' : 'Gathering a thought…'}</small></div>`
           : '');
       const lines = this.el('conversation-lines');
       lines.scrollTop = lines.scrollHeight;
       this.dialogSignature = signature;
     }
-    this.el<HTMLButtonElement>('send-dialogue').disabled = !!conversation.pendingJob;
-    this.el<HTMLInputElement>('dialogue-input').disabled = !!conversation.pendingJob;
+    this.el<HTMLButtonElement>('send-dialogue').disabled =
+      !!conversation.pendingJob && !conversation.reading;
+    this.el<HTMLInputElement>('dialogue-input').disabled =
+      !!conversation.pendingJob && !conversation.reading;
     this.el<HTMLButtonElement>('dialogue-battle').hidden = profile.partner === null;
     this.el<HTMLButtonElement>('dialogue-invite').disabled = conversation.invitePending === true;
     const staged = this.el('staged-note');
@@ -859,6 +873,10 @@ export class HudPresenter {
     if (this.el('inventory-panel').hidden) this.intent({ type: 'toggle', overlay: 'inventory' });
   }
   intent(intent: UiIntent): void {
+    if (intent.type === 'use') {
+      this.useItem(intent.slot);
+      return;
+    }
     const command = commandForIntent(intent);
     if (command) {
       void this.command(command);
@@ -1027,10 +1045,38 @@ export class HudPresenter {
   get inputBlocked(): boolean {
     return !!document.querySelector('dialog[open]');
   }
+  useItem(slot: 0 | 1): void {
+    const item = this.frame?.inventory[slot];
+    if (item?.id === 'note' || item?.id === 'book') void this.book.open(slot);
+    else void this.command({ type: 'use', slot });
+  }
+  inspectText(): boolean {
+    const frame = this.frame;
+    if (!frame) return false;
+    const displayed = frame.placements
+      .map((p) => ({ placement: p, prop: frame.scene.props.find((prop) => prop.id === p.propId) }))
+      .filter(
+        ({ placement, prop }) =>
+          placement.sceneId === frame.scene.id &&
+          prop &&
+          Math.hypot(prop.x - frame.player.x, prop.y - frame.player.y) <= 2 &&
+          frame.artifacts.some((a) => a.id === placement.artifactId && a.kind !== 'painting'),
+      )
+      .sort(
+        (a, b) =>
+          Math.hypot(a.prop!.x - frame.player.x, a.prop!.y - frame.player.y) -
+            Math.hypot(b.prop!.x - frame.player.x, b.prop!.y - frame.player.y) ||
+          a.placement.artifactId.localeCompare(b.placement.artifactId),
+      );
+    if (!displayed[0]) return false;
+    void this.book.open(null, displayed[0].placement.artifactId);
+    return true;
+  }
   get currentFrame(): RenderSnapshot | null {
     return this.frame;
   }
   dispose(): void {
+    this.book.dispose();
     if (this.toastTimer) clearTimeout(this.toastTimer);
   }
 }

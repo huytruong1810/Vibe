@@ -20,6 +20,144 @@ const job = (id: string, kind: InferenceJob['kind'] = 'plan'): InferenceJob => (
 });
 afterEach(() => vi.useRealTimers());
 describe('local inference adapter and scheduling', () => {
+  it('sends fixed read ranges as equivalent homogeneous arrays accepted by Ollama', async () => {
+    const adapter = new OllamaAdapter('http://localhost:11434', async (_input, init) => {
+      const schema = JSON.parse(String(init?.body)).format;
+      const read = schema.properties.action.oneOf.find(
+        (branch: any) => branch.properties.type.const === 'READ_TEXT',
+      );
+      expect(read.properties.pages.items).toMatchObject({ type: 'integer' });
+      expect(read.properties.pages).toMatchObject({ minItems: 2, maxItems: 2 });
+      expect(read.properties.pages).not.toHaveProperty('prefixItems');
+      return new Response(
+        JSON.stringify({
+          message: {
+            content: JSON.stringify({
+              dialogue: 'Let me read.',
+              emotion: 'neutral',
+              action: { type: 'READ_TEXT', artifactId: 'art:1', pages: [1, 2] },
+            }),
+          },
+        }),
+      );
+    });
+    const response = await adapter.generate(
+      job('proposal', 'dialogue'),
+      'gemma4:e4b',
+      new AbortController().signal,
+    );
+    expect(response.output).toHaveProperty('action.pages', [1, 2]);
+  });
+  it('collects a bounded reading stream across UTF-8 chunk boundaries before exposing JSON', async () => {
+    const output = {
+      dialogue: 'The river is quiet, é.',
+      emotion: 'thoughtful',
+      summary: 'The book describes a quiet river.',
+      wantsMore: false,
+    };
+    const bytes = new TextEncoder().encode(
+      JSON.stringify({ message: { content: JSON.stringify(output) }, done: false }) +
+        '\n' +
+        JSON.stringify({ done: true, eval_count: 24, prompt_eval_count: 100 }),
+    );
+    const split = bytes.findIndex((b) => b === 0xc3) + 1;
+    const adapter = new OllamaAdapter('http://localhost:11434', async (_input, init) => {
+      const body = JSON.parse(String(init?.body));
+      expect(body.stream).toBe(true);
+      expect(body.options.num_gpu).toBe(0);
+      return new Response(
+        new ReadableStream({
+          start(controller) {
+            controller.enqueue(bytes.slice(0, split));
+            controller.enqueue(bytes.slice(split));
+            controller.close();
+          },
+        }),
+      );
+    });
+    const result = await adapter.generate(
+      { ...job('reading', 'reading'), numGpu: 0 },
+      'gemma4:e4b',
+      new AbortController().signal,
+    );
+    expect(result.output).toEqual(output);
+    expect(result.firstTokenMs).toBeGreaterThanOrEqual(0);
+    expect(result.promptTokens).toBe(100);
+    const unfinished = new OllamaAdapter(
+      'http://localhost:11434',
+      async () => new Response(JSON.stringify({ message: { content: '{}' }, done: false }) + '\n'),
+    );
+    await expect(
+      unfinished.generate(job('unfinished', 'reading'), 'gemma4:e4b', new AbortController().signal),
+    ).rejects.toThrow(/complete response/);
+    const oversized = new OllamaAdapter(
+      'http://localhost:11434',
+      async () => new Response('x'.repeat(128001)),
+    );
+    await expect(
+      oversized.generate(job('oversized', 'reading'), 'gemma4:e4b', new AbortController().signal),
+    ).rejects.toThrow(/size limit/);
+  });
+  it('lets foreground reading bypass routine quota and lets dialogue preempt that reading', async () => {
+    vi.useFakeTimers();
+    let readingAborted = false;
+    const receipts: InferenceReceipt[] = [];
+    const provider: InferenceProvider = {
+      models: async () => [],
+      capabilityCheck: async () => {},
+      generate: async (request, _model, signal) => {
+        if (request.kind === 'reading')
+          return new Promise((_resolve, reject) =>
+            signal.addEventListener(
+              'abort',
+              () => {
+                readingAborted = true;
+                reject(Error('preempted'));
+              },
+              { once: true },
+            ),
+          );
+        return { output: { done: true }, tokens: 1 };
+      },
+    };
+    const scheduler = new InferenceScheduler(
+      provider,
+      'model',
+      (r) => receipts.push(r),
+      () => Date.now(),
+    );
+    scheduler.enqueue(job('routine1'));
+    await vi.advanceTimersByTimeAsync(1);
+    scheduler.enqueue(job('routine2'));
+    await vi.advanceTimersByTimeAsync(1);
+    scheduler.setBackgroundDeferred(true);
+    scheduler.enqueue({
+      ...job('read', 'reading'),
+      priority: 0.5,
+      readingTarget: {
+        conversationId: 'conversation:test',
+        metadata: {
+          id: 'art:1',
+          kind: 'note',
+          title: 'River',
+          author: { kind: 'player' },
+          createdDay: 0,
+          revision: 1,
+          sealed: true,
+          length: 1,
+        },
+        source: { artifactId: 'art:1', revision: 1, lines: [1, 1] },
+        requested: { type: 'READ_TEXT', artifactId: 'art:1', lines: [1, 1] },
+        excerpt: 'The river.',
+      },
+    });
+    await vi.advanceTimersByTimeAsync(1);
+    scheduler.enqueue(job('dialogue', 'dialogue'));
+    await vi.advanceTimersByTimeAsync(1);
+    expect(readingAborted).toBe(true);
+    expect(receipts.some((r) => r.jobId === 'dialogue' && r.output)).toBe(true);
+    scheduler.dispose();
+  });
   it('runs extraction despite the routine quota and resumes it after dialogue preemption', async () => {
     vi.useFakeTimers();
     let extractions = 0;

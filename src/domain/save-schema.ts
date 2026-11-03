@@ -4,6 +4,7 @@ import {
   initialMindRecord,
   validateMindState,
 } from './creature-minds';
+import { LiteracySnapshotSchema, seedLegacyDiary } from './literacy';
 import { MemoryStateSchema, migrateMemory } from './memory';
 import { z } from 'zod';
 import { ITEMS, ItemIdSchema, NPC_PROFILES } from '../content/definitions';
@@ -143,7 +144,8 @@ const projectiles = z
 export const GameSaveSchema = z
   .object({
     ...legacy,
-    version: z.literal(8),
+    version: z.literal(9),
+    literacy: LiteracySnapshotSchema,
     npcs: z.array(legacy.npcs.element.extend({ memory: MemoryStateSchema })).length(30),
     artifacts: ArtifactRecordsSchema,
     artifactSequence: z.number().int().min(0).max(Number.MAX_SAFE_INTEGER),
@@ -217,6 +219,36 @@ export const GameSaveSchema = z
       refs.set(id, (refs.get(id) ?? 0) + 1);
     };
     save.inventory.forEach((i) => i && reference(i.artifact, i.id));
+    const day = Math.floor(save.elapsedSeconds / CONFIG.daySeconds);
+    for (const state of save.literacy) {
+      state.hands.forEach((i) => reference(i.artifact, i.id));
+      if (
+        [state.readDay, state.noteDay, state.pageDay].some((d) => d > day) ||
+        (state.readDay === -1 && state.reads !== 0)
+      )
+        fail('Invalid literacy quota day');
+      const next = state.continuation;
+      if (next) {
+        const record = artifacts.get(next.artifactId),
+          length =
+            record?.kind === 'book'
+              ? record.pages.length
+              : record?.kind === 'note'
+                ? record.lines.length
+                : 0;
+        if (
+          !record ||
+          record.kind === 'painting' ||
+          (record.kind === 'book') !== (next.kind === 'pages') ||
+          next.revision > record.revision ||
+          next.next[0] > next.next[1] ||
+          next.next[1] - next.next[0] > (next.kind === 'pages' ? 1 : 47) ||
+          next.next[0] > length ||
+          (next.kind === 'lines' && next.offset !== 0)
+        )
+          fail('Invalid reading continuation');
+      }
+    }
     for (const loadout of save.equipment.loadouts) {
       Object.values(loadout.worn).forEach((i) => i && reference(i.artifact, i.id));
       loadout.combat.forEach((i) => i && reference(i.artifact, i.id));
@@ -264,6 +296,7 @@ function v3Projection(save: GameSave): unknown {
     artifacts: _artifacts,
     placements: _placements,
     artifactSequence: _sequence,
+    literacy: _literacy,
     ...base
   } = save;
   const { guarding: _guarding, ...player } = save.player;
@@ -426,6 +459,7 @@ function validateV4(save: GameSave, fail: (message: string) => void): void {
       fail('Animal food lost species provenance');
   };
   save.inventory.forEach(checkItem);
+  save.literacy.forEach((state) => state.hands.forEach(checkItem));
   save.placements.forEach((p) => checkItem(p.item));
   const loadouts = new Map(save.equipment.loadouts.map((l) => [l.entityId, l]));
   if (loadouts.size !== 31 || [...loadouts.keys()].some((id) => records.get(id)?.species !== 8))
@@ -731,6 +765,14 @@ export function migrateSave(input: unknown): GameSave {
         },
         director: { ...director, settings: { ...settings, reactionDelay: { min: 2, max: 4 } } },
       },
+    };
+  }
+  if (candidate.version === 8) {
+    if ('literacy' in candidate) throw Error('Save v8 cannot contain v9 literacy fields');
+    candidate = {
+      ...seedLegacyDiary(candidate as unknown as Parameters<typeof seedLegacyDiary>[0]),
+      version: 9,
+      literacy: [],
     };
   }
   const result = GameSaveSchema.safeParse(candidate);

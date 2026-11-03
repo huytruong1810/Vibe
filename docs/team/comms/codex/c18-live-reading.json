@@ -1,0 +1,57 @@
+{
+  "recordedAt": "2026-11-03T15:42:32.002Z",
+  "model": "gemma4:e4b",
+  "device": "CPU (num_gpu=0, num_thread=4)",
+  "cpuSmokeTimeoutMs": 300000,
+  "passed": true,
+  "capabilityMs": 27804.3535,
+  "dialogueMs": 139530.34,
+  "proposedAction": {
+    "type": "READ_TEXT",
+    "artifactId": "art:2",
+    "pages": [
+      1,
+      2
+    ]
+  },
+  "readingMs": 73012.49,
+  "firstStreamedTokenMs": 30336.856500000024,
+  "readingWarmFirstTokenBudgetMs": 2000,
+  "readingWarmFirstTokenBudgetMet": false,
+  "promptTokens": 266,
+  "estimatedPromptTokens": 342,
+  "output": {
+    "dialogue": "The tide is high, a reminder that even the calmest waters shift. Rumors are like eddies—they swirl, but they don't define the whole flow.",
+    "emotion": "thoughtful",
+    "summary": "Caelum reflects on the high tide, using it as a metaphor for the shifting nature of rumors versus the steady flow of the watershed.",
+    "wantsMore": true
+  },
+  "memorySource": {
+    "kind": "artifact",
+    "ids": [
+      "art:2"
+    ],
+    "reading": {
+      "artifactId": "art:2",
+      "revision": 1,
+      "pages": [
+        1,
+        2
+      ],
+      "pageLines": [
+        {
+          "page": 1,
+          "from": 1,
+          "to": 1
+        },
+        {
+          "page": 2,
+          "from": 1,
+          "to": 1
+        }
+      ]
+    }
+  },
+  "inventoryUnchanged": true,
+  "note": "One live dialogue-to-reading round-trip with an injection page. Transport streams are collected and validated before display; incremental dialogue display remains C20. This host/model is not the reference GPU acceptance."
+}

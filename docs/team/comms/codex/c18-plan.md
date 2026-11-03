@@ -51,3 +51,9 @@ and [AGT-7/8](../../../doctrine/11-living-minds.md). C13 is a separate change.
 
 Delivery is a candidate with Changed / Evidence / Gaps, a current handoff and separate
 C18 commit. No painting-provider work, training, art production or approval is included.
+
+Director clarification during implementation: machine A has the GPU; machine B is
+CPU-only and needs functional AI checks, not latency acceptance runs. The authorized
+`gemma4:e4b` test on B completed dialogue → READ_TEXT → sourced memory with no inventory
+change from the injection page. Retain its timings as diagnostics only; request the
+reference GPU measurement from A and do not repeat model latency tests on B.

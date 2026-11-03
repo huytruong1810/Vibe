@@ -479,7 +479,7 @@ describe('brain persistence and lifecycle', () => {
     const { minds: _minds, failedHunts: _failed, ...combat } = save.combat;
     const { reactionDelay: _delay, ...settings } = combat.director.settings;
     const old = {
-      ...save,
+      ...(({ literacy: _literacy, ...legacy }) => legacy)(save),
       version: 7,
       entities: {
         ...save.entities,
@@ -488,7 +488,7 @@ describe('brain persistence and lifecycle', () => {
       combat: { ...combat, director: { ...combat.director, settings } },
     };
     const migrated = migrateSave(old);
-    expect(migrated.version).toBe(8);
+    expect(migrated.version).toBe(9);
     expect(migrated.entities.records.every((r) => r.bondHearts === 0)).toBe(true);
     expect(migrated.entities.records.map((r) => r.trust)).toEqual(
       save.entities.records.map((r) => r.trust),

@@ -521,3 +521,23 @@ adapter before the unchanged save-v5 validator. Explicit fallback entry uses the
 bounded inference scheduler and deterministic failure receipts, with no model/network
 calls or action bypass. Connect continues to require a real capability check. See
 [beta operations](../operations/operations.md#beta-channel-and-ci-c22).
+
+## ADR 035 - Bounded written-word jobs and durable literacy
+
+**Decision:** C18 uses authoritative worker commands for player edits and a separate
+literacy service for NPC reach, daily quotas, carried artifacts and continuation.
+Save v9 preserves the v8 creature/director/memory state and migrates older saves with
+a blank Lark diary when capacity permits. Restoring v9 never adds content.
+
+An accepted READ_TEXT proposal replaces its response's other effects. A second job
+receives at most 600 estimated tokens of JSON-quoted text in a 2000-token prompt;
+its strict response has no action field. Applying it rechecks session, NPC, reach and
+artifact revision. Memory pins the actual pages and line prefix read. New dialogue
+can interrupt reading. Metadata-only readables drop before other prompt facts.
+
+**Consequences:** arbitrary player prose cannot directly execute actions or expand
+prompts without bounds. Conservative canonical vocabulary grounding can reject valid
+ordinary words; it is not a general named-entity recognizer. Only the current spread
+mounts in the book screen. Reading transport buffers bounded NDJSON before applying
+the result; incremental dialogue presentation remains C20. CPU functional evidence
+does not substitute for machine-A GPU latency acceptance.
