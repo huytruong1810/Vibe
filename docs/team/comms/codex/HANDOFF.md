@@ -7,6 +7,35 @@ C14 runtime code is **17672f7** on `eng/hd-presentation`, followed by studio int
 implementation is **C13**, then C18, C19, C20, C3g and C7. C22/C24/C25 external
 acceptance remains separate. No C13 runtime work has started. Codex reaches candidate at most.
 
+## Fresh-session startup
+
+1. Work on **`eng/hd-presentation`** in **`C:/Users/htruong/source/repos/Vibe`**.
+   Last implementation/integration receipt is **5b8e341** (pushed); later handoff-only
+   commits do not change that tested baseline. `git pull`, inspect status, re-read
+   `docs/team/briefs/codex.md`, use team-comms to read new addressed messages, and
+   update the existing session log. Do not switch or edit the Vibe-art/review worktrees.
+2. Recheck engineering **5b8e341** runs
+   [41564379329](https://github.com/huytruong1810/Vibe/actions/runs/41564379329) and
+   [41564371915](https://github.com/huytruong1810/Vibe/actions/runs/41564371915).
+   At **2026-11-03T0211 UTC**, both were in progress: both root beta-browser jobs
+   passed; subpath browser and verify remained in progress. Ecology-soak passed in
+   41564371915 and remained in progress in 41564379329. Do not call either full run green
+   from these partial results. Studio **83dd6f6 / 41563209207** is already green;
+   do not repeat its repaired item-test work unless new evidence shows a regression.
+3. Read **C13**, the binding inputs below, and ADR 033. If CI reveals a failure,
+   inspect/reproduce its actual failed step before new implementation. Otherwise take
+   **C13** as the next open ticket; C22/C24/C25/C14 remain candidates with separate
+   external acceptance. Change C13 to `in-progress` only when implementation starts.
+4. Start the single-creature end-to-end slice below, preserving the spec's per-tick
+   ordering and C14 director semantics. Validate that slice before expanding to eight
+   species. This handoff authorizes no C15/C16 training, GPU work, art production or approval.
+
+Tooling on machine B: `gh` is unavailable; use the GitHub REST API for run/job status.
+Public job-log download returned 403, so the prior repair used an isolated source export
+to reproduce the traceback. Python tooling uses `python -m uv run --project art/source/forge …`.
+Run benchmarks alone; sequence world checks after `assets:build` completes, because the
+atlas rebuild temporarily removes old pages. Stop owned processes before pushing.
+
 ## Studio CI repair (2026-11-03 UTC)
 
 Repair **83dd6f6** is pushed to studio, integrated through art **e3ddb58** into
@@ -179,10 +208,18 @@ and attack starts are unrestricted are stale. The tested code above is the basel
 
 ## C13 acceptance and first implementation slice
 
-After the CI repair/integration, start one end-to-end scripted creature scenario
+The studio repair/integration is complete. After the startup CI check, start one
+end-to-end scripted Bramblefang scenario
 (observation -> engagement -> director permission -> intent -> one movement step ->
 registered attack -> saved replay), then expand to all eight species. No C13 runtime
 changes were made by this handoff. Keep C13 open until the new session starts work.
+
+First-slice finish line: a deterministic domain test drives one Bramblefang through
+notice/engagement, fills the versioned observation, chooses a legal intent, starts
+an attack only with permission for its actual target/category, and moves the actor
+once per tick. Save mid-fight and compare the continued intent **and motion** stream
+against uninterrupted execution. Establish the brain-state/save-version contract here;
+do not postpone replay until after species tactics and movement have spread through the code.
 
 - Tests: honest scene/radius/cone perception; calm brain suppression; 3,000-tick
   same-seed/input intent hash; illegal masks; reaction floor/commitment/cadence;
@@ -242,7 +279,7 @@ changes were made by this handoff. Keep C13 open until the new session starts wo
 - Riverlands revision 2 is director-approved for layout only, per
   `docs/team/comms/director/approvals/world-aqualia--world-aqualia-aqualia_riverlands-2.md`;
   preview tiles/placeholders are not approved art, and C7 activation remains gated. C32 already tracks the
-  previous-revision before-overview fix. C26-C32 retain their upstream ownership and gates; published 0d708b5 updates C26/C31 as noted above.
+  previous-revision before-overview fix. C26-C33 retain their upstream ownership and gates; C33 is inventory icons, not the Riverlands fix.
 - After C14: C13, C18, C19, C20, C3g, C7. C23/C12 standing; C21 needs director go;
   C15/C16 remain gated. Blender owns all art; communicator owns manifest integration,
   relay/status/digests/music. Hourly automation remains cancelled.
