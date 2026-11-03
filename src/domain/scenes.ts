@@ -341,6 +341,9 @@ export class SceneRegistry {
     this.contexts.set(code, result);
     return result;
   }
+  isLoaded(code: number): boolean {
+    return this.contexts.has(code);
+  }
   loaded(): readonly [number, SceneContext][] {
     return [...this.contexts.entries()];
   }

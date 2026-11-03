@@ -1,0 +1,77 @@
+[
+  {
+    "stage": "c13-benchmark-before-filter.json",
+    "recordedAt": "2026-11-03T14:03:55.395Z",
+    "engagedCombat150": {
+      "actors": 150,
+      "minimumExecuted": 150,
+      "maximumFullRate": 48,
+      "brain": {
+        "meanMs": 0.898,
+        "p95Ms": 1.588,
+        "maxMs": 3.053
+      },
+      "movement": {
+        "meanMs": 0.35,
+        "p95Ms": 0.616,
+        "maxMs": 1.41
+      },
+      "director": {
+        "meanMs": 0.132,
+        "p95Ms": 0.241,
+        "maxMs": 1.29
+      }
+    },
+    "note": "Failed timing gate; profiled stage includes CPU-profiler overhead. Retained for transparency."
+  },
+  {
+    "stage": "c13-benchmark-before-grouping.json",
+    "recordedAt": "2026-11-03T14:08:51.754Z",
+    "engagedCombat150": {
+      "actors": 150,
+      "minimumExecuted": 150,
+      "maximumFullRate": 48,
+      "brain": {
+        "meanMs": 0.811,
+        "p95Ms": 1.4,
+        "maxMs": 85.631
+      },
+      "movement": {
+        "meanMs": 0.47,
+        "p95Ms": 0.745,
+        "maxMs": 36.987
+      },
+      "director": {
+        "meanMs": 0.181,
+        "p95Ms": 0.287,
+        "maxMs": 10.448
+      }
+    },
+    "note": "Failed timing gate; profiled stage includes CPU-profiler overhead. Retained for transparency."
+  },
+  {
+    "stage": "c13-benchmark-profiled.json",
+    "recordedAt": "2026-11-03T14:11:51.090Z",
+    "engagedCombat150": {
+      "actors": 150,
+      "minimumExecuted": 150,
+      "maximumFullRate": 48,
+      "brain": {
+        "meanMs": 0.572,
+        "p95Ms": 0.957,
+        "maxMs": 2.376
+      },
+      "movement": {
+        "meanMs": 0.483,
+        "p95Ms": 0.743,
+        "maxMs": 2.08
+      },
+      "director": {
+        "meanMs": 0.183,
+        "p95Ms": 0.317,
+        "maxMs": 1.128
+      }
+    },
+    "note": "Failed timing gate; profiled stage includes CPU-profiler overhead. Retained for transparency."
+  }
+]

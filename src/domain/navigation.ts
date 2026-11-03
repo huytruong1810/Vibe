@@ -64,7 +64,7 @@ export class NavigationService {
     });
   }
   private key(start: number, target: number, traversal: Traversal): string {
-    return `${this.world.revision}:${start}:${target}:${+traversal.lava}:${+traversal.water}`;
+    return `${this.world.revision}:${start}:${target}:${+traversal.lava}:${+traversal.water}:${+!!traversal.air}`;
   }
   advance(budget = 1000): void {
     this.expansions = 0;

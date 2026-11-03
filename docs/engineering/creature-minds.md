@@ -10,6 +10,13 @@ Goal: fights that read like meeting animals (notice, stalk, commit, break) and s
 (one or two clear threats at a time), at a cost that lets 150 creatures fight on a laptop
 CPU with the simulation deterministic and replayable.
 
+C13 implementation receipt (2026-11-03): `src/domain/creature-minds.ts` and
+`src/content/creature-tactics.ts` implement the scripted interface, observation,
+engagement, executor and eight species. Saves are v8; C14 token state and C25 memory
+are preserved. [Candidate evidence](../team/comms/codex/HANDOFF.md) records validation
+and remaining art/reference-machine acceptance. Sections describing the old runtime
+below are the design baseline, rather than a statement that C13 is unimplemented.
+
 ## 1. As built today (what this replaces and what it keeps)
 
 | Concern       | Today                                                                                                                                                                                                                                     | Keep / change                                                                    |

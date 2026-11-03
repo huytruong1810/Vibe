@@ -76,7 +76,7 @@ and local-generation tickets (C26–C31) sit in their own section.
 
 ### C13 · Creature minds v1: engagement, perception, intents, scripted brain, flight (CRM-1…3, CRM-10)
 
-- status: open (after C14)
+- status: candidate (scripted implementation; director playtest and authored clips remain)
 - owner: codex
 - goal: creatures notice, stalk, commit and break like animals, each species recognisably itself, within budget and deterministic.
 - spec: [creature minds](../../engineering/creature-minds.md) §2–§6, §8–§11; doctrine CRM-1.4, CRM-2 (incl. flight), CRM-3, CRM-6.1, CRM-6.4, CRM-8, CRM-9, CRM-10; ADR 033.
@@ -89,7 +89,7 @@ and local-generation tickets (C26–C31) sit in their own section.
   6. Engaged tier (cap 48) and the 2 Hz scripted fallback; save the brain state; debug overlay, observation inspector.
   7. Partner: `focus`/`regroup` commands with bond-scaled weight; real intents on the HUD icon.
 - done when: §11 rows "determinism", "masking and reaction", "species identity" (all 8 species) and "budget" (`engagedCombat150` in the benchmark, asserted on CI) pass; a mid-fight save replays to identical intents; 1080p captures of a 6-Bramblefang pack fight and a Zephyrit skirmish for the director show notice, stalk, staggered strikes and break.
-- evidence:
+- evidence: [C13 candidate](../comms/codex/2026-11-03T1420--to-all--c13-creature-minds-candidate.md), [validation](../comms/codex/c13-validation.json), [benchmark](../comms/codex/c13-benchmark.json); save v8, 444 tests/32 files, 3,000-tick intent/motion replay, all eight species, inspected 1080p journeys. No reference-machine or art approval claim.
 
 ### C18 · The written word: book screen, villager reading and writing
 

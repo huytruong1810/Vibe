@@ -1,0 +1,91 @@
+{
+  "engagedCombat150": {
+    "actors": 150,
+    "minimumExecuted": 150,
+    "maximumFullRate": 48,
+    "brain": {
+      "meanMs": 0.339,
+      "p95Ms": 0.734,
+      "maxMs": 3.154
+    },
+    "movement": {
+      "meanMs": 0.29,
+      "p95Ms": 0.563,
+      "maxMs": 6.094
+    },
+    "director": {
+      "meanMs": 0.106,
+      "p95Ms": 0.194,
+      "maxMs": 15.876
+    }
+  },
+  "recordedAt": "2026-11-03T14:17:02.454Z",
+  "runtime": "v22.22.3",
+  "platform": "win32 x64",
+  "cpu": "13th Gen Intel(R) Core(TM) i7-1365U",
+  "logicalCpus": 12,
+  "systemMemoryGiB": 39.7,
+  "seed": 42,
+  "villagers": 30,
+  "creatures": 1000,
+  "livingEntities": 1031,
+  "measuredTicks": 3000,
+  "warmupTicks": 300,
+  "generationMs": 735.9,
+  "simulation": {
+    "meanMs": 5.782,
+    "p95Ms": 8.661,
+    "maxMs": 28.443
+  },
+  "renderSnapshot": {
+    "meanMs": 5.485,
+    "p95Ms": 7.674,
+    "maxMs": 22.49
+  },
+  "structuredClone": {
+    "meanMs": 2.914,
+    "p95Ms": 4.167,
+    "maxMs": 8.379
+  },
+  "maximumDetailed": 17,
+  "maximumPaths": 1,
+  "denseSimulation": {
+    "meanMs": 6.72,
+    "p95Ms": 9.799,
+    "maxMs": 23.659
+  },
+  "denseMaximumDetailed": 128,
+  "activeCombat": {
+    "meanMs": 7.652,
+    "p95Ms": 10.514,
+    "maxMs": 56.144
+  },
+  "activeCombatActors": 128,
+  "activeCombatFixture": "64 paired territorial encounters; needs, stamina and HP refill between ordinary ticks; no rendering or inference.",
+  "memoryRetrieval": {
+    "meanMs": 1.288,
+    "p95Ms": 1.814,
+    "maxMs": 9.51
+  },
+  "memoryPrompt": {
+    "meanMs": 2.062,
+    "p95Ms": 2.999,
+    "maxMs": 17.87
+  },
+  "memoryFixture": "400 valid records, cached 256-d embeddings, full prompt construction; 100 warmups and 1000 samples",
+  "director150": {
+    "meanMs": 0.11,
+    "p95Ms": 0.168,
+    "maxMs": 1.106
+  },
+  "directorWild150": {
+    "meanMs": 0.098,
+    "p95Ms": 0.145,
+    "maxMs": 1.084
+  },
+  "directorFixture": "150 ready Bramblefang: one player target, then 75 independent wild pairs; 300 warmups and 3000 samples each; collection, release and selection included.",
+  "checkpointMs": 377.97,
+  "checkpointBytes": 1000584,
+  "nodeRssMiB": 218.9,
+  "limitations": "Headless Node CPU measurements; excludes GPU, browser rendering, and live model inference. Maxima include garbage collection. This is a measured host, not an ordinary-laptop guarantee."
+}

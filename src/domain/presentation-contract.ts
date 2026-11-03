@@ -27,7 +27,7 @@ export interface ActionTiming {
 export interface ActorPresentation {
   readonly attackTarget?: number;
   readonly telegraph?: AttackTelegraph;
-  readonly intent?: 'attack' | 'guard' | 'follow';
+  readonly intent?: import('./creature-minds').CreatureIntent;
   readonly physique?: {
     readonly heightMeters: number;
     readonly massKg: number;

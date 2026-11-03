@@ -49,7 +49,7 @@ export const CONFIG = Object.freeze({
   population: 1000,
   generatorVersion: 1,
   contentVersion: 3,
-  saveVersion: 7,
+  saveVersion: 8,
   memoryLimit: 400,
   eventLimit: 128,
 });

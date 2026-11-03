@@ -8,6 +8,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 test('20 hostile Bramblefang have staggered tokens, readable windups and saved settings', async ({
   page,
 }) => {
+  test.slow();
   await page.setViewportSize({ width: 1920, height: 1080 });
   const errors: string[] = [];
   page.on('pageerror', (e) => errors.push(e.message));
@@ -28,6 +29,7 @@ test('20 hostile Bramblefang have staggered tokens, readable windups and saved s
       if (Math.hypot(x, y) >= 1 && SurfaceRules.walkable(world, q.x, q.y)) sites.push(q);
     }
   expect(sites.length).toBeGreaterThanOrEqual(20);
+  save.combat.minds.records = [];
   save.combat.attacks = [];
   save.combat.pursuits = [];
   save.combat.nextAttack = [];
@@ -83,9 +85,12 @@ test('20 hostile Bramblefang have staggered tokens, readable windups and saved s
       };
       const samples: { tick: number; active: number; starts: number[] }[] = [];
       const starts = new Set<number>();
-      const end = api.frame().tick + 150;
+      // Pack preparation can outlast a fixed window in the crowded 20-actor fixture.
+      // Always observe at least 420 ticks; allow up to 900 to collect four starts.
+      const minimumEnd = api.frame().tick + 420,
+        end = minimumEnd + 480;
       let previous = -1;
-      while (api.frame().tick < end) {
+      while (api.frame().tick < end && (api.frame().tick < minimumEnd || starts.size < 4)) {
         await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
         const frame = api.frame();
         if (frame.tick === previous) continue;
@@ -129,17 +134,19 @@ test('20 hostile Bramblefang have staggered tokens, readable windups and saved s
     (window as any).__hearthwild.checkpoint(),
   );
   expect(configured.combat.director.settings.grantSpacing).toBe(12);
-  expect(configured.version).toBe(7);
+  expect(configured.version).toBe(8);
   // A second validated scenario proves an element glint also survives reduced motion.
   const ranged = configured.entities.records.find((r) => r.id === hostiles[0]!.id)!;
   const playerBody = configured.entities.records.find((r) => r.id === 0)!;
   Object.assign(ranged, {
-    species: 1,
+    species: 4,
     level: 40,
+    hp: SPECIES[4]!.hp + 39 * 5,
     stamina: 100,
     x: playerBody.x + 1,
     y: playerBody.y,
   });
+  configured.combat.minds.records = [];
   configured.combat.attacks = [];
   configured.combat.nextAttack = [];
   configured.combat.pursuits = [

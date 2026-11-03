@@ -1,3 +1,4 @@
+import { remapMindScenes } from './creature-minds';
 import type { DialogueSession } from './conversation';
 import { applyExtraction, applySynthesis, validMemory } from './memory';
 import {
@@ -39,6 +40,7 @@ import {
   CareInteractionSystem,
   CreatureDecisionSystem,
   CreatureMode,
+  creatureTraversal,
   NeedsSystem,
   WellbeingPolicy,
   PartnershipService,
@@ -162,6 +164,7 @@ export class SimulationHost {
   private readonly sentDeltas = new Map<number, string>();
   private movement = { x: 0, y: 0 };
   private debugEnabled = false;
+  private inspectedCreature: number | null = null;
   private eventSerial = 0;
   private cueSerial = 0;
   private readonly presentationCues = new RingBuffer<PresentationCue & { readonly scene: number }>(
@@ -334,6 +337,7 @@ export class SimulationHost {
       (id) => this.systems(this.entities.scene[this.entities.require(id)]!).survival.feeding(id),
       this.equipment,
       (scene) => this.scenes.context(scene).world,
+      (scene) => this.scenes.isLoaded(scene),
     );
     this.rebuildSpatial();
     this.tiers.update(this.creatures, this.player);
@@ -507,6 +511,8 @@ export class SimulationHost {
       'debug',
       'configureContext',
       'configureCombat',
+      'inspectCreature',
+      'partnerCommand',
       'move',
       'dialogue',
       'closeDialogue',
@@ -987,6 +993,13 @@ export class SimulationHost {
         };
         break;
       }
+      case 'partnerCommand':
+        ok = this.combat.minds.command(c.command, c.target, this.tick);
+        if (!ok) message = 'Choose a visible target and an available companion.';
+        break;
+      case 'inspectCreature':
+        this.inspectedCreature = c.entityId;
+        break;
       case 'configureCombat':
         ok = this.combat.configure(c.settings);
         break;
@@ -1465,6 +1478,8 @@ export class SimulationHost {
       direction.y * speed * dt,
       { lava: false, water: true },
     );
+    this.entities.vx[playerSlot] = (moved.x - this.player.x) * CONFIG.tickRate;
+    this.entities.vy[playerSlot] = (moved.y - this.player.y) * CONFIG.tickRate;
     this.player.x = moved.x;
     this.player.y = moved.y;
     if (this.tick % 10 === 0) {
@@ -1473,6 +1488,8 @@ export class SimulationHost {
     }
     const s = this.creatures,
       now = this.calendar.elapsedSeconds;
+    this.rebuildSpatial();
+    this.combat.prepareTick(this.tick, this.spatial, now);
     // Universal survival runs on simulation time; tactical combat preempts ordinary plans.
     if (this.tick % 30 === 0)
       for (const i of s.slots()) {
@@ -1483,7 +1500,7 @@ export class SimulationHost {
         SleepSystem.update(s, i, 0, now, this.combat.danger(s.id(i)));
       }
     for (const i of this.tiers.detailed) {
-      if (this.combat.active(s.id(i))) continue;
+      if (this.combat.active(s.id(i)) || this.combat.minds.active(i)) continue;
       if (s.owner[i] === 0 && s.scene[i] !== s.scene[playerSlot]) {
         this.followPortal(i, s.scene[playerSlot]!, dt);
         continue;
@@ -1555,7 +1572,12 @@ export class SimulationHost {
     }
     if (this.tick % 30 === 0)
       for (let i = 0; i < s.count; i++)
-        if (s.alive[i] && !s.tier[i] && !this.combat.active(s.id(i))) {
+        if (
+          s.alive[i] &&
+          !s.tier[i] &&
+          !this.combat.active(s.id(i)) &&
+          !this.combat.minds.active(i)
+        ) {
           const system = this.systems(s.scene[i]!);
           if (s.owner[i] === 0 && s.scene[i] !== s.scene[playerSlot])
             this.followPortal(i, s.scene[playerSlot]!, 1);
@@ -1944,24 +1966,32 @@ export class SimulationHost {
                   : this.combat.presentationGuard(id, this.tick)
                     ? 'guard'
                     : moving
-                      ? 'walk'
+                      ? this.combat.minds.active(slot) &&
+                        ['flankLeft', 'flankRight', 'flee', 'dash'].includes(
+                          this.combat.minds.intent(slot),
+                        )
+                        ? 'run'
+                        : 'walk'
                       : task === 'food' || (mode === CreatureMode.Feed && atGoal)
                         ? 'eat'
                         : task === 'water' || (mode === CreatureMode.Drink && atGoal)
                           ? 'drink'
                           : task === 'clean' || (mode === CreatureMode.Bathe && atGoal)
                             ? 'bathe'
-                            : task === 'social' || (mode === CreatureMode.Socialize && atGoal)
+                            : this.combat.minds.active(slot) &&
+                                this.combat.minds.intent(slot) === 'callPack'
                               ? 'social'
-                              : recent && recent.until > this.tick
-                                ? recent.pose
-                                : npc
-                                  ? this.schedules.presentation(
-                                      npc,
-                                      this.npcs.indexOf(npc),
-                                      this.calendar,
-                                    )
-                                  : 'idle';
+                              : task === 'social' || (mode === CreatureMode.Socialize && atGoal)
+                                ? 'social'
+                                : recent && recent.until > this.tick
+                                  ? recent.pose
+                                  : npc
+                                    ? this.schedules.presentation(
+                                        npc,
+                                        this.npcs.indexOf(npc),
+                                        this.calendar,
+                                      )
+                                    : 'idle';
       actors.push({
         ...(action && id !== 0
           ? {
@@ -1969,11 +1999,18 @@ export class SimulationHost {
               attackTarget: this.combat.pursuits.get(id)?.target,
             }
           : {}),
-        ...(s.owner[slot] === 0 ? { intent: this.combat.partnerIntent(id, this.tick) } : {}),
+        ...(!s.isHuman(slot)
+          ? {
+              intent:
+                s.owner[slot] === 0
+                  ? this.combat.partnerIntent(id, this.tick)
+                  : this.combat.minds.intent(slot),
+            }
+          : {}),
         physique: {
           ...s.physique(slot),
           strideTiles: PhysiquePolicy.stride(s.physique(slot)),
-          grounded: s.definition(slot).id !== 'cindermoth',
+          grounded: !creatureTraversal(s, slot).air,
         },
         activityInstanceId: recent ? `${id}:${recent.pose}:${recent.until}` : undefined,
         activityVariant: npc ? NPC_PROFILES.find((p) => p.id === npc.profileId)?.role : undefined,
@@ -2032,6 +2069,9 @@ export class SimulationHost {
       if (!presentIds.has(id)) this.presentationPositions.delete(id);
     return {
       equipment: this.equipment.view(),
+      creatureDebug: this.debugEnabled
+        ? this.combat.minds.debug(this.inspectedCreature, this.tick)
+        : [],
       combatSettings: structuredClone(this.combat.director.settings),
       artifacts: this.artifacts.views(),
       placements: structuredClone(this.placements),
@@ -2290,6 +2330,7 @@ export class SimulationHost {
     this.reactions.restore(save.reactions);
     this.combat.restore({
       ...save.combat,
+      minds: remapMindScenes(save.combat.minds, (scene) => this.scenes.remap(save.scenes, scene)),
       projectiles: {
         ...save.combat.projectiles,
         arrows: save.combat.projectiles.arrows.map((a) => ({
@@ -2324,6 +2365,7 @@ export class SimulationHost {
   }
   dispose(): void {
     this.combat.director.reset();
+    this.combat.minds.reset();
     this.disposed = true;
     this.plans.context.close();
     this.plans.queries.clear();

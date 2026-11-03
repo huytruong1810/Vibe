@@ -10,6 +10,10 @@ export const CombatSettingsSchema = z
     wild: pool,
     grantSpacing: z.number().int().min(8).max(300),
     aggressionBias: z.number().finite().min(-1).max(1),
+    reactionDelay: z
+      .object({ min: z.number().int().min(2).max(30), max: z.number().int().min(2).max(30) })
+      .strict()
+      .refine((v) => v.max >= v.min),
   })
   .strict();
 export type CombatSettings = z.infer<typeof CombatSettingsSchema>;
@@ -20,6 +24,7 @@ export const DEFAULT_COMBAT_SETTINGS: CombatSettings = {
   wild: { melee: 2, ranged: 1 },
   grantSpacing: 8,
   aggressionBias: 0,
+  reactionDelay: { min: 2, max: 4 },
 };
 export type AttackCategory = 'melee' | 'ranged';
 /** Content-space viewport; one tile inset covers elevation and the 1080/64 rounding. */
@@ -55,6 +60,10 @@ export class CombatDirector {
   readonly since: Float64Array;
   readonly lastGrant: Float64Array;
   readonly selected: Uint8Array;
+  readonly selectedCategory: Uint8Array;
+  readonly trackedSlots: Int32Array;
+  trackedCount = 0;
+  private readonly tracked: Uint8Array;
   private readonly selectedTargets: Uint8Array;
   private readonly candidates: Int32Array;
   private readonly targetSlots: Int32Array;
@@ -76,6 +85,9 @@ export class CombatDirector {
     this.since = new Float64Array(capacity).fill(-1);
     this.lastGrant = new Float64Array(capacity).fill(-Infinity);
     this.selected = new Uint8Array(capacity);
+    this.selectedCategory = new Uint8Array(capacity);
+    this.trackedSlots = new Int32Array(capacity);
+    this.tracked = new Uint8Array(capacity);
     this.selectedTargets = new Uint8Array(capacity);
     this.candidates = new Int32Array(capacity);
     this.targetSlots = new Int32Array(capacity);
@@ -89,6 +101,10 @@ export class CombatDirector {
   }
   touch(slot: number, id: number): void {
     if (this.ids[slot] === id) return;
+    if (!this.tracked[slot]) {
+      this.tracked[slot] = 1;
+      this.trackedSlots[this.trackedCount++] = slot;
+    }
     this.release(slot);
     this.ids[slot] = id;
     this.lastGrant[slot] = -Infinity;
@@ -105,9 +121,13 @@ export class CombatDirector {
     this.remainingTargets = 0;
     this.eligibleTargets.fill(0);
     this.selected.fill(0);
+    this.selectedCategory.fill(0);
     this.selectedTargets.fill(0);
     this.melee.fill(0);
     this.ranged.fill(0);
+  }
+  pressure(targetSlot: number, allowed: number): number {
+    return Math.min(1, (this.melee[targetSlot]! + this.ranged[targetSlot]!) / Math.max(1, allowed));
   }
   occupied(targetSlot: number, category: number): void {
     const counts = category === 1 ? this.melee : this.ranged;
@@ -188,6 +208,7 @@ export class CombatDirector {
       )
         continue;
       this.selected[slot] = 1;
+      this.selectedCategory[slot] = this.categories[best]!;
       this.selectedTargets[target] = 1;
       this.remainingTargets--;
       return slot;
@@ -215,6 +236,8 @@ export class CombatDirector {
     return { settings: structuredClone(this.settings), holds, waiting, grants };
   }
   reset(): void {
+    this.trackedCount = 0;
+    this.tracked.fill(0);
     this.ids.fill(-1);
     this.targets.fill(-1);
     this.held.fill(0);

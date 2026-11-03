@@ -328,7 +328,7 @@ describe('typed persistent memory', () => {
         })),
       };
       const migrated = migrateSave(v5);
-      expect(migrated.version).toBe(7);
+      expect(migrated.version).toBe(8);
       expect(migrated.npcs[0]!.memory.records).toHaveLength(2);
       expect(migrated.artifacts).toEqual(save.artifacts);
       const db = new IndexedDbSaveRepository('memory-migration', new IDBFactory());

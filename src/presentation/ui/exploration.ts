@@ -71,7 +71,20 @@ export function updateExploration(
   companion.hidden = !partner;
   if (partner) {
     const intent = frame.actors.find((a) => a.id === partner.id)?.intent ?? 'follow';
-    const intentIcon = { attack: '\u2694', guard: '\u25c7', follow: '\u2197' }[intent];
+    const intentIcon = {
+      hold: '\u25e6',
+      approach: '\u2197',
+      flankLeft: '\u21b6',
+      flankRight: '\u21b7',
+      retreat: '\u2199',
+      flee: '\u21e0',
+      strike: '\u2694',
+      element: '\u2727',
+      guard: '\u25c7',
+      dash: '\u279c',
+      callPack: '\u2667',
+      follow: '\u2197',
+    }[intent];
     const portrait = appearance?.portrait('species', partner.species);
     patchView(
       companion,

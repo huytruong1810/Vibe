@@ -583,6 +583,12 @@ test('human food, accelerated sleep, emergency waking, retaliation and predation
     voluntaryRest: 1,
     commitUntil: hunt.elapsedSeconds + 100,
   });
+  // The C13 brain wakes and evades threats. This hunt deliberately uses exhausted,
+  // injured prey, and relocates both home fallbacks with the synthetic scenario.
+  Object.assign(prey, { food: 0.1, water: 0.1, rest: 0.1, cleanliness: 0.1, recreation: 0.1 });
+  hunt.combat.minds.records = hunt.combat.minds.records.filter(
+    (r) => r.id !== hunter.id && r.id !== prey.id,
+  );
   await importScenario(page, hunt);
   await expect
     .poll(async () => (await checkpoint(page)).carrion.some((c) => c.sourceId === prey.id))

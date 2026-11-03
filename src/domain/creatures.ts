@@ -1,3 +1,4 @@
+import { CREATURE_TACTICS } from '../content/creature-tactics';
 import { ITEMS, SPECIES, itemIds } from '../content/definitions';
 import { SeededRandom } from './core';
 import { SpatialIndex, NavigationService } from './navigation';
@@ -144,15 +145,40 @@ export class SteeringSystem {
       count++;
     }
     if (!count) return { x: 0, y: 0 };
+    const t = store.isHuman(i)
+      ? undefined
+      : CREATURE_TACTICS[
+          store.definition(i).id as Exclude<import('../content/definitions').SpeciesId, 'human'>
+        ];
     return {
-      x: sx * 0.7 + (ax / count) * 0.08 + (cx / count - store.x[i]!) * 0.04,
-      y: sy * 0.7 + (ay / count) * 0.08 + (cy / count - store.y[i]!) * 0.04,
+      x:
+        sx * (t?.separation ?? 0.7) +
+        (ax / count) * (t?.alignment ?? 0.08) +
+        (cx / count - store.x[i]!) * (t?.cohesion ?? 0.04),
+      y:
+        sy * (t?.separation ?? 0.7) +
+        (ay / count) * (t?.alignment ?? 0.08) +
+        (cy / count - store.y[i]!) * (t?.cohesion ?? 0.04),
     };
   }
 }
 
+const LAND_TRAVERSAL: Traversal = { lava: false, water: true };
+const FIRE_TRAVERSAL: Traversal = { lava: true, water: true };
+const AIR_TRAVERSAL: Traversal = { lava: false, water: true, air: true };
+const FIRE_AIR_TRAVERSAL: Traversal = { lava: true, water: true, air: true };
 export function creatureTraversal(store: CreatureStateStore, i: number): Traversal {
-  return { lava: store.definition(i).elements.includes('fire'), water: true };
+  const id = store.definition(i).id,
+    mode = store.mode[i];
+  const landing =
+    !!store.sleeping[i] ||
+    mode === CreatureMode.Feed ||
+    mode === CreatureMode.Drink ||
+    mode === CreatureMode.Bathe ||
+    mode === CreatureMode.Rest;
+  const air = (id === 'zephyrit' || id === 'cindermoth') && !landing,
+    fire = store.definition(i).elements.includes('fire');
+  return air ? (fire ? FIRE_AIR_TRAVERSAL : AIR_TRAVERSAL) : fire ? FIRE_TRAVERSAL : LAND_TRAVERSAL;
 }
 export function moveOnTerrain(
   world: ChunkStore,
@@ -160,14 +186,20 @@ export function moveOnTerrain(
   dx: number,
   dy: number,
   traversal: Traversal,
+  out?: { x: number; y: number },
 ): WorldPosition {
   let x = position.x,
     y = position.y;
   // Substeps prevent tunneling through a tile when dashing or when a coarse update runs.
   const steps = Math.max(1, Math.ceil(Math.max(Math.abs(dx), Math.abs(dy)) / 0.2));
   for (let s = 0; s < steps; s++) {
-    if (SurfaceRules.canStep(world, { x, y }, { x: x + dx / steps, y }, traversal)) x += dx / steps;
-    if (SurfaceRules.canStep(world, { x, y }, { x, y: y + dy / steps }, traversal)) y += dy / steps;
+    if (SurfaceRules.canStepAt(world, x, y, x + dx / steps, y, traversal)) x += dx / steps;
+    if (SurfaceRules.canStepAt(world, x, y, x, y + dy / steps, traversal)) y += dy / steps;
+  }
+  if (out) {
+    out.x = x;
+    out.y = y;
+    return out;
   }
   return { x, y };
 }

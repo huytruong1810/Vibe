@@ -151,6 +151,10 @@ export class HudPresenter {
       this.drawMap();
     });
     this.el('settings-button').addEventListener('click', () => this.openMenu('settings-dialog'));
+    this.el('creature-inspector').addEventListener('change', () => {
+      const value = this.el<HTMLInputElement>('creature-inspector').value;
+      void this.handlers.send({ type: 'inspectCreature', entityId: value ? Number(value) : null });
+    });
     this.el('combat-settings').addEventListener('submit', (event) => {
       event.preventDefault();
       if (!this.frame) return;
@@ -169,6 +173,7 @@ export class HudPresenter {
           type: 'configureCombat',
           settings: {
             ...pools,
+            reactionDelay: { min: value('reaction-min'), max: value('reaction-max') },
             grantSpacing: value('spacing'),
             aggressionBias: value('aggression'),
           },
@@ -298,7 +303,13 @@ export class HudPresenter {
       if (!button) return;
       const action = button.dataset.action!,
         id = Number(button.dataset.id);
-      if (action === 'sleep' || action === 'wake') void this.command({ type: action });
+      if (action === 'partner-focus' || action === 'partner-regroup')
+        void this.command({
+          type: 'partnerCommand',
+          command: action === 'partner-focus' ? 'focus' : 'regroup',
+          ...(action === 'partner-focus' ? { target: id } : {}),
+        });
+      else if (action === 'sleep' || action === 'wake') void this.command({ type: action });
       else if (action === 'accelerate') void this.command({ type: 'accelerate', factor: 8 });
       else if (action === 'service')
         void this.command({
@@ -538,6 +549,21 @@ export class HudPresenter {
       `\nRender CPU ${stats.renderMs?.toFixed(2) ?? '?'} ms · load ${stats.loadMs?.toFixed(0) ?? '?'} ms · tracked textures ${((stats.textureBytes ?? 0) / 1048576).toFixed(1)} MiB · framebuffer ${stats.framebufferScale ?? 1} · prototype actors ${stats.prototypeActors ?? 0}\nGPU: ${stats.gpu ?? 'unreported'}${stats.assetError ? `\n${stats.assetError}` : ''}`;
     if (this.el<HTMLInputElement>('debug').checked)
       this.el('debug-stats').textContent += this.diagnostics(frame);
+    this.el('creature-debug-overlay').hidden = !frame.debugEnabled;
+    this.el('creature-debug-overlay').textContent = (frame.creatureDebug ?? [])
+      .map(
+        (a) =>
+          `${a.id} ${a.intent} -> ${a.target}, token ${a.token}; ${a.scores.map((s) => `${s.intent} ${s.score.toFixed(2)}`).join(', ')}`,
+      )
+      .join('\n');
+    this.el('creature-debug').textContent = frame.debugEnabled
+      ? (frame.creatureDebug ?? [])
+          .map(
+            (a) =>
+              `${a.id}: ${a.intent} -> ${a.target}, token ${a.token}; ${a.scores.map((s) => `${s.intent} ${s.score.toFixed(2)}`).join(', ')}${a.observation ? `\ncrm-obs-1: ${a.observation.map((v) => v.toFixed(2)).join(', ')}` : ''}`,
+          )
+          .join('\n')
+      : '';
     const human = frame.humanNeeds.find((h) => h.id === 0)!;
     this.setHtml(
       'human-needs',
@@ -733,7 +759,7 @@ export class HudPresenter {
     const definition = SPECIES.find((s) => s.id === creature.species)!,
       tamed = creature.owner === 0,
       portrait = this.appearance?.portrait('species', creature.species);
-    return `<div class="creature-card"><div class="creature-art creature-art-${creature.species}" style="--creature:#${definition.color.toString(16)}">${portrait ? `<img src="${escapeHtml(appUrl(portrait.hud128))}" alt="${escapeHtml(creature.name)} portrait" width="128" height="128"/>` : `<span class="creature-ear left"></span><span class="creature-ear right"></span><span class="creature-face"><i></i><i></i></span>`}<span class="creature-spark">✧</span></div><div class="creature-title"><div><div class="eyebrow">${tamed ? 'YOUR COMPANION' : creature.owner > 0 ? 'VILLAGER COMPANION' : 'A WILD LITTLE WONDER'}</div><h3>${creature.name}</h3></div><span class="element-tag">${creature.elements.join(' / ')}</span></div><p class="creature-description">${definition.description}</p><p class="creature-diet"><b>Likes</b> ${definition.diet.map((id) => ITEMS[id].name).join(', ')} <span>·</span> <b>Bathes in</b> ${definition.bath}</p>${tamed ? `<div class="creature-stats"><span>LV ${creature.level}</span><span>HP ${Math.ceil(creature.hp)} / ${creature.maxHp}</span><span>ATK ${creature.attack}</span><span>DEF ${creature.defense}</span></div>${meter('Food', creature.food)}${meter('Water', creature.water, 'water')}${meter('Recreation', creature.recreation)}${meter('Cleanliness', creature.cleanliness, 'water')}${meter('Rest', creature.rest, 'warm')}${meter('Wildness', creature.wildness, 'warm')}` : `<div class="wild-stats"><span>HP ???</span><span>ATK ???</span><span>DEF ???</span></div>${meter('Trust', creature.trust, 'warm')}`}<p class="creature-mode">${escapeHtml(creature.mode)} · ${escapeHtml(creature.nature.join(', '))} · ${Math.round(Math.hypot(creature.x - this.frame!.player.x, creature.y - this.frame!.player.y))} tiles away</p><div class="care-buttons">${(['feed', 'water', 'pet', 'bathe', 'heal'] as const).map((action) => `<button data-action="care" data-care="${action}" data-id="${creature.id}">${action[0]!.toUpperCase() + action.slice(1)}</button>`).join('')}</div><button class="wide-secondary" data-action="${tamed ? 'release' : 'tame'}" data-id="${creature.id}">${tamed ? 'Release to the wild' : 'Form a partnership'} <span>♡</span></button></div>`;
+    return `<div class="creature-card"><div class="creature-art creature-art-${creature.species}" style="--creature:#${definition.color.toString(16)}">${portrait ? `<img src="${escapeHtml(appUrl(portrait.hud128))}" alt="${escapeHtml(creature.name)} portrait" width="128" height="128"/>` : `<span class="creature-ear left"></span><span class="creature-ear right"></span><span class="creature-face"><i></i><i></i></span>`}<span class="creature-spark">✧</span></div><div class="creature-title"><div><div class="eyebrow">${tamed ? 'YOUR COMPANION' : creature.owner > 0 ? 'VILLAGER COMPANION' : 'A WILD LITTLE WONDER'}</div><h3>${creature.name}</h3></div><span class="element-tag">${creature.elements.join(' / ')}</span></div><p class="creature-description">${definition.description}</p><p class="creature-diet"><b>Likes</b> ${definition.diet.map((id) => ITEMS[id].name).join(', ')} <span>·</span> <b>Bathes in</b> ${definition.bath}</p>${tamed ? `<div class="creature-stats"><span>LV ${creature.level}</span><span>HP ${Math.ceil(creature.hp)} / ${creature.maxHp}</span><span>ATK ${creature.attack}</span><span>DEF ${creature.defense}</span></div>${meter('Food', creature.food)}${meter('Water', creature.water, 'water')}${meter('Recreation', creature.recreation)}${meter('Cleanliness', creature.cleanliness, 'water')}${meter('Rest', creature.rest, 'warm')}${meter('Wildness', creature.wildness, 'warm')}` : `<div class="wild-stats"><span>HP ???</span><span>ATK ???</span><span>DEF ???</span></div>${meter('Trust', creature.trust, 'warm')}`}<p class="creature-mode">${escapeHtml(creature.mode)} · ${escapeHtml(creature.nature.join(', '))} · ${Math.round(Math.hypot(creature.x - this.frame!.player.x, creature.y - this.frame!.player.y))} tiles away</p><div class="care-buttons">${(['feed', 'water', 'pet', 'bathe', 'heal'] as const).map((action) => `<button data-action="care" data-care="${action}" data-id="${creature.id}">${action[0]!.toUpperCase() + action.slice(1)}</button>`).join('')}</div><button class="wide-secondary" data-action="${tamed ? 'release' : 'tame'}" data-id="${creature.id}">${tamed ? 'Release to the wild' : 'Form a partnership'} <span>♡</span></button><button class="secondary" data-action="partner-focus" data-id="${creature.id}">Companion: focus</button><button class="secondary" data-action="partner-regroup">Companion: regroup</button></div>`;
   }
   private renderConversation(): void {
     const frame = this.frame!,
@@ -807,6 +833,8 @@ export class HudPresenter {
       for (const kind of ['player', 'partner', 'villager', 'wild'] as const)
         for (const cat of ['melee', 'ranged'] as const)
           this.el<HTMLInputElement>(`combat-${kind}-${cat}`).value = String(settings[kind][cat]);
+      this.el<HTMLInputElement>('combat-reaction-min').value = String(settings.reactionDelay.min);
+      this.el<HTMLInputElement>('combat-reaction-max').value = String(settings.reactionDelay.max);
       this.el<HTMLInputElement>('combat-spacing').value = String(settings.grantSpacing);
       this.el<HTMLInputElement>('combat-aggression').value = String(settings.aggressionBias);
     }

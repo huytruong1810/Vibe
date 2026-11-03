@@ -1,3 +1,9 @@
+import {
+  MindSnapshotSchema,
+  emptyMinds,
+  initialMindRecord,
+  validateMindState,
+} from './creature-minds';
 import { MemoryStateSchema, migrateMemory } from './memory';
 import { z } from 'zod';
 import { ITEMS, ItemIdSchema, NPC_PROFILES } from '../content/definitions';
@@ -35,6 +41,7 @@ const item = z
   .strict();
 const nullableItem = item.nullable();
 const attack = legacy.player.shape.attack.unwrap().extend({
+  category: z.enum(['melee', 'ranged']).optional(),
   moveId: z.enum(['strike', 'element', 'sword_slash', 'spear_thrust', 'bow_shot']).optional(),
   instanceId: z
     .string()
@@ -136,7 +143,7 @@ const projectiles = z
 export const GameSaveSchema = z
   .object({
     ...legacy,
-    version: z.literal(7),
+    version: z.literal(8),
     npcs: z.array(legacy.npcs.element.extend({ memory: MemoryStateSchema })).length(30),
     artifacts: ArtifactRecordsSchema,
     artifactSequence: z.number().int().min(0).max(Number.MAX_SAFE_INTEGER),
@@ -158,6 +165,7 @@ export const GameSaveSchema = z
       records: z
         .array(
           legacy.entities.shape.records.element.extend({
+            bondHearts: finite.min(0).max(10),
             scene: sceneCode,
             heightMeters: finite.min(0.1).max(4),
             massKg: finite.min(0.2).max(1000),
@@ -175,6 +183,8 @@ export const GameSaveSchema = z
     carrion: z.array(carrion).max(CONFIG.creatureCapacity * 2),
     supplies: z.array(legacy.supplies.element.extend({ scene: sceneCode.optional() })).length(9),
     combat: legacy.combat.extend({
+      minds: MindSnapshotSchema,
+      failedHunts: z.array(z.tuple([uint, uint])).max(CONFIG.creatureCapacity),
       director: DirectorSnapshotSchema,
       attacks: z.array(z.tuple([uint, attack])).max(CONFIG.creatureCapacity + 31),
       projectiles,
@@ -193,6 +203,7 @@ export const GameSaveSchema = z
       for (const issue of old.error.issues)
         ctx.addIssue({ code: 'custom', path: issue.path, message: issue.message });
     validateV4(save, fail);
+    validateMindState(save.combat.minds, save.entities.records, save.tick, fail);
     const artifacts = new Map(save.artifacts.map((a) => [a.id, a]));
     const refs = new Map<string, number>();
     const reference = (id: string | undefined, kind: string, hasInstance = true): void => {
@@ -256,7 +267,13 @@ function v3Projection(save: GameSave): unknown {
     ...base
   } = save;
   const { guarding: _guarding, ...player } = save.player;
-  const { projectiles: _projectiles, director: _director, ...combat } = save.combat;
+  const {
+    projectiles: _projectiles,
+    director: _director,
+    minds: _minds,
+    failedHunts: _failedHunts,
+    ...combat
+  } = save.combat;
   const oldItem = (value: GameSave['inventory'][number]) => {
     if (!value) return null;
     const { charges: _charges, artifact: _artifact, ...old } = value;
@@ -283,6 +300,7 @@ function v3Projection(save: GameSave): unknown {
         ({
           scene: _scene,
           heightMeters: _height,
+          bondHearts: _bond,
           massKg: _mass,
           recoilX: _rx,
           recoilY: _ry,
@@ -326,11 +344,12 @@ function validateV4(save: GameSave, fail: (message: string) => void): void {
       fail('Invalid director hold');
     if (a && action) {
       const expected =
-        action.moveId === 'bow_shot'
+        action.category ??
+        (action.moveId === 'bow_shot'
           ? 'ranged'
           : action.moveId && action.moveId !== 'element'
             ? 'melee'
-            : CREATURE_MOVES[SPECIES[a.species]?.id ?? 'human'].category;
+            : CREATURE_MOVES[SPECIES[a.species]?.id ?? 'human'].category);
       if (category !== expected) fail('Director category disagrees with attack');
     }
     heldActors.add(actor);
@@ -684,6 +703,33 @@ export function migrateSave(input: unknown): GameSave {
           waiting: [],
           grants: [...grants],
         },
+      },
+    };
+  }
+  if (candidate.version === 7) {
+    const combat = candidate.combat as Record<string, unknown>;
+    const director = combat.director as Record<string, unknown>;
+    const settings = director.settings as Record<string, unknown>;
+    const entities = candidate.entities as { records: Record<string, unknown>[] };
+    candidate = {
+      ...candidate,
+      version: 8,
+      entities: { ...entities, records: entities.records.map((r) => ({ ...r, bondHearts: 0 })) },
+      combat: {
+        ...combat,
+        failedHunts: [],
+        minds: {
+          ...emptyMinds(),
+          records: entities.records
+            .filter((r) => Number(r.species) < 8)
+            .map((r) =>
+              initialMindRecord(
+                r as unknown as Parameters<typeof initialMindRecord>[0],
+                candidate.seed as number,
+              ),
+            ),
+        },
+        director: { ...director, settings: { ...settings, reactionDelay: { min: 2, max: 4 } } },
       },
     };
   }

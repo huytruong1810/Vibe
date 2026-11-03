@@ -1,0 +1,1934 @@
+{
+  "rows": [
+    {
+      "tick": 85,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.32861328125,
+          "y": 283.281005859375,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 88,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.5482482910156,
+          "y": 283.1346130371094,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 91,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.76788330078125,
+          "y": 282.98822021484375,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 94,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.9875183105469,
+          "y": 282.8418273925781,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 98,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.2803649902344,
+          "y": 282.6466369628906,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 101,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.5,
+          "y": 282.500244140625,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 104,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.7196350097656,
+          "y": 282.3538513183594,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 108,
+      "actors": [
+        {
+          "id": 100,
+          "x": 268.0124816894531,
+          "y": 282.1586608886719,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 111,
+      "actors": [
+        {
+          "id": 100,
+          "x": 268.085693359375,
+          "y": 282.10986328125,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 114,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.8660583496094,
+          "y": 282.2562561035156,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 118,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.5732116699219,
+          "y": 282.4514465332031,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 121,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.35357666015625,
+          "y": 282.59783935546875,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 124,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.1339416503906,
+          "y": 282.7442321777344,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 128,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.8410949707031,
+          "y": 282.9394226074219,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 131,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.6214599609375,
+          "y": 283.0858154296875,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 134,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.4018249511719,
+          "y": 283.2322082519531,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 138,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.1089782714844,
+          "y": 283.4273986816406,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 141,
+      "actors": [
+        {
+          "id": 100,
+          "x": 265.9625549316406,
+          "y": 283.5249938964844,
+          "intent": "strike",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:100:140",
+            "startedAt": 140,
+            "activeAt": 144,
+            "recoveryAt": 146,
+            "endsAt": 155
+          }
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 145,
+      "actors": [
+        {
+          "id": 100,
+          "x": 265.9625549316406,
+          "y": 283.5249938964844,
+          "intent": "retreat",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:100:140",
+            "startedAt": 140,
+            "activeAt": 144,
+            "recoveryAt": 146,
+            "endsAt": 155
+          }
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 148,
+      "actors": [
+        {
+          "id": 100,
+          "x": 265.9625549316406,
+          "y": 283.5249938964844,
+          "intent": "retreat",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:100:140",
+            "startedAt": 140,
+            "activeAt": 144,
+            "recoveryAt": 146,
+            "endsAt": 155
+          }
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 151,
+      "actors": [
+        {
+          "id": 100,
+          "x": 265.9625549316406,
+          "y": 283.5249938964844,
+          "intent": "retreat",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:100:140",
+            "startedAt": 140,
+            "activeAt": 144,
+            "recoveryAt": 146,
+            "endsAt": 155
+          }
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 155,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.0357666015625,
+          "y": 283.4761962890625,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 158,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.2554016113281,
+          "y": 283.3298034667969,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 161,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.47503662109375,
+          "y": 283.18341064453125,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 165,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.76788330078125,
+          "y": 282.98822021484375,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 168,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.9875183105469,
+          "y": 282.8418273925781,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 171,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.2071533203125,
+          "y": 282.6954345703125,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 175,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.5,
+          "y": 282.500244140625,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 178,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.7196350097656,
+          "y": 282.3538513183594,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 181,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.93927001953125,
+          "y": 282.20745849609375,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 185,
+      "actors": [
+        {
+          "id": 100,
+          "x": 268.085693359375,
+          "y": 282.10986328125,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 188,
+      "actors": [
+        {
+          "id": 100,
+          "x": 268.085693359375,
+          "y": 282.10986328125,
+          "intent": "retreat",
+          "pose": "idle",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 192,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.8660583496094,
+          "y": 282.2562561035156,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 195,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.64642333984375,
+          "y": 282.40264892578125,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 198,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.4267883300781,
+          "y": 282.5490417480469,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 202,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.1339416503906,
+          "y": 282.7442321777344,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 205,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.914306640625,
+          "y": 282.890625,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 208,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.6946716308594,
+          "y": 283.0370178222656,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 212,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.4018249511719,
+          "y": 283.2322082519531,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 215,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.18218994140625,
+          "y": 283.37860107421875,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 218,
+      "actors": [
+        {
+          "id": 100,
+          "x": 265.9625549316406,
+          "y": 283.5249938964844,
+          "intent": "strike",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:100:218",
+            "startedAt": 218,
+            "activeAt": 222,
+            "recoveryAt": 224,
+            "endsAt": 233
+          }
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 222,
+      "actors": [
+        {
+          "id": 100,
+          "x": 265.9625549316406,
+          "y": 283.5249938964844,
+          "intent": "retreat",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:100:218",
+            "startedAt": 218,
+            "activeAt": 222,
+            "recoveryAt": 224,
+            "endsAt": 233
+          }
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 225,
+      "actors": [
+        {
+          "id": 100,
+          "x": 265.9625549316406,
+          "y": 283.5249938964844,
+          "intent": "retreat",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:100:218",
+            "startedAt": 218,
+            "activeAt": 222,
+            "recoveryAt": 224,
+            "endsAt": 233
+          }
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 229,
+      "actors": [
+        {
+          "id": 100,
+          "x": 265.9625549316406,
+          "y": 283.5249938964844,
+          "intent": "retreat",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:100:218",
+            "startedAt": 218,
+            "activeAt": 222,
+            "recoveryAt": 224,
+            "endsAt": 233
+          }
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 232,
+      "actors": [
+        {
+          "id": 100,
+          "x": 265.9625549316406,
+          "y": 283.5249938964844,
+          "intent": "retreat",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:100:218",
+            "startedAt": 218,
+            "activeAt": 222,
+            "recoveryAt": 224,
+            "endsAt": 233
+          }
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 235,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.18218994140625,
+          "y": 283.37860107421875,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 239,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.47503662109375,
+          "y": 283.18341064453125,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 242,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.6946716308594,
+          "y": 283.0370178222656,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 245,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.914306640625,
+          "y": 282.890625,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 249,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.2071533203125,
+          "y": 282.6954345703125,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 252,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.4267883300781,
+          "y": 282.5490417480469,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 255,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.64642333984375,
+          "y": 282.40264892578125,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 259,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.93927001953125,
+          "y": 282.20745849609375,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 263,
+      "actors": [
+        {
+          "id": 100,
+          "x": 268.085693359375,
+          "y": 282.10986328125,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 266,
+      "actors": [
+        {
+          "id": 100,
+          "x": 268.085693359375,
+          "y": 282.10986328125,
+          "intent": "retreat",
+          "pose": "idle",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 269,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.93927001953125,
+          "y": 282.20745849609375,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 273,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.64642333984375,
+          "y": 282.40264892578125,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 276,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.4267883300781,
+          "y": 282.5490417480469,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 279,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.2071533203125,
+          "y": 282.6954345703125,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 283,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.914306640625,
+          "y": 282.890625,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 286,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.6946716308594,
+          "y": 283.0370178222656,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 289,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.47503662109375,
+          "y": 283.18341064453125,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 293,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.18218994140625,
+          "y": 283.37860107421875,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 296,
+      "actors": [
+        {
+          "id": 100,
+          "x": 265.9625549316406,
+          "y": 283.5249938964844,
+          "intent": "strike",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:100:296",
+            "startedAt": 296,
+            "activeAt": 300,
+            "recoveryAt": 302,
+            "endsAt": 311
+          }
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 300,
+      "actors": [
+        {
+          "id": 100,
+          "x": 265.9625549316406,
+          "y": 283.5249938964844,
+          "intent": "retreat",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:100:296",
+            "startedAt": 296,
+            "activeAt": 300,
+            "recoveryAt": 302,
+            "endsAt": 311
+          }
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 303,
+      "actors": [
+        {
+          "id": 100,
+          "x": 265.9625549316406,
+          "y": 283.5249938964844,
+          "intent": "retreat",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:100:296",
+            "startedAt": 296,
+            "activeAt": 300,
+            "recoveryAt": 302,
+            "endsAt": 311
+          }
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 306,
+      "actors": [
+        {
+          "id": 100,
+          "x": 265.9625549316406,
+          "y": 283.5249938964844,
+          "intent": "retreat",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:100:296",
+            "startedAt": 296,
+            "activeAt": 300,
+            "recoveryAt": 302,
+            "endsAt": 311
+          }
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 310,
+      "actors": [
+        {
+          "id": 100,
+          "x": 265.9625549316406,
+          "y": 283.5249938964844,
+          "intent": "retreat",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:100:296",
+            "startedAt": 296,
+            "activeAt": 300,
+            "recoveryAt": 302,
+            "endsAt": 311
+          }
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 314,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.2554016113281,
+          "y": 283.3298034667969,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 317,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.47503662109375,
+          "y": 283.18341064453125,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 321,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.76788330078125,
+          "y": 282.98822021484375,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 324,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.9875183105469,
+          "y": 282.8418273925781,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 327,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.2071533203125,
+          "y": 282.6954345703125,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 330,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.4267883300781,
+          "y": 282.5490417480469,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 334,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.7196350097656,
+          "y": 282.3538513183594,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 337,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.93927001953125,
+          "y": 282.20745849609375,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 340,
+      "actors": [
+        {
+          "id": 100,
+          "x": 268.085693359375,
+          "y": 282.10986328125,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 344,
+      "actors": [
+        {
+          "id": 100,
+          "x": 268.085693359375,
+          "y": 282.10986328125,
+          "intent": "retreat",
+          "pose": "idle",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 347,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.93927001953125,
+          "y": 282.20745849609375,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 350,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.7196350097656,
+          "y": 282.3538513183594,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 354,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.4267883300781,
+          "y": 282.5490417480469,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 357,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.2071533203125,
+          "y": 282.6954345703125,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 360,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.9875183105469,
+          "y": 282.8418273925781,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 363,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.76788330078125,
+          "y": 282.98822021484375,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 367,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.47503662109375,
+          "y": 283.18341064453125,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 370,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.2554016113281,
+          "y": 283.3298034667969,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 373,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.0357666015625,
+          "y": 283.4761962890625,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 377,
+      "actors": [
+        {
+          "id": 100,
+          "x": 265.9625549316406,
+          "y": 283.5249938964844,
+          "intent": "retreat",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:100:374",
+            "startedAt": 374,
+            "activeAt": 378,
+            "recoveryAt": 380,
+            "endsAt": 389
+          }
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 380,
+      "actors": [
+        {
+          "id": 100,
+          "x": 265.9625549316406,
+          "y": 283.5249938964844,
+          "intent": "retreat",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:100:374",
+            "startedAt": 374,
+            "activeAt": 378,
+            "recoveryAt": 380,
+            "endsAt": 389
+          }
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 384,
+      "actors": [
+        {
+          "id": 100,
+          "x": 265.9625549316406,
+          "y": 283.5249938964844,
+          "intent": "retreat",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:100:374",
+            "startedAt": 374,
+            "activeAt": 378,
+            "recoveryAt": 380,
+            "endsAt": 389
+          }
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 387,
+      "actors": [
+        {
+          "id": 100,
+          "x": 265.9625549316406,
+          "y": 283.5249938964844,
+          "intent": "retreat",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:100:374",
+            "startedAt": 374,
+            "activeAt": 378,
+            "recoveryAt": 380,
+            "endsAt": 389
+          }
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 391,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.18218994140625,
+          "y": 283.37860107421875,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 394,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.4018249511719,
+          "y": 283.2322082519531,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 397,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.6214599609375,
+          "y": 283.0858154296875,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 401,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.914306640625,
+          "y": 282.890625,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 404,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.1339416503906,
+          "y": 282.7442321777344,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 408,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.4267883300781,
+          "y": 282.5490417480469,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 411,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.64642333984375,
+          "y": 282.40264892578125,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 414,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.8660583496094,
+          "y": 282.2562561035156,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 418,
+      "actors": [
+        {
+          "id": 100,
+          "x": 268.085693359375,
+          "y": 282.10986328125,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 421,
+      "actors": [
+        {
+          "id": 100,
+          "x": 268.085693359375,
+          "y": 282.10986328125,
+          "intent": "retreat",
+          "pose": "idle",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 424,
+      "actors": [
+        {
+          "id": 100,
+          "x": 268.0124816894531,
+          "y": 282.1586608886719,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 428,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.7196350097656,
+          "y": 282.3538513183594,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 431,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.5,
+          "y": 282.500244140625,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 434,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.2803649902344,
+          "y": 282.6466369628906,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 438,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.9875183105469,
+          "y": 282.8418273925781,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 441,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.76788330078125,
+          "y": 282.98822021484375,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 445,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.47503662109375,
+          "y": 283.18341064453125,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 448,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.2554016113281,
+          "y": 283.3298034667969,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 451,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.0357666015625,
+          "y": 283.4761962890625,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 455,
+      "actors": [
+        {
+          "id": 100,
+          "x": 265.9625549316406,
+          "y": 283.5249938964844,
+          "intent": "retreat",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:100:452",
+            "startedAt": 452,
+            "activeAt": 456,
+            "recoveryAt": 458,
+            "endsAt": 467
+          }
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 458,
+      "actors": [
+        {
+          "id": 100,
+          "x": 265.9625549316406,
+          "y": 283.5249938964844,
+          "intent": "retreat",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:100:452",
+            "startedAt": 452,
+            "activeAt": 456,
+            "recoveryAt": 458,
+            "endsAt": 467
+          }
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 461,
+      "actors": [
+        {
+          "id": 100,
+          "x": 265.9625549316406,
+          "y": 283.5249938964844,
+          "intent": "retreat",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:100:452",
+            "startedAt": 452,
+            "activeAt": 456,
+            "recoveryAt": 458,
+            "endsAt": 467
+          }
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 465,
+      "actors": [
+        {
+          "id": 100,
+          "x": 265.9625549316406,
+          "y": 283.5249938964844,
+          "intent": "retreat",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:100:452",
+            "startedAt": 452,
+            "activeAt": 456,
+            "recoveryAt": 458,
+            "endsAt": 467
+          }
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 468,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.1089782714844,
+          "y": 283.4273986816406,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 471,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.32861328125,
+          "y": 283.281005859375,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 475,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.6214599609375,
+          "y": 283.0858154296875,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 478,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.8410949707031,
+          "y": 282.9394226074219,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 481,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.06072998046875,
+          "y": 282.79302978515625,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 485,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.35357666015625,
+          "y": 282.59783935546875,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 488,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.5732116699219,
+          "y": 282.4514465332031,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 492,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.8660583496094,
+          "y": 282.2562561035156,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 495,
+      "actors": [
+        {
+          "id": 100,
+          "x": 268.085693359375,
+          "y": 282.10986328125,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 498,
+      "actors": [
+        {
+          "id": 100,
+          "x": 268.085693359375,
+          "y": 282.10986328125,
+          "intent": "retreat",
+          "pose": "idle",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 502,
+      "actors": [
+        {
+          "id": 100,
+          "x": 268.0124816894531,
+          "y": 282.1586608886719,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 505,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.7928466796875,
+          "y": 282.3050537109375,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    }
+  ],
+  "starts": [
+    140,
+    218,
+    296,
+    374,
+    452
+  ],
+  "beats": {
+    "notice": 40,
+    "stalk": 54,
+    "commit": 68
+  }
+}

@@ -32,6 +32,8 @@ export enum TileFlag {
   Protected = 8,
   Ice = 16,
   Burning = 32,
+  Reeds = 64,
+  DeepWater = 128,
 }
 export const BIOME_NAMES = [
   'Riverlands',
@@ -402,6 +404,7 @@ export class WorldGenerator {
 }
 
 export interface Traversal {
+  readonly air?: boolean;
   readonly lava: boolean;
   readonly water: boolean;
 }
@@ -418,10 +421,11 @@ export class SurfaceRules {
       flags = world.flags[i]!;
     if (flags & TileFlag.Solid) return false;
     const fluid = world.fluid[i]!;
-    if (fluid === Fluid.Lava && !traversal.lava) return false;
+    if (fluid === Fluid.Lava && !traversal.lava && !traversal.air) return false;
     if (
       (fluid === Fluid.Freshwater || fluid === Fluid.Saltwater) &&
       !(flags & TileFlag.Ice) &&
+      !traversal.air &&
       !traversal.water
     )
       return false;
@@ -433,12 +437,24 @@ export class SurfaceRules {
     to: WorldPosition,
     traversal: Traversal = PLAYER_TRAVERSAL,
   ): boolean {
-    if (!this.walkable(world, to.x, to.y, traversal)) return false;
-    const a = world.index(from.x, from.y),
-      b = world.index(to.x, to.y);
+    return this.canStepAt(world, from.x, from.y, to.x, to.y, traversal);
+  }
+  static canStepAt(
+    world: ChunkStore,
+    fromX: number,
+    fromY: number,
+    toX: number,
+    toY: number,
+    traversal: Traversal,
+  ): boolean {
+    if (!this.walkable(world, toX, toY, traversal)) return false;
+    const a = world.index(fromX, fromY),
+      b = world.index(toX, toY);
     const delta = Math.abs(world.elevation[a]! - world.elevation[b]!);
     return (
-      delta === 0 || (delta === 1 && ((world.flags[a]! | world.flags[b]!) & TileFlag.Ramp) !== 0)
+      (traversal.air && delta <= 2) ||
+      delta === 0 ||
+      (delta === 1 && ((world.flags[a]! | world.flags[b]!) & TileFlag.Ramp) !== 0)
     );
   }
   static medium(world: ChunkStore, index: number): Medium | null {

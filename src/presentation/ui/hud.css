@@ -510,3 +510,21 @@ body:has(.hd-game) {
   color: var(--ink);
   font-size: 32px;
 }
+
+.creature-minds-debug {
+  position: fixed;
+  top: 25%;
+  left: 1rem;
+  max-width: 42rem;
+  max-height: 40vh;
+  overflow: auto;
+  white-space: pre-wrap;
+  pointer-events: none;
+  z-index: 30;
+  padding: 0.5rem;
+  background: var(--ui-panel);
+  color: var(--ui-text);
+  font: inherit;
+  border: 6px solid transparent;
+  border-image: url('/assets/generated/ui/frame_thin.png') 6 fill / 6px / 0 repeat;
+}

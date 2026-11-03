@@ -496,6 +496,17 @@ incoming attacks. Inverse effect masks reserve cue space. Existing predator spri
 receive presentation-only crouch/shiver; authored anticipation remains an art follow-up.
 Full perception, intent selection and reaction delay remain C13.
 
+**C13 implementation, 2026-11-03:** save v8 adds fixed observation/conditioning and
+scripted-rules identity, typed-array intent/reaction/history/home/pack/RNG state and
+separate 0–10 bond hearts. Perception precedes engagement, director selection, brain,
+one intent movement update and attack resolution. Category-specific transient
+selection commits only when the matching attack starts. Calm needs behavior and
+human/NPC combat remain. Both winged species use separate air navigation cache keys
+and land for needs; home uses spawn plus a 12-tile fallback until habitats activate.
+At most 48 nearby brains decide at full cadence; remaining loaded combatants decide
+at 2 Hz while movement/combat continues. The overworld remains one loaded scene;
+this does not add a region streamer. No learned policy ships in C13.
+
 ## ADR 034 - Exact-SHA beta deployments and optional local AI
 
 **Decision:** C22 deploys only a successful studio push's SHA, via a separate Pages

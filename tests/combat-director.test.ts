@@ -27,6 +27,18 @@ function pack(count = 20, world = false) {
     ids.push(id);
     combat.pursuits.set(id, { target: 0, cause: 'territory', until: 3000 });
   }
+  // Director tests start after the independently tested notice/brain phase.
+  combat.minds.sync();
+  for (const id of ids) {
+    const i = store.require(id),
+      a = combat.minds.state;
+    combat.minds.alert(i, 0, 0);
+    a.engage[i] = 2;
+    a.intent[i] = a.request[i] = 6;
+    a.nextDecision[i] = 1e9;
+    a.until[i] = 0;
+    a.flanked[i] = 1;
+  }
   return { store, p, combat, ids, spatial: new SpatialIndex() };
 }
 
@@ -45,19 +57,19 @@ describe('combat director', () => {
     d.commit(0, 2, 'melee', 90);
     expect(d.snapshot().holds).toEqual([[0xfffffffe, 0xfffffffd, 'melee']]);
   });
-  it('holds the token for all 7 windup, 3 active and 16 recovery ticks', () => {
+  it('holds a scripted strike token for all 4 windup, 2 active and 9 recovery ticks', () => {
     const { combat, ids, spatial, p } = pack(1);
     p.invulnerableUntil = 100;
-    for (let tick = 1; tick <= 26; tick++) {
+    for (let tick = 1; tick <= 15; tick++) {
       combat.advance(tick, spatial);
       expect(combat.snapshot().director!.holds).toHaveLength(1);
       const timing = combat.presentation(ids[0]!, tick)!;
-      expect(timing).toMatchObject({ startedAt: 1, activeAt: 8, recoveryAt: 11, endsAt: 27 });
+      expect(timing).toMatchObject({ startedAt: 1, activeAt: 5, recoveryAt: 7, endsAt: 16 });
       expect(combat.telegraph(ids[0]!, tick)?.phase).toBe(
-        tick < 8 ? 'windup' : tick < 11 ? 'active' : undefined,
+        tick < 5 ? 'windup' : tick < 7 ? 'active' : undefined,
       );
     }
-    combat.advance(27, spatial);
+    combat.advance(16, spatial);
     expect(combat.snapshot().director!.holds).toHaveLength(0);
   });
   it('limits actual attack phases and staggers a 20-creature pack through recovery', () => {
@@ -128,9 +140,15 @@ describe('combat director', () => {
       const target = store.id(b),
         limits = DEFAULT_COMBAT_SETTINGS[kind];
       for (let n = 0; n < ids.length; n++) {
-        if (n >= 3) store.species[store.require(ids[n]!)] = 1;
+        if (n >= 3) {
+          const slot = store.require(ids[n]!);
+          store.species[slot] = 1;
+          combat.minds.state.intent[slot] = combat.minds.state.request[slot] = 7;
+        }
         combat.pursuits.set(ids[n]!, { target, cause: 'territory', until: 3000 });
       }
+      combat.minds.sync();
+      store.setNature(b, { response: 'avoid', aggression: [] });
       const granted = new Set<string>();
       for (let tick = 1; tick < 120; tick++) {
         p.hp = p.maxHp;
@@ -230,6 +248,8 @@ describe('combat director', () => {
       const { combat, store, ids, spatial, p } = pack(1);
       const a = store.require(ids[0]!);
       store.species[a] = species;
+      combat.minds.state.intent[a] = combat.minds.state.request[a] =
+        CREATURE_MOVES[store.definition(a).id].category === 'melee' ? 6 : 7;
       store.level[a] = 40;
       store.food[a] = store.water[a] = store.rest[a] = 0.1;
       p.guarding = true;
@@ -241,13 +261,17 @@ describe('combat director', () => {
       });
     },
   );
-  it('shows follow, defensive guard and attack from the existing partner state', () => {
+  it('shows the real follow, guard and strike intent from brain state', () => {
     const { combat, ids, spatial } = pack(1);
+    const slot = combat.minds.ids.findIndex((id) => id === ids[0]);
+    combat.minds.state.intent[slot] = 8;
     expect(combat.partnerIntent(ids[0]!, 1)).toBe('guard');
+    combat.minds.state.intent[slot] = 6;
     combat.advance(1, spatial);
-    expect(combat.partnerIntent(ids[0]!, 1)).toBe('attack');
+    expect(combat.partnerIntent(ids[0]!, 1)).toBe('strike');
     combat.cancelAction(ids[0]!);
     combat.pursuits.clear();
+    combat.minds.state.engage[slot] = 0;
     expect(combat.partnerIntent(ids[0]!, 1)).toBe('follow');
   });
   it('replays a mid-fight save and migrates v6 attack timing without restarting', () => {
@@ -267,7 +291,7 @@ describe('combat director', () => {
     }
     expect(b.snapshot().combat).toEqual(a.snapshot().combat);
     expect(b.player.hp).toBe(a.player.hp);
-    const { director: _director, ...legacyCombat } = saved.combat;
+    const { director: _director, minds: _minds, ...legacyCombat } = saved.combat;
     const old = { ...saved, version: 6, combat: legacyCombat };
     const migrated = migrateSave(old);
     expect(migrated.combat.attacks).toEqual(saved.combat.attacks);

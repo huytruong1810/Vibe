@@ -18,6 +18,19 @@ import type { ScenePresentation, ProjectilePresentation } from './presentation-c
 const npc = z.enum(NPC_PROFILES.map((n) => n.id) as [NpcId, ...NpcId[]]);
 const slot = z.union([z.literal(0), z.literal(1)]);
 export const CommandPayloadSchema = z.discriminatedUnion('type', [
+  z
+    .object({
+      type: z.literal('partnerCommand'),
+      command: z.enum(['focus', 'regroup']),
+      target: z.number().int().nonnegative().optional(),
+    })
+    .strict(),
+  z
+    .object({
+      type: z.literal('inspectCreature'),
+      entityId: z.number().int().nonnegative().nullable(),
+    })
+    .strict(),
   z.object({ type: z.literal('configureCombat'), settings: CombatSettingsSchema }).strict(),
   z.object({ type: z.literal('configureContext'), settings: ContextSettingsSchema }).strict(),
   z
@@ -187,6 +200,14 @@ export interface PerformanceView {
   readonly context?: { tokens: number; budget: number; compactions: number; truncated: boolean };
 }
 export interface RenderSnapshot {
+  readonly creatureDebug?: readonly {
+    id: number;
+    intent: string;
+    target: number;
+    token: number;
+    scores: readonly { intent: string; score: number }[];
+    observation?: readonly number[];
+  }[];
   readonly combatSettings: CombatSettings;
   readonly equipment: EquipmentView;
   readonly scene: ScenePresentation;

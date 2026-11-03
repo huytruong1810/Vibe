@@ -1,3 +1,5 @@
+import { ChunkStore } from '../src/domain/world';
+import { SpatialIndex } from '../src/domain/navigation';
 import { NpcProfileRegistry, PlanService, MemoryRepository } from '../src/domain/agents';
 import { cpus, platform, arch, totalmem } from 'node:os';
 import { mkdir, writeFile } from 'node:fs/promises';
@@ -137,6 +139,8 @@ directorStore.spawnHuman(0, 1, 20, 20);
 bindBody(directorPlayer, directorStore, 0);
 const directorCombat = new CombatSystem(directorStore, directorPlayer, []);
 for (let n = 0; n < 150; n++) directorStore.spawn(6, 20 + (n % 2), 20);
+directorCombat.minds.sync();
+for (let i = 0; i < 150; i++) directorCombat.minds.state.engage[i] = 2;
 const directorTimings: number[] = [],
   wildDirectorTimings: number[] = [];
 for (const paired of [false, true]) {
@@ -154,7 +158,63 @@ for (const paired of [false, true]) {
     if (n >= 300) (paired ? wildDirectorTimings : directorTimings).push(performance.now() - before);
   }
 }
+// 150 living combatants execute every tick; the 48-slot cap affects decision cadence only.
+const engagedStore = new EntityStore(),
+  engagedPlayer = { ...host.player };
+engagedStore.spawnHuman(0, 1, 64, 64);
+bindBody(engagedPlayer, engagedStore, 0);
+const engagedWorld = new ChunkStore(128),
+  engagedCombat = new CombatSystem(engagedStore, engagedPlayer, [], engagedWorld),
+  engagedSpatial = new SpatialIndex();
+for (let i = 0; i < 150; i++)
+  engagedStore.spawn(i % 8, 64 + ((i % 15) - 7) * 0.5, 64 + (Math.floor(i / 15) - 5) * 0.5);
+const brain150: number[] = [],
+  movement150: number[] = [],
+  engagedDirector150: number[] = [];
+let minimumExecuted = 150,
+  maximumFullRate = 0;
+for (let tick = 1; tick <= samples + 300; tick++) {
+  engagedPlayer.invulnerableUntil = tick + 100;
+  for (let i = 0; i < 150; i++) {
+    engagedStore.hp[i] = engagedStore.maxHp(i);
+    engagedStore.stamina[i] = 100;
+    engagedCombat.pursuits.set(engagedStore.id(i), {
+      target: 0,
+      cause: 'territory',
+      until: tick + 600,
+    });
+    // Keep this sustained-load fixture inside the same home/leash, independently of motion.
+    if (engagedCombat.minds.ids[i]! >= 0) {
+      engagedCombat.minds.state.lastSeen[i] = tick;
+      engagedCombat.minds.state.homeX[i] = 64;
+      engagedCombat.minds.state.homeY[i] = 64;
+    }
+  }
+  engagedCombat.advance(tick, engagedSpatial);
+  let executed = 0,
+    full = 0;
+  for (let i = 0; i < 150; i++) {
+    if (engagedCombat.minds.state.lastMove[i] === tick) executed++;
+    full += engagedCombat.minds.fullRate[i]!;
+  }
+  if (tick > 300) {
+    brain150.push(engagedCombat.minds.brainMs);
+    movement150.push(engagedCombat.minds.movementMs);
+    engagedDirector150.push(engagedCombat.directorMs);
+    minimumExecuted = Math.min(minimumExecuted, executed);
+    maximumFullRate = Math.max(maximumFullRate, full);
+  }
+}
+const engagedCombat150 = {
+  actors: 150,
+  minimumExecuted,
+  maximumFullRate,
+  brain: summarize(brain150),
+  movement: summarize(movement150),
+  director: summarize(engagedDirector150),
+};
 const report = {
+  engagedCombat150,
   recordedAt: new Date().toISOString(),
   runtime: process.version,
   platform: `${platform()} ${arch()}`,
@@ -203,5 +263,16 @@ if (summarize(memoryTimings).p95Ms > 5) {
 }
 if (Math.max(summarize(directorTimings).p95Ms, summarize(wildDirectorTimings).p95Ms) > 0.2) {
   console.error('Combat director p95 exceeds 0.2 ms/tick');
+  process.exitCode = 1;
+}
+
+if (
+  engagedCombat150.minimumExecuted !== 150 ||
+  engagedCombat150.maximumFullRate > 48 ||
+  engagedCombat150.brain.p95Ms > 1 ||
+  engagedCombat150.movement.p95Ms > 1 ||
+  engagedCombat150.director.p95Ms > 0.2
+) {
+  console.error('CRM-8 engagedCombat150 budget/execution gate failed');
   process.exitCode = 1;
 }

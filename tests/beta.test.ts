@@ -59,7 +59,7 @@ it('stamps exports while preserving strict save v5 and accepting legacy exports'
   const repository = new IndexedDbSaveRepository('beta-exports', new IDBFactory());
   const save = new SimulationHost(42, 1, 0).snapshot();
   const exported = JSON.parse(repository.export(save));
-  expect(exported.version).toBe(7);
+  expect(exported.version).toBe(8);
   expect(exported.build).toEqual(BUILD);
   expect(repository.import(JSON.stringify(exported))).toEqual(save);
   expect(repository.import(JSON.stringify(save))).toEqual(save);
