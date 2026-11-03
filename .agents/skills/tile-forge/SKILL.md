@@ -29,7 +29,17 @@ uv run --project art/source/forge python art/source/tiles/tools/tileforge.py <co
    `art/source/tiles/sets/<set>/set.json` and `swatches/`.
 2. **Make a swatch** (image generation is allowed for 2D, PRD-7; log it in your
    `image-ledger.md`). The prompt pattern is below. Save it as
-   `art/source/tiles/sets/<set>/swatches/<material>.png`.
+   `art/source/tiles/sets/<set>/swatches/<material>.png`. `forge.py swatch` does this (C30a):
+   - `forge.py swatch --set <set> --material <id> --prompt "<feature clause>" --n 4` generates
+     1024 px candidates from the pattern below, makes each seamless (half-offset cross-fade) and
+     writes `work/swatch-<set>-<material>/swatch/contact.png`, a 2 × 2 tiling of each with its
+     wrap-seam score (1.0 = as smooth as any line inside).
+   - LOOK at the sheet. The cross-fade leaves faint doubled features in a band across the middle;
+     choose the candidate where it shows least.
+   - `forge.py swatch --set <set> --material <id> --pick <id>` writes the swatch and logs it in
+     the image ledger. Model runs (`swatch`, `concept`, gen3d) first create `~/projects/jepa_ipomdp/runs/week/PAUSE`, wait until that project's `GPU_BUSY` file is gone (up to 2.5 h), and delete `PAUSE` afterwards (`core.gpu_window`).
+   - First trial (grass, 4 candidates): QA needed `swatchTilePx` 256 (128 made one clump per tile
+     and a visible grid) and `flatten` 2 to pass `lowFrequency`.
 3. **Write the recipe entry** (schema: `art/source/tiles/spec/tileset.schema.json`):
    - values come from `art/source/forge/spec/palette.json`, dark to light;
    - set proportions;

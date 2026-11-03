@@ -183,7 +183,7 @@ B0 is standing.
 ### B17 · Aqualia terrain set through tileforge (long design session)
 
 - moved: from the communicator's M9 on 2026-11-02 (all art is blender's, TEAM-1). Since directive 013 generate **locally** with the forge after B19's decision; quota limits no longer apply.
-- status: in_progress (scaffolded aqualia-terrain; swatches wait for claude's `forge.py swatch`, C30)
+- status: in_progress (scaffolded aqualia-terrain; `forge.py swatch` is ready (C30a, 2026-11-03): generate and pick swatches, see the tile-forge skill)
 - goal: the whole Aqualia ground in palette-locked 32-px tiles (ART-11.2), designed by you, made exact by tileforge: grass, dirt, sand, stone, mud, reedbed, boardwalk; freshwater with its 14 shore masks; dirt-path and stone-path edges; cliff strip and ramp.
 - inputs: `.agents/skills/tile-forge/SKILL.md` (read it fully first); region bible `docs/doctrine/regions/aqualia.md` and ART-13 (teal, sand, warm timber); the concept `art/source/masters/aqualia_canal_settlement_master.jpg` for mood only (its grid lines and props make it unusable as a swatch); the golden sample `art/source/tiles/sets/aqualia-grass-water/` and its packet `art/review/tiles-aqualia-grass-water-1/` (procedural stand-in swatches; beat them).
 - work, one material at a time (PRD-4), each through the skill's loop (swatch, recipe, `all`, look at all three previews, fix inputs, repeat):
