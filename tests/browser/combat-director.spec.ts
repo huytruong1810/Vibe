@@ -149,13 +149,11 @@ test('20 hostile Bramblefang have staggered tokens, readable windups and saved s
   configured.combat.director.waiting = [];
   configured.combat.director.grants = [];
   const beforeGlint = await page.evaluate(() => (window as any).__hearthwild.frame().session);
-  await page
-    .locator('#import-input')
-    .setInputFiles({
-      name: 'c14-glint.json',
-      mimeType: 'application/json',
-      buffer: Buffer.from(JSON.stringify(configured)),
-    });
+  await page.locator('#import-input').setInputFiles({
+    name: 'c14-glint.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(JSON.stringify(configured)),
+  });
   await expect
     .poll(() => page.evaluate(() => (window as any).__hearthwild.frame().session))
     .not.toBe(beforeGlint);

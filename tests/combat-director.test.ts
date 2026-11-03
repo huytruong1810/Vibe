@@ -203,6 +203,8 @@ describe('combat director', () => {
   it('keeps waiting creatures near the ring without spending attack stamina', () => {
     const { combat, store, ids, spatial, p } = pack(2, true);
     combat.configure({ ...DEFAULT_COMBAT_SETTINGS, player: { melee: 0, ranged: 0 } });
+    // A coincident spawn still needs a deterministic direction out to the ring.
+    store.x[store.require(ids[1]!)] = p.x;
     for (let tick = 1; tick <= 90; tick++) combat.advance(tick, spatial);
     for (const id of ids) {
       const a = store.require(id);

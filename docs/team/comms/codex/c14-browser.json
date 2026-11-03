@@ -1,0 +1,344 @@
+{
+  "samples": [
+    {
+      "tick": 48,
+      "active": 1,
+      "starts": [
+        46
+      ]
+    },
+    {
+      "tick": 52,
+      "active": 1,
+      "starts": [
+        46
+      ]
+    },
+    {
+      "tick": 55,
+      "active": 1,
+      "starts": [
+        46
+      ]
+    },
+    {
+      "tick": 58,
+      "active": 0,
+      "starts": [
+        46
+      ]
+    },
+    {
+      "tick": 62,
+      "active": 1,
+      "starts": [
+        59,
+        46
+      ]
+    },
+    {
+      "tick": 65,
+      "active": 1,
+      "starts": [
+        59,
+        46
+      ]
+    },
+    {
+      "tick": 68,
+      "active": 1,
+      "starts": [
+        59,
+        46
+      ]
+    },
+    {
+      "tick": 72,
+      "active": 0,
+      "starts": [
+        59
+      ]
+    },
+    {
+      "tick": 76,
+      "active": 0,
+      "starts": [
+        59
+      ]
+    },
+    {
+      "tick": 79,
+      "active": 0,
+      "starts": [
+        59
+      ]
+    },
+    {
+      "tick": 83,
+      "active": 0,
+      "starts": [
+        59
+      ]
+    },
+    {
+      "tick": 86,
+      "active": 1,
+      "starts": [
+        84
+      ]
+    },
+    {
+      "tick": 89,
+      "active": 1,
+      "starts": [
+        84
+      ]
+    },
+    {
+      "tick": 92,
+      "active": 1,
+      "starts": [
+        84
+      ]
+    },
+    {
+      "tick": 95,
+      "active": 0,
+      "starts": [
+        84
+      ]
+    },
+    {
+      "tick": 99,
+      "active": 0,
+      "starts": [
+        84
+      ]
+    },
+    {
+      "tick": 102,
+      "active": 0,
+      "starts": [
+        84
+      ]
+    },
+    {
+      "tick": 105,
+      "active": 1,
+      "starts": [
+        84,
+        103
+      ]
+    },
+    {
+      "tick": 109,
+      "active": 1,
+      "starts": [
+        84,
+        103
+      ]
+    },
+    {
+      "tick": 113,
+      "active": 0,
+      "starts": [
+        103
+      ]
+    },
+    {
+      "tick": 116,
+      "active": 0,
+      "starts": [
+        103
+      ]
+    },
+    {
+      "tick": 119,
+      "active": 0,
+      "starts": [
+        103
+      ]
+    },
+    {
+      "tick": 123,
+      "active": 1,
+      "starts": [
+        103,
+        122
+      ]
+    },
+    {
+      "tick": 127,
+      "active": 1,
+      "starts": [
+        103,
+        122
+      ]
+    },
+    {
+      "tick": 130,
+      "active": 1,
+      "starts": [
+        122
+      ]
+    },
+    {
+      "tick": 133,
+      "active": 0,
+      "starts": [
+        122
+      ]
+    },
+    {
+      "tick": 137,
+      "active": 0,
+      "starts": [
+        122
+      ]
+    },
+    {
+      "tick": 140,
+      "active": 0,
+      "starts": [
+        122
+      ]
+    },
+    {
+      "tick": 143,
+      "active": 1,
+      "starts": [
+        141,
+        122
+      ]
+    },
+    {
+      "tick": 147,
+      "active": 1,
+      "starts": [
+        141,
+        122
+      ]
+    },
+    {
+      "tick": 150,
+      "active": 1,
+      "starts": [
+        141
+      ]
+    },
+    {
+      "tick": 153,
+      "active": 0,
+      "starts": [
+        141
+      ]
+    },
+    {
+      "tick": 157,
+      "active": 0,
+      "starts": [
+        141
+      ]
+    },
+    {
+      "tick": 160,
+      "active": 1,
+      "starts": [
+        160,
+        141
+      ]
+    },
+    {
+      "tick": 163,
+      "active": 1,
+      "starts": [
+        160,
+        141
+      ]
+    },
+    {
+      "tick": 167,
+      "active": 1,
+      "starts": [
+        160
+      ]
+    },
+    {
+      "tick": 170,
+      "active": 0,
+      "starts": [
+        160
+      ]
+    },
+    {
+      "tick": 173,
+      "active": 0,
+      "starts": [
+        160
+      ]
+    },
+    {
+      "tick": 176,
+      "active": 0,
+      "starts": [
+        160
+      ]
+    },
+    {
+      "tick": 183,
+      "active": 1,
+      "starts": [
+        160,
+        179
+      ]
+    },
+    {
+      "tick": 186,
+      "active": 1,
+      "starts": [
+        179
+      ]
+    },
+    {
+      "tick": 191,
+      "active": 0,
+      "starts": [
+        179
+      ]
+    },
+    {
+      "tick": 195,
+      "active": 0,
+      "starts": [
+        179
+      ]
+    },
+    {
+      "tick": 198,
+      "active": 1,
+      "starts": [
+        179,
+        198
+      ]
+    }
+  ],
+  "starts": [
+    46,
+    59,
+    84,
+    103,
+    122,
+    141,
+    160,
+    179,
+    198
+  ],
+  "viewport": {
+    "width": 1920,
+    "height": 1080
+  },
+  "hostileCount": 20,
+  "configuredSpacing": 12,
+  "reducedMotionGlint": true,
+  "pageErrors": []
+}

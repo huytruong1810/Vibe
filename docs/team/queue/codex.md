@@ -61,7 +61,7 @@ and local-generation tickets (C26–C31) sit in their own section.
 
 ### C14 · Combat director and telegraphs: fair fights first (CRM-4, CMB-4)
 
-- status: in progress (director-authorized C14 implementation, 2026-11-02)
+- status: candidate (2026-11-02; director review pending)
 - owner: codex
 - goal: no matter how many hostiles, the player faces one or two clear threats at a time, every heavy attack is telegraphed, and nothing attacks from off screen.
 - spec: [creature minds](../../engineering/creature-minds.md) §1, §2, §7, §10 (partner icon), §11 rows "director" and "telegraphs"; doctrine CRM-4, CRM-10.3, CMB-4; ADR 033.
@@ -72,7 +72,7 @@ and local-generation tickets (C26–C31) sit in their own section.
   4. Difficulty knobs (token counts, grant spacing, aggression bias) in settings.
   5. Partner intent icon slot in the HUD (shows `attack`/`guard`/`follow` from today's state until C13 provides intents).
 - done when: unit and browser tests from §11 "director" and "telegraphs" pass; a Playwright journey with 20 hostile Bramblefang shows at most the token count in windup or active at any tick; a 1080p capture of that fight is looked at (PRD-5) and attached; `npm run benchmark` unchanged within 5%.
-- evidence:
+- evidence: [C14 candidate digest](../comms/codex/2026-11-02T2300--to-all--c14-combat-candidate.md), [validation](../comms/codex/c14-validation.json), [benchmark](../comms/codex/c14-benchmark.json), [browser proof](../comms/codex/c14-browser.json); implementation **17672f7** plus final lifecycle fixes.
 
 ### C13 · Creature minds v1: engagement, perception, intents, scripted brain, flight (CRM-1…3, CRM-10)
 

@@ -1,0 +1,80 @@
+{
+  "implementationCommit": "17672f7",
+  "studioIntegrationCommit": "7f9858c",
+  "check": {
+    "command": "VITEST_MAX_WORKERS=4 npm run check",
+    "exitCode": 0,
+    "testFiles": 31,
+    "tests": 414,
+    "durationSeconds": 45.34,
+    "hygiene": "0 errors, 0 warnings",
+    "types": "passed",
+    "architecture": "passed",
+    "normalAssets": "passed",
+    "productionBuild": "passed",
+    "artifactValidationGateMs": 50,
+    "artifactGate": "passed unchanged"
+  },
+  "browser": {
+    "combatPackAndReducedMotionGlint": "passed after heap optimization",
+    "hostileBramblefang": 20,
+    "dialogueMemoryAndSaveResume": "passed",
+    "hudFocusAndSavedOutcomes": "passed",
+    "interiorIdentityAndSaveLoad": "passed",
+    "productionBeta": {
+      "passed": 2,
+      "basePath": "/"
+    },
+    "pageErrors": []
+  },
+  "visualReview": {
+    "lookedAt": [
+      "c14-pack-1080p.png",
+      "c14-glint-1080p.png"
+    ],
+    "viewport": {
+      "width": 1920,
+      "height": 1080
+    },
+    "observations": "Outlined pale ground arc in front of a pack attacker; mint cross glint beside the player in the reduced-motion scenario; partner follow arrow beside its portrait. Static captures do not prove shiver motion."
+  },
+  "performance": {
+    "baseline": "c25-benchmark.json",
+    "pickupMeasurement": "c14-baseline.json",
+    "candidate": "c14-benchmark.json",
+    "maximumAllowedP95RegressionPercent": 5,
+    "p95DeltaPercent": {
+      "simulation": -33.33,
+      "renderSnapshot": -19.32,
+      "structuredClone": -17.64,
+      "denseSimulation": -31.73,
+      "activeCombat": -35.65,
+      "memoryRetrieval": -5.88,
+      "memoryPrompt": -1.09
+    },
+    "directorPlayer150": {
+      "meanMs": 0.071,
+      "p95Ms": 0.15,
+      "maxMs": 1.184
+    },
+    "directorWild150": {
+      "meanMs": 0.046,
+      "p95Ms": 0.095,
+      "maxMs": 0.384
+    },
+    "directorP95BudgetMs": 0.2,
+    "limitations": "Machine B i7-1365U; host conditions vary. No causal speedup claim. Maxima include runtime outliers and exceed the 0.2 ms target; p95 is reported explicitly, not a guarantee for every tick."
+  },
+  "hdGate": {
+    "result": "failed, existing gaps retained",
+    "missingRequirements": 1515,
+    "approvedAppearances": 4,
+    "totalAppearances": 41,
+    "gateChanged": false
+  },
+  "gaps": [
+    "Authored predator anticipation clip requested from Blender; current anticipation is a presentation sprite transform.",
+    "Director approval pending.",
+    "C22 rollout and C24/C25 machine-A acceptance remain separate."
+  ]
+}

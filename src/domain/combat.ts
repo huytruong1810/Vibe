@@ -858,8 +858,8 @@ export class CombatSystem {
       if (waiting) {
         const radial = Math.max(-1, Math.min(1, distance - ring));
         const side = id % 2 ? 1 : -1;
-        const nx = delta.x / Math.max(0.001, distance),
-          ny = delta.y / Math.max(0.001, distance);
+        const nx = distance > 0.001 ? delta.x / distance : side,
+          ny = distance > 0.001 ? delta.y / distance : 0;
         delta.x = nx * radial - ny * 0.25 * side;
         delta.y = ny * radial + nx * 0.25 * side;
         s.targetX[a] = s.x[a]! + delta.x;
