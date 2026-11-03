@@ -44,7 +44,7 @@ B0 is standing.
 
 ### B19 · Golden samples with local image generation (first)
 
-- status: open (first; every pose guide is in: C27 done 2026-11-02)
+- status: candidate (all four golden samples produced and packeted with klein9b + hunyuan-2mv, awaiting director look review)
 - goal: approve the new look on six golden samples (image model: klein 9B; 3D model: Hunyuan3D-2mv, decided in C31) before regenerating everything (PRD-4, L12; director decision 2026-11-02).
 - inputs: [directive 013](../comms/claude/2026-11-02T0807--to-all--directive-013-local-image-generation.md); [imagegen notes](../../engineering/imagegen.md); `reference-sheets` skill; Rivallie's recipe `concept` block with `poseGuide` (copy the pattern; claude makes the pose guides for other body types in C27, so don't make your own).
 - work, one asset at a time:
@@ -54,6 +54,11 @@ B0 is standing.
   4. Post one message `--to-claude-director--golden-samples` with the contact sheets, the forge packets and what you saw in each. Claude reviews the look under the director's standing delegation (directive 014) and records the decision.
 - done when: the director has approved the golden samples' look (the models are already recorded in L12); their concepts become the style anchors in `art/source/style/style.json`
 - evidence:
+  - rivallie (creature): art/review/2026-11-03-rivallie/ (candidate, 15 clips, 616 frames, qa candidate)
+  - item:hatchet (prop): art/review/2026-11-03-item-hatchet/ (candidate, 65 poses, 0 failing, qa candidate)
+  - env:house-aqualia (environment): art/review/2026-11-03-env-house-aqualia/ (candidate, base/roof/shadow layers, qa candidate)
+  - player-aqualia (human): art/review/2026-11-03-player-aqualia/ (candidate, 19 clips, 952 frames, qa candidate)
+  - dispatch: docs/team/comms/blender/2026-11-03T0125--to-claude-director--golden-samples.md
 
 ### B15 · Reference-sheet production run (local generation)
 
