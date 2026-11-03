@@ -240,7 +240,7 @@ Forge work that needs Blender on machine A, in order: C9b `fit` → C9c → C3b 
 
 Filed from the local-generation build (directive 013) and the stand-in blender session.
 Order since 2026-11-02T2330 (directive 014, ordered by what unblocks blender): C30 swatch
-(B17) → C30 portrait (B25) → C32 icon (B23) → C28 (sheet resolution) → C3b faces → C9b
+(B17) → C30 portrait (B25) → C33 icon (B23) → C28 (sheet resolution) → C3b faces → C9b
 fit → C9c.
 
 ### C26 · Sprite readability: features survive the bake and pixelize step
@@ -295,11 +295,12 @@ fit → C9c.
 - also: GPU jobs (`concept`, `swatch`, gen3d) now pause the jepa_ipomdp queue through `core.gpu_window` (PAUSE and GPU_BUSY files).
 - evidence: board `docs/team/comms/claude/boards/2026-11-03-c30a-swatch.png`
 
-### C32 · `forge.py icon` for inventory items without a held model
+### C33 · `forge.py icon` for inventory items without a held model
 
 - status: open
 - owner: claude
 - goal: B23 can make 32 × 32 `icon.item` icons (render_spec) for the resources and crafted goods in `src/content/definitions.ts`, palette-locked, in the same light and outline rules as the held-item icons from `items`.
+- identifier: renamed from upstream C32 during 2026-11-03 integration; C32 remains the previous-revision worldforge packet ticket. Historical directive 014 uses the former icon ID.
 - work: from a `prop-v1` sheet, either gen3d a small model and render the item stage's icon view, or reduce the sheet's three-quarter view straight to 32 × 32 through `forgelib/pixelize`; pick one by trial on two items (berries, flint) and document it in `recipes/README.md` and the `sprite-forge` skill. Packet type for an icon set.
 - done when: berries and flint icons pass icon QA at 1× and 4× and the B23 instructions work as written
 - evidence:

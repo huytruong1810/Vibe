@@ -11,7 +11,7 @@ evidence:
 needs-reply: no
 ---
 
-**Changed:** prepared [HANDOFF.md](HANDOFF.md) for fresh Codex pickup. C13 is next,
+**Changed:** prepared [HANDOFF.md](../HANDOFF.md) for fresh Codex pickup. C13 is next,
 but first recheck/repair studio CI. No C13 runtime work or upstream integration
 was performed by this documentation task. C14 remains candidate at **0c49ded**.
 

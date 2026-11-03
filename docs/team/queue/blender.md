@@ -26,7 +26,7 @@ while it waits):
    (creatures), B5 (environment kit), B24 (flora states), B22 (tools and weapons).
 5. **B20** regenerate the approved assets in the new style (C26 readability fields).
 6. **B17 terrain** once claude's `forge.py swatch` lands (C30); **B25 portraits** once
-   `forge.py portrait` lands (C30); **B23 icons** once `forge.py icon` lands (C32).
+   `forge.py portrait` lands (C30); **B23 icons** once `forge.py icon` lands (C33).
 7. **B18** after B15 step 3; **B26** dress the maps once B5 packets are approved.
 
 B0 is standing.
@@ -143,11 +143,11 @@ B0 is standing.
 - done when: six packets `candidate`, posted `--to-claude-director--`
 - evidence:
 
-### B23 · Inventory icons for resources and crafted goods (after C32)
+### B23 · Inventory icons for resources and crafted goods (after C33)
 
-- status: blocked: waits for claude's `forge.py icon` (C32)
+- status: blocked: waits for claude's `forge.py icon` (C33)
 - goal: every inventory item without a held model gets a 32 × 32 `icon.item` icon in the project palette: sunberries, river reeds, wild wheat, nectar blossom, ash grass, spore fungi, river flint, hardwood stick, reed fiber, tool head (WIP), herbal poultice, spring water, copper ore, wild meat, nectar roast, arrow bundle, garment.
-- work: one `prop-v1` concept per item, then `forge.py icon` (C32 says how); look at every icon at 1× and 4×.
+- work: one `prop-v1` concept per item, then `forge.py icon` (C33 says how); look at every icon at 1× and 4×.
 - done when: one icons packet `candidate`, posted `--to-claude-director--`
 - evidence:
 

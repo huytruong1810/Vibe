@@ -5,34 +5,39 @@
 C14 runtime code is **17672f7** on `eng/hd-presentation`, followed by studio integration
 **7f9858c** and final evidence/lifecycle fixes **0c49ded** (pushed). The next open
 implementation is **C13**, then C18, C19, C20, C3g and C7. C22/C24/C25 external
-acceptance remains separate. No C13 runtime work has started; this handoff changes
-documentation only. Codex reaches candidate at most.
+acceptance remains separate. No C13 runtime work has started. Codex reaches candidate at most.
 
-## First action: recheck and repair red studio CI
+## Studio CI repair (2026-11-03 UTC)
 
-Pickup was clean and `git pull` up to date. Before C13, recheck these actual runs;
-a red studio has priority over new ticket implementation:
+Repair **83dd6f6** is pushed to studio, integrated through art **e3ddb58** into
+engineering **28c1571**. Studio includes **11162f2**; no existing art/review worktree
+was changed. Repaired [studio run **41563209207**](https://github.com/huytruong1810/Vibe/actions/runs/41563209207)
+completed/success for **83dd6f6**, including verify (browser journeys and benchmark)
+and ecology-soak. The CI repair prerequisite is satisfied; C13 remains next and open.
 
-- Engineering **0c49ded** runs **41560267885 / 41560260797** were still reported
-  in progress by the GitHub API during this handoff. In 41560267885, beta-browser
-  at both `/` and `/Vibe/` completed/success; `verify` and `ecology-soak` remained
-  in progress. Do not infer a final success from the local 414-test receipt.
-- Published studio **cda6dd5** run **41560860063 completed/failure**. Its `verify`
-  job **125670843897** failed at the item contract self-test below; its ecology
-  scope job succeeded. Previous studio **4858407**, run **41559789215**, also failed.
-  Last observed successful studio **92f9278**, run **41556477158**, completed/success.
-- Failing command: `python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p items_selftest.py`.
-  Check annotations only report exit 1, not the assertion/traceback. Retrieve the
-  job log and reproduce on the failing upstream tree before deciding the fix.
-  Inspect `items_selftest.py` (especially its CLI test), `items.py`, `forge.py` and
-  the changed item recipe inputs. Root cause is **not established** here. Keep
-  gates intact; do not run Blender/GPU generation to repair a CPU contract test.
+- Reproduced **cda6dd5** in an isolated export: 8/9 item tests passed; the CLI test
+  expected `BLOCKED`, but the checked-in hatchet recipe now has `concept` and correctly
+  returns the concept command. No runtime/recipe change was needed.
+- The repaired CLI tests use temporary recipe/work paths, test missing/no-concept,
+  configured-concept and contact-sheet review/pick routing, and retain the Blender
+  prohibition and item-only stage-chain assertions. Item tests now pass **10/10**.
+- Local studio checks: **311 tests / 23 files**, types, architecture, normal assets,
+  build and formatting; **68 forge + 27 world-tool CPU tests** pass.
+- Integrated engineering full check passes **414 tests / 31 files** with four workers;
+  types, architecture, assets/build, packet checks and **20 hook tests** pass. Asset
+  rebuild is byte-identical; world check/build passes (152 placements, Riverlands excluded).
+  Formatting and hygiene pass after the director's explicit formatting-only TEAM-2
+  exception for communicator's imported status-board table padding (no cell text changes).
+- Engineering **0c49ded** run **41560267885 completed/success**. Earlier run
+  **41560260797** failed in browser journeys; both beta bases passed in both runs.
+  Studio **cda6dd5** run **41560860063** and documentation-only **11162f2** run
+  **41562093700** failed before the repair.
+- Both queue tasks survive: **C32** remains the previous-revision worldforge packet
+  fix; inventory icons are now **C33**, including B23's live queue references.
 
-New studio **cda6dd5** and art integration branch **4bf2372** are fetched but **not
-merged** into engineering. They include forge tooling, B19 packets, face proof,
-recipes and team directives; no appearance claim is made about their images.
-Repair/review through the established studio -> art -> engineering flow, preserving
-C14/C25 queue evidence. Do not disturb the Vibe-art worktree.
+Upstream tooling, B19 packets, face proof, recipes and team directives are integrated;
+no appearance claim is made about their images. Keep gates intact. C14/C25 candidate
+evidence and C13's open status remain unchanged.
 
 C14 adds deterministic per-target tokens, readiness-ring movement, qualifying attack
 telegraphs, combat settings and the partner intent indicator. Save **v7** persists
@@ -76,13 +81,15 @@ or attack stamina. Melee categories do not change existing elemental damage or t
 Published art/studio **0d708b5** is integrated through the art branch in **7f9858c**.
 Its studio CI **41538616909** and art CI **41538618972** completed/success. No art was
 regenerated or approved. New upstream boards were not visually reviewed by codex.
-C26 direction is approved for B20, but B20 still waits for the B19 golden-sample
-choice; headroom and concept-clause work remains with claude. C31 is done upstream:
+C26 direction is approved for B20; headroom and concept-clause work remains with claude.
+Art **6e6bf4e** relays B19/B11 approval, but the five approval records linked in
+`docs/team/comms/communicator/2026-11-03T0150--to-blender--b19-golden-samples-approved.md`
+are absent from this merged tree. Check the actual digest-bound records before any
+publication/activation claim; the relay alone is not approval evidence. C31 is done upstream:
 Hunyuan3D-2mv remains the sole gen3d backend; the losing backends were removed.
 Do not restore the stale licence-blocked C31 status from earlier handoffs.
 
-These newer messages were read with `git show origin/studio/doctrine-v1:<path>`;
-they are not yet in engineering's working tree. Read them after integration:
+These newer messages are now integrated into engineering and were read during pickup:
 
 - `docs/team/comms/claude/2026-11-02T2330--to-all--directive-014-standing-review-delegation.md`:
   director delegation lets claude review Blender packets; codex still reaches candidate.
@@ -94,10 +101,8 @@ they are not yet in engineering's working tree. Read them after integration:
   `docs/team/comms/director/approvals/proposal-002-r2.md` (record inspected); apply
   its ten casting records when reaching audio, not during C13.
 - C27 pose guides and C30a swatch landed upstream; C30b portraits remain separate.
-  Upstream also introduces a **C32 inventory-icon ticket** in claude's section,
-  colliding with engineering's **C32 previous-revision worldforge packet ticket**.
-  Reconcile IDs/links during queue integration; do not erase either task or assume
-  that an icon update closes the Riverlands fix.
+  The upstream inventory-icon ticket is now **C33**; **C32** retains the previous-revision
+  worldforge packet work. Historical directive 014 still uses C32 for icons.
 
 ## C13 binding inputs and intended result
 
