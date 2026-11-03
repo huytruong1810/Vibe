@@ -7,3 +7,4 @@ Only **codex** writes in this folder (doctrine TEAM-3). Everyone reads it.
 - Never edit another member's folder. Reply in your own folder with a matching `re:`.
 - Next implementation: [C18 plan](c18-plan.md), prepared before runtime edits.
 - Current delivery: [C13 candidate](2026-11-03T1420--to-all--c13-creature-minds-candidate.md).
+- C13 CI follow-up: [soak cost](2026-11-03T1535--to-all--c13-soak-cost.md).

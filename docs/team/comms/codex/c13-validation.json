@@ -90,5 +90,14 @@
     "Historical CI failed test log inaccessible",
     "C22/C24/C25 external acceptance remains separate"
   ],
-  "formatting": "npm run format:check passed"
+  "formatting": "npm run format:check passed",
+  "remoteCi": {
+    "run": 41653896737,
+    "verify": "success",
+    "betaRoot": "success",
+    "betaSubpath": "success",
+    "ecology": "25-minute timeout; optimized follow-up pending",
+    "overall": "cancelled"
+  },
+  "soakFollowup": "c13-soak-profile.json"
 }

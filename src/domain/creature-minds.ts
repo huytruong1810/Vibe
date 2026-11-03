@@ -66,6 +66,15 @@ export enum Engagement {
   Disengaging,
 }
 export const SCRIPTED_RULES_HASH = `crm-scripted-1:${hashString(JSON.stringify(CREATURE_TACTICS)).toString(16)}`;
+const preyBits = new Uint8Array(
+  SPECIES.map((species) =>
+    (species.prey ?? []).reduce(
+      (bits, id) => bits | (1 << SPECIES.findIndex((s) => s.id === id)),
+      0,
+    ),
+  ),
+);
+const predatableBits = preyBits.reduce((bits, value) => bits | value, 0);
 
 /** Integer hash buckets and caller-owned result buffers. IDs break distance ties. */
 export class PerceptionGrid {
@@ -73,12 +82,14 @@ export class PerceptionGrid {
   private readonly next: Int32Array;
   private readonly distances: Float64Array;
   private readonly groupDistances = new Float64Array(6);
+  private readonly predatorCells: Uint8Array;
   constructor(
     private readonly store: EntityStore,
     buckets = 4096,
     private readonly loaded: (scene: number) => boolean = () => true,
   ) {
     this.heads = new Int32Array(buckets);
+    this.predatorCells = new Uint8Array(buckets);
     this.next = new Int32Array(store.capacity);
     this.distances = new Float64Array(8);
     this.heads.fill(-1);
@@ -91,13 +102,33 @@ export class PerceptionGrid {
   }
   rebuild(): void {
     this.heads.fill(-1);
+    this.predatorCells.fill(0);
     const s = this.store;
     for (let i = s.capacity - 1; i >= 0; i--) {
       if (!s.alive[i] || s.hp[i]! <= 0 || !this.loaded(s.scene[i]!)) continue;
       const key = this.bucket(s.scene[i]!, Math.floor(s.x[i]! / 4), Math.floor(s.y[i]! / 4));
       this.next[i] = this.heads[key]!;
       this.heads[key] = i;
+      const prey = preyBits[s.species[i]!] ?? 0;
+      if (prey)
+        this.predatorCells[
+          this.bucket(s.scene[i]!, Math.floor(s.x[i]! / 16), Math.floor(s.y[i]! / 16))
+        ]! |= prey;
     }
+  }
+  /** Conservative broad phase only: collisions may cause extra searches, never missed predators. */
+  hasPredatorNearby(i: number, radius: number): boolean {
+    const s = this.store,
+      bit = 1 << s.species[i]!;
+    if (!(predatableBits & bit)) return false;
+    const minX = Math.floor((s.x[i]! - radius) / 16),
+      maxX = Math.floor((s.x[i]! + radius) / 16),
+      minY = Math.floor((s.y[i]! - radius) / 16),
+      maxY = Math.floor((s.y[i]! + radius) / 16);
+    for (let y = minY; y <= maxY; y++)
+      for (let x = minX; x <= maxX; x++)
+        if (this.predatorCells[this.bucket(s.scene[i]!, x, y)]! & bit) return true;
+    return false;
   }
   visible(i: number, j: number, radius: number, world?: ChunkStore): boolean {
     const s = this.store;
@@ -702,6 +733,7 @@ export class CreatureMinds {
       const pursuit = this.combat.pursuits.get(s.id(i));
       if (pursuit && a.engage[i] === Engagement.Calm) this.alert(i, pursuit.target, tick);
       if (a.engage[i] === Engagement.Calm) {
+        if (!this.grid.hasPredatorNearby(i, this.tactics(i).notice)) continue;
         const count = this.grid.nearest(
           i,
           this.tactics(i).notice,
