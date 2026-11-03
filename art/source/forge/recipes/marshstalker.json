@@ -24,5 +24,21 @@
       "left",
       "back"
     ]
+  },
+  "concept": {
+    "template": "creature-v1",
+    "fields": {
+      "species": "Marshstalker",
+      "element": "water and wind",
+      "size": "large",
+      "stance": "standing on all four paws with its body horizontal, never sitting or standing upright",
+      "description": "a patient wetland hunter with a low rippling gait",
+      "anatomy": "long low-slung reptilian quadruped body, four clawed limbs, raised dorsal scutes along the spine, an arched angler-like antenna lure tipped with a glowing bulb rising from above the snout, long tapering tail, narrow slit eyes",
+      "colours": "olive moss green hide, deep teal dorsal scutes, pale reed belly, glowing water-blue lure"
+    },
+    "references": [
+      "public/assets/portraits/creatures/portrait_marshstalker_128.png"
+    ],
+    "poseGuide": "art/source/style/pose-guides/quadruped.png"
   }
 }

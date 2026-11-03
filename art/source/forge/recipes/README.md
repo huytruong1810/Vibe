@@ -70,6 +70,7 @@ spec (`../spec/`); a recipe never overrides spec numbers.
   "template": "creature-v1",
   "fields": { "species": "...", "element": "...", "size": "...", "stance": "...",
               "description": "...", "anatomy": "...", "colours": "..." },
+  "poseGuide": "art/source/style/pose-guides/quadruped.png",
   "references": ["public/assets/portraits/...", "art/source/masters/..."],
   "model": "klein9b"
 }
@@ -77,6 +78,24 @@ spec (`../spec/`); a recipe never overrides spec numbers.
 
 - `template` and its fields: `art/source/forge/spec/concept_templates.json`; a missing field
   fails loudly. `references` are identity sources passed as reference images.
+- `poseGuide`: always set it to the guide for the species' skeleton template. It goes in as the
+  first reference image with a fixed clause (match pose, views and layout; take no design).
+  Without it the image model drifts to upright or cartoon poses (`docs/engineering/imagegen.md`).
+
+  | skeleton template | `poseGuide` (`art/source/style/pose-guides/`) | concept template |
+  | ----------------- | --------------------------------------------- | ---------------- |
+  | quadruped         | `quadruped.png` (Rivallie rest pose)          | `creature-v1`    |
+  | shelled           | `shelled.png`                                 | `creature-v1`    |
+  | winged            | `winged.png` (hover clip, wings up)           | `creature-winged-v1` |
+  | mushroom-biped    | `mushroom-biped.png`                          | `creature-biped-v1` |
+  | humanoid          | `human.png` (A-pose mannequin, front and back) | `human-apose-v1` |
+
+  Guides are made by `forge.py pose-guide --template <t>` (grey clay of the template fixture,
+  laid out on the concept template's canvas; provenance in `<t>.json` beside each PNG).
+  `forge.py pose-guide --template <t> --try` runs one test concept with the guide.
+  `creature-winged-v1` and `creature-biped-v1` fix the stance themselves (no `stance`
+  field) and drop creature-v1's tail clause, so name a tail in `anatomy` only if the species
+  has one.
 - `model` (optional) overrides `art/source/style/style.json`'s default.
 - `forge.py concept --asset <id>` then `forge.py views --asset <id> --pick <cand>`
   (`reference-sheets` skill).

@@ -69,6 +69,18 @@ Earlier klein 4B measurements: the first attempt kept the text encoder resident 
   the text. `pose-guides/quadruped.png` is a grey render of the approved Rivallie mesh's rest
   pose. Make one guide per skeleton template from a fixture or an approved mesh
   (`blender/preview.py`, then grey it and crop each view tight).
+- **One guide per skeleton template (C27).** `forge.py pose-guide --template <t>` renders
+  the template fixture as grey clay (`blender/pose_guide.py`, Workbench single colour,
+  one shared ortho scale) and lays the views out on the concept template's canvas. The
+  guides are in `art/source/style/pose-guides/` with provenance JSON. Trials (`--try`,
+  board `docs/team/comms/claude/boards/2026-11-02-c27-pose-guides.png`): human 4/4 in
+  A-pose front and back; shelled 4/4 on all fours (one front view at three-quarter). With
+  `creature-v1`, winged hung its body vertically and turned side and back views to
+  three-quarter or top-down, and mushroom-biped grew tails from the fixed tail clause.
+  Two templates fix this, `creature-winged-v1` and `creature-biped-v1`: 4/4 winged level
+  in flight with the back seen at eye level, and 4/4 bipeds upright with no tail (one side
+  view leans three-quarter). The winged guide uses the hover clip's wings-up frame, because
+  flat rest wings read as needles from the front.
 - **Upright masters are poor identity references for quadrupeds.** Use the text fields and
   the pose guide; add a portrait only if identity drifts.
 - **View size.** With the pose guide, views land about 620 px tall on a 2304 × 1344 sheet
@@ -77,7 +89,6 @@ Earlier klein 4B measurements: the first attempt kept the text encoder resident 
 
 ## Open
 
-- **More pose guides:** humans (A-pose mannequin), winged, shelled and biped (C27).
 - **Views at 1024 px or more** (C28).
 - **Not built yet:** `portrait` (9 emotions by reference editing) and `swatch` (seamless
   tileforge swatches) (C30).

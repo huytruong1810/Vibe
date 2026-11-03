@@ -238,8 +238,10 @@ Forge work that needs Blender on machine A, in order: C9b `fit` → C9c → C3b 
 
 ## Claude (machine A): art-quality and local-generation tooling (2026-11-02)
 
-Filed from the local-generation build (directive 013) and the stand-in blender session. In
-order; C26 gates any regeneration of approved assets (blender B20).
+Filed from the local-generation build (directive 013) and the stand-in blender session.
+Order since 2026-11-02T2330 (directive 014, ordered by what unblocks blender): C30 swatch
+(B17) → C30 portrait (B25) → C32 icon (B23) → C28 (sheet resolution) → C3b faces → C9b
+fit → C9c.
 
 ### C26 · Sprite readability: features survive the bake and pixelize step
 
@@ -258,12 +260,13 @@ order; C26 gates any regeneration of approved assets (blender B20).
 
 ### C27 · Pose guides for every template
 
-- status: open
+- status: done (2026-11-02, claude)
 - owner: claude
 - goal: `concept` gets the pose right for humans (A-pose), winged, shelled and mushroom-biped, as `pose-guides/quadruped.png` does for quadrupeds.
 - work: `forge.py pose-guide --template <t>` rendering the template's fixture (or an approved mesh) front/side/back as tight grey clay; guides committed in `art/source/style/pose-guides/`; recipes README and skill updated.
 - done when: one `concept` run per template keeps every view in the template pose
-- evidence:
+- result: guides `art/source/style/pose-guides/{human,shelled,winged,mushroom-biped}.png` (+ provenance JSON) from `forge.py pose-guide --template <t>` (`blender/pose_guide.py`). Trials (`--try`, 4 candidates each), pose held in every view: human 4/4 (A-pose front and back); shelled 4/4 (`creature-v1`; one front view at three-quarter); winged 4/4 and mushroom-biped 4/4 with the new spec templates `creature-winged-v1` and `creature-biped-v1`. With `creature-v1`, winged hung vertically and its views drifted, and bipeds grew tails from the fixed tail clause. The winged guide uses the hover clip's wings-up frame.
+- evidence: board `docs/team/comms/claude/boards/2026-11-02-c27-pose-guides.png`; `docs/engineering/imagegen.md` (findings); `recipes/README.md` (guide table)
 
 ### C28 · Reference views at 1024 px or more
 
@@ -288,6 +291,17 @@ order; C26 gates any regeneration of approved assets (blender B20).
 - owner: claude
 - goal: the static 2D classes generate locally too: portraits in all nine emotions kept on identity (contract-v2), seamless 1024² terrain swatches.
 - done when: Neris has nine emotion portraits at 96/128 px that pass the portrait contract; a grass swatch passes tileforge QA
+- progress: **C30a swatch done (2026-11-03)**: `forge.py swatch` (`forgelib/swatch.py`); a grass swatch passed tileforge QA (candidate; soft `actorContrast` only) on a scratch set at `swatchTilePx` 256, `flatten` 2. Look: no obvious grid, but the field shows faint diagonal streaks and busy clumps, so B17 should tune the prompt and values. C30b portrait is next.
+- also: GPU jobs (`concept`, `swatch`, gen3d) now pause the jepa_ipomdp queue through `core.gpu_window` (PAUSE and GPU_BUSY files).
+- evidence: board `docs/team/comms/claude/boards/2026-11-03-c30a-swatch.png`
+
+### C32 · `forge.py icon` for inventory items without a held model
+
+- status: open
+- owner: claude
+- goal: B23 can make 32 × 32 `icon.item` icons (render_spec) for the resources and crafted goods in `src/content/definitions.ts`, palette-locked, in the same light and outline rules as the held-item icons from `items`.
+- work: from a `prop-v1` sheet, either gen3d a small model and render the item stage's icon view, or reduce the sheet's three-quarter view straight to 32 × 32 through `forgelib/pixelize`; pick one by trial on two items (berries, flint) and document it in `recipes/README.md` and the `sprite-forge` skill. Packet type for an icon set.
+- done when: berries and flint icons pass icon QA at 1× and 4× and the B23 instructions work as written
 - evidence:
 
 ### C31 · gen3d backends: Hunyuan3D-2.1 shape and TRELLIS.2

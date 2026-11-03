@@ -1,0 +1,29 @@
+{
+  "asset": "npc:dara",
+  "kind": "human",
+  "heightArtPx": 46,
+  "ramps": {
+    "skin": "skin-tan",
+    "hair": "hair-auburn",
+    "vest": "timber",
+    "tunic": "sail",
+    "boots": "leather"
+  },
+  "gen3d": { "seed": 1234, "steps": 50, "views": ["front", "back"] },
+  "concept": {
+    "template": "human-apose-v1",
+    "fields": {
+      "name": "Dara",
+      "age": "30",
+      "role": "outpost courier",
+      "home": "Aqualia courier post",
+      "personality": "organized, kind, reliable, remembers every small promise",
+      "appearance": "standard athletic courier build, warm tan skin, braided auburn hair tied high, wearing a timber-brown leather traveler's vest with strapped pouches over a clean off-white sailcloth tunic, navy fitted riding trousers, and knee-high oiled courier boots. Proportions are 5 heads tall in clean stylized A-pose"
+    },
+    "poseGuide": "art/source/style/pose-guides/human.png",
+    "references": [
+      "public/assets/portraits/characters/portrait_npc_dara_128.png"
+    ]
+  },
+  "notes": "Aqualia outpost courier (B21). Standard build, 5 heads tall, guided by human.png."
+}

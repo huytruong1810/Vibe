@@ -11,5 +11,17 @@
     "iconPivot": "auto",
     "iconScale": "auto"
   },
-  "notes": "Golden held-item sample (claude, C9b). lengthArtPx 13 = about 0.23 of the player's 58 px, a 40 cm hatchet beside a 1.7 m adult. Grip 15% up from the butt, inside the leather wrap."
+  "concept": {
+    "template": "prop-v1",
+    "fields": {
+      "object": "chunky woodcutter's hatchet with a heavy iron hammer poll and thick wedge-shaped blade",
+      "owner": "an Aqualia woodcutter",
+      "materials": "forged dark iron head with thick hammer poll and wide bevel, chunky ash wood handle, wrapped leather grip, heavy rope cross-lashing around the eye",
+      "scale": "hand tool, about 40 cm long overall"
+    },
+    "references": [
+      "art/source/references/player-aqualia/prop-hatchet.png"
+    ]
+  },
+  "notes": "Golden held-item sample (claude, C9b; B19 local generation). lengthArtPx 13 = about 0.23 of the player's 58 px, a 40 cm hatchet beside a 1.7 m adult. Grip 15% up from the butt, inside the leather wrap."
 }

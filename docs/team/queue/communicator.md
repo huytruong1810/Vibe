@@ -9,11 +9,11 @@ manifest integration and music. Image generation and all art moved to blender.
 
 ### M26 · Hand the art work to blender (one time, first)
 
-- status: open
+- status: done (handover message pushed in docs/team/comms/communicator/2026-11-02T2355--to-blender--art-handover.md; awaiting blender ack)
 - goal: blender continues your sheets, terrain and art tickets without losing anything (director decision 2026-11-02: all art is blender's, TEAM-1).
 - work: write `docs/team/comms/communicator/<UTC>--to-blender--art-handover.md` with: the state of each moved ticket (now B15 = your M23, B16 = M11, B17 = M9, B18 = M24), files in progress and where they are, the prompt templates and wording that worked or failed (from your image ledger), the remaining image quota you know of, and any sheet the director has already commented on. Commit anything unfinished that is worth keeping; delete the rest. Stop generating images.
 - done when: the handover message is pushed and blender has replied that it has what it needs
-- evidence:
+- evidence: docs/team/comms/communicator/2026-11-02T2355--to-blender--art-handover.md, docs/team/comms/communicator/m23-prompt-batch.md, docs/team/comms/communicator/image-ledger.md
 
 ### M25 · Merge every published, approved body into the manifest (standing)
 

@@ -28,14 +28,21 @@ templates and `art/source/style/style.json`, so never write free-form prompts.
      "fields": { "species": "Rivallie", "element": "water", "size": "small to medium",
                  "stance": "standing on all four legs", "description": "...",
                  "anatomy": "...", "colours": "..." },
+     "poseGuide": "art/source/style/pose-guides/quadruped.png",
      "references": ["public/assets/portraits/creatures/portrait_rivallie.jpg",
                     "art/source/masters/rivallie_turnaround_master.jpg"]
    }
    ```
-   Templates (spec `concept_templates.json`): `creature-v1` (front, left, back),
+   Templates (spec `concept_templates.json`): `creature-v1` (front, left, back; quadruped and
+   shelled), `creature-winged-v1` and `creature-biped-v1` (front, left, back; stance built in,
+   no `stance` field, no tail unless `anatomy` names one),
    `human-apose-v1` (front, back), `prop-v1` (three-quarter), `building-v1` (front, left).
    `stance`: quadruped and shelled "standing on all four paws with its body horizontal, never sitting or standing upright", winged "in flight with both
    wings spread wide", mushroom-biped "standing upright on two legs".
+   `poseGuide`: always set it to the guide for the species' skeleton template:
+   `art/source/style/pose-guides/{quadruped,shelled,winged,mushroom-biped,human}.png`
+   (table in `art/source/forge/recipes/README.md`). The guide fixes pose and layout. The
+   fields and references fix the design.
 3. **Generate:** `forge.py concept --asset <id> [--n 4]` (model: `klein9b`, the only one installed). It writes
    `work/<id>/concept/` and a contact sheet.
 4. **Look at the contact sheet** (`read_file`) and run the checklist below on each

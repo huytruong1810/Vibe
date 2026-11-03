@@ -1,0 +1,32 @@
+{
+  "asset": "item:ferry-pole",
+  "kind": "item",
+  "ramps": {
+    "pole": "wood",
+    "shoe": "iron",
+    "grip": "leather",
+    "lashing": "reed"
+  },
+  "gen3d": { "seed": 1234, "steps": 50 },
+  "orient": { "lengthArtPx": 26, "gripFraction": 0.35 },
+  "item": {
+    "model": "auto",
+    "grip": "auto",
+    "socket": "Socket_Hand.R",
+    "iconPivot": "auto",
+    "iconScale": "auto"
+  },
+  "concept": {
+    "template": "prop-v1",
+    "fields": {
+      "object": "long chunky river punting pole with an iron shoe at the base and a rounded wooden pommel",
+      "owner": "Neris the ferry keeper",
+      "materials": "straight peeled timber pole, forged dark iron mud shoe ferrule, wrapped leather center grip with reed cord wrap",
+      "scale": "long river pole, about 2.2 m long"
+    },
+    "references": [
+      "art/source/references/npc-neris/prop-ferry-pole.png"
+    ]
+  },
+  "notes": "Aqualia held tool (B15 step 5 / B22). Length 26 px, Neris ferry pole."
+}

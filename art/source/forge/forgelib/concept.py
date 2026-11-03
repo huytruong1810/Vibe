@@ -23,6 +23,7 @@ from pathlib import Path
 import numpy as np
 from PIL import Image, ImageDraw
 
+from . import core
 from .core import FORGE, REPO, SPEC_DIR, ForgeError, load_recipe, reference_dir, slug, work_dir
 
 IMAGEGEN = FORGE / "imagegen"
@@ -40,8 +41,8 @@ class _Fields(dict):
         raise ForgeError(f"concept.fields lacks '{key}' (template placeholder)")
 
 
-def plan(asset: str, model: str | None = None) -> dict:
-    r = load_recipe(asset)
+def plan(asset: str, model: str | None = None, recipe: dict | None = None) -> dict:
+    r = recipe or load_recipe(asset)  # forge.py passes built-in trial recipes (pose-guide --try)
     c = r.get("concept")
     if not isinstance(c, dict) or "template" not in c:
         raise ForgeError(f"Recipe {slug(asset)}.json needs a `concept` block: template, fields, references (recipes/README.md).")
@@ -63,10 +64,10 @@ def plan(asset: str, model: str | None = None) -> dict:
             "styleSha256": hashlib.sha256(STYLE.read_bytes()).hexdigest()}
 
 
-def concept(asset: str, n: int = 4, seed: int | None = None, model: str | None = None) -> str:
+def concept(asset: str, n: int = 4, seed: int | None = None, model: str | None = None, recipe: dict | None = None) -> str:
     if not IMAGEGEN_PY.exists():
         raise ForgeError("Local image generation isn't set up: bash art/source/forge/imagegen/setup.sh")
-    p = plan(asset, model)
+    p = plan(asset, model, recipe)
     wd = work_dir(asset)
     out = wd / "concept"
     out.mkdir(parents=True, exist_ok=True)
@@ -78,7 +79,7 @@ def concept(asset: str, n: int = 4, seed: int | None = None, model: str | None =
     jf.write_text(json.dumps(job, indent=1))
     log = wd / "logs" / "concept.log"
     log.parent.mkdir(parents=True, exist_ok=True)
-    with open(log, "w") as f:
+    with core.gpu_window(), open(log, "w") as f:
         rc = subprocess.run([str(IMAGEGEN_PY), str(IMAGEGEN / "run_image.py"), str(jf)], stdout=f, stderr=subprocess.STDOUT).returncode
     lines = [l for l in log.read_text(errors="replace").splitlines() if l.startswith("IMAGEGEN ")]
     if rc != 0 or not lines:

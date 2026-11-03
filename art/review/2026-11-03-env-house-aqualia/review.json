@@ -1,0 +1,105 @@
+{
+ "asset": "env:house-aqualia",
+ "footprint": [
+  3,
+  3
+ ],
+ "frames": [
+  {
+   "anchorPx": {
+    "x": 128,
+    "y": 350
+   },
+   "file": "frames/shadow.png",
+   "id": "env-house-aqualia-shadow",
+   "layer": "shadow",
+   "sha256": "f96f7a0ed6a28a9d8cbb24641b80a16d2a150c5bd1cd6e30977036b1f71ab35d",
+   "sourceSize": {
+    "h": 364,
+    "w": 256
+   }
+  },
+  {
+   "anchorPx": {
+    "x": 128,
+    "y": 350
+   },
+   "file": "frames/base.png",
+   "id": "env-house-aqualia-base",
+   "layer": "base",
+   "sha256": "781452bab90503c017ef8771f31086553de1b01cbdcbbe5ed1675530b74592f0",
+   "sourceSize": {
+    "h": 364,
+    "w": 256
+   }
+  },
+  {
+   "anchorPx": {
+    "x": 128,
+    "y": 350
+   },
+   "file": "frames/roof.png",
+   "id": "env-house-aqualia-roof",
+   "layer": "roof",
+   "sha256": "f276c9a5fcc517ce4beaae99173791060b3df288ffd14ebf9a550d6da88d4a0d",
+   "sourceSize": {
+    "h": 364,
+    "w": 256
+   }
+  }
+ ],
+ "kind": "environment-review",
+ "lightPools": [],
+ "qa": [
+  {
+   "check": "footprint",
+   "detail": "ground contact 3.20 tiles deep vs declared 3 (width is scaled to fit)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-11.4"
+  },
+  {
+   "check": "canvas",
+   "detail": "128x182, width multiple of 32",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec canvases.environment"
+  },
+  {
+   "check": "margins",
+   "detail": "smallest transparent margin 2px",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec marginsArtPixels"
+  },
+  {
+   "check": "paletteMembership",
+   "detail": "0 off-palette colours",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.1"
+  },
+  {
+   "check": "colorCount",
+   "detail": "18 colours (environment limit 32)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.4"
+  },
+  {
+   "check": "blocks",
+   "detail": "exports are exact 2x blocks",
+   "hard": true,
+   "pass": true,
+   "rule": "L1"
+  }
+ ],
+ "schemaVersion": 1,
+ "scope": [
+  "shadow",
+  "base",
+  "roof"
+ ],
+ "sourceDigest": "6aeb9234339c3367c971c53b80e621c688915f7e188cea7856b4765e0e84bb73",
+ "status": "candidate"
+}

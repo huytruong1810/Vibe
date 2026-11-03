@@ -1,0 +1,30 @@
+{
+  "asset": "env:prop-hearth",
+  "kind": "environment",
+  "ramps": {
+    "basin": "stone",
+    "coals": "basalt",
+    "flame": "ember",
+    "fittings": "iron"
+  },
+  "gen3d": { "seed": 1234, "steps": 50, "views": ["front", "left"] },
+  "environment": {
+    "footprint": [2, 2],
+    "split": null,
+    "contactShadow": true,
+    "lightPools": [
+      { "x": 0, "y": 0, "radiusTiles": 3 }
+    ]
+  },
+  "concept": {
+    "template": "building-v1",
+    "fields": {
+      "building": "communal village hearth circle with raised river stone rim, glowing ember coals and iron spit rack",
+      "region": "Aqualia Hearth Island",
+      "description": "the permanent sacred fire pit of Aqualia village",
+      "materials": "rounded river stone ring hearth, glowing charcoal basalt fuel embers, warm flame tongues, forged iron kettle hooks"
+    },
+    "references": []
+  },
+  "notes": "Hearth Island permanent fire (B5). 2x2 tile footprint with lightPool."
+}

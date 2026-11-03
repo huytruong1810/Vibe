@@ -1,0 +1,29 @@
+{
+  "asset": "npc:oren",
+  "kind": "human",
+  "heightArtPx": 46,
+  "ramps": {
+    "skin": "skin-warm",
+    "hair": "hair-silver",
+    "apron": "leather",
+    "shirt": "timber",
+    "boots": "iron"
+  },
+  "gen3d": { "seed": 1234, "steps": 50, "views": ["front", "back"] },
+  "concept": {
+    "template": "human-apose-v1",
+    "fields": {
+      "name": "Oren",
+      "age": "57",
+      "role": "waterwheel builder",
+      "home": "Aqualia canal mill",
+      "personality": "patient teacher, enjoys mechanical puzzles and terrible jokes",
+      "appearance": "sturdy broad-shouldered build, ruddy warm skin, full silver beard and thick silver hair, wearing a heavy split-leather carpenter's apron over a sturdy timber-brown wool shirt, rugged canvas trousers, and iron-capped work boots. Proportions are 5 heads tall in clean stylized A-pose"
+    },
+    "poseGuide": "art/source/style/pose-guides/human.png",
+    "references": [
+      "public/assets/portraits/characters/portrait_npc_oren_128.png"
+    ]
+  },
+  "notes": "Aqualia waterwheel builder (B21). Sturdy build, 5 heads tall, guided by human.png."
+}

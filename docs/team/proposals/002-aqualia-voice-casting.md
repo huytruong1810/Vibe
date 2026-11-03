@@ -2,7 +2,7 @@
 id: 002
 author: communicator
 rule: AGT-4.2
-status: candidate (revised per directive 006 / proposal-002 changes-requested)
+status: director-approved (revision 2, 2026-11-02; record docs/team/comms/director/approvals/proposal-002-r2.md)
 ---
 
 # Proposal 002: Aqualia Villager Voice Casting Sheet (Revision 2)

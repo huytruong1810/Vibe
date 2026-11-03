@@ -13,6 +13,8 @@ Commands:
   items --asset item:ID      render a separate existing prop through all 65 poses and QA
   Items run prep|gen3d|clean|texture|orient|items|packet|publish (all runs through items).
   all --asset ID         run every runnable stage in order (stops at the first block)
+  pose-guide --template T [--try]   grey clay pose guide for a skeleton template (concept poseGuide); --try runs one concept trial
+  swatch --set S --material M --prompt "..." [--n N] [--pick ID]   seamless 1024 px terrain swatch candidates for tileforge; --pick keeps one and logs it
 """
 
 from __future__ import annotations
@@ -126,7 +128,7 @@ def st_gen3d(asset: str) -> str:
            "--seed", str(extra["seed"]), "--steps", str(extra["steps"])]
     log = wd / "logs" / "gen3d.log"
     log.parent.mkdir(exist_ok=True)
-    with open(log, "w") as f:
+    with core.gpu_window(), open(log, "w") as f:
         p = subprocess.run(cmd, stdout=f, stderr=subprocess.STDOUT, timeout=3600,
                            env={**__import__("os").environ, "PYTHONDONTWRITEBYTECODE": "1", "HF_HOME": str(core.GEN3D_HF_HOME)})
     if p.returncode != 0:
@@ -1103,10 +1105,122 @@ def _run(asset: str, st: str) -> str:
     return msg
 
 
+# C27 pose guides: grey clay renders of a skeleton template's rest pose, laid out like the concept
+# template's sheet, passed to `concept` as the first reference (recipe concept.poseGuide).
+POSE_GUIDES = REPO / "art/source/style/pose-guides"
+POSE_GUIDE_SOURCES = {"quadruped": "rivallie", "human": "selftest-human", "winged": "selftest-creature-winged",
+                      "shelled": "selftest-creature-shelled", "mushroom-biped": "selftest-creature-mushroom-biped"}
+# Winged rests with flat wings, which read as needles from the front: pose it at the hover clip's
+# wings-up frame instead (a clear V in every view).
+POSE_GUIDE_POSE = {"winged": ("animate.blend", "idle", 2)}
+POSE_GUIDE_CONCEPT = {"human": "human-apose-v1", "winged": "creature-winged-v1", "mushroom-biped": "creature-biped-v1"}
+POSE_GUIDE_BG = (205, 205, 205)  # the flat light grey of pose-guides/quadruped.png
+# Trial recipes for `pose-guide --try` only (proof that a guide holds the pose); never placed in recipes/.
+_CREATURE_STANCE = {
+    "quadruped": "standing on all four paws with its body horizontal, never sitting or standing upright",
+    "shelled": "standing on all four paws with its body horizontal, never sitting or standing upright",
+}
+POSE_GUIDE_TRIALS = {
+    "human": {"template": "human-apose-v1", "fields": {
+        "name": "Test Villager", "age": "34", "role": "river ferry keeper", "home": "a lakeside village",
+        "personality": "calm and dry-humoured",
+        "appearance": "short dark hair, rolled-sleeve linen shirt in faded teal, brown work trousers, leather boots"}},
+    "winged": {"template": "creature-winged-v1", "fields": {
+        "species": "a test moth creature", "element": "wind", "size": "small",
+        "description": "a round fluffy moth with a friendly face", "anatomy": "plump body, two large wings, short antennae, a short tail",
+        "colours": "cream body, pale sky-blue wings, ochre tail tip"}},
+    "shelled": {"template": "creature-v1", "fields": {
+        "species": "a test turtle creature", "element": "fire", "size": "large",
+        "description": "a sturdy turtle with a domed rock shell", "anatomy": "four thick legs, a domed shell, a short head and tail",
+        "colours": "dark basalt shell, ochre skin"}},
+    "mushroom-biped": {"template": "creature-biped-v1", "fields": {
+        "species": "a test mushroom creature", "element": "fire", "size": "small",
+        "description": "a small mushroom sprite", "anatomy": "a large round cap as its head, a stout stem body, two short legs, two stubby arms, no tail",
+        "colours": "ember-red cap with cream spots, cream stem"}},
+    "quadruped": {"template": "creature-v1", "fields": {
+        "species": "a test otter creature", "element": "water", "size": "small",
+        "description": "a sleek river otter", "anatomy": "four legs, a long body, a long flat tail, small round ears",
+        "colours": "teal back, cream belly"}},
+}
+
+
+def pose_guide(template: str, concept_template: str | None = None, source: str | None = None, out: str | None = None) -> str:
+    """Render the template's fixture (or --source) as grey clay per view and lay the views out on the concept canvas."""
+    import numpy as np
+    from PIL import Image
+    if template not in POSE_GUIDE_SOURCES:
+        raise ForgeError(f"Unknown pose-guide template {template}; use one of {', '.join(POSE_GUIDE_SOURCES)}")
+    ct = concept_template or POSE_GUIDE_CONCEPT.get(template, "creature-v1")
+    t = json.loads((core.SPEC_DIR / "concept_templates.json").read_text())["templates"][ct]
+    owner = POSE_GUIDE_SOURCES[template]
+    blend, action, frame = POSE_GUIDE_POSE.get(template, ("texture.blend", None, None)) if not source else (None, None, None)
+    src = Path(source).resolve() if source else work_dir(owner) / blend
+    if not src.exists():
+        fix = (f"{CMD} selftest --kind {owner.removeprefix('selftest-')}" if owner.startswith("selftest")
+               else f"{CMD} texture --asset {owner}")
+        raise ForgeError(f"No source mesh at {src}; run {fix} first (or pass --source)")
+    wd = work_dir(f"poseguide-{template}")
+    renders = wd / "views"
+    renders.mkdir(parents=True, exist_ok=True)
+    pose = ["--action", action, "--frame", str(frame)] if action else []
+    core.run_blender("pose_guide.py", [str(src), str(renders), ",".join(t["views"]), *pose], wd / "logs" / "pose_guide.log")
+    W, H = t["size"]
+    crops = []
+    for v in t["views"]:
+        im = Image.open(renders / f"{v}.png").convert("RGBA")
+        box = im.getchannel("A").point(lambda a: 255 if a > 8 else 0).getbbox()
+        if not box:
+            raise ForgeError(f"Pose-guide view {v} rendered empty ({_rel(renders / f'{v}.png')})")
+        crops.append(im.crop(box))
+    n, margin = len(crops), 0.03 * W
+    sumw, maxh = sum(c.width for c in crops), max(c.height for c in crops)
+    s = 0.45 * H / maxh  # the tallest view fills about 45% of the canvas height, like quadruped.png
+    if n > 1:
+        s = min(s, (W - 2 * margin - (n - 1) * 0.06 * W) / sumw)  # keep at least 6% of the width between views
+    else:
+        s = min(s, (W - 2 * margin) / sumw)
+    crops = [c.resize((max(1, round(c.width * s)), max(1, round(c.height * s))), Image.LANCZOS) for c in crops]
+    sumw, maxh = sum(c.width for c in crops), max(c.height for c in crops)
+    canvas = Image.new("RGBA", (W, H), (*POSE_GUIDE_BG, 255))
+    base = round(H / 2 + maxh / 2)  # feet on one baseline, the block centred
+    gap = (W - 2 * margin - sumw) / (n - 1) if n > 1 else 0
+    x = margin if n > 1 else (W - sumw) / 2
+    for c in crops:
+        canvas.alpha_composite(c, (round(x), base - c.height))
+        x += c.width + gap
+    dest = Path(out).resolve() if out else POSE_GUIDES / f"{template}.png"
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    canvas.convert("RGB").save(dest)
+    prov = {"template": template, "conceptTemplate": ct, "views": t["views"], "size": [W, H],
+            "source": _rel(src) if src.is_relative_to(REPO) else str(src), "sourceSha256": core.sha256_file(src),
+            **({"pose": {"action": action, "frame": frame}} if action else {}),
+            "script": "art/source/forge/blender/pose_guide.py", "blender": _blender_version(),
+            "command": f"{CMD} pose-guide --template {template}" + (f" --concept-template {ct}" if concept_template else ""),
+            "at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
+    if dest.parent == POSE_GUIDES:
+        dest.with_suffix(".json").write_text(json.dumps(prov, indent=2) + "\n")
+    shown = _rel(dest) if dest.is_relative_to(REPO) else str(dest)
+    return f"wrote {shown} ({W}x{H}, views {', '.join(t['views'])}, tallest {maxh} px); LOOK at it"
+
+
+def pose_guide_try(template: str, n: int = 4, seed: int | None = None, model: str | None = None) -> str:
+    """One concept run with a built-in trial recipe that uses the committed guide (C27 done-when)."""
+    from forgelib import concept as concept_mod
+    guide = POSE_GUIDES / f"{template}.png"
+    if not guide.exists():
+        raise ForgeError(f"No guide at {_rel(guide)}; run {CMD} pose-guide --template {template} first")
+    trial = POSE_GUIDE_TRIALS[template]
+    fields = dict(trial["fields"])
+    if trial["template"] == "creature-v1":
+        fields["stance"] = _CREATURE_STANCE[template]
+    recipe = {"asset": f"poseguide-{template}", "concept": {**trial, "fields": fields, "poseGuide": _rel(guide)}}
+    return concept_mod.concept(f"poseguide-{template}", n, seed, model, recipe)
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("command", choices=["doctor", "selftest", "status", "next", "all", "faces", "item-plan", "items", "orient", "layout",
-                                        "concept", "views", *STAGES])
+                                        "concept", "views", "pose-guide", "swatch", *STAGES])
     ap.add_argument("--asset")
     ap.add_argument("--n", type=int, default=4, help="concept: candidates to generate")
     ap.add_argument("--seed", type=int, help="concept: first seed (default: time-based)")
@@ -1114,7 +1228,34 @@ def main() -> int:
     ap.add_argument("--pick", help="views: the concept candidate id to keep (e.g. c4211)")
     ap.add_argument("--kind", choices=["human", "creature", *[f"creature-{t}" for t in TEMPLATE_FIXTURES], "item", "environment", "all"],
                     default="all", help="selftest fixture kind")
+    ap.add_argument("--template", choices=list(POSE_GUIDE_SOURCES), help="pose-guide: skeleton template")
+    ap.add_argument("--concept-template", help="pose-guide: concept template whose views and size set the layout")
+    ap.add_argument("--source", help="pose-guide: mesh to render (.blend/.glb; default the template's fixture)")
+    ap.add_argument("--out", help="pose-guide: output PNG (default art/source/style/pose-guides/<template>.png)")
+    ap.add_argument("--set", dest="tileset", help="swatch: tileforge set name")
+    ap.add_argument("--material", help="swatch: material id in the set")
+    ap.add_argument("--prompt", help="swatch: the feature clause (what the ground looks like)")
+    ap.add_argument("--try", dest="trial", action="store_true", help="pose-guide: run one concept trial with the committed guide")
     a = ap.parse_args()
+    if a.command == "pose-guide":
+        if not a.template:
+            ap.error("pose-guide needs --template")
+        try:
+            print(f"[pose-guide] {pose_guide_try(a.template, a.n, a.seed, a.model) if a.trial else pose_guide(a.template, a.concept_template, a.source, a.out)}")
+            return 0
+        except (ForgeError, OSError, ValueError, KeyError) as e:
+            print(f"FORGE ERROR [pose-guide]: {e}", file=sys.stderr)
+            return 2
+    if a.command == "swatch":
+        if not (a.tileset and a.material):
+            ap.error("swatch needs --set and --material")
+        try:
+            from forgelib import swatch as swatch_mod
+            print(f"[swatch] {swatch_mod.swatch(a.tileset, a.material, a.prompt, a.n, a.seed, a.pick, a.model)}")
+            return 0
+        except (ForgeError, OSError, ValueError, KeyError) as e:
+            print(f"FORGE ERROR [swatch]: {e}", file=sys.stderr)
+            return 2
     if a.command == "doctor":
         return doctor()
     if a.command == "selftest":

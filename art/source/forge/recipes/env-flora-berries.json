@@ -1,0 +1,27 @@
+{
+  "asset": "env:flora-berries",
+  "kind": "environment",
+  "ramps": {
+    "bush": "foliage",
+    "berries": "gold",
+    "stems": "wood",
+    "leaves": "foliage-deep"
+  },
+  "gen3d": { "seed": 1234, "steps": 50, "views": ["front", "left"] },
+  "environment": {
+    "footprint": [1, 1],
+    "split": null,
+    "contactShadow": true
+  },
+  "concept": {
+    "template": "building-v1",
+    "fields": {
+      "building": "wild sunberry bush heavy with golden spherical berries and serrated green leaves",
+      "region": "Aqualia Riverlands",
+      "description": "a low rounded gathering bush with ripe glowing berries",
+      "materials": "gnarled wood stem, deep green foliage cluster, bright golden sunberries"
+    },
+    "references": []
+  },
+  "notes": "Gatherable flora healthy base (B24). 1x1 tile footprint."
+}

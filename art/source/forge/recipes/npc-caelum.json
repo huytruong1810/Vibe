@@ -1,0 +1,29 @@
+{
+  "asset": "npc:caelum",
+  "kind": "human",
+  "heightArtPx": 46,
+  "ramps": {
+    "skin": "skin-tan",
+    "hair": "hair-ink",
+    "tunic": "navy",
+    "coat": "timber",
+    "boots": "leather"
+  },
+  "gen3d": { "seed": 1234, "steps": 50, "views": ["front", "back"] },
+  "concept": {
+    "template": "human-apose-v1",
+    "fields": {
+      "name": "Caelum",
+      "age": "42",
+      "role": "hydrologist and canal master",
+      "home": "Aqualia canal settlement",
+      "personality": "calm, measured, thoughtful, fond of river metaphors",
+      "appearance": "standard adult build, tanned weathered skin, short ink-black hair with neat temples, wearing a deep navy tunic under an oiled timber-brown canal keeper's coat, rugged trousers, and waterproof leather wading boots. Proportions are 5 heads tall in clean stylized A-pose"
+    },
+    "poseGuide": "art/source/style/pose-guides/human.png",
+    "references": [
+      "public/assets/portraits/characters/portrait_npc_caelum_128.png"
+    ]
+  },
+  "notes": "Aqualia canal master (B21). Standard build, 5 heads tall, guided by human.png."
+}
