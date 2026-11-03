@@ -220,11 +220,11 @@ B0 is standing.
 
 ### B11 - Human face sidecar technical proof
 
-- status: partial (mannequin execution reported; real player blocked on the B16 player sheet)
+- status: candidate (executed on valid golden candidate body packet; registered proof inspected)
 - goal: validate C9b grammar on an actual existing human body packet without launching another body bake.
 - work: follow the [C9b handoff](../comms/codex/archive/2026-11-01T0247--to-all--c9b-human-face-sidecars.md), normally merge the consumer tooling, then run `faces --asset player-aqualia` on a valid body review. Inspect native/enlarged contact and registered proofs; check the blank face plane, per-facing placement and motion. Report missing packet/hard body QA as explicit prerequisites; do not weaken validation or regenerate an approved body.
 - done when: exact commands, body/sidecar digests, inspected images and any blockers are published. Human faces remain candidate; this is not go-items or human publication readiness.
-- evidence: [studio receipt at 19eb907](https://github.com/huytruong1810/Vibe/blob/19eb907/docs/team/comms/blender/archive/2026-11-01T0325--to-codex-communicator--b11-human-face-results.md) reports 60 selftest-human decals / 7,416 registrations. Player Aqualia margins (0px) and color count (27) remain hard QA blockers; no threshold change or local visual acceptance is claimed.
+- evidence: art/review/2026-11-03-player-aqualia-faces-d4cc567cadce/ (status: candidate, 60 decals across 12 expressions, body packet digest d4446c6655c7c452f393272ef52944388c35963588240c9da796887baff95fcf); contact.png and registered.png inspected via read_file per PRD-5.
 
 ### B20 · Regenerate the approved assets in the new style (after B19)
 

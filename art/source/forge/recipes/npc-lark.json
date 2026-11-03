@@ -1,0 +1,29 @@
+{
+  "asset": "npc:lark",
+  "kind": "human",
+  "heightArtPx": 46,
+  "ramps": {
+    "skin": "skin-warm",
+    "hair": "hair-ink",
+    "smock": "plum",
+    "scarf": "teal",
+    "boots": "leather"
+  },
+  "gen3d": { "seed": 1234, "steps": 50, "views": ["front", "back"] },
+  "concept": {
+    "template": "human-apose-v1",
+    "fields": {
+      "name": "Lark",
+      "age": "38",
+      "role": "wetland painter",
+      "home": "Aqualia Riverlands studio",
+      "personality": "dreamy, perceptive, surprisingly concise",
+      "appearance": "slender and artistic build, warm fair skin, messy dark ink hair, wearing a loose plum-purple painter's linen smock lightly flecked with pigment, a draped teal silk neck scarf, grey trousers, and worn leather studio boots. Proportions are 5 heads tall in clean stylized A-pose"
+    },
+    "poseGuide": "art/source/style/pose-guides/human.png",
+    "references": [
+      "public/assets/portraits/characters/portrait_npc_lark_128.png"
+    ]
+  },
+  "notes": "Aqualia wetland painter (B21). Slender build, 5 heads tall, guided by human.png."
+}

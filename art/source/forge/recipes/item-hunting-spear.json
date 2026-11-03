@@ -1,0 +1,30 @@
+{
+  "asset": "item:hunting-spear",
+  "kind": "item",
+  "ramps": {
+    "tip": "iron",
+    "shaft": "wood",
+    "grip": "leather",
+    "lashing": "reed"
+  },
+  "gen3d": { "seed": 1234, "steps": 50 },
+  "orient": { "lengthArtPx": 25, "gripFraction": 0.30 },
+  "item": {
+    "model": "auto",
+    "grip": "auto",
+    "socket": "Socket_Hand.R",
+    "iconPivot": "auto",
+    "iconScale": "auto"
+  },
+  "concept": {
+    "template": "prop-v1",
+    "fields": {
+      "object": "chunky hunting spear with a broad leaf-shaped iron spearhead and thick cross-lashed wings",
+      "owner": "an Aqualia hunter",
+      "materials": "forged dark iron socketed spearhead with side lugs, smooth ash wood shaft, wrapped leather grip with reed cord whipping",
+      "scale": "two-handed hunting spear, about 1.8 m long"
+    },
+    "references": []
+  },
+  "notes": "T0 combat weapon (B22). Length 25 px, hunting spear."
+}

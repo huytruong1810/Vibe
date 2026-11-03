@@ -1,0 +1,43 @@
+{
+  "asset": "zephyrit",
+  "kind": "creature",
+  "heightArtPx": 25,
+  "ramps": {
+    "body": "sky",
+    "wings": "cream",
+    "belly": "sage",
+    "eyes": "gold"
+  },
+  "gen3d": {
+    "seed": 1234,
+    "steps": 50,
+    "views": [
+      "front",
+      "left",
+      "back"
+    ]
+  },
+  "notes": "Winged creature (zephyrit). Winged-v1 rig template with hover gait, pale sky body, cream wings, sage belly, gold eyes. creature.small canvas (40x44, anchor 20,34).",
+  "texture": {
+    "views": [
+      "front",
+      "left",
+      "back"
+    ]
+  },
+  "concept": {
+    "template": "creature-winged-v1",
+    "fields": {
+      "species": "Zephyrit",
+      "element": "wind",
+      "size": "small",
+      "description": "a bright little companion that follows the sea breeze and perches on high sails",
+      "anatomy": "plump aerodynamic avian-fae body, pair of broad rounded feather-wings spread wide, short feathered crest atop the head, tiny curved beak, small tucked talons under the body, delicate fan tail",
+      "colours": "pale sky-blue body plumage, soft cream wing primary feathers, light sage green underbelly, bright gold eyes"
+    },
+    "references": [
+      "public/assets/portraits/creatures/portrait_zephyrit_128.png"
+    ],
+    "poseGuide": "art/source/style/pose-guides/winged.png"
+  }
+}
