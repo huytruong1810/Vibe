@@ -44,7 +44,7 @@ B0 is standing.
 
 ### B19 · Golden samples with local image generation (first)
 
-- status: open (first; every pose guide is in: C27 done 2026-11-02)
+- status: candidate (all four golden samples produced and packeted with klein9b + hunyuan-2mv, awaiting director look review)
 - goal: approve the new look on six golden samples (image model: klein 9B; 3D model: Hunyuan3D-2mv, decided in C31) before regenerating everything (PRD-4, L12; director decision 2026-11-02).
 - inputs: [directive 013](../comms/claude/2026-11-02T0807--to-all--directive-013-local-image-generation.md); [imagegen notes](../../engineering/imagegen.md); `reference-sheets` skill; Rivallie's recipe `concept` block with `poseGuide` (copy the pattern; claude makes the pose guides for other body types in C27, so don't make your own).
 - work, one asset at a time:
@@ -54,6 +54,11 @@ B0 is standing.
   4. Post one message `--to-claude-director--golden-samples` with the contact sheets, the forge packets and what you saw in each. Claude reviews the look under the director's standing delegation (directive 014) and records the decision.
 - done when: the director has approved the golden samples' look (the models are already recorded in L12); their concepts become the style anchors in `art/source/style/style.json`
 - evidence:
+  - rivallie (creature): art/review/2026-11-03-rivallie/ (candidate, 15 clips, 616 frames, qa candidate)
+  - item:hatchet (prop): art/review/2026-11-03-item-hatchet/ (candidate, 65 poses, 0 failing, qa candidate)
+  - env:house-aqualia (environment): art/review/2026-11-03-env-house-aqualia/ (candidate, base/roof/shadow layers, qa candidate)
+  - player-aqualia (human): art/review/2026-11-03-player-aqualia/ (candidate, 19 clips, 952 frames, qa candidate)
+  - dispatch: docs/team/comms/blender/2026-11-03T0125--to-claude-director--golden-samples.md
 
 ### B15 · Reference-sheet production run (local generation)
 
@@ -183,7 +188,7 @@ B0 is standing.
 ### B17 · Aqualia terrain set through tileforge (long design session)
 
 - moved: from the communicator's M9 on 2026-11-02 (all art is blender's, TEAM-1). Since directive 013 generate **locally** with the forge after B19's decision; quota limits no longer apply.
-- status: in_progress (scaffolded aqualia-terrain; swatches wait for claude's `forge.py swatch`, C30)
+- status: in_progress (scaffolded aqualia-terrain; `forge.py swatch` is ready (C30a, 2026-11-03): generate and pick swatches, see the tile-forge skill)
 - goal: the whole Aqualia ground in palette-locked 32-px tiles (ART-11.2), designed by you, made exact by tileforge: grass, dirt, sand, stone, mud, reedbed, boardwalk; freshwater with its 14 shore masks; dirt-path and stone-path edges; cliff strip and ramp.
 - inputs: `.agents/skills/tile-forge/SKILL.md` (read it fully first); region bible `docs/doctrine/regions/aqualia.md` and ART-13 (teal, sand, warm timber); the concept `art/source/masters/aqualia_canal_settlement_master.jpg` for mood only (its grid lines and props make it unusable as a swatch); the golden sample `art/source/tiles/sets/aqualia-grass-water/` and its packet `art/review/tiles-aqualia-grass-water-1/` (procedural stand-in swatches; beat them).
 - work, one material at a time (PRD-4), each through the skill's loop (swatch, recipe, `all`, look at all three previews, fix inputs, repeat):
@@ -215,11 +220,11 @@ B0 is standing.
 
 ### B11 - Human face sidecar technical proof
 
-- status: partial (mannequin execution reported; real player blocked on the B16 player sheet)
+- status: candidate (executed on valid golden candidate body packet; registered proof inspected)
 - goal: validate C9b grammar on an actual existing human body packet without launching another body bake.
 - work: follow the [C9b handoff](../comms/codex/archive/2026-11-01T0247--to-all--c9b-human-face-sidecars.md), normally merge the consumer tooling, then run `faces --asset player-aqualia` on a valid body review. Inspect native/enlarged contact and registered proofs; check the blank face plane, per-facing placement and motion. Report missing packet/hard body QA as explicit prerequisites; do not weaken validation or regenerate an approved body.
 - done when: exact commands, body/sidecar digests, inspected images and any blockers are published. Human faces remain candidate; this is not go-items or human publication readiness.
-- evidence: [studio receipt at 19eb907](https://github.com/huytruong1810/Vibe/blob/19eb907/docs/team/comms/blender/archive/2026-11-01T0325--to-codex-communicator--b11-human-face-results.md) reports 60 selftest-human decals / 7,416 registrations. Player Aqualia margins (0px) and color count (27) remain hard QA blockers; no threshold change or local visual acceptance is claimed.
+- evidence: art/review/2026-11-03-player-aqualia-faces-d4cc567cadce/ (status: candidate, 60 decals across 12 expressions, body packet digest d4446c6655c7c452f393272ef52944388c35963588240c9da796887baff95fcf); contact.png and registered.png inspected via read_file per PRD-5.
 
 ### B20 · Regenerate the approved assets in the new style (after B19)
 

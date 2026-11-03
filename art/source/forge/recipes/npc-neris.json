@@ -1,0 +1,29 @@
+{
+  "asset": "npc:neris",
+  "kind": "human",
+  "heightArtPx": 46,
+  "ramps": {
+    "skin": "skin-warm",
+    "hair": "hair-silver",
+    "vest": "moss",
+    "shirt": "navy",
+    "boots": "leather"
+  },
+  "gen3d": { "seed": 1234, "steps": 50, "views": ["front", "back"] },
+  "concept": {
+    "template": "human-apose-v1",
+    "fields": {
+      "name": "Neris",
+      "age": "51",
+      "role": "ferry keeper",
+      "home": "Aqualia canal settlement",
+      "personality": "dry humor, careful listener, reliable in storms",
+      "appearance": "elder build with stoic posture, warm weathered skin, neat silver hair tied back, wearing a moss-green quilted vest over a navy long-sleeve shirt, dark trousers, and sturdy brown leather boots. Proportions are 5 heads tall in clean stylized A-pose"
+    },
+    "poseGuide": "art/source/style/pose-guides/human.png",
+    "references": [
+      "public/assets/portraits/characters/portrait_npc_neris_128.png"
+    ]
+  },
+  "notes": "Aqualia village elder ferry keeper (B15 step 1 / B4). Elder build, 5 heads tall, guided by human.png."
+}

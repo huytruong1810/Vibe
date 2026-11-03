@@ -1,16 +1,45 @@
 {
   "asset": "player-aqualia",
   "kind": "human",
-  "heightArtPx": 58,
+  "heightArtPx": 46,
   "ramps": {
     "skin": "skin-warm",
     "hair": "hair-teal",
     "tunic": "teal",
-    "trim": "glass",
-    "undershirt": "cream",
+    "trim": "teal",
+    "undershirt": "teal",
     "trousers": "navy",
     "boots": "leather"
   },
   "gen3d": { "seed": 1234, "steps": 50, "views": ["front", "back"] },
-  "notes": "Bring-up recipe (claude, C9a validation run). heightArtPx = standard crown 56 + 2 hair. Ramps mapped onto palette.json names: the sheet lists river-blue, charcoal and outline-dark, which don't exist. The sheet is about 6.5-7 heads; L3 asks 4.5-5 (communicator to redraw). Held hatchet waits for codex C9b (items)."
+  "rig": {
+    "landmarks": {
+      "shoulder_l": [0.157, 0.043, 1.2657],
+      "elbow_l": [0.2702, 0.0411, 1.0371],
+      "wrist_l": [0.4187, -0.0043, 0.816],
+      "palm_l": [0.4408, 0.0014, 0.7984],
+      "hand_end_l": [0.4739, 0.0099, 0.7717],
+      "shoulder_r": [-0.1587, 0.0347, 1.264],
+      "elbow_r": [-0.2702, 0.0408, 1.0358],
+      "wrist_r": [-0.4192, -0.0043, 0.8171],
+      "palm_r": [-0.4419, 0.0019, 0.7988],
+      "hand_end_r": [-0.4759, 0.0114, 0.7714]
+    }
+  },
+  "concept": {
+    "template": "human-apose-v1",
+    "fields": {
+      "name": "Player",
+      "age": "19",
+      "role": "young adventurer and villager",
+      "home": "Aqualia canal settlement",
+      "personality": "curious and determined",
+      "appearance": "slender build, porcelain skin, vibrant teal hair tied neatly, wearing a teal tunic with glass-blue trim over a cream undershirt, navy trousers, and brown leather boots. Proportions are 5 heads tall in clean stylized A-pose"
+    },
+    "poseGuide": "art/source/style/pose-guides/human.png",
+    "references": [
+      "public/assets/portraits/characters/portrait_player_aqualia_128.png"
+    ]
+  },
+  "notes": "Golden human sample (B19/B4/B16). 5 heads tall (L3), slender build, teal hair, A-pose guided by human.png."
 }

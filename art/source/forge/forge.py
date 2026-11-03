@@ -14,6 +14,7 @@ Commands:
   Items run prep|gen3d|clean|texture|orient|items|packet|publish (all runs through items).
   all --asset ID         run every runnable stage in order (stops at the first block)
   pose-guide --template T [--try]   grey clay pose guide for a skeleton template (concept poseGuide); --try runs one concept trial
+  swatch --set S --material M --prompt "..." [--n N] [--pick ID]   seamless 1024 px terrain swatch candidates for tileforge; --pick keeps one and logs it
 """
 
 from __future__ import annotations
@@ -127,7 +128,7 @@ def st_gen3d(asset: str) -> str:
            "--seed", str(extra["seed"]), "--steps", str(extra["steps"])]
     log = wd / "logs" / "gen3d.log"
     log.parent.mkdir(exist_ok=True)
-    with open(log, "w") as f:
+    with core.gpu_window(), open(log, "w") as f:
         p = subprocess.run(cmd, stdout=f, stderr=subprocess.STDOUT, timeout=3600,
                            env={**__import__("os").environ, "PYTHONDONTWRITEBYTECODE": "1", "HF_HOME": str(core.GEN3D_HF_HOME)})
     if p.returncode != 0:
@@ -1219,7 +1220,7 @@ def pose_guide_try(template: str, n: int = 4, seed: int | None = None, model: st
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("command", choices=["doctor", "selftest", "status", "next", "all", "faces", "item-plan", "items", "orient", "layout",
-                                        "concept", "views", "pose-guide", *STAGES])
+                                        "concept", "views", "pose-guide", "swatch", *STAGES])
     ap.add_argument("--asset")
     ap.add_argument("--n", type=int, default=4, help="concept: candidates to generate")
     ap.add_argument("--seed", type=int, help="concept: first seed (default: time-based)")
@@ -1231,6 +1232,9 @@ def main() -> int:
     ap.add_argument("--concept-template", help="pose-guide: concept template whose views and size set the layout")
     ap.add_argument("--source", help="pose-guide: mesh to render (.blend/.glb; default the template's fixture)")
     ap.add_argument("--out", help="pose-guide: output PNG (default art/source/style/pose-guides/<template>.png)")
+    ap.add_argument("--set", dest="tileset", help="swatch: tileforge set name")
+    ap.add_argument("--material", help="swatch: material id in the set")
+    ap.add_argument("--prompt", help="swatch: the feature clause (what the ground looks like)")
     ap.add_argument("--try", dest="trial", action="store_true", help="pose-guide: run one concept trial with the committed guide")
     a = ap.parse_args()
     if a.command == "pose-guide":
@@ -1241,6 +1245,16 @@ def main() -> int:
             return 0
         except (ForgeError, OSError, ValueError, KeyError) as e:
             print(f"FORGE ERROR [pose-guide]: {e}", file=sys.stderr)
+            return 2
+    if a.command == "swatch":
+        if not (a.tileset and a.material):
+            ap.error("swatch needs --set and --material")
+        try:
+            from forgelib import swatch as swatch_mod
+            print(f"[swatch] {swatch_mod.swatch(a.tileset, a.material, a.prompt, a.n, a.seed, a.pick, a.model)}")
+            return 0
+        except (ForgeError, OSError, ValueError, KeyError) as e:
+            print(f"FORGE ERROR [swatch]: {e}", file=sys.stderr)
             return 2
     if a.command == "doctor":
         return doctor()

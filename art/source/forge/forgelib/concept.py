@@ -23,6 +23,7 @@ from pathlib import Path
 import numpy as np
 from PIL import Image, ImageDraw
 
+from . import core
 from .core import FORGE, REPO, SPEC_DIR, ForgeError, load_recipe, reference_dir, slug, work_dir
 
 IMAGEGEN = FORGE / "imagegen"
@@ -78,7 +79,7 @@ def concept(asset: str, n: int = 4, seed: int | None = None, model: str | None =
     jf.write_text(json.dumps(job, indent=1))
     log = wd / "logs" / "concept.log"
     log.parent.mkdir(parents=True, exist_ok=True)
-    with open(log, "w") as f:
+    with core.gpu_window(), open(log, "w") as f:
         rc = subprocess.run([str(IMAGEGEN_PY), str(IMAGEGEN / "run_image.py"), str(jf)], stdout=f, stderr=subprocess.STDOUT).returncode
     lines = [l for l in log.read_text(errors="replace").splitlines() if l.startswith("IMAGEGEN ")]
     if rc != 0 or not lines:

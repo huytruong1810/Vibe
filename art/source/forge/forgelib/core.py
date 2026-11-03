@@ -180,3 +180,35 @@ def run_blender(script: str, args: list[str], log: Path, timeout: int = 1800) ->
     if proc.returncode != 0:
         tail = "\n".join(log.read_text(errors="replace").splitlines()[-25:])
         raise ForgeError(f"Blender script {script} failed (exit {proc.returncode}). Log: {log.relative_to(REPO)}\n{tail}")
+
+
+# The GPU is shared with the jepa_ipomdp experiment queue (agreed 2026-11-03). Protocol: create PAUSE (its queue then
+# starts no new seed), wait until GPU_BUSY (the seed running now) is gone, run, delete PAUSE. A seed takes 1-2 h.
+GPU_PAUSE = Path.home() / "projects/jepa_ipomdp/runs/week/PAUSE"
+GPU_BUSY = GPU_PAUSE.with_name("GPU_BUSY")
+
+
+class gpu_window:
+    """Context manager around a big GPU job (more than ~8 GB): pause the other project's queue, wait for its running seed."""
+
+    def __init__(self, wait_s: int = 9000):
+        self.wait_s, self.made = wait_s, False
+
+    def __enter__(self):
+        if not GPU_PAUSE.parent.is_dir():
+            return self  # the other project isn't on this machine
+        if not GPU_PAUSE.exists():
+            GPU_PAUSE.touch()
+            self.made = True
+        t0 = time.time()
+        while GPU_BUSY.exists():
+            if time.time() - t0 > self.wait_s:
+                self.__exit__()
+                raise ForgeError(f"{GPU_BUSY} still exists after {self.wait_s} s: another project's seed is running. Retry later.")
+            time.sleep(15)
+        return self
+
+    def __exit__(self, *exc):
+        if self.made:
+            GPU_PAUSE.unlink(missing_ok=True)
+            self.made = False
