@@ -314,12 +314,13 @@ fit → C9c.
 
 ### C32 · `forge.py icon` for inventory items without a held model
 
-- status: open
+- status: done (2026-11-04, claude)
 - owner: claude
 - goal: B23 can make 32 × 32 `icon.item` icons (render_spec) for the resources and crafted goods in `src/content/definitions.ts`, palette-locked, in the same light and outline rules as the held-item icons from `items`.
 - work: from a `prop-v1` sheet, either gen3d a small model and render the item stage's icon view, or reduce the sheet's three-quarter view straight to 32 × 32 through `forgelib/pixelize`; pick one by trial on two items (berries, flint) and document it in `recipes/README.md` and the `sprite-forge` skill. Packet type for an icon set.
 - done when: berries and flint icons pass icon QA at 1× and 4× and the B23 instructions work as written
-- evidence:
+- result: `forge.py icon --item ID --prompt "..." --ramps a,b [--n N] [--pick ID]` (`forgelib/icon.py`). Route: klein draws the object, then 2D reduction to 32 x 32 with palette lock and selective outline; the 3D route was not built (see `docs/engineering/imagegen.md`). Berries (`ember,sage,timber`, i400/i401) read at 1x; flint (`basalt`, i303) reads as a plain stone and is low contrast. Candidate tool; B23 picks and the reviewer judges.
+- evidence: `icon_selftest.py` 6/6; trials `art/source/forge/work/icon-{berries,flint}/` (0 icon-check problems in all 16 candidates); boards `docs/team/comms/claude/boards/2026-11-04-c32-icon-berries.png`, `…-c32-icon-flint.png`
 
 ### C31 · gen3d backends: Hunyuan3D-2.1 shape and TRELLIS.2
 

@@ -15,6 +15,7 @@ Commands:
   all --asset ID         run every runnable stage in order (stops at the first block)
   pose-guide --template T [--try]   grey clay pose guide for a skeleton template (concept poseGuide); --try runs one concept trial
   portrait --asset K:ID [--emotions a,b] [--n N] [--pick e=id,...]   eight expressions (96/128 px) from the neutral portrait by reference editing; --pick keeps candidates
+  icon --item ID --prompt "..." --ramps a,b [--n N] [--pick ID]   32 px inventory icon candidates for items without a held model; --pick keeps one and logs it
   swatch --set S --material M --prompt "..." [--n N] [--pick ID]   seamless 1024 px terrain swatch candidates for tileforge; --pick keeps one and logs it
 """
 
@@ -1221,7 +1222,7 @@ def pose_guide_try(template: str, n: int = 4, seed: int | None = None, model: st
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("command", choices=["doctor", "selftest", "status", "next", "all", "faces", "item-plan", "items", "orient", "layout",
-                                        "concept", "views", "pose-guide", "swatch", "portrait", *STAGES])
+                                        "concept", "views", "pose-guide", "swatch", "portrait", "icon", *STAGES])
     ap.add_argument("--asset")
     ap.add_argument("--n", type=int, default=4, help="concept: candidates to generate")
     ap.add_argument("--seed", type=int, help="concept: first seed (default: time-based)")
@@ -1236,6 +1237,8 @@ def main() -> int:
     ap.add_argument("--set", dest="tileset", help="swatch: tileforge set name")
     ap.add_argument("--material", help="swatch: material id in the set")
     ap.add_argument("--prompt", help="swatch: the feature clause (what the ground looks like)")
+    ap.add_argument("--item", help="icon: item id (e.g. berries)")
+    ap.add_argument("--ramps", help="icon: comma list of palette ramps the icon may use (e.g. ember,sage)")
     ap.add_argument("--emotions", help="portrait: comma list of emotions to generate (default all eight non-neutral)")
     ap.add_argument("--try", dest="trial", action="store_true", help="pose-guide: run one concept trial with the committed guide")
     a = ap.parse_args()
@@ -1257,6 +1260,16 @@ def main() -> int:
             return 0
         except (ForgeError, OSError, ValueError, KeyError) as e:
             print(f"FORGE ERROR [swatch]: {e}", file=sys.stderr)
+            return 2
+    if a.command == "icon":
+        if not a.item:
+            ap.error("icon needs --item <id> (e.g. berries)")
+        try:
+            from forgelib import icon as icon_mod
+            print(f"[icon] {icon_mod.icon(a.item, a.prompt, a.ramps, a.n, a.seed, a.pick, a.model)}")
+            return 0
+        except (ForgeError, OSError, ValueError, KeyError) as e:
+            print(f"FORGE ERROR [icon]: {e}", file=sys.stderr)
             return 2
     if a.command == "portrait":
         if not a.asset:

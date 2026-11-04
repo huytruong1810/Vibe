@@ -101,6 +101,20 @@ warm=warm-4100,...` copies the kept ones to `exports/portraits/expressions/<kind
   all 16. Limits seen: skin comes out warmer and brighter than the neutral's muted tone; thoughtful,
   concerned and sad sit close together; one curious candidate reads as fearful. Pick by eye, generate
   more seeds for the weak ones. The drift numbers do not judge the expression.
+- **Item icons (C32, built).** `forge.py icon --item berries --prompt "cluster of five round red berries on a short
+brown stem with two small green leaves" --ramps ember,sage,timber [--n 4] [--seed S]` has klein 9B draw the object
+  on flat grey (three-quarter view, upper-left light), keys it, reduces it to a 26 px body, snaps every pixel to the
+  named ramps' non-`deep` steps (OKLab nearest), cleans orphans, and adds the 1 px selective outline (`deep`, `shadow`
+  on the top-lit edge; ART-5.1/5.2). Result: 32 x 32, margin at least 2, palette-locked; the contact sheet shows the
+  raw render and the icon at 8x on dark and light grounds. `--pick <id>` checks it again and writes
+  `art/source/ui/icons/items/<id>.png`, logging the seed in the image ledger. **Route chosen: the 2D reduction.**
+  The 3D route (gen3d a prop, render the item stage's icon view) was not built: the 2D route read well enough on both
+  trial items and needs one klein call (about 1 min) instead of a sheet, a model and a bake. Trials (seeds 100-103,
+  200-203, 300-303, 400-403; boards `docs/team/comms/claude/boards/2026-11-04-c32-icon-*.png`): the `--ramps` list
+  decides the result. Berries with `ember,sage` lose the brown stem to red and green pixels; with `ember,sage,timber`
+  the stem, leaves and berries read at 1x. Flint with `basalt,glass` gets teal patches; with `basalt` alone it is a
+  low-contrast grey slab with few facets. Name every material's ramp, and expect to re-seed. Not approved: B23 picks and
+  the reviewer judges.
 - **Swatches (C30a, built):** `forge.py swatch`, see the tile-forge skill.
 - **Shared GPU.** Every model stage runs inside `core.gpu_window`, which now serializes forge jobs: a live
   forge process holding `PAUSE` makes the next one wait (two klein jobs on 16 GB spilled to swap and took 51
