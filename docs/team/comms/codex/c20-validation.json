@@ -1,7 +1,7 @@
 {
   "recordedAt": "2026-11-04T22:55:48.594Z",
   "baseCommit": "1df43a71891dec84f56835a6f3cb0b077d44f44e",
-  "status": "candidate; local validation passes; external acceptance and source CI pending",
+  "status": "candidate; local validation passes; source verify fails; external acceptance pending",
   "changed": [
     "Authoritative player canvas requests, immutable briefs, revision-checked completion, Keep/Discard/Retry",
     "Shared content data and canonical subjects/affinity; NPC CREATE/HANG with home reservation and retained-record rates",
@@ -341,5 +341,127 @@
     "mockPipelineMs": 542.5,
     "goldenHash": "80bd3049d7d65ff7f8ce461f9ca0ffb7489b50e1f9780879482b62281f14ba01",
     "realImageModel": false
+  },
+  "sourceCommit": "e2e2b0f1029f57a4c11e4a60b56453004628da08",
+  "sourceCi": {
+    "receipt": {
+      "path": "artifacts/c20-browser/source-ci-final.json",
+      "sha256": "4a7cf7099c0a84ed50a9c1aa8bca663ed79d544656a314e109829e37b69b4c9c"
+    },
+    "runs": [
+      {
+        "id": 41930714385,
+        "url": "https://github.com/huytruong1810/Vibe/actions/runs/41930714385",
+        "conclusion": "failure",
+        "jobs": [
+          {
+            "name": "checks",
+            "conclusion": "success",
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/41930714385/job/126926585626",
+            "startedAt": "2026-11-04T23:04:30Z",
+            "completedAt": "2026-11-04T23:09:40Z"
+          },
+          {
+            "name": "browser-journeys (2)",
+            "conclusion": "failure",
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/41930714385/job/126926586002",
+            "startedAt": "2026-11-04T23:04:29Z",
+            "completedAt": "2026-11-04T23:14:30Z"
+          },
+          {
+            "name": "beta-browser (/)",
+            "conclusion": "success",
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/41930714385/job/126926586015",
+            "startedAt": "2026-11-04T23:04:30Z",
+            "completedAt": "2026-11-04T23:06:08Z"
+          },
+          {
+            "name": "beta-browser (/Vibe/)",
+            "conclusion": "success",
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/41930714385/job/126926586065",
+            "startedAt": "2026-11-04T23:04:30Z",
+            "completedAt": "2026-11-04T23:06:01Z"
+          },
+          {
+            "name": "browser-journeys (1)",
+            "conclusion": "failure",
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/41930714385/job/126926586190",
+            "startedAt": "2026-11-04T23:04:30Z",
+            "completedAt": "2026-11-04T23:20:09Z"
+          },
+          {
+            "name": "ecology-soak",
+            "conclusion": "cancelled",
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/41930714385/job/126926586196",
+            "startedAt": "2026-11-04T23:04:29Z",
+            "completedAt": "2026-11-04T23:29:45Z"
+          },
+          {
+            "name": "verify",
+            "conclusion": "failure",
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/41930714385/job/126933977126",
+            "startedAt": "2026-11-04T23:20:12Z",
+            "completedAt": "2026-11-04T23:20:15Z"
+          }
+        ]
+      },
+      {
+        "id": 41930723882,
+        "url": "https://github.com/huytruong1810/Vibe/actions/runs/41930723882",
+        "conclusion": "failure",
+        "jobs": [
+          {
+            "name": "beta-browser (/Vibe/)",
+            "conclusion": "success",
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/41930723882/job/126926616655",
+            "startedAt": "2026-11-04T23:04:33Z",
+            "completedAt": "2026-11-04T23:05:41Z"
+          },
+          {
+            "name": "beta-browser (/)",
+            "conclusion": "success",
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/41930723882/job/126926616955",
+            "startedAt": "2026-11-04T23:04:33Z",
+            "completedAt": "2026-11-04T23:06:19Z"
+          },
+          {
+            "name": "checks",
+            "conclusion": "success",
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/41930723882/job/126926616965",
+            "startedAt": "2026-11-04T23:04:33Z",
+            "completedAt": "2026-11-04T23:08:01Z"
+          },
+          {
+            "name": "ecology-soak",
+            "conclusion": "cancelled",
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/41930723882/job/126926616988",
+            "startedAt": "2026-11-04T23:04:33Z",
+            "completedAt": "2026-11-04T23:29:49Z"
+          },
+          {
+            "name": "browser-journeys (2)",
+            "conclusion": "success",
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/41930723882/job/126926616992",
+            "startedAt": "2026-11-04T23:04:33Z",
+            "completedAt": "2026-11-04T23:09:39Z"
+          },
+          {
+            "name": "browser-journeys (1)",
+            "conclusion": "failure",
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/41930723882/job/126926617034",
+            "startedAt": "2026-11-04T23:04:33Z",
+            "completedAt": "2026-11-04T23:20:30Z"
+          },
+          {
+            "name": "verify",
+            "conclusion": "failure",
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/41930723882/job/126934129932",
+            "startedAt": "2026-11-04T23:20:33Z",
+            "completedAt": "2026-11-04T23:20:37Z"
+          }
+        ]
+      }
+    ],
+    "finding": "Both C13 Zephyrit captures miss transient beats; push C18 startup times out; PR C18 passes; aggregate verify fails both. Ecology cancelled, not passing soak."
   }
 }

@@ -3,7 +3,7 @@
 ## Current work
 
 Branch `eng/hd-presentation`, workspace `C:/Users/htruong/source/repos/Vibe`.
-Committed HEAD **1df43a7**. C20 is locally validated and ready for its separate commit/push.
+C20 source **e2e2b0f1** push/PR verify failed. C3g **7a3ae74b**, C18 startup diagnostics **f9f9e5dd**, and C13 phase capture **ab636702** are separately committed; fresh source CI is next.
 The director asked to continue through all unblocked Codex tickets. The earlier
 pause/cron request was cancelled; no cron was created. C21 still needs explicit go.
 
@@ -91,21 +91,23 @@ Mock worker6ms exceeds5ms target; startup149.3ms/total542.5ms, golden bytes unch
 
 ## Next actions
 
-1. C20 local validation and screenshot retention are finished. Do not repeat them
-   without a new change/failure; see c20-validation.json for exact commands/hashes.
-2. Commit C20 separately from C18 repair, pull/push, retain public source CI receipts.
-   Update this handoff, session and queue with Changed / Evidence / Gaps and risks.
-3. Send the concrete machine-A request prepared in
-   [C20 smoke request](2026-11-04T2252--to-blender--test-c20-painting-workflow.md).
-   C19 already has [a smoke request](2026-11-04T1619--to-blender--test-c19-painting.md).
-4. Continue C3g: gallery still hardcodes page0 and16MiB despite five catalog pages.
-   Add every-page selection, truthful catalog/resident-byte statistics and document
-   the existing128MiB gallery cache versus runtime quality budgets. Keep approval,
-   atlas content and runtime streaming gates unchanged; inspect the gallery capture.
-5. Audit remaining queue tickets against current code before implementing duplicates.
-   C32 previous-revision tooling already landed; machine-A revision3 proof is external.
-   C7 authored-world activation remains gated separately; never enable it from layout
-   approval alone. C15/C16 and C21 require explicit director authorization.
+1. C3g, C18 startup diagnostics and C13 transient capture repair are separate commits. Evidence: c3g-validation.json, c18-ci-diagnostics.json,
+   c13-capture-validation.json. Temporary software config removed.
+2. Pull/push and verify fresh public browser + aggregate verify receipts before
+   claiming C20 CI acceptance. Source e2e2b0f1 push41930714385/PR41930723882 fail:
+   C13 Zephyrit misses notice/commit; push C18 startup times out, sibling passes.
+   Ecology cancelled around25 minutes in both, never passing evidence.
+3. C20 machine-A request is already pushed in
+   [smoke request](2026-11-04T2252--to-blender--test-c20-painting-workflow.md);
+   C19 request is also pushed. Both actual model/GPU acceptances remain external.
+4. C3g now selects all5 pages and distinguishes79.84MiB catalog from resident128MiB
+   page-cache cap; ADR038 documents overhead exclusions. Seven gallery tests pass;
+   final two atlas checks and all5 inspected captures retained. Scale awaits M11.
+5. C32 is NOT implemented: review.py still trusts cached draft before-overview.
+   Fix render/packet revision provenance in worldlib (world-builder skill applies),
+   test fail-closed lineage, then request machine-A Riverlands revision3 proof.
+6. Audit remaining open tickets. C7 activation is separately gated; C15/C16 and
+   C21 require explicit director authorization. No schedule was created.
 
 ## Gaps and risks
 

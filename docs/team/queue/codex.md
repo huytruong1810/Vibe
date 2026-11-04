@@ -164,13 +164,15 @@ and local-generation tickets (C26–C31) sit in their own section.
 
 ### C3g · Follow-ups from the beta slice (claude, 2026-11-01)
 
-- status: open
+- status: candidate (engineering checks pass; legacy scale comparison awaits M11)
 - goal: tidy what the beta slice exposed.
 - work:
   1. Packet gallery atlas tab (`src/presentation/gallery.ts:332`, `renderAtlas`) shows only page 0 under a hard-coded "Single page: bundle.png" label. The build now emits four pages.
   2. Decoded atlas memory went from 14.97 to 63.88 MiB full-res (four 2048 pages, mostly 160×144 quadruped canvases). Decide on a budget, then trim per-clip canvases or move review-only frames out of the runtime atlas.
   3. Scale: forge creatures render at doctrine scale and look small beside the oversized legacy humans and creatures. Expected while legacy art remains; check it again when M11 humans land.
 - done when: the gallery shows every page and the atlas budget is written into `docs/engineering/`
+
+- evidence (2026-11-04): every-page selector and catalog/resident budgets; [validation](../comms/codex/c3g-validation.json),7 gallery tests pass, final2 atlas checks pass,5 captures inspected; ADR038 records128MiB review page cache. Art/runtime gates unchanged.
 
 ### C7 · Authored world in the engine (WLD-M1…M4)
 
