@@ -1,0 +1,125 @@
+{
+  "recordedAt": "2026-11-04T23:36:26.644Z",
+  "changed": "Arm transient-beat observer before resume/closing Settings; keep captures paused until next observer is armed",
+  "evidence": {
+    "normal": {
+      "passed": 2,
+      "seconds": [
+        49.2,
+        29.9
+      ],
+      "log": "artifacts/c13-capture-focused.log"
+    },
+    "pinnedHeadless": {
+      "passed": 2,
+      "seconds": [
+        66,
+        54.3
+      ],
+      "log": "artifacts/c13-capture-headless.log"
+    },
+    "artifacts": [
+      {
+        "path": "artifacts/c13-capture/headless/c13-pack-browser.json",
+        "sha256": "c5b1b17170de622b8f789dce7eba8cdcd094ec3c7e351fad6aca5ca12a0d4501"
+      },
+      {
+        "path": "artifacts/c13-capture/headless/c13-zephyrit-browser.json",
+        "sha256": "3f038ee34d0368449a4b51d21efbca5d26a08ce7bb0ec7511b4fa6d6a938eed5"
+      },
+      {
+        "path": "artifacts/c13-capture/headless/screenshots/c13-pack-1080p.png",
+        "sha256": "418c7e31736691b5fe4c57e3eb9f961fd62ef7ba6097e25f8cfc1c2cdbe8d0cd"
+      },
+      {
+        "path": "artifacts/c13-capture/headless/screenshots/c13-pack-break-1080p.png",
+        "sha256": "423ba3b3839858a52b519ac768cb8910f1954e72a9d993650675c2ad768197af"
+      },
+      {
+        "path": "artifacts/c13-capture/headless/screenshots/c13-pack-commit-1080p.png",
+        "sha256": "432ea17b298fe4318ba75ea8eca32a69096ea29a334de1be5ee1903608b09ba5"
+      },
+      {
+        "path": "artifacts/c13-capture/headless/screenshots/c13-pack-notice-1080p.png",
+        "sha256": "8eb63b6a0e60b91c35cd24972fcabcfa05ff2bf9b9b318f901a2cc474e4ff4e9"
+      },
+      {
+        "path": "artifacts/c13-capture/headless/screenshots/c13-pack-stalk-1080p.png",
+        "sha256": "b8ff5a3a4708f1f99eb0570426c3a1c8e8eefabdd659655867442f156fe47568"
+      },
+      {
+        "path": "artifacts/c13-capture/headless/screenshots/c13-zephyrit-1080p.png",
+        "sha256": "8d252f87e600a87b8a2f72c80f8bc436ef224ec44acff1dddf8485695419613a"
+      },
+      {
+        "path": "artifacts/c13-capture/headless/screenshots/c13-zephyrit-break-1080p.png",
+        "sha256": "0c6c86e7946daad26d197f20ee033a67d24745ad513dba9c663a22532ae26e33"
+      },
+      {
+        "path": "artifacts/c13-capture/headless/screenshots/c13-zephyrit-commit-1080p.png",
+        "sha256": "532a30b6bb21c66b233643a51536f698c01ad419883b19dcfda878057fff9bda"
+      },
+      {
+        "path": "artifacts/c13-capture/headless/screenshots/c13-zephyrit-notice-1080p.png",
+        "sha256": "8a169202a1d45ab09235577f3abf1eadd4fa44229d3038d957f6f649f872638d"
+      },
+      {
+        "path": "artifacts/c13-capture/headless/screenshots/c13-zephyrit-stalk-1080p.png",
+        "sha256": "95a5eb9a8d06e76525e45ae7b3791f97fac0cfbb4adcfdca66f41f7e1dc4d758"
+      },
+      {
+        "path": "artifacts/c13-capture/normal/c13-pack-browser.json",
+        "sha256": "55d49c40659a6b13cc197709e1517ade3bacdeca595ea0fa4329efd184ad1e2b"
+      },
+      {
+        "path": "artifacts/c13-capture/normal/c13-zephyrit-browser.json",
+        "sha256": "cdeb4164e5184b635ebb056028b5256bacc8b1f10a0923a73d8080481e82118a"
+      },
+      {
+        "path": "artifacts/c13-capture/normal/screenshots/c13-pack-1080p.png",
+        "sha256": "3b63376be5b8fb3013c034e1ed51159894eab5ebd2d53df08ac3ec01a5476394"
+      },
+      {
+        "path": "artifacts/c13-capture/normal/screenshots/c13-pack-break-1080p.png",
+        "sha256": "3254b023b143ca266af1bbc454460bc472a81e405fff7dedba67d4b93d881b96"
+      },
+      {
+        "path": "artifacts/c13-capture/normal/screenshots/c13-pack-commit-1080p.png",
+        "sha256": "2677509d0b5246c0a251caaeec4e0fdf8fbfde96bd8c46baa66ffbc4bbde94bf"
+      },
+      {
+        "path": "artifacts/c13-capture/normal/screenshots/c13-pack-notice-1080p.png",
+        "sha256": "de86c89bb7a9c3eb33e54d1011f451fcf992f15d189b230f8404e453eef6a084"
+      },
+      {
+        "path": "artifacts/c13-capture/normal/screenshots/c13-pack-stalk-1080p.png",
+        "sha256": "826872b52807d17ad1114ef7a254b005f983b44fee3fa2c93ec0c4b90b50bd37"
+      },
+      {
+        "path": "artifacts/c13-capture/normal/screenshots/c13-zephyrit-1080p.png",
+        "sha256": "6e70b5628d975cb2f41fd4bebc240f36c0a75ba01224735f5a8e087057896956"
+      },
+      {
+        "path": "artifacts/c13-capture/normal/screenshots/c13-zephyrit-break-1080p.png",
+        "sha256": "9b8527f7f4425519e0717f4e998d476c7346d2873ea65a09778ac8e9c12cce49"
+      },
+      {
+        "path": "artifacts/c13-capture/normal/screenshots/c13-zephyrit-commit-1080p.png",
+        "sha256": "0d3f92ec9b263359ff8f6294cf78069b5a15a70cfe700f62bb88c8a4091d11f6"
+      },
+      {
+        "path": "artifacts/c13-capture/normal/screenshots/c13-zephyrit-notice-1080p.png",
+        "sha256": "186e9f8b035a3a310686bc47a1935d0729f5df8c85586eb58522a7ac394430e0"
+      },
+      {
+        "path": "artifacts/c13-capture/normal/screenshots/c13-zephyrit-stalk-1080p.png",
+        "sha256": "43b0544afed4f8ad8f4e503f7fe7a9ebf98c0f7182ea964d3ce00cde0974a3fb"
+      }
+    ],
+    "imagesInspected": 20
+  },
+  "gaps": [
+    "Remote CI confirmation pending",
+    "No simulation, phase condition, spacing assertion, tracing, retry or timeout change"
+  ]
+}

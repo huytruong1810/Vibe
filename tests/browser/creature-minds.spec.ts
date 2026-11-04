@@ -10,40 +10,52 @@ async function captureBeat(
   name: string,
   beat: 'notice' | 'stalk' | 'commit',
 ) {
-  const tick = await page.evaluate(
+  // Arm the next observer while the previous beat is still paused. Browser/CDP
+  // round trips can outlast a brief notice or windup on software-rendered CI.
+  const observed = page.evaluate(
     async ({ ids, beat }) => {
       const api = (window as any).__hearthwild,
         deadline = performance.now() + 15000;
-      while (performance.now() < deadline) {
-        const f = api.frame(),
-          actors = f.actors.filter((a: any) => ids.includes(a.id));
-        const ready =
-          beat === 'notice'
-            ? actors.some((a: any) => a.pose === 'guard' && !a.action)
-            : beat === 'stalk'
-              ? actors.some(
-                  (a: any) =>
-                    ['approach', 'flankLeft', 'flankRight', 'strike', 'element'].includes(
-                      a.intent,
-                    ) &&
-                    !a.action &&
-                    ['walk', 'run'].includes(a.pose),
-                )
-              : actors.some((a: any) => a.action && f.tick < a.action.activeAt);
-        if (ready) {
-          await api.command({ type: 'pause', token: 'c13:capture' });
-          return f.tick;
+      let captured = false;
+      const sample = async () => {
+        while (performance.now() < deadline) {
+          const f = api.frame(),
+            actors = f.actors.filter((a: any) => ids.includes(a.id));
+          const ready =
+            beat === 'notice'
+              ? actors.some((a: any) => a.pose === 'guard' && !a.action)
+              : beat === 'stalk'
+                ? actors.some(
+                    (a: any) =>
+                      ['approach', 'flankLeft', 'flankRight', 'strike', 'element'].includes(
+                        a.intent,
+                      ) &&
+                      !a.action &&
+                      ['walk', 'run'].includes(a.pose),
+                  )
+                : actors.some((a: any) => a.action && f.tick < a.action.activeAt);
+          if (ready) {
+            captured = true;
+            await api.command({ type: 'pause', token: 'c13:capture' });
+            return f.tick;
+          }
+          await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
         }
-        await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
-      }
-      throw Error(`Missing ${beat} beat`);
+        throw Error(`Missing ${beat} beat`);
+      };
+      const pending = sample();
+      (window as any).__c13CaptureArmed = true;
+      if (!captured) void api.command({ type: 'resume', token: 'c13:capture' });
+      return pending;
     },
     { ids, beat },
   );
+  if (beat === 'notice') {
+    await page.waitForFunction(() => (window as any).__c13CaptureArmed === true);
+    await page.getByRole('button', { name: 'Close settings' }).click();
+  }
+  const tick = await observed;
   await page.screenshot({ path: `artifacts/c13-${name}-${beat}-1080p.png` });
-  await page.evaluate(() =>
-    (window as any).__hearthwild.command({ type: 'resume', token: 'c13:capture' }),
-  );
   return tick;
 }
 
@@ -115,7 +127,6 @@ for (const [name, species, count] of [
     await expect
       .poll(() => page.evaluate(() => (window as any).__hearthwild.frame().session))
       .not.toBe(previous);
-    await page.getByRole('button', { name: 'Close settings' }).click();
     await mkdir('artifacts', { recursive: true });
     const ids = actors.map((a) => a.id);
     const beats = {
@@ -129,6 +140,7 @@ for (const [name, species, count] of [
         starts = new Set<number>();
       let previous = -1;
       const end = api.frame().tick + 420;
+      void api.command({ type: 'resume', token: 'c13:capture' });
       while (api.frame().tick < end) {
         await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
         const f = api.frame();
