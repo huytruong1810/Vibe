@@ -15,6 +15,11 @@ internal phase timings. New diagnostics measure pause, content, render and modal
 phases and save the browser receipt before assertions and on earlier failure.
 Local focused test passed (24.9 ms); an intentionally impossible assertion failed
 and retained a fresh receipt (82.9 ms) and trace. The **100 ms gate is restored**.
+Diagnostic commit **c73cdb8** is pushed; its
+[full CI run](https://github.com/huytruong1810/Vibe/actions/runs/41758344674) is running.
+GitHub artifact downloads require authentication (unauthenticated API returned 401).
+A CI-only notice now publishes the timing receipt through public check annotations,
+without reading credentials; the JSON artifact remains authoritative too.
 See [diagnostic evidence](c18-ci-diagnostics.json). Full browser CI remains pending;
 this instrumentation is not a latency repair, and C19 has not started.
 

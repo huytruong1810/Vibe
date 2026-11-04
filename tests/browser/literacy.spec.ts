@@ -149,6 +149,8 @@ test('C18 writes three pages, seals and reopens a read-only spread', async ({ pa
       Object.values(diagnostics.phaseTimingsMs).reduce<number>((sum, ms) => sum + (ms ?? 0), 0),
     ).toBeCloseTo(openingMs!, 5);
   } finally {
-    await saveDiagnostics();
+    const diagnostics = await saveDiagnostics();
+    if (process.env.CI)
+      console.log(`::notice title=C18 book opening diagnostics::${JSON.stringify(diagnostics)}`);
   }
 });

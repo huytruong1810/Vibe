@@ -49,10 +49,31 @@
     "hygiene": "passed; 0 errors, 0 warnings"
   },
   "ci": {
-    "status": "pending push and full browser CI"
+    "sourceCommit": "c73cdb8",
+    "run": "https://github.com/huytruong1810/Vibe/actions/runs/41758344674",
+    "checks": "success",
+    "beta": "both production bases passed",
+    "ecology": "scope-skipped; not a full soak",
+    "browser": "running",
+    "artifactAccess": "Unauthenticated GitHub artifact download returns 401. Added CI-only public notice with timing receipt; no credentials accessed."
   },
   "gaps": [
     "Original CI slow stage remains unknown until phase receipt is collected on CI.",
     "C19 remains unstarted."
-  ]
+  ],
+  "localCiNotice": {
+    "command": "CI=1 npm run test:browser -- tests/browser/literacy.spec.ts",
+    "result": "1 passed; notice emitted",
+    "seconds": 38,
+    "openingMs": 17.5,
+    "phaseTimingsMs": {
+      "pause": 2.600000023841858,
+      "content": 7.799999952316284,
+      "render": 0.20000004768371582,
+      "show-modal": 6.899999976158142
+    },
+    "measurementsRetained": 5,
+    "mountedPages": 2,
+    "pageErrors": []
+  }
 }
