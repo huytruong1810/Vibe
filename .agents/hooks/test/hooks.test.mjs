@@ -137,6 +137,16 @@ test('own comms folder allowed, other comms and director approvals denied', () =
       fx,
       'communicator',
     ).decision,
+    'allow',
+  );
+  for (const p of [
+    'docs/team/comms/director/approvals/README.md',
+    'docs/team/comms/director/2026-11-05T0000--to-all--x.md',
+  ])
+    assert.equal(run('guard.mjs', write(p), fx, 'communicator').decision, 'deny', p);
+  assert.equal(
+    run('guard.mjs', write('docs/team/comms/director/approvals/npc-neris--p1.md'), fx, 'blender')
+      .decision,
     'deny',
   );
   assert.equal(
@@ -386,16 +396,21 @@ test('agents can never stage or commit protected files, even ones they did not w
   const fx = fixtureRepo();
   mkdirSync(path.join(fx.root, 'docs/team/comms/director/approvals'), { recursive: true });
   writeFileSync(path.join(fx.root, 'docs/team/comms/director/approvals/a--p.md'), 'decision: x\n');
-  for (const role of ['blender', 'communicator']) {
-    for (const c of [
-      'git add docs/team/comms/director/approvals/a--p.md',
-      'git add -A && git commit -m "records"',
-      'git commit -am "sync"',
-    ])
-      assert.equal(run('guard.mjs', cmd(c), fx, role).decision, 'deny', `${role}: ${c}`);
-  }
+  for (const c of [
+    'git add docs/team/comms/director/approvals/a--p.md',
+    'git add -A && git commit -m "records"',
+    'git commit -am "sync"',
+  ])
+    assert.equal(run('guard.mjs', cmd(c), fx, 'blender').decision, 'deny', `blender: ${c}`);
+  // Directive 016: the communicator may commit its delegated records, but not other protected files.
+  assert.equal(
+    run('guard.mjs', cmd('git add docs/team/comms/director/approvals/a--p.md'), fx, 'communicator')
+      .decision,
+    'allow',
+  );
   execFileSync('git', ['add', 'docs/team/comms/director/approvals/a--p.md'], { cwd: fx.root });
   assert.equal(run('guard.mjs', cmd('git commit -m "x"'), fx, 'blender').decision, 'deny');
+  assert.equal(run('guard.mjs', cmd('git commit -m "x"'), fx, 'communicator').decision, 'allow');
   execFileSync('git', ['reset', '-q'], { cwd: fx.root });
   writeFileSync(path.join(fx.root, 'notes.md'), 'x\n');
   assert.equal(run('guard.mjs', cmd('git add notes.md'), fx, 'blender').decision, 'allow');

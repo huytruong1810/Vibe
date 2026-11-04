@@ -39,7 +39,7 @@ is committed and pushed.
 | `docs/team/status-board.md`                                                                                  | ✅                                                          | ❌                            | ✅ (owner)                                         | ❌                               |
 | `docs/team/proposals/**`                                                                                     | ✅                                                          | ✅                            | ✅                                                 | ✅                               |
 | `docs/team/comms/<member>/**`                                                                                | own folder only                                             | own                           | own                                                | own                              |
-| `docs/team/comms/director/approvals/**`                                                                      | director (or claude on the director's explicit instruction) | ❌                            | ❌                                                 | ❌                               |
+| `docs/team/comms/director/approvals/**`                                                                      | director (or claude on the director's explicit instruction) | ❌                            | ✅ delegated records only (TEAM-4.1)               | ❌                               |
 
 Need something outside your lane? Ask the owner through comms (TEAM-3).
 
@@ -47,7 +47,8 @@ Need something outside your lane? Ask the owner through comms (TEAM-3).
 not write and even when another member asks: `git add`, `commit`, `mv`, `rm`, `restore`
 or `stash` on doctrine, spec, briefs, `.agents/`, `AGENTS.md`/`GEMINI.md` or
 `docs/team/comms/director/**` is denied by the guard. Director records are committed by
-the director, or by Claude or codex on the director's explicit instruction. If one is
+the director, or by Claude or codex on the director's explicit instruction. The one
+exception is the communicator's delegated approval records (TEAM-4.1). If one is
 missing from a branch, say so in your comms and continue with unblocked work.
 
 ## TEAM-2a Division of art work (director's decision on codex's two-agent split)
@@ -66,6 +67,7 @@ Split by **medium and machine**, because only machine A has Blender:
   the status board and weekly review digests, writes music scores (AUD), and is the
   **sole integrator** of `art/source/manifest.json` (`npm run art:integrate -- merge`),
   reconciling blender's staging records. It no longer generates images or makes art.
+  It is also the director's assistant and a delegated art reviewer (TEAM-4.1).
 - **codex:** schemas, compiler, generated catalogs, `docs/art/approvals.json`
   ledger (transcribing director decisions only, L7).
 
@@ -101,14 +103,35 @@ Split by **medium and machine**, because only machine A has Blender:
 
 ## TEAM-4 Status vocabulary
 
-| Status              | Who can set it                                | Meaning                                                             |
-| ------------------- | --------------------------------------------- | ------------------------------------------------------------------- |
-| `draft`             | anyone                                        | Work in progress; may not render                                    |
-| `candidate`         | forge QA pass plus author                     | Structurally valid, packet ready, awaiting the director             |
-| `changes-requested` | director                                      | Specific revisions listed in the approval folder                    |
-| `director-approved` | **director only**                             | Accepted for runtime integration                                    |
-| `rejected`          | director (or claude on the director's behalf) | Method or result retired                                            |
-| `superseded`        | director (or claude on the director's behalf) | An earlier record whose packet was regenerated; it approves nothing |
+| Status              | Who can set it                                  | Meaning                                                             |
+| ------------------- | ----------------------------------------------- | ------------------------------------------------------------------- |
+| `draft`             | anyone                                          | Work in progress; may not render                                    |
+| `candidate`         | forge QA pass plus author                       | Structurally valid, packet ready, awaiting the director             |
+| `changes-requested` | director                                        | Specific revisions listed in the approval folder                    |
+| `director-approved` | director, or claude/communicator under TEAM-4.1 | Accepted for runtime integration                                    |
+| `rejected`          | director (or claude on the director's behalf)   | Method or result retired                                            |
+| `superseded`        | director (or claude on the director's behalf)   | An earlier record whose packet was regenerated; it approves nothing |
+
+### TEAM-4.1 Standing review delegation (directive 016, director decision 2026-11-04)
+
+The director delegates art approval, as a standing grant, to **claude** and the
+**communicator**. Either may set `director-approved`, `changes-requested`, `rejected` or
+`superseded` on any asset except doctrine; the director can override any decision.
+
+- The reviewer looks at every image and the whole packet first (PRD-5) and writes what it
+  saw, with QA numbers and the checks run. A record without that evidence is invalid.
+- Each record is bound to the packet's `sourceDigest` (PRD-9) and says "recordedBy:
+  `<claude|communicator>` under the director's standing delegation of 2026-11-04".
+- **No self-approval:** a reviewer never approves what it made itself. The communicator's
+  own work (scores, digests, status board) goes to claude or the director; claude's own
+  work (tool stand-ins, boards) goes to the communicator or the director.
+- **Precedence:** claude outranks the communicator. If they disagree on an asset, claude's
+  record governs. Only claude (and the director) edits doctrine or issues high-level
+  tickets (DOC-5); the communicator never does.
+- The communicator writes only its own approval records in `docs/team/comms/director/approvals/`;
+  the guard allows nothing else under `docs/team/comms/director/`. Other agents still reach `candidate`
+  at most.
+- The director's own approval, and any direct instruction, always wins.
 
 No other status words ("complete", "stable", "done", "final", "AAA") may be
 used for art.

@@ -30,7 +30,8 @@ the conflict in your comms folder.
 1. The doctrine (`docs/doctrine/**`, `art/source/forge/spec/**`, `docs/team/briefs/**`,
    `.agents/**`, every `AGENTS.md`/`GEMINI.md`) is **read-only** for agents.
    Propose changes in `docs/team/proposals/`. Codex is steward under DOC-5.
-2. Only the director approves. Agents and QA reach `candidate` at most (TEAM-4).
+2. Only the director approves, or claude and the communicator under the standing delegation
+   in TEAM-4.1 (never their own work). Other agents and QA reach `candidate` at most (TEAM-4).
 3. **Look at every image you produce before you describe it** (PRD-5).
 4. No geometry from typed coordinates; 3D comes from the image-to-3D modular kit
    via the forge (L5, PRD-2).
