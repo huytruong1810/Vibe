@@ -1,77 +1,117 @@
 # Codex session handoff
 
-## Next session: repair browser CI, then pick up C19
+## Next session: repair C18 worker waits, then C19 and C20
 
 Branch `eng/hd-presentation`, workspace `C:/Users/htruong/source/repos/Vibe`.
-C13 commits **9b229bd** and **de93730**, C18 **8619e25** and evidence **89ffe45**
-are pushed. Pickup was clean at **89ffe45**; this handoff is a documentation-only
-follow-up. C13/C18 are candidates, never approvals. C19 is the next open feature
-ticket and has not started. The [C18 plan](c18-plan.md) preceded its implementation.
+Clean pickup at **b17d0c4** on 2026-11-03 (America/Chicago). This handoff is a
+documentation-only follow-up; no latency repair or C19 implementation has started.
 
-Diagnostic follow-up (2026-11-03): the director supplied the failed browser log and
-artifact archive. The failure is the C18 maximum-book opening gate: **328.8 ms >
-100 ms**, with 22 other journeys passing. The trace has two mounted pages but no
-internal phase timings. New diagnostics measure pause, content, render and modal
-phases and save the browser receipt before assertions and on earlier failure.
-Local focused test passed (24.9 ms); an intentionally impossible assertion failed
-and retained a fresh receipt (82.9 ms) and trace. The **100 ms gate is restored**.
-Diagnostic commit **c73cdb8** is pushed; its
-[full CI run](https://github.com/huytruong1810/Vibe/actions/runs/41758344674) is running.
-GitHub artifact downloads require authentication (unauthenticated API returned 401).
-A CI-only notice now publishes the timing receipt through public check annotations,
-without reading credentials; the JSON artifact remains authoritative too.
-Follow-up **1110305** is pushed. Its
-[PR CI run](https://github.com/huytruong1810/Vibe/actions/runs/41759172479) fails the
-browser step (12m23s, exit 1), with a public C18 receipt: **393.2 ms total**, split
-into **192 ms pause**, **198.5 ms content**, **0.2 ms render**, **2.5 ms modal**.
-Only two pages mount. The delay is in the two sequential worker round-trip waits,
-not spread rendering/modal layout on this measured run. Worker service time versus
-main-thread delivery/render scheduling still needs profiling before choosing a repair.
-The [push run](https://github.com/huytruong1810/Vibe/actions/runs/41759162909) also
-fails (browser step16m42s, exit1 within the job envelope): **607.8 ms total**,
-**305.5 ms pause**, **297.8 ms content**, **0.2 ms render**, **4.3 ms modal**.
-Both runs' aggregate `verify` correctly fails; CPU checks and both beta bases pass.
-The push browser artifact uploaded successfully (id13290199166); its raw trace has
-not been downloaded because GitHub requires authentication. Public timing notices
-were inspected. No stored credentials accessed.
-The first diagnostic run failed (16m37s browser step, exit 1, within the job limit);
-CPU checks and both production beta paths passed. See
-[diagnostic evidence](c18-ci-diagnostics.json). This is not a latency repair;
-the 100 ms gate remains, and C19 has not started.
+Completed and pushed:
 
-Use [team-comms](../../../../.agents/skills/team-comms/SKILL.md), pull only with a clean
-index, read new addressed messages and re-read `docs/team/briefs/codex.md` after compaction.
-Keep the existing [session log](session-2026-11-02.md) current. Leave Vibe-art and other
-review worktrees alone. No alarm or hourly automation was scheduled.
+- **c73cdb8**: bounded book-opening phase measurements and browser receipts saved
+  before assertions and in `finally`.
+- **1110305**: CI-only public notice containing the phase receipt, so diagnostics
+  can be inspected without downloading authenticated artifacts.
+- **b17d0c4**: both CI receipts, validation evidence and session record.
+- Earlier C13 **9b229bd** / **de93730**, C18 **8619e25** and evidence **89ffe45**
+  remain candidates, never approvals. Do not restart their implementation.
 
-## First actions before C19 code
+Use [team-comms](../../../../.agents/skills/team-comms/SKILL.md) and
+[doctrine-lookup](../../../../.agents/skills/doctrine-lookup/SKILL.md).
+Read `docs/team/briefs/codex.md` at pickup and after compaction. Keep the existing
+[session log](session-2026-11-02.md) current. Leave Vibe-art and other review
+worktrees alone. No alarm, hourly automation or owned server is left running.
 
-1. Confirm branch/workspace, inspect `git status`, then `git pull --ff-only` with a
-   clean tree. Read new addressed messages after `.last-read`, especially replies to
-   the [C18 machine-A request](2026-11-03T1730--to-blender--test-c18-reading.md).
-   Update the existing session log; do not restart completed C13/C18 implementation.
-2. Resolve the known red browser job as the CI follow-up. On source **8619e25**,
-   [push run41686809511](https://github.com/huytruong1810/Vibe/actions/runs/41686809511)
-   passed CPU checks, both beta paths and the full 28-day ecology soak (**22m33s**).
-   Browser job126094603227 exceeded the unchanged 20-minute limit (public annotation
-   confirms it); aggregate `verify` failed. Separating CPU/browser jobs was insufficient.
-3. Latest evidence-only **89ffe45**,
-   [push run41688294291](https://github.com/huytruong1810/Vibe/actions/runs/41688294291),
-   again passed CPU and both beta paths; its documentation-only ecology job was
-   scope-skipped, not another full soak. Browser job126099802397 instead exited with
-   code 1 after 12m31s in `npm run test:browser`, within its job envelope. Public
-   annotations identify only exit code 1; the director's supplied log now identifies
-   C18's 328.8 ms book-opening measurement against 100 ms. PR twin run41688308406
-   also failed. Do not describe this second failure as another timeout.
-4. Inspect the new phase receipt from full browser CI, identify the slow stage,
-   reproduce its actual failure, then repair it before C19.
-   All 23 local journeys previously passed; that does not establish the remote cause.
-   Keep assertions, HD/artifact budgets and aggregate `verify`. Consider deterministic
-   sharding only if evidence shows total browser runtime remains the problem; do not
-   merely raise timeouts or skip cases. Stored-credential access was rejected earlier;
-   do not repeat or bypass it. Record unavailable logs honestly if access is still absent.
-5. Re-read the C19 ticket/spec and record any plan adjustments before implementation.
-   Keep the CI repair and C19 feature in separate commits, with validation for each.
+## First actions: finish the browser CI repair
+
+1. Check branch, `git status` and `git log`; pull with `git pull --ff-only` only
+   with a clean tree. Read new addressed messages after `.last-read`, especially
+   replies to the [C18 machine-A request](2026-11-03T1730--to-blender--test-c18-reading.md).
+2. Read [diagnostic evidence](c18-ci-diagnostics.json). The director's historical
+   archive `C:/Users/htruong/Downloads/browser-journey-artifacts.zip` was inspected:
+   C18 opening **328.8 ms > 100 ms**, with the other 22 journeys passing. That
+   historical trace predates phase measurements; do not confuse it with new CI.
+3. Inspect newer CI at pickup. The source **1110305** runs below are completed and
+   red. Documentation-only **b17d0c4** has
+   [push run41761606519](https://github.com/huytruong1810/Vibe/actions/runs/41761606519)
+   and PR twin41761614061 still running as of this handoff; no result is claimed.
+
+### Confirmed remote findings
+
+| Source `1110305` | Total | Pause acknowledgement | Content retrieval | Spread render | Modal |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| [Push 41759162909](https://github.com/huytruong1810/Vibe/actions/runs/41759162909) | 607.8 ms | 305.5 ms | 297.8 ms | 0.2 ms | 4.3 ms |
+| [PR 41759172479](https://github.com/huytruong1810/Vibe/actions/runs/41759172479) | 393.2 ms | 192 ms | 198.5 ms | 0.2 ms | 2.5 ms |
+
+Both mount two pages. Delay is concentrated in the **two sequential worker
+round-trip waits**. These measurements do **not** distinguish worker service time
+from main-thread delivery, rendering or scheduling delays. No underlying-cause or
+latency-repair claim is justified yet.
+
+Both browser steps exited **1**, within their unchanged 20-minute job limits
+(push 16m42s, PR 12m23s); aggregate `verify` correctly failed. CPU checks and both
+production beta bases passed. Ecology was scope-skipped, not another full soak.
+The earlier diagnostic source c73cdb8/run 41758344674 also exited 1 (16m37s browser
+step), within its job envelope. These failures are not job timeouts.
+
+Public timing receipts:
+[push annotations](https://api.github.com/repos/huytruong1810/Vibe/check-runs/126342436407/annotations),
+[PR annotations](https://api.github.com/repos/huytruong1810/Vibe/check-runs/126342466743/annotations).
+Filter for title `C18 book opening diagnostics`. Public API access works through
+`curl.exe`; sandboxed network calls may need escalation. `gh` is unavailable.
+Push browser artifact **13290199166** uploaded successfully. Its raw trace was
+not downloaded: unauthenticated artifact download returned **401**. Earlier
+automatic review rejected stored-credential access; do not repeat or bypass it.
+Use public notices for timings and an explicitly supplied archive for raw traces.
+
+### Next investigation and repair
+
+1. Start with `BookScreen.open` in `src/presentation/ui/book.ts`: it awaits pause,
+   then content, then renders and opens the modal. Keep the existing total and
+   four phase measurements; only the current opening's five entries are retained.
+2. Correlate request IDs through `src/adapters/worker-bridge.ts` and
+   `src/worker/simulation.worker.ts`. Profile request dispatch/receipt, worker
+   `host.submit`, `host.artifactContent`, command-triggered `publish('frame')`
+   and the periodic simulation/frame work.
+3. On the main thread, profile frame handling in `src/main.ts`, HUD update and
+   renderer/ticker work around those replies. Compare durations measured within
+   each thread; do not subtract clocks with unrelated time origins. If needed,
+   add bounded diagnostics and a focused CPU trace before selecting a repair.
+4. Fix the demonstrated bottleneck. Removing one round trip alone is not proven
+   sufficient: each remote wait already exceeds 100 ms. Preserve authoritative reach,
+   session checks, pause semantics, on-demand content and two-page mounting.
+5. Validate `npm run test:browser -- tests/browser/literacy.spec.ts` and the same
+   command with `CI=1`; inspect every new screenshot. Run relevant worker/literacy
+   regressions, four-worker `npm run check`, format and hygiene. Confirm the full
+   browser suite and aggregate `verify` remotely before moving to C19.
+6. Preserve the **100 ms** opening gate, all assertions, HD/artifact budgets,
+   required `verify` and job limits. Do not skip cases, increase timeouts or add
+   retries. Only investigate sharding if separate runtime evidence warrants it.
+
+Local diagnostic evidence is already complete: focused test 1/1 in 47.5s (24.9 ms
+opening), CI-enabled test 1/1 in 38.0s (17.5 ms). A temporary impossible -1 ms assertion
+failed as intended and retained a fresh 82.9 ms receipt plus trace; **100 ms is restored**.
+All four phases sum to the total; five entries remain after repeated opens.
+Typecheck, full repository formatting and hygiene passed; generated spreads were
+inspected. Do not rerun that temporary assertion as ordinary validation.
+
+## Ticket order after the repair
+
+1. **C19** is the next open feature: image provider, GPU arbiter, quantizer and
+   operations guide. Follow the plan below; re-read the ticket/spec before code.
+   Keep its commits separate from the CI repair. Machine B uses functional checks
+   and mocks; machine A owns image-model/GPU latency and VRAM acceptance.
+2. **C20** follows C19 and C17: painting actions, pending-job persistence, caption
+   jobs, painting screen and rendering. Re-read
+   [the queue](../../queue/codex.md#c20--paintings-villagers-paint-the-player-paints-everyone-sees-them)
+   and authored-artifacts spec before planning it. Its player/villager workflows
+   are not part of C19.
+3. **C21** is optional and still needs explicit director go after C20. C15/C16
+   remain gated on C13 playtests and director go. C22/C24/C25/C14 external
+   acceptance is not authorization to redo their completed implementations.
+4. Afterwards follow the current queue, including the after-C20 section and
+   standing C12/C23 obligations; re-check upstream integration and acceptance
+   evidence before treating an open tooling ticket as missing implementation.
 
 ## C19 plan prepared before code
 
