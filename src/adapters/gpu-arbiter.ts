@@ -7,6 +7,7 @@ type Ticket = {
   run(signal: AbortSignal): Promise<unknown>;
   resolve(value: unknown): void;
   reject(error: unknown): void;
+  stage?(stage: 'waiting' | 'unloading' | 'running'): void;
 };
 export interface PaintingWindow {
   dialogue: boolean;
@@ -20,6 +21,7 @@ export class GpuArbiter {
   private active: { ticket: Ticket; abort: AbortController; preempted: boolean } | null = null;
   private settling: Promise<void> | null = null;
   private disposed = false;
+  private failure: ImageGpuStateUnknown | null = null;
   private window: PaintingWindow = {
     dialogue: false,
     paused: false,
@@ -55,14 +57,16 @@ export class GpuArbiter {
     id: string,
     owner: Ticket['owner'],
     run: (signal: AbortSignal) => Promise<T>,
+    stage?: Ticket['stage'],
   ): Promise<T> {
     if (this.disposed) return Promise.reject(Error('Painting queue unavailable'));
     if (this.active?.ticket.id === id || this.queue.some((ticket) => ticket.id === id))
       return Promise.reject(Error('Painting is already queued'));
     if (this.queue.length >= 16) return Promise.reject(Error('Painting queue is full'));
     const pending = new Promise<T>((resolve, reject) => {
-      this.queue.push({ id, owner, run, resolve: (value) => resolve(value as T), reject });
+      this.queue.push({ id, owner, run, resolve: (value) => resolve(value as T), reject, stage });
     });
+    stage?.('waiting');
     if (owner === 'player') this.preempt();
     this.pump();
     return pending;
@@ -88,13 +92,18 @@ export class GpuArbiter {
       .exclusive(async () => {
         try {
           active.abort.signal.throwIfAborted();
-          if (this.unloadEnabled) await this.unload(active.abort.signal);
+          if (this.unloadEnabled) {
+            ticket.stage?.('unloading');
+            await this.unload(active.abort.signal);
+          }
           active.abort.signal.throwIfAborted();
+          ticket.stage?.('running');
           const value = await ticket.run(active.abort.signal);
           active.abort.signal.throwIfAborted();
           ticket.resolve(value);
         } catch (error) {
           if (error instanceof ImageGpuStateUnknown) {
+            this.failure = error;
             this.scheduler.suspend();
             this.disposed = true;
             for (const pending of this.queue.splice(0)) pending.reject(error);
@@ -117,5 +126,11 @@ export class GpuArbiter {
       this.active.abort.abort(Error('Painting queue disposed'));
     }
     await this.settling;
+    if (this.failure) throw this.failure;
+  }
+  acknowledgeServerRestart(): void {
+    if (this.active || this.settling)
+      throw Error('Wait for the image request to finish cancellation before resetting recovery.');
+    this.failure = null;
   }
 }

@@ -1,6 +1,11 @@
 import { afterEach, expect, it, vi } from 'vitest';
 import { readFileSync } from 'node:fs';
-import { SdCppProvider, ImageGpuStateUnknown } from '../src/adapters/image';
+import {
+  SdCppProvider,
+  ImageGpuStateUnknown,
+  type ImageFlight,
+  type ImageFlightStore,
+} from '../src/adapters/image';
 const request = {
   prompt: 'River reeds',
   negative: 'text',
@@ -54,6 +59,7 @@ it('finishes submission after abort and waits for terminal cancellation before r
   const provider = new SdCppProvider('http://localhost', fetcher);
   const pending = provider.generateManaged(request, controller.signal);
   const failed = expect(pending).rejects.toThrow('dialogue');
+  await vi.advanceTimersByTimeAsync(0);
   controller.abort(Error('dialogue'));
   submit(json({ id: 'job_test', status: 'queued' }));
   await vi.advanceTimersByTimeAsync(250);
@@ -94,6 +100,7 @@ it('quarantines a server that never acknowledges cancellation or loses submissio
     controller = new AbortController();
   const pending = provider.generateManaged(request, controller.signal);
   const failed = expect(pending).rejects.toBeInstanceOf(ImageGpuStateUnknown);
+  await vi.advanceTimersByTimeAsync(0);
   controller.abort();
   await vi.advanceTimersByTimeAsync(10_500);
   await failed;
@@ -107,6 +114,75 @@ it('quarantines a server that never acknowledges cancellation or loses submissio
   await expect(
     missing.generateManaged(request, new AbortController().signal),
   ).rejects.toBeInstanceOf(ImageGpuStateUnknown);
+});
+it('reconciles the saved server job before submitting replacement work after reload', async () => {
+  vi.useFakeTimers();
+  let marker: ImageFlight | null = { endpoint: 'http://localhost', id: 'job_previous' };
+  const history: (ImageFlight | null)[] = [];
+  const store: ImageFlightStore = {
+    read: () => marker,
+    write: (value) => {
+      marker = value;
+      history.push(value);
+    },
+  };
+  const fetcher = vi.fn<typeof fetch>(async (url) => {
+    if (String(url).endsWith('/job_previous/cancel'))
+      return json({ status: 'generating', cancel_requested: true });
+    if (String(url).endsWith('/job_previous')) return json({ status: 'cancelled' });
+    if (String(url).endsWith('/img_gen')) {
+      expect(marker?.id).toBeNull();
+      return json({ id: 'job_new' });
+    }
+    return json(complete);
+  });
+  const pending = new SdCppProvider('http://localhost', fetcher, store).generateManaged(
+    request,
+    new AbortController().signal,
+  );
+  await vi.advanceTimersByTimeAsync(500);
+  await expect(pending).resolves.toBeInstanceOf(Blob);
+  expect(fetcher.mock.calls.map(([url]) => new URL(String(url)).pathname)).toEqual([
+    '/sdcpp/v1/jobs/job_previous/cancel',
+    '/sdcpp/v1/jobs/job_previous',
+    '/sdcpp/v1/img_gen',
+    '/sdcpp/v1/jobs/job_new',
+  ]);
+  expect(history).toEqual([
+    null,
+    { endpoint: 'http://localhost', id: null },
+    { endpoint: 'http://localhost', id: 'job_new' },
+    null,
+  ]);
+  expect(marker).toBeNull();
+  expect(vi.getTimerCount()).toBe(0);
+});
+it('does no generation when a previous submission has no ID or durable storage cannot be written', async () => {
+  const fetcher = vi.fn<typeof fetch>();
+  const lost: ImageFlightStore = {
+    read: () => ({ endpoint: 'http://localhost', id: null }),
+    write: vi.fn(),
+  };
+  await expect(
+    new SdCppProvider('http://localhost', fetcher, lost).generateManaged(
+      request,
+      new AbortController().signal,
+    ),
+  ).rejects.toBeInstanceOf(ImageGpuStateUnknown);
+  expect(lost.write).not.toHaveBeenCalled();
+  const full: ImageFlightStore = {
+    read: () => null,
+    write: () => {
+      throw Error('storage full');
+    },
+  };
+  await expect(
+    new SdCppProvider('http://localhost', fetcher, full).generateManaged(
+      request,
+      new AbortController().signal,
+    ),
+  ).rejects.toThrow('storage full');
+  expect(fetcher).not.toHaveBeenCalled();
 });
 it('rejects pre-aborted work without submission and leaves failed terminal jobs reusable', async () => {
   const fetcher = vi.fn<typeof fetch>(async (url) =>

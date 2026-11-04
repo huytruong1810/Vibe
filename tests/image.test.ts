@@ -39,14 +39,15 @@ it.each([
 ])('rejects unsafe image endpoint: %s', (endpoint) => {
   expect(() => new SdCppProvider(endpoint)).toThrow();
 });
-it('probes the pinned server model discovery route once without generating', async () => {
+it('refreshes loaded-model provenance without generating an image', async () => {
   const fetcher = vi
     .fn<typeof fetch>()
-    .mockResolvedValue(new Response(JSON.stringify([{ model_name: 'z_image_turbo-Q4_K' }])));
+    .mockResolvedValueOnce(new Response(JSON.stringify([{ model_name: 'z_image_turbo-Q4_K' }])))
+    .mockResolvedValueOnce(new Response(JSON.stringify([{ model_name: 'z_image_turbo-Q5_K' }])));
   const provider = new SdCppProvider('http://localhost:8080', fetcher);
   expect(await provider.probe()).toEqual({ ok: true, model: 'z_image_turbo-Q4_K' });
-  expect(await provider.probe()).toEqual({ ok: true, model: 'z_image_turbo-Q4_K' });
-  expect(fetcher).toHaveBeenCalledTimes(1);
+  expect(await provider.probe()).toEqual({ ok: true, model: 'z_image_turbo-Q5_K' });
+  expect(fetcher).toHaveBeenCalledTimes(2);
   expect(fetcher.mock.calls[0]![0]).toBe('http://localhost:8080/sdapi/v1/sd-models');
 });
 it('sends the exact bounded single-image SDAPI request and returns the original PNG', async () => {

@@ -61,6 +61,8 @@ import {
 } from './compositor';
 import { EffectDirector, visibleProjectiles, effectSeed } from './effects';
 import { actorInScene, sceneCamera } from './scene-view';
+import { WorldPaintings } from './paintings';
+import type { Artifact } from '../domain/artifacts';
 
 export type { Quality } from './quality';
 export { CameraController } from './projection';
@@ -250,6 +252,21 @@ export class WorldRenderer {
   private assetError = '';
   private needsRedraw = true;
   private sceneSignature = '';
+  private readArtifact: (id: string) => Promise<Artifact | null> = async () => null;
+  private readonly paintings = new WorldPaintings(
+    this.objects,
+    this.projection,
+    (id) => this.readArtifact(id),
+    () => {
+      this.needsRedraw = true;
+    },
+    (message) => {
+      this.assetError = message;
+    },
+  );
+  setArtifactContent(read: (id: string) => Promise<Artifact | null>): void {
+    this.readArtifact = read;
+  }
   private gpu = 'unreported';
   private initialized = false;
   private disposed = false;
@@ -648,6 +665,7 @@ export class WorldRenderer {
     this.sceneSignature = signature;
     // packed/ids are returned to the worker immediately after apply; retaining empty views is intentional.
     this.frame = { ...frame, packed: new Float32Array(0), ids: new Uint32Array(0) };
+    this.paintings.apply(frame);
     this.clock.accept(
       frame.session,
       frame.tick,
@@ -2067,9 +2085,11 @@ export class WorldRenderer {
     gpu: string;
     assetError: string;
     prototypeActors: number;
+    paintingTextures: number;
   } {
     const atlasBytes = this.assets.stats.residentBytes;
     let cacheBytes = 0;
+    cacheBytes += this.paintings.bytes;
     for (const c of this.chunks.values()) {
       const source = c.container.renderGroup?.texture?.source;
       if (source) cacheBytes += source.pixelWidth * source.pixelHeight * 4;
@@ -2078,6 +2098,7 @@ export class WorldRenderer {
       PROFILE.width * PROFILE.height * this.qualitySettings.framebufferScale ** 2 * 8;
     return {
       sprites: this.entities.size + this.props.size,
+      paintingTextures: this.paintings.textureCount,
       chunks: this.chunks.size,
       fps: this.initialized ? this.app.ticker.FPS : 0,
       renderMs: this.renderMs,
@@ -2098,6 +2119,7 @@ export class WorldRenderer {
   }
   dispose(): void {
     this.disposed = true;
+    this.paintings.dispose();
     this.assetRequest?.abort();
     this.assetLease?.release();
     this.prepareRequest?.abort();

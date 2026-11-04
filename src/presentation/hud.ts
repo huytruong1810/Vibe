@@ -1,5 +1,7 @@
 import { appUrl } from './assets/url';
 import { BookScreen } from './ui/book';
+import { PaintingScreen } from './ui/painting';
+import { paintingRgba } from '../domain/painting-pixels';
 import type { Artifact } from '../domain/artifacts';
 import { mountHudView, loadBetaNotes, escapeHtml } from './ui/view';
 import {
@@ -32,6 +34,14 @@ const percent = (n: number): number => Math.round(Math.max(0, Math.min(1, n)) * 
 const meter = (label: string, value: number, _color = 'sage'): string => meterMarkup(label, value);
 
 export interface HudHandlers {
+  imageRecoveryNeeded(): boolean;
+  recoverImages(): Promise<void>;
+  painting: {
+    enabled(): boolean;
+    progress(id: string): string;
+    raw(id: string): Blob | null;
+    cancel(id: string): void;
+  };
   imageSettings(settings: ImageSettings): Promise<void>;
   testImage(settings: ImageSettings): Promise<ImageProbe>;
   bookDiagnostics?(active: boolean): void;
@@ -75,6 +85,8 @@ export class HudPresenter {
   private mapScene = '';
   private readonly handlers: HudHandlers;
   private readonly book: BookScreen;
+  private readonly painting: PaintingScreen;
+  private readonly paintingIcons = new Map<string, string | null>();
   private appearance: AppearanceResolver | null = null;
   private viewState: HudViewState | null = null;
   private readonly overlayFocus = new Map<Overlay, HTMLElement>();
@@ -87,6 +99,13 @@ export class HudPresenter {
       send: (command) => this.handlers.send(command),
       content: (id) => this.handlers.artifactContent(id),
       notify: (message) => this.notify(message),
+    });
+    this.painting = new PaintingScreen(root, {
+      ...handlers.painting,
+      frame: () => this.frame,
+      send: (command) => this.handlers.send(command),
+      content: (id) => this.handlers.artifactContent(id),
+      settings: () => this.openMenu('settings-dialog'),
     });
     void loadBetaNotes(root);
     this.gameElement = root.querySelector<HTMLElement>('#game-viewport')!;
@@ -165,6 +184,17 @@ export class HudPresenter {
       void imageAction(false);
     });
     this.el('image-test').addEventListener('click', () => void imageAction(true));
+    this.el('image-recover').addEventListener('click', () => {
+      void this.handlers
+        .recoverImages()
+        .then(() => {
+          this.el('image-recover').hidden = true;
+          this.el('image-status').textContent = 'Painting recovery reset after the server restart.';
+        })
+        .catch((error) => {
+          this.el('image-status').textContent = String(error);
+        });
+    });
     for (const button of document.querySelectorAll<HTMLButtonElement>('[data-combat]'))
       button.addEventListener('click', () => {
         const kind = button.dataset.combat;
@@ -560,6 +590,7 @@ export class HudPresenter {
     }
     this.frame = frame;
     this.book.update(frame);
+    this.painting.update(frame);
     if (frame.scene.id !== this.mapScene) {
       this.mapScene = frame.scene.id;
       this.mapLayer = 'local';
@@ -648,6 +679,53 @@ export class HudPresenter {
   }
   private renderInventory(): void {
     const frame = this.frame!;
+    const iconKeys = new Set<string>();
+    for (const item of frame.inventory) {
+      if (item?.id !== 'painting' || !item.artifact) continue;
+      const metadata = frame.artifacts.find((a) => a.id === item.artifact);
+      if (!metadata) continue;
+      const key = `${frame.session}:${item.artifact}:${metadata.revision}`;
+      iconKeys.add(key);
+      if (this.paintingIcons.has(key)) continue;
+      this.paintingIcons.set(key, null);
+      void this.handlers
+        .artifactContent(item.artifact)
+        .then((record) => {
+          if (
+            !this.paintingIcons.has(key) ||
+            this.frame?.session !== frame.session ||
+            record?.kind !== 'painting' ||
+            !record.pixels ||
+            !record.palette
+          )
+            return;
+          const native = document.createElement('canvas'),
+            icon = document.createElement('canvas');
+          native.width = 48;
+          native.height = 32;
+          icon.width = 16;
+          icon.height = 11;
+          native
+            .getContext('2d')!
+            .putImageData(
+              new ImageData(
+                paintingRgba({ pixels: record.pixels, palette: record.palette }),
+                48,
+                32,
+              ),
+              0,
+              0,
+            );
+          const ctx = icon.getContext('2d')!;
+          ctx.imageSmoothingEnabled = false;
+          ctx.drawImage(native, 0, 0, 16, 11);
+          this.paintingIcons.set(key, icon.toDataURL('image/png'));
+          this.renderInventory();
+        })
+        .catch(() => {});
+    }
+    for (const key of this.paintingIcons.keys())
+      if (!iconKeys.has(key)) this.paintingIcons.delete(key);
     const html = frame.inventory
       .map(
         (item, i) =>
@@ -655,6 +733,23 @@ export class HudPresenter {
       )
       .join('');
     this.setHtml('inventory', html);
+    for (const [slot, item] of frame.inventory.entries()) {
+      const metadata = item?.artifact && frame.artifacts.find((a) => a.id === item.artifact);
+      if (!item || !metadata) continue;
+      const url = this.paintingIcons.get(`${frame.session}:${item.artifact}:${metadata.revision}`),
+        host = this.el('inventory').querySelector(`[data-carry-slot="${slot}"] .item-pixel`);
+      if (!url || !host) continue;
+      let image = host.querySelector('img');
+      if (!image) {
+        image = document.createElement('img');
+        image.className = 'painting-thumbnail';
+        image.alt = 'Painting thumbnail';
+        image.width = 16;
+        image.height = 11;
+        host.append(image);
+      }
+      if (image.src !== url) image.src = url;
+    }
     this.setHtml(
       'equipment',
       GARMENT_SLOTS.map((slot) => {
@@ -892,6 +987,8 @@ export class HudPresenter {
     el.dataset.rendered = html;
   }
   openMenu(id: 'map-dialog' | 'settings-dialog' | 'journal-dialog'): void {
+    if (id === 'settings-dialog')
+      this.el('image-recover').hidden = !this.handlers.imageRecoveryNeeded();
     if (id === 'settings-dialog' && this.frame) {
       const settings = this.frame.combatSettings;
       for (const kind of ['player', 'partner', 'villager', 'wild'] as const)
@@ -1098,7 +1195,15 @@ export class HudPresenter {
   useItem(slot: 0 | 1): void {
     const item = this.frame?.inventory[slot];
     if (item?.id === 'note' || item?.id === 'book') void this.book.open(slot);
+    else if (item?.id === 'canvas' || item?.id === 'painting') void this.painting.open(slot);
     else void this.command({ type: 'use', slot });
+  }
+  openPainting(): void {
+    const slot =
+      this.frame?.inventory.findIndex((item) => item?.id === 'canvas' || item?.id === 'painting') ??
+      -1;
+    if (slot >= 0) void this.painting.open(slot as 0 | 1);
+    else this.notify('Carry a blank canvas to paint at the easel.');
   }
   inspectText(): boolean {
     const frame = this.frame;
@@ -1110,7 +1215,7 @@ export class HudPresenter {
           placement.sceneId === frame.scene.id &&
           prop &&
           Math.hypot(prop.x - frame.player.x, prop.y - frame.player.y) <= 2 &&
-          frame.artifacts.some((a) => a.id === placement.artifactId && a.kind !== 'painting'),
+          frame.artifacts.some((a) => a.id === placement.artifactId),
       )
       .sort(
         (a, b) =>
@@ -1119,7 +1224,10 @@ export class HudPresenter {
           a.placement.artifactId.localeCompare(b.placement.artifactId),
       );
     if (!displayed[0]) return false;
-    void this.book.open(null, displayed[0].placement.artifactId);
+    const id = displayed[0].placement.artifactId;
+    if (frame.artifacts.find((artifact) => artifact.id === id)?.kind === 'painting')
+      void this.painting.open(null, id);
+    else void this.book.open(null, id);
     return true;
   }
   get currentFrame(): RenderSnapshot | null {
@@ -1135,6 +1243,7 @@ export class HudPresenter {
   }
   dispose(): void {
     this.book.dispose();
+    this.painting.dispose();
     if (this.toastTimer) clearTimeout(this.toastTimer);
   }
 }

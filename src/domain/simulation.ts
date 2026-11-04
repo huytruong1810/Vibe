@@ -1,6 +1,13 @@
 import { remapMindScenes } from './creature-minds';
 import { editCarriedArtifact } from './artifact-writing';
 import { LiteracyService } from './literacy';
+import {
+  PaintingService,
+  validatePaintingBrief,
+  isPaintingAction,
+  type PaintingAction,
+} from './painting';
+import { groundWriting } from '../content/writing-grounding';
 import { ReadingResponseSchema, type LiteracyAction } from './text-contracts';
 import type { DialogueSession } from './conversation';
 import { applyExtraction, applySynthesis, validMemory } from './memory';
@@ -159,6 +166,7 @@ export class SimulationHost {
   private readonly plans = new PlanService(this.memories, (id) => ({
     ...this.query.perceivedFacts(id),
     ...this.literacy.facts(id, this.dialogue?.npcId === id),
+    ...this.paintingFacts(id),
   }));
   private readonly reflections = new ReflectionService(this.memories);
   private readonly validator = new AgentActionValidator();
@@ -173,6 +181,8 @@ export class SimulationHost {
   private debugEnabled = false;
   private inspectedCreature: number | null = null;
   private eventSerial = 0;
+  private paintingsEnabled = false;
+  private readonly paintingNotices = new Map<string, number>();
   private cueSerial = 0;
   private readonly presentationCues = new RingBuffer<PresentationCue & { readonly scene: number }>(
     64,
@@ -525,6 +535,7 @@ export class SimulationHost {
     const allowedPaused = [
       'debug',
       'configureContext',
+      'configurePainting',
       'configureCombat',
       'inspectCreature',
       'partnerCommand',
@@ -532,6 +543,11 @@ export class SimulationHost {
       'artifactPageAdd',
       'artifactPageRemove',
       'artifactSeal',
+      'paintingRequest',
+      'paintingKeep',
+      'paintingDiscard',
+      'paintingResult',
+      'paintingFailure',
       'move',
       'dialogue',
       'closeDialogue',
@@ -574,6 +590,9 @@ export class SimulationHost {
         'artifactPageAdd',
         'artifactPageRemove',
         'artifactSeal',
+        'paintingRequest',
+        'paintingKeep',
+        'paintingDiscard',
       ].includes(c.type) &&
       (this.player.attack || this.equipment.hasReservation(0))
     )
@@ -606,6 +625,9 @@ export class SimulationHost {
         'artifactPageAdd',
         'artifactPageRemove',
         'artifactSeal',
+        'paintingRequest',
+        'paintingKeep',
+        'paintingDiscard',
       ].includes(c.type)
     )
       return {
@@ -613,12 +635,75 @@ export class SimulationHost {
         ok: false,
         message: 'You are asleep or recovering. Wake when safe, or wait for an emergency.',
       };
-    if ((c.type === 'agentResult' || c.type === 'agentFailure') && envelope.issuer !== 'inference')
+    if (
+      ['agentResult', 'agentFailure', 'paintingResult', 'paintingFailure'].includes(c.type) &&
+      envelope.issuer !== 'inference'
+    )
       return { id: envelope.id, ok: false, message: 'Inference receipt required.' };
     let message = '',
       ok = true,
       artifactId: string | undefined;
     switch (c.type) {
+      case 'configurePainting':
+        this.paintingsEnabled = c.enabled;
+        break;
+      case 'paintingRequest':
+      case 'paintingKeep':
+      case 'paintingDiscard':
+      case 'paintingResult':
+      case 'paintingFailure': {
+        const paintings = new PaintingService(this.artifacts, this.inventory);
+        try {
+          if (c.type === 'paintingRequest' && !this.paintingsEnabled)
+            throw Error('No image endpoint is configured.');
+          if (c.type === 'paintingRequest')
+            artifactId = paintings.requestPlayer(
+              c.slot,
+              c.prompt,
+              c.mood,
+              c.composition ?? 'wide landscape',
+              this.calendar.day,
+              (id) => this.npcs.find((n) => n.profileId === id)?.affinity ?? -100,
+            ).id;
+          else if (c.type === 'paintingKeep') artifactId = paintings.keep(c.requestId).id;
+          else if (c.type === 'paintingDiscard') paintings.discard(c.requestId);
+          else if (c.type === 'paintingResult') {
+            const painting = paintings.complete(c.artifactId, c.revision, c.result);
+            artifactId = painting.id;
+            if (painting.author.kind === 'npc') {
+              const authorId = painting.author.id,
+                npc = this.npcs.find((n) => n.profileId === authorId)!;
+              this.memories.append(npc, {
+                type: 'semantic',
+                text: `I painted '${painting.title}'.`,
+                subjects: [npc.profileId],
+                importance: 4,
+                createdTick: this.tick,
+                lastAccessTick: this.tick,
+                confidence: 'witnessed',
+                source: { kind: 'artifact', ids: [painting.id] },
+              });
+            }
+          } else paintings.fail(c.artifactId, c.revision, c.reason);
+          message =
+            c.type === 'paintingRequest'
+              ? 'Painting in progress.'
+              : c.type === 'paintingKeep'
+                ? 'Painting kept.'
+                : c.type === 'paintingDiscard'
+                  ? 'Canvas ready for another painting.'
+                  : c.type === 'paintingResult'
+                    ? 'Palette preview ready.'
+                    : 'Painting could not finish.';
+        } catch (error) {
+          ok = false;
+          message =
+            error instanceof Error && error.name !== 'ZodError'
+              ? error.message
+              : 'Invalid painting request or result.';
+        }
+        break;
+      }
       case 'artifactWrite':
       case 'artifactPageAdd':
       case 'artifactPageRemove':
@@ -659,6 +744,7 @@ export class SimulationHost {
             !item ||
             !record ||
             record.kind !== item.id ||
+            (record.kind === 'painting' && record.status !== 'ready') ||
             !prop.display.accepts.includes(record.kind) ||
             index >= 0
           ) {
@@ -674,9 +760,19 @@ export class SimulationHost {
             item: { ...item },
           });
           this.inventory.remove(c.slot);
+          if (record.kind === 'painting') this.noticePainting(record.id, scene.code, prop);
           message = 'Artifact displayed.';
         } else {
           const placement = this.placements[index];
+          const displayed = placement && this.artifacts.get(placement.artifactId);
+          if (
+            displayed?.kind === 'painting' &&
+            (!displayed.sealed || displayed.status !== 'ready')
+          ) {
+            ok = false;
+            message = 'The painter has not hung this painting yet.';
+            break;
+          }
           if (!placement || !this.inventory.insert(placement.item)) {
             ok = false;
             message = placement ? 'Both hands are full.' : 'That display slot is empty.';
@@ -738,8 +834,7 @@ export class SimulationHost {
             this.presentationActions.set(0, { pose: 'eat', until: this.tick + 24 });
           }
         } else if (prop.interaction === 'paint') {
-          ok = false;
-          message = 'The painting screen is not available yet.';
+          message = 'The easel is ready for a carried blank canvas.';
         } else
           message =
             'Use the equipment panel to change carried garments; this wardrobe has no storage.';
@@ -925,6 +1020,16 @@ export class SimulationHost {
         break;
       case 'drop': {
         const item = this.inventory.state[c.slot];
+        const record = item?.artifact ? this.artifacts.get(item.artifact) : null;
+        if (
+          record?.kind === 'painting' &&
+          record.author.kind === 'player' &&
+          record.status !== 'ready'
+        ) {
+          ok = false;
+          message = 'Finish or discard the painting preview before dropping its canvas.';
+          break;
+        }
         if (
           !item ||
           !current.resources.dropItem(item, {
@@ -1215,8 +1320,198 @@ export class SimulationHost {
     }
     return { id: envelope.id, ok, message, ...(artifactId ? { artifactId } : {}) };
   }
+  private paintingFacts(id: import('./values').NpcId) {
+    const npc = this.npcs.find((n) => n.profileId === id);
+    if (!npc) return {};
+    const scene = this.scenes.definitions[npc.scene ?? 0],
+      home = this.scenes.home(npc.entityId);
+    return {
+      paintingEnabled: this.paintingsEnabled,
+      ownPaintings: this.artifacts
+        .views()
+        .filter(
+          (a) =>
+            a.kind === 'painting' && a.author.kind === 'npc' && a.author.id === id && !a.sealed,
+        )
+        .slice(0, 3),
+      paintingAtHome: home?.code === npc.scene,
+      paintings: this.placements
+        .filter(
+          (p) =>
+            p.sceneId === scene?.id &&
+            scene.props.some(
+              (prop) => prop.id === p.propId && distanceSquared(npc, prop) <= 12 ** 2,
+            ),
+        )
+        .flatMap((p) => {
+          const a = this.artifacts.get(p.artifactId);
+          return a?.kind === 'painting' && a.sealed && a.status === 'ready'
+            ? [{ id: a.id, title: a.title, caption: a.caption }]
+            : [];
+        })
+        .slice(0, 5),
+    };
+  }
+  private validateNpcPainting(npc: NpcState, action: PaintingAction): string | null {
+    try {
+      const body = this.entities.require(npc.entityId),
+        home = this.scenes.home(npc.entityId);
+      if (this.entities.hp[body]! <= 0 || this.entities.sleeping[body])
+        throw Error('The painter must be awake and well.');
+      if (!home) throw Error('The painter needs a home.');
+      if (action.type === 'CREATE_PAINTING') {
+        if (!this.paintingsEnabled) throw Error('No image endpoint is configured.');
+        validatePaintingBrief(action.brief, (id) =>
+          id === npc.profileId ? 0 : (npc.relations[id] ?? 0),
+        );
+        groundWriting(action.brief.subject);
+        groundWriting(action.brief.title, true);
+        if (action.brief.subject.length < 3 || action.brief.subject.length > 160)
+          throw Error('Villager subjects need3–160 characters.');
+        const words = action.brief.subject.toLowerCase().match(/[\p{L}]{4,}/gu) ?? [];
+        const memories = npc.memory.records
+          .filter(validMemory)
+          .map((m) => m.text.toLowerCase())
+          .join(' ');
+        if (!words.some((word) => memories.includes(word)))
+          throw Error('Choose a subject from existing memories or sight notes.');
+        const days = NPC_PROFILES.find((p) => p.id === npc.profileId)!.role.includes('painter')
+          ? 1
+          : 7;
+        if (
+          this.artifacts
+            .views()
+            .some(
+              (a) =>
+                a.kind === 'painting' &&
+                a.author.kind === 'npc' &&
+                a.author.id === npc.profileId &&
+                this.calendar.day - a.createdDay < days,
+            )
+        )
+          throw Error('Painting rate reached for this villager.');
+        if (
+          !home.props.some(
+            (prop) =>
+              prop.display?.accepts.includes('painting') &&
+              !this.placements.some((p) => p.sceneId === home.id && p.propId === prop.id),
+          )
+        )
+          throw Error('The painter needs a free home hook.');
+      } else {
+        const a = this.artifacts.get(action.artifactId);
+        if (
+          npc.scene !== home.code ||
+          !a ||
+          a.kind !== 'painting' ||
+          a.author.kind !== 'npc' ||
+          a.author.id !== npc.profileId ||
+          a.status !== 'ready' ||
+          a.sealed ||
+          !this.placements.some((p) => p.artifactId === a.id && p.sceneId === home.id)
+        )
+          throw Error('Return home to hang your finished painting.');
+      }
+      return null;
+    } catch (error) {
+      return error instanceof Error ? error.message : 'Invalid painting action.';
+    }
+  }
+  executePainting(npc: NpcState, action: PaintingAction): { ok: boolean; message: string } {
+    const error = this.validateNpcPainting(npc, action);
+    if (error) return { ok: false, message: error };
+    try {
+      const home = this.scenes.home(npc.entityId)!;
+      if (action.type === 'CREATE_PAINTING') {
+        const hook = home.props.find(
+          (prop) =>
+            prop.display?.accepts.includes('painting') &&
+            !this.placements.some((p) => p.sceneId === home.id && p.propId === prop.id),
+        )!;
+        new PaintingService(this.artifacts, this.inventory).requestNpc(
+          {
+            id: npc.profileId,
+            artist: NPC_PROFILES.find((p) => p.id === npc.profileId)!.role.includes('painter'),
+            relations: npc.relations,
+          },
+          action.brief,
+          this.calendar.day,
+          (item) => {
+            this.scenes.context(home.code);
+            this.placements.push({
+              artifactId: item.artifact!,
+              sceneId: home.id,
+              propId: hook.id,
+              slot: 0,
+              item,
+            });
+            return true;
+          },
+        );
+        return { ok: true, message: 'Painting in progress at home.' };
+      }
+      const record = this.artifacts.seal(action.artifactId),
+        placement = this.placements.find((p) => p.artifactId === record.id)!;
+      this.noticePainting(
+        record.id,
+        home.code,
+        home.props.find((p) => p.id === placement.propId)!,
+      );
+      return { ok: true, message: `Hung '${record.title}'.` };
+    } catch (error) {
+      return {
+        ok: false,
+        message: error instanceof Error ? error.message : 'Painting action failed.',
+      };
+    }
+  }
+  private noticePainting(id: string, scene: number, prop: { x: number; y: number }): void {
+    const a = this.artifacts.get(id);
+    if (a?.kind !== 'painting' || !a.caption) return;
+    const now = Date.now();
+    for (const npc of this.npcs) {
+      if (
+        npc.scene !== scene ||
+        distanceSquared(npc, prop) > 12 ** 2 ||
+        now - (this.paintingNotices.get(npc.profileId) ?? -Infinity) < 600_000
+      )
+        continue;
+      this.paintingNotices.set(npc.profileId, now);
+      this.memories.append(npc, {
+        type: 'sight',
+        text: `Painting '${a.title}': ${a.caption}`
+          .split(/\s+/)
+          .slice(0, 40)
+          .join(' ')
+          .slice(0, 280),
+        subjects: [npc.profileId],
+        importance: 4,
+        createdTick: this.tick,
+        lastAccessTick: this.tick,
+        confidence: 'witnessed',
+        source: { kind: 'artifact', ids: [id] },
+      });
+    }
+  }
   /** On-demand text is available only in the player's hands or a nearby display. */
-  artifactContent(id: string): import('./artifacts').Artifact | null {
+  artifactContent(
+    id: string,
+    paintingPurpose?: 'display' | 'generation',
+  ): import('./artifacts').Artifact | null {
+    const record = this.artifacts.get(id);
+    if (record?.kind === 'painting') {
+      if (paintingPurpose === 'generation' && record.status === 'pending' && !record.pixels)
+        return record;
+      if (
+        paintingPurpose === 'display' &&
+        this.placements.some(
+          (p) =>
+            p.artifactId === id &&
+            p.sceneId === this.scenes.definitions[this.player.scene ?? 0]?.id,
+        )
+      )
+        return record;
+    }
     if (this.inventory.state.some((item) => item?.artifact === id)) return this.artifacts.get(id);
     const scene = this.scenes.definitions[this.entities.scene[this.entities.require(0)]!]!;
     const reachable = this.placements.some(
@@ -1401,6 +1696,11 @@ export class SimulationHost {
       )
         return { ok: false, message: 'Ungrounded personal plan rejected.' };
       if (parsed.data.action) {
+        if (isPaintingAction(parsed.data.action)) {
+          const receipt = this.executePainting(npc, parsed.data.action);
+          if (receipt.ok) npc.revision++;
+          return receipt;
+        }
         if (parsed.data.action.type === 'READ_TEXT')
           return this.startReading(npc, parsed.data.action, false);
         const receipt = this.literacy.execute(
@@ -1521,6 +1821,10 @@ export class SimulationHost {
     if (npc.revision === dialogue.revision)
       for (const action of dialogue.staged) {
         const receipt = this.validator.execute(npc, action, {
+          paintings: {
+            validate: (proposal) => this.validateNpcPainting(npc, proposal),
+            execute: (proposal) => this.executePainting(npc, proposal),
+          },
           literacy: {
             validate: (proposal) =>
               this.literacy.validate(npc.profileId, proposal, this.calendar.day, true),

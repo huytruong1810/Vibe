@@ -128,3 +128,22 @@ the browser worker/preview path must also meet 30 seconds on the reference machi
   in the mocked pipeline receipt, separate from the quantizer's measured work.
 
 Paint/Keep/Hang workflows and their reference-machine overnight smoke are C20.
+
+C20 world requests survive save/reload. The browser stores the last native job
+endpoint/ID separately from world saves and cancels/polls it before submitting a
+replacement. If the server cannot acknowledge terminal state, stop/restart it,
+then use **Server restarted � reset painting recovery** in Settings. That control
+is an explicit operator acknowledgement, not a retry of unknown GPU work. Use one
+active game tab for local LLM/image work; Web Locks serialize native image flights,
+while LLM scheduling is per game instance.
+
+Player canvas: use a blank canvas or an easel, enter1�240 characters, choose mood
+and composition, then Generate. Keep seals the palette result; Retry returns the
+canvas and allocates a new identity/seed. Cancel/Discard retain the same carried
+canvas instance. Existing paintings remain usable with an empty image endpoint.
+NPC requests use shared rules,3�160 characters, memory grounding and home-hook
+capacity. The unsealed home reservation stays covered until HANG_PAINTING at home.
+Rates derive from retained authored records: artists1/day, other villagers1/7days.
+A finished painting stores its caption once; subsequent prompts use caption text.
+The caption worker encodes192�128 nearest PNGs; actual model image-token cost and
+reference-machine latency/VRAM remain acceptance measurements, not mocked claims.

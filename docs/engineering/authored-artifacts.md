@@ -1,6 +1,6 @@
 # Authored artifacts: notes, books, paintings (AGT-6, AGT-8, AGT-9)
 
-Status: C17 foundation implemented; C18 candidate (machine-A latency/director review pending); C19–C21 queued. Original specification,
+Status: C17 foundation implemented; C18–C20 candidates (machine-A acceptance/director review pending); C21 requires director go. Original specification,
 2026-11-02 (claude, on the director's request). Implementation is
 codex tickets C17–C21. Doctrine: `docs/doctrine/11-living-minds.md` AGT-6, AGT-8, AGT-9,
 AGT-7 budgets; ADR 031 in `decisions.md`.
@@ -269,7 +269,7 @@ a new main-thread `GpuArbiter` beside `InferenceScheduler`:
 PaintingBriefSchema = z
   .object({
     title: z.string().min(1).max(48),
-    subject: z.string().min(3).max(160),
+    subject: z.string().min(1).max(240), // Player input; NPC actions additionally require3–160.
     composition: z.enum(['wide landscape', 'close study', 'portrait', 'still life', 'scene']),
     mood: z.enum(['dawn', 'noon', 'dusk', 'night', 'storm', 'festival', 'quiet']),
     subjects: z

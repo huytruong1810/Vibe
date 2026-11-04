@@ -96,7 +96,7 @@ worker.onmessage = (message: MessageEvent<ToWorker>): void => {
       case 'artifactContent': {
         if (!host) throw Error('Start a journey before reading');
         const started = performance.now();
-        const artifact = host.artifactContent(data.artifactId);
+        const artifact = host.artifactContent(data.artifactId, data.paintingPurpose);
         record('host-artifact-content', started);
         reply(
           {

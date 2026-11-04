@@ -738,3 +738,64 @@ body {
   grid-template-columns: minmax(0, 1fr);
   max-width: min(1100px, calc(100vw - 24px));
 }
+/* Runtime painting previews retain the native48x32 grid at integer4x display scale. */
+.painting-dialog {
+  width: min(1040px, 94vw);
+  max-height: 90vh;
+  overflow: auto;
+  padding: 24px;
+  border: 16px solid transparent;
+  border-image: url('/assets/generated/ui/frame_standard.png') 16 fill / 16px / 0 repeat;
+  color: var(--ui-text);
+}
+.painting-dialog fieldset {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  border-color: var(--ui-frameGold);
+}
+.painting-dialog > label {
+  display: grid;
+  gap: 8px;
+}
+.painting-dialog textarea {
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+  font: inherit;
+  color: var(--ui-text);
+  background: var(--ui-panel);
+  border: 2px solid var(--ui-frameGold);
+}
+.painting-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  padding: 6px 10px;
+  border: 2px solid var(--ui-frameGold);
+}
+.painting-chip:has(input:checked) {
+  outline: 2px solid var(--ui-textAccent);
+}
+.painting-previews {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+.painting-previews[hidden] {
+  display: none;
+}
+.painting-previews canvas,
+.painting-previews img {
+  width: 192px;
+  height: 128px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+.painting-thumbnail {
+  display: block;
+  width: 32px;
+  height: 22px;
+  image-rendering: pixelated;
+}

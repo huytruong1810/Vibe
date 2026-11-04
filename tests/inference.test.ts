@@ -20,6 +20,37 @@ const job = (id: string, kind: InferenceJob['kind'] = 'plan'): InferenceJob => (
 });
 afterEach(() => vi.useRealTimers());
 describe('local inference adapter and scheduling', () => {
+  it('captions one image only for a vision model and rejects unbounded or action-bearing output', async () => {
+    const bodies: any[] = [];
+    let vision = false,
+      caption: unknown = { caption: 'Purple reeds beside green water.' };
+    const adapter = new OllamaAdapter('http://localhost:11434', async (url, init) => {
+      bodies.push(JSON.parse(String(init?.body)));
+      return Response.json(
+        String(url).endsWith('/api/show')
+          ? { capabilities: vision ? ['vision'] : ['completion'] }
+          : { message: { content: JSON.stringify(caption) } },
+      );
+    });
+    const png = new Blob([new Uint8Array([1, 2, 3])], { type: 'image/png' }),
+      signal = new AbortController().signal;
+    expect(await adapter.captionPainting('gemma4', png, signal)).toBeNull();
+    expect(bodies).toHaveLength(1);
+    vision = true;
+    expect(await adapter.captionPainting('gemma4', png, signal)).toBe(
+      'Purple reeds beside green water.',
+    );
+    expect(bodies.at(-1)).toMatchObject({
+      stream: false,
+      think: false,
+      options: { num_predict: 140, num_ctx: 4096 },
+      messages: [{ role: 'system' }, { role: 'user', images: ['AQID'] }],
+    });
+    caption = { caption: 'word '.repeat(41) };
+    expect(await adapter.captionPainting('gemma4', png, signal)).toBeNull();
+    caption = { caption: 'Reeds', action: { type: 'DROP_GIFT' } };
+    expect(await adapter.captionPainting('gemma4', png, signal)).toBeNull();
+  });
   it('sends fixed read ranges as equivalent homogeneous arrays accepted by Ollama', async () => {
     const adapter = new OllamaAdapter('http://localhost:11434', async (_input, init) => {
       const schema = JSON.parse(String(init?.body)).format;

@@ -23,6 +23,56 @@ export interface ImageProvider {
 export const IMAGE_RESPONSE_LIMIT = 8 * 1024 * 1024;
 /** No terminal server acknowledgement: do not release the GPU to Ollama. */
 export class ImageGpuStateUnknown extends Error {}
+export interface ImageFlight {
+  endpoint: string;
+  id: string | null;
+}
+export interface ImageFlightStore {
+  read(): ImageFlight | null;
+  write(flight: ImageFlight | null): void;
+}
+const flightKey = 'hearthwild-image-flight';
+export const browserImageFlights: ImageFlightStore | undefined =
+  typeof window === 'undefined'
+    ? undefined
+    : {
+        read() {
+          const text = localStorage.getItem(flightKey);
+          if (!text) return null;
+          const value = JSON.parse(text) as ImageFlight;
+          if (
+            !value ||
+            typeof value.endpoint !== 'string' ||
+            (value.id !== null &&
+              (typeof value.id !== 'string' || !/^[A-Za-z0-9_-]{1,128}$/.test(value.id)))
+          )
+            throw new ImageGpuStateUnknown(
+              'Invalid saved image job. Restart sd-server before resetting painting recovery in Settings.',
+            );
+          return { endpoint: loopbackImageEndpoint(value.endpoint), id: value.id };
+        },
+        write(flight) {
+          if (flight) localStorage.setItem(flightKey, JSON.stringify(flight));
+          else localStorage.removeItem(flightKey);
+        },
+      };
+/** Run before warming Ollama after a browser reload. */
+export async function recoverImageFlight(store = browserImageFlights): Promise<void> {
+  const operation = async () => {
+    const flight = store?.read();
+    if (flight) await new SdCppProvider(flight.endpoint, undefined, store).recoverPending();
+  };
+  if (typeof window !== 'undefined' && navigator.locks)
+    await navigator.locks.request('hearthwild-image-gpu', operation);
+  else await operation();
+}
+/** Invoked only by the user's explicit server-restarted recovery control. */
+export async function resetImageFlightAfterServerRestart(): Promise<void> {
+  const clear = () => browserImageFlights?.write(null);
+  if (typeof window !== 'undefined' && navigator.locks)
+    await navigator.locks.request('hearthwild-image-gpu', clear);
+  else clear();
+}
 const pngSignature = [137, 80, 78, 71, 13, 10, 26, 10];
 export function loopbackImageEndpoint(endpoint: string): string {
   const url = new URL(endpoint);
@@ -86,12 +136,13 @@ export class SdCppProvider implements ImageProvider {
   readonly id = 'sdcpp' as const;
   readonly endpoint: string;
   private active = false;
-  private model: string | null = null;
   private managed = false;
+  private managedQueued = false;
   private uncertain = false;
   constructor(
     endpoint: string,
     private readonly fetcher: typeof fetch = (input, init) => fetch(input, init),
+    private readonly flights: ImageFlightStore | undefined = browserImageFlights,
   ) {
     this.endpoint = loopbackImageEndpoint(endpoint);
   }
@@ -141,16 +192,14 @@ export class SdCppProvider implements ImageProvider {
   }
   async probe(signal?: AbortSignal): Promise<ImageProbe> {
     signal?.throwIfAborted();
-    if (this.managed || this.uncertain)
+    if (this.managed || this.managedQueued || this.uncertain)
       return { ok: false, reason: 'Image GPU is busy or needs server recovery' };
-    if (this.model) return { ok: true, model: this.model };
     try {
       // The pinned server exposes the loaded filename without generating an image.
       const data = await this.request('/sdapi/v1/sd-models', {}, signal, 5000);
       const model = Array.isArray(data) ? data[0]?.model_name : null;
       if (typeof model !== 'string' || !model.trim() || model.length > 200)
         throw Error('Image server has no loaded model');
-      this.model = model;
       return { ok: true, model };
     } catch (error) {
       if (signal?.aborted) throw error;
@@ -180,7 +229,8 @@ export class SdCppProvider implements ImageProvider {
   }
   async generate(request: ImageRequest, signal: AbortSignal): Promise<Blob> {
     this.validate(request);
-    if (this.managed || this.uncertain) throw Error('Image GPU is busy or needs server recovery');
+    if (this.managed || this.managedQueued || this.uncertain)
+      throw Error('Image GPU is busy or needs server recovery');
     const data = (await this.request(
       '/sdapi/v1/txt2img',
       {
@@ -220,11 +270,65 @@ export class SdCppProvider implements ImageProvider {
   async generateManaged(request: ImageRequest, signal: AbortSignal): Promise<Blob> {
     signal.throwIfAborted();
     this.validate(request);
+    if (this.active || this.managedQueued || this.managed || this.uncertain)
+      throw Error('Image GPU is busy or needs server recovery');
+    this.managedQueued = true;
+    const operation = async () => {
+      await this.recoverPending();
+      return this.generateManagedUnlocked(request, signal);
+    };
+    try {
+      return typeof window !== 'undefined' && navigator.locks
+        ? await navigator.locks.request('hearthwild-image-gpu', { signal }, operation)
+        : await operation();
+    } finally {
+      this.managedQueued = false;
+    }
+  }
+  async recoverPending(): Promise<void> {
+    const flight = this.flights?.read();
+    if (!flight) return;
+    if (flight.endpoint !== this.endpoint) {
+      await new SdCppProvider(flight.endpoint, this.fetcher, this.flights).recoverPending();
+      return;
+    }
+    try {
+      if (!flight.id) throw Error('Image submission acknowledgement was lost');
+      const deadline = Date.now() + 10_000;
+      let job = (await this.request(
+        `/sdcpp/v1/jobs/${flight.id}/cancel`,
+        { method: 'POST' },
+        undefined,
+        5000,
+      )) as { status?: string };
+      while (
+        !['completed', 'failed', 'cancelled'].includes(job.status ?? '') &&
+        Date.now() < deadline
+      ) {
+        await new Promise<void>((resolve) => setTimeout(resolve, 250));
+        job = (await this.request(`/sdcpp/v1/jobs/${flight.id}`, {}, undefined, 5000)) as {
+          status?: string;
+        };
+      }
+      if (!['completed', 'failed', 'cancelled'].includes(job.status ?? ''))
+        throw Error('Image job is still running');
+      this.flights?.write(null);
+    } catch {
+      this.uncertain = true;
+      throw new ImageGpuStateUnknown(
+        'Previous image job could not confirm stopped GPU work. Stop/restart sd-server, then use painting recovery in Settings.',
+      );
+    }
+  }
+  private async generateManagedUnlocked(request: ImageRequest, signal: AbortSignal): Promise<Blob> {
+    signal.throwIfAborted();
+    this.validate(request);
     if (this.active || this.managed || this.uncertain)
       throw Error('Image GPU is busy or needs server recovery');
     this.managed = true;
     let id: string | undefined,
-      idle = false;
+      idle = true,
+      leaseWritten = false;
     const deadline = Date.now() + 90_000;
     type Job = {
       id?: string;
@@ -236,6 +340,9 @@ export class SdCppProvider implements ImageProvider {
     const poll = () => this.request(`/sdcpp/v1/jobs/${id}`, {}, undefined, 5000) as Promise<Job>;
     const delay = () => new Promise<void>((resolve) => setTimeout(resolve, 250));
     try {
+      this.flights?.write({ endpoint: this.endpoint, id: null });
+      leaseWritten = true;
+      idle = false;
       // Finish submission even after a client abort so its job ID is available for cancellation.
       const submitted = (await this.request(
         '/sdcpp/v1/img_gen',
@@ -259,6 +366,7 @@ export class SdCppProvider implements ImageProvider {
       if (typeof submitted.id !== 'string' || !/^[A-Za-z0-9_-]{1,128}$/.test(submitted.id))
         throw Error('Image server returned no valid job ID');
       id = submitted.id;
+      this.flights?.write({ endpoint: this.endpoint, id });
       for (;;) {
         signal.throwIfAborted();
         if (Date.now() >= deadline)
@@ -304,6 +412,7 @@ export class SdCppProvider implements ImageProvider {
       throw error;
     } finally {
       this.managed = false;
+      if (idle && leaseWritten) this.flights?.write(null);
     }
   }
 }
@@ -319,6 +428,7 @@ export class OllamaImageProvider implements ImageProvider {
 
 export interface DecodedPainting extends QuantizedPainting {
   readonly quantizeMs: number;
+  readonly captionPng?: Blob;
 }
 /** One disposable worker per decode bounds lifetime and lets cancellation stop CPU work. */
 export class PaintingDecoder {

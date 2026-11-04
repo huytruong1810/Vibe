@@ -375,5 +375,15 @@
       "Latest C19 PR browser/verify gate is green; matching push literacy fails before offline world starts. Bootstrap diagnostics follow separately.",
       "Push ecology actually completed22m52s; PR ecology reached25-minute limit. These outcomes are independent of verify."
     ]
+  },
+  "c20Regression": {
+    "recordedAt": "2026-11-04T22:58:40.847Z",
+    "artifact": "artifacts/c20-browser/c19-golden.json",
+    "goldenHash": "80bd3049d7d65ff7f8ce461f9ca0ffb7489b50e1f9780879482b62281f14ba01",
+    "quantizeMs": 6,
+    "workerStartupMs": 149.29999995231628,
+    "mockPipelineMs": 542.5,
+    "outcome": "Golden bytes preserved;6ms full-browser quantization exceeds5ms target. Reference-machine acceptance remains external.",
+    "realImageModel": false
   }
 }

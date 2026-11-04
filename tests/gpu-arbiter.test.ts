@@ -121,7 +121,7 @@ it('suspends chat and rejects the painting queue if GPU cancellation is unacknow
   await expect(arbiter.request('later', 'player', async () => 'unused')).rejects.toThrow(
     'unavailable',
   );
-  await arbiter.dispose();
+  await expect(arbiter.dispose()).rejects.toThrow('recover server');
 });
 it('sends and awaits the documented Ollama unload call', async () => {
   const fetcher = vi.fn<typeof fetch>(async (_url, init) => {

@@ -123,12 +123,12 @@ and local-generation tickets (C26–C31) sit in their own section.
   5. `docs/operations/image-generation.md`: install and launch `sd-server` on Windows (CUDA build) and Linux; pinned release; model files (Z-Image Turbo GGUF + its Qwen3-4B text encoder + VAE, Apache-2.0; FLUX.2 klein 4B as the alternative; never klein 9B, non-commercial); the exact command line verified against the project's docs; VRAM and timing measured on machine A; CORS check; troubleshooting.
 - out of scope: ComfyUI provider; any model other than Apache-2.0 weights; Ollama image generation beyond the stub.
 - done when: unit tests for adapters (mock fetch: ok, HTTP error, oversize, timeout, abort, non-loopback URL), arbiter (dialogue preempts and requeues a villager job; a player job is not preempted; unload is called when enabled), quantizer (golden hash, ≤ 16 colours, all palette members, deterministic); the ops guide exists; blender's live smoke on machine A generates one painting through `sd-server` and records the player-painting timing against the 30 s budget.
-- evidence (2026-11-04): provider/worker/quantizer golden slice8f1c399; [validation](../comms/codex/c19-validation.json),502 tests/39 files. Follow-up native cancellation, arbiter, settings and pinned guide in progress. No machine-A latency/VRAM acceptance.
+- evidence (2026-11-04): golden slice8f1c399 and follow-up1c14403 include native cancellation, arbiter, settings and pinned guide; [validation](../comms/codex/c19-validation.json),513 tests/42 files and25 browser journeys pass. C20 regression preserves golden bytes but worker6ms misses5ms target; machine-A latency/VRAM acceptance remains external.
 - evidence:
 
 ### C20 · Paintings: villagers paint, the player paints, everyone sees them
 
-- status: open (after C17 and C19)
+- status: candidate (2026-11-04; local workflow/persistence checks pass; machine-A overnight/VRAM/latency, pending cloth art and director review remain)
 - owner: codex
 - goal: villagers paint from their memories and hang paintings at home; the player paints at an easel from a prompt and keeps or retries; villagers perceive paintings by caption.
 - spec: [authored artifacts](../../engineering/authored-artifacts.md) §4 (`paintingRequest`, `paintingKeep`, `paintingDiscard`), §7.1–7.3, §7.5, §8.2, §11; doctrine AGT-6 (all of it), AGT-3.2/3.3 for captions.
@@ -140,7 +140,7 @@ and local-generation tickets (C26–C31) sit in their own section.
   5. Rendering: LRU texture cache (32), framed display on hooks, inventory thumbnail, pending easel.
 - out of scope: pixel editing (C21); painting sizes other than 48×32.
 - done when: unit tests for brief validation, rates, allowlist rejections (lettering, URL, brand list), pending-survives-reload; Playwright with a mocked provider paints, keeps, hangs the painting on a hook and captures it at 1080p (look at it, PRD-5); blender's live smoke on machine A: Lark paints overnight during sleep acceleration with `gemma4-abliterated:26b` and `sd-server`, the painting hangs, a villager's next dialogue can mention it from the caption; contact capture attached to the reply.
-- evidence:
+- evidence (2026-11-04): [validation](../comms/codex/c20-validation.json),544 tests/45 files, full27 journeys, root/subpath beta2/2 each;48 retained PNGs inspected. Native pending reload cancels prior job before replacement. [Machine-A request](../comms/codex/2026-11-04T2252--to-blender--test-c20-painting-workflow.md); source CI pending; no real model/GPU run on B.
 
 ### C21 · Player pixel touch-up for paintings (optional)
 

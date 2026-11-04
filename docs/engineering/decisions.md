@@ -564,3 +564,44 @@ are separate from saves. Machine-B mocked evidence does not establish machine-A
 VRAM, cancellation latency or the 30-second unload/generate/reload budget. The
 [pinned operations guide](../operations/image-generation.md) records source links,
 model licenses, exact launch commands and the remaining acceptance procedure.
+
+## ADR 037 � durable painting requests and native GPU recovery
+
+**Problem:** a browser reload can leave an image job running on the server even
+though its fetch has disappeared. Pending player previews and NPC work also need
+one authoritative identity through retries, saves and late results.
+
+**Decision:** the simulation owns immutable briefs and revision-checked completion.
+Player requests convert the carried blank canvas in place; Keep seals, Discard
+returns that same canvas, and Retry allocates a new artifact/seed. Player subjects
+retain1�240 characters; NPC actions enforce3�160. This widens an existing validator
+without adding save fields or changing save v9. Existing saves remain readable.
+
+NPC work reserves a free home hook using existing placement/item fields, remains
+covered until ready, and requires an explicit validated HANG_PAINTING action at
+home to seal and reveal it. Rates derive from retained authored records. The painter
+receives an artifact-sourced semantic memory; nearby witnesses receive a bounded
+sight note. Captions enter prompts as quoted data, never image history or authority.
+
+Native submissions persist an endpoint/job marker outside the world save before
+POST. Same-origin Web Locks serialize recovery and submission. Reload cancels and
+polls the previous job to a terminal state before another submission or model warmup.
+A missing acknowledgement or unknown state quarantines image/chat GPU use. Only the
+explicit server-restarted recovery control clears an unknown marker. No inferred
+GPU-idle state comes from aborting fetch. Endpoint preferences remain browser-local.
+
+Caption encoding runs in the image worker:48�32 palette pixels become a192�128
+nearest-neighbour PNG. A vision-capability probe precedes one bounded structured
+chat request under the same exclusive lease; offline/non-vision/failure uses the
+brief subject. The adapter rejects extra response fields and captions over40 words.
+Ollama documents capability discovery and base64 chat images in its
+[model details](https://docs.ollama.com/api-reference/show-model-details) and
+[vision](https://docs.ollama.com/capabilities/vision) references.
+
+**Consequences:** no C21 pixel editor, new baked art, approval or model install.
+Rendering fetches painting content on demand, separately from text-inspection reach,
+uses nearest textures with32 resident entries, and pins mounted textures during
+LRU eviction. Runtime covers identify pending work; authored easel/cloth art remains
+external. The192�128 input and140 output-token cap do not prove the model's actual
+140-image-token budget; reference-machine measurement remains required. Real-time
+notice cooldown is session-local and is not a replay-determinism guarantee.

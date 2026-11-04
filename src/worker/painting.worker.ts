@@ -1,4 +1,5 @@
 import { quantizePainting } from '../domain/painting-quantize';
+import { paintingRgba } from '../domain/painting-pixels';
 
 const scope = self as unknown as DedicatedWorkerGlobalScope;
 // Compile the bounded default path while the image server is generating, not after its PNG arrives.
@@ -43,7 +44,16 @@ scope.onmessage = async (event: MessageEvent<{ png: Blob }>) => {
     const pixels = context.getImageData(0, 0, width, height).data;
     const start = performance.now(),
       result = quantizePainting(pixels, width, height);
-    scope.postMessage({ result: { ...result, quantizeMs: performance.now() - start } });
+    const quantizeMs = performance.now() - start;
+    const tiny = new OffscreenCanvas(48, 32),
+      small = tiny.getContext('2d')!;
+    small.putImageData(new ImageData(paintingRgba(result), 48, 32), 0, 0);
+    const captionCanvas = new OffscreenCanvas(192, 128),
+      captionContext = captionCanvas.getContext('2d')!;
+    captionContext.imageSmoothingEnabled = false;
+    captionContext.drawImage(tiny, 0, 0, 192, 128);
+    const captionPng = await captionCanvas.convertToBlob({ type: 'image/png' });
+    scope.postMessage({ result: { ...result, quantizeMs, captionPng } });
   } catch (error) {
     scope.postMessage({
       error: error instanceof Error ? error.message.slice(0, 200) : 'Painting decode failed',

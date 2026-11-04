@@ -8413,6 +8413,101 @@
           }
         },
         "nextChange": "Bounded setup status, renderer loadMs/assetError/GPU in public bootstrap diagnostics; all assertions and deadlines unchanged"
+      },
+      "source1df43a7": {
+        "sourceCommit": "1df43a71891dec84f56835a6f3cb0b077d44f44e",
+        "recordedAt": "2026-11-04T22:50:56.6260182Z",
+        "artifact": "artifacts/c18-trace-repair/phase-diagnostics/1df43a7-ci.json",
+        "sha256": "A172137AFBED1D55C3427693BD8AA22A574F036CC1D675A1BCB798D4751F2C76",
+        "runs": [
+          {
+            "id": 41873320685,
+            "event": "push",
+            "status": "completed",
+            "conclusion": "success",
+            "jobs": [
+              {
+                "name": "checks",
+                "id": 126725999246,
+                "conclusion": "success"
+              },
+              {
+                "name": "browser-journeys (2)",
+                "id": 126725999775,
+                "conclusion": "success"
+              },
+              {
+                "name": "beta-browser (/Vibe/)",
+                "id": 126725999914,
+                "conclusion": "success"
+              },
+              {
+                "name": "browser-journeys (1)",
+                "id": 126726000085,
+                "conclusion": "success"
+              },
+              {
+                "name": "beta-browser (/)",
+                "id": 126726000179,
+                "conclusion": "success"
+              },
+              {
+                "name": "ecology-soak",
+                "id": 126726000225,
+                "conclusion": "success"
+              },
+              {
+                "name": "verify",
+                "id": 126733623624,
+                "conclusion": "success"
+              }
+            ]
+          },
+          {
+            "id": 41873343384,
+            "event": "pull_request",
+            "status": "completed",
+            "conclusion": "cancelled",
+            "jobs": [
+              {
+                "name": "ecology-soak",
+                "id": 126726073773,
+                "conclusion": "cancelled"
+              },
+              {
+                "name": "browser-journeys (1)",
+                "id": 126726073803,
+                "conclusion": "success"
+              },
+              {
+                "name": "checks",
+                "id": 126726073997,
+                "conclusion": "success"
+              },
+              {
+                "name": "browser-journeys (2)",
+                "id": 126726074032,
+                "conclusion": "success"
+              },
+              {
+                "name": "beta-browser (/)",
+                "id": 126726074241,
+                "conclusion": "success"
+              },
+              {
+                "name": "beta-browser (/Vibe/)",
+                "id": 126726074248,
+                "conclusion": "success"
+              },
+              {
+                "name": "verify",
+                "id": 126731616077,
+                "conclusion": "success"
+              }
+            ]
+          }
+        ],
+        "ecology": "Push scope-skipped; PR cancelled during soak. Neither is passing soak evidence. ef890fd push actual22m52s success remains separate."
       }
     }
   }

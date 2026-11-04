@@ -50,7 +50,10 @@ const page = z
 export const PaintingBriefSchema = z
   .object({
     title,
-    subject: canonicalText(160, 3),
+    subject: canonicalText(240, 1).refine(
+      (value) => value.trim().length > 0,
+      'Empty painting subject',
+    ),
     composition: z.enum(['wide landscape', 'close study', 'portrait', 'still life', 'scene']),
     mood: z.enum(['dawn', 'noon', 'dusk', 'night', 'storm', 'festival', 'quiet']),
     subjects: z

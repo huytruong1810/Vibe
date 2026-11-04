@@ -11,6 +11,8 @@ import type { Building, WorldDelta } from './world';
 import type { DebugPath, NpcId, WorldPosition } from './values';
 import type { WeatherState } from './core';
 import type { DialogueEmotion } from './dialogue';
+import { PaintingResultSchema } from './painting';
+import { ArtifactIdSchema, PaintingBriefSchema } from './artifacts';
 import type { EquipmentView } from './equipment';
 import type { Artifact, ArtifactView, ArtifactPlacement } from './artifacts';
 import type { ScenePresentation, ProjectilePresentation } from './presentation-contract';
@@ -18,6 +20,7 @@ import type { ScenePresentation, ProjectilePresentation } from './presentation-c
 const npc = z.enum(NPC_PROFILES.map((n) => n.id) as [NpcId, ...NpcId[]]);
 const slot = z.union([z.literal(0), z.literal(1)]);
 export const CommandPayloadSchema = z.discriminatedUnion('type', [
+  z.object({ type: z.literal('configurePainting'), enabled: z.boolean() }).strict(),
   z
     .object({
       type: z.literal('artifactWrite'),
@@ -104,6 +107,33 @@ export const CommandPayloadSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('swap') }).strict(),
   z.object({ type: z.literal('drop'), slot }).strict(),
   z.object({ type: z.literal('use'), slot }).strict(),
+  z
+    .object({
+      type: z.literal('paintingRequest'),
+      slot,
+      prompt: z.string().min(1).max(240),
+      mood: PaintingBriefSchema.shape.mood,
+      composition: PaintingBriefSchema.shape.composition.optional(),
+    })
+    .strict(),
+  z.object({ type: z.literal('paintingKeep'), requestId: ArtifactIdSchema }).strict(),
+  z.object({ type: z.literal('paintingDiscard'), requestId: ArtifactIdSchema }).strict(),
+  z
+    .object({
+      type: z.literal('paintingResult'),
+      artifactId: ArtifactIdSchema,
+      revision: z.number().int().min(1).max(Number.MAX_SAFE_INTEGER),
+      result: PaintingResultSchema,
+    })
+    .strict(),
+  z
+    .object({
+      type: z.literal('paintingFailure'),
+      artifactId: ArtifactIdSchema,
+      revision: z.number().int().min(1).max(Number.MAX_SAFE_INTEGER),
+      reason: z.string().max(200),
+    })
+    .strict(),
   z
     .object({
       type: z.literal('care'),
@@ -321,7 +351,12 @@ export interface WorkerTiming {
   recent: readonly WorkTiming[];
 }
 export type ToWorker = (
-  | { type: 'artifactContent'; requestId: string; artifactId: string }
+  | {
+      type: 'artifactContent';
+      requestId: string;
+      artifactId: string;
+      paintingPurpose?: 'display' | 'generation';
+    }
   | { type: 'initialize'; seed: number; origin: number; population?: number }
   | { type: 'command'; envelope: WorldCommand }
   | { type: 'checkpoint'; requestId: string }

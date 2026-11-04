@@ -185,10 +185,18 @@ export class WorkerBridge {
     const requestId = `checkpoint:${++this.serial}`;
     return migrateSave(await this.request(requestId, { type: 'checkpoint', requestId }));
   }
-  artifactContent(artifactId: string): Promise<Artifact | null> {
+  artifactContent(
+    artifactId: string,
+    paintingPurpose?: 'display' | 'generation',
+  ): Promise<Artifact | null> {
     if (!this.session) return Promise.reject(new Error('Start a journey before reading'));
     const requestId = `artifact:${++this.serial}`;
-    return this.request(requestId, { type: 'artifactContent', requestId, artifactId });
+    return this.request(requestId, {
+      type: 'artifactContent',
+      requestId,
+      artifactId,
+      paintingPurpose,
+    });
   }
   restore(snapshot: GameSave): Promise<void> {
     const requestId = `restore:${++this.serial}`;
