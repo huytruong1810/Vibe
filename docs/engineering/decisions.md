@@ -605,3 +605,23 @@ LRU eviction. Runtime covers identify pending work; authored easel/cloth art rem
 external. The192�128 input and140 output-token cap do not prove the model's actual
 140-image-token budget; reference-machine measurement remains required. Real-time
 notice cooldown is session-local and is not a replay-determinism guarantee.
+
+## ADR 038 � distinguish catalog size from gallery residency
+
+**Problem:** the gallery atlas tab used page0 and hardcoded dimensions, counts and
+16 MiB while the compiled catalog already contained multiple pages (ART-M7/C3g).
+That could hide delivered frames and misstate the memory used by the review tool.
+
+**Decision:** offer every full-resolution catalog page and retain nearest canvas
+drawing at the selected zoom. Derive counts/full/half RGBA totals from the catalog.
+Report actual resident page RGBA against the existing128 MiB gallery cache,
+separately from total catalog bytes. Clear old pixels during selected-page loads
+and failures; expose loading and errors accessibly. Avoid repainting unchanged
+static atlas canvases during the animation ticker.
+
+**Consequences:** no atlas repack, source-art edits, approval, save-schema change,
+runtime texture-budget change or weakening of HD gates. Canvas/UI/GPU overhead is
+outside this page-cache accounting. Browser checks render and hash every page,
+verify distinct nonempty results and validate selected-page failure behavior.
+The [engineering budget](hd-presentation.md#c3g-gallery-pages-and-decoded-memory)
+records128 MiB review residency and the separate runtime quality budgets.

@@ -525,8 +525,11 @@
 }
 .art-budget-labels {
   display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
   justify-content: space-between;
-  font-size: 13px;
+  font-size: 26px;
+  line-height: 30px;
   color: #afc4b8;
 }
 .art-stats-grid {
@@ -542,16 +545,27 @@
   padding: 12px 16px;
 }
 .art-stat-val {
-  font-size: 22px;
+  font-size: 38px;
   font-weight: 600;
   color: var(--gallery-accent);
 }
 .art-stat-lbl {
-  font-size: 12px;
+  font-size: 24px;
+  line-height: 28px;
   color: #a1b6aa;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   margin-top: 4px;
+}
+.art-budget-card h2 {
+  font-size: 38px;
+  line-height: 42px;
+}
+.art-atlas-viewer .art-controls label,
+.art-atlas-viewer .art-controls select,
+.art-atlas-viewer .art-status {
+  font-size: 26px;
+  line-height: 30px;
 }
 .art-atlas-viewer {
   background: #142225;

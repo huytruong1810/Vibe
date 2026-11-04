@@ -306,34 +306,35 @@ export async function initializeArtGallery(root: HTMLElement): Promise<() => voi
       <section id="view-atlas" class="art-view" aria-label="Atlas Sheet & Memory Budget" hidden>
         <div class="art-budget-card">
           <h2>Deterministic Texture Atlas Budget</h2>
-          <p>Strict performance invariant: Entire game art decoded footprint must reside within 1 single atlas page (&lt; 16.0 MiB RAM limit).</p>
-          <div class="art-budget-meter" role="progressbar" aria-valuenow="87.4" aria-valuemin="0" aria-valuemax="100">
-            <div id="art-budget-fill" class="art-budget-bar" style="width: 87.38%"></div>
+          <p>Catalog pages load on demand. This review cache allows 128 MiB of decoded page pixels; runtime quality budgets are separate.</p>
+          <div id="art-budget-meter" class="art-budget-meter" role="progressbar" aria-label="Resident atlas page cache" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+            <div id="art-budget-fill" class="art-budget-bar" style="width:0%"></div>
           </div>
           <div class="art-budget-labels">
-            <span id="art-stat-decoded-ram">Decoded RAM: <strong>13.98 MiB</strong> (1921 × 1908 × 4 bytes)</span>
-            <span>Budget Ceiling: <strong>16.00 MiB</strong> (2048 × 2048 × 4 bytes)</span>
+            <span id="art-stat-decoded-ram">Catalog page RGBA: awaiting catalog</span>
+            <span id="art-stat-resident">Resident page RGBA: awaiting catalog</span>
           </div>
           <div class="art-stats-grid">
-            <div class="art-stat-box"><div id="art-stat-frames" class="art-stat-val">1129</div><div class="art-stat-lbl">Packed Sprite Frames</div></div>
-            <div class="art-stat-box"><div id="art-stat-pages" class="art-stat-val">1 Page</div><div class="art-stat-lbl">Atlas Count (Single Page Invariant)</div></div>
-            <div class="art-stat-box"><div id="art-stat-headroom" class="art-stat-val">12.62%</div><div class="art-stat-lbl">Free Headroom Remaining</div></div>
-            <div class="art-stat-box"><div id="art-stat-half" class="art-stat-val">3.78 MiB</div><div class="art-stat-lbl">Half-Resolution @0.5x RAM</div></div>
+            <div class="art-stat-box"><div id="art-stat-frames" class="art-stat-val">—</div><div class="art-stat-lbl">Packed Sprite Frames</div></div>
+            <div class="art-stat-box"><div id="art-stat-pages" class="art-stat-val">—</div><div class="art-stat-lbl">Full-Resolution Atlas Pages</div></div>
+            <div class="art-stat-box"><div id="art-stat-headroom" class="art-stat-val">—</div><div class="art-stat-lbl">Resident Cache Headroom</div></div>
+            <div class="art-stat-box"><div id="art-stat-half" class="art-stat-val">—</div><div class="art-stat-lbl">Catalog Half-Resolution RGBA</div></div>
           </div>
         </div>
         <div class="art-atlas-viewer">
           <div class="art-controls" style="margin-top:0">
+            <label>Atlas page<select id="atlas-page"></select></label>
             <label>Atlas view zoom
               <select id="atlas-zoom">
                 <option value="0.5">0.5× Fit</option>
-                <option id="atlas-zoom-1" value="1" selected>1× Native Authored Sheet (1921 × 1908)</option>
+                <option id="atlas-zoom-1" value="1" selected>1× Native Authored Sheet</option>
                 <option value="1.5">1.5× Zoom</option>
               </select>
             </label>
-            <p id="atlas-status" class="art-status" style="margin:0;align-self:center">Single page: bundle.png (1921 × 1908)</p>
+            <p id="atlas-status" class="art-status" role="status" style="margin:0;align-self:center">Awaiting catalog</p>
           </div>
           <div class="art-atlas-canvas-wrap">
-            <canvas id="art-atlas-canvas" width="1921" height="1908" role="img" aria-label="Packed bundle texture atlas"></canvas>
+            <canvas id="art-atlas-canvas" width="1" height="1" role="img" aria-label="Selected texture atlas page" aria-busy="true"></canvas>
           </div>
         </div>
       </section>
@@ -1573,17 +1574,54 @@ export async function initializeArtGallery(root: HTMLElement): Promise<() => voi
   };
 
   // --- TAB 5: ATLAS SHEET & MEMORY ---
+  let atlasDraw = '';
   const renderAtlas = (): void => {
     if (!catalog?.pages.length) return;
-    const page = catalog.pages[0]!;
+    const page =
+      catalog.pages.find((p) => p.id === el<HTMLSelectElement>('atlas-page').value) ??
+      catalog.pages[0]!;
+    requiredPages = new Set([page.id]);
+    const bytes = catalog.pages.reduce((sum, p) => sum + p.width * p.height * 4, 0);
+    const half = catalog.pages.reduce((sum, p) => {
+      const v = p.variants.find((v) => v.resolution === 0.5);
+      return sum + (v ? v.width * v.height * 4 : 0);
+    }, 0);
+    const resident = [...images.values()].reduce(
+      (sum, p) => sum + p.naturalWidth * p.naturalHeight * 4,
+      0,
+    );
+    const percent = Math.min(100, (resident / pageBudget) * 100);
+    el('art-stat-decoded-ram').textContent =
+      `Catalog page RGBA: ${(bytes / 1048576).toFixed(2)} MiB`;
+    el('art-stat-resident').textContent =
+      `Resident page RGBA: ${(resident / 1048576).toFixed(2)} /128.00 MiB`;
+    el('art-stat-frames').textContent = String(catalog.frames.length);
+    el('art-stat-pages').textContent = `${catalog.pages.length} pages`;
+    el('art-stat-headroom').textContent = `${Math.max(0, 100 - percent).toFixed(2)}%`;
+    el('art-stat-half').textContent = `${(half / 1048576).toFixed(2)} MiB`;
+    el('art-budget-meter').setAttribute('aria-valuenow', percent.toFixed(2));
+    el('art-budget-fill').style.width = `${percent}%`;
     const image = images.get(page.id);
-    if (!image) {
-      ensurePage(page.id);
+    const error = pageErrors.get(page.id),
+      zoom = Number(el<HTMLSelectElement>('atlas-zoom').value);
+    el('atlas-status').textContent =
+      error ?? `${page.id}: ${page.width} × ${page.height}${image ? '' : ' · Loading…'}`;
+    el('atlas-status').setAttribute('role', error ? 'alert' : 'status');
+    atlasCanvas.setAttribute('aria-busy', String(!image && !error));
+    atlasCanvas.setAttribute('aria-label', `Atlas page ${page.id}`);
+    el('atlas-zoom-1').textContent = `1× Native Authored Sheet (${page.width} × ${page.height})`;
+    const signature = `${page.id}:${zoom}:${!!image}:${!!error}`;
+    if (signature === atlasDraw) {
+      if (!image && !error) ensurePage(page.id);
       return;
     }
-    const zoom = Number(el<HTMLSelectElement>('atlas-zoom').value);
+    atlasDraw = signature;
     atlasCanvas.width = Math.round(page.width * zoom);
     atlasCanvas.height = Math.round(page.height * zoom);
+    if (!image) {
+      if (!error) ensurePage(page.id);
+      return;
+    }
     atlasContext.imageSmoothingEnabled = false;
     atlasContext.drawImage(image, 0, 0, atlasCanvas.width, atlasCanvas.height);
   };
@@ -1663,6 +1701,7 @@ export async function initializeArtGallery(root: HTMLElement): Promise<() => voi
   ])
     listen(id, 'change', renderStaging);
   listen('atlas-zoom', 'change', renderAtlas);
+  listen('atlas-page', 'change', renderAtlas);
 
   listen('art-next', 'click', () => {
     frameIndex++;
@@ -1783,6 +1822,9 @@ export async function initializeArtGallery(root: HTMLElement): Promise<() => voi
     if (!catResponse.ok)
       throw new Error(`Catalog request failed (${catResponse.status}). Run npm run assets:build.`);
     catalog = AssetCatalogSchema.parse(await catResponse.json());
+    el<HTMLSelectElement>('atlas-page').replaceChildren(
+      ...catalog.pages.map((p) => new Option(`${p.id} · ${p.width} × ${p.height}`, p.id)),
+    );
 
     if (manifestResponse && manifestResponse.ok) {
       try {

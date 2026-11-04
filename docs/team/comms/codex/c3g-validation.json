@@ -1,0 +1,95 @@
+{
+  "recordedAt": "2026-11-04T23:36:26.644Z",
+  "changed": [
+    "Every atlas page selectable at native dimensions with nearest zoom",
+    "Catalog RGBA and resident page-cache memory distinguished; existing 128MiB limit documented",
+    "Static canvas redraws avoided; load errors clear stale image"
+  ],
+  "evidence": {
+    "metrics": {
+      "pages": [
+        {
+          "id": "bundle-0",
+          "width": 2046,
+          "height": 2046,
+          "canvasSha256": "3b93dc7c0de71992b3528ddb3163f0787f49daec6bdf8ef4ff75a3d791b7a5a9"
+        },
+        {
+          "id": "bundle-1",
+          "width": 2046,
+          "height": 2046,
+          "canvasSha256": "29b3478a67b9ddae5bd95c918c77e23344746ac0d549ed4190f3dcf009bfa09d"
+        },
+        {
+          "id": "bundle-2",
+          "width": 2046,
+          "height": 2046,
+          "canvasSha256": "78745af2e1984c7a445a41f1e8f4661ea2abe5ac9c3f41bf6d5eddd72698523f"
+        },
+        {
+          "id": "bundle-3",
+          "width": 2046,
+          "height": 2046,
+          "canvasSha256": "f284ea8e827953ffe6162629ffdbab0f09622ffe10e8a75604131d269a2e8918"
+        },
+        {
+          "id": "bundle-4",
+          "width": 2046,
+          "height": 2046,
+          "canvasSha256": "fa1099cc720f689ed1054e35322df11aa86adc90392dfbf19e07db91d5e622a8"
+        }
+      ],
+      "frames": 3908,
+      "fullBytes": 83722320,
+      "halfBytes": 20848820,
+      "residentMiB": 79.84,
+      "pageCacheLimitMiB": 128
+    },
+    "gallerySuite": {
+      "passed": 7,
+      "seconds": 55.4
+    },
+    "finalAtlasFocused": {
+      "passed": 2,
+      "minutes": 1.1,
+      "log": "artifacts/c3g-atlas-focused.log"
+    },
+    "check": {
+      "tests": 544,
+      "files": 45,
+      "seconds": 85.6,
+      "log": "artifacts/c3g-check.log"
+    },
+    "artifacts": [
+      {
+        "path": "artifacts/c3g-browser/screenshots/c3g-atlas-budget-1080p.png",
+        "sha256": "489fbcf2d1e582812932f5fd250c5de06112e518caca0522166f250b7775b144"
+      },
+      {
+        "path": "artifacts/c3g-browser/screenshots/c3g-atlas-last-page-1080p.png",
+        "sha256": "56ad7bc86e425368d9030c0dc547eee2bcdf9a521d3b79fc7b6977a4b0a55a25"
+      },
+      {
+        "path": "artifacts/c3g-browser/screenshots/hd-gallery-environment.png",
+        "sha256": "4bae5583df9a867df8aa35737b84a544742ee97227682ccd1a36ed04bdfb1733"
+      },
+      {
+        "path": "artifacts/c3g-browser/screenshots/hd-gallery-missing-neris.png",
+        "sha256": "699fb372651e08b4602ca25c5c6a47cc91f09a000043f2a044fcc3489a6fcbd7"
+      },
+      {
+        "path": "artifacts/c3g-browser/screenshots/hd-gallery-rivallie.png",
+        "sha256": "a10e4bdecb35f11cc6777bc68185579b7d961e6a8236d611556c028b2cec82b1"
+      },
+      {
+        "path": "artifacts/c3g-atlas.json",
+        "sha256": "d70b430165f72d77ddee662d88d38b21f9c8413b7ea093ad75cf9c240c524b7f"
+      }
+    ],
+    "imagesInspected": 5
+  },
+  "gaps": [
+    "Legacy art scale comparison awaits M11 humans; no new art approval",
+    "RGBA page estimate excludes canvas, UI and driver overhead; no atlas repack"
+  ]
+}

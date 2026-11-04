@@ -523,3 +523,27 @@ order, glob traversal order or locale collation.
 After a repack, compare every decoded full/half frame crop and trim/source dimensions
 against the previous catalog before treating page/rectangle changes as packaging-only.
 Structural asset and decoded-memory gates still apply; a repack grants no art approval.
+
+## C3g gallery pages and decoded memory
+
+The atlas tab selects every full-resolution page in the current catalog, loads it
+on demand and shows its native dimensions. Half-resolution totals come from the
+catalog variants. Frame count, page count and full/half RGBA bytes are computed
+from that catalog; the former single-page/16 MiB invariant is retired in this view.
+This follows ART-M7: "Support multi-page atlases streamed by region (the full slice
+clip matrix cannot fit one 16 MiB page)."
+
+The existing gallery page-image cache budget remains **128 MiB**. Its meter reports
+resident decoded page pixels (`width � height �4`) separately from the bytes needed
+if every full-resolution catalog page were decoded. It does not include canvas
+backing stores, portraits, UI textures, GPU copies or framebuffer allocation; it
+is not a claim about total browser/GPU memory. Selected-page errors clear stale
+canvas content and identify the failed page, with no substitute artwork.
+
+Main-game quality texture budgets remain High512 MiB, Balanced256 MiB, Low128 MiB
+(`src/presentation/quality.ts`). Runtime leases,64 MiB presentation reserve, paging,
+HD validation and approval gates are unchanged. Current catalog totals are3908
+frames/five pages,79.84 MiB full and19.88 MiB half (`npm run check:assets`). No source
+canvases or review-only clips were repacked by this gallery correction. Scale must
+be reviewed again when modular human bodies replace the legacy placeholders;
+this engineering change supplies no art acceptance. See ADR038.
