@@ -34,6 +34,7 @@ it('keeps a valid public notice below the annotation limit with total/phases fir
       openingMs: 636.8,
       phaseTimingsMs: { pause: 320.7, content: 312.4, render: 0.1, 'show-modal': 3.6 },
       mountedPages: 2,
+      pageLabel: '1–2 / 48',
       pageErrors: ['界'.repeat(200)],
       workerWaits: {
         start: 0,
@@ -64,6 +65,7 @@ it('keeps a valid public notice below the annotation limit with total/phases fir
   expect(parsed.openingMs).toBe(636.8);
   expect(parsed.phaseTimingsMs.content).toBe(312.4);
   expect(parsed.mountedPages).toBe(2);
+  expect(parsed.pageLabel).toBe('1–2 / 48');
   expect(parsed.requests.map((r: { id: string }) => r.id)).toEqual([
     'request:4',
     'request:5',

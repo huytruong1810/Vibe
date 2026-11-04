@@ -4,6 +4,19 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { bookNotice, summarizeBookTrace } from './book-diagnostics';
 
 test.use({
+  // Keep Linux CI headless compositing and WebGL on the same software GLES driver.
+  ...(process.env.CI && process.platform === 'linux'
+    ? {
+        launchOptions: {
+          args: [
+            '--enable-gpu',
+            '--use-gl=angle',
+            '--use-angle=swiftshader',
+            '--enable-unsafe-swiftshader',
+          ],
+        },
+      }
+    : {}),
   trace: {
     mode: 'retain-on-failure',
     screenshots: false,
@@ -185,10 +198,14 @@ test('C18 writes three pages, seals and reopens a read-only spread', async ({ pa
     });
     tracing = true;
     await use.click();
+    // Closing retains the old articles; wait for the newly imported record to open.
+    await expect(page.locator('#book-dialog')).toBeVisible();
+    await expect(page.locator('#book-pages')).toHaveText('1–2 / 48');
     await expect(page.locator('#book-spread article')).toHaveCount(2);
     await saveCpuTrace();
     const diagnostics = await saveDiagnostics();
     if (!('openingMs' in diagnostics)) throw Error(diagnostics.diagnosticError);
+    expect(diagnostics.pageLabel).toBe('1–2 / 48');
     const { openingMs } = diagnostics;
     expect(openingMs).not.toBeNull();
     expect(openingMs).toBeLessThanOrEqual(100);

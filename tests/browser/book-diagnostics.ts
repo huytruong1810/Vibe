@@ -64,6 +64,7 @@ interface BookReceipt {
   openingMs?: number | null;
   phaseTimingsMs?: Record<string, number | null>;
   mountedPages?: number;
+  pageLabel?: string | null;
   pageErrors?: readonly string[];
   diagnosticError?: string;
   workerWaits?: {
@@ -111,6 +112,7 @@ export function bookNotice(
     openingMs: receipt.openingMs,
     phaseTimingsMs: receipt.phaseTimingsMs,
     mountedPages: receipt.mountedPages,
+    pageLabel: receipt.pageLabel?.slice(0, 32),
     pageErrors: receipt.pageErrors?.slice(0, 3).map((e) => e.slice(0, 128)),
     diagnosticError: receipt.diagnosticError?.slice(0, 128),
     requests,
