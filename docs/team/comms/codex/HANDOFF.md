@@ -8,8 +8,19 @@ source **232ac33**. Screenshot-only repair **5e9c3e4** and compositor/freshness
 follow-up **ec22a07** are committed and pushed separately from these records.
 Production source is unchanged. All existing assertions remain; the follow-up
 adds visible-dialog and fresh48-page label checks, including the public notice.
-C19 has a local uncommitted provider/worker/quantizer prototype and tests; C20 is
+C19 has a provider/worker/quantizer golden slice and tests; C20 is
 unstarted. Do not restart C13/C18 implementations.
+
+C19 golden slice: [evidence](c19-validation.json), 32 focused unit tests and a
+real browser worker fed a mocked server PNG. Deterministic golden hash is
+`80bd3049d7d65ff7f8ce461f9ca0ffb7489b50e1f9780879482b62281f14ba01`.
+Prepared worker quantization is3.7ms with113ms explicit startup,373.2ms total
+mock pipeline; initial cold46ms is retained as a limitation. Both48x32 and4x
+previews were inspected. No live model, GPU or machine-A acceptance claimed.
+Next implement the GPU arbiter, settings and pinned operations guide before C20.
+Pinned sd-server SDAPI does not acknowledge GPU cancellation; native job cancel
+and terminal-state polling are required for villager preemption. Client abort
+alone is insufficient. The adapter currently supplies only the scoped SDAPI path.
 
 Current evidence is in `traceScreenshotRepair` in
 [diagnostic evidence](c18-ci-diagnostics.json). Key results:

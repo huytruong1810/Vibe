@@ -1,0 +1,89 @@
+{
+  "changed": [
+    "SDAPI loopback provider with bounded response, timeout, abort and unavailable Ollama stub",
+    "Disposable prepared PNG decode worker and pure linear-light area/OKLab palette quantizer",
+    "Synthetic golden PNG and adapter/worker/quantizer tests"
+  ],
+  "evidence": {
+    "golden": {
+      "pixels": "AAAAAHd3d3d3iIiIqqqqqqqqqq//+ZmZAAAAAAd3d3d3GIGIqqqqqqqqqq//mfmZAAAAd3d3d3d3ERiIqqqqqqqq////mZmZAAAAd3d3d3d3ERiIqqqqqqqq//qqmZmZAAAAd3d3F3d3ERiIqqqqqqqq//+qmZmZAAd3d3d3ERERGIiIqqqqqqqq///5mZmZd3d3AAAAEREReIiIqqqqqqqq+ZmZqq/5d3d3B3d3ERERiIiIiqiKqqqqmZmZ+qn7d3d3d3d3ERERiIiIiIqqqqqqmZmZ//+7EXd3d3d3ERERiIiIiIqqqqqqmZmZ+Zu7ERF3dxERIhERGIiIiKqq//qqmZmZmZu7ERERERERERERiIj////////5mf//+7u7ERERERIizMzMiIiP///5mZmZu7u7u7u7ERERIiIizMzMiI////mfmZmZu7u7u7u7IiIiIiIizMzMyIjP////mZmZu7u7u7u7IiEiIiIizMzMzMzMmZn5mZmZu7u7u7u7IiIiIiIizMzMzMzMmZmZmZmZu7u7u7u7IiIiIiIizMzMzMzMmZmZmZmZu7u7u7u7IiIiIiIizMzMzMzMZmZmRGZmu7u73du7ZmZmIiZmzMREzMzEZmZmZEZm3du73VVVZmZmZmZmzEREzEREZmZmZmMz3du71VVVZmZmZmImREREREREZmMzMz0zVVVVVVVVZmZmZmbd1EREREREZmMzMzM9VVVVVVVVZjMz3d3d3d3d0zMzMz3d3dVVVe7u7u7u3d3d3d3d3TMzMzMz3d3d1VVVXu7u7u7u3d3d3d3dM9MzMzMz3d3dVVVV7u7u7u7u3d3d3d3dMzMzMzMz3dVVVVVV7u7u7u7u3d3d3d3dMzVTMzM+VVVVVeVV7u7u7u7u3d3d3d3dPuVV7u7uVVVV7u7u7u7u7u7u3d1VVVVV7u7u7u7uVV7u7u7u7u7u7u7uVVVVVVVV7u7u7u7u7u7u7u7u7u7u7u7u7u7uVV7u7u7u7u7u7u7u7u7u7u7u7u7u",
+      "palette": [
+        "#191928",
+        "#335e97",
+        "#4f80ba",
+        "#6ec1b2",
+        "#8ba65b",
+        "#b0c37f",
+        "#6fa7d8",
+        "#553868",
+        "#6e4b7b",
+        "#a97ea5",
+        "#9e1c3c",
+        "#ec7c64",
+        "#5f8f3f",
+        "#92b56b",
+        "#c3d9a2",
+        "#a8708c"
+      ],
+      "quantizeMs": 3.700000047683716,
+      "workerStartupMs": 113,
+      "probe": {
+        "ok": true,
+        "model": "z_image_turbo-Q4_K"
+      },
+      "mockPipelineMs": 373.2000000476837,
+      "rejectsOversizedHeader": true,
+      "hash": "80bd3049d7d65ff7f8ce461f9ca0ffb7489b50e1f9780879482b62281f14ba01",
+      "realImageModel": false
+    },
+    "focusedUnit": {
+      "command": "npx vitest run tests/image.test.ts tests/painting-quantize.test.ts",
+      "tests": 32,
+      "files": 2,
+      "passed": true
+    },
+    "browser": {
+      "command": "npm run test:browser -- tests/browser/painting-provider.spec.ts",
+      "tests": 1,
+      "passed": true,
+      "durationSeconds": 32.2,
+      "imagesInspected": true
+    },
+    "check": {
+      "command": "VITEST_MAX_WORKERS=4 npm run check",
+      "tests": 502,
+      "files": 39,
+      "vitestSeconds": 56.53,
+      "passed": true
+    },
+    "artifacts": [
+      {
+        "path": "tests/fixtures/painting-golden.png",
+        "sha256": "d99a5ac9215ba573d7cae40948e999787f21ca2f9867d6bf2efb1a120b218646"
+      },
+      {
+        "path": "artifacts/c19-golden.json",
+        "sha256": "fbc7f6e97df3999e6ab84a50db50c3dbf394f7652bf1b7b9d91ba55d2baab00c"
+      },
+      {
+        "path": "artifacts/c19-golden-native.png",
+        "sha256": "6d8f4b663386502d5a8d50f5b805ad2eba678c2711e2a3a13af9f35cceec66cf"
+      },
+      {
+        "path": "artifacts/c19-golden-preview.png",
+        "sha256": "80c4f9eda90e6c859392670c93d0a8fcdd690e24bf0cf6bbcdd023a3aac39b68"
+      },
+      {
+        "path": "artifacts/c19-check.log",
+        "sha256": "5443fb868222a6c0abde91f03c3585f093ef7e41fa788d11c4accf05216bbad7"
+      }
+    ]
+  },
+  "gapsAndRisks": [
+    "No real image model or GPU smoke on machine B; machine-A 30-second unload/generate/reload and VRAM acceptance remain external",
+    "C19 arbiter, settings and operations guide are not implemented in this golden slice",
+    "Cold worker quantization measured46ms; preparation startup is113ms and is included in373.2ms mocked pipeline",
+    "SDAPI client abort does not establish stopped GPU work; native server job cancellation and terminal acknowledgement needed for preemption",
+    "Latest CI reporter follow-up4979a66 is queued; earlier sharded runs had functional failures, not job timeouts"
+  ]
+}

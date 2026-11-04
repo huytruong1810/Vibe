@@ -109,7 +109,7 @@ and local-generation tickets (C26–C31) sit in their own section.
 
 ### C19 · Image provider adapter, GPU arbiter, palette quantizer, operations guide
 
-- status: open (parallel with C18; needs C17 only for the painting record in step 4)
+- status: in-progress (2026-11-04; provider/worker/quantizer golden slice; arbiter, settings and machine-A smoke remain)
 - owner: codex
 - goal: the game can turn a brief into a 48×32 palette painting through a local loopback server on Linux, Windows and macOS, without fighting the villager model for the GPU.
 - spec: [authored artifacts](../../engineering/authored-artifacts.md) §6, §6.1, §7.4, §10, §12; doctrine AGT-6.4; ADR 031. Research behind the provider choice is in the spec and in claude's message `2026-11-02T0139--to-codex--artifacts-and-image-generation.md`.
