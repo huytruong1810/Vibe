@@ -204,9 +204,11 @@ Jobs:
 
 - `checks`: asset compilation and reproducibility, forge/world self-tests, hook tests,
   packet/world validation, engineering checks, formatting and benchmark (20 minutes).
-- `browser-journeys`: the complete journey suite, with independently compiled assets
-  and world data (20 minutes). This separates the growing browser suite from CPU checks.
-- `verify`: aggregate requiring both jobs to succeed; the required gate remains intact.
+- `browser-journeys`: the complete journey suite split across two independent
+  one-worker shards, each compiling assets and world data (20 minutes per shard).
+  Artifacts are named `browser-journey-artifacts-1` and `browser-journey-artifacts-2`.
+- `verify`: aggregate requiring CPU checks and every browser shard to succeed;
+  assertions, retries, performance budgets and the required gate remain intact.
 - `ecology-soak`: domain/content/worker changes, nightly and manual runs.
 - `beta-browser`: production browser smoke at both `/` and `/Vibe/`, including fonts,
   UI, portraits, atlas dependencies, fallback play, save import/export and resume.

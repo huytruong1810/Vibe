@@ -1,13 +1,56 @@
 # Codex session handoff
 
-## Next: C18 trace-screenshot repair, then C19 and C20
+## Next: C19 golden slice, then C20; browser-shard CI follow-up
 
 Branch `eng/hd-presentation`, workspace `C:/Users/htruong/source/repos/Vibe`.
-Start at current branch HEAD. Runtime/test source is **232ac33** (runtime
-diagnostics **731da0e**, compact engine notices **232ac33**), both committed and
-pushed. The current handoff-only commit follows that source baseline. This preparation
-changes only own-folder handoff/evidence/session records. No C18 repair, C19 or
-C20 implementation has started. Do not restart C13/C18 implementations.
+Start at current branch HEAD. Pickup baseline **ef2c072** follows runtime/test
+source **232ac33**. Screenshot-only repair **5e9c3e4** and compositor/freshness
+follow-up **ec22a07** are committed and pushed separately from these records.
+Production source is unchanged. All existing assertions remain; the follow-up
+adds visible-dialog and fresh48-page label checks, including the public notice.
+C19 and C20 remain unstarted. Do not restart C13/C18 implementations.
+
+Current evidence is in `traceScreenshotRepair` in
+[diagnostic evidence](c18-ci-diagnostics.json). Key results:
+
+- Source5e9c3e4 local browser23/23 in6.8min, C18 opening24.4ms; normal/CI-focused
+  openings46.7/50.3ms. All three stored labels confirm48 pages. All40 full-suite
+  PNGs were inspected. Initial forced-software installed-Chrome probes both timed
+  out before the measured opening; no latency result claimed for those attempts.
+- Source5e9c3e4 remote PR619.3ms and push633ms retain synchronous ReadPixels waits.
+  Push browser job reaches20 minutes; PR browser exits1. Both aggregate verify
+  jobs fail. CPU checks and both beta bases pass. Push ecology is scope-skipped;
+  PR ecology reaches its unchanged25-minute limit. Complete public receipts retained.
+- Pinned headless shell156.0.8078.4/revision1248 reproduces289.3ms opening and
+  128.1ms ReadPixels with zero screenshots/screencast frames and153 DOM snapshots.
+  Screenshot-only repair is insufficient. Full-Chromium comparison read a stale
+  earlier opening (no completed CPU trace opening); excluded from latency acceptance.
+- The stale result exposed retained old articles satisfying the count assertion.
+  Follow-up waits for a visible book and `1?2 / 48` before ending the CPU trace.
+  Strengthened normal/CI Windows runs pass1/1 in40.1/36.1s at38.8/49ms.
+- Headless shell with full SwiftShader GLES and enabled compositing passes1/1
+  in1.9min at61.2ms, fresh48-page receipt and complete CPU trace. Same forced flags
+  on installed Windows Chrome fail Add page before measurement. Shipped driver
+  flags therefore apply only to this literacy test on Linux CI. Other journeys,
+  retries, deadlines,100ms gate and production renderer remain unchanged.
+- Follow-up four-worker check passes470 tests/37 files in63.90s, plus types,
+  architecture, assets and production build. Full formatting passes. Every explicit
+  capture was inspected. Temporary configs removed; no owned server remains.
+
+Follow-up sourceec22a07 CI:
+[push41780039418](https://github.com/huytruong1810/Vibe/actions/runs/41780039418),
+[PR41780047802](https://github.com/huytruong1810/Vibe/actions/runs/41780047802).
+PR browser and aggregate verify pass: fresh48-page opening11.3ms, two mounted
+pages, no page errors. PR browser step673s. Push browser reaches20 minutes without
+a C18 receipt (browser step cancelled after1030s); no journey outcomes inferred.
+PR ecology reaches25 minutes; push ecology is scope-skipped. C18 PR gate is met;
+external machine-A/director acceptance remains. Current CI capacity follow-up splits
+all23 journeys exactly once across13/10-test shards, one worker and20 minutes each;
+verify still requires CPU checks and every shard. Remote shard validation pending.
+Prior failed
+source5e9c3e4 runs:
+[push41776153357](https://github.com/huytruong1810/Vibe/actions/runs/41776153357),
+[PR41776159880](https://github.com/huytruong1810/Vibe/actions/runs/41776159880).
 
 **Execution order:** scoped C18 trace-screenshot repair -> full browser/verify CI
 green -> C19 provider/arbiter/quantizer golden slice -> C20 painting workflows.
@@ -37,16 +80,16 @@ configuration has been removed.
    ```
 
    Update `.last-read` with real UTC after reading. Keep the existing session log.
-3. Inspect any CI newer than the source232ac33 results below. The handoff-only
-   commit also triggers CI; its result is not yet recorded here. Keep code-source
+3. Inspect follow-up sourceec22a07 CI above and any newer source runs. Keep code-source
    validation distinct from documentation-only follow-ups.
 4. Open `tests/browser/literacy.spec.ts`, `tests/browser/book-diagnostics.ts` and
-   `playwright.config.ts`. Apply the small scoped repair below; diagnosis is ready.
+   `playwright.config.ts`. The small scoped repair below is already shipped;
+   inspect validation gaps before making any further changes.
 5. In this Windows sandbox, git writes and test/Vite/hygiene subprocesses can fail
    with `EPERM`; use approved tool escalation. Public GitHub curl needed network
    escalation. Preserve every check; never retry stored-credential access.
 
-## Latest completed CI: source232ac33
+## Earlier diagnostic CI: source232ac33
 
 Both [push41768124908](https://github.com/huytruong1810/Vibe/actions/runs/41768124908)
 and [PR41768132897](https://github.com/huytruong1810/Vibe/actions/runs/41768132897)
@@ -141,7 +184,7 @@ public notice are in [diagnostic evidence](c18-ci-diagnostics.json).
 - An initial browser run was invalidated by my edit causing a Vite reload before
   maximum-size opening; it is excluded from timing evidence.
 
-## Concrete next repair: separate commit
+## Scoped repair procedure (implemented in5e9c3e4)
 
 1. Clean pull with `git pull --ff-only`; read new addressed messages after
    `.last-read`. Source232ac33 has already confirmed the remote engine mechanism;
@@ -255,7 +298,10 @@ paintings still show." Read the complete rule in `docs/doctrine/11-living-minds.
 4. Extend connection settings in `src/presentation/hud.ts` / `src/main.ts`: endpoint
    empty by default, provider, unload toggle and Test receipt. Preserve the current
    `hearthwild-connection` settings and fallback entry; no endpoint must remain usable.
-5. Write `docs/operations/image-generation.md`. At implementation time verify exact
+5. Write `docs/operations/image-generation.md`. Read-only pickup research found public
+   release `master-1047-984eb06` (commit984eb0686cbf5b7fc4f0063d9e0b1fb38d5c4f82).
+   Its SDAPI handler calls synchronous generate_image without a disconnect cancel;
+   inspect native async cancellation before claiming real GPU preemption. At implementation time verify exact
    API/launch/CORS details against primary project docs and pin a release. Document
    Windows CUDA/Linux commands, model+encoder+VAE files and troubleshooting. Permit
    Apache-2.0 Z-Image Turbo or FLUX.2 klein 4B; exclude klein 9B/non-commercial weights.

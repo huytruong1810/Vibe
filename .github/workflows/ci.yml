@@ -85,6 +85,10 @@ jobs:
   browser-journeys:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -102,11 +106,11 @@ jobs:
       - run: npm run check:world -- --region aqualia --level aqualia_village
       - run: npm run world:build -- --region aqualia --level aqualia_village
       - run: npx playwright install --with-deps chromium
-      - run: npm run test:browser
+      - run: npm run test:browser -- --shard=${{ matrix.shard }}/2
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: browser-journey-artifacts
+          name: browser-journey-artifacts-${{ matrix.shard }}
           retention-days: 14
           path: |
             artifacts/
