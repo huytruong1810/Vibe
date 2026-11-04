@@ -61,6 +61,7 @@ export function summarizeBookTrace(events: readonly TraceEvent[]) {
 }
 
 interface BookReceipt {
+  bootstrap?: { setupStatus: string; loadMs: number; assetError: string; gpu: string };
   journeyPhase?: string;
   openingMs?: number | null;
   phaseTimingsMs?: Record<string, number | null>;
@@ -111,6 +112,12 @@ export function bookNotice(
   const summary = {
     format: 2,
     journeyPhase: receipt.journeyPhase?.slice(0, 64),
+    bootstrap: receipt.bootstrap && {
+      setupStatus: receipt.bootstrap.setupStatus.slice(0, 256),
+      loadMs: receipt.bootstrap.loadMs,
+      assetError: receipt.bootstrap.assetError.slice(0, 128),
+      gpu: receipt.bootstrap.gpu.slice(0, 96),
+    },
     openingMs: receipt.openingMs,
     phaseTimingsMs: receipt.phaseTimingsMs,
     mountedPages: receipt.mountedPages,

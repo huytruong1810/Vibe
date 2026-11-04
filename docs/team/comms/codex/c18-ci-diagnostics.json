@@ -8365,7 +8365,55 @@
         "Root of remote pre-trace timeout is not identified until a phase receipt reaches CI",
         "No latest-source browser/verify green claim; ec22a07 PR gate remains historical acceptance",
         "Ecology has no new completed-soak evidence; reporter PR ecology still in progress at captured receipt, push scope-skipped"
-      ]
+      ],
+      "latest": {
+        "source": "ef890fdffe2a36f98b4c36a6a5ebb182489f818f",
+        "publicReceipt": "artifacts/c18-trace-repair/phase-diagnostics/ef890fd-ci.json",
+        "sha256": "66f8db896e9311b29a7888bd2e40997418e39b3d84f44a6bbc9ef7c79fb7e497",
+        "pullRequest": {
+          "run": 41868377375,
+          "browserShards": "both success",
+          "verify": {
+            "id": 126715970638,
+            "conclusion": "success"
+          },
+          "checks": "success",
+          "betaBases": "both success",
+          "literacy": {
+            "job": 126708437872,
+            "journeyPhase": "complete",
+            "openingMs": 21.2,
+            "mountedPages": 2,
+            "pageLabel": "1?2 / 48",
+            "pageErrors": []
+          },
+          "ecology": {
+            "id": 126708438813,
+            "conclusion": "cancelled",
+            "reason": "25-minute job deadline"
+          }
+        },
+        "push": {
+          "run": 41868358995,
+          "browserShard1": "success",
+          "browserShard2": {
+            "id": 126708375618,
+            "conclusion": "failure",
+            "journeyPhase": "start offline world",
+            "assertion": "setup-dialog remains visible after60000ms; total120000ms test deadline"
+          },
+          "verify": "failure",
+          "ecology": {
+            "id": 126708375448,
+            "conclusion": "success",
+            "soakStep": "success",
+            "soakStartedAt": "2026-11-04T16:33:38Z",
+            "soakCompletedAt": "2026-11-04T16:56:30Z",
+            "scopeSkipped": false
+          }
+        },
+        "nextChange": "Bounded setup status, renderer loadMs/assetError/GPU in public bootstrap diagnostics; all assertions and deadlines unchanged"
+      }
     }
   }
 }

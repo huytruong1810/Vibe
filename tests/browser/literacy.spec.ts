@@ -71,7 +71,14 @@ test('C18 writes three pages, seals and reopens a read-only spread', async ({ pa
               entry.name === 'hearthwild:book-open' ||
               entry.name.startsWith('hearthwild:book-open:'),
           );
+        const stats = (window as any).__hearthwild?.stats();
         return {
+          bootstrap: {
+            setupStatus: document.getElementById('setup-status')?.textContent ?? '',
+            loadMs: stats?.loadMs ?? 0,
+            assetError: stats?.assetError ?? '',
+            gpu: stats?.gpu ?? '',
+          },
           workerWaits: (window as any).__hearthwild.bookDiagnostics(),
           viewport: { width: innerWidth, height: innerHeight },
           maximumPages: 48,

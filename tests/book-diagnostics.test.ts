@@ -36,6 +36,7 @@ it('keeps a valid public notice below the annotation limit with total/phases fir
       mountedPages: 2,
       pageLabel: '1–2 / 48',
       journeyPhase: 'complete',
+      bootstrap: { setupStatus: '界'.repeat(1000), loadMs: 42, assetError: '', gpu: 'SwiftShader' },
       pageErrors: ['界'.repeat(200)],
       workerWaits: {
         start: 0,
@@ -68,6 +69,8 @@ it('keeps a valid public notice below the annotation limit with total/phases fir
   expect(parsed.mountedPages).toBe(2);
   expect(parsed.pageLabel).toBe('1–2 / 48');
   expect(parsed.journeyPhase).toBe('complete');
+  expect(parsed.bootstrap.setupStatus).toHaveLength(256);
+  expect(parsed.bootstrap.loadMs).toBe(42);
   expect(parsed.requests.map((r: { id: string }) => r.id)).toEqual([
     'request:4',
     'request:5',

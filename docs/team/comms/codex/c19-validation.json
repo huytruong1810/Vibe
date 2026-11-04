@@ -352,15 +352,28 @@
           "path": "artifacts/c19-format.log",
           "sha256": "d4131f633fb8c4fb0fc6b4d858663c406522b33771b6fc8ae8793f9bce9a7b40"
         }
-      ]
+      ],
+      "remote": {
+        "source": "ef890fd",
+        "prRun": 41868377375,
+        "checks": "success",
+        "browserShards": "both success",
+        "verify": "success",
+        "betaBases": "both success",
+        "pushRun": 41868358995,
+        "pushVerify": "failure (literacy startup)",
+        "pushEcology": "actual soak step success,22m52s",
+        "prEcology": "25-minute timeout",
+        "receipt": "artifacts/c18-trace-repair/phase-diagnostics/ef890fd-ci.json"
+      }
     },
     "gapsAndRisks": [
       "Machine-A live model generation, VRAM, cancellation checkpoints and 30-second unload/preview/reload acceptance are unmeasured; test request prepared for blender",
       "Browser quantization varied3.7-6.7ms in focused attempts; latest full-suite2.6ms and serial5ms Node gate pass, not reference-machine acceptance",
       "No real GPU/model execution on machine B; raw/native previews are synthetic fixture data",
       "C20 Paint/Keep/Hang, durable pending job integration and caption workflows remain separate",
-      "C18 reporter source4979a66 PR literacy times out before CPU tracing; cleanup masks original location. Phase diagnostics follow separately. No current aggregate-green claim",
-      "Ecology remains independent: prior PR timeouts and push scope skips are not passing soak evidence"
+      "Latest C19 PR browser/verify gate is green; matching push literacy fails before offline world starts. Bootstrap diagnostics follow separately.",
+      "Push ecology actually completed22m52s; PR ecology reached25-minute limit. These outcomes are independent of verify."
     ]
   }
 }
