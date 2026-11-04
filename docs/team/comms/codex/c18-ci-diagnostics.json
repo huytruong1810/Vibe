@@ -316,8 +316,374 @@
     "ecology": "timed out at unchanged25-minute limit; public annotation confirms; no soak artifact",
     "ecologyAnnotations": "https://api.github.com/repos/huytruong1810/Vibe/check-runs/126357949674/annotations"
   },
+  "remoteCompactReceipts232ac33": [
+    {
+      "checkId": 126371220785,
+      "noticeCharacters": 1453,
+      "receipt": {
+        "format": 2,
+        "openingMs": 631.9000000001397,
+        "phaseTimingsMs": {
+          "pause": 318.70000000018626,
+          "content": 308.29999999981374,
+          "render": 0.20000000018626451,
+          "show-modal": 4.699999999953434
+        },
+        "mountedPages": 2,
+        "pageErrors": [],
+        "requests": [
+          {
+            "id": "world:2de24017-c757-4bd2-ade3-4b9266bf420c:42:c36",
+            "type": "command",
+            "waitMs": 318.6,
+            "serviceMs": 0,
+            "recent": [
+              [
+                "periodic-work",
+                -29.7,
+                3.9
+              ],
+              [
+                "clock-consume",
+                -61.7,
+                2
+              ],
+              [
+                "periodic-work",
+                -61.7,
+                2
+              ]
+            ]
+          },
+          {
+            "id": "artifact:37",
+            "type": "artifactContent",
+            "waitMs": 308.2,
+            "serviceMs": 0.6,
+            "recent": [
+              [
+                "publish-frame",
+                -14.1,
+                1.8
+              ],
+              [
+                "periodic-work",
+                -14.1,
+                1.8
+              ],
+              [
+                "host-frame",
+                -14.1,
+                1.4
+              ]
+            ]
+          }
+        ],
+        "main": [
+          [
+            "frame-handler",
+            299.7,
+            2.3
+          ],
+          [
+            "frame-handler",
+            319.9,
+            2.2
+          ],
+          [
+            "frame-handler",
+            302.8,
+            2.1
+          ],
+          [
+            "frame-handler",
+            309,
+            2.1
+          ],
+          [
+            "frame-handler",
+            305.9,
+            2
+          ],
+          [
+            "frame-handler",
+            624.8,
+            1.9
+          ],
+          [
+            "frame-handler",
+            322.9,
+            1.9
+          ],
+          [
+            "hud-update",
+            320.3,
+            1.8
+          ]
+        ],
+        "cpu": {
+          "windowMs": 631.9,
+          "main": [
+            [
+              "CrRendererMain:ThreadControllerImpl::RunTask:",
+              -2.5,
+              301.3,
+              298.9
+            ],
+            [
+              "CrRendererMain:ProxyMain::BeginMainFrame:",
+              -2.5,
+              301.3,
+              298.9
+            ],
+            [
+              "CrRendererMain:LayerTreeHost::DoUpdateLayers:",
+              2.4,
+              296.3,
+              296.3
+            ],
+            [
+              "CrRendererMain:GLES2::ReadPixels:",
+              2.4,
+              294.5,
+              294.5
+            ],
+            [
+              "CrRendererMain:ImplementationBase::WaitForCmd:",
+              2.4,
+              293.4,
+              293.4
+            ],
+            [
+              "CrRendererMain:CommandBufferHelper::Finish:",
+              2.4,
+              293.4,
+              293.4
+            ]
+          ],
+          "other": [
+            [
+              "CrGpuMain:ThreadControllerImpl::RunTask:",
+              2.5,
+              293.1,
+              293.1
+            ],
+            [
+              "CrGpuMain:Scheduler::RunTask:",
+              2.5,
+              293.1,
+              293.1
+            ],
+            [
+              "CrGpuMain:GpuChannel::ExecuteDeferredRequest:",
+              2.5,
+              293.1,
+              293.1
+            ],
+            [
+              "CrGpuMain:WebGL:",
+              2.5,
+              293.1,
+              293.1
+            ]
+          ]
+        }
+      },
+      "sourceCommit": "232ac33",
+      "run": "https://github.com/huytruong1810/Vibe/actions/runs/41768124908",
+      "annotations": "https://api.github.com/repos/huytruong1810/Vibe/check-runs/126371220785/annotations",
+      "checks": "success",
+      "beta": "both production bases passed",
+      "browser": "failure; exit1 within unchanged20-minute job limit",
+      "verify": "failure",
+      "ecology": "scope-skipped; not a successful soak",
+      "interpretation": "Intact public engine summary confirms synchronous GLES2::ReadPixels/command-buffer waits of about294-303 ms overlapping GPU work during the slow opening. Worker service is0-0.6ms. Together with the controlled local recorder experiment, this supports the scoped trace-screenshot repair."
+    },
+    {
+      "checkId": 126371245550,
+      "noticeCharacters": 1465,
+      "receipt": {
+        "format": 2,
+        "openingMs": 638.1000000000931,
+        "phaseTimingsMs": {
+          "pause": 316.20000000018626,
+          "content": 318.39999999990687,
+          "render": 0.30000000004656613,
+          "show-modal": 3.199999999953434
+        },
+        "mountedPages": 2,
+        "pageErrors": [],
+        "requests": [
+          {
+            "id": "world:c49d827e-c8ce-44a8-81fc-853295192d88:42:c36",
+            "type": "command",
+            "waitMs": 316.1,
+            "serviceMs": 0.1,
+            "recent": [
+              [
+                "periodic-work",
+                -108.4,
+                17.7
+              ],
+              [
+                "publish-frame",
+                -98,
+                7.3
+              ],
+              [
+                "clock-consume",
+                -76.5,
+                2.5
+              ]
+            ]
+          },
+          {
+            "id": "artifact:37",
+            "type": "artifactContent",
+            "waitMs": 318.4,
+            "serviceMs": 0.5,
+            "recent": [
+              [
+                "publish-frame",
+                -88.6,
+                5.6
+              ],
+              [
+                "periodic-work",
+                -88.6,
+                5.6
+              ],
+              [
+                "host-frame",
+                -88.6,
+                3.9
+              ]
+            ]
+          }
+        ],
+        "main": [
+          [
+            "frame-handler",
+            309.1,
+            3
+          ],
+          [
+            "frame-handler",
+            313,
+            2.8
+          ],
+          [
+            "frame-handler",
+            317.4,
+            2.2
+          ],
+          [
+            "hud-update",
+            313.7,
+            2.1
+          ],
+          [
+            "hud-update",
+            309.9,
+            2
+          ],
+          [
+            "hud-update",
+            318,
+            1.5
+          ],
+          [
+            "frame-handler",
+            320.3,
+            1.5
+          ],
+          [
+            "frame-handler",
+            322.5,
+            1.5
+          ]
+        ],
+        "cpu": {
+          "windowMs": 638.1,
+          "main": [
+            [
+              "CrRendererMain:ThreadControllerImpl::RunTask:",
+              325.9,
+              308.2,
+              308.2
+            ],
+            [
+              "CrRendererMain:ProxyMain::BeginMainFrame:",
+              325.9,
+              308.2,
+              308.2
+            ],
+            [
+              "CrRendererMain:LayerTreeHost::DoUpdateLayers:",
+              2.3,
+              305.5,
+              305.5
+            ],
+            [
+              "CrRendererMain:GLES2::ReadPixels:",
+              328.4,
+              303.3,
+              303.3
+            ],
+            [
+              "CrRendererMain:ImplementationBase::WaitForCmd:",
+              328.4,
+              302.5,
+              302.5
+            ],
+            [
+              "CrRendererMain:CommandBufferHelper::Finish:",
+              328.4,
+              302.4,
+              302.4
+            ]
+          ],
+          "other": [
+            [
+              "CrGpuMain:ThreadControllerImpl::RunTask:",
+              328.5,
+              302.2,
+              302.2
+            ],
+            [
+              "CrGpuMain:Scheduler::RunTask:",
+              328.5,
+              302.2,
+              302.2
+            ],
+            [
+              "CrGpuMain:GpuChannel::ExecuteDeferredRequest:",
+              328.5,
+              302.2,
+              302.2
+            ],
+            [
+              "CrGpuMain:WebGL:",
+              328.6,
+              302.1,
+              302.1
+            ]
+          ]
+        }
+      },
+      "sourceCommit": "232ac33",
+      "run": "https://github.com/huytruong1810/Vibe/actions/runs/41768132897",
+      "annotations": "https://api.github.com/repos/huytruong1810/Vibe/check-runs/126371245550/annotations",
+      "checks": "success",
+      "beta": "both production bases passed",
+      "browser": "failure; exit1 within unchanged20-minute job limit",
+      "verify": "failure",
+      "ecology": "timed out at unchanged25-minute limit",
+      "interpretation": "Intact public engine summary confirms synchronous GLES2::ReadPixels/command-buffer waits of about294-303 ms overlapping GPU work during the slow opening. Worker service is0-0.6ms. Together with the controlled local recorder experiment, this supports the scoped trace-screenshot repair."
+    }
+  ],
   "workerWaitInvestigation": {
-    "status": "diagnostics and controlled reproduction implemented; concrete separate repair prepared; no repair shipped",
+    "status": "diagnostics implemented; remote engine-level waits confirmed; scoped repair prepared but not shipped",
     "normal": {
       "command": "npm run test:browser -- tests/browser/literacy.spec.ts",
       "result": "1 passed in 1.6 minutes",
@@ -692,7 +1058,7 @@
       }
     },
     "invalidAttempt": "Source edit caused Vite reload before maximum-size opening; discarded for timing evidence. Screenshot inspected.",
-    "interpretation": "Public source731da0e receipt excludes expensive worker service and measured frame/HUD/ticker callbacks as causes of its long waits. Controlled forced-SwiftShader experiment reproduces a main-thread GPU readback stall with continuous trace screenshots, then removes it by disabling only those screenshots. This is the candidate explanation for CI; the new engine-level remote summary remains pending.",
+    "interpretation": "Source232ac33 push/PR engine summaries confirm roughly294-303ms GLES2::ReadPixels and command-buffer stalls overlapping GPU tasks, with worker service0-0.6ms. The controlled SwiftShader experiment isolates continuous Playwright screenshots as the reproduced readback trigger. Scoped trace screenshots:false is the supported next repair; production book/worker behavior remains unchanged.",
     "localCi": {
       "command": "CI=1 npm run test:browser -- tests/browser/literacy.spec.ts",
       "result": "1 passed in 1.3 minutes; notice emitted",
@@ -1039,7 +1405,7 @@
         "result": "passed; 470 tests /37 files in57.51 seconds; typecheck, architecture, assets, production build, hygiene and full formatting passed"
       }
     },
-    "nextRepair": "Separately configure the literacy performance journey to retain-on-failure traces with DOM snapshots but screenshots:false; preserve its explicit 1080p screenshot, CPU trace/compact summary, 100 ms assertion, every functional assertion and all full-suite/verify gates. Re-run forced SwiftShader with the real scoped configuration, normal/CI focused journeys and full browser CI. Confirm engine-level remote CPU summary; no production worker or book-open protocol change is justified by the current evidence.",
+    "nextRepair": "Separately configure the literacy performance journey to retain-on-failure traces with DOM snapshots but screenshots:false; preserve its explicit 1080p screenshot, CPU trace/compact summary, 100 ms assertion, every functional assertion and all full-suite/verify gates. Re-run forced SwiftShader with the real scoped configuration, normal/CI focused journeys and full browser CI. Remote engine-level summaries are confirmed by source232ac33; no production worker or book-open protocol change is justified by the current evidence.",
     "finalNormal": {
       "sourceCommit": "731da0e",
       "command": "npm run test:browser -- tests/browser/literacy.spec.ts",
@@ -1901,9 +2267,9 @@
       "temporaryConfig": "deleted; no continuous-screenshot setting shipped"
     },
     "gaps": [
-      "Remote raw CPU trace has not been inspected; engine-summary confirmation for the follow-up is pending.",
+      "Remote raw CPU trace not downloaded. Both intact source232ac33 public engine summaries now confirm large synchronous WebGL pixel-readback/command-buffer waits; controlled local experiment identifies continuous trace screenshots as the reproduced trigger.",
       "The scoped continuous-trace-screenshot repair is prepared but not shipped; original C18 CI gate still fails.",
-      "Source731da0e ecology exceeded its unchanged25-minute job limit.",
+      "Ecology exceeded its unchanged25-minute limit on source731da0e and source232ac33 PR. Source232ac33 push ecology was scope-skipped, not a soak.",
       "C19 remains unstarted; machine-A C18 acceptance/director review remain external."
     ]
   }

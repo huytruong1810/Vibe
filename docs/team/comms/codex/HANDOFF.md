@@ -3,10 +3,16 @@
 ## Next: C18 trace-screenshot repair, then C19 and C20
 
 Branch `eng/hd-presentation`, workspace `C:/Users/htruong/source/repos/Vibe`.
-Director-authorized investigation started at **3ccf5ab** on 2026-11-03
-(America/Chicago). Initial diagnostics are committed and pushed as **731da0e**;
-compact notice/engine-summary follow-up is validated and ready for publication. No latency repair or
-C19 implementation has started. Do not restart C13/C18 implementations.
+Start at current branch HEAD. Runtime/test source is **232ac33** (runtime
+diagnostics **731da0e**, compact engine notices **232ac33**), both committed and
+pushed. The current handoff-only commit follows that source baseline. This preparation
+changes only own-folder handoff/evidence/session records. No C18 repair, C19 or
+C20 implementation has started. Do not restart C13/C18 implementations.
+
+**Execution order:** scoped C18 trace-screenshot repair -> full browser/verify CI
+green -> C19 provider/arbiter/quantizer golden slice -> C20 painting workflows.
+C21 still needs explicit director go. The queue is the ticket source; the details
+below preserve the accepted plan and current implementation facts.
 
 Use [team-comms](../../../../.agents/skills/team-comms/SKILL.md) and
 [doctrine-lookup](../../../../.agents/skills/doctrine-lookup/SKILL.md).
@@ -14,6 +20,62 @@ Read `docs/team/briefs/codex.md` at pickup and after compaction. Keep the existi
 [session log](session-2026-11-02.md) current. Leave Vibe-art and other review
 worktrees alone. No owned server is left running; the temporary experiment
 configuration has been removed.
+
+## First five minutes
+
+1. Confirm `eng/hd-presentation`, clean status and recent log; pull with
+   `git pull --ff-only` only when clean. Read the brief and the two skills above.
+2. Read addressed messages using one-level directory enumeration (no archives):
+
+   ```powershell
+   $handoffSince = (Get-Content docs/team/comms/codex/.last-read -Raw).Trim()
+   Get-ChildItem -LiteralPath docs/team/comms -Directory | ForEach-Object {
+     Get-ChildItem -LiteralPath $_.FullName -File | Where-Object {
+       $_.Name -match '--to-(codex|all)--' -and $_.Name.Substring(0,15) -gt $handoffSince
+     }
+   } | ForEach-Object { $_.FullName; Get-Content -LiteralPath $_.FullName }
+   ```
+
+   Update `.last-read` with real UTC after reading. Keep the existing session log.
+3. Inspect any CI newer than the source232ac33 results below. The handoff-only
+   commit also triggers CI; its result is not yet recorded here. Keep code-source
+   validation distinct from documentation-only follow-ups.
+4. Open `tests/browser/literacy.spec.ts`, `tests/browser/book-diagnostics.ts` and
+   `playwright.config.ts`. Apply the small scoped repair below; diagnosis is ready.
+5. In this Windows sandbox, git writes and test/Vite/hygiene subprocesses can fail
+   with `EPERM`; use approved tool escalation. Public GitHub curl needed network
+   escalation. Preserve every check; never retry stored-credential access.
+
+## Latest completed CI: source232ac33
+
+Both [push41768124908](https://github.com/huytruong1810/Vibe/actions/runs/41768124908)
+and [PR41768132897](https://github.com/huytruong1810/Vibe/actions/runs/41768132897)
+are completed and red. CPU checks/benchmark and both beta bases pass in each.
+Browser and aggregate verify fail, with intact public format2 receipts:
+
+| Source232ac33 | Opening | Pause/content | Worker service | Longest ReadPixels |
+| --- | ---: | ---: | ---: | ---: |
+| Push | 631.9 ms | 318.7 / 308.3 ms | 0 / 0.6 ms | 294.5 ms |
+| PR | 638.1 ms | 316.2 / 318.4 ms | 0.1 / 0.5 ms | 303.3 ms |
+
+Main-thread `GLES2::ReadPixels` / command-buffer waits overlap roughly293-302 ms
+GPU WebGL work. Both mount two pages and report no page errors. This confirms the
+remote engine-level stalls that the older receipt could not classify. Combined
+with the controlled local recorder experiment below, the scoped trace-screenshot
+repair is supported. Nested trace rows overlap; do not sum their durations.
+
+Public receipts:
+[push annotations](https://api.github.com/repos/huytruong1810/Vibe/check-runs/126371220785/annotations),
+[PR annotations](https://api.github.com/repos/huytruong1810/Vibe/check-runs/126371245550/annotations).
+Both complete JSON receipts are retained in the existing diagnostic evidence.
+Push browser step failed in16m00s, within its unchanged20-minute job limit;
+its browser artifact upload succeeded. Other journey outcomes are not inferred
+from a timing notice. No full-browser/full-workflow-green claim.
+
+Push ecology was **scope-skipped**, not a completed soak. PR ecology hit the
+unchanged25-minute limit ([annotation](https://api.github.com/repos/huytruong1810/Vibe/check-runs/126371245131/annotations)).
+Keep this independent CI-health gap visible; preserve25 minutes. Earlier source
+731da0e also timed out there; the earlier C13 full soak did pass (history below).
 
 ## What the investigation established
 
@@ -26,12 +88,12 @@ public notice are in [diagnostic evidence](c18-ci-diagnostics.json).
   Ecology exceeded the unchanged25-minute limit; no successful soak is claimed.
 - The public C18 receipt shows **636.8 ms** opening: pause320.7, content312.4,
   render0.1, modal3.6 ms. Worker service was **0.1/0.4 ms**, recent worker work
-  at most6 ms, measured renderer ticks1.0?1.1 ms and frame handlers1.3?2.9 ms.
+  at most6 ms, measured renderer ticks1.0-1.1 ms and frame handlers1.3-2.9 ms.
   Long gaps lie outside those measured callbacks. This does not support an
   expensive pause/content-service or HUD/ticker-callback repair.
 - The initial expanded notice truncated at4094 characters; its complete prefix
   fields are labelled as extracted evidence, never as an intact JSON receipt.
-  PR twin41763996060 also shows roughly315?317 ms waits and tiny worker service;
+  PR twin41763996060 also shows roughly315-317 ms waits and tiny worker service;
   its notice truncated earlier. Remote raw CPU trace has not been downloaded.
 - Normal local source731da0e passed1/1 in57.6s: **36.3 ms** opening, two pages,
   no errors. CI-enabled local capture passed1/1 in1.3min: **31.5 ms** opening.
@@ -45,8 +107,8 @@ public notice are in [diagnostic evidence](c18-ci-diagnostics.json).
   trace screenshots disabled, passed1/1 in1.8min at **37.5 ms**. A long GPU swap
   remained in flight while the main thread stayed responsive. DOM snapshots and
   the explicit1080p screenshot remained. This isolates recorder screenshot
-  readback as the reproduced main-thread stall. It is the candidate explanation
-  for CI's matching gaps; remote engine-summary confirmation remains pending.
+  readback as the reproduced main-thread stall. Source232ac33 now confirms matching
+  remote WebGL readback/command-buffer waits in both public engine summaries.
 - Every produced spread screenshot was inspected. The controlled trace setting
   was temporary and is not shipped. The original journey still retains continuous
   trace screenshots, so CI is expected to remain red until the separate repair.
@@ -82,8 +144,9 @@ public notice are in [diagnostic evidence](c18-ci-diagnostics.json).
 ## Concrete next repair: separate commit
 
 1. Clean pull with `git pull --ff-only`; read new addressed messages after
-   `.last-read`. Read the latest diagnostic follow-up CI public notice to confirm
-   the engine-level remote mechanism. Public notices need no stored credentials.
+   `.last-read`. Source232ac33 has already confirmed the remote engine mechanism;
+   inspect newer runs without repeating the instrumentation. Public notices need
+   no stored credentials.
 2. Scope `test.use({ trace: { mode: 'retain-on-failure', screenshots: false,
    snapshots: true } })` to the literacy performance journey. Keep its explicit
    1080p capture, DOM snapshots, CPU trace/compact notice, every functional
@@ -99,6 +162,45 @@ public notice are in [diagnostic evidence](c18-ci-diagnostics.json).
 5. Confirm full browser suite and aggregate verify remotely before C19. Record
    the independent ecology timeout honestly; preserve25 minutes. Machine-A C18
    reading/model acceptance and director review remain external.
+
+Focused validation commands from repository root (PowerShell):
+
+```powershell
+npm run test:browser -- tests/browser/literacy.spec.ts
+$c18PriorCi = $env:CI
+try { $env:CI = '1'; npm run test:browser -- tests/browser/literacy.spec.ts }
+finally { $env:CI = $c18PriorCi }
+$env:VITEST_MAX_WORKERS = '4'
+npm run check
+npm run format:check
+npm run check:hygiene
+```
+
+For the software-rendering proof, create only an own-folder temporary config;
+inherit the actual scoped trace setting from the test file, with no trace override:
+
+```powershell
+New-Item -ItemType Directory -Path docs/team/comms/codex/tmp -Force | Out-Null
+$c18ProbeConfig = 'docs/team/comms/codex/tmp/c18-swiftshader.config.ts'
+@'
+import config from '../../../../../playwright.config';
+import { resolve } from 'node:path';
+export default {
+  ...config, testDir: resolve('tests/browser'),
+  use: { ...config.use, launchOptions: {
+    args: ['--enable-unsafe-swiftshader', '--use-angle=swiftshader']
+  } }
+};
+'@ | Set-Content -Encoding utf8 -LiteralPath $c18ProbeConfig
+try {
+  npx playwright test --config $c18ProbeConfig --project=journeys tests/browser/literacy.spec.ts
+} finally { Remove-Item -LiteralPath $c18ProbeConfig }
+```
+
+Run browser captures sequentially, with no concurrent full check and no source
+edits that trigger Vite reloads. Inspect every explicit screenshot. Playwright owns
+the temporary server; verify it exits. A reused process ID alone does not identify
+an owned process. Retain named experiment artifacts and their hashes in evidence.
 
 Authenticated artifact download previously returned401 and automatic review
 rejected stored-credential access. Do not repeat or bypass that rejection. Use
@@ -145,7 +247,8 @@ paintings still show." Read the complete rule in `docs/doctrine/11-living-minds.
    fixture golden hash, palette membership, repeatability and the specified 5 ms budget.
 3. Integrate `GpuArbiter` beside `src/adapters/inference.ts`. Existing
    `InferenceScheduler.exclusive` aborts/settles active work and serializes controls;
-   review its cancellation/requeue behavior before extending it. Preserve C18 reading,
+   it must not be assumed to requeue automatically. Review cancellation/requeue
+   behavior before extending it. Preserve C18 reading,
    dialogue priority and C24/C25 jobs. Optional Ollama unload defaults on; await unload
    before image generation. Villager jobs require no dialogue plus pause/sleep/
    acceleration; dialogue aborts/requeues them. Player image jobs finish before chat.
@@ -167,6 +270,45 @@ paintings still show." Read the complete rule in `docs/doctrine/11-living-minds.
    Inspect every produced review image before describing it. Deliver Changed/Evidence/
    Gaps and candidate evidence; update the handoff. C20 painting actions, screens,
    hanging/captions and C21 pixel editing are separate tickets, not C19 scope.
+
+## C20 pickup after C19
+
+Inputs: [ticket](../../queue/codex.md#c20--paintings-villagers-paint-the-player-paints-everyone-sees-them),
+[artifact specification](../../../engineering/authored-artifacts.md) sections4,
+7.1-7.3,7.5,8.2,9,11; doctrine AGT-6, AGT-3.2/3.3; ADR031. C19's provider,
+worker decode, quantizer and arbiter must exist before this integration starts.
+
+1. Reuse C17/C18 foundation. `src/domain/artifacts.ts` already defines strict
+   `PaintingBriefSchema`, pending/ready/failed painting records, pixels/palette,
+   caption and render provenance. Artifacts already persist and display/take
+   commands exist. Current saves are **v9**, not the spec's historical v5.
+   Preserve every prior migration, one-reference ownership and immutable brief.
+2. First mocked golden slice: player blank canvas -> validated paintingRequest ->
+   persisted pending artifact -> C19 generation/quantization -> preview -> Keep ->
+   displayed painting. Test reload during pending work and session/revision-safe
+   result application. Add commands/actions/job variants through existing contracts
+   and validators; add a new save migration only if persistent schema changes.
+3. Implement shared content rules as content data: prompt1-240 characters,
+   allowlisted composition/subjects, lettering/URL/brand/real-person rejections.
+   Add CREATE_PAINTING and HANG_PAINTING with subject affinity and rates:
+   artists1/day, other villagers1/7days. Resume pending briefs on load; use C19's
+   existing player/villager arbitration rather than a second GPU queue.
+4. Caption once through the sight/vision path: image4x nearest, image budget140
+   tokens, at most40 words, fallback to brief subject. Store provenance/caption,
+   give painter a fact memory, and make hanging a notice event. Villager prompts
+   consume the caption; they do not repeatedly receive image pixels.
+5. Painting screen from easel or blank canvas: prompt/chips, progress/Cancel,
+   quantized4x preview beside raw output, Keep/Retry/Discard, clear missing-endpoint
+   receipt linking Settings. Reuse UI kit/focus patterns. Render via LRU32 textures,
+   framed hooks, inventory16x11 thumbnail and pending easel; request needed art
+   through blender rather than generating or approving it here.
+6. Validate briefs/rates/content rules, pending reload, cancellation/retry/stale
+   results and the mocked paint->keep->hang1080p browser journey; inspect capture.
+   Full check, relevant root/subpath regressions and CI remain required. Send a
+   concrete own-folder machine-A smoke request: Lark paints during sleep
+   acceleration alongside the26b model, painting hangs, next villager dialogue can
+   mention its caption. A owns GPU/model/VRAM acceptance; B uses mocks/functional
+   checks. C21 pixel editing remains separately gated on director go.
 
 ## C18 implementation
 
@@ -198,8 +340,9 @@ checks only. Do not repeat model latency testing here. Machine-A GPU acceptance 
 requested in [the Blender test message](2026-11-03T1730--to-blender--test-c18-reading.md).
 Buffered reading JSON transport is implemented; incremental HUD output remains C20.
 
-Latest full unit-only run: **464 tests / 34 files passed**, four workers, 104.68 s.
-Full browser suite passes **23/23** in 8.9 minutes. Final book capture was copied and
+Historical C18 implementation validation (before current diagnostics):
+**464 tests / 34 files passed**, four workers, 104.68 s.
+The historical full local browser suite passed **23/23** in 8.9 minutes. Final book capture was copied and
 inspected; full 48-page opening 47.3 ms mounts two pages. Both local combined checks
 passed464 tests but missed the unchanged50ms artifact gate (61.4688/54.962ms);
 isolated artifact project passed1/1. Types, architecture, assets, hygiene and formatting
@@ -210,7 +353,7 @@ are retained; do not rerun model latency on B or relax gates.
 [Push CI41686809511](https://github.com/huytruong1810/Vibe/actions/runs/41686809511)
 CPU `checks` **passed**, including full check, artifact timing, formatting and benchmark.
 Both beta jobs and full ecology passed; browser timed out and aggregate `verify`
-failed. The89ffe45 follow-up browser step exited1; see the first-actions section.
+failed. The89ffe45 follow-up browser step exited1; see the current repair section.
 No full-workflow-green claim. See [validation](c18-validation.json) and
 [benchmark](c18-benchmark.json). C18 is candidate; A latency and director review remain.
 
