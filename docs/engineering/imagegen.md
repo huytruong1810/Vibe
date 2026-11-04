@@ -125,8 +125,11 @@ brown stem with two small green leaves" --ramps ember,sage,timber [--n 4] [--see
   `docs/team/comms/claude/boards/2026-11-04-c28-upscale-mireling.png`): every view 1267-1304 px tall (from 489-493),
   silhouette IoU 0.98-0.99, colour drift 7-12 after the chroma step (13-16 before). Look: pose, plates, ferns and
   flowers hold; skin and shell stay browner than the olive-grey originals (seed 501 more so, its back legs go red),
-  and fine detail (scutes, scales, claws) is added. Pick by eye. Not run: gen3d on upscaled views (the ticket's
-  "unchanged or better" check), so nothing was kept over blender's references. Humans, NPCs, props and tall creatures
+  and fine detail (scutes, scales, claws) is added. Pick by eye. gen3d (Hunyuan3D-2mv, seed 1234, 50 steps) on Mireling's prepped views, original against seed-500 upscaled (board
+  `docs/team/comms/claude/boards/2026-11-04-c28-gen3d-mireling.png`): 1.00 M against 1.02 M faces, both not watertight,
+  silhouette IoU between the two meshes 0.88-0.94; the upscaled mesh has slightly crisper shell moss, fern clumps, toes and
+  face, and nothing worse. Prep frames both to 1024 square, so the gain is detail, not resolution. One creature, one
+  seed; the texture stage (where the colour shift would show) was not run. Nothing was kept over blender's references. Humans, NPCs, props and tall creatures
   are already above 1024 px; the low ones are wide quadrupeds and small creatures (Bramblefang, Mireling, Marshstalker,
   Rivallie, Zephyrit, Cindermoth).
 - **Swatches (C30a, built):** `forge.py swatch`, see the tile-forge skill.
