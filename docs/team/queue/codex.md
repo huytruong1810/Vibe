@@ -286,13 +286,13 @@ fit → C9c.
 
 ### C28 · Reference views at 1024 px or more
 
-- status: candidate (tool built and trialled 2026-11-04; gen3d shape check passed on Mireling)
+- status: done (2026-11-04, claude; tool, trialled on Mireling and Bramblefang)
 - owner: claude
 - goal: generated views meet PRD-3.1 (today about 620 px tall on a 2304 × 1344 sheet).
 - work: per-view upscale pass (the edit model re-rendering each cropped view at 1024+ with the sheet as reference) or larger sheets within VRAM; keep identity.
 - done when: `views` writes every view ≥ 1024 px tall without `prep` warnings, `gen3d` unchanged or better
-- result: `forge.py upscale --asset ID [--n N] [--seed S] [--keep SEED]` (`forgelib/upscale.py`): per-view edit-model re-render at 1100+ px with a chroma match to the original. Mireling trial: 489-493 px views became 1267-1304 px, IoU 0.98-0.99. Colour still runs browner than the original. gen3d on Mireling's original against upscaled views: same shape, slightly crisper detail, no regression. Open: texture stage on upscaled views (colour), `prep` warnings, and a second creature (a wide quadruped) before blender runs `--keep`.
-- evidence: `upscale_selftest.py` 5/5; trial `art/source/forge/work/upscale-mireling/`; boards `docs/team/comms/claude/boards/2026-11-04-c28-upscale-mireling.png`, `…-c28-gen3d-mireling.png`
+- result: `forge.py upscale --asset ID [--n N] [--seed S] [--keep SEED]` (`forgelib/upscale.py`): per-view edit-model re-render at 1100+ px with a chroma match to the original. Mireling trial: 489-493 px views became 1267-1304 px, IoU 0.98-0.99. Colour still runs browner than the original. gen3d on Mireling's original against upscaled views: same shape, slightly crisper detail, no regression. Bramblefang (wide quadruped): 1291-1393 px, IoU 0.95-0.98. Not checked: the texture stage on upscaled views. `--keep` only on assets about to be re-forged, never on an approved one without a new packet.
+- evidence: `upscale_selftest.py` 5/5; trial `art/source/forge/work/upscale-mireling/`; boards `docs/team/comms/claude/boards/2026-11-04-c28-upscale-mireling.png`, `…-c28-gen3d-mireling.png`, `…-c28-upscale-bramblefang.png`
 
 ### C29 · Image model bake-off: klein 9B, klein 4B, Qwen-Image-2.1
 

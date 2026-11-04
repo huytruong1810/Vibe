@@ -129,7 +129,13 @@ brown stem with two small green leaves" --ramps ember,sage,timber [--n 4] [--see
   `docs/team/comms/claude/boards/2026-11-04-c28-gen3d-mireling.png`): 1.00 M against 1.02 M faces, both not watertight,
   silhouette IoU between the two meshes 0.88-0.94; the upscaled mesh has slightly crisper shell moss, fern clumps, toes and
   face, and nothing worse. Prep frames both to 1024 square, so the gain is detail, not resolution. One creature, one
-  seed; the texture stage (where the colour shift would show) was not run. Nothing was kept over blender's references. Humans, NPCs, props and tall creatures
+  seed; the texture stage (where the colour shift would show) was not run. Second trial on Bramblefang, a wide quadruped (seeds 600, 601; board
+  `docs/team/comms/claude/boards/2026-11-04-c28-upscale-bramblefang.png`): 528-545 px views became 1291-1393 px, IoU
+  0.95-0.98, drift 6-13; mane, tusks, flames and fur keep their colours better than Mireling's skin did, seed 601 runs
+  cooler and darker in the body. The side view's stray tail-flame fragment from the neighbouring sheet view (already in
+  the original crop) is carried through; that is a `views` crop issue. **Rules:** run `--keep` only on an asset that is
+  about to be re-forged, and never on a director-approved one without a new packet and a new approval (PRD-9 binds the
+  approval to the packet digest). Nothing was kept over blender's references. Humans, NPCs, props and tall creatures
   are already above 1024 px; the low ones are wide quadrupeds and small creatures (Bramblefang, Mireling, Marshstalker,
   Rivallie, Zephyrit, Cindermoth).
 - **Swatches (C30a, built):** `forge.py swatch`, see the tile-forge skill.
