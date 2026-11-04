@@ -9,6 +9,11 @@ import { NPC_PROFILES } from '../src/content/definitions';
 import { SimulationHost } from '../src/domain/simulation';
 import { ReadingResponseSchema } from '../src/domain/text-contracts';
 
+if (process.argv.includes('--painting')) {
+  const { paintingSmoke } = await import('./painting-smoke');
+  await paintingSmoke();
+  process.exit(process.exitCode ?? 0);
+}
 const model =
   process.argv.slice(2).find((arg) => !arg.startsWith('--')) ??
   process.env.OLLAMA_MODEL ??

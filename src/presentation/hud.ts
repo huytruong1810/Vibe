@@ -21,6 +21,7 @@ import type {
 } from '../domain/contracts';
 import { BIOME_COLORS, BIOME_NAMES, nearestSettlement, TileFlag } from '../domain/world';
 import type { InferenceUsage, ModelInfo } from '../adapters/inference';
+import type { ImageSettings, ImageProbe } from '../adapters/image';
 import type { Quality } from './renderer';
 import { GARMENT_SLOTS, type GearSlot } from '../domain/equipment';
 import { latestNpcEmotion } from './ui/dialogue';
@@ -31,6 +32,8 @@ const percent = (n: number): number => Math.round(Math.max(0, Math.min(1, n)) * 
 const meter = (label: string, value: number, _color = 'sage'): string => meterMarkup(label, value);
 
 export interface HudHandlers {
+  imageSettings(settings: ImageSettings): Promise<void>;
+  testImage(settings: ImageSettings): Promise<ImageProbe>;
   bookDiagnostics?(active: boolean): void;
   artifactContent(id: string): Promise<Artifact | null>;
   send(command: CommandPayload): Promise<CommandResult>;
@@ -44,6 +47,7 @@ export interface HudHandlers {
     origin: number;
     resume: boolean;
     offline: boolean;
+    image: ImageSettings;
   }): Promise<string | void>;
   discover(endpoint: string): Promise<readonly ModelInfo[]>;
   save(): Promise<void>;
@@ -113,11 +117,54 @@ export class HudPresenter {
     } catch {
       /* Storage preference failure must not block play. */
     }
+    try {
+      const image = JSON.parse(
+        localStorage.getItem('hearthwild-image-connection') ?? 'null',
+      ) as Partial<ImageSettings> | null;
+      if (image?.endpoint) this.el<HTMLInputElement>('image-endpoint').value = image.endpoint;
+      if (image?.provider === 'ollama')
+        this.el<HTMLSelectElement>('image-provider').value = 'ollama';
+      if (typeof image?.unload === 'boolean')
+        this.el<HTMLInputElement>('image-unload').checked = image.unload;
+    } catch {
+      /* Optional preferences must not block play. */
+    }
   }
   private el<T extends HTMLElement = HTMLElement>(id: string): T {
     return document.getElementById(id) as T;
   }
   private bind(): void {
+    const imageAction = async (test: boolean) => {
+      const status = this.el('image-status'),
+        button = this.el<HTMLButtonElement>(test ? 'image-test' : 'image-apply');
+      button.disabled = true;
+      try {
+        const settings = this.imageSettings();
+        if (test) {
+          const result = await this.handlers.testImage(settings);
+          status.textContent = result.ok ? `Ready: ${result.model}` : result.reason;
+        } else {
+          await this.handlers.imageSettings(settings);
+          try {
+            localStorage.setItem('hearthwild-image-connection', JSON.stringify(settings));
+          } catch {
+            /* Optional. */
+          }
+          status.textContent = settings.endpoint
+            ? 'Painting settings saved.'
+            : 'Image endpoint disabled. Existing paintings remain available.';
+        }
+      } catch (error) {
+        status.textContent = error instanceof Error ? error.message : 'Image server unavailable';
+      } finally {
+        button.disabled = false;
+      }
+    };
+    this.el('image-settings').addEventListener('submit', (event) => {
+      event.preventDefault();
+      void imageAction(false);
+    });
+    this.el('image-test').addEventListener('click', () => void imageAction(true));
     for (const button of document.querySelectorAll<HTMLButtonElement>('[data-combat]'))
       button.addEventListener('click', () => {
         const kind = button.dataset.combat;
@@ -414,6 +461,7 @@ export class HudPresenter {
       origin: Number(this.el<HTMLSelectElement>('origin').value),
       resume,
       offline,
+      image: this.imageSettings(),
     };
     try {
       const warning = await this.handlers.enter(options);
@@ -1076,6 +1124,14 @@ export class HudPresenter {
   }
   get currentFrame(): RenderSnapshot | null {
     return this.frame;
+  }
+  private imageSettings(): ImageSettings {
+    return {
+      endpoint: this.el<HTMLInputElement>('image-endpoint').value.trim(),
+      provider:
+        this.el<HTMLSelectElement>('image-provider').value === 'ollama' ? 'ollama' : 'sdcpp',
+      unload: this.el<HTMLInputElement>('image-unload').checked,
+    };
   }
   dispose(): void {
     this.book.dispose();

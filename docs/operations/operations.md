@@ -2,6 +2,9 @@
 
 ## Development and clean installation
 
+For the pinned loopback painting server, model licenses, cancellation and machine-A
+acceptance, see [local image generation](image-generation.md).
+
 ### Written-word functional smoke (C18)
 
 `npm run test:ollama -- --reading` exercises real dialogue proposing READ_TEXT,

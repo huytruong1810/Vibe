@@ -541,3 +541,26 @@ ordinary words; it is not a general named-entity recognizer. Only the current sp
 mounts in the book screen. Reading transport buffers bounded NDJSON before applying
 the result; incremental dialogue presentation remains C20. CPU functional evidence
 does not substitute for machine-A GPU latency acceptance.
+
+## ADR 036 - Acknowledged image cancellation and bounded palette workers
+
+**Decision:** C19 retains the specified SDAPI adapter and probes its loaded model
+through `/sdapi/v1/sd-models`. Managed jobs use the pinned sd-server native async
+API because disconnecting SDAPI does not stop GPU execution. GpuArbiter holds
+`InferenceScheduler.exclusive` through terminal cancellation acknowledgement;
+dialogue preempts/requeues villager images and never preempts a player image.
+Uncertain server state suspends subsequent chat instead of assuming GPU release.
+Optional awaited Ollama unload defaults on; the next chat reloads naturally.
+
+PNG headers and response bytes are bounded before worker bitmap allocation.
+Pure linear-light area filtering and exact OKLab nearest-palette selection use
+stable ties, exclude outline colours, retain at most 16 colours and pack high
+nibbles first. Alpha composites onto palette `cream.mid`. Explicit worker
+preparation compiles the bounded default path during the image pipeline;
+receipts include preparation separately from quantization and in total latency.
+
+**Consequences:** no artifact/save-schema change. Browser connection preferences
+are separate from saves. Machine-B mocked evidence does not establish machine-A
+VRAM, cancellation latency or the 30-second unload/generate/reload budget. The
+[pinned operations guide](../operations/image-generation.md) records source links,
+model licenses, exact launch commands and the remaining acceptance procedure.

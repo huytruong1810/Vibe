@@ -2,6 +2,14 @@ import { ContextSettingsSchema, type ContextSettings } from './domain/conversati
 import './style.css';
 import { FallbackProvider, InferenceScheduler, OllamaAdapter } from './adapters/inference';
 import {
+  SdCppProvider,
+  OllamaImageProvider,
+  PaintingDecoder,
+  type ImageSettings,
+  type ImageRequest,
+} from './adapters/image';
+import { GpuArbiter } from './adapters/gpu-arbiter';
+import {
   IndexedDbSaveRepository,
   IndexedDbEmbeddingCache,
   SaveCoordinator,
@@ -23,6 +31,8 @@ export class GameBootstrap {
   private readonly hud: HudPresenter;
   private readonly rendererReady: Promise<void>;
   private inference: InferenceScheduler | null = null;
+  private imageProvider: SdCppProvider | OllamaImageProvider | null = null;
+  private gpu: GpuArbiter | null = null;
   private frame: RenderSnapshot | null = null;
   private readonly keys = new Set<string>();
   private movementSignature = '';
@@ -42,6 +52,16 @@ export class GameBootstrap {
       (command) => this.bridge.send(command),
     );
     this.hud = new HudPresenter(root, {
+      imageSettings: (settings) => this.configureImages(settings),
+      testImage: async (settings) => {
+        if (!settings.endpoint)
+          return { ok: false, reason: 'Choose a loopback image endpoint first.' };
+        const provider =
+          settings.provider === 'ollama'
+            ? new OllamaImageProvider()
+            : new SdCppProvider(settings.endpoint);
+        return provider.probe();
+      },
       bookDiagnostics: (active) => this.bridge.bookDiagnostics(active),
       artifactContent: (id) => this.bridge.artifactContent(id),
       send: (command) => this.bridge.send(command),
@@ -100,6 +120,14 @@ export class GameBootstrap {
       this.bridge.recordWork('hud-update', hudStarted, performance.now());
       this.inference?.setBackgroundDeferred(frame.timeScale > 1);
       for (const job of frame.jobs) this.inference?.enqueue(job);
+      this.gpu?.setWindow({
+        dialogue: !!frame.dialogue,
+        paused: frame.paused.length > 0,
+        asleep: frame.humanNeeds.some(
+          (human) => human.id === frame.player.entityId && human.sleeping,
+        ),
+        accelerated: frame.timeScale > 1,
+      });
       if (frame.events.at(-1)?.id !== this.lastEventId) {
         const event = frame.events.at(-1);
         this.lastEventId = event?.id ?? '';
@@ -145,8 +173,10 @@ export class GameBootstrap {
     backgroundModel: string;
     backgroundCpu: boolean;
     contextTokens: number;
+    image: ImageSettings;
   }): Promise<string | void> {
     await this.rendererReady;
+    await this.gpu?.dispose();
     const provider = options.offline
       ? new FallbackProvider()
       : new OllamaAdapter(options.endpoint, undefined, new IndexedDbEmbeddingCache());
@@ -194,6 +224,12 @@ export class GameBootstrap {
           )
           .catch((error) => this.hud.notify(String(error)));
     });
+    this.contextSettings = context;
+    try {
+      await this.configureImages(options.image);
+    } catch (error) {
+      backgroundWarning += ` Painting endpoint disabled: ${String(error)}`;
+    }
     if (options.resume) {
       const saved = await this.repository.restore();
       if (!saved)
@@ -212,6 +248,48 @@ export class GameBootstrap {
       new OllamaAdapter(this.connectedEndpoint).capabilityCheck(this.connectedModel);
     if (this.inference) await this.inference.exclusive(check);
     else await check();
+  }
+  private async configureImages(settings: ImageSettings): Promise<void> {
+    const provider = settings.endpoint
+      ? settings.provider === 'ollama'
+        ? new OllamaImageProvider()
+        : new SdCppProvider(settings.endpoint)
+      : null;
+    await this.gpu?.dispose();
+    this.imageProvider = provider;
+    this.gpu =
+      provider && this.inference
+        ? new GpuArbiter(
+            this.inference,
+            async (signal) => {
+              if (this.offline) return;
+              const adapter = new OllamaAdapter(this.connectedEndpoint);
+              const models = new Set([this.connectedModel]);
+              if (!this.contextSettings.backgroundCpu)
+                models.add(this.contextSettings.backgroundModel);
+              for (const model of models) await adapter.unload(model, signal);
+            },
+            settings.unload,
+          )
+        : null;
+  }
+  async generatePainting(id: string, owner: 'player' | 'villager', request: ImageRequest) {
+    const provider = this.imageProvider,
+      gpu = this.gpu;
+    if (!(provider instanceof SdCppProvider) || !gpu)
+      throw Error('Choose an available image endpoint in Settings.');
+    return gpu.request(id, owner, async (signal) => {
+      const decoder = new PaintingDecoder();
+      try {
+        await decoder.prepare();
+        const probe = await provider.probe(signal);
+        if (!probe.ok) throw Error(probe.reason);
+        const raw = await provider.generateManaged(request, signal);
+        return { raw, painting: await decoder.decode(raw, signal), model: probe.model };
+      } finally {
+        decoder.dispose();
+      }
+    });
   }
   private async save(): Promise<void> {
     await this.saves.checkpoint(await this.bridge.checkpoint());
@@ -384,6 +462,7 @@ export class GameBootstrap {
   dispose(): void {
     clearInterval(this.autoSave);
     this.inference?.dispose();
+    void this.gpu?.dispose();
     this.portals.dispose();
     this.bridge.dispose();
     this.audio.dispose();

@@ -34,7 +34,7 @@ export default defineConfig({
         test: {
           name: 'unit',
           include: ['tests/**/*.test.ts'],
-          exclude: ['tests/artifact-budget.test.ts'],
+          exclude: ['tests/artifact-budget.test.ts', 'tests/painting-budget.test.ts'],
           sequence: { groupOrder: 0 },
         },
       },
@@ -42,7 +42,7 @@ export default defineConfig({
         extends: true,
         test: {
           name: 'artifact-budget',
-          include: ['tests/artifact-budget.test.ts'],
+          include: ['tests/artifact-budget.test.ts', 'tests/painting-budget.test.ts'],
           fileParallelism: false,
           sequence: { groupOrder: 1 },
         },

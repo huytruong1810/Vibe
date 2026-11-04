@@ -8,8 +8,9 @@ source **232ac33**. Screenshot-only repair **5e9c3e4** and compositor/freshness
 follow-up **ec22a07** are committed and pushed separately from these records.
 Production source is unchanged. All existing assertions remain; the follow-up
 adds visible-dialog and fresh48-page label checks, including the public notice.
-C19 has a provider/worker/quantizer golden slice and tests; C20 is
-unstarted. Do not restart C13/C18 implementations.
+C19 has a committed golden slice8f1c399 and a validated follow-up adding native
+cancellation, GpuArbiter, settings, pinned operations and the machine-A smoke.
+C20 is unstarted. Do not restart C13/C18 implementations.
 
 C19 golden slice: [evidence](c19-validation.json), 32 focused unit tests and a
 real browser worker fed a mocked server PNG. Deterministic golden hash is
@@ -17,10 +18,17 @@ real browser worker fed a mocked server PNG. Deterministic golden hash is
 Prepared worker quantization is3.7ms with113ms explicit startup,373.2ms total
 mock pipeline; initial cold46ms is retained as a limitation. Both48x32 and4x
 previews were inspected. No live model, GPU or machine-A acceptance claimed.
-Next implement the GPU arbiter, settings and pinned operations guide before C20.
-Pinned sd-server SDAPI does not acknowledge GPU cancellation; native job cancel
-and terminal-state polling are required for villager preemption. Client abort
-alone is insufficient. The adapter currently supplies only the scoped SDAPI path.
+Follow-up check passes513 tests/42 files (four workers,56.80s); full browser25/25
+passes in6.7min. All42 PNGs inspected and retained under artifacts/c19-browser/;
+latest golden quant2.6ms/startup106.6ms/total296ms. Focused browser observations
+also include5.2/6.7ms; reference-machine5ms quantization acceptance remains open.
+The exact filter caches box footprints and fast-paths opaque pixels. The unchanged
+5ms Node assertion runs in the existing serial budget phase to avoid contention.
+Pinned sd-server SDAPI does not acknowledge GPU cancellation; managed jobs use
+native job cancel and terminal polling, retaining the scheduler lease. Unknown
+GPU state suspends chat. See ADR036 and the pinned operations guide. Machine-A
+request2026-11-04T1619--to-blender--test-c19-painting.md is prepared. No real GPU
+work ran on B. Continue C18 phase diagnostics, then C20 integration.
 
 Current evidence is in `traceScreenshotRepair` in
 [diagnostic evidence](c18-ci-diagnostics.json). Key results:

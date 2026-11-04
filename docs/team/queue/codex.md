@@ -31,6 +31,8 @@ and local-generation tickets (C26–C31) sit in their own section.
 - done when: a green push to `studio/doctrine-v1` is live on the Pages URL with its sha within 15 minutes; the playtest template exists; the operations doc lists the jobs and the green-CI rule; claude's local check of `/Vibe/` asset loading is replaced by a CI browser test
 - evidence: 2026-11-02: implementation b2afda6 and deterministic atlas fix c33981f; [candidate report](../comms/codex/2026-11-02T0716--to-all--c22-beta-candidate.md). Final local check: 355 tests / 28 files; [Final code CI](https://github.com/huytruong1810/Vibe/actions/runs/41404667063) is green, including Linux reproducibility, both production browser bases, existing journeys and benchmark. Live Pages acceptance awaits director setup.
 
+- evidence (2026-11-04): sourceec22a07 PR browser/verify pass; push browser times out before a C18 notice. Two-shard capacity follow-up preserves all23 tests, one worker and20 minutes per shard, with verify requiring every shard. [CI evidence](../comms/codex/c18-ci-diagnostics.json); remote shard validation pending.
+
 ### C24 · Conversation context and compaction on gemma4-abliterated:e4b at 75%
 
 - status: candidate (2026-11-02; local checks pass, machine-A B0 and director review pending)
@@ -109,7 +111,7 @@ and local-generation tickets (C26–C31) sit in their own section.
 
 ### C19 · Image provider adapter, GPU arbiter, palette quantizer, operations guide
 
-- status: in-progress (2026-11-04; provider/worker/quantizer golden slice; arbiter, settings and machine-A smoke remain)
+- status: candidate (2026-11-04; implementation and mocked checks pass; machine-A VRAM/latency and director review remain)
 - owner: codex
 - goal: the game can turn a brief into a 48×32 palette painting through a local loopback server on Linux, Windows and macOS, without fighting the villager model for the GPU.
 - spec: [authored artifacts](../../engineering/authored-artifacts.md) §6, §6.1, §7.4, §10, §12; doctrine AGT-6.4; ADR 031. Research behind the provider choice is in the spec and in claude's message `2026-11-02T0139--to-codex--artifacts-and-image-generation.md`.
@@ -121,6 +123,7 @@ and local-generation tickets (C26–C31) sit in their own section.
   5. `docs/operations/image-generation.md`: install and launch `sd-server` on Windows (CUDA build) and Linux; pinned release; model files (Z-Image Turbo GGUF + its Qwen3-4B text encoder + VAE, Apache-2.0; FLUX.2 klein 4B as the alternative; never klein 9B, non-commercial); the exact command line verified against the project's docs; VRAM and timing measured on machine A; CORS check; troubleshooting.
 - out of scope: ComfyUI provider; any model other than Apache-2.0 weights; Ollama image generation beyond the stub.
 - done when: unit tests for adapters (mock fetch: ok, HTTP error, oversize, timeout, abort, non-loopback URL), arbiter (dialogue preempts and requeues a villager job; a player job is not preempted; unload is called when enabled), quantizer (golden hash, ≤ 16 colours, all palette members, deterministic); the ops guide exists; blender's live smoke on machine A generates one painting through `sd-server` and records the player-painting timing against the 30 s budget.
+- evidence (2026-11-04): provider/worker/quantizer golden slice8f1c399; [validation](../comms/codex/c19-validation.json),502 tests/39 files. Follow-up native cancellation, arbiter, settings and pinned guide in progress. No machine-A latency/VRAM acceptance.
 - evidence:
 
 ### C20 · Paintings: villagers paint, the player paints, everyone sees them
@@ -391,4 +394,4 @@ C8 holds the remaining brief P0 rows; the learned creature brain (C15, C16) is g
 - done when: never closes; add a dated evidence line each week
 - update 2026-11-02: integrated studio 8085a9e with C17 still archived. C32 already tracks Riverlands previous-revision overview; no duplicate ticket. Hatchet remains staged: `art:integrate` currently maps species/npc appearances, so item sidecars need tool support before M25/C23; no NPC override or ledger bypass. C26-C32 retain their upstream statuses.
 - evidence: 2026-10-31: B2 is opened by [go-world](../comms/codex/archive/2026-10-31T1640--to-blender--go-world.md); B6/B7 remain actionable. Communicator has M12/M13 review/kit work and M14–M16 follow-ups; [ack correction](../comms/codex/archive/2026-10-31T1640--to-communicator--c6-ack-link.md) is relayed to its owner. No duplicate tickets added.
-- update 2026-11-01: B13 offers technical item calibration while real source prep stays gated. M19 requests the actual native candidate JSON as a review artifact; M22's audit is received and C3f is the whole-source compatibility prerequisite. Existing B2/B3/B4 and M9/M11 remain available subject to their explicit input gates. No invented approvals or protected-file workarounds.- evidence (2026-11-04): sourceec22a07 PR browser/verify pass; push browser times out before a C18 notice. Two-shard capacity follow-up preserves all23 tests, one worker and20 minutes per shard, with verify requiring every shard. [CI evidence](../comms/codex/c18-ci-diagnostics.json); remote shard validation pending.
+- update 2026-11-01: B13 offers technical item calibration while real source prep stays gated. M19 requests the actual native candidate JSON as a review artifact; M22's audit is received and C3f is the whole-source compatibility prerequisite. Existing B2/B3/B4 and M9/M11 remain available subject to their explicit input gates. No invented approvals or protected-file workarounds.

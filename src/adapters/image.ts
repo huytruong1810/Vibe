@@ -10,12 +10,19 @@ export interface ImageRequest {
   readonly seed: number;
 }
 export type ImageProbe = { ok: true; model: string } | { ok: false; reason: string };
+export interface ImageSettings {
+  endpoint: string;
+  provider: 'sdcpp' | 'ollama';
+  unload: boolean;
+}
 export interface ImageProvider {
   readonly id: 'sdcpp' | 'ollama' | 'comfyui';
   probe(signal?: AbortSignal): Promise<ImageProbe>;
   generate(request: ImageRequest, signal: AbortSignal): Promise<Blob>;
 }
 export const IMAGE_RESPONSE_LIMIT = 8 * 1024 * 1024;
+/** No terminal server acknowledgement: do not release the GPU to Ollama. */
+export class ImageGpuStateUnknown extends Error {}
 const pngSignature = [137, 80, 78, 71, 13, 10, 26, 10];
 export function loopbackImageEndpoint(endpoint: string): string {
   const url = new URL(endpoint);
@@ -80,6 +87,8 @@ export class SdCppProvider implements ImageProvider {
   readonly endpoint: string;
   private active = false;
   private model: string | null = null;
+  private managed = false;
+  private uncertain = false;
   constructor(
     endpoint: string,
     private readonly fetcher: typeof fetch = (input, init) => fetch(input, init),
@@ -132,6 +141,8 @@ export class SdCppProvider implements ImageProvider {
   }
   async probe(signal?: AbortSignal): Promise<ImageProbe> {
     signal?.throwIfAborted();
+    if (this.managed || this.uncertain)
+      return { ok: false, reason: 'Image GPU is busy or needs server recovery' };
     if (this.model) return { ok: true, model: this.model };
     try {
       // The pinned server exposes the loaded filename without generating an image.
@@ -149,7 +160,7 @@ export class SdCppProvider implements ImageProvider {
       };
     }
   }
-  async generate(request: ImageRequest, signal: AbortSignal): Promise<Blob> {
+  private validate(request: ImageRequest): void {
     if (
       !request.prompt.trim() ||
       request.prompt.length > 2000 ||
@@ -166,6 +177,10 @@ export class SdCppProvider implements ImageProvider {
       request.seed > 0xffffffff
     )
       throw Error('Invalid image generation parameters');
+  }
+  async generate(request: ImageRequest, signal: AbortSignal): Promise<Blob> {
+    this.validate(request);
+    if (this.managed || this.uncertain) throw Error('Image GPU is busy or needs server recovery');
     const data = (await this.request(
       '/sdapi/v1/txt2img',
       {
@@ -184,7 +199,11 @@ export class SdCppProvider implements ImageProvider {
       },
       signal,
     )) as { images?: unknown };
-    const encoded = Array.isArray(data?.images) && data.images.length === 1 ? data.images[0] : null;
+    return this.png(
+      Array.isArray(data?.images) && data.images.length === 1 ? data.images[0] : null,
+    );
+  }
+  private png(encoded: unknown): Blob {
     if (
       typeof encoded !== 'string' ||
       !encoded.length ||
@@ -196,6 +215,96 @@ export class SdCppProvider implements ImageProvider {
     if (!pngSignature.every((byte, n) => bytes[n] === byte))
       throw Error('Image server did not return a PNG');
     return new Blob([bytes], { type: 'image/png' });
+  }
+  /** Native jobs acknowledge cancellation; SDAPI fetch abort alone cannot stop GPU work. */
+  async generateManaged(request: ImageRequest, signal: AbortSignal): Promise<Blob> {
+    signal.throwIfAborted();
+    this.validate(request);
+    if (this.active || this.managed || this.uncertain)
+      throw Error('Image GPU is busy or needs server recovery');
+    this.managed = true;
+    let id: string | undefined,
+      idle = false;
+    const deadline = Date.now() + 90_000;
+    type Job = {
+      id?: string;
+      status?: string;
+      result?: { images?: { b64_json?: unknown }[] };
+      error?: { message?: string };
+    };
+    const terminal = (job: Job) => ['completed', 'failed', 'cancelled'].includes(job.status ?? '');
+    const poll = () => this.request(`/sdcpp/v1/jobs/${id}`, {}, undefined, 5000) as Promise<Job>;
+    const delay = () => new Promise<void>((resolve) => setTimeout(resolve, 250));
+    try {
+      // Finish submission even after a client abort so its job ID is available for cancellation.
+      const submitted = (await this.request(
+        '/sdcpp/v1/img_gen',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            prompt: request.prompt,
+            negative_prompt: request.negative,
+            width: request.width,
+            height: request.height,
+            seed: request.seed,
+            batch_count: 1,
+            output_format: 'png',
+            sample_params: { sample_steps: request.steps, guidance: { txt_cfg: request.cfg } },
+          }),
+        },
+        undefined,
+        5000,
+      )) as Job;
+      if (typeof submitted.id !== 'string' || !/^[A-Za-z0-9_-]{1,128}$/.test(submitted.id))
+        throw Error('Image server returned no valid job ID');
+      id = submitted.id;
+      for (;;) {
+        signal.throwIfAborted();
+        if (Date.now() >= deadline)
+          throw new DOMException('Image request exceeded its timeout', 'TimeoutError');
+        const job = await poll();
+        if (terminal(job)) {
+          idle = true;
+          signal.throwIfAborted();
+          if (job.status !== 'completed')
+            throw Error(job.error?.message?.slice(0, 200) ?? 'Image generation cancelled');
+          return this.png(job.result?.images?.length === 1 ? job.result.images[0]?.b64_json : null);
+        }
+        if (!['queued', 'generating'].includes(job.status ?? ''))
+          throw Error('Invalid image job state');
+        await delay();
+      }
+    } catch (error) {
+      if (!idle && id) {
+        // A cancel request is not a terminal acknowledgement. Keep the scheduler's lease until stopped.
+        const cleanupDeadline = Date.now() + 10_000;
+        try {
+          let job = (await this.request(
+            `/sdcpp/v1/jobs/${id}/cancel`,
+            { method: 'POST' },
+            undefined,
+            5000,
+          )) as Job;
+          while (!terminal(job) && Date.now() < cleanupDeadline) {
+            await delay();
+            job = await poll();
+          }
+          idle = terminal(job);
+        } catch {
+          /* Unknown server state is handled below, never assumed idle. */
+        }
+      }
+      if (!idle) {
+        this.uncertain = true;
+        throw new ImageGpuStateUnknown(
+          'Image server did not confirm stopped GPU work. Stop or restart sd-server before reconnecting local AI.',
+        );
+      }
+      throw error;
+    } finally {
+      this.managed = false;
+    }
   }
 }
 export class OllamaImageProvider implements ImageProvider {

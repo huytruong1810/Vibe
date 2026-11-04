@@ -3,6 +3,47 @@ import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import sharp from 'sharp';
 
+test('C19 image settings probe loopback, reject remote origins and keep disabled generation playable', async ({
+  page,
+}) => {
+  let probes = 0;
+  await page.route('http://127.0.0.1:5899/**', async (route) => {
+    expect(route.request().url()).toBe('http://127.0.0.1:5899/sdapi/v1/sd-models');
+    probes++;
+    await route.fulfill({
+      json: [{ model_name: 'z_image_turbo-Q4_K' }],
+      headers: { 'Access-Control-Allow-Origin': '*' },
+    });
+  });
+  await page.goto('/?test=1');
+  await page.getByRole('button', { name: 'Play without local AI', exact: true }).click();
+  await page.locator('#settings-button').click();
+  await expect(page.locator('#image-unload')).toBeChecked();
+  await page.locator('#image-endpoint').fill('https://example.com');
+  await page.locator('#image-test').click();
+  await expect(page.locator('#image-status')).toContainText('loopback');
+  expect(probes).toBe(0);
+  await page.locator('#image-endpoint').fill('http://127.0.0.1:5899');
+  await page.locator('#image-test').click();
+  await expect(page.locator('#image-status')).toHaveText('Ready: z_image_turbo-Q4_K');
+  await page.locator('#image-apply').click();
+  await expect(page.locator('#image-status')).toHaveText('Painting settings saved.');
+  await page.locator('#image-provider').selectOption('ollama');
+  await page.locator('#image-test').click();
+  await expect(page.locator('#image-status')).toContainText('unavailable');
+  expect(probes).toBe(1);
+  await page.locator('#image-endpoint').fill('');
+  await page.locator('#image-apply').click();
+  await expect(page.locator('#image-status')).toContainText('disabled');
+  expect(
+    await page.evaluate(
+      () => JSON.parse(localStorage.getItem('hearthwild-image-connection')!).endpoint,
+    ),
+  ).toBe('');
+  await page.getByRole('button', { name: 'Close settings', exact: true }).click();
+  await expect(page.locator('#settings-dialog')).not.toBeVisible();
+});
+
 test('C19 mocked sd-server PNG decodes and quantizes in a bounded worker', async ({ page }) => {
   const png = await readFile(new URL('../fixtures/painting-golden.png', import.meta.url));
   let generations = 0;

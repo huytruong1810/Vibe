@@ -132,6 +132,16 @@ export class OllamaAdapter implements InferenceProvider {
       .filter((m) => typeof m.name === 'string' && typeof m.size === 'number')
       .map((m) => ({ name: m.name as string, size: m.size as number }));
   }
+  async unload(model: string, signal: AbortSignal): Promise<void> {
+    signal.throwIfAborted();
+    if (!model.trim() || model.length > 200) throw Error('Invalid model to unload');
+    await this.call('/api/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      signal: AbortSignal.any([signal, AbortSignal.timeout(30_000)]),
+      body: JSON.stringify({ model, keep_alive: 0, stream: false }),
+    });
+  }
   async capabilityCheck(
     model: string,
     signal = AbortSignal.timeout(60_000),
@@ -376,6 +386,18 @@ export class InferenceScheduler {
   private backgroundDeferred = false;
   private settling: Promise<void> | null = null;
   private controls = 0;
+  private suspended = false;
+  /** Fail closed when an image server cannot acknowledge stopped GPU work. A new
+   * connection must construct a new scheduler after the server is recovered. */
+  suspend(): void {
+    this.suspended = true;
+    this.active?.abort.abort();
+  }
+  get foregroundPending(): boolean {
+    const foreground = (job: InferenceJob) =>
+      job.kind === 'dialogue' || (job.kind === 'reading' && !!job.readingTarget?.conversationId);
+    return !!(this.active && foreground(this.active.job)) || this.queue.some(foreground);
+  }
   private controlTail: Promise<void> = Promise.resolve();
   /** Readiness checks share the same request boundary as generation. Abort and
    * settle current work before entering a serialized browser lifecycle operation. */
@@ -441,7 +463,8 @@ export class InferenceScheduler {
     this.pump();
   }
   private pump(): void {
-    if (this.active || this.settling || this.controls || !this.queue.length) return;
+    if (this.suspended || this.active || this.settling || this.controls || !this.queue.length)
+      return;
     if (this.timer) {
       clearTimeout(this.timer);
       this.timer = null;

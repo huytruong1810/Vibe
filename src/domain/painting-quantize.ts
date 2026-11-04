@@ -142,24 +142,43 @@ export function quantizePainting(
   const counts = new Uint16Array(colors.length);
   const stack = new Int16Array(colors.length),
     bounds = new Float64Array(colors.length);
+  // Source overlap is shared by every row. Avoid recomputing box intersections per channel/pixel.
+  const footprints = Array.from({ length: PAINTING_WIDTH }, (_, x) => {
+    const x0 = left + x * dx,
+      x1 = left + (x + 1) * dx;
+    const start = Math.floor(x0),
+      end = Math.min(width, Math.ceil(x1));
+    return {
+      start,
+      weights: Float64Array.from({ length: end - start }, (_, offset) => {
+        const sx = start + offset;
+        return Math.min(x1, sx + 1) - Math.max(x0, sx);
+      }),
+    };
+  });
   for (let y = 0; y < PAINTING_HEIGHT; y++) {
     const y0 = top + y * dy,
       y1 = top + (y + 1) * dy;
     for (let x = 0; x < PAINTING_WIDTH; x++) {
-      const x0 = left + x * dx,
-        x1 = left + (x + 1) * dx;
+      const footprint = footprints[x]!;
       let red = 0,
         green = 0,
         blue = 0;
       for (let sy = Math.floor(y0); sy < Math.ceil(y1) && sy < height; sy++) {
         const wy = Math.min(y1, sy + 1) - Math.max(y0, sy);
-        for (let sx = Math.floor(x0); sx < Math.ceil(x1) && sx < width; sx++) {
-          const weight = wy * (Math.min(x1, sx + 1) - Math.max(x0, sx));
-          const n = (sy * width + sx) * 4,
-            alpha = rgba[n + 3]! / 255;
-          red += (linear[rgba[n]!]! * alpha + paper[0] * (1 - alpha)) * weight;
-          green += (linear[rgba[n + 1]!]! * alpha + paper[1] * (1 - alpha)) * weight;
-          blue += (linear[rgba[n + 2]!]! * alpha + paper[2] * (1 - alpha)) * weight;
+        let n = (sy * width + footprint.start) * 4;
+        for (let offset = 0; offset < footprint.weights.length; offset++, n += 4) {
+          const weight = wy * footprint.weights[offset]!;
+          if (rgba[n + 3] === 255) {
+            red += linear[rgba[n]!]! * weight;
+            green += linear[rgba[n + 1]!]! * weight;
+            blue += linear[rgba[n + 2]!]! * weight;
+          } else {
+            const alpha = rgba[n + 3]! / 255;
+            red += (linear[rgba[n]!]! * alpha + paper[0] * (1 - alpha)) * weight;
+            green += (linear[rgba[n + 1]!]! * alpha + paper[1] * (1 - alpha)) * weight;
+            blue += (linear[rgba[n + 2]!]! * alpha + paper[2] * (1 - alpha)) * weight;
+          }
         }
       }
       const index = nearestAll(lab(red / area, green / area, blue / area), stack, bounds);
