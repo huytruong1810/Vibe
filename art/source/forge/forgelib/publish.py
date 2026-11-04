@@ -393,3 +393,82 @@ def publish_env(repo: Path, wd: Path, packet: Path, approval: Path, asset: str, 
     finally:
         Path(temp).unlink(missing_ok=True)
     return staging
+
+
+def faces_approval_for(repo: Path, approvals: Path, slug: str) -> tuple[Path, Path] | None:
+    """(record, faces packet dir) of an approved faces record whose packetDigest equals the packet's
+    faces.json sourceDigest (PRD-9). Records marked superseded-by are ignored."""
+    for rec in sorted([*approvals.glob(f"{slug}--*.md"), *approvals.glob(f"{slug}-faces--*.md")]):
+        meta = approval_metadata(rec)
+        scope = set(meta.get("scope", "").strip("[]").replace(" ", "").split(","))
+        if meta.get("decision") != "director-approved" or "faces" not in scope or meta.get("superseded-by"):
+            continue
+        packet = (repo / meta.get("packet", "").rstrip("/")).resolve()
+        faces = packet / "faces.json"
+        if faces.is_file() and json.loads(faces.read_text()).get("sourceDigest") == meta.get("packetDigest"):
+            return rec, packet
+    return None
+
+
+def publish_faces(repo: Path, packet: Path, approval: Path, asset: str) -> Path:
+    """Digest-bound face sidecar publication (C3b). No Blender: decals are script-drawn palette indices.
+
+    Copies the exact decal PNGs to art/source/exports/<slug>-faces/<digest>/ and replaces
+    art/source/staging/blender/<slug>-faces.json atomically. It binds the body packet the registration
+    table was computed against; it neither activates a runtime face layer nor changes a body approval.
+    """
+    repo, packet, approval = repo.resolve(), packet.resolve(), approval.resolve()
+    if not approval.is_relative_to(repo / "docs/team/comms/director/approvals"):
+        raise ForgeError("Approval must come from the director records directory")
+    faces = json.loads((packet / "faces.json").read_text())
+    payload = {k: v for k, v in faces.items() if k != "sourceDigest"}
+    if hashlib.sha256(json.dumps(payload, sort_keys=True).encode()).hexdigest() != faces.get("sourceDigest"):
+        raise ForgeError("faces.json changed after it was built")
+    if faces.get("asset") != asset or faces.get("status") != "candidate" or any(not c["pass"] for c in faces["qa"]):
+        raise ForgeError("Wrong faces packet asset, status or failed hard QA")
+    meta = approval_metadata(approval)
+    scope = set(meta.get("scope", "").strip("[]").replace(" ", "").split(","))
+    if (meta.get("asset") != asset or meta.get("decision") != "director-approved" or "faces" not in scope
+            or within(repo, meta.get("packet", "")) != packet or meta.get("packetDigest") != faces["sourceDigest"]):
+        raise ForgeError("Approval asset, scope [faces], packet or digest does not match")
+    for frame in faces["frames"]:
+        if sha(within(packet, frame["file"])) != frame["sha256"]:
+            raise ForgeError("Face decal bytes changed after the packet was built")
+    slug = asset.replace(":", "-")
+    export = repo / "art/source/exports" / f"{slug}-faces" / faces["sourceDigest"]
+    if export.exists():
+        for frame in faces["frames"]:
+            if sha(within(export, frame["file"])) != frame["sha256"]:
+                raise ForgeError("Existing immutable face export has changed")
+    else:
+        export.parent.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=export.parent, prefix="publish-") as tmp:
+            candidate = Path(tmp) / "frameset"
+            for frame in faces["frames"]:
+                target = within(candidate, frame["file"])
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(within(packet, frame["file"]), target)
+                if sha(target) != frame["sha256"]:
+                    raise ForgeError("Decal changed while copying; publication cancelled")
+            os.replace(candidate, export)
+    frames = json.loads(json.dumps(faces["frames"]))
+    for frame in frames:
+        frame["file"] = (export / frame["file"]).relative_to(repo / "art/source").as_posix()
+    record = {"schemaVersion": 1, "asset": asset, "scope": ["faces"],
+              "packet": packet.relative_to(repo).as_posix(), "packetDigest": faces["sourceDigest"],
+              "packetSha256": sha(packet / "faces.json"), "approvalRecord": approval.relative_to(repo).as_posix(),
+              "approvalSha256": sha(approval), "bodyPacketDigest": faces["bodyPacketDigest"],
+              "bodyManifestSha256": faces["bodyManifestSha256"], "socket": "Socket_Head",
+              "registration": faces.get("registration"), "frames": frames,
+              "generator": {"path": "forge/forgelib/faces.py", "sha256": sha(repo / "art/source/forge/forgelib/faces.py"),
+                            "note": "script-drawn palette-indexed decals; no Blender or generative model"}}
+    if sha(approval) != record["approvalSha256"] or sha(packet / "faces.json") != record["packetSha256"]:
+        raise ForgeError("Publication inputs changed before commit; previous staging retained")
+    staging = repo / "art/source/staging/blender" / f"{slug}-faces.json"
+    staging.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.NamedTemporaryFile("w", dir=staging.parent, delete=False, encoding="utf-8") as handle:
+        json.dump(record, handle, indent=2, sort_keys=True)
+        handle.write("\n")
+        temp = handle.name
+    os.replace(temp, staging)
+    return staging

@@ -33,12 +33,15 @@ def parse_meta(text: str) -> dict[str, str]:
 
 
 def source_digest(repo: Path, packet: str) -> str:
-    review = repo / packet.strip().rstrip("/") / "review.json"
+    base = repo / packet.strip().rstrip("/")
+    review = base / "review.json"
     if not review.exists():
-        raise RecordError(f"{review} does not exist; build the packet first")
+        review = base / "faces.json"  # face sidecar packets carry their digest here
+    if not review.exists():
+        raise RecordError(f"{base} has neither review.json nor faces.json; build the packet first")
     digest = json.loads(review.read_text()).get("sourceDigest")
     if not digest:
-        raise RecordError(f"{review} has no sourceDigest")
+        raise RecordError(f"{review.name} has no sourceDigest")
     return digest
 
 

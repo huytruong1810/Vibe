@@ -96,6 +96,25 @@ someone with authority already made (TEAM-4.1) and refuses to overwrite. Without
 record that has no `superseded-by`: exit 1 on a digest that no longer matches (the frames changed, PRD-9), and a count of records
 whose packet has no `review.json` here. Selftest: `approval_record_selftest.py`.
 
+## Creature faces and face publish (C3b)
+
+`forge.py faces --asset <creature>` draws the five decals (neutral, warm, fearful, hurt, sleep in s/se/sw/e/w) and now
+**registers them per frame**: a head deforms in a lunge or a lap, so one offset from `Socket_Head` cannot stay on it. The default
+origin is 3 art px below the socket (recipe `faceOffsetPx` overrides it); for each forward frame `register_frames` picks the nearest
+offset (within 4 art px vertically, 2 horizontally) at which every ink pixel of every expression lands on the body interior
+(opaque with four opaque neighbours, so inside the silhouette and off the outline row). A frame with none hides the face. Hard
+checks: `faceAnchor` (integer socket, canvas), `faceCoverage` (no idle frame hidden, at most 10% of forward frames hidden),
+`faceDistinct` (every expression differs from neutral in every facing, e and w included). `faces.json` carries the table under
+`registration.frames` (frame px from `Socket_Head`, `null` = hidden); the runtime adds it to the socket. Human faces keep the
+fixed-offset check.
+
+`forge.py publish-faces --asset ID` needs a `director-approved` record with scope `faces` whose `packetDigest` equals the packet's
+`faces.json` `sourceDigest` (`forge.py approve-record` writes it). It copies the exact decals to
+`art/source/exports/<asset>-faces/<digest>/` and replaces `art/source/staging/blender/<asset>-faces.json` (decal hashes, the
+registration table, the body packet digest it was computed against, the approval hash, the generator file hash). No Blender, no GPU.
+The communicator's integration of this record and the runtime layer are separate tickets; nothing is activated. Selftests:
+`faces_creature_selftest.py`, `publish_faces_selftest.py`.
+
 ## Open
 
 - **Views at 1024 px or more** (C28).
