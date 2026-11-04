@@ -3,6 +3,14 @@ import type { GameSave } from '../../src/domain/save-schema';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { bookNotice, summarizeBookTrace } from './book-diagnostics';
 
+test.use({
+  trace: {
+    mode: 'retain-on-failure',
+    screenshots: false,
+    snapshots: true,
+  },
+});
+
 test('C18 writes three pages, seals and reopens a read-only spread', async ({ page, context }) => {
   const cpu = await context.newCDPSession(page);
   let tracing = false;
