@@ -7936,7 +7936,7 @@
       "sha256FilesVerified": 77
     },
     "browserShards": {
-      "status": "local partition and formatting validated; remote pending",
+      "status": "functional failures inside existing limits; standard CI GitHub reporter follow-up pending",
       "total": 23,
       "shard1": 13,
       "shard2": 10,
@@ -7944,7 +7944,28 @@
       "missing": 0,
       "workersPerShard": 1,
       "timeoutMinutesPerShard": 20,
-      "verifyRequiresEveryShard": true
+      "verifyRequiresEveryShard": true,
+      "source": "247b03d119b155b32df71c249d4d682928cff486",
+      "runs": [
+        {
+          "id": 41857707952,
+          "event": "push",
+          "failedShard": 1,
+          "passedShard": 2,
+          "verify": "failure"
+        },
+        {
+          "id": 41857724315,
+          "event": "pull_request",
+          "failedShard": 2,
+          "passedShard": 1,
+          "verify": "failure"
+        }
+      ],
+      "failureEvidence": [
+        "artifacts/c18-trace-repair/sharded-41857707952-126670686329-annotations.json",
+        "artifacts/c18-trace-repair/sharded-41857724315-126670742562-annotations.json"
+      ]
     }
   }
 }

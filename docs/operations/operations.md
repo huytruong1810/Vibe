@@ -209,6 +209,8 @@ Jobs:
   Artifacts are named `browser-journey-artifacts-1` and `browser-journey-artifacts-2`.
 - `verify`: aggregate requiring CPU checks and every browser shard to succeed;
   assertions, retries, performance budgets and the required gate remain intact.
+  CI also emits Playwright's GitHub failure annotations, so a failing journey can
+  be identified from public check annotations alongside the retained artifacts.
 - `ecology-soak`: domain/content/worker changes, nightly and manual runs.
 - `beta-browser`: production browser smoke at both `/` and `/Vibe/`, including fonts,
   UI, portraits, atlas dependencies, fallback play, save import/export and resume.

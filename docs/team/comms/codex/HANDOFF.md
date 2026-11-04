@@ -1,6 +1,6 @@
 # Codex session handoff
 
-## Next: C19 golden slice, then C20; browser-shard CI follow-up
+## Next: C22 public failure diagnostics and C19 golden slice, then C20
 
 Branch `eng/hd-presentation`, workspace `C:/Users/htruong/source/repos/Vibe`.
 Start at current branch HEAD. Pickup baseline **ef2c072** follows runtime/test
@@ -8,7 +8,8 @@ source **232ac33**. Screenshot-only repair **5e9c3e4** and compositor/freshness
 follow-up **ec22a07** are committed and pushed separately from these records.
 Production source is unchanged. All existing assertions remain; the follow-up
 adds visible-dialog and fresh48-page label checks, including the public notice.
-C19 and C20 remain unstarted. Do not restart C13/C18 implementations.
+C19 has a local uncommitted provider/worker/quantizer prototype and tests; C20 is
+unstarted. Do not restart C13/C18 implementations.
 
 Current evidence is in `traceScreenshotRepair` in
 [diagnostic evidence](c18-ci-diagnostics.json). Key results:
@@ -46,7 +47,11 @@ a C18 receipt (browser step cancelled after1030s); no journey outcomes inferred.
 PR ecology reaches25 minutes; push ecology is scope-skipped. C18 PR gate is met;
 external machine-A/director acceptance remains. Current CI capacity follow-up splits
 all23 journeys exactly once across13/10-test shards, one worker and20 minutes each;
-verify still requires CPU checks and every shard. Remote shard validation pending.
+verify still requires CPU checks and every shard. Source247b03d shard jobs finish
+without the old job timeout, but push shard1 and PR shard2 fail tests. Public output
+only says exit1; PR C18 notice shows no opening (failure before CPU tracing).
+Current follow-up enables the standard GitHub reporter on CI to expose test names
+and assertions publicly, preserving list output and all existing budgets.
 Prior failed
 source5e9c3e4 runs:
 [push41776153357](https://github.com/huytruong1810/Vibe/actions/runs/41776153357),

@@ -26,5 +26,5 @@ export default defineConfig({
     url: `http://127.0.0.1:${port}${base}`,
     reuseExistingServer: !beta && !process.env.CI,
   },
-  reporter: [['list']],
+  reporter: process.env.CI ? [['list'], ['github']] : [['list']],
 });
