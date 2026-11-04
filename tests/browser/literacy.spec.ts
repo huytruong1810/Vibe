@@ -27,6 +27,7 @@ test.use({
 test('C18 writes three pages, seals and reopens a read-only spread', async ({ page, context }) => {
   const cpu = await context.newCDPSession(page);
   let tracing = false;
+  let journeyPhase = 'navigate';
   let cpuSummary: ReturnType<typeof summarizeBookTrace> | { error: string } = {
     error: 'CPU trace not started',
   };
@@ -96,14 +97,16 @@ test('C18 writes three pages, seals and reopens a read-only spread', async ({ pa
     await mkdir('artifacts', { recursive: true });
     await writeFile(
       'artifacts/c18-book-browser.json',
-      JSON.stringify({ ...diagnostics, cpuSummary, pageErrors: errors }, null, 2),
+      JSON.stringify({ ...diagnostics, journeyPhase, cpuSummary, pageErrors: errors }, null, 2),
     );
     return diagnostics;
   };
   try {
     await page.goto('/?test=1');
+    journeyPhase = 'start offline world';
     await page.getByRole('button', { name: 'Play without local AI', exact: true }).click();
     await expect(page.locator('#setup-dialog')).not.toBeVisible({ timeout: 60000 });
+    journeyPhase = 'checkpoint blank book';
     await page.getByRole('button', { name: 'Settings', exact: true }).click();
     const save: GameSave = await page.evaluate(() => (window as any).__hearthwild.checkpoint());
     save.inventory = [{ id: 'book', instance: `item:${++save.inventorySerial}` }, null];
@@ -118,18 +121,22 @@ test('C18 writes three pages, seals and reopens a read-only spread', async ({ pa
         .poll(() => page.evaluate(() => (window as any).__hearthwild.frame().session))
         .not.toBe(session);
     };
+    journeyPhase = 'import blank book';
     await importSave(save);
+    journeyPhase = 'open blank book';
     await page.getByRole('button', { name: 'Close settings' }).click();
     await page.locator('#inventory-button').click();
     const use = page.locator('[data-carry-slot="0"] button[data-action="use"]');
     await use.click();
     await expect(page.locator('#book-dialog')).toBeVisible();
+    journeyPhase = 'reject overlong line';
     await page.locator('#book-title').fill('River diary');
     await page.locator('#book-text').fill('x'.repeat(97));
     await page.getByRole('button', { name: 'Add page', exact: true }).click();
     await expect(page.locator('#book-status')).toContainText('96 characters');
     await expect(page.locator('#book-text')).toHaveValue('x'.repeat(97));
     await expect(page.locator('#book-pages')).toHaveText('1 / 1');
+    journeyPhase = 'write three pages';
     await page.locator('#book-text').fill('The tide is high.\nAqualia wakes beside the river.');
     await page.getByRole('button', { name: 'Add page', exact: true }).click();
     await expect(page.locator('#book-pages')).toHaveText('2 / 2');
@@ -137,16 +144,19 @@ test('C18 writes three pages, seals and reopens a read-only spread', async ({ pa
     await page.getByRole('button', { name: 'Add page', exact: true }).click();
     await expect(page.locator('#book-pages')).toHaveText('3 / 3');
     await page.locator('#book-text').fill('Third page: the ferries return.');
+    journeyPhase = 'seal book';
     await page.getByRole('button', { name: 'Seal', exact: true }).click();
     await expect(page.locator('#book-seal-confirm')).toBeVisible();
     await page.getByRole('button', { name: 'Seal permanently', exact: true }).click();
     await expect(page.locator('#book-provenance')).toContainText('Sealed');
     await expect(page.locator('#book-write')).toBeHidden();
+    journeyPhase = 'reopen sealed spread';
     await page.getByRole('button', { name: 'Close book' }).click();
     await use.click();
     await expect(page.locator('#book-spread article')).toHaveCount(2);
     await expect(page.locator('#book-spread')).toContainText('The tide is high.');
     await expect(page.locator('#book-spread')).toContainText('Second page: reeds and rain.');
+    journeyPhase = 'keyboard and gamepad turns';
     await page.locator('#book-close').focus();
     await page.keyboard.press('End');
     await expect(page.locator('#book-spread')).toContainText('Third page: the ferries return.');
@@ -173,10 +183,12 @@ test('C18 writes three pages, seals and reopens a read-only spread', async ({ pa
     await page.evaluate(() => {
       (window as any).__bookPad.button = null;
     });
+    journeyPhase = 'capture spread';
     await mkdir('artifacts', { recursive: true });
     await page.screenshot({ path: 'artifacts/c18-book-spread-1080p.png' });
     await page.getByRole('button', { name: 'Close book' }).click();
     await expect(use).toBeFocused();
+    journeyPhase = 'checkpoint maximum book';
     // Warm on-demand opening of a maximum-size record still mounts only two pages.
     await page.getByRole('button', { name: 'Settings', exact: true }).click();
     const full: GameSave = await page.evaluate(() => (window as any).__hearthwild.checkpoint());
@@ -189,7 +201,9 @@ test('C18 writes three pages, seals and reopens a read-only spread', async ({ pa
       ),
     );
     book.revision++;
+    journeyPhase = 'import maximum book';
     await importSave(full);
+    journeyPhase = 'start opening CPU trace';
     await page.getByRole('button', { name: 'Close settings' }).click();
     await cpu.send('Tracing.start', {
       categories:
@@ -197,12 +211,14 @@ test('C18 writes three pages, seals and reopens a read-only spread', async ({ pa
       transferMode: 'ReturnAsStream',
     });
     tracing = true;
+    journeyPhase = 'open maximum spread';
     await use.click();
     // Closing retains the old articles; wait for the newly imported record to open.
     await expect(page.locator('#book-dialog')).toBeVisible();
     await expect(page.locator('#book-pages')).toHaveText('1–2 / 48');
     await expect(page.locator('#book-spread article')).toHaveCount(2);
     await saveCpuTrace();
+    journeyPhase = 'assert opening measurements';
     const diagnostics = await saveDiagnostics();
     if (!('openingMs' in diagnostics)) throw Error(diagnostics.diagnosticError);
     expect(diagnostics.pageLabel).toBe('1–2 / 48');
@@ -214,18 +230,24 @@ test('C18 writes three pages, seals and reopens a read-only spread', async ({ pa
     expect(
       Object.values(diagnostics.phaseTimingsMs).reduce<number>((sum, ms) => sum + (ms ?? 0), 0),
     ).toBeCloseTo(openingMs!, 5);
+    journeyPhase = 'complete';
   } finally {
     try {
-      await saveCpuTrace();
+      await saveCpuTrace().catch((error: unknown) => {
+        cpuSummary = { error: `CPU trace cleanup failed: ${String(error).slice(0, 128)}` };
+      });
     } finally {
       try {
         const diagnostics = await saveDiagnostics();
         if (process.env.CI)
           console.log(
-            `::notice title=C18 book opening diagnostics::${bookNotice({ ...diagnostics, pageErrors: errors }, cpuSummary)}`,
+            `::notice title=C18 book opening diagnostics::${bookNotice({ ...diagnostics, journeyPhase, pageErrors: errors }, cpuSummary)}`,
           );
       } finally {
-        await cpu.detach();
+        await cpu.detach().catch((error: unknown) => {
+          // Timeout teardown can close the target first; preserve the original failing operation.
+          if (!page.isClosed()) throw error;
+        });
       }
     }
   }

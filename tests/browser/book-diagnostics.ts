@@ -61,6 +61,7 @@ export function summarizeBookTrace(events: readonly TraceEvent[]) {
 }
 
 interface BookReceipt {
+  journeyPhase?: string;
   openingMs?: number | null;
   phaseTimingsMs?: Record<string, number | null>;
   mountedPages?: number;
@@ -109,6 +110,7 @@ export function bookNotice(
   }));
   const summary = {
     format: 2,
+    journeyPhase: receipt.journeyPhase?.slice(0, 64),
     openingMs: receipt.openingMs,
     phaseTimingsMs: receipt.phaseTimingsMs,
     mountedPages: receipt.mountedPages,

@@ -7966,6 +7966,406 @@
         "artifacts/c18-trace-repair/sharded-41857707952-126670686329-annotations.json",
         "artifacts/c18-trace-repair/sharded-41857724315-126670742562-annotations.json"
       ]
+    },
+    "phaseDiagnostics": {
+      "changed": [
+        "Bounded journey phase is available even if the page closes before browser diagnostics",
+        "Closed-target detach no longer masks the original test failure; all functional assertions and budgets remain"
+      ],
+      "evidence": {
+        "reporterSource": "4979a66",
+        "pullRequestRun": 41861747714,
+        "shard1": "success",
+        "shard2": "literacy test120s timeout before CPU trace",
+        "verify": "failure",
+        "cpuAndBothBetaBases": "success",
+        "remoteReceipt": "artifacts/c18-trace-repair/phase-diagnostics/c18-reporter-ci.json",
+        "normal": {
+          "command": "npm run test:browser -- tests/browser/literacy.spec.ts",
+          "passed": true,
+          "tests": 1,
+          "seconds": 34.5,
+          "receipt": {
+            "workerWaits": {
+              "start": 26984.600000023842,
+              "end": 27019.299999952316,
+              "requests": [
+                {
+                  "id": "world:f53fdc73-a634-4a90-82d9-1f643de7bc68:42:c35",
+                  "type": "command",
+                  "dispatched": 26984.799999952316,
+                  "received": 26992.100000023842,
+                  "worker": {
+                    "requestId": "world:f53fdc73-a634-4a90-82d9-1f643de7bc68:42:c35",
+                    "received": 10544,
+                    "serviceEnd": 10544,
+                    "reply": 10544,
+                    "recent": [
+                      {
+                        "name": "clock-consume",
+                        "start": 10447.300000071526,
+                        "end": 10447.300000071526
+                      },
+                      {
+                        "name": "host-frame",
+                        "start": 10447.300000071526,
+                        "end": 10449.300000071526
+                      },
+                      {
+                        "name": "post-frame",
+                        "start": 10449.300000071526,
+                        "end": 10449.600000023842
+                      },
+                      {
+                        "name": "publish-frame",
+                        "start": 10447.300000071526,
+                        "end": 10449.600000023842
+                      },
+                      {
+                        "name": "periodic-work",
+                        "start": 10447.300000071526,
+                        "end": 10449.600000023842
+                      },
+                      {
+                        "name": "clock-consume",
+                        "start": 10463.600000023842,
+                        "end": 10466.5
+                      },
+                      {
+                        "name": "periodic-work",
+                        "start": 10463.600000023842,
+                        "end": 10466.5
+                      },
+                      {
+                        "name": "clock-consume",
+                        "start": 10479.300000071526,
+                        "end": 10479.300000071526
+                      },
+                      {
+                        "name": "periodic-work",
+                        "start": 10479.300000071526,
+                        "end": 10479.300000071526
+                      },
+                      {
+                        "name": "clock-consume",
+                        "start": 10496.200000047684,
+                        "end": 10500.399999976158
+                      },
+                      {
+                        "name": "periodic-work",
+                        "start": 10496.200000047684,
+                        "end": 10500.399999976158
+                      },
+                      {
+                        "name": "clock-consume",
+                        "start": 10512.100000023842,
+                        "end": 10512.100000023842
+                      },
+                      {
+                        "name": "periodic-work",
+                        "start": 10512.100000023842,
+                        "end": 10512.100000023842
+                      },
+                      {
+                        "name": "clock-consume",
+                        "start": 10527.800000071526,
+                        "end": 10530.200000047684
+                      },
+                      {
+                        "name": "periodic-work",
+                        "start": 10527.800000071526,
+                        "end": 10530.200000047684
+                      },
+                      {
+                        "name": "host-submit",
+                        "start": 10544,
+                        "end": 10544
+                      }
+                    ]
+                  },
+                  "resolved": 26992.100000023842
+                },
+                {
+                  "id": "artifact:36",
+                  "type": "artifactContent",
+                  "dispatched": 26992.600000023842,
+                  "received": 27013.399999976158,
+                  "worker": {
+                    "requestId": "artifact:36",
+                    "received": 10549.899999976158,
+                    "serviceEnd": 10550.5,
+                    "reply": 10550.5,
+                    "recent": [
+                      {
+                        "name": "clock-consume",
+                        "start": 10512.100000023842,
+                        "end": 10512.100000023842
+                      },
+                      {
+                        "name": "periodic-work",
+                        "start": 10512.100000023842,
+                        "end": 10512.100000023842
+                      },
+                      {
+                        "name": "clock-consume",
+                        "start": 10527.800000071526,
+                        "end": 10530.200000047684
+                      },
+                      {
+                        "name": "periodic-work",
+                        "start": 10527.800000071526,
+                        "end": 10530.200000047684
+                      },
+                      {
+                        "name": "host-submit",
+                        "start": 10544,
+                        "end": 10544
+                      },
+                      {
+                        "name": "post-result",
+                        "start": 10544,
+                        "end": 10544.100000023842
+                      },
+                      {
+                        "name": "host-frame",
+                        "start": 10544.100000023842,
+                        "end": 10547
+                      },
+                      {
+                        "name": "post-frame",
+                        "start": 10547,
+                        "end": 10547.300000071526
+                      },
+                      {
+                        "name": "publish-frame",
+                        "start": 10544.100000023842,
+                        "end": 10547.300000071526
+                      },
+                      {
+                        "name": "command-publish",
+                        "start": 10544.100000023842,
+                        "end": 10547.300000071526
+                      },
+                      {
+                        "name": "clock-consume",
+                        "start": 10547.399999976158,
+                        "end": 10547.399999976158
+                      },
+                      {
+                        "name": "host-frame",
+                        "start": 10547.399999976158,
+                        "end": 10549.399999976158
+                      },
+                      {
+                        "name": "post-frame",
+                        "start": 10549.399999976158,
+                        "end": 10549.899999976158
+                      },
+                      {
+                        "name": "publish-frame",
+                        "start": 10547.399999976158,
+                        "end": 10549.899999976158
+                      },
+                      {
+                        "name": "periodic-work",
+                        "start": 10547.399999976158,
+                        "end": 10549.899999976158
+                      },
+                      {
+                        "name": "host-artifact-content",
+                        "start": 10549.899999976158,
+                        "end": 10550.5
+                      }
+                    ]
+                  },
+                  "resolved": 27013.5
+                }
+              ],
+              "main": [
+                {
+                  "name": "renderer-tick",
+                  "start": 26985.600000023842,
+                  "end": 26988.100000023842
+                },
+                {
+                  "name": "renderer-apply",
+                  "start": 26997.100000023842,
+                  "end": 26997.699999928474
+                },
+                {
+                  "name": "hud-update",
+                  "start": 26997.699999928474,
+                  "end": 27001.399999976158
+                },
+                {
+                  "name": "frame-handler",
+                  "start": 26997.100000023842,
+                  "end": 27001.399999976158
+                },
+                {
+                  "name": "renderer-tick",
+                  "start": 27005.199999928474,
+                  "end": 27007.600000023842
+                },
+                {
+                  "name": "renderer-apply",
+                  "start": 27009.799999952316,
+                  "end": 27010.399999976158
+                },
+                {
+                  "name": "hud-update",
+                  "start": 27010.399999976158,
+                  "end": 27012.399999976158
+                },
+                {
+                  "name": "frame-handler",
+                  "start": 27009.699999928474,
+                  "end": 27012.5
+                }
+              ]
+            },
+            "viewport": {
+              "width": 1920,
+              "height": 1080
+            },
+            "maximumPages": 48,
+            "mountedPages": 2,
+            "pageLabel": "1–2 / 48",
+            "openingMs": 34.40000009536743,
+            "phaseTimingsMs": {
+              "pause": 7.600000023841858,
+              "content": 21.300000071525574,
+              "render": 0.5999999046325684,
+              "show-modal": 4.900000095367432
+            },
+            "measurements": [
+              {
+                "name": "hearthwild:book-open:pause",
+                "startTime": 26984.699999928474,
+                "duration": 7.600000023841858
+              },
+              {
+                "name": "hearthwild:book-open",
+                "startTime": 26984.699999928474,
+                "duration": 34.40000009536743
+              },
+              {
+                "name": "hearthwild:book-open:content",
+                "startTime": 26992.299999952316,
+                "duration": 21.300000071525574
+              },
+              {
+                "name": "hearthwild:book-open:render",
+                "startTime": 27013.600000023842,
+                "duration": 0.5999999046325684
+              },
+              {
+                "name": "hearthwild:book-open:show-modal",
+                "startTime": 27014.199999928474,
+                "duration": 4.900000095367432
+              }
+            ],
+            "journeyPhase": "complete",
+            "cpuSummary": {
+              "windowMs": 34.4,
+              "main": [
+                [
+                  "CrRendererMain:ThreadControllerImpl::RunTask:",
+                  28,
+                  6.7,
+                  6.4
+                ],
+                [
+                  "CrRendererMain:HandlePostMessage:",
+                  28,
+                  6.7,
+                  6.4
+                ],
+                [
+                  "CrRendererMain:v8.callFunction:",
+                  28.2,
+                  6.5,
+                  6.2
+                ],
+                [
+                  "CrRendererMain:ProxyMain::BeginMainFrame:",
+                  18.1,
+                  6,
+                  6
+                ],
+                [
+                  "CrRendererMain:FunctionCall:WorkerBridge.worker.onmessage",
+                  11.8,
+                  4.9,
+                  4.9
+                ],
+                [
+                  "CrRendererMain:FireAnimationFrame:",
+                  0.9,
+                  2.6,
+                  2.6
+                ]
+              ],
+              "other": [
+                [
+                  "GpuVSyncThread:ThreadControllerImpl::RunTask:",
+                  13.4,
+                  16.6,
+                  16.6
+                ],
+                [
+                  "CrGpuMain:ThreadControllerImpl::RunTask:",
+                  14,
+                  9.7,
+                  9.7
+                ],
+                [
+                  "CrGpuMain:Scheduler::RunTask:",
+                  14,
+                  9.7,
+                  9.7
+                ],
+                [
+                  "CrGpuMain:GpuChannel::ExecuteDeferredRequest:",
+                  14,
+                  9.7,
+                  9.7
+                ]
+              ]
+            },
+            "pageErrors": []
+          },
+          "pngInspected": true
+        },
+        "noticeUnit": {
+          "command": "npx vitest run tests/book-diagnostics.test.ts",
+          "passed": true,
+          "tests": 2
+        },
+        "artifacts": [
+          {
+            "path": "artifacts/c18-trace-repair/phase-diagnostics/c18-book-browser.json",
+            "sha256": "b8cadadc81ff437a9c0bbf43fd771a8766f4b0e84d8314b698ef6f3a3d423d94"
+          },
+          {
+            "path": "artifacts/c18-trace-repair/phase-diagnostics/c18-book-cpu.json",
+            "sha256": "6cdb44c96a2972d1a3b99ce79e7b8275af112ed30b559ca5ab2a69cc091f5c04"
+          },
+          {
+            "path": "artifacts/c18-trace-repair/phase-diagnostics/c18-book-spread-1080p.png",
+            "sha256": "bf79b600427feeac177601c8dcde86718a95b46fa624d7a8042512bd9c386f50"
+          },
+          {
+            "path": "artifacts/c18-trace-repair/phase-diagnostics/c18-reporter-ci.json",
+            "sha256": "18b67b1797bb6948c9314074a91f8de6ef6c50c6a7b5762c5fe33a7e17151ae8"
+          }
+        ]
+      },
+      "gapsAndRisks": [
+        "Root of remote pre-trace timeout is not identified until a phase receipt reaches CI",
+        "No latest-source browser/verify green claim; ec22a07 PR gate remains historical acceptance",
+        "Ecology has no new completed-soak evidence; reporter PR ecology still in progress at captured receipt, push scope-skipped"
+      ]
     }
   }
 }

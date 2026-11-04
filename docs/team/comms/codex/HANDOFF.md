@@ -1,6 +1,6 @@
 # Codex session handoff
 
-## Next: C22 public failure diagnostics and C19 golden slice, then C20
+## Next: C22 literacy timeout phase receipt, then C20
 
 Branch `eng/hd-presentation`, workspace `C:/Users/htruong/source/repos/Vibe`.
 Start at current branch HEAD. Pickup baseline **ef2c072** follows runtime/test
@@ -8,7 +8,7 @@ source **232ac33**. Screenshot-only repair **5e9c3e4** and compositor/freshness
 follow-up **ec22a07** are committed and pushed separately from these records.
 Production source is unchanged. All existing assertions remain; the follow-up
 adds visible-dialog and fresh48-page label checks, including the public notice.
-C19 has a committed golden slice8f1c399 and a validated follow-up adding native
+C19 has a committed golden slice8f1c399 and follow-up1c14403 adding native
 cancellation, GpuArbiter, settings, pinned operations and the machine-A smoke.
 C20 is unstarted. Do not restart C13/C18 implementations.
 
@@ -71,6 +71,13 @@ without the old job timeout, but push shard1 and PR shard2 fail tests. Public ou
 only says exit1; PR C18 notice shows no opening (failure before CPU tracing).
 Current follow-up enables the standard GitHub reporter on CI to expose test names
 and assertions publicly, preserving list output and all existing budgets.
+Reporter source4979a66 PR41861747714 shard1 passes and shard2 fails literacy's
+120-second test deadline before CPU tracing starts; CPU/beta jobs pass, verify
+fails. A detach-on-closed-target error masks the original operation. The next
+test-only change adds a bounded journey phase and prevents cleanup from masking
+the original timeout. All assertions, five measures, explicit screenshot, trace
+settings,100ms opening gate and job/test limits remain unchanged. Focused local
+normal journey passes1/1 in34.5s; inspect the latest phase receipt in C18 evidence.
 Prior failed
 source5e9c3e4 runs:
 [push41776153357](https://github.com/huytruong1810/Vibe/actions/runs/41776153357),
