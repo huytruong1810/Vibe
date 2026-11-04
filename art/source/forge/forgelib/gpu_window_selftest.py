@@ -44,13 +44,14 @@ class GpuWindowTest(unittest.TestCase):
             self.assertNotEqual(core._pause_owner(core.GPU_PAUSE), dead.pid)
         self.assertFalse(core.GPU_PAUSE.exists())
 
-    def test_live_owner_pause_is_kept(self):
+    def test_live_forge_owner_makes_us_wait_and_keeps_its_pause(self):
         live = subprocess.Popen([sys.executable, "-c", "import time; time.sleep(30)"])
         try:
             core.GPU_PAUSE.write_text(f"{live.pid}\n")
-            with core.gpu_window():
-                pass
-            self.assertTrue(core.GPU_PAUSE.exists(), "someone else's live PAUSE must survive")
+            with self.assertRaises(core.ForgeError):
+                with core.gpu_window(wait_s=-1):
+                    pass
+            self.assertEqual(core._pause_owner(core.GPU_PAUSE), live.pid, "the other job's PAUSE must survive")
         finally:
             live.kill()
             live.wait()

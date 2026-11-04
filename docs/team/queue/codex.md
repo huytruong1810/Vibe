@@ -307,9 +307,10 @@ fit → C9c.
 - owner: claude
 - goal: the static 2D classes generate locally too: portraits in all nine emotions kept on identity (contract-v2), seamless 1024² terrain swatches.
 - done when: Neris has nine emotion portraits at 96/128 px that pass the portrait contract; a grass swatch passes tileforge QA
-- progress: **C30a swatch done (2026-11-03)**: `forge.py swatch` (`forgelib/swatch.py`); a grass swatch passed tileforge QA (candidate; soft `actorContrast` only) on a scratch set at `swatchTilePx` 256, `flatten` 2. Look: no obvious grid, but the field shows faint diagonal streaks and busy clumps, so B17 should tune the prompt and values. C30b portrait is next.
+- progress: **C30a swatch done (2026-11-03)**: `forge.py swatch` (`forgelib/swatch.py`); a grass swatch passed tileforge QA (candidate; soft `actorContrast` only) on a scratch set at `swatchTilePx` 256, `flatten` 2. Look: no obvious grid, but the field shows faint diagonal streaks and busy clumps, so B17 should tune the prompt and values. C30b portrait landed (2026-11-04, below).
+- progress: **C30b portrait done (2026-11-04)**: `forge.py portrait` (`forgelib/portrait.py`, selftest `portrait_selftest.py`). Neris trial: 8 emotions x 2 seeds, identity held in all 16, 0 drift warnings; skin runs warmer than the neutral and thoughtful/concerned/sad are close, so blender picks by eye and re-seeds weak ones. Not approved; B25 judges.
 - also: GPU jobs (`concept`, `swatch`, gen3d) now pause the jepa_ipomdp queue through `core.gpu_window` (PAUSE and GPU_BUSY files).
-- evidence: board `docs/team/comms/claude/boards/2026-11-03-c30a-swatch.png`
+- evidence: boards `docs/team/comms/claude/boards/2026-11-03-c30a-swatch.png`, `2026-11-04-c30b-portrait-neris.png`; `docs/engineering/imagegen.md`; selftests `portrait_selftest.py`, `gpu_window_selftest.py`
 
 ### C32 · `forge.py icon` for inventory items without a held model
 

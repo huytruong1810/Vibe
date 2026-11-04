@@ -90,8 +90,21 @@ Earlier klein 4B measurements: the first attempt kept the text encoder resident 
 ## Open
 
 - **Views at 1024 px or more** (C28).
-- **Not built yet:** `portrait` (9 emotions by reference editing) and `swatch` (seamless
-  tileforge swatches) (C30).
+- **Portraits (C30b, built).** `forge.py portrait --asset npc:neris [--emotions a,b] [--n 2] [--seed S]`
+  upscales the neutral portrait (`exports/portraits/portrait_<kind>_<id>_128.png`) onto a flat grey
+  background, passes it to klein 9B as the reference, and asks for the same character with only the
+  expression changed. Each result is keyed back to alpha, aligned to the neutral's framing, and written at
+  128 and 96 px, with a contact sheet and drift warnings (silhouette IoU, clothing colour). `--pick
+warm=warm-4100,...` copies the kept ones to `exports/portraits/expressions/<kind>_<id>/` and logs the
+  seeds in the image ledger. Trial on Neris (seeds 4100-4101, all eight, 16 candidates, 0 warnings, IoU
+  0.988-0.994; board `docs/team/comms/claude/boards/2026-11-04-c30b-portrait-neris.png`): identity held in
+  all 16. Limits seen: skin comes out warmer and brighter than the neutral's muted tone; thoughtful,
+  concerned and sad sit close together; one curious candidate reads as fearful. Pick by eye, generate
+  more seeds for the weak ones. The drift numbers do not judge the expression.
+- **Swatches (C30a, built):** `forge.py swatch`, see the tile-forge skill.
+- **Shared GPU.** Every model stage runs inside `core.gpu_window`, which now serializes forge jobs: a live
+  forge process holding `PAUSE` makes the next one wait (two klein jobs on 16 GB spilled to swap and took 51
+  minutes to load).
 - **gen3d:** Hunyuan3D-2mv stays the default. Hunyuan3D-2.1 was tried and removed:
   single-image only, so from the front it invents a spike tail, and from the side it gets the
   body right but faces sideways and drops the whiskers
