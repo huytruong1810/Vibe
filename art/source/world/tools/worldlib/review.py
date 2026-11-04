@@ -1,5 +1,7 @@
 """Deterministic review images and hash-bound inspection receipts, not approvals."""
 
+import json
+import re
 import shutil
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
@@ -155,13 +157,56 @@ def draw_level(level, art):
     return canvas
 
 
-def render(project, plan, name, output):
-    lv = next(l for l in project["levels"] if l["identifier"] == name)
-    output.mkdir(parents=True, exist_ok=True)
-    art = PreviewArt()
-    canvas = draw_level(lv, art)
-    art.close()
-    font = ImageFont.truetype(str(REPO / "art/source/ui/fonts/Silver.ttf"), 19)
+def packet_path(plan, name, revision):
+    return REPO / f"art/review/world-{plan['region']}-{name}-{revision}"
+
+
+def next_revision(plan, name):
+    prefix = f"world-{plan['region']}-{name}-"
+    revisions = [
+        int(p.name[len(prefix):])
+        for p in (REPO / "art/review").glob(prefix + "*")
+        if re.fullmatch(re.escape(prefix) + r"[1-9][0-9]*", p.name)
+    ]
+    return max(revisions, default=0) + 1
+
+
+def comparison_source(plan, name, revision):
+    """Resolve the exact predecessor, never fall back to a cached draft image."""
+    if type(revision) is not int or revision < 1:
+        raise WorldError("Revision must be positive")
+    if packet_path(plan, name, revision).exists():
+        raise WorldError("Refusing to overwrite a review packet; use a new revision")
+    if revision == 1:
+        from .project import new_project
+
+        return {"kind": "initial-draft", "projectDigest": sha(new_project(plan))}
+    previous = packet_path(plan, name, revision - 1)
+    try:
+        receipt = previous / "packet.json"
+        data = receipt.read_bytes()
+        recorded = json.loads(data)
+        digest = recorded["files"]["overview.png"]
+        if (
+            recorded["level"] != name
+            or recorded["status"] != "candidate"
+            or not re.fullmatch(r"[0-9a-f]{64}", recorded["sourceDigest"])
+            or sha((previous / "overview.png").read_bytes()) != digest
+        ):
+            raise WorldError("Previous packet identity or overview hash mismatch")
+        return {
+            "kind": "previous-packet",
+            "revision": revision - 1,
+            "packet": previous.relative_to(REPO).as_posix(),
+            "packetSha256": sha(data),
+            "sourceDigest": recorded["sourceDigest"],
+            "overviewSha256": digest,
+        }
+    except (OSError, KeyError, TypeError, ValueError) as error:
+        raise WorldError(f"Revision {revision} requires a valid previous packet: {error}") from error
+
+
+def level_overview(canvas):
     overview = canvas.resize(
         (canvas.width // 4, canvas.height // 4), Image.Resampling.NEAREST
     )
@@ -170,8 +215,35 @@ def render(project, plan, name, output):
         d.line((x * 8, 0, x * 8, overview.height), fill="#c9a044", width=1)
     for y in range(0, canvas.height // 32, 17):
         d.line((0, y * 8, overview.width, y * 8), fill="#c9a044", width=1)
+    return overview
+
+
+def render(project, plan, name, output, revision=None):
+    revision = next_revision(plan, name) if revision is None else revision
+    comparison = comparison_source(plan, name, revision)
+    lv = next(l for l in project["levels"] if l["identifier"] == name)
+    output.mkdir(parents=True, exist_ok=True)
+    art = PreviewArt()
+    canvas = draw_level(lv, art)
+    font = ImageFont.truetype(str(REPO / "art/source/ui/fonts/Silver.ttf"), 19)
+    overview = level_overview(canvas)
     overview.save(output / "overview.png")
-    images = ["overview.png"]
+    before_path = output / "before-overview.png"
+    if comparison["kind"] == "previous-packet":
+        shutil.copyfile(REPO / comparison["packet"] / "overview.png", before_path)
+        if sha(before_path.read_bytes()) != comparison["overviewSha256"]:
+            raise WorldError("Previous overview changed during render; render again")
+    else:
+        from .project import new_project
+
+        initial = next(l for l in new_project(plan)["levels"] if l["identifier"] == name)
+        baseline = draw_level(initial, art)
+        before = level_overview(baseline)
+        before.save(before_path)
+        before.close()
+        baseline.close()
+    art.close()
+    images = ["overview.png", "before-overview.png"]
     for y in range(math_ceil(lv["pxHei"] / 544)):
         for x in range(math_ceil(lv["pxWid"] / 960)):
             crop = Image.new("RGBA", (960, 540), "#1a243e")
@@ -194,6 +266,8 @@ def render(project, plan, name, output):
     overview.close()
     manifest = {
         "level": name,
+        "revision": revision,
+        "comparison": comparison,
         "projectDigest": sha(project),
         "planDigest": sha(plan),
         "dependenciesDigest": dependencies(),
@@ -229,7 +303,7 @@ def require_viewed(output, manifest):
             )
 
 
-def packet(project, plan, name, work, destination, report):
+def packet(project, plan, name, work, destination, report, revision=None):
     if not destination.resolve().is_relative_to((REPO / "art/review").resolve()):
         raise WorldError("Packet output must remain under art/review")
     manifest = read(work / "render.json")
@@ -247,6 +321,20 @@ def packet(project, plan, name, work, destination, report):
         manifest["dependenciesDigest"],
     ) != (sha(project), sha(plan), dependencies()):
         raise WorldError("Render receipt is stale; render and inspect again")
+    revision = next_revision(plan, name) if revision is None else revision
+    comparison = comparison_source(plan, name, revision)
+    if (
+        destination.resolve() != packet_path(plan, name, revision).resolve()
+        or manifest.get("level") != name
+        or manifest.get("revision") != revision
+        or manifest.get("comparison") != comparison
+        or "before-overview.png" not in manifest["images"]
+        or (
+            comparison["kind"] == "previous-packet"
+            and manifest["images"]["before-overview.png"] != comparison["overviewSha256"]
+        )
+    ):
+        raise WorldError("Before overview provenance is stale; render the requested revision and inspect again")
     require_viewed(work, manifest)
     from .project import new_project
     from .passes import apply_pass
@@ -257,13 +345,6 @@ def packet(project, plan, name, work, destination, report):
         replay = apply_pass(replay, read(path))
     if sha(replay) != sha(project):
         raise WorldError("Committed passes do not replay to the current project")
-    before = work / "before-overview.png"
-    if (
-        not before.exists()
-        or not Path(str(before) + ".viewed").exists()
-        or Path(str(before) + ".viewed").read_text().strip() != sha(before.read_bytes())
-    ):
-        raise WorldError("Before overview needs a current viewed receipt")
     if destination.exists():
         raise WorldError("Refusing to overwrite a review packet; use a new revision")
     destination.mkdir(parents=True)
@@ -272,11 +353,10 @@ def packet(project, plan, name, work, destination, report):
     atomic_write(destination / "render.json", manifest)
     for file in manifest["images"]:
         shutil.copyfile(work / file, destination / file)
-    shutil.copyfile(before, destination / before.name)
     passes = WORLD / "passes" / plan["region"]
     shutil.copytree(passes, destination / "passes")
     (destination / "README.md").write_text(
-        f"# {name}: candidate map packet\n\nScope: {name}; other levels remain unfinished.\n\nMap source: `{source['path']}`; SHA: `{sha(project)}`. The map is referenced, not duplicated. Replay the included passes from worldforge new to reconstruct this digest.\n\nAll screen crops and before/after overviews inspected by the author; director approval is separate.\n\nPreview artwork and foreground placeholders are not approved final art. Density values are measurements, not aesthetic scores.\n",
+        f"# {name}: candidate map packet, revision {revision}\n\nScope: {name}; other levels remain unfinished.\n\nBefore: {comparison.get('packet', 'initial draft from the current protected plan')}; after: current map. Exact comparison provenance is recorded in render.json and packet.json.\n\nMap source: `{source['path']}`; SHA: `{sha(project)}`. The map is referenced, not duplicated. Replay the included passes from worldforge new to reconstruct this digest.\n\nAll screen crops and before/after overviews inspected by the author; director approval is separate.\n\nPreview artwork and foreground placeholders are not approved final art. Density values are measurements, not aesthetic scores.\n",
         encoding="utf-8",
         newline="\n",
     )
@@ -286,6 +366,8 @@ def packet(project, plan, name, work, destination, report):
             "schemaVersion": 2,
             "status": "candidate",
             "level": name,
+            "revision": revision,
+            "comparison": comparison,
             "sourceDigest": sha(project),
             "source": source,
             "dependenciesDigest": dependencies(),

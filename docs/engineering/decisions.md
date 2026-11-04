@@ -625,3 +625,21 @@ outside this page-cache accounting. Browser checks render and hash every page,
 verify distinct nonempty results and validate selected-page failure behavior.
 The [engineering budget](hd-presentation.md#c3g-gallery-pages-and-decoded-memory)
 records128 MiB review residency and the separate runtime quality budgets.
+
+## ADR 039 - bind world review comparisons to packet revisions
+
+**Problem:** C32 found Riverlands revision 2 comparing against a cached initial
+draft, because packaging checked an image's viewed hash without its provenance.
+
+**Decision:** render and packet share an explicit target revision (or next unused
+numeric revision). The first revision renders its selected level from the initial
+protected plan. Later revisions require the exact previous packet and copy its
+registered overview bytes. Receipts bind predecessor packet, source and overview
+digests. Packaging revalidates lineage and includes the before image in the
+existing inspection gate; missing, changed or mismatched predecessors fail.
+
+**Consequences:** no map, pass, protected plan or approval changes. Historical
+packets stay intact. Current dependency hashes require fresh check/render receipts.
+Machine-A Riverlands revision 3 and director review remain external; synthetic
+receipt tests establish tooling behavior, never visual acceptance. See
+[worldforge review semantics](worldforge.md#qa-and-review-semantics).

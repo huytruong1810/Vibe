@@ -96,6 +96,23 @@ the corresponding QA/render/inspection evidence. `packet.json` is written last a
 binds the included files; a partially written folder is not a complete packet.
 No packet or inspection receipt modifies director approvals or gameplay artwork.
 
+C32 binds before/after comparisons to packet revisions. Pass the same positive
+`--revision N` to `render` and `packet`; omitting it selects the next unused
+numeric revision. Revision 1 renders the selected level from the initial protected
+plan. Revision N > 1 copies the exact `overview.png` from revision N-1, after
+checking that packet's level, source digest and registered overview hash. Missing
+predecessors fail; cached draft images are never a fallback. Existing packet
+folders cannot be overwritten, including incomplete folders.
+
+Both render and packet receipts record the target revision and comparison source,
+including the predecessor packet bytes, overview and map digests. Packaging checks
+the lineage again, so a changed predecessor or a render for another revision
+requires a new render and inspection. The before overview belongs to the same
+SHA-bound inspection gate as the current overview and every screen crop; a stale
+viewed sidecar does not survive changed bytes. The packet README identifies the
+comparison source. Historical packets and approvals remain unchanged. Machine-A
+Riverlands revision 3 must still demonstrate revision 2 as its before image.
+
 C6b reads collision flags, deck membership and elevation values from the shared
 contract through `TerrainSemantics`; the example pass uses named content lookups.
 Zero remains the contract's empty value. Re-numbering test fixtures verifies that

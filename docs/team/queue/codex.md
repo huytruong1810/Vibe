@@ -155,12 +155,12 @@ and local-generation tickets (C26–C31) sit in their own section.
 
 ### C32 · worldforge packets compare against the previous revision
 
-- status: open
+- status: candidate (tooling validated; machine-A Riverlands revision3 proof outstanding)
 - owner: codex
 - goal: a world packet's before/after shows the last revision, not the blank draft (gap found in Riverlands revision 2).
 - work: `worldforge render`/`packet` writes `before-overview.png` from the previous packet's overview (or re-renders the previous map); README wording follows.
 - done when: Riverlands revision 3's packet shows revision 2 as its before
-- evidence:
+- evidence (2026-11-04): [validation](../comms/codex/c32-validation.json),27 worldforge +5 terrain tests and read-only village check pass. Exact predecessor lineage and before-image inspection gate implemented; machine-A proof requested.
 
 ### C3g · Follow-ups from the beta slice (claude, 2026-11-01)
 

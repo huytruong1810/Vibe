@@ -164,6 +164,11 @@ class Authoring(unittest.TestCase):
         self.assertEqual(PROJECT.read_bytes(), before)
 
     def test_compact_packet_references_map_without_copying_it(self):
+        for revision in (1, 3):
+            with self.subTest(revision=revision):
+                self.compact_packet(revision)
+
+    def compact_packet(self, revision):
         from worldlib.review import dependencies
         from unittest.mock import patch
 
@@ -180,20 +185,41 @@ class Authoring(unittest.TestCase):
             atomic_write(
                 work / "render.json",
                 {
+                    "level": "aqualia_village",
+                    "revision": 1,
+                    "comparison": {"kind": "initial-draft", "projectDigest": sha(self.empty)},
                     "projectDigest": sha(self.latest_authored),
                     "planDigest": sha(self.plan),
                     "dependenciesDigest": dependency,
-                    "images": {"overview.png": sha(b"receipt fixture")},
+                    "images": {name: sha(b"receipt fixture") for name in ("overview.png", "before-overview.png")},
                 },
             )
             with patch("worldlib.review.REPO", root), patch(
                 "worldlib.review.dependencies", return_value=dependency
             ):
-                target = root / "art/review/selftest"
+                from worldlib.review import packet_path, comparison_source
+
+                if revision == 3:
+                    previous = packet_path(self.plan, "aqualia_village", 2)
+                    previous.mkdir(parents=True)
+                    (previous / "overview.png").write_bytes(b"receipt fixture")
+                    atomic_write(previous / "packet.json", {
+                        "status": "candidate", "level": "aqualia_village",
+                        "sourceDigest": sha(self.authored),
+                        "files": {"overview.png": sha(b"receipt fixture")},
+                    })
+                    manifest = read(work / "render.json")
+                    manifest["revision"] = revision
+                    manifest["comparison"] = comparison_source(self.plan, "aqualia_village", revision)
+                    atomic_write(work / "render.json", manifest)
+                target = packet_path(self.plan, "aqualia_village", revision)
                 packet(
-                    self.latest_authored, self.plan, "aqualia_village", work, target, report
+                    self.latest_authored, self.plan, "aqualia_village", work, target, report, revision
                 )
             manifest = read(target / "packet.json")
+            self.assertEqual(manifest["revision"], revision)
+            self.assertEqual(manifest["comparison"]["kind"], "initial-draft" if revision == 1 else "previous-packet")
+            self.assertEqual((target / "before-overview.png").read_bytes(), b"receipt fixture")
             self.assertEqual(manifest["schemaVersion"], 2)
             self.assertEqual(
                 manifest["source"],
@@ -444,3 +470,133 @@ class Authoring(unittest.TestCase):
             altered["nextUid"] += 1
             with self.assertRaisesRegex(WorldError, "Current map/plan QA"):
                 packet(altered, self.plan, "aqualia_village", work, target, report)
+
+
+class RevisionComparisons(unittest.TestCase):
+    """Synthetic receipts test lineage, not visual or director acceptance."""
+
+    def setUp(self):
+        from unittest.mock import patch
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.root = Path(self.tmp.name)
+        self.addCleanup(patch.stopall)
+        patch('worldlib.review.REPO', self.root).start()
+        self.plan = {'region': 'aqualia'}
+        self.name = 'aqualia_riverlands'
+
+    def previous(self, revision=2):
+        from worldlib.review import packet_path
+        folder = packet_path(self.plan, self.name, revision)
+        folder.mkdir(parents=True)
+        (folder / 'overview.png').write_bytes(b'previous overview')
+        atomic_write(folder / 'packet.json', {
+            'status': 'candidate', 'level': self.name, 'sourceDigest': sha(b'previous map'),
+            'files': {'overview.png': sha(b'previous overview')},
+        })
+        return folder
+
+    def test_exact_predecessor_and_numeric_revision_selection(self):
+        from worldlib.review import comparison_source, next_revision
+        previous = self.previous(2)
+        (previous.parent / 'world-aqualia-aqualia_riverlands-10').mkdir()
+        self.assertEqual(next_revision(self.plan, self.name), 11)
+        comparison = comparison_source(self.plan, self.name, 3)
+        self.assertEqual(comparison['revision'], 2)
+        self.assertEqual(comparison['packetSha256'], sha((previous / 'packet.json').read_bytes()))
+        self.assertEqual(comparison['overviewSha256'], sha(b'previous overview'))
+        with self.assertRaisesRegex(WorldError, 'valid previous packet'):
+            comparison_source(self.plan, self.name, 5)
+        with self.assertRaisesRegex(WorldError, 'overwrite'):
+            comparison_source(self.plan, self.name, 2)
+        with self.assertRaisesRegex(WorldError, 'positive'):
+            comparison_source(self.plan, self.name, 0)
+
+    def test_tampered_or_wrong_level_predecessor_is_rejected(self):
+        from worldlib.review import comparison_source
+        previous = self.previous()
+        (previous / 'overview.png').write_bytes(b'changed')
+        with self.assertRaisesRegex(WorldError, 'overview hash mismatch'):
+            comparison_source(self.plan, self.name, 3)
+        (previous / 'overview.png').write_bytes(b'previous overview')
+        receipt = read(previous / 'packet.json')
+        receipt['level'] = 'aqualia_village'
+        atomic_write(previous / 'packet.json', receipt)
+        with self.assertRaisesRegex(WorldError, 'identity'):
+            comparison_source(self.plan, self.name, 3)
+
+    def test_render_replaces_cached_draft_and_requires_before_inspection(self):
+        from unittest.mock import patch, Mock
+        from PIL import Image, ImageFont
+        from worldlib.review import render, comparison_source
+        previous = self.previous()
+        work = self.root / 'work'
+        work.mkdir()
+        (work / 'before-overview.png').write_bytes(b'cached draft')
+        (work / 'before-overview.png.viewed').write_text(sha(b'cached draft'))
+        font = ImageFont.load_default()
+        project = {'levels': [{'identifier': self.name, 'pxWid': 960, 'pxHei': 544}]}
+        with patch('worldlib.review.PreviewArt', return_value=Mock()), patch(
+            'worldlib.review.draw_level', return_value=Image.new('RGBA', (960, 544))
+        ), patch('worldlib.review.ImageFont.truetype', return_value=font), patch(
+            'worldlib.review.dependencies', return_value='fixture dependencies'
+        ):
+            manifest = render(project, self.plan, self.name, work, 3)
+        self.assertEqual((work / 'before-overview.png').read_bytes(), (previous / 'overview.png').read_bytes())
+        self.assertEqual(manifest['comparison'], comparison_source(self.plan, self.name, 3))
+        for filename, digest in manifest['images'].items():
+            if filename != 'before-overview.png':
+                (work / (filename + '.viewed')).write_text(digest)
+        with self.assertRaisesRegex(WorldError, 'before-overview'):
+            require_viewed(work, manifest)
+        (work / 'before-overview.png.viewed').write_text(manifest['images']['before-overview.png'])
+        require_viewed(work, manifest)
+
+    def test_packet_revalidates_parent_and_requested_revision(self):
+        from unittest.mock import patch
+        from worldlib.review import comparison_source, packet_path
+        previous = self.previous()
+        project = {'fixture': 'map'}
+        dependency = 'fixture dependencies'
+        report = {'status': 'candidate', 'projectDigest': sha(project),
+                  'planDigest': sha(self.plan), 'dependenciesDigest': dependency}
+        work = self.root / 'work'
+        work.mkdir()
+        manifest = {**report, 'level': self.name, 'revision': 3,
+                    'comparison': comparison_source(self.plan, self.name, 3),
+                    'images': {'overview.png': sha(b'current'), 'before-overview.png': sha(b'previous overview')}}
+        atomic_write(work / 'render.json', manifest)
+        target = packet_path(self.plan, self.name, 3)
+        with patch('worldlib.review.dependencies', return_value=dependency):
+            # Recomputed expected lineage rejects a changed parent, even when its
+            # overview remains identical. No viewed or replay gate is bypassed.
+            parent = read(previous / 'packet.json')
+            parent['sourceDigest'] = sha(b'changed parent map')
+            atomic_write(previous / 'packet.json', parent)
+            with self.assertRaisesRegex(WorldError, 'provenance is stale'):
+                packet(project, self.plan, self.name, work, target, report, 3)
+            with self.assertRaisesRegex(WorldError, 'valid previous packet'):
+                packet(project, self.plan, self.name, work, target, report, 5)
+
+    def test_first_revision_renders_selected_level_initial_draft(self):
+        from unittest.mock import patch, Mock
+        from PIL import Image, ImageFont
+        from worldlib.review import render
+        font = ImageFont.load_default()
+        current = {'identifier': self.name, 'pxWid': 960, 'pxHei': 544}
+        initial = {'identifier': self.name, 'initial': True}
+        draft = {'levels': [{'identifier': 'aqualia_village'}, initial]}
+        work = self.root / 'work'
+        with patch('worldlib.project.new_project', return_value=draft), patch(
+            'worldlib.review.PreviewArt', return_value=Mock()
+        ), patch('worldlib.review.draw_level', side_effect=[
+            Image.new('RGBA', (960, 544), 'red'), Image.new('RGBA', (960, 544), 'blue')
+        ]) as draw, patch('worldlib.review.ImageFont.truetype', return_value=font), patch(
+            'worldlib.review.dependencies', return_value='fixture dependencies'
+        ):
+            manifest = render({'levels': [current]}, self.plan, self.name, work, 1)
+        self.assertEqual(draw.call_args_list[1].args[0], initial)
+        self.assertEqual(manifest['comparison'], {'kind': 'initial-draft', 'projectDigest': sha(draft)})
+        self.assertNotEqual(manifest['images']['overview.png'], manifest['images']['before-overview.png'])
+        with Image.open(work / 'before-overview.png') as before:
+            self.assertEqual(before.getpixel((4, 4)), (0, 0, 255, 255))
