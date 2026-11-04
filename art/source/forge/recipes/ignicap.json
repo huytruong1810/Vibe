@@ -1,7 +1,7 @@
 {
   "asset": "ignicap",
   "kind": "creature",
-  "heightArtPx": 26,
+  "heightArtPx": 24,
   "ramps": {
     "cap": "ember",
     "stem": "linen",

@@ -1,15 +1,30 @@
 {
   "asset": "npc:oren",
   "kind": "human",
-  "heightArtPx": 46,
+  "heightArtPx": 38,
   "ramps": {
     "skin": "skin-warm",
     "hair": "hair-silver",
     "apron": "leather",
     "shirt": "timber",
-    "boots": "iron"
+    "pants": "linen",
+    "boots": "leather"
   },
   "gen3d": { "seed": 1234, "steps": 50, "views": ["front", "back"] },
+  "rig": {
+    "landmarks": {
+      "shoulder_l": [0.186, 0.041, 0.999],
+      "shoulder_r": [-0.186, 0.041, 0.999],
+      "elbow_l": [0.256, 0.030, 0.855],
+      "elbow_r": [-0.256, 0.030, 0.855],
+      "wrist_l": [0.326, -0.003, 0.731],
+      "wrist_r": [-0.326, -0.003, 0.731],
+      "palm_l": [0.357, -0.031, 0.684],
+      "palm_r": [-0.357, -0.031, 0.684],
+      "hand_end_l": [0.406, -0.045, 0.635],
+      "hand_end_r": [-0.406, -0.045, 0.635]
+    }
+  },
   "concept": {
     "template": "human-apose-v1",
     "fields": {

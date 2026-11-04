@@ -1,0 +1,105 @@
+{
+ "asset": "env:tree-oak",
+ "footprint": [
+  2,
+  2
+ ],
+ "frames": [
+  {
+   "anchorPx": {
+    "x": 128,
+    "y": 276
+   },
+   "file": "frames/shadow.png",
+   "id": "env-tree-oak-shadow",
+   "layer": "shadow",
+   "sha256": "f8164f8554f4e7a20589ee5020858d84e4191e8dc063a4ca0ae33eba8a8b1846",
+   "sourceSize": {
+    "h": 284,
+    "w": 256
+   }
+  },
+  {
+   "anchorPx": {
+    "x": 128,
+    "y": 276
+   },
+   "file": "frames/base.png",
+   "id": "env-tree-oak-base",
+   "layer": "base",
+   "sha256": "a6a717a46b15ccad69a84f9410eb55ba61aa1f73ec08d73e7811ffce8d89ce45",
+   "sourceSize": {
+    "h": 284,
+    "w": 256
+   }
+  },
+  {
+   "anchorPx": {
+    "x": 128,
+    "y": 276
+   },
+   "file": "frames/canopy.png",
+   "id": "env-tree-oak-canopy",
+   "layer": "canopy",
+   "sha256": "01874ee75c343b67829826da2bd931ddcaf2bdbd113f1c6636a2ac2b9fbd0abc",
+   "sourceSize": {
+    "h": 284,
+    "w": 256
+   }
+  }
+ ],
+ "kind": "environment-review",
+ "lightPools": [],
+ "qa": [
+  {
+   "check": "footprint",
+   "detail": "ground contact 1.85 tiles deep vs declared 2 (width is scaled to fit)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-11.4"
+  },
+  {
+   "check": "canvas",
+   "detail": "128x142, width multiple of 32",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec canvases.environment"
+  },
+  {
+   "check": "margins",
+   "detail": "smallest transparent margin 2px",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec marginsArtPixels"
+  },
+  {
+   "check": "paletteMembership",
+   "detail": "0 off-palette colours",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.1"
+  },
+  {
+   "check": "colorCount",
+   "detail": "13 colours (environment limit 32)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.4"
+  },
+  {
+   "check": "blocks",
+   "detail": "exports are exact 2x blocks",
+   "hard": true,
+   "pass": true,
+   "rule": "L1"
+  }
+ ],
+ "schemaVersion": 1,
+ "scope": [
+  "shadow",
+  "base",
+  "canopy"
+ ],
+ "sourceDigest": "6ce3910e857497c5315f3d8d862f0ed01b39d1479947b89b8534d63daa8fc3c1",
+ "status": "candidate"
+}

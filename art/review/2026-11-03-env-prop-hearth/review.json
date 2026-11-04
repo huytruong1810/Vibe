@@ -1,0 +1,111 @@
+{
+ "asset": "env:prop-hearth",
+ "footprint": [
+  2,
+  2
+ ],
+ "frames": [
+  {
+   "anchorPx": {
+    "x": 96,
+    "y": 206
+   },
+   "file": "frames/shadow.png",
+   "id": "env-prop-hearth-shadow",
+   "layer": "shadow",
+   "sha256": "a7410324b88caf5d35837a202a206a802724867c2e23e3a9700d5efbdac5668c",
+   "sourceSize": {
+    "h": 216,
+    "w": 192
+   }
+  },
+  {
+   "anchorPx": {
+    "x": 96,
+    "y": 206
+   },
+   "file": "frames/base.png",
+   "id": "env-prop-hearth-base",
+   "layer": "base",
+   "sha256": "a38c3becafa9d8c68faeb452f78c7b840118fa8873e4b486fb9d4363c40e3eac",
+   "sourceSize": {
+    "h": 216,
+    "w": 192
+   }
+  },
+  {
+   "anchorPx": {
+    "x": 96,
+    "y": 206
+   },
+   "file": "frames/roof.png",
+   "id": "env-prop-hearth-roof",
+   "layer": "roof",
+   "sha256": "cac9ffdf7f76889222518742516f0b9832bd365ec0297d62c4bb5606d29cc78d",
+   "sourceSize": {
+    "h": 216,
+    "w": 192
+   }
+  }
+ ],
+ "kind": "environment-review",
+ "lightPools": [
+  {
+   "radiusTiles": 3,
+   "x": 0,
+   "y": 0
+  }
+ ],
+ "qa": [
+  {
+   "check": "footprint",
+   "detail": "ground contact 2.06 tiles deep vs declared 2 (width is scaled to fit)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-11.4"
+  },
+  {
+   "check": "canvas",
+   "detail": "96x108, width multiple of 32",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec canvases.environment"
+  },
+  {
+   "check": "margins",
+   "detail": "smallest transparent margin 2px",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec marginsArtPixels"
+  },
+  {
+   "check": "paletteMembership",
+   "detail": "0 off-palette colours",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.1"
+  },
+  {
+   "check": "colorCount",
+   "detail": "17 colours (environment limit 32)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.4"
+  },
+  {
+   "check": "blocks",
+   "detail": "exports are exact 2x blocks",
+   "hard": true,
+   "pass": true,
+   "rule": "L1"
+  }
+ ],
+ "schemaVersion": 1,
+ "scope": [
+  "shadow",
+  "base",
+  "roof"
+ ],
+ "sourceDigest": "c239e690966ac412bf64fd1c17b3a935ad33a612e43f395dba6e1aa7942d5c68",
+ "status": "candidate"
+}

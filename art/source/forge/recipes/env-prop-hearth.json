@@ -5,12 +5,13 @@
     "basin": "stone",
     "coals": "basalt",
     "flame": "ember",
-    "fittings": "iron"
+    "fittings": "iron",
+    "roof": "timber"
   },
   "gen3d": { "seed": 1234, "steps": 50, "views": ["front", "left"] },
   "environment": {
     "footprint": [2, 2],
-    "split": null,
+    "split": { "layer": "roof", "aboveFraction": 0.50 },
     "contactShadow": true,
     "lightPools": [
       { "x": 0, "y": 0, "radiusTiles": 3 }

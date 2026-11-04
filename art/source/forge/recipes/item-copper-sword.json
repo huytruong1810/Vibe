@@ -7,8 +7,15 @@
     "grip": "leather",
     "pommel": "gold"
   },
-  "gen3d": { "seed": 1234, "steps": 50 },
-  "orient": { "lengthArtPx": 16, "gripFraction": 0.15 },
+  "gen3d": {
+    "seed": 1234,
+    "steps": 50
+  },
+  "orient": {
+    "lengthArtPx": 14,
+    "gripFraction": 0.25,
+    "minFeaturePx": 2.4
+  },
   "item": {
     "model": "auto",
     "grip": "auto",

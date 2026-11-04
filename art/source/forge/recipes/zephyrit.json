@@ -1,7 +1,7 @@
 {
   "asset": "zephyrit",
   "kind": "creature",
-  "heightArtPx": 25,
+  "heightArtPx": 22,
   "ramps": {
     "body": "sky",
     "wings": "cream",

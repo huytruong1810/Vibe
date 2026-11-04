@@ -1,0 +1,105 @@
+{
+ "asset": "env:well",
+ "footprint": [
+  2,
+  2
+ ],
+ "frames": [
+  {
+   "anchorPx": {
+    "x": 96,
+    "y": 252
+   },
+   "file": "frames/shadow.png",
+   "id": "env-well-shadow",
+   "layer": "shadow",
+   "sha256": "82133bcf6383ebb2ad6e16789c93c497803acad6b47fa8af859dbce5561e7f6e",
+   "sourceSize": {
+    "h": 260,
+    "w": 192
+   }
+  },
+  {
+   "anchorPx": {
+    "x": 96,
+    "y": 252
+   },
+   "file": "frames/base.png",
+   "id": "env-well-base",
+   "layer": "base",
+   "sha256": "776beb7d5394108b18f5d9ac8188e183a97ee863ca38ff88bf2c555d548838df",
+   "sourceSize": {
+    "h": 260,
+    "w": 192
+   }
+  },
+  {
+   "anchorPx": {
+    "x": 96,
+    "y": 252
+   },
+   "file": "frames/roof.png",
+   "id": "env-well-roof",
+   "layer": "roof",
+   "sha256": "71b66aad1c8488a6fb8aa1a5c8197ef18b0a564479ed7ebd514186b1c7b14dad",
+   "sourceSize": {
+    "h": 260,
+    "w": 192
+   }
+  }
+ ],
+ "kind": "environment-review",
+ "lightPools": [],
+ "qa": [
+  {
+   "check": "footprint",
+   "detail": "ground contact 2.08 tiles deep vs declared 2 (width is scaled to fit)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-11.4"
+  },
+  {
+   "check": "canvas",
+   "detail": "96x130, width multiple of 32",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec canvases.environment"
+  },
+  {
+   "check": "margins",
+   "detail": "smallest transparent margin 2px",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec marginsArtPixels"
+  },
+  {
+   "check": "paletteMembership",
+   "detail": "0 off-palette colours",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.1"
+  },
+  {
+   "check": "colorCount",
+   "detail": "9 colours (environment limit 32)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.4"
+  },
+  {
+   "check": "blocks",
+   "detail": "exports are exact 2x blocks",
+   "hard": true,
+   "pass": true,
+   "rule": "L1"
+  }
+ ],
+ "schemaVersion": 1,
+ "scope": [
+  "shadow",
+  "base",
+  "roof"
+ ],
+ "sourceDigest": "3ea9d2311ed568fa086acb5f07dc3ee99bea76a0697741e16baec772f8804953",
+ "status": "candidate"
+}

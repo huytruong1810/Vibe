@@ -1,11 +1,11 @@
 {
   "asset": "npc:mira",
   "kind": "human",
-  "heightArtPx": 46,
+  "heightArtPx": 40,
   "ramps": {
     "skin": "skin-porcelain",
-    "hair": "hair-brown",
-    "jacket": "sage",
+    "hair": "hair-ink",
+    "vest": "teal",
     "trousers": "sand",
     "boots": "leather"
   },
@@ -18,7 +18,7 @@
       "role": "river wildlife surveyor",
       "home": "Aqualia Riverlands",
       "personality": "observant, enthusiastic about creatures, dislikes needless fighting",
-      "appearance": "slender nimble build, porcelain skin, neat chin-length brown hair tucked behind ears, wearing a light sage-green field surveyor jacket with utility loops, pale sand canvas trousers, and flexible oiled leather wading boots. Proportions are 5 heads tall in clean stylized A-pose"
+      "appearance": "slender nimble build, porcelain skin, neat chin-length dark ink hair with teal feather clips behind ear, bright blue eyes, wearing a teal river surveyor vest with utility pockets over a field tunic, pale sand canvas trousers, and flexible brown leather field boots. Proportions are 5 heads tall in clean stylized A-pose"
     },
     "poseGuide": "art/source/style/pose-guides/human.png",
     "references": [

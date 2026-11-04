@@ -1,0 +1,610 @@
+{
+  "schemaVersion": 1,
+  "set": "aqualia-terrain",
+  "status": "candidate",
+  "buildDigest": "95130f39a9d84020c8638a8729b632928e5fc1f34efca3292f5e54e7b27797a7",
+  "checks": [
+    {
+      "check": "grass.palette",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 pixels outside ['foliage-deep.shadow', 'foliage-deep.mid', 'moss.mid', 'reed.mid']"
+    },
+    {
+      "check": "grass.valueCount",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "4 values (limit 4)"
+    },
+    {
+      "check": "grass.seamless",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst seam step / roughest interior line 0.70 (limit 1.35; every variant beside every other)"
+    },
+    {
+      "check": "grass.variantBorders",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "3 variants; 0 border pixels differ from the base"
+    },
+    {
+      "check": "grass.orphans",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst isolated-pixel fraction 0.002 (limit 0.01)"
+    },
+    {
+      "check": "grass.lowFrequency",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "largest tile-scale lighting wave 0.017 (limit 0.02); a higher value shows as a grid when tiled; raise flatten or use an evenly lit swatch"
+    },
+    {
+      "check": "grass.proportions",
+      "rule": "recipe",
+      "pass": true,
+      "hard": false,
+      "detail": "value shares [0.12, 0.68, 0.15, 0.05] vs recipe [0.12, 0.68, 0.15, 0.05]"
+    },
+    {
+      "check": "freshwater.palette",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 pixels outside ['water.shadow', 'water.mid', 'water.light', 'water.highlight']"
+    },
+    {
+      "check": "freshwater.valueCount",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "4 values (limit 4)"
+    },
+    {
+      "check": "freshwater.seamless",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst seam step / roughest interior line 0.65 (limit 1.35; every variant beside every other)"
+    },
+    {
+      "check": "freshwater.variantBorders",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "2 variants; 0 border pixels differ from the base"
+    },
+    {
+      "check": "freshwater.orphans",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst isolated-pixel fraction 0.001 (limit 0.01)"
+    },
+    {
+      "check": "freshwater.lowFrequency",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "largest tile-scale lighting wave 0.014 (limit 0.02); a higher value shows as a grid when tiled; raise flatten or use an evenly lit swatch"
+    },
+    {
+      "check": "freshwater.proportions",
+      "rule": "recipe",
+      "pass": true,
+      "hard": false,
+      "detail": "value shares [0.23, 0.5, 0.18, 0.08] vs recipe [0.22, 0.5, 0.2, 0.08]"
+    },
+    {
+      "check": "dirt.palette",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 pixels outside ['timber.deep', 'timber.shadow', 'sand.shadow', 'sand.mid']"
+    },
+    {
+      "check": "dirt.valueCount",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "4 values (limit 4)"
+    },
+    {
+      "check": "dirt.seamless",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst seam step / roughest interior line 0.45 (limit 1.35; every variant beside every other)"
+    },
+    {
+      "check": "dirt.variantBorders",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "2 variants; 0 border pixels differ from the base"
+    },
+    {
+      "check": "dirt.orphans",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst isolated-pixel fraction 0.000 (limit 0.01)"
+    },
+    {
+      "check": "dirt.lowFrequency",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "largest tile-scale lighting wave 0.018 (limit 0.02); a higher value shows as a grid when tiled; raise flatten or use an evenly lit swatch"
+    },
+    {
+      "check": "dirt.proportions",
+      "rule": "recipe",
+      "pass": true,
+      "hard": false,
+      "detail": "value shares [0.1, 0.2, 0.56, 0.15] vs recipe [0.1, 0.2, 0.55, 0.15]"
+    },
+    {
+      "check": "sand.palette",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 pixels outside ['sand.deep', 'sand.shadow', 'sand.mid', 'sand.light']"
+    },
+    {
+      "check": "sand.valueCount",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "4 values (limit 4)"
+    },
+    {
+      "check": "sand.seamless",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst seam step / roughest interior line 0.54 (limit 1.35; every variant beside every other)"
+    },
+    {
+      "check": "sand.variantBorders",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "2 variants; 0 border pixels differ from the base"
+    },
+    {
+      "check": "sand.orphans",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst isolated-pixel fraction 0.000 (limit 0.01)"
+    },
+    {
+      "check": "sand.lowFrequency",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "largest tile-scale lighting wave 0.019 (limit 0.02); a higher value shows as a grid when tiled; raise flatten or use an evenly lit swatch"
+    },
+    {
+      "check": "sand.proportions",
+      "rule": "recipe",
+      "pass": true,
+      "hard": false,
+      "detail": "value shares [0.1, 0.19, 0.56, 0.15] vs recipe [0.1, 0.2, 0.55, 0.15]"
+    },
+    {
+      "check": "stone.palette",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 pixels outside ['stone.deep', 'stone.shadow', 'stone.mid', 'stone.light']"
+    },
+    {
+      "check": "stone.valueCount",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "4 values (limit 4)"
+    },
+    {
+      "check": "stone.seamless",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst seam step / roughest interior line 0.36 (limit 1.35; every variant beside every other)"
+    },
+    {
+      "check": "stone.variantBorders",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "2 variants; 0 border pixels differ from the base"
+    },
+    {
+      "check": "stone.orphans",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst isolated-pixel fraction 0.000 (limit 0.01)"
+    },
+    {
+      "check": "stone.lowFrequency",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "largest tile-scale lighting wave 0.013 (limit 0.02); a higher value shows as a grid when tiled; raise flatten or use an evenly lit swatch"
+    },
+    {
+      "check": "stone.proportions",
+      "rule": "recipe",
+      "pass": true,
+      "hard": false,
+      "detail": "value shares [0.15, 0.5, 0.25, 0.1] vs recipe [0.15, 0.5, 0.25, 0.1]"
+    },
+    {
+      "check": "mud.palette",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 pixels outside ['basalt.deep', 'timber.deep', 'leather.shadow', 'timber.shadow']"
+    },
+    {
+      "check": "mud.valueCount",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "4 values (limit 4)"
+    },
+    {
+      "check": "mud.seamless",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst seam step / roughest interior line 0.21 (limit 1.35; every variant beside every other)"
+    },
+    {
+      "check": "mud.variantBorders",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "2 variants; 0 border pixels differ from the base"
+    },
+    {
+      "check": "mud.orphans",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst isolated-pixel fraction 0.001 (limit 0.01)"
+    },
+    {
+      "check": "mud.lowFrequency",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "largest tile-scale lighting wave 0.008 (limit 0.02); a higher value shows as a grid when tiled; raise flatten or use an evenly lit swatch"
+    },
+    {
+      "check": "mud.proportions",
+      "rule": "recipe",
+      "pass": true,
+      "hard": false,
+      "detail": "value shares [0.2, 0.58, 0.07, 0.15] vs recipe [0.2, 0.55, 0.1, 0.15]"
+    },
+    {
+      "check": "reedbed.palette",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 pixels outside ['foliage-deep.shadow', 'moss.shadow', 'reed.mid', 'reed.light']"
+    },
+    {
+      "check": "reedbed.valueCount",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "4 values (limit 4)"
+    },
+    {
+      "check": "reedbed.seamless",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst seam step / roughest interior line 0.90 (limit 1.35; every variant beside every other)"
+    },
+    {
+      "check": "reedbed.variantBorders",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "2 variants; 0 border pixels differ from the base"
+    },
+    {
+      "check": "reedbed.orphans",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst isolated-pixel fraction 0.001 (limit 0.01)"
+    },
+    {
+      "check": "reedbed.lowFrequency",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "largest tile-scale lighting wave 0.010 (limit 0.02); a higher value shows as a grid when tiled; raise flatten or use an evenly lit swatch"
+    },
+    {
+      "check": "reedbed.proportions",
+      "rule": "recipe",
+      "pass": true,
+      "hard": false,
+      "detail": "value shares [0.16, 0.45, 0.29, 0.1] vs recipe [0.15, 0.45, 0.3, 0.1]"
+    },
+    {
+      "check": "boardwalk.palette",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 pixels outside ['wood.deep', 'wood.shadow', 'wood.mid', 'wood.light']"
+    },
+    {
+      "check": "boardwalk.valueCount",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "4 values (limit 4)"
+    },
+    {
+      "check": "boardwalk.seamless",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst seam step / roughest interior line 0.55 (limit 1.35; every variant beside every other)"
+    },
+    {
+      "check": "boardwalk.variantBorders",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "2 variants; 0 border pixels differ from the base"
+    },
+    {
+      "check": "boardwalk.orphans",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst isolated-pixel fraction 0.001 (limit 0.01)"
+    },
+    {
+      "check": "boardwalk.lowFrequency",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "largest tile-scale lighting wave 0.008 (limit 0.02); a higher value shows as a grid when tiled; raise flatten or use an evenly lit swatch"
+    },
+    {
+      "check": "boardwalk.proportions",
+      "rule": "recipe",
+      "pass": true,
+      "hard": false,
+      "detail": "value shares [0.2, 0.45, 0.25, 0.1] vs recipe [0.2, 0.45, 0.25, 0.1]"
+    },
+    {
+      "check": "cliff.palette",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 pixels outside ['stone.deep', 'stone.shadow', 'stone.mid', 'moss.mid']"
+    },
+    {
+      "check": "cliff.valueCount",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "4 values (limit 4)"
+    },
+    {
+      "check": "cliff.seamless",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst seam step / roughest interior line 0.17 (limit 1.35; every variant beside every other)"
+    },
+    {
+      "check": "cliff.variantBorders",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 variants; 0 border pixels differ from the base"
+    },
+    {
+      "check": "cliff.orphans",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst isolated-pixel fraction 0.000 (limit 0.01)"
+    },
+    {
+      "check": "dirt.actorContrast",
+      "rule": "ART-7.3",
+      "pass": false,
+      "hard": false,
+      "detail": "lightness gap to actor body tones {'teal.mid': 0.004, 'foliage.mid': 0.042, 'basalt.mid': 0.176, 'skin-warm.mid': 0.1, 'timber.mid': 0.122}; below 0.12: ['foliage.mid', 'skin-warm.mid', 'teal.mid']"
+    },
+    {
+      "check": "grass.actorContrast",
+      "rule": "ART-7.3",
+      "pass": false,
+      "hard": false,
+      "detail": "lightness gap to actor body tones {'teal.mid': 0.152, 'foliage.mid': 0.114, 'basalt.mid': 0.02, 'skin-warm.mid': 0.257, 'timber.mid': 0.035}; below 0.12: ['basalt.mid', 'foliage.mid', 'timber.mid']"
+    },
+    {
+      "check": "mud.actorContrast",
+      "rule": "ART-7.3",
+      "pass": true,
+      "hard": false,
+      "detail": "lightness gap to actor body tones {'teal.mid': 0.301, 'foliage.mid': 0.263, 'basalt.mid': 0.129, 'skin-warm.mid': 0.405, 'timber.mid': 0.183}; below 0.12: none"
+    },
+    {
+      "check": "reedbed.actorContrast",
+      "rule": "ART-7.3",
+      "pass": false,
+      "hard": false,
+      "detail": "lightness gap to actor body tones {'teal.mid': 0.15, 'foliage.mid': 0.112, 'basalt.mid': 0.022, 'skin-warm.mid': 0.255, 'timber.mid': 0.033}; below 0.12: ['basalt.mid', 'foliage.mid', 'timber.mid']"
+    },
+    {
+      "check": "sand.actorContrast",
+      "rule": "ART-7.3",
+      "pass": false,
+      "hard": false,
+      "detail": "lightness gap to actor body tones {'teal.mid': 0.183, 'foliage.mid': 0.221, 'basalt.mid': 0.355, 'skin-warm.mid': 0.079, 'timber.mid': 0.301}; below 0.12: ['skin-warm.mid']"
+    },
+    {
+      "check": "stone.actorContrast",
+      "rule": "ART-7.3",
+      "pass": false,
+      "hard": false,
+      "detail": "lightness gap to actor body tones {'teal.mid': 0.123, 'foliage.mid': 0.085, 'basalt.mid': 0.049, 'skin-warm.mid': 0.227, 'timber.mid': 0.006}; below 0.12: ['basalt.mid', 'foliage.mid', 'timber.mid']"
+    },
+    {
+      "check": "pair.grass-freshwater",
+      "rule": "WLD-3.3",
+      "pass": true,
+      "hard": false,
+      "detail": "median lightness gap 0.214 (want >= 0.06)"
+    },
+    {
+      "check": "pair.grass-dirt",
+      "rule": "WLD-3.3",
+      "pass": true,
+      "hard": false,
+      "detail": "median lightness gap 0.156 (want >= 0.06)"
+    },
+    {
+      "check": "pair.grass-sand",
+      "rule": "WLD-3.3",
+      "pass": true,
+      "hard": false,
+      "detail": "median lightness gap 0.335 (want >= 0.06)"
+    },
+    {
+      "check": "pair.dirt-sand",
+      "rule": "WLD-3.3",
+      "pass": true,
+      "hard": false,
+      "detail": "median lightness gap 0.179 (want >= 0.06)"
+    },
+    {
+      "check": "freshwater_shore.palette",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 opaque pixels outside ['water.shadow', 'water.mid', 'water.light', 'water.highlight', 'timber.deep']"
+    },
+    {
+      "check": "freshwater_shore.hardAlpha",
+      "rule": "ART-1",
+      "pass": true,
+      "hard": true,
+      "detail": "0 semi-transparent pixels"
+    },
+    {
+      "check": "freshwater_shore.bodyMatch",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 body pixels differ from freshwater.png (the full tile must match the body)"
+    },
+    {
+      "check": "freshwater_shore.cornerBits",
+      "rule": "autotiler.ts",
+      "pass": true,
+      "hard": true,
+      "detail": "corners disagreeing with their mask bit: none"
+    },
+    {
+      "check": "freshwater_shore.edgeContinuity",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst shared-edge excess 0 px at 11/2 over the tiles' own neighbouring lines (limit 1; every legal neighbour pair, transparent/edge band/inside compared)"
+    },
+    {
+      "check": "dirt_path_edge.palette",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 opaque pixels outside ['timber.deep', 'timber.shadow', 'sand.shadow', 'sand.mid']"
+    },
+    {
+      "check": "dirt_path_edge.hardAlpha",
+      "rule": "ART-1",
+      "pass": true,
+      "hard": true,
+      "detail": "0 semi-transparent pixels"
+    },
+    {
+      "check": "dirt_path_edge.bodyMatch",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 body pixels differ from dirt.png (the full tile must match the body)"
+    },
+    {
+      "check": "dirt_path_edge.cornerBits",
+      "rule": "autotiler.ts",
+      "pass": true,
+      "hard": true,
+      "detail": "corners disagreeing with their mask bit: none"
+    },
+    {
+      "check": "dirt_path_edge.edgeContinuity",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst shared-edge excess 0 px at 11/2 over the tiles' own neighbouring lines (limit 1; every legal neighbour pair, transparent/edge band/inside compared)"
+    },
+    {
+      "check": "stone_path_edge.palette",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 opaque pixels outside ['stone.deep', 'stone.shadow', 'stone.mid', 'stone.light']"
+    },
+    {
+      "check": "stone_path_edge.hardAlpha",
+      "rule": "ART-1",
+      "pass": true,
+      "hard": true,
+      "detail": "0 semi-transparent pixels"
+    },
+    {
+      "check": "stone_path_edge.bodyMatch",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 body pixels differ from stone.png (the full tile must match the body)"
+    },
+    {
+      "check": "stone_path_edge.cornerBits",
+      "rule": "autotiler.ts",
+      "pass": true,
+      "hard": true,
+      "detail": "corners disagreeing with their mask bit: none"
+    },
+    {
+      "check": "stone_path_edge.edgeContinuity",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst shared-edge excess 0 px at 11/2 over the tiles' own neighbouring lines (limit 1; every legal neighbour pair, transparent/edge band/inside compared)"
+    }
+  ]
+}

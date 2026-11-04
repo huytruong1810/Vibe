@@ -1,7 +1,7 @@
 {
   "set": "aqualia-terrain",
   "region": "aqualia",
-  "notes": "What this set is for, which map layers it covers, and the look you are aiming at.",
+  "notes": "Aqualia region terrain set (ART-11.2, WLD-4.2). Palette-locked to Aqualia accents: teal, navy, reed, timber, sand. Grass darkened to Oklab L 0.48 so teal and green creatures clear actorContrast by >= 0.12.",
   "materials": [
     {
       "id": "grass",
@@ -13,24 +13,319 @@
         ]
       },
       "swatch": "swatches/grass.png",
+      "swatchTilePx": 256,
+      "flatten": 2,
+      "cluster": 0.6,
+      "values": [
+        "foliage-deep.shadow",
+        "foliage-deep.mid",
+        "moss.mid",
+        "reed.mid"
+      ],
+      "proportions": [
+        0.12,
+        0.68,
+        0.15,
+        0.05
+      ],
+      "variants": 3
+    },
+    {
+      "id": "freshwater",
+      "runtimeId": "ground_freshwater",
+      "binds": {
+        "layer": "water",
+        "values": [
+          "fresh_shallow",
+          "fresh_deep"
+        ]
+      },
+      "swatch": "swatches/water.png",
       "swatchTilePx": 128,
       "values": [
-        "foliage.shadow",
-        "foliage.mid",
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight"
+      ],
+      "proportions": [
+        0.22,
+        0.5,
+        0.2,
+        0.08
+      ],
+      "variants": 2
+    },
+    {
+      "id": "dirt",
+      "runtimeId": "ground_dirt",
+      "binds": {
+        "layer": "ground",
+        "values": [
+          "dirt"
+        ]
+      },
+      "swatch": "swatches/dirt.png",
+      "swatchTilePx": 128,
+      "values": [
+        "timber.deep",
+        "timber.shadow",
+        "sand.shadow",
+        "sand.mid"
+      ],
+      "proportions": [
+        0.1,
+        0.2,
+        0.55,
+        0.15
+      ],
+      "variants": 2
+    },
+    {
+      "id": "sand",
+      "runtimeId": "ground_sand",
+      "binds": {
+        "layer": "ground",
+        "values": [
+          "sand"
+        ]
+      },
+      "swatch": "swatches/sand.png",
+      "swatchTilePx": 128,
+      "values": [
+        "sand.deep",
+        "sand.shadow",
+        "sand.mid",
+        "sand.light"
+      ],
+      "proportions": [
+        0.1,
+        0.2,
+        0.55,
+        0.15
+      ],
+      "variants": 2
+    },
+    {
+      "id": "stone",
+      "runtimeId": "ground_stone",
+      "binds": {
+        "layer": "ground",
+        "values": [
+          "stone"
+        ]
+      },
+      "swatch": "swatches/stone.png",
+      "swatchTilePx": 128,
+      "values": [
+        "stone.deep",
+        "stone.shadow",
+        "stone.mid",
+        "stone.light"
+      ],
+      "proportions": [
+        0.15,
+        0.5,
+        0.25,
+        0.1
+      ],
+      "variants": 2
+    },
+    {
+      "id": "mud",
+      "runtimeId": "ground_mud",
+      "binds": {
+        "layer": "ground",
+        "values": [
+          "mud"
+        ]
+      },
+      "swatch": "swatches/mud.png",
+      "swatchTilePx": 128,
+      "values": [
+        "basalt.deep",
+        "timber.deep",
+        "timber.shadow",
+        "leather.shadow"
+      ],
+      "proportions": [
+        0.2,
+        0.55,
+        0.15,
+        0.1
+      ],
+      "variants": 2
+    },
+    {
+      "id": "reedbed",
+      "runtimeId": "ground_reedbed",
+      "binds": {
+        "layer": "ground",
+        "values": [
+          "reedbed"
+        ]
+      },
+      "swatch": "swatches/reedbed.png",
+      "swatchTilePx": 128,
+      "values": [
+        "foliage-deep.shadow",
+        "moss.shadow",
         "reed.mid",
         "reed.light"
       ],
       "proportions": [
-        0.18,
-        0.42,
-        0.28,
-        0.12
+        0.15,
+        0.45,
+        0.3,
+        0.1
       ],
-      "variants": 3
+      "variants": 2
+    },
+    {
+      "id": "boardwalk",
+      "runtimeId": "ground_boardwalk",
+      "binds": {
+        "layer": "paths",
+        "values": [
+          "boardwalk",
+          "bridge"
+        ]
+      },
+      "swatch": "swatches/boardwalk.png",
+      "swatchTilePx": 128,
+      "values": [
+        "wood.deep",
+        "wood.shadow",
+        "wood.mid",
+        "wood.light"
+      ],
+      "proportions": [
+        0.2,
+        0.45,
+        0.25,
+        0.1
+      ],
+      "variants": 2
+    },
+    {
+      "id": "cliff",
+      "runtimeId": "cliff_grass",
+      "swatch": "swatches/grass.png",
+      "swatchTilePx": 128,
+      "wrap": "x",
+      "heightPx": 8,
+      "values": [
+        "stone.deep",
+        "stone.shadow",
+        "stone.mid"
+      ],
+      "rows": {
+        "0": "moss.mid",
+        "-1": "stone.deep"
+      }
     }
   ],
-  "overlays": [],
-  "pairs": [],
+  "overlays": [
+    {
+      "id": "freshwater_shore",
+      "material": "freshwater",
+      "binds": {
+        "layer": "water",
+        "values": [
+          "fresh_shallow",
+          "fresh_deep"
+        ]
+      },
+      "runtimeIdTemplate": "shore_freshwater_mask_{mask}",
+      "edge": {
+        "inside": [
+          {
+            "px": 1,
+            "value": "water.highlight"
+          },
+          {
+            "px": 2,
+            "value": "water.light",
+            "dither": 0.5
+          }
+        ],
+        "outside": [
+          {
+            "px": 1,
+            "value": "timber.deep"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dirt_path_edge",
+      "material": "dirt",
+      "binds": {
+        "layer": "paths",
+        "values": [
+          "dirt_path"
+        ]
+      },
+      "runtimeIdTemplate": "path_dirt_mask_{mask}",
+      "edge": {
+        "inside": [
+          {
+            "px": 1,
+            "value": "sand.shadow"
+          }
+        ],
+        "outside": [
+          {
+            "px": 1,
+            "value": "timber.deep"
+          }
+        ]
+      }
+    },
+    {
+      "id": "stone_path_edge",
+      "material": "stone",
+      "binds": {
+        "layer": "paths",
+        "values": [
+          "stone_path"
+        ]
+      },
+      "runtimeIdTemplate": "path_stone_mask_{mask}",
+      "edge": {
+        "inside": [
+          {
+            "px": 1,
+            "value": "stone.light"
+          }
+        ],
+        "outside": [
+          {
+            "px": 1,
+            "value": "stone.deep"
+          }
+        ]
+      }
+    }
+  ],
+  "pairs": [
+    [
+      "grass",
+      "freshwater"
+    ],
+    [
+      "grass",
+      "dirt"
+    ],
+    [
+      "grass",
+      "sand"
+    ],
+    [
+      "dirt",
+      "sand"
+    ]
+  ],
   "preview": {
     "level": "aqualia_village",
     "rect": [

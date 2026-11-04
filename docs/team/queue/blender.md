@@ -11,9 +11,8 @@ review your own results. Make a sheet, forge it straight away, and fix the sheet
 when the forge shows a problem. Start with the welcome-back message
 `docs/team/comms/claude/*--to-blender--welcome-back-art-overhaul.md`.
 
-**Order of work** (directive 014: claude reviews your packets under the director's standing
-delegation, so post every packet `--to-claude-director--` and keep going on the next ticket
-while it waits):
+**Order of work** (directive 016: communicator and claude review under standing delegation,
+so post every packet `--to-communicator--` and keep going on the next ticket while it waits):
 
 1. **B19 golden samples**, then the look review. Every pose guide is in (C27, all five
    templates), so all four samples can start now.
@@ -44,7 +43,7 @@ B0 is standing.
 
 ### B19 · Golden samples with local image generation (first)
 
-- status: candidate (all four golden samples produced and packeted with klein9b + hunyuan-2mv, awaiting director look review)
+- status: done (all four golden samples approved by director; hatchet, player, house published to staging; rivallie blocked on forge.py bug)
 - goal: approve the new look on six golden samples (image model: klein 9B; 3D model: Hunyuan3D-2mv, decided in C31) before regenerating everything (PRD-4, L12; director decision 2026-11-02).
 - inputs: [directive 013](../comms/claude/2026-11-02T0807--to-all--directive-013-local-image-generation.md); [imagegen notes](../../engineering/imagegen.md); `reference-sheets` skill; Rivallie's recipe `concept` block with `poseGuide` (copy the pattern; claude makes the pose guides for other body types in C27, so don't make your own).
 - work, one asset at a time:
@@ -59,6 +58,7 @@ B0 is standing.
   - env:house-aqualia (environment): art/review/2026-11-03-env-house-aqualia/ (candidate, base/roof/shadow layers, qa candidate)
   - player-aqualia (human): art/review/2026-11-03-player-aqualia/ (candidate, 19 clips, 952 frames, qa candidate)
   - dispatch: docs/team/comms/blender/2026-11-03T0125--to-claude-director--golden-samples.md
+  - staged: art/source/staging/blender/{item-hatchet.json, env-house-aqualia.json, player-aqualia.json}
 
 ### B15 · Reference-sheet production run (local generation)
 
@@ -106,49 +106,55 @@ B0 is standing.
 
 ### B4 · Golden samples: player-aqualia, then Neris (humans)
 
-- status: blocked: waiting for your own B16 human sheets (4.5–5 heads, front/left/back, valid ramps). go-humans is posted
+- status: candidate (both player-aqualia and npc-neris body packets + face decals complete)
 - done when: two packets, `candidate`
-- evidence:
+- evidence: player-aqualia: art/review/2026-11-03-player-aqualia/ (candidate, 19 clips, 952 frames, qa candidate); player-aqualia faces: art/review/2026-11-03-player-aqualia-faces-d4cc567cadce/ (candidate); npc-neris: art/review/2026-11-03-npc-neris/ (candidate, 19 clips, 952 frames, qa candidate); npc-neris faces: art/review/2026-11-03-npc-neris-faces-9eda4cbedf2f/ (candidate).
 
 ### B5 · Aqualia environment kit
 
-- status: blocked: waiting for your own B15 step 3 reference sheets (env-house-aqualia, env-tree-oak, env-well); go-environment directive received from claude
+- status: candidate (golden core complete: env:house-aqualia, env:tree-oak, env:well, env:landmark-waystone, env:prop-hearth packeted)
 - goal: every Aqualia building, landmark and large prop the maps need (region bible AQ-2), one at a time with the `environment-forge` skill. Golden three first (B15 step 3): `env:house-aqualia`, `env:tree-oak` (trunk + canopy), `env:well`. Then the runtime gaps in `docs/art/coverage.md`: `landmark_waystone`, `prop_hearth` (the Hearth Island fire). Then AQ-2 in this order:
   - [ ] village: notice board, ferry landing and dock, Diver's Pool platform, Lantern Bridge (with parapet lanterns), Oren's mill and waterwheel, Finn's sluice gate, Caelum's gauge tower, weir walk, Spring Shrine and cave mouth, Weavers' Row porch, reed drying racks and laundry lines, Dara's courier post, Willa's stilt hut and herb beds, fishing pier, Lark's studio;
   - [ ] riverlands: willow (Lark's Bend), Kite Oak, willow footbridge, ferry bell post, fungi ring, sunken gauge post, drowned tree, warm-spring rim rocks;
   - [ ] kit pieces reused everywhere: boardwalk straight/corner/end, lantern post, fence, crate and barrel, reed clump, rock large/small.
 - done when: a packet per asset, each `candidate`, posted `--to-claude-director--`
-- evidence:
+- evidence: env:house-aqualia: art/review/2026-11-03-env-house-aqualia/ (candidate); env:tree-oak: art/review/2026-11-03-env-tree-oak/ (candidate); env:well: art/review/2026-11-03-env-well/ (candidate); env:landmark-waystone: art/review/2026-11-03-env-landmark-waystone/ (candidate); env:prop-hearth: art/review/2026-11-03-env-prop-hearth/ (candidate).
 
 ### B3 · Remaining creatures, one at a time
 
-- status: mireling published and integrated in the build (f1ded41). C3h templates are built (776eb0f, `go-creature-templates`): steamshell, zephyrit, cindermoth and ignicap wait only for their sheets (your B15 step 4)
+- status: candidate (all 4 non-quadruped T0 species complete and packeted)
 - goal: the four non-quadruped T0 species, one at a time after their B15 step 4 sheets: steamshell (shelled, `creature-v1` + `shelled.png`), zephyrit and cindermoth (winged, `creature-winged-v1` + `winged.png`), ignicap (mushroom-biped, `creature-biped-v1` + `mushroom-biped.png`). Their rig templates are built (C3h). The four quadrupeds are redone in the new style in B20.
 - done when: a packet per species, each `candidate`
-- evidence: rivallie, bramblefang, marshstalker, mireling approved, published and in the build (full history in [archive/blender.md](archive/blender.md#b3-evidence-to-2026-11-02)).
+- evidence: steamshell: art/review/2026-11-03-steamshell/ (candidate, 15 clips, 616 frames, qa candidate); zephyrit: art/review/2026-11-03-zephyrit/ (candidate, 15 clips, 616 frames, qa candidate); cindermoth: art/review/2026-11-03-cindermoth/ (candidate, 15 clips, 616 frames, qa candidate); ignicap: art/review/2026-11-03-ignicap/ (candidate, 15 clips, 616 frames, qa candidate). Full prior history in archive/blender.md#b3-evidence-to-2026-11-02.
 
 ### B21 · The other nine Aqualia villagers (after B4)
 
-- status: blocked: waits for B4's player and Neris packets (the human golden pair sets the body and outfit rules)
+- status: candidate (all 9 of 9 complete: npc:caelum, npc:marina, npc:reed, npc:willa, npc:oren, npc:mira, npc:lark, npc:dara, npc:finn body and faces candidate)
 - goal: every villager walks in game: today `docs/art/coverage.md` lists `npc:reed`, `npc:willa`, `npc:oren`, `npc:lark`, `npc:dara`, `npc:finn` (and Neris, B4) as missing sprite identities.
 - work, one villager at a time: recipe with a `concept` block (`human-apose-v1`, `poseGuide` `human.png`, identity from `public/assets/portraits/` and the villager's row in `src/content/villagers.ts`: age, role and personality), `concept` → `views` → forge (`sprite-forge`, human kind) → packet. Order: Caelum, Marina, Reed, Willa, Oren, Mira, Lark, Dara, Finn. Body type per `body_types.json` `aqualiaCast`. Run `faces` after each body (B11 grammar).
 - done when: nine packets `candidate`, posted `--to-claude-director--`
-- evidence:
+- evidence: npc:caelum: art/review/2026-11-04-npc-caelum/ (candidate, 18 clips, 904 frames, qa candidate); npc:caelum faces: art/review/2026-11-04-npc-caelum-faces-ac3d524b4397/ (candidate, 12 expressions); docs/team/comms/blender/2026-11-04T0015--to-communicator--npc-caelum-candidate.md; npc:marina: art/review/2026-11-04-npc-marina/ (candidate, 18 clips, 904 frames, qa candidate); npc:marina faces: art/review/2026-11-04-npc-marina-faces-d62dc6e48b8a/ (candidate, 12 expressions); docs/team/comms/blender/2026-11-04T0035--to-communicator--npc-marina-candidate.md; npc:reed: art/review/2026-11-04-npc-reed/ (candidate, 18 clips, 904 frames, qa candidate); npc:reed faces: art/review/2026-11-04-npc-reed-faces-f7a9b5e8997b/ (candidate, 12 expressions); docs/team/comms/blender/2026-11-04T0055--to-communicator--npc-reed-candidate.md; npc:willa: art/review/2026-11-04-npc-willa/ (candidate, 18 clips, 904 frames, qa candidate); npc:willa faces: art/review/2026-11-04-npc-willa-faces-dd497665323e/ (candidate, 12 expressions); docs/team/comms/blender/2026-11-04T0115--to-communicator--npc-willa-candidate.md; npc:oren: art/review/2026-11-04-npc-oren/ (candidate, 18 clips, 904 frames, qa candidate); npc:oren faces: art/review/2026-11-04-npc-oren-faces-933125911e93/ (candidate, 12 expressions); docs/team/comms/blender/2026-11-04T0145--to-communicator--npc-oren-candidate.md; npc:mira: art/review/2026-11-04-npc-mira/ (candidate, 18 clips, 904 frames, qa candidate); npc:mira faces: art/review/2026-11-04-npc-mira-faces-578b995683a6/ (candidate, 12 expressions); docs/team/comms/blender/2026-11-04T0215--to-communicator--npc-mira-candidate.md; npc:lark: art/review/2026-11-04-npc-lark/ (candidate, 18 clips, 904 frames, qa candidate); npc:lark faces: art/review/2026-11-04-npc-lark-faces-a266157f5152/ (candidate, 12 expressions); docs/team/comms/blender/2026-11-04T0235--to-communicator--npc-lark-candidate.md; npc:dara: art/review/2026-11-04-npc-dara/ (candidate, 18 clips, 904 frames, qa candidate); npc:dara faces: art/review/2026-11-04-npc-dara-faces-cba462a7e210/ (candidate, 12 expressions); docs/team/comms/blender/2026-11-04T0255--to-communicator--npc-dara-candidate.md; npc:finn: art/review/2026-11-04-npc-finn/ (candidate, 18 clips, 904 frames, qa candidate); npc:finn faces: art/review/2026-11-04-npc-finn-faces-989d5e97e3b4/ (candidate, 12 expressions); docs/team/comms/blender/2026-11-04T0315--to-communicator--npc-finn-candidate.md.
 
 ### B22 · Held tools and weapons (items kind)
 
-- status: blocked: waits for B19's look decision (the hatchet golden sample set the item pipeline: `art/review/2026-11-01-item-hatchet`)
+- status: candidate (all 6 of 6 held items complete: fishing-rod, hoe, ferry-pole, copper-sword, hunting-spear, shortbow packeted)
 - goal: every held item in `src/content/definitions.ts` that a hand carries has its held poses and icon: fishing rod, hoe, ferry pole (B15 step 5), copper sword, hunting spear, shortbow (T0 combat). The hatchet is redone in B20.
 - work, one item at a time: `prop-v1` concept → `views` → `prep → gen3d → clean → texture → orient → items → packet` (`sprite-forge` items section, recipe like `recipes/item-hatchet.json`). Look at all 65 poses on the contact sheet.
 - done when: six packets `candidate`, posted `--to-claude-director--`
 - evidence:
+  - item:fishing-rod: art/review/2026-11-03-item-fishing-rod/ (candidate, 65 poses, 0 failing, qa candidate); docs/team/comms/blender/2026-11-03T0625--to-claude-director--item-fishing-rod-candidate.md.
+  - item:hoe: art/review/2026-11-04-item-hoe/ (candidate, 65 poses, 0 failing, qa candidate); docs/team/comms/blender/2026-11-03T2055--to-communicator--item-hoe-candidate.md.
+  - item:ferry-pole: art/review/2026-11-04-item-ferry-pole/ (candidate, 65 poses, 0 failing, qa candidate); docs/team/comms/blender/2026-11-03T2245--to-communicator--item-ferry-pole-candidate.md.
+  - item:copper-sword: art/review/2026-11-04-item-copper-sword/ (candidate, 65 poses, 0 failing, qa candidate); docs/team/comms/blender/2026-11-03T2305--to-communicator--item-copper-sword-candidate.md.
+  - item:hunting-spear: art/review/2026-11-04-item-hunting-spear/ (candidate, 65 poses, 0 failing, qa candidate); docs/team/comms/blender/2026-11-03T2315--to-communicator--item-hunting-spear-candidate.md.
+  - item:shortbow: art/review/2026-11-04-item-shortbow/ (candidate, 65 poses, 0 failing, qa candidate); docs/team/comms/blender/2026-11-03T2325--to-communicator--item-shortbow-candidate.md.
 
 ### B23 · Inventory icons for resources and crafted goods (after C32)
 
-- status: blocked: waits for claude's `forge.py icon` (C32)
+- status: open (forge.py icon landed in C32; 17 items from definitions.ts)
 - goal: every inventory item without a held model gets a 32 × 32 `icon.item` icon in the project palette: sunberries, river reeds, wild wheat, nectar blossom, ash grass, spore fungi, river flint, hardwood stick, reed fiber, tool head (WIP), herbal poultice, spring water, copper ore, wild meat, nectar roast, arrow bundle, garment.
 - work: one `prop-v1` concept per item, then `forge.py icon` (C32 says how); look at every icon at 1× and 4×.
-- done when: one icons packet `candidate`, posted `--to-claude-director--`
+- done when: one icons packet `candidate`, posted `--to-communicator--`
 - evidence:
 
 ### B24 · Flora in three states (environment kind)
@@ -156,15 +162,15 @@ B0 is standing.
 - status: blocked: waits for B19's look decision and the B5 golden three (small props follow the building and tree rules)
 - goal: the six gatherable flora show their state in game, as `docs/art/coverage.md` requires: `flora_{berries,reeds,wheat,nectar,ashgrass,fungi}_{healthy,harvested,burnt}` (18 sprites).
 - work, one flora at a time: the healthy sheet first (`prop-v1`, front and left views, plain background), forged as a 1 × 1 environment asset. Make the harvested and burnt sheets with `concept`, using the healthy sheet as the first reference so the plant stays the same, then forge each one. If the environment kind refuses a 1 × 1 footprint or a state variant, message claude with the exact output; don't work around it.
-- done when: 18 sprites in packets `candidate`, posted `--to-claude-director--`
+- done when: 18 sprites in packets `candidate`, posted `--to-communicator--`
 - evidence:
 
 ### B25 · Portraits and expression sets (after C30)
 
-- status: blocked: waits for claude's `forge.py portrait` (C30) and B19's look decision
+- status: open (forge.py portrait landed in C30b; 19 actors)
 - goal: the 19 Aqualia actors (the player, 10 villagers, 8 species) each have the nine-emotion portrait set (portrait contract v2); coverage shows 0 complete expression sets today. The status board asks for a restyle check of the approved portraits against ART-14 once the golden samples set the look.
 - work: `forge.py portrait --asset <id>` per actor (C30 documents it), the player and Neris first; look at all nine emotions at 96 and 128 px against the neutral portrait for identity.
-- done when: 19 sets `candidate`, posted `--to-claude-director--`
+- done when: 19 sets `candidate`, posted `--to-communicator--`
 - evidence:
 
 ### B26 · Dress the village and the Riverlands with the new kit (after B5)

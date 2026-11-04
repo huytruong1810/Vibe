@@ -8,7 +8,7 @@
     "fittings": "iron"
   },
   "gen3d": { "seed": 1234, "steps": 50 },
-  "orient": { "lengthArtPx": 22, "gripFraction": 0.15 },
+  "orient": { "lengthArtPx": 16, "gripFraction": 0.15, "flipHead": true, "minFeaturePx": 2.5 },
   "item": {
     "model": "auto",
     "grip": "auto",
@@ -19,9 +19,9 @@
   "concept": {
     "template": "prop-v1",
     "fields": {
-      "object": "chunky cane fishing rod with a simple wooden spool reel and carved line guides",
+      "object": "chunky cane fishing rod with a carved wooden spool reel and carved wooden line notches",
       "owner": "an Aqualia river angler",
-      "materials": "polished flexible bamboo wood pole, wrapped dark leather handle, twisted reed fiber line, small dark iron line guides",
+      "materials": "thick sturdy bamboo cane pole, carved bamboo joint rings, wrapped dark leather handle grip, carved wooden spool reel, chunky solid silhouette, no loose line, no thin wires",
       "scale": "handheld fishing rod, about 1.2 m long"
     },
     "references": []

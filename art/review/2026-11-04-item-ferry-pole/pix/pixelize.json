@@ -1,0 +1,587 @@
+{
+ "held_0/e_0": {
+  "labels": {
+   "pole": 17,
+   "shoe": 18,
+   "grip": 26,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_0/n_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 33,
+   "grip": 18,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_0/ne_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 21,
+   "grip": 38,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_0/nw_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 33,
+   "grip": 26,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_0/s_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 10,
+   "grip": 41,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_0/se_0": {
+  "labels": {
+   "pole": 10,
+   "shoe": 17,
+   "grip": 30,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_0/sw_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 27,
+   "grip": 28,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_0/w_0": {
+  "labels": {
+   "pole": 4,
+   "shoe": 39,
+   "grip": 16,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/e_0": {
+  "labels": {
+   "pole": 8,
+   "shoe": 16,
+   "grip": 41,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/n_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 26,
+   "grip": 33,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/ne_0": {
+  "labels": {
+   "pole": 6,
+   "shoe": 15,
+   "grip": 39,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/nw_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 32,
+   "grip": 27,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/s_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 24,
+   "grip": 30,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/se_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 12,
+   "grip": 47,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/sw_0": {
+  "labels": {
+   "pole": 4,
+   "shoe": 23,
+   "grip": 29,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/w_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 33,
+   "grip": 34,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/e_0": {
+  "labels": {
+   "pole": 17,
+   "shoe": 18,
+   "grip": 26,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/n_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 33,
+   "grip": 18,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/ne_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 21,
+   "grip": 38,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/nw_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 33,
+   "grip": 26,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/s_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 10,
+   "grip": 41,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/se_0": {
+  "labels": {
+   "pole": 10,
+   "shoe": 17,
+   "grip": 31,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/sw_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 27,
+   "grip": 30,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/w_0": {
+  "labels": {
+   "pole": 4,
+   "shoe": 39,
+   "grip": 16,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/e_0": {
+  "labels": {
+   "pole": 13,
+   "shoe": 16,
+   "grip": 36,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/n_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 26,
+   "grip": 33,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/ne_0": {
+  "labels": {
+   "pole": 6,
+   "shoe": 15,
+   "grip": 39,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/nw_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 30,
+   "grip": 29,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/s_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 24,
+   "grip": 30,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/se_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 12,
+   "grip": 47,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/sw_0": {
+  "labels": {
+   "pole": 4,
+   "shoe": 23,
+   "grip": 29,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/w_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 33,
+   "grip": 34,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/e_0": {
+  "labels": {
+   "pole": 17,
+   "shoe": 18,
+   "grip": 26,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/n_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 33,
+   "grip": 18,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/ne_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 21,
+   "grip": 38,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/nw_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 33,
+   "grip": 26,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/s_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 10,
+   "grip": 41,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/se_0": {
+  "labels": {
+   "pole": 10,
+   "shoe": 17,
+   "grip": 31,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/sw_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 27,
+   "grip": 29,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/w_0": {
+  "labels": {
+   "pole": 4,
+   "shoe": 39,
+   "grip": 16,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/e_0": {
+  "labels": {
+   "pole": 8,
+   "shoe": 16,
+   "grip": 41,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/n_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 26,
+   "grip": 33,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/ne_0": {
+  "labels": {
+   "pole": 6,
+   "shoe": 15,
+   "grip": 39,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/nw_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 32,
+   "grip": 27,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/s_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 24,
+   "grip": 30,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/se_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 12,
+   "grip": 47,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/sw_0": {
+  "labels": {
+   "pole": 4,
+   "shoe": 24,
+   "grip": 28,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/w_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 33,
+   "grip": 34,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/e_0": {
+  "labels": {
+   "pole": 17,
+   "shoe": 18,
+   "grip": 26,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/n_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 33,
+   "grip": 18,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/ne_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 21,
+   "grip": 38,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/nw_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 33,
+   "grip": 26,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/s_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 10,
+   "grip": 41,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/se_0": {
+  "labels": {
+   "pole": 10,
+   "shoe": 17,
+   "grip": 30,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/sw_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 27,
+   "grip": 28,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/w_0": {
+  "labels": {
+   "pole": 4,
+   "shoe": 39,
+   "grip": 16,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/e_0": {
+  "labels": {
+   "pole": 8,
+   "shoe": 16,
+   "grip": 41,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/n_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 27,
+   "grip": 32,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/ne_0": {
+  "labels": {
+   "pole": 6,
+   "shoe": 15,
+   "grip": 39,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/nw_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 32,
+   "grip": 27,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/s_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 24,
+   "grip": 30,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/se_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 12,
+   "grip": 47,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/sw_0": {
+  "labels": {
+   "pole": 4,
+   "shoe": 24,
+   "grip": 29,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/w_0": {
+  "labels": {
+   "pole": 0,
+   "shoe": 33,
+   "grip": 34,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "icon/se_0": {
+  "labels": {
+   "pole": 20,
+   "shoe": 26,
+   "grip": 54,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ }
+}

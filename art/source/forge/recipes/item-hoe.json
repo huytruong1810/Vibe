@@ -8,7 +8,7 @@
     "lashing": "reed"
   },
   "gen3d": { "seed": 1234, "steps": 50 },
-  "orient": { "lengthArtPx": 20, "gripFraction": 0.25 },
+  "orient": { "lengthArtPx": 15, "gripFraction": 0.20, "minFeaturePx": 2.5 },
   "item": {
     "model": "auto",
     "grip": "auto",

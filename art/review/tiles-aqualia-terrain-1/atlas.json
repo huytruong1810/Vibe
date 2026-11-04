@@ -1,0 +1,432 @@
+{
+  "tilePx": 32,
+  "image": "atlas.png",
+  "tiles": {
+    "boardwalk": {
+      "x": 0,
+      "y": 0,
+      "runtimeId": "ground_boardwalk",
+      "mask": null
+    },
+    "boardwalk_v1": {
+      "x": 32,
+      "y": 0,
+      "runtimeId": "ground_boardwalk_v1",
+      "mask": null
+    },
+    "boardwalk_v2": {
+      "x": 64,
+      "y": 0,
+      "runtimeId": "ground_boardwalk_v2",
+      "mask": null
+    },
+    "cliff": {
+      "x": 96,
+      "y": 0,
+      "runtimeId": "cliff_grass",
+      "mask": null
+    },
+    "dirt": {
+      "x": 128,
+      "y": 0,
+      "runtimeId": "ground_dirt",
+      "mask": null
+    },
+    "dirt_path_edge_mask_1": {
+      "x": 160,
+      "y": 0,
+      "runtimeId": "path_dirt_mask_1",
+      "mask": 1
+    },
+    "dirt_path_edge_mask_10": {
+      "x": 192,
+      "y": 0,
+      "runtimeId": "path_dirt_mask_10",
+      "mask": 10
+    },
+    "dirt_path_edge_mask_11": {
+      "x": 224,
+      "y": 0,
+      "runtimeId": "path_dirt_mask_11",
+      "mask": 11
+    },
+    "dirt_path_edge_mask_12": {
+      "x": 256,
+      "y": 0,
+      "runtimeId": "path_dirt_mask_12",
+      "mask": 12
+    },
+    "dirt_path_edge_mask_13": {
+      "x": 288,
+      "y": 0,
+      "runtimeId": "path_dirt_mask_13",
+      "mask": 13
+    },
+    "dirt_path_edge_mask_14": {
+      "x": 320,
+      "y": 0,
+      "runtimeId": "path_dirt_mask_14",
+      "mask": 14
+    },
+    "dirt_path_edge_mask_15": {
+      "x": 352,
+      "y": 0,
+      "runtimeId": null,
+      "mask": 15
+    },
+    "dirt_path_edge_mask_2": {
+      "x": 384,
+      "y": 0,
+      "runtimeId": "path_dirt_mask_2",
+      "mask": 2
+    },
+    "dirt_path_edge_mask_3": {
+      "x": 416,
+      "y": 0,
+      "runtimeId": "path_dirt_mask_3",
+      "mask": 3
+    },
+    "dirt_path_edge_mask_4": {
+      "x": 448,
+      "y": 0,
+      "runtimeId": "path_dirt_mask_4",
+      "mask": 4
+    },
+    "dirt_path_edge_mask_5": {
+      "x": 480,
+      "y": 0,
+      "runtimeId": "path_dirt_mask_5",
+      "mask": 5
+    },
+    "dirt_path_edge_mask_6": {
+      "x": 0,
+      "y": 32,
+      "runtimeId": "path_dirt_mask_6",
+      "mask": 6
+    },
+    "dirt_path_edge_mask_7": {
+      "x": 32,
+      "y": 32,
+      "runtimeId": "path_dirt_mask_7",
+      "mask": 7
+    },
+    "dirt_path_edge_mask_8": {
+      "x": 64,
+      "y": 32,
+      "runtimeId": "path_dirt_mask_8",
+      "mask": 8
+    },
+    "dirt_path_edge_mask_9": {
+      "x": 96,
+      "y": 32,
+      "runtimeId": "path_dirt_mask_9",
+      "mask": 9
+    },
+    "dirt_v1": {
+      "x": 128,
+      "y": 32,
+      "runtimeId": "ground_dirt_v1",
+      "mask": null
+    },
+    "dirt_v2": {
+      "x": 160,
+      "y": 32,
+      "runtimeId": "ground_dirt_v2",
+      "mask": null
+    },
+    "freshwater": {
+      "x": 192,
+      "y": 32,
+      "runtimeId": "ground_freshwater",
+      "mask": null
+    },
+    "freshwater_shore_mask_1": {
+      "x": 224,
+      "y": 32,
+      "runtimeId": "shore_freshwater_mask_1",
+      "mask": 1
+    },
+    "freshwater_shore_mask_10": {
+      "x": 256,
+      "y": 32,
+      "runtimeId": "shore_freshwater_mask_10",
+      "mask": 10
+    },
+    "freshwater_shore_mask_11": {
+      "x": 288,
+      "y": 32,
+      "runtimeId": "shore_freshwater_mask_11",
+      "mask": 11
+    },
+    "freshwater_shore_mask_12": {
+      "x": 320,
+      "y": 32,
+      "runtimeId": "shore_freshwater_mask_12",
+      "mask": 12
+    },
+    "freshwater_shore_mask_13": {
+      "x": 352,
+      "y": 32,
+      "runtimeId": "shore_freshwater_mask_13",
+      "mask": 13
+    },
+    "freshwater_shore_mask_14": {
+      "x": 384,
+      "y": 32,
+      "runtimeId": "shore_freshwater_mask_14",
+      "mask": 14
+    },
+    "freshwater_shore_mask_15": {
+      "x": 416,
+      "y": 32,
+      "runtimeId": null,
+      "mask": 15
+    },
+    "freshwater_shore_mask_2": {
+      "x": 448,
+      "y": 32,
+      "runtimeId": "shore_freshwater_mask_2",
+      "mask": 2
+    },
+    "freshwater_shore_mask_3": {
+      "x": 480,
+      "y": 32,
+      "runtimeId": "shore_freshwater_mask_3",
+      "mask": 3
+    },
+    "freshwater_shore_mask_4": {
+      "x": 0,
+      "y": 64,
+      "runtimeId": "shore_freshwater_mask_4",
+      "mask": 4
+    },
+    "freshwater_shore_mask_5": {
+      "x": 32,
+      "y": 64,
+      "runtimeId": "shore_freshwater_mask_5",
+      "mask": 5
+    },
+    "freshwater_shore_mask_6": {
+      "x": 64,
+      "y": 64,
+      "runtimeId": "shore_freshwater_mask_6",
+      "mask": 6
+    },
+    "freshwater_shore_mask_7": {
+      "x": 96,
+      "y": 64,
+      "runtimeId": "shore_freshwater_mask_7",
+      "mask": 7
+    },
+    "freshwater_shore_mask_8": {
+      "x": 128,
+      "y": 64,
+      "runtimeId": "shore_freshwater_mask_8",
+      "mask": 8
+    },
+    "freshwater_shore_mask_9": {
+      "x": 160,
+      "y": 64,
+      "runtimeId": "shore_freshwater_mask_9",
+      "mask": 9
+    },
+    "freshwater_v1": {
+      "x": 192,
+      "y": 64,
+      "runtimeId": "ground_freshwater_v1",
+      "mask": null
+    },
+    "freshwater_v2": {
+      "x": 224,
+      "y": 64,
+      "runtimeId": "ground_freshwater_v2",
+      "mask": null
+    },
+    "grass": {
+      "x": 256,
+      "y": 64,
+      "runtimeId": "ground_grass",
+      "mask": null
+    },
+    "grass_v1": {
+      "x": 288,
+      "y": 64,
+      "runtimeId": "ground_grass_v1",
+      "mask": null
+    },
+    "grass_v2": {
+      "x": 320,
+      "y": 64,
+      "runtimeId": "ground_grass_v2",
+      "mask": null
+    },
+    "grass_v3": {
+      "x": 352,
+      "y": 64,
+      "runtimeId": "ground_grass_v3",
+      "mask": null
+    },
+    "mud": {
+      "x": 384,
+      "y": 64,
+      "runtimeId": "ground_mud",
+      "mask": null
+    },
+    "mud_v1": {
+      "x": 416,
+      "y": 64,
+      "runtimeId": "ground_mud_v1",
+      "mask": null
+    },
+    "mud_v2": {
+      "x": 448,
+      "y": 64,
+      "runtimeId": "ground_mud_v2",
+      "mask": null
+    },
+    "reedbed": {
+      "x": 480,
+      "y": 64,
+      "runtimeId": "ground_reedbed",
+      "mask": null
+    },
+    "reedbed_v1": {
+      "x": 0,
+      "y": 96,
+      "runtimeId": "ground_reedbed_v1",
+      "mask": null
+    },
+    "reedbed_v2": {
+      "x": 32,
+      "y": 96,
+      "runtimeId": "ground_reedbed_v2",
+      "mask": null
+    },
+    "sand": {
+      "x": 64,
+      "y": 96,
+      "runtimeId": "ground_sand",
+      "mask": null
+    },
+    "sand_v1": {
+      "x": 96,
+      "y": 96,
+      "runtimeId": "ground_sand_v1",
+      "mask": null
+    },
+    "sand_v2": {
+      "x": 128,
+      "y": 96,
+      "runtimeId": "ground_sand_v2",
+      "mask": null
+    },
+    "stone": {
+      "x": 160,
+      "y": 96,
+      "runtimeId": "ground_stone",
+      "mask": null
+    },
+    "stone_path_edge_mask_1": {
+      "x": 192,
+      "y": 96,
+      "runtimeId": "path_stone_mask_1",
+      "mask": 1
+    },
+    "stone_path_edge_mask_10": {
+      "x": 224,
+      "y": 96,
+      "runtimeId": "path_stone_mask_10",
+      "mask": 10
+    },
+    "stone_path_edge_mask_11": {
+      "x": 256,
+      "y": 96,
+      "runtimeId": "path_stone_mask_11",
+      "mask": 11
+    },
+    "stone_path_edge_mask_12": {
+      "x": 288,
+      "y": 96,
+      "runtimeId": "path_stone_mask_12",
+      "mask": 12
+    },
+    "stone_path_edge_mask_13": {
+      "x": 320,
+      "y": 96,
+      "runtimeId": "path_stone_mask_13",
+      "mask": 13
+    },
+    "stone_path_edge_mask_14": {
+      "x": 352,
+      "y": 96,
+      "runtimeId": "path_stone_mask_14",
+      "mask": 14
+    },
+    "stone_path_edge_mask_15": {
+      "x": 384,
+      "y": 96,
+      "runtimeId": null,
+      "mask": 15
+    },
+    "stone_path_edge_mask_2": {
+      "x": 416,
+      "y": 96,
+      "runtimeId": "path_stone_mask_2",
+      "mask": 2
+    },
+    "stone_path_edge_mask_3": {
+      "x": 448,
+      "y": 96,
+      "runtimeId": "path_stone_mask_3",
+      "mask": 3
+    },
+    "stone_path_edge_mask_4": {
+      "x": 480,
+      "y": 96,
+      "runtimeId": "path_stone_mask_4",
+      "mask": 4
+    },
+    "stone_path_edge_mask_5": {
+      "x": 0,
+      "y": 128,
+      "runtimeId": "path_stone_mask_5",
+      "mask": 5
+    },
+    "stone_path_edge_mask_6": {
+      "x": 32,
+      "y": 128,
+      "runtimeId": "path_stone_mask_6",
+      "mask": 6
+    },
+    "stone_path_edge_mask_7": {
+      "x": 64,
+      "y": 128,
+      "runtimeId": "path_stone_mask_7",
+      "mask": 7
+    },
+    "stone_path_edge_mask_8": {
+      "x": 96,
+      "y": 128,
+      "runtimeId": "path_stone_mask_8",
+      "mask": 8
+    },
+    "stone_path_edge_mask_9": {
+      "x": 128,
+      "y": 128,
+      "runtimeId": "path_stone_mask_9",
+      "mask": 9
+    },
+    "stone_v1": {
+      "x": 160,
+      "y": 128,
+      "runtimeId": "ground_stone_v1",
+      "mask": null
+    },
+    "stone_v2": {
+      "x": 192,
+      "y": 128,
+      "runtimeId": "ground_stone_v2",
+      "mask": null
+    }
+  }
+}

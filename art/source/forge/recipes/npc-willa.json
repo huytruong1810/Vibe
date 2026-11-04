@@ -1,7 +1,7 @@
 {
   "asset": "npc:willa",
   "kind": "human",
-  "heightArtPx": 46,
+  "heightArtPx": 38,
   "ramps": {
     "skin": "skin-tan",
     "hair": "hair-ink",
@@ -10,6 +10,20 @@
     "boots": "leather"
   },
   "gen3d": { "seed": 1234, "steps": 50, "views": ["front", "back"] },
+  "rig": {
+    "landmarks": {
+      "shoulder_l": [0.149, 0.029, 1.032],
+      "shoulder_r": [-0.149, 0.029, 1.032],
+      "elbow_l": [0.213, 0.027, 0.890],
+      "elbow_r": [-0.213, 0.027, 0.890],
+      "wrist_l": [0.289, -0.005, 0.766],
+      "wrist_r": [-0.289, -0.005, 0.766],
+      "palm_l": [0.336, -0.021, 0.720],
+      "palm_r": [-0.336, -0.021, 0.720],
+      "hand_end_l": [0.384, -0.037, 0.675],
+      "hand_end_r": [-0.384, -0.037, 0.675]
+    }
+  },
   "concept": {
     "template": "human-apose-v1",
     "fields": {

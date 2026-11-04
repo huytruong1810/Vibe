@@ -7,8 +7,15 @@
     "string": "linen",
     "tips": "iron"
   },
-  "gen3d": { "seed": 1234, "steps": 50 },
-  "orient": { "lengthArtPx": 18, "gripFraction": 0.50 },
+  "gen3d": {
+    "seed": 1234,
+    "steps": 50
+  },
+  "orient": {
+    "lengthArtPx": 17,
+    "gripFraction": 0.47,
+    "minFeaturePx": 2.7
+  },
   "item": {
     "model": "auto",
     "grip": "auto",

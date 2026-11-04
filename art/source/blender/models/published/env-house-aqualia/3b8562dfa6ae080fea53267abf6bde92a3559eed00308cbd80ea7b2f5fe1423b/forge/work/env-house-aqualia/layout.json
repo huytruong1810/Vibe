@@ -1,0 +1,48 @@
+{
+  "asset": "env:house-aqualia",
+  "stage": "layout",
+  "inputsDigest": "628b7994778b9241675bdf04d1a2108d85c9cf4ae0fd5d5981386493d5c088bc",
+  "inputs": [
+    "art/source/forge/work/env-house-aqualia/texture.blend",
+    "art/source/forge/work/env-house-aqualia/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-house-aqualia/layout/base.blend": "2a418ed85a5f6fdc68615267edbc22a06c99a3cad127d96d4006ee2f6db19891",
+    "art/source/forge/work/env-house-aqualia/layout/roof.blend": "2896b0553ee89109e753272cd6a62e8df243bee08048937ed9802e4e35569731",
+    "art/source/forge/work/env-house-aqualia/layout_preview.png": "5bcd81e9ff8c83a2a7b9131f17ca0f66d3a650aabff5be22cdbfbc698de12fcb"
+  },
+  "extra": {
+    "scale": 0.217623,
+    "heightUnits": 3.2533,
+    "contactDepthTiles": 3.197,
+    "footprint": [
+      3,
+      3
+    ],
+    "canvas": {
+      "size": [
+        128,
+        182
+      ],
+      "anchor": [
+        64,
+        175
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -1.5,
+      0.0
+    ],
+    "layers": [
+      "base",
+      "roof"
+    ],
+    "faces": {
+      "base": 6411,
+      "roof": 7588
+    }
+  },
+  "at": "2026-11-03T00:54:24Z"
+}

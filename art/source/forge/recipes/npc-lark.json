@@ -1,15 +1,29 @@
 {
   "asset": "npc:lark",
   "kind": "human",
-  "heightArtPx": 46,
+  "heightArtPx": 40,
   "ramps": {
     "skin": "skin-warm",
-    "hair": "hair-ink",
+    "hair": "hair-brown",
     "smock": "plum",
     "scarf": "teal",
     "boots": "leather"
   },
   "gen3d": { "seed": 1234, "steps": 50, "views": ["front", "back"] },
+  "rig": {
+    "landmarks": {
+      "shoulder_l": [0.1264, 0.0225, 1.0574],
+      "shoulder_r": [-0.1264, 0.0225, 1.0574],
+      "elbow_l": [0.2175, 0.005, 0.892],
+      "elbow_r": [-0.2175, 0.005, 0.892],
+      "wrist_l": [0.2867, -0.0128, 0.7712],
+      "wrist_r": [-0.2867, -0.0128, 0.7712],
+      "palm_l": [0.3565, -0.0498, 0.7049],
+      "palm_r": [-0.3565, -0.0498, 0.7049],
+      "hand_end_l": [0.3917, -0.0469, 0.675],
+      "hand_end_r": [-0.3917, -0.0469, 0.675]
+    }
+  },
   "concept": {
     "template": "human-apose-v1",
     "fields": {
@@ -18,7 +32,7 @@
       "role": "wetland painter",
       "home": "Aqualia Riverlands studio",
       "personality": "dreamy, perceptive, surprisingly concise",
-      "appearance": "slender and artistic build, warm fair skin, messy dark ink hair, wearing a loose plum-purple painter's linen smock lightly flecked with pigment, a draped teal silk neck scarf, grey trousers, and worn leather studio boots. Proportions are 5 heads tall in clean stylized A-pose"
+      "appearance": "slender artistic build, warm fair skin, wavy ash-brown hair with a wooden paintbrush tucked behind ear, gentle dreamy expression, wearing a loose plum-purple painter's linen smock lightly flecked with pigment, a draped teal silk neck scarf, grey trousers, and worn leather studio boots. Proportions are 5 heads tall in clean stylized A-pose"
     },
     "poseGuide": "art/source/style/pose-guides/human.png",
     "references": [

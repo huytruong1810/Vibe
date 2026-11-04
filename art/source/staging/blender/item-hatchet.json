@@ -7,77 +7,77 @@
     "id": "forge-item-hatchet",
     "inputs": [
       {
-        "path": "blender/models/published/item-hatchet/1b47435c8a687128c0b2c8bd3c5528e52077f97637857c36d3fdb6647161c6c1/forge/blender/bake.py",
+        "path": "blender/models/published/item-hatchet/da6bce925052bec8078362bae16bd20d8c9e766fdba6e5d6f83ef6bbf8e91264/forge/blender/bake.py",
         "role": "script",
-        "sha256": "376b476cd1f7e8228872a7294911f9823a5149a7385c9bee70abc8f42fac19e0"
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
       },
       {
-        "path": "blender/models/published/item-hatchet/1b47435c8a687128c0b2c8bd3c5528e52077f97637857c36d3fdb6647161c6c1/forge/blender/item_orient.py",
+        "path": "blender/models/published/item-hatchet/da6bce925052bec8078362bae16bd20d8c9e766fdba6e5d6f83ef6bbf8e91264/forge/blender/item_orient.py",
         "role": "script",
         "sha256": "a68d9fcfc9cae6f56c882c76e9e294d3c24bd02fb7826d9da3eaa086b7de362f"
       },
       {
-        "path": "blender/models/published/item-hatchet/1b47435c8a687128c0b2c8bd3c5528e52077f97637857c36d3fdb6647161c6c1/forge/forge.py",
+        "path": "blender/models/published/item-hatchet/da6bce925052bec8078362bae16bd20d8c9e766fdba6e5d6f83ef6bbf8e91264/forge/forge.py",
         "role": "script",
-        "sha256": "8f4bba1656e720dacf25efb3a0c4b895307f089aa0d93c1c31fd5202e39c6b41"
+        "sha256": "97f60ac788e5e174ee8413a9eb7324b2f1cfe040de4c9578bddcaf9ca81a36b9"
       },
       {
-        "path": "blender/models/published/item-hatchet/1b47435c8a687128c0b2c8bd3c5528e52077f97637857c36d3fdb6647161c6c1/forge/forgelib/item_orient.py",
+        "path": "blender/models/published/item-hatchet/da6bce925052bec8078362bae16bd20d8c9e766fdba6e5d6f83ef6bbf8e91264/forge/forgelib/item_orient.py",
         "role": "script",
         "sha256": "03534083c34c47428d83b477a4e98678e6e547ef21b9a65b751d508a0e164600"
       },
       {
-        "path": "blender/models/published/item-hatchet/1b47435c8a687128c0b2c8bd3c5528e52077f97637857c36d3fdb6647161c6c1/forge/forgelib/item_render.py",
+        "path": "blender/models/published/item-hatchet/da6bce925052bec8078362bae16bd20d8c9e766fdba6e5d6f83ef6bbf8e91264/forge/forgelib/item_render.py",
         "role": "script",
         "sha256": "3290c864b563263170efcc626acce2a1dc88141d320d9cf186f5bc48b3e6f2d0"
       },
       {
-        "path": "blender/models/published/item-hatchet/1b47435c8a687128c0b2c8bd3c5528e52077f97637857c36d3fdb6647161c6c1/forge/forgelib/items.py",
+        "path": "blender/models/published/item-hatchet/da6bce925052bec8078362bae16bd20d8c9e766fdba6e5d6f83ef6bbf8e91264/forge/forgelib/items.py",
         "role": "script",
         "sha256": "22221017285c31c893c28260a13caf407e646913c63e32ad723c8671f1a9d84c"
       },
       {
-        "path": "blender/models/published/item-hatchet/1b47435c8a687128c0b2c8bd3c5528e52077f97637857c36d3fdb6647161c6c1/forge/forgelib/pixelize.py",
+        "path": "blender/models/published/item-hatchet/da6bce925052bec8078362bae16bd20d8c9e766fdba6e5d6f83ef6bbf8e91264/forge/forgelib/pixelize.py",
         "role": "script",
-        "sha256": "2ad28c42a5fb0aee68ce769d8481601a74ef98764c599384f05523ec4e0862d1"
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
       },
       {
-        "path": "blender/models/published/item-hatchet/1b47435c8a687128c0b2c8bd3c5528e52077f97637857c36d3fdb6647161c6c1/forge/forgelib/publish.py",
+        "path": "blender/models/published/item-hatchet/da6bce925052bec8078362bae16bd20d8c9e766fdba6e5d6f83ef6bbf8e91264/forge/forgelib/publish.py",
         "role": "script",
         "sha256": "05d8748985702d31f58141fa58ceb852acfc69a8d21de6ecb0ad11aaf013b77d"
       },
       {
-        "path": "blender/models/published/item-hatchet/1b47435c8a687128c0b2c8bd3c5528e52077f97637857c36d3fdb6647161c6c1/forge/recipes/item-hatchet.json",
+        "path": "blender/models/published/item-hatchet/da6bce925052bec8078362bae16bd20d8c9e766fdba6e5d6f83ef6bbf8e91264/forge/recipes/item-hatchet.json",
         "role": "pose-config",
-        "sha256": "5b75f2b16bd1afd8e2dc86a6b600ccea6186852b23b080b9c6535b032c3a6e5d"
+        "sha256": "07d0a101c5df435f427dfd44b8c4a3cdbcfbfa9e506ab7fde60e81008c84be97"
       },
       {
-        "path": "blender/models/published/item-hatchet/1b47435c8a687128c0b2c8bd3c5528e52077f97637857c36d3fdb6647161c6c1/forge/spec/palette.json",
+        "path": "blender/models/published/item-hatchet/da6bce925052bec8078362bae16bd20d8c9e766fdba6e5d6f83ef6bbf8e91264/forge/spec/palette.json",
         "role": "palette",
         "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
       },
       {
-        "path": "blender/models/published/item-hatchet/1b47435c8a687128c0b2c8bd3c5528e52077f97637857c36d3fdb6647161c6c1/forge/spec/render_spec.json",
+        "path": "blender/models/published/item-hatchet/da6bce925052bec8078362bae16bd20d8c9e766fdba6e5d6f83ef6bbf8e91264/forge/spec/render_spec.json",
         "role": "pose-config",
         "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
       },
       {
-        "path": "blender/models/published/item-hatchet/1b47435c8a687128c0b2c8bd3c5528e52077f97637857c36d3fdb6647161c6c1/forge/uv.lock",
+        "path": "blender/models/published/item-hatchet/da6bce925052bec8078362bae16bd20d8c9e766fdba6e5d6f83ef6bbf8e91264/forge/uv.lock",
         "role": "dependency-lock",
         "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
       },
       {
-        "path": "blender/models/published/item-hatchet/1b47435c8a687128c0b2c8bd3c5528e52077f97637857c36d3fdb6647161c6c1/forge/work/item-hatchet/item_model.blend",
+        "path": "blender/models/published/item-hatchet/da6bce925052bec8078362bae16bd20d8c9e766fdba6e5d6f83ef6bbf8e91264/forge/work/item-hatchet/item_model.blend",
         "role": "model",
-        "sha256": "d52f5ff4585d191945ef85738c6106dc5b66b756972bf51b44885f54fbd0a413"
+        "sha256": "5b6a2021709616ecfd710bd8a0470a0a27ba93ca1fff0c142215abf4c068e5b5"
       },
       {
-        "path": "blender/models/published/item-hatchet/1b47435c8a687128c0b2c8bd3c5528e52077f97637857c36d3fdb6647161c6c1/forge/work/item-hatchet/orient.json",
+        "path": "blender/models/published/item-hatchet/da6bce925052bec8078362bae16bd20d8c9e766fdba6e5d6f83ef6bbf8e91264/forge/work/item-hatchet/orient.json",
         "role": "pose-config",
-        "sha256": "2aa5753ad15f4db4549d193ac281a679990642018a165adc9546b4e728dea9ba"
+        "sha256": "aeef265bc21b5e77e1e6d384f303a23882d41a5f63230d19d090b409c8a10e49"
       },
       {
-        "path": "blender/models/published/item-hatchet/1b47435c8a687128c0b2c8bd3c5528e52077f97637857c36d3fdb6647161c6c1/forge/work/item-hatchet/orient_params.json",
+        "path": "blender/models/published/item-hatchet/da6bce925052bec8078362bae16bd20d8c9e766fdba6e5d6f83ef6bbf8e91264/forge/work/item-hatchet/orient_params.json",
         "role": "pose-config",
         "sha256": "29a864cca686edc2ab9fc36acf74e526bc9bbbab09ac4c231092c381ea52e62f"
       }
