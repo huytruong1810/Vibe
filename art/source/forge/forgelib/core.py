@@ -188,8 +188,30 @@ GPU_PAUSE = Path.home() / "projects/jepa_ipomdp/runs/week/PAUSE"
 GPU_BUSY = GPU_PAUSE.with_name("GPU_BUSY")
 
 
+def _pid_alive(pid: int) -> bool:
+    try:
+        os.kill(pid, 0)
+    except ProcessLookupError:
+        return False
+    except PermissionError:
+        return True
+    return True
+
+
+def _pause_owner(path: Path) -> int | None:
+    """PID stored in a PAUSE file, or None when the file is empty or foreign (written by another project)."""
+    try:
+        return int(path.read_text().strip().split()[0])
+    except (OSError, ValueError, IndexError):
+        return None
+
+
 class gpu_window:
-    """Context manager around a big GPU job (more than ~8 GB): pause the other project's queue, wait for its running seed."""
+    """Context manager around a big GPU job (more than ~8 GB): pause the other project's queue, wait for its running seed.
+
+    PAUSE holds the owner PID. A PAUSE whose recorded PID is dead (a forge process killed outright) is taken over;
+    a PAUSE with no PID (someone else's) is left alone and never deleted.
+    """
 
     def __init__(self, wait_s: int = 9000):
         self.wait_s, self.made = wait_s, False
@@ -197,8 +219,12 @@ class gpu_window:
     def __enter__(self):
         if not GPU_PAUSE.parent.is_dir():
             return self  # the other project isn't on this machine
+        if GPU_PAUSE.exists():
+            owner = _pause_owner(GPU_PAUSE)
+            if owner is not None and not _pid_alive(owner):
+                GPU_PAUSE.unlink(missing_ok=True)  # stale: its forge process died without cleanup
         if not GPU_PAUSE.exists():
-            GPU_PAUSE.touch()
+            GPU_PAUSE.write_text(f"{os.getpid()}\n")
             self.made = True
         t0 = time.time()
         while GPU_BUSY.exists():
