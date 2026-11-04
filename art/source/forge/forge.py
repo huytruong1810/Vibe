@@ -16,6 +16,7 @@ Commands:
   pose-guide --template T [--try]   grey clay pose guide for a skeleton template (concept poseGuide); --try runs one concept trial
   portrait --asset K:ID [--emotions a,b] [--n N] [--pick e=id,...]   eight expressions (96/128 px) from the neutral portrait by reference editing; --pick keeps candidates
   headroom [--asset ID]   canvas room from the anchor (spec table), or how far an asset's frames reach and the largest heightArtPx that keeps the 2 px margin (C26)
+  approve-record --asset ID --packet DIR --decision D --scope a,b --recorded-by WHO --note "..." [--suffix -faces]   write an approval record with the digest taken from review.json (PRD-9); no --asset: check every record
   upscale --asset ID [--n N] [--seed S] [--keep SEED]   re-render reference views under 1024 px tall at 1100+ px with the edit model (C28); --keep writes them over the views
   icon --item ID --prompt "..." --ramps a,b [--n N] [--pick ID]   32 px inventory icon candidates for items without a held model; --pick keeps one and logs it
   swatch --set S --material M --prompt "..." [--n N] [--pick ID]   seamless 1024 px terrain swatch candidates for tileforge; --pick keeps one and logs it
@@ -1224,7 +1225,7 @@ def pose_guide_try(template: str, n: int = 4, seed: int | None = None, model: st
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("command", choices=["doctor", "selftest", "status", "next", "all", "faces", "item-plan", "items", "orient", "layout",
-                                        "concept", "views", "pose-guide", "swatch", "portrait", "icon", "upscale", "headroom", *STAGES])
+                                        "concept", "views", "pose-guide", "swatch", "portrait", "icon", "upscale", "headroom", "approve-record", *STAGES])
     ap.add_argument("--asset")
     ap.add_argument("--n", type=int, default=4, help="concept: candidates to generate")
     ap.add_argument("--seed", type=int, help="concept: first seed (default: time-based)")
@@ -1243,6 +1244,12 @@ def main() -> int:
     ap.add_argument("--item", help="icon: item id (e.g. berries)")
     ap.add_argument("--ramps", help="icon: comma list of palette ramps the icon may use (e.g. ember,sage)")
     ap.add_argument("--emotions", help="portrait: comma list of emotions to generate (default all eight non-neutral)")
+    ap.add_argument("--packet", help="approve-record: packet dir, e.g. art/review/2026-11-04-neris/")
+    ap.add_argument("--decision", default="director-approved", help="approve-record: director-approved | changes-requested | rejected | superseded")
+    ap.add_argument("--scope", help="approve-record: comma list, e.g. body,clips")
+    ap.add_argument("--recorded-by", dest="recorded_by", help="approve-record: who decided and under what authority")
+    ap.add_argument("--note", default="", help="approve-record: the reason, in the record body")
+    ap.add_argument("--suffix", default="", help="approve-record: file name suffix, e.g. -faces")
     ap.add_argument("--try", dest="trial", action="store_true", help="pose-guide: run one concept trial with the committed guide")
     a = ap.parse_args()
     if a.command == "pose-guide":
@@ -1263,6 +1270,24 @@ def main() -> int:
             return 0
         except (ForgeError, OSError, ValueError, KeyError) as e:
             print(f"FORGE ERROR [swatch]: {e}", file=sys.stderr)
+            return 2
+    if a.command == "approve-record":
+        try:
+            from datetime import datetime, timezone
+            from forgelib import approval_record as rec_mod
+            if not a.asset:
+                bad, unverifiable = rec_mod.check(REPO, core.APPROVALS)
+                print("\n".join(bad) if bad else "[approve-record] every verifiable director-approved record matches its packet")
+                print(f"[approve-record] {len(unverifiable)} records have no review.json here (face packets not built, world and doc records)")
+                return 1 if bad else 0
+            if not (a.packet and a.scope and a.recorded_by):
+                ap.error("approve-record needs --packet, --scope and --recorded-by")
+            out = rec_mod.write(REPO, core.APPROVALS, a.asset, a.packet, a.decision, a.scope.split(","), a.recorded_by, a.note,
+                                datetime.now(timezone.utc).strftime("%Y-%m-%d"), a.suffix)
+            print(f"[approve-record] wrote {_rel(out)}")
+            return 0
+        except (rec_mod.RecordError, ForgeError, OSError, ValueError, KeyError) as e:
+            print(f"FORGE ERROR [approve-record]: {e}", file=sys.stderr)
             return 2
     if a.command == "headroom":
         try:

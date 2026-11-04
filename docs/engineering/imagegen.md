@@ -87,6 +87,15 @@ Earlier klein 4B measurements: the first attempt kept the text encoder resident 
   (the long side view limits the scale). `prep` warns under 1024 px, and `gen3d` still made
   a clean mesh. Raising the sheet size, or adding an upscale pass, is open.
 
+## Approval records
+
+`forge.py approve-record --asset ID --packet art/review/<dir>/ --scope body,clips --recorded-by "claude under directive 016" --note "..." [--decision D] [--suffix -faces]`
+writes `docs/team/comms/director/approvals/<asset>--<packet dir>.md` with `packetDigest` copied from the packet's `review.json`
+`sourceDigest`, so nobody retypes a digest (33 of 36 records written by hand on 2026-11-04 had a wrong tail). It records a decision
+someone with authority already made (TEAM-4.1) and refuses to overwrite. Without `--asset` it checks every `director-approved`
+record that has no `superseded-by`: exit 1 on a digest that no longer matches (the frames changed, PRD-9), and a count of records
+whose packet has no `review.json` here. Selftest: `approval_record_selftest.py`.
+
 ## Open
 
 - **Views at 1024 px or more** (C28).
