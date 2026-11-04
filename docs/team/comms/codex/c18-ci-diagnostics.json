@@ -1,0 +1,58 @@
+{
+  "recordedAt": "2026-11-03",
+  "purpose": "C18 book-opening CI diagnostics; no latency repair or C19 implementation",
+  "remoteFailure": {
+    "run": "https://github.com/huytruong1810/Vibe/actions/runs/41688294291",
+    "source": "Director-supplied browser log and browser-journey-artifacts.zip",
+    "test": "C18 writes three pages, seals and reopens a read-only spread",
+    "openingMs": 328.80000000004657,
+    "limitMs": 100,
+    "passedJourneys": 22,
+    "failedJourneys": 1,
+    "trace": "test-results/literacy-C18-writes-three--4dc98--reopens-a-read-only-spread-journeys/trace.zip",
+    "finding": "Two pages mounted; no internal phase timings in this historical trace; responsible stage remains unknown."
+  },
+  "localNormal": {
+    "command": "npm run test:browser -- tests/browser/literacy.spec.ts",
+    "result": "1 passed",
+    "seconds": 47.5,
+    "openingMs": 24.90000009536743,
+    "phaseTimingsMs": {
+      "pause": 12.200000047683716,
+      "content": 8.700000047683716,
+      "render": 0.19999992847442627,
+      "show-modal": 3.8000000715255737
+    },
+    "measurementsRetained": 5,
+    "mountedPages": 2,
+    "pageErrors": []
+  },
+  "localForcedFailure": {
+    "command": "npm run test:browser -- tests/browser/literacy.spec.ts",
+    "temporaryLimitMs": -1,
+    "result": "Expected assertion failure; new receipt and trace retained; 100 ms limit restored immediately",
+    "seconds": 32.4,
+    "openingMs": 82.90000009536743,
+    "phaseTimingsMs": {
+      "pause": 54,
+      "content": 21.800000071525574,
+      "render": 0.3999999761581421,
+      "show-modal": 6.700000047683716
+    },
+    "measurementsRetained": 5,
+    "mountedPages": 2,
+    "pageErrors": []
+  },
+  "checks": {
+    "typecheck": "passed",
+    "format": "passed; full npm run format:check",
+    "hygiene": "passed; 0 errors, 0 warnings"
+  },
+  "ci": {
+    "status": "pending push and full browser CI"
+  },
+  "gaps": [
+    "Original CI slow stage remains unknown until phase receipt is collected on CI.",
+    "C19 remains unstarted."
+  ]
+}

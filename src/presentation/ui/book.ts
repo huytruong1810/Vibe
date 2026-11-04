@@ -139,7 +139,18 @@ export class BookScreen {
     const item = slot === null ? null : frame.inventory[slot];
     if (slot !== null && item?.id !== 'book' && item?.id !== 'note') return;
     this.opening = true;
+    for (const name of ['hearthwild:book-open', 'pause', 'content', 'render', 'show-modal'])
+      performance.clearMeasures(
+        name === 'hearthwild:book-open' ? name : `hearthwild:book-open:${name}`,
+      );
     const started = performance.now();
+    let phaseStarted = started;
+    const measurePhase = (phase: 'pause' | 'content' | 'render' | 'show-modal'): number => {
+      const end = performance.now();
+      performance.measure(`hearthwild:book-open:${phase}`, { start: phaseStarted, end });
+      phaseStarted = end;
+      return end;
+    };
     const focus = document.activeElement;
     this.returnFocus = focus instanceof HTMLElement ? focus : null;
     this.session = frame.session;
@@ -147,9 +158,11 @@ export class BookScreen {
     this.kind = item?.id === 'note' ? 'note' : 'book';
     try {
       const pause = await this.handlers.send({ type: 'pause', token: 'menu' });
+      measurePhase('pause');
       if (!pause.ok) return;
       const record =
         id || item?.artifact ? await this.handlers.content(id ?? item!.artifact!) : null;
+      measurePhase('content');
       if (this.disposed || this.handlers.frame()?.session !== this.session) return;
       if ((id || item?.artifact) && (!record || record.kind === 'painting'))
         throw Error('That text is no longer within reach.');
@@ -160,9 +173,10 @@ export class BookScreen {
       this.editing = this.record === null && slot !== null;
       this.status('');
       this.render();
+      measurePhase('render');
       this.dialog.showModal();
-      performance.clearMeasures('hearthwild:book-open');
-      performance.measure('hearthwild:book-open', { start: started });
+      const opened = measurePhase('show-modal');
+      performance.measure('hearthwild:book-open', { start: started, end: opened });
       cancelAnimationFrame(this.gamepadFrame);
       this.previousButtons =
         navigator

@@ -8,6 +8,16 @@ are pushed. Pickup was clean at **89ffe45**; this handoff is a documentation-onl
 follow-up. C13/C18 are candidates, never approvals. C19 is the next open feature
 ticket and has not started. The [C18 plan](c18-plan.md) preceded its implementation.
 
+Diagnostic follow-up (2026-11-03): the director supplied the failed browser log and
+artifact archive. The failure is the C18 maximum-book opening gate: **328.8 ms >
+100 ms**, with 22 other journeys passing. The trace has two mounted pages but no
+internal phase timings. New diagnostics measure pause, content, render and modal
+phases and save the browser receipt before assertions and on earlier failure.
+Local focused test passed (24.9 ms); an intentionally impossible assertion failed
+and retained a fresh receipt (82.9 ms) and trace. The **100 ms gate is restored**.
+See [diagnostic evidence](c18-ci-diagnostics.json). Full browser CI remains pending;
+this instrumentation is not a latency repair, and C19 has not started.
+
 Use [team-comms](../../../../.agents/skills/team-comms/SKILL.md), pull only with a clean
 index, read new addressed messages and re-read `docs/team/briefs/codex.md` after compaction.
 Keep the existing [session log](session-2026-11-02.md) current. Leave Vibe-art and other
@@ -29,10 +39,11 @@ review worktrees alone. No alarm or hourly automation was scheduled.
    again passed CPU and both beta paths; its documentation-only ecology job was
    scope-skipped, not another full soak. Browser job126099802397 instead exited with
    code 1 after 12m31s in `npm run test:browser`, within its job envelope. Public
-   annotations identify only exit code 1; the exact failed test is **unknown**. PR twin
-   run41688308406 also failed. Do not describe this second failure as another timeout.
-4. Obtain the failed-test name/trace from that run's `browser-journey-artifacts` or
-   authorized job logs, reproduce its actual failure, then repair it before C19.
+   annotations identify only exit code 1; the director's supplied log now identifies
+   C18's 328.8 ms book-opening measurement against 100 ms. PR twin run41688308406
+   also failed. Do not describe this second failure as another timeout.
+4. Inspect the new phase receipt from full browser CI, identify the slow stage,
+   reproduce its actual failure, then repair it before C19.
    All 23 local journeys previously passed; that does not establish the remote cause.
    Keep assertions, HD/artifact budgets and aggregate `verify`. Consider deterministic
    sharding only if evidence shows total browser runtime remains the problem; do not

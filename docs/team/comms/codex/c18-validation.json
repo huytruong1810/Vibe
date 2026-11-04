@@ -49,9 +49,9 @@
       "run": "https://github.com/huytruong1810/Vibe/actions/runs/41688294291",
       "checksAndBeta": "success",
       "ecology": "scope-skipped for documentation-only changes; not another full soak",
-      "browser": "failure; npm run test:browser exited 1 after 12m31s; exact failed test unknown from public annotations",
+      "browser": "failure; npm run test:browser exited 1 after 12m31s. Director-supplied log/trace identifies C18 maximum-book opening: 328.8 ms against unchanged 100 ms gate; 22 other journeys passed",
       "verify": "failure",
-      "note": "No full-workflow-green claim. Next session must inspect the failed-test trace before C19."
+      "note": "No full-workflow-green claim. Supplied trace lacks internal phase timings; see c18-ci-diagnostics.json for instrumentation and local failure-retention validation before C19."
     }
   },
   "book": {
