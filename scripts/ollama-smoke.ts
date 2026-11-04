@@ -8,9 +8,9 @@ import { DialogueResponseSchema, PlanService, MemoryRepository } from '../src/do
 import { NPC_PROFILES } from '../src/content/definitions';
 import { SimulationHost } from '../src/domain/simulation';
 import { ReadingResponseSchema } from '../src/domain/text-contracts';
+import { paintingSmoke } from './painting-smoke';
 
 if (process.argv.includes('--painting')) {
-  const { paintingSmoke } = await import('./painting-smoke');
   await paintingSmoke();
   process.exit(process.exitCode ?? 0);
 }
