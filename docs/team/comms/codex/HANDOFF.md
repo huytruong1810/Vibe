@@ -1,136 +1,111 @@
 # Codex session handoff
 
-## Current work: investigate C18 worker waits, then repair before C19 and C20
+## Next: C18 trace-screenshot repair, then C19 and C20
 
 Branch `eng/hd-presentation`, workspace `C:/Users/htruong/source/repos/Vibe`.
-Clean pickup at **3ccf5ab** on 2026-11-03 (America/Chicago). The director
-authorized bounded worker/main-thread diagnostics and a focused CPU trace.
-Instrumentation is implemented locally; no latency repair or C19 implementation
-has started.
-
-Completed and pushed:
-
-- **c73cdb8**: bounded book-opening phase measurements and browser receipts saved
-  before assertions and in `finally`.
-- **1110305**: CI-only public notice containing the phase receipt, so diagnostics
-  can be inspected without downloading authenticated artifacts.
-- **b17d0c4**: both CI receipts, validation evidence and session record.
-- Earlier C13 **9b229bd** / **de93730**, C18 **8619e25** and evidence **89ffe45**
-  remain candidates, never approvals. Do not restart their implementation.
+Director-authorized investigation started at **3ccf5ab** on 2026-11-03
+(America/Chicago). Initial diagnostics are committed and pushed as **731da0e**;
+compact notice/engine-summary follow-up is validated and ready for publication. No latency repair or
+C19 implementation has started. Do not restart C13/C18 implementations.
 
 Use [team-comms](../../../../.agents/skills/team-comms/SKILL.md) and
 [doctrine-lookup](../../../../.agents/skills/doctrine-lookup/SKILL.md).
 Read `docs/team/briefs/codex.md` at pickup and after compaction. Keep the existing
 [session log](session-2026-11-02.md) current. Leave Vibe-art and other review
-worktrees alone. No alarm, hourly automation or owned server is left running.
+worktrees alone. No owned server is left running; the temporary experiment
+configuration has been removed.
 
-## Worker-wait instrumentation
+## What the investigation established
 
-- BookScreen brackets its opening with a fresh diagnostic window. WorkerBridge
-  retains only that opening: up to eight request receipts and 32 main-thread work
-  intervals. The existing five performance measurements remain unchanged.
-- Optional worker message diagnostics correlate request IDs and worker-local
-  receipt/service/reply timestamps with bridge-local dispatch/receipt/resolution.
-  Worker replies include at most 16 recent work intervals. Do not subtract clocks
-  across threads or add overlapping nested work intervals.
-- Work timings cover host submission/content, frame construction, synchronous
-  postMessage cost, command publication and periodic clock/frame work; the main
-  thread records renderer apply, HUD update, full frame handler and renderer ticks.
-- The literacy journey captures artifacts/c18-book-cpu.json with Chromium tracing
-  around the maximum-size opening. The existing JSON and public notice include
-  the latest bridge receipt, still saved on assertion failure. Raw local normal
-  trace is retained as artifacts/c18-book-cpu-normal.json; its hash and opening
-  window call summary are in [diagnostic evidence](c18-ci-diagnostics.json).
-- Stable-source normal journey passed 1/1 in 1.6 minutes: 52.7 ms total,
-  pause/content 13.9/33.2 ms, worker request service 3.4/1.5 ms. Command and periodic
-  publications took 16.2/16.5 ms between the requests, with main-thread frame work
-  overlapping the content wait. Full four-worker check ran concurrently, so this
-  is diagnostic evidence under load rather than isolated latency acceptance.
-- The CPU trace confirms worker command/timer work and main-thread frame/ticker
-  work in that opening window. No remote root-cause or repair claim follows from
-  this local passing capture. Isolated CI-enabled local capture passed 1/1 in
-  1.3 minutes: 31.5 ms total; pause/content 12.5/13.3 ms, request service 0.1/0.7 ms,
-  command frame build/post 5.8/2.1 ms and main frame handler 5.8 ms. The raw CI
-  trace is artifacts/c18-book-cpu-ci.json; hash and call summary are in evidence.
-- Final four-worker check passed 468 tests/36 files in 60.66 s plus types,
-  architecture, assets, production build, hygiene and full formatting.
-  Trace cleanup preserves the existing receipt/notice
-  even when CPU stream capture fails.
-- An initial local browser attempt was invalidated by my source edit triggering a
-  Vite reload before maximum-size opening; it is excluded from timing evidence.
+Full receipts, trace hashes, focused call summaries and the exact truncated
+public notice are in [diagnostic evidence](c18-ci-diagnostics.json).
 
-## First actions: finish the browser CI repair
+- Source **731da0e** [push CI41763990779](https://github.com/huytruong1810/Vibe/actions/runs/41763990779)
+  passed CPU checks/benchmark and both production beta bases. Browser failed
+  within its 20-minute envelope (browser step16m04s, job18m59s); verify failed.
+  Ecology exceeded the unchanged25-minute limit; no successful soak is claimed.
+- The public C18 receipt shows **636.8 ms** opening: pause320.7, content312.4,
+  render0.1, modal3.6 ms. Worker service was **0.1/0.4 ms**, recent worker work
+  at most6 ms, measured renderer ticks1.0?1.1 ms and frame handlers1.3?2.9 ms.
+  Long gaps lie outside those measured callbacks. This does not support an
+  expensive pause/content-service or HUD/ticker-callback repair.
+- The initial expanded notice truncated at4094 characters; its complete prefix
+  fields are labelled as extracted evidence, never as an intact JSON receipt.
+  PR twin41763996060 also shows roughly315?317 ms waits and tiny worker service;
+  its notice truncated earlier. Remote raw CPU trace has not been downloaded.
+- Normal local source731da0e passed1/1 in57.6s: **36.3 ms** opening, two pages,
+  no errors. CI-enabled local capture passed1/1 in1.3min: **31.5 ms** opening.
+  A prior52.7 ms normal capture ran alongside full check and is labelled under load.
+- Forced local SwiftShader, using the same journey and unchanged assertions,
+  reproduced **440.5 ms** opening and failed the100 ms gate. CPU/GPU trace shows
+  a **302.3 ms** main-thread RasterImplementation::Finish/command-buffer wait,
+  overlapping a roughly**298 ms** GPU RealSwapBuffers task during content wait.
+  Worker content service was0.8 ms. Trace intervals nest; never sum them.
+- Controlled experiment: same software renderer, with only continuous Playwright
+  trace screenshots disabled, passed1/1 in1.8min at **37.5 ms**. A long GPU swap
+  remained in flight while the main thread stayed responsive. DOM snapshots and
+  the explicit1080p screenshot remained. This isolates recorder screenshot
+  readback as the reproduced main-thread stall. It is the candidate explanation
+  for CI's matching gaps; remote engine-summary confirmation remains pending.
+- Every produced spread screenshot was inspected. The controlled trace setting
+  was temporary and is not shipped. The original journey still retains continuous
+  trace screenshots, so CI is expected to remain red until the separate repair.
 
-1. Check branch, `git status` and `git log`; pull with `git pull --ff-only` only
-   with a clean tree. Read new addressed messages after `.last-read`, especially
-   replies to the [C18 machine-A request](2026-11-03T1730--to-blender--test-c18-reading.md).
-2. Read [diagnostic evidence](c18-ci-diagnostics.json). The director's historical
-   archive `C:/Users/htruong/Downloads/browser-journey-artifacts.zip` was inspected:
-   C18 opening **328.8 ms > 100 ms**, with the other 22 journeys passing. That
-   historical trace predates phase measurements; do not confuse it with new CI.
-3. Inspect newer CI at pickup. The source **1110305** runs below are completed and
-   red. Documentation-only **b17d0c4** has
-   [push run41761606519](https://github.com/huytruong1810/Vibe/actions/runs/41761606519)
-   and PR twin41761614061 still running as of this handoff; no result is claimed.
+## Diagnostic implementation and validation
 
-### Confirmed remote findings
+- BookScreen brackets each opening with a fresh window. WorkerBridge retains up
+  to8 requests and32 main-thread intervals; worker replies include16 recent work
+  intervals. Only the latest opening is retained. Existing total/four phases and
+  on-demand artifact transport remain unchanged.
+- Optional message metadata correlates IDs, bridge dispatch/receipt/resolution
+  and worker receipt/service/reply. Compare durations within their thread clocks.
+  Main instrumentation covers frame handler, renderer apply, HUD and ticker;
+  worker instrumentation covers submit/content, frame construction/postMessage,
+  command publication and periodic clock/frame work.
+- The follow-up keeps public notices below3500 UTF-8 bytes, prioritizes total and
+  four phases, and summarizes the longest opening-window engine/GPU trace events.
+  Complete bounded receipts and raw CPU traces remain in artifacts. Chromium
+  tracing has its own shared timeline; it is distinct from request-local clocks.
+- Trace rows are `[name, startRelativeMs, fullDurationMs, overlapWithOpeningMs]`.
+  Main work rows are `[name, startRelativeMs, durationMs]`; request recent-work
+  offsets are relative to that worker receipt. Nested rows overlap.
+- Ordinary CI-enabled validation of the compact notice passed1/1 in59.8s with
+  **36.9 ms** opening, two pages and no errors. The full compact JSON notice and
+  engine/GPU summary emitted intact. All seven explicit captures were inspected.
+- Four-worker full check on731da0e passed468 tests/36 files in60.66s, plus types,
+  architecture, assets, production build, formatting and hygiene. Follow-up adds
+  two meaningful trace-window/annotation-budget tests. Final four-worker check
+  passes470 tests/37 files in57.51s, plus all prior gates and full formatting.
+- An initial browser run was invalidated by my edit causing a Vite reload before
+  maximum-size opening; it is excluded from timing evidence.
 
-| Source `1110305` | Total | Pause acknowledgement | Content retrieval | Spread render | Modal |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| [Push 41759162909](https://github.com/huytruong1810/Vibe/actions/runs/41759162909) | 607.8 ms | 305.5 ms | 297.8 ms | 0.2 ms | 4.3 ms |
-| [PR 41759172479](https://github.com/huytruong1810/Vibe/actions/runs/41759172479) | 393.2 ms | 192 ms | 198.5 ms | 0.2 ms | 2.5 ms |
+## Concrete next repair: separate commit
 
-Both mount two pages. Delay is concentrated in the **two sequential worker
-round-trip waits**. These measurements do **not** distinguish worker service time
-from main-thread delivery, rendering or scheduling delays. No underlying-cause or
-latency-repair claim is justified yet.
+1. Clean pull with `git pull --ff-only`; read new addressed messages after
+   `.last-read`. Read the latest diagnostic follow-up CI public notice to confirm
+   the engine-level remote mechanism. Public notices need no stored credentials.
+2. Scope `test.use({ trace: { mode: 'retain-on-failure', screenshots: false,
+   snapshots: true } })` to the literacy performance journey. Keep its explicit
+   1080p capture, DOM snapshots, CPU trace/compact notice, every functional
+   assertion and the100 ms opening assertion. Other journeys retain their trace
+   settings. This removes the reproduced recorder readback from the latency path.
+3. Preserve authoritative pause/reach/session checks, on-demand content, five
+   performance entries and two-page mounting. No production worker protocol or
+   book-opening behavior repair is justified by current evidence.
+4. Run normal and CI-enabled focused literacy journeys, plus a forced-SwiftShader
+   experiment using the actual scoped trace setting. Inspect all new screenshots.
+   Run relevant regressions, four-worker check, formatting and hygiene. Keep all
+   assertions, budgets, retry counts, required verify and job limits unchanged.
+5. Confirm full browser suite and aggregate verify remotely before C19. Record
+   the independent ecology timeout honestly; preserve25 minutes. Machine-A C18
+   reading/model acceptance and director review remain external.
 
-Both browser steps exited **1**, within their unchanged 20-minute job limits
-(push 16m42s, PR 12m23s); aggregate `verify` correctly failed. CPU checks and both
-production beta bases passed. Ecology was scope-skipped, not another full soak.
-The earlier diagnostic source c73cdb8/run 41758344674 also exited 1 (16m37s browser
-step), within its job envelope. These failures are not job timeouts.
-
-Public timing receipts:
-[push annotations](https://api.github.com/repos/huytruong1810/Vibe/check-runs/126342436407/annotations),
-[PR annotations](https://api.github.com/repos/huytruong1810/Vibe/check-runs/126342466743/annotations).
-Filter for title `C18 book opening diagnostics`. Public API access works through
-`curl.exe`; sandboxed network calls may need escalation. `gh` is unavailable.
-Push browser artifact **13290199166** uploaded successfully. Its raw trace was
-not downloaded: unauthenticated artifact download returned **401**. Earlier
-automatic review rejected stored-credential access; do not repeat or bypass it.
-Use public notices for timings and an explicitly supplied archive for raw traces.
-
-### Next investigation and repair
-
-1. Start with `BookScreen.open` in `src/presentation/ui/book.ts`: it awaits pause,
-   then content, then renders and opens the modal. Keep the existing total and
-   four phase measurements; only the current opening's five entries are retained.
-2. Correlate request IDs through `src/adapters/worker-bridge.ts` and
-   `src/worker/simulation.worker.ts`. Profile request dispatch/receipt, worker
-   `host.submit`, `host.artifactContent`, command-triggered `publish('frame')`
-   and the periodic simulation/frame work.
-3. On the main thread, profile frame handling in `src/main.ts`, HUD update and
-   renderer/ticker work around those replies. Compare durations measured within
-   each thread; do not subtract clocks with unrelated time origins. If needed,
-   add bounded diagnostics and a focused CPU trace before selecting a repair.
-4. Fix the demonstrated bottleneck. Removing one round trip alone is not proven
-   sufficient: each remote wait already exceeds 100 ms. Preserve authoritative reach,
-   session checks, pause semantics, on-demand content and two-page mounting.
-5. Validate `npm run test:browser -- tests/browser/literacy.spec.ts` and the same
-   command with `CI=1`; inspect every new screenshot. Run relevant worker/literacy
-   regressions, four-worker `npm run check`, format and hygiene. Confirm the full
-   browser suite and aggregate `verify` remotely before moving to C19.
-6. Preserve the **100 ms** opening gate, all assertions, HD/artifact budgets,
-   required `verify` and job limits. Do not skip cases, increase timeouts or add
-   retries. Only investigate sharding if separate runtime evidence warrants it.
-
-Local diagnostic evidence is already complete: focused test 1/1 in 47.5s (24.9 ms
-opening), CI-enabled test 1/1 in 38.0s (17.5 ms). A temporary impossible -1 ms assertion
-failed as intended and retained a fresh 82.9 ms receipt plus trace; **100 ms is restored**.
-All four phases sum to the total; five entries remain after repeated opens.
-Typecheck, full repository formatting and hygiene passed; generated spreads were
-inspected. Do not rerun that temporary assertion as ordinary validation.
+Authenticated artifact download previously returned401 and automatic review
+rejected stored-credential access. Do not repeat or bypass that rejection. Use
+public notices or an explicitly supplied archive. The director's historical
+Downloads/browser-journey-artifacts.zip predates phase measurements (328.8 ms);
+it is not the new CPU trace. Earlier diagnostic history lives in commits
+c73cdb8,1110305,b17d0c4 and3ccf5ab and the evidence JSON.
 
 ## Ticket order after the repair
 

@@ -191,8 +191,133 @@
     "pageErrors": []
   },
   "finding": "Both CI receipts isolate the delay to sequential pause/content worker round-trip waits: PR 390.5 of 393.2 ms; push 603.3 of 607.8 ms. Rendering plus modal costs 2.7/4.5 ms respectively, with two mounted pages. Worker service time versus main-thread delivery/render scheduling remains unseparated.",
+  "remoteWorkerNotice731da0e": {
+    "sourceCommit": "731da0e",
+    "run": "https://github.com/huytruong1810/Vibe/actions/runs/41763990779",
+    "annotations": "https://api.github.com/repos/huytruong1810/Vibe/check-runs/126357949751/annotations",
+    "browser": "failure",
+    "verify": "failure",
+    "checks": "success",
+    "beta": "both bases passed",
+    "rawNotice": "{\"workerWaits\":{\"start\":32397.100000000093,\"end\":33034.30000000005,\"requests\":[{\"id\":\"world:063ac13f-e952-4b41-9795-85235e331c95:42:c35\",\"type\":\"command\",\"dispatched\":32397.20000000007,\"received\":32717.70000000007,\"worker\":{\"requestId\":\"world:063ac13f-e952-4b41-9795-85235e331c95:42:c35\",\"received\":31914.099999999977,\"serviceEnd\":31914.20000000007,\"reply\":31914.300000000047,\"recent\":[{\"name\":\"clock-consume\",\"start\":31830.900000000023,\"end\":31833.099999999977},{\"name\":\"periodic-work\",\"start\":31830.900000000023,\"end\":31833.099999999977},{\"name\":\"clock-consume\",\"start\":31847,\"end\":31847},{\"name\":\"periodic-work\",\"start\":31847,\"end\":31847},{\"name\":\"clock-consume\",\"start\":31863,\"end\":31865.300000000047},{\"name\":\"periodic-work\",\"start\":31863,\"end\":31865.300000000047},{\"name\":\"clock-consume\",\"start\":31879,\"end\":31879},{\"name\":\"periodic-work\",\"start\":31879,\"end\":31879},{\"name\":\"clock-consume\",\"start\":31895,\"end\":31901},{\"name\":\"periodic-work\",\"start\":31895,\"end\":31901},{\"name\":\"clock-consume\",\"start\":31911,\"end\":31911},{\"name\":\"host-frame\",\"start\":31911,\"end\":31913.5},{\"name\":\"post-frame\",\"start\":31913.5,\"end\":31914},{\"name\":\"publish-frame\",\"start\":31911,\"end\":31914},{\"name\":\"periodic-work\",\"start\":31911,\"end\":31914},{\"name\":\"host-submit\",\"start\":31914.099999999977,\"end\":31914.20000000007}]},\"resolved\":32717.800000000047},{\"id\":\"artifact:36\",\"type\":\"artifactContent\",\"dispatched\":32717.900000000023,\"received\":33030.20000000007,\"worker\":{\"requestId\":\"artifact:36\",\"received\":32233.099999999977,\"serviceEnd\":32233.5,\"reply\":32233.5,\"recent\":[{\"name\":\"post-frame\",\"start\":32137.400000000023,\"end\":32137.800000000047},{\"name\":\"publish-frame\",\"start\":32135,\"end\":32137.800000000047},{\"name\":\"periodic-work\",\"start\":32135,\"end\":32137.800000000047},{\"name\":\"clock-consume\",\"start\":32151,\"end\":32151},{\"name\":\"periodic-work\",\"start\":32151,\"end\":32151},{\"name\":\"clock-consume\",\"start\":32167,\"end\":32167},{\"name\":\"periodic-work\",\"start\":32167,\"end\":32167},{\"name\":\"clock-consume\",\"start\":32183,\"end\":32183},{\"name\":\"periodic-work\",\"start\":32183,\"end\":32183},{\"name\":\"clock-consume\",\"start\":32198.900000000023,\"end\":32198.900000000023},{\"name\":\"periodic-work\",\"start\":32198.900000000023,\"end\":32198.900000000023},{\"name\":\"clock-consume\",\"start\":32214.900000000023,\"end\":32214.900000000023},{\"name\":\"periodic-work\",\"start\":32214.900000000023,\"end\":32214.900000000023},{\"name\":\"clock-consume\",\"start\":32231,\"end\":32231},{\"name\":\"periodic-work\",\"start\":32231,\"end\":32231},{\"name\":\"host-artifact-content\",\"start\":32233.099999999977,\"end\":32233.5}]},\"resolved\":33030.20000000007}],\"main\":[{\"name\":\"renderer-tick\",\"start\":32397.70000000007,\"end\":32398.800000000047},{\"name\":\"renderer-apply\",\"start\":32710.800000000047,\"end\":32711.800000000047},{\"name\":\"hud-update\",\"start\":32711.800000000047,\"end\":32713.70000000007},{\"name\":\"frame-handler\",\"start\":32710.800000000047,\"end\":32713.70000000007},{\"name\":\"renderer-apply\",\"start\":32714.800000000047,\"end\":32715.400000000023},{\"name\":\"hud-update\",\"start\":32715.400000000023,\"end\":32717.5},{\"name\":\"frame-handler\",\"start\":32714.800000000047,\"end\":32717.5},{\"name\":\"renderer-apply\",\"start\":32718.600000000093,\"end\":32718.800000000047},{\"name\":\"hud-update\",\"start\":32718.800000000047,\"end\":32720.300000000047},{\"name\":\"frame-handler\",\"start\":32718.5,\"end\":32720.300000000047},{\"name\":\"renderer-apply\",\"start\":32720.900000000023,\"end\":32721.20000000007},{\"name\":\"hud-update\",\"start\":32721.20000000007,\"end\":32722.400000000023},{\"name\":\"frame-handler\",\"start\":32720.900000000023,\"end\":32722.400000000023},{\"name\":\"renderer-apply\",\"start\":32723,\"end\":32723.20000000007},{\"name\":\"hud-update\",\"start\":32723.20000000007,\"end\":32724.300000000047},{\"name\":\"frame-handler\",\"start\":32723,\"end\":32724.300000000047},{\"name\":\"renderer-tick\",\"start\":32725,\"end\":32726}]},\"viewport\":{\"width\":1920,\"height\":1080},\"maximumPages\":48,\"mountedPages\":2,\"pageLabel\":\"1–2 / 48\",\"openingMs\":636.7999999999302,\"phaseTimingsMs\":{\"pause\":320.69999999995343,\"content\":312.4000000000233,\"render\":0.09999999997671694,\"show-modal\":3.599999999976717},\"measurements\":[{\"name\":\"hearthwild:b",
+    "noticeTruncated": true,
+    "noticeCharacters": 4094,
+    "openingMs": 636.7999999999302,
+    "phaseTimingsMs": {
+      "pause": 320.69999999995343,
+      "content": 312.4000000000233,
+      "render": 0.09999999997671694,
+      "show-modal": 3.599999999976717
+    },
+    "mountedPages": 2,
+    "requests": [
+      {
+        "id": "world:063ac13f-e952-4b41-9795-85235e331c95:42:c35",
+        "waitMs": 320.5999999999767,
+        "serviceMs": 0.10000000009313226,
+        "workerRecentMaxMs": 6
+      },
+      {
+        "id": "artifact:36",
+        "waitMs": 312.30000000004657,
+        "serviceMs": 0.40000000002328306,
+        "workerRecentMaxMs": 2.800000000046566
+      }
+    ],
+    "main": [
+      {
+        "name": "renderer-tick",
+        "relativeStartMs": 0.5999999999767169,
+        "durationMs": 1.099999999976717
+      },
+      {
+        "name": "renderer-apply",
+        "relativeStartMs": 313.69999999995343,
+        "durationMs": 1
+      },
+      {
+        "name": "hud-update",
+        "relativeStartMs": 314.69999999995343,
+        "durationMs": 1.900000000023283
+      },
+      {
+        "name": "frame-handler",
+        "relativeStartMs": 313.69999999995343,
+        "durationMs": 2.900000000023283
+      },
+      {
+        "name": "renderer-apply",
+        "relativeStartMs": 317.69999999995343,
+        "durationMs": 0.5999999999767169
+      },
+      {
+        "name": "hud-update",
+        "relativeStartMs": 318.29999999993015,
+        "durationMs": 2.099999999976717
+      },
+      {
+        "name": "frame-handler",
+        "relativeStartMs": 317.69999999995343,
+        "durationMs": 2.699999999953434
+      },
+      {
+        "name": "renderer-apply",
+        "relativeStartMs": 321.5,
+        "durationMs": 0.19999999995343387
+      },
+      {
+        "name": "hud-update",
+        "relativeStartMs": 321.69999999995343,
+        "durationMs": 1.5
+      },
+      {
+        "name": "frame-handler",
+        "relativeStartMs": 321.39999999990687,
+        "durationMs": 1.8000000000465661
+      },
+      {
+        "name": "renderer-apply",
+        "relativeStartMs": 323.79999999993015,
+        "durationMs": 0.30000000004656613
+      },
+      {
+        "name": "hud-update",
+        "relativeStartMs": 324.0999999999767,
+        "durationMs": 1.1999999999534339
+      },
+      {
+        "name": "frame-handler",
+        "relativeStartMs": 323.79999999993015,
+        "durationMs": 1.5
+      },
+      {
+        "name": "renderer-apply",
+        "relativeStartMs": 325.89999999990687,
+        "durationMs": 0.2000000000698492
+      },
+      {
+        "name": "hud-update",
+        "relativeStartMs": 326.0999999999767,
+        "durationMs": 1.099999999976717
+      },
+      {
+        "name": "frame-handler",
+        "relativeStartMs": 325.89999999990687,
+        "durationMs": 1.3000000000465661
+      },
+      {
+        "name": "renderer-tick",
+        "relativeStartMs": 327.89999999990687,
+        "durationMs": 1
+      }
+    ],
+    "finding": "Long gaps lie outside the recorded worker service and main-thread frame/HUD/renderer callbacks. Neither expensive worker service nor a long measured renderer callback explains the failure. Raw remote CPU trace remains uninspected. Public notice was truncated; trace summary and compact notice are being added.",
+    "browserStep": "failed in16m04s within unchanged20-minute job envelope; job18m59s",
+    "ecology": "timed out at unchanged25-minute limit; public annotation confirms; no soak artifact",
+    "ecologyAnnotations": "https://api.github.com/repos/huytruong1810/Vibe/check-runs/126357949674/annotations"
+  },
   "workerWaitInvestigation": {
-    "status": "diagnostics implemented; no repair",
+    "status": "diagnostics and controlled reproduction implemented; concrete separate repair prepared; no repair shipped",
     "normal": {
       "command": "npm run test:browser -- tests/browser/literacy.spec.ts",
       "result": "1 passed in 1.6 minutes",
@@ -567,7 +692,7 @@
       }
     },
     "invalidAttempt": "Source edit caused Vite reload before maximum-size opening; discarded for timing evidence. Screenshot inspected.",
-    "interpretation": "Local receipt separates small request service times from waits. Command-triggered and periodic frame publication plus main-thread frame work overlap the content wait. Remote failure remains unprofiled.",
+    "interpretation": "Public source731da0e receipt excludes expensive worker service and measured frame/HUD/ticker callbacks as causes of its long waits. Controlled forced-SwiftShader experiment reproduces a main-thread GPU readback stall with continuous trace screenshots, then removes it by disabling only those screenshots. This is the candidate explanation for CI; the new engine-level remote summary remains pending.",
     "localCi": {
       "command": "CI=1 npm run test:browser -- tests/browser/literacy.spec.ts",
       "result": "1 passed in 1.3 minutes; notice emitted",
@@ -907,9 +1032,879 @@
       "command": "VITEST_MAX_WORKERS=4 npm run check",
       "result": "passed; 468 tests in 36 files; unit/test project duration 60.66 seconds; types, architecture, assets, hygiene and production build pass",
       "focusedRegressions": "19 bridge/literacy/reading tests passed; actual worker regression passed 1/1",
-      "screenshots": "All three generated spread captures inspected",
-      "processCleanup": "All three Playwright-owned Vite process IDs were absent after the journeys"
+      "screenshots": "All seven explicit spread captures inspected",
+      "processCleanup": "All seven Playwright-owned Vite process IDs absent after the journeys; temporary config removed",
+      "finalFollowup": {
+        "command": "VITEST_MAX_WORKERS=4 npm run check; npm run format:check",
+        "result": "passed; 470 tests /37 files in57.51 seconds; typecheck, architecture, assets, production build, hygiene and full formatting passed"
+      }
     },
-    "nextRepair": "Obtain the new remote receipt first. Local evidence identifies intervening frame publication and main-thread work rather than expensive pause/content service, but cannot explain the previous 393-608 ms CI failures. Select the repair against the remote dominant interval; combining requests alone is not justified."
+    "nextRepair": "Separately configure the literacy performance journey to retain-on-failure traces with DOM snapshots but screenshots:false; preserve its explicit 1080p screenshot, CPU trace/compact summary, 100 ms assertion, every functional assertion and all full-suite/verify gates. Re-run forced SwiftShader with the real scoped configuration, normal/CI focused journeys and full browser CI. Confirm engine-level remote CPU summary; no production worker or book-open protocol change is justified by the current evidence.",
+    "finalNormal": {
+      "sourceCommit": "731da0e",
+      "command": "npm run test:browser -- tests/browser/literacy.spec.ts",
+      "result": "1 passed in 57.6 seconds; test 48.4 seconds",
+      "receiptPath": "artifacts/c18-book-browser-final-normal.json",
+      "receiptSha256": "6154e1f172bb0b91e24398431d6010bd549cbac48456ebab77f3a52c82b27f58",
+      "openingMs": 36.300000071525574,
+      "phaseTimingsMs": {
+        "pause": 10.900000095367432,
+        "content": 14.399999976158142,
+        "render": 0.2999999523162842,
+        "show-modal": 10.700000047683716
+      },
+      "mountedPages": 2,
+      "measurementsRetained": 5,
+      "pageErrors": [],
+      "requests": [
+        {
+          "id": "world:5c7e0c20-023d-4c77-8f61-4fced6ae8362:42:c35",
+          "type": "command",
+          "roundTripMs": 10.700000047683716,
+          "workerServiceMs": 0.10000002384185791
+        },
+        {
+          "id": "artifact:36",
+          "type": "artifactContent",
+          "roundTripMs": 13.799999952316284,
+          "workerServiceMs": 1.100000023841858
+        }
+      ],
+      "cpuTrace": {
+        "path": "artifacts/c18-book-cpu-final-normal.json",
+        "sha256": "015152718e596b330d94546dc3d349b9fb247df9caed12715e19f2edd41de72d",
+        "bytes": 1358014
+      },
+      "screenshot": "Inspected final sealed River diary spread: two readable columns, navigation and no write control."
+    },
+    "softwareRenderingExperiment": {
+      "command": "CI=1 npx playwright test --config docs/team/comms/codex/tmp/swiftshader.config.ts --project=journeys tests/browser/literacy.spec.ts",
+      "launchArgs": [
+        "--enable-unsafe-swiftshader",
+        "--use-angle=swiftshader"
+      ],
+      "result": "1 failed at unchanged 100 ms assertion; opening 440.5 ms; test 2.0 minutes",
+      "receipt": {
+        "workerWaits": {
+          "start": 108884.80000007153,
+          "end": 109325.5,
+          "requests": [
+            {
+              "id": "world:6cedac1f-9ba6-43b3-a089-746a82754baa:42:c38",
+              "type": "command",
+              "dispatched": 108884.80000007153,
+              "received": 108954.80000007153,
+              "worker": {
+                "requestId": "world:6cedac1f-9ba6-43b3-a089-746a82754baa:42:c38",
+                "received": 73479.10000002384,
+                "serviceEnd": 73479.19999992847,
+                "reply": 73479.19999992847,
+                "recent": [
+                  {
+                    "name": "periodic-work",
+                    "start": 73194.60000002384,
+                    "end": 73194.60000002384
+                  },
+                  {
+                    "name": "clock-consume",
+                    "start": 73209.5,
+                    "end": 73209.5
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 73209.5,
+                    "end": 73209.5
+                  },
+                  {
+                    "name": "clock-consume",
+                    "start": 73241,
+                    "end": 73319.10000002384
+                  },
+                  {
+                    "name": "host-frame",
+                    "start": 73319.10000002384,
+                    "end": 73327.69999992847
+                  },
+                  {
+                    "name": "post-frame",
+                    "start": 73327.69999992847,
+                    "end": 73329.79999995232
+                  },
+                  {
+                    "name": "publish-frame",
+                    "start": 73319.10000002384,
+                    "end": 73329.89999997616
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 73241,
+                    "end": 73329.89999997616
+                  },
+                  {
+                    "name": "clock-consume",
+                    "start": 73330.19999992847,
+                    "end": 73361.79999995232
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 73330.19999992847,
+                    "end": 73361.79999995232
+                  },
+                  {
+                    "name": "clock-consume",
+                    "start": 73362.10000002384,
+                    "end": 73369.19999992847
+                  },
+                  {
+                    "name": "host-frame",
+                    "start": 73369.19999992847,
+                    "end": 73478.29999995232
+                  },
+                  {
+                    "name": "post-frame",
+                    "start": 73478.29999995232,
+                    "end": 73478.89999997616
+                  },
+                  {
+                    "name": "publish-frame",
+                    "start": 73369.19999992847,
+                    "end": 73479
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 73362.10000002384,
+                    "end": 73479
+                  },
+                  {
+                    "name": "host-submit",
+                    "start": 73479.10000002384,
+                    "end": 73479.19999992847
+                  }
+                ]
+              },
+              "resolved": 108954.80000007153
+            },
+            {
+              "id": "artifact:39",
+              "type": "artifactContent",
+              "dispatched": 108955,
+              "received": 109320.70000004768,
+              "worker": {
+                "requestId": "artifact:39",
+                "received": 73509.10000002384,
+                "serviceEnd": 73509.89999997616,
+                "reply": 73509.89999997616,
+                "recent": [
+                  {
+                    "name": "host-frame",
+                    "start": 73369.19999992847,
+                    "end": 73478.29999995232
+                  },
+                  {
+                    "name": "post-frame",
+                    "start": 73478.29999995232,
+                    "end": 73478.89999997616
+                  },
+                  {
+                    "name": "publish-frame",
+                    "start": 73369.19999992847,
+                    "end": 73479
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 73362.10000002384,
+                    "end": 73479
+                  },
+                  {
+                    "name": "host-submit",
+                    "start": 73479.10000002384,
+                    "end": 73479.19999992847
+                  },
+                  {
+                    "name": "post-result",
+                    "start": 73479.19999992847,
+                    "end": 73479.19999992847
+                  },
+                  {
+                    "name": "host-frame",
+                    "start": 73479.29999995232,
+                    "end": 73503.69999992847
+                  },
+                  {
+                    "name": "post-frame",
+                    "start": 73503.69999992847,
+                    "end": 73504.29999995232
+                  },
+                  {
+                    "name": "publish-frame",
+                    "start": 73479.29999995232,
+                    "end": 73504.29999995232
+                  },
+                  {
+                    "name": "command-publish",
+                    "start": 73479.29999995232,
+                    "end": 73504.29999995232
+                  },
+                  {
+                    "name": "clock-consume",
+                    "start": 73504.39999997616,
+                    "end": 73504.39999997616
+                  },
+                  {
+                    "name": "host-frame",
+                    "start": 73504.39999997616,
+                    "end": 73507.79999995232
+                  },
+                  {
+                    "name": "post-frame",
+                    "start": 73507.79999995232,
+                    "end": 73508.69999992847
+                  },
+                  {
+                    "name": "publish-frame",
+                    "start": 73504.39999997616,
+                    "end": 73508.69999992847
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 73504.39999997616,
+                    "end": 73508.69999992847
+                  },
+                  {
+                    "name": "host-artifact-content",
+                    "start": 73509.10000002384,
+                    "end": 73509.79999995232
+                  }
+                ]
+              },
+              "resolved": 109320.70000004768
+            }
+          ],
+          "main": [
+            {
+              "name": "renderer-apply",
+              "start": 108949.10000002384,
+              "end": 108950.20000004768
+            },
+            {
+              "name": "hud-update",
+              "start": 108950.20000004768,
+              "end": 108954.20000004768
+            },
+            {
+              "name": "frame-handler",
+              "start": 108949.10000002384,
+              "end": 108954.20000004768
+            },
+            {
+              "name": "renderer-apply",
+              "start": 108957.30000007153,
+              "end": 108957.89999997616
+            },
+            {
+              "name": "hud-update",
+              "start": 108957.89999997616,
+              "end": 108961.5
+            },
+            {
+              "name": "frame-handler",
+              "start": 108957.30000007153,
+              "end": 108961.5
+            },
+            {
+              "name": "renderer-apply",
+              "start": 108963.39999997616,
+              "end": 108964.10000002384
+            },
+            {
+              "name": "hud-update",
+              "start": 108964.10000002384,
+              "end": 108966.70000004768
+            },
+            {
+              "name": "frame-handler",
+              "start": 108963.39999997616,
+              "end": 108966.80000007153
+            },
+            {
+              "name": "renderer-tick",
+              "start": 109313.80000007153,
+              "end": 109316.89999997616
+            }
+          ]
+        },
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "maximumPages": 48,
+        "mountedPages": 2,
+        "pageLabel": "1–2 / 48",
+        "openingMs": 440.5,
+        "phaseTimingsMs": {
+          "pause": 70.09999990463257,
+          "content": 365.8000000715256,
+          "render": 0.19999992847442627,
+          "show-modal": 4.400000095367432
+        },
+        "measurements": [
+          {
+            "name": "hearthwild:book-open:pause",
+            "startTime": 108884.80000007153,
+            "duration": 70.09999990463257
+          },
+          {
+            "name": "hearthwild:book-open",
+            "startTime": 108884.80000007153,
+            "duration": 440.5
+          },
+          {
+            "name": "hearthwild:book-open:content",
+            "startTime": 108954.89999997616,
+            "duration": 365.8000000715256
+          },
+          {
+            "name": "hearthwild:book-open:render",
+            "startTime": 109320.70000004768,
+            "duration": 0.19999992847442627
+          },
+          {
+            "name": "hearthwild:book-open:show-modal",
+            "startTime": 109320.89999997616,
+            "duration": 4.400000095367432
+          }
+        ],
+        "cpuSummary": {
+          "windowMs": 440.5,
+          "main": [
+            [
+              "CrRendererMain:RasterImplementation::Finish:",
+              123.6,
+              302.3,
+              302.3
+            ],
+            [
+              "CrRendererMain:CommandBufferHelper::Finish:",
+              123.7,
+              302.3,
+              302.3
+            ],
+            [
+              "CrRendererMain:CommandBufferProxyImpl::WaitForGetOffset:",
+              123.7,
+              302,
+              302
+            ],
+            [
+              "CrRendererMain:CommandBufferProxyImpl::WaitForToken:",
+              82.2,
+              41.4,
+              41.4
+            ],
+            [
+              "CrRendererMain:ThreadControllerImpl::RunTask:",
+              426.1,
+              9.2,
+              9.2
+            ],
+            [
+              "CrRendererMain:ProxyMain::BeginMainFrame:",
+              426.1,
+              9.2,
+              9.2
+            ]
+          ],
+          "other": [
+            [
+              "ThreadPoolForegroundWorker:ThreadPool_RunTask:",
+              -295.8,
+              689.7,
+              393.8
+            ],
+            [
+              "CrGpuMain:ThreadControllerImpl::RunTask:",
+              124.8,
+              298.8,
+              298.8
+            ],
+            [
+              "CrGpuMain:Scheduler::RunTask:",
+              124.8,
+              298.8,
+              298.8
+            ],
+            [
+              "CrGpuMain:NativeViewGLSurfaceEGL:RealSwapBuffers:",
+              125.4,
+              298,
+              298
+            ]
+          ]
+        },
+        "pageErrors": []
+      },
+      "receiptPath": "artifacts/c18-book-browser-swiftshader.json",
+      "receiptSha256": "59c56864a9278038fe741e3c9d2d234a95f1c2384278b14e2682e15638ecdc78",
+      "cpuTrace": {
+        "path": "artifacts/c18-book-cpu-swiftshader.json",
+        "sha256": "b8c38bfc5a27ac4167488af3e1e22fe692d5bb292efc3f0d8367fff426425b9a",
+        "bytes": 2663371
+      },
+      "finding": "Local software rendering reproduces a 302.3 ms Chromium raster/command-buffer finish wait overlapped by a 298 ms GPU RealSwapBuffers task during content retrieval. Worker content service 0.8 ms, measured JS work small. Candidate mechanism for remote gaps; remote raw trace not inspected.",
+      "screenshot": "Inspected sealed two-column River diary spread; test server stopped."
+    },
+    "softwareRenderingNoContinuousScreenshots": {
+      "command": "CI=1 npx playwright test --config docs/team/comms/codex/tmp/swiftshader.config.ts --project=journeys tests/browser/literacy.spec.ts",
+      "launchArgs": [
+        "--enable-unsafe-swiftshader",
+        "--use-angle=swiftshader"
+      ],
+      "controlledChange": "use.trace = {mode: 'retain-on-failure', screenshots: false, snapshots: true}; original config remains unchanged",
+      "result": "1 passed in 1.8 minutes; test 1.7 minutes; all assertions unchanged",
+      "receipt": {
+        "workerWaits": {
+          "start": 94613.70000004768,
+          "end": 94651.5,
+          "requests": [
+            {
+              "id": "world:c6e4bf4d-198f-47e6-b174-07737d20bed1:42:c36",
+              "type": "command",
+              "dispatched": 94613.70000004768,
+              "received": 94629.10000002384,
+              "worker": {
+                "requestId": "world:c6e4bf4d-198f-47e6-b174-07737d20bed1:42:c36",
+                "received": 63607.40000009537,
+                "serviceEnd": 63607.5,
+                "reply": 63607.5,
+                "recent": [
+                  {
+                    "name": "clock-consume",
+                    "start": 63417.40000009537,
+                    "end": 63417.5
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 63417.40000009537,
+                    "end": 63417.5
+                  },
+                  {
+                    "name": "clock-consume",
+                    "start": 63433,
+                    "end": 63443.5
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 63433,
+                    "end": 63443.5
+                  },
+                  {
+                    "name": "clock-consume",
+                    "start": 63449.800000071526,
+                    "end": 63449.800000071526
+                  },
+                  {
+                    "name": "host-frame",
+                    "start": 63449.800000071526,
+                    "end": 63453.60000002384
+                  },
+                  {
+                    "name": "post-frame",
+                    "start": 63453.60000002384,
+                    "end": 63454.60000002384
+                  },
+                  {
+                    "name": "publish-frame",
+                    "start": 63449.800000071526,
+                    "end": 63454.60000002384
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 63449.800000071526,
+                    "end": 63454.60000002384
+                  },
+                  {
+                    "name": "clock-consume",
+                    "start": 63480,
+                    "end": 63485.200000047684
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 63480,
+                    "end": 63485.200000047684
+                  },
+                  {
+                    "name": "clock-consume",
+                    "start": 63497.200000047684,
+                    "end": 63548.60000002384
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 63497.200000047684,
+                    "end": 63548.60000002384
+                  },
+                  {
+                    "name": "clock-consume",
+                    "start": 63548.700000047684,
+                    "end": 63607.200000047684
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 63548.700000047684,
+                    "end": 63607.200000047684
+                  },
+                  {
+                    "name": "host-submit",
+                    "start": 63607.40000009537,
+                    "end": 63607.5
+                  }
+                ]
+              },
+              "resolved": 94629.10000002384
+            },
+            {
+              "id": "artifact:37",
+              "type": "artifactContent",
+              "dispatched": 94629.30000007153,
+              "received": 94646.39999997616,
+              "worker": {
+                "requestId": "artifact:37",
+                "received": 63631.200000047684,
+                "serviceEnd": 63632.800000071526,
+                "reply": 63632.800000071526,
+                "recent": [
+                  {
+                    "name": "clock-consume",
+                    "start": 63497.200000047684,
+                    "end": 63548.60000002384
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 63497.200000047684,
+                    "end": 63548.60000002384
+                  },
+                  {
+                    "name": "clock-consume",
+                    "start": 63548.700000047684,
+                    "end": 63607.200000047684
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 63548.700000047684,
+                    "end": 63607.200000047684
+                  },
+                  {
+                    "name": "host-submit",
+                    "start": 63607.40000009537,
+                    "end": 63607.5
+                  },
+                  {
+                    "name": "post-result",
+                    "start": 63607.5,
+                    "end": 63607.5
+                  },
+                  {
+                    "name": "host-frame",
+                    "start": 63607.5,
+                    "end": 63614.40000009537
+                  },
+                  {
+                    "name": "post-frame",
+                    "start": 63614.40000009537,
+                    "end": 63616.10000002384
+                  },
+                  {
+                    "name": "publish-frame",
+                    "start": 63607.5,
+                    "end": 63616.10000002384
+                  },
+                  {
+                    "name": "command-publish",
+                    "start": 63607.5,
+                    "end": 63616.10000002384
+                  },
+                  {
+                    "name": "clock-consume",
+                    "start": 63616.10000002384,
+                    "end": 63616.10000002384
+                  },
+                  {
+                    "name": "host-frame",
+                    "start": 63616.10000002384,
+                    "end": 63629.90000009537
+                  },
+                  {
+                    "name": "post-frame",
+                    "start": 63629.90000009537,
+                    "end": 63631.10000002384
+                  },
+                  {
+                    "name": "publish-frame",
+                    "start": 63616.10000002384,
+                    "end": 63631.10000002384
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 63616.10000002384,
+                    "end": 63631.10000002384
+                  },
+                  {
+                    "name": "host-artifact-content",
+                    "start": 63631.200000047684,
+                    "end": 63632.800000071526
+                  }
+                ]
+              },
+              "resolved": 94646.5
+            }
+          ],
+          "main": [
+            {
+              "name": "renderer-tick",
+              "start": 94622.30000007153,
+              "end": 94624
+            },
+            {
+              "name": "renderer-apply",
+              "start": 94630.39999997616,
+              "end": 94631.60000002384
+            },
+            {
+              "name": "hud-update",
+              "start": 94631.60000002384,
+              "end": 94638.30000007153
+            },
+            {
+              "name": "frame-handler",
+              "start": 94630.39999997616,
+              "end": 94638.39999997616
+            },
+            {
+              "name": "renderer-apply",
+              "start": 94642.39999997616,
+              "end": 94643.30000007153
+            },
+            {
+              "name": "hud-update",
+              "start": 94643.30000007153,
+              "end": 94645.70000004768
+            },
+            {
+              "name": "frame-handler",
+              "start": 94642.39999997616,
+              "end": 94645.80000007153
+            }
+          ]
+        },
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "maximumPages": 48,
+        "mountedPages": 2,
+        "pageLabel": "1–2 / 48",
+        "openingMs": 37.5,
+        "phaseTimingsMs": {
+          "pause": 15.399999976158142,
+          "content": 17.399999976158142,
+          "render": 0.20000004768371582,
+          "show-modal": 4.5
+        },
+        "measurements": [
+          {
+            "name": "hearthwild:book-open:pause",
+            "startTime": 94613.70000004768,
+            "duration": 15.399999976158142
+          },
+          {
+            "name": "hearthwild:book-open",
+            "startTime": 94613.70000004768,
+            "duration": 37.5
+          },
+          {
+            "name": "hearthwild:book-open:content",
+            "startTime": 94629.10000002384,
+            "duration": 17.399999976158142
+          },
+          {
+            "name": "hearthwild:book-open:render",
+            "startTime": 94646.5,
+            "duration": 0.20000004768371582
+          },
+          {
+            "name": "hearthwild:book-open:show-modal",
+            "startTime": 94646.70000004768,
+            "duration": 4.5
+          }
+        ],
+        "cpuSummary": {
+          "windowMs": 37.5,
+          "main": [
+            [
+              "CrRendererMain:ThreadControllerImpl::RunTask:",
+              15.6,
+              9.6,
+              9.6
+            ],
+            [
+              "CrRendererMain:HandlePostMessage:",
+              15.7,
+              9.6,
+              9.6
+            ],
+            [
+              "CrRendererMain:v8.callFunction:",
+              15.7,
+              9.5,
+              9.5
+            ],
+            [
+              "CrRendererMain:FunctionCall:WorkerBridge.worker.onmessage",
+              15.7,
+              9.1,
+              9.1
+            ],
+            [
+              "CrRendererMain:ProxyMain::BeginMainFrame:",
+              8.2,
+              6.9,
+              6.9
+            ],
+            [
+              "CrRendererMain:ProxyMain::BeginMainFrame::commit:",
+              12.8,
+              2.3,
+              2.3
+            ]
+          ],
+          "other": [
+            [
+              "ThreadPoolForegroundWorker:ThreadPool_RunTask:",
+              -390.3,
+              709.4,
+              37.5
+            ],
+            [
+              "CrGpuMain:ThreadControllerImpl::RunTask:",
+              13.3,
+              178.7,
+              24.2
+            ],
+            [
+              "CrGpuMain:Scheduler::RunTask:",
+              13.3,
+              178.7,
+              24.2
+            ],
+            [
+              "CrGpuMain:NativeViewGLSurfaceEGL:RealSwapBuffers:",
+              14.6,
+              177.3,
+              22.9
+            ]
+          ]
+        },
+        "pageErrors": []
+      },
+      "receiptPath": "artifacts/c18-book-browser-swiftshader-no-screencast.json",
+      "receiptSha256": "a46bddad38d2b75efcc6ba7a5578f22b67915f8621b0b522878e70f176ea2fd9",
+      "cpuTrace": {
+        "path": "artifacts/c18-book-cpu-swiftshader-no-screencast.json",
+        "sha256": "ef1600c58fde3f1525ce041077a06d7aba8509cba85fb8aa8e2044d5b632c351",
+        "bytes": 3200145
+      },
+      "finding": "37.5 ms opening with a long GPU swap still in flight but no main-thread raster finish wait in the opening window. Disabling continuous trace screenshots removes the reproduced synchronous GPU readback stall; DOM snapshots and explicit screenshot remain.",
+      "screenshot": "Inspected sealed two-column River diary spread; test server stopped."
+    },
+    "compactNoticeValidation": {
+      "result": "ordinary CI-enabled journey passed 1/1 in 59.8 seconds; test48.6 seconds; compact notice emitted intact",
+      "openingMs": 36.90000009536743,
+      "phaseTimingsMs": {
+        "pause": 15.5,
+        "content": 8.400000095367432,
+        "render": 0.3999999761581421,
+        "show-modal": 12.600000023841858
+      },
+      "mountedPages": 2,
+      "pageErrors": [],
+      "cpuSummary": {
+        "windowMs": 36.9,
+        "main": [
+          [
+            "CrRendererMain:ThreadControllerImpl::RunTask:",
+            23.4,
+            14.1,
+            13.5
+          ],
+          [
+            "CrRendererMain:HandlePostMessage:",
+            23.5,
+            14,
+            13.5
+          ],
+          [
+            "CrRendererMain:v8.callFunction:",
+            23.5,
+            14,
+            13.4
+          ],
+          [
+            "CrRendererMain:UpdateLayoutTree:",
+            24.5,
+            8.4,
+            8.4
+          ],
+          [
+            "CrRendererMain:ProxyMain::BeginMainFrame:",
+            1.2,
+            7.4,
+            7.4
+          ],
+          [
+            "CrRendererMain:FunctionCall:WorkerBridge.worker.onmessage",
+            16.8,
+            5.9,
+            5.9
+          ]
+        ],
+        "other": [
+          [
+            "GpuVSyncThread:ThreadControllerImpl::RunTask:",
+            7.7,
+            16.6,
+            16.6
+          ],
+          [
+            "CrGpuMain:ThreadControllerImpl::RunTask:",
+            10.2,
+            13.1,
+            13.1
+          ],
+          [
+            "CrGpuMain:Scheduler::RunTask:",
+            10.3,
+            13.1,
+            13.1
+          ],
+          [
+            "CrGpuMain:GpuChannel::ExecuteDeferredRequest:",
+            10.3,
+            13.1,
+            13.1
+          ]
+        ]
+      },
+      "receiptPath": "artifacts/c18-book-browser.json",
+      "receiptSha256": "20cd4a818937ef0835f0ebe8264accb71313d62b822e34a8861a06403f731dc9",
+      "cpuTracePath": "artifacts/c18-book-cpu.json",
+      "cpuTraceSha256": "1eb58172297d81cf83154548496266ce3207bce9b4839bbde0915a97d555a454",
+      "focusedRegressions": "22 tests / 5 files passed; typecheck passed after correcting the synthetic summary fixture type",
+      "temporaryConfig": "deleted; no continuous-screenshot setting shipped"
+    },
+    "gaps": [
+      "Remote raw CPU trace has not been inspected; engine-summary confirmation for the follow-up is pending.",
+      "The scoped continuous-trace-screenshot repair is prepared but not shipped; original C18 CI gate still fails.",
+      "Source731da0e ecology exceeded its unchanged25-minute job limit.",
+      "C19 remains unstarted; machine-A C18 acceptance/director review remain external."
+    ]
   }
 }

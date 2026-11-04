@@ -1,10 +1,14 @@
 import { test, expect } from '@playwright/test';
 import type { GameSave } from '../../src/domain/save-schema';
 import { mkdir, writeFile } from 'node:fs/promises';
+import { bookNotice, summarizeBookTrace } from './book-diagnostics';
 
 test('C18 writes three pages, seals and reopens a read-only spread', async ({ page, context }) => {
   const cpu = await context.newCDPSession(page);
   let tracing = false;
+  let cpuSummary: ReturnType<typeof summarizeBookTrace> | { error: string } = {
+    error: 'CPU trace not started',
+  };
   const saveCpuTrace = async () => {
     if (!tracing) return;
     tracing = false;
@@ -22,7 +26,12 @@ test('C18 writes three pages, seals and reopens a read-only spread', async ({ pa
         if (chunk.eof) break;
       }
       await mkdir('artifacts', { recursive: true });
-      await writeFile('artifacts/c18-book-cpu.json', Buffer.concat(chunks));
+      const trace = Buffer.concat(chunks);
+      await writeFile('artifacts/c18-book-cpu.json', trace);
+      cpuSummary = summarizeBookTrace(JSON.parse(trace.toString('utf8')).traceEvents);
+    } catch (error) {
+      cpuSummary = { error: `CPU trace collection failed: ${String(error).slice(0, 128)}` };
+      throw error;
     } finally {
       await cpu.send('IO.close', { handle: stream });
     }
@@ -66,7 +75,7 @@ test('C18 writes three pages, seals and reopens a read-only spread', async ({ pa
     await mkdir('artifacts', { recursive: true });
     await writeFile(
       'artifacts/c18-book-browser.json',
-      JSON.stringify({ ...diagnostics, pageErrors: errors }, null, 2),
+      JSON.stringify({ ...diagnostics, cpuSummary, pageErrors: errors }, null, 2),
     );
     return diagnostics;
   };
@@ -163,7 +172,7 @@ test('C18 writes three pages, seals and reopens a read-only spread', async ({ pa
     await page.getByRole('button', { name: 'Close settings' }).click();
     await cpu.send('Tracing.start', {
       categories:
-        'devtools.timeline,v8,disabled-by-default-v8.cpu_profiler,blink.user_timing,toplevel',
+        'devtools.timeline,v8,disabled-by-default-v8.cpu_profiler,blink.user_timing,toplevel,cc,gpu',
       transferMode: 'ReturnAsStream',
     });
     tracing = true;
@@ -188,7 +197,7 @@ test('C18 writes three pages, seals and reopens a read-only spread', async ({ pa
         const diagnostics = await saveDiagnostics();
         if (process.env.CI)
           console.log(
-            `::notice title=C18 book opening diagnostics::${JSON.stringify(diagnostics)}`,
+            `::notice title=C18 book opening diagnostics::${bookNotice({ ...diagnostics, pageErrors: errors }, cpuSummary)}`,
           );
       } finally {
         await cpu.detach();
