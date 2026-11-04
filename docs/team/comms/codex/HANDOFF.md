@@ -20,8 +20,24 @@ Diagnostic commit **c73cdb8** is pushed; its
 GitHub artifact downloads require authentication (unauthenticated API returned 401).
 A CI-only notice now publishes the timing receipt through public check annotations,
 without reading credentials; the JSON artifact remains authoritative too.
-See [diagnostic evidence](c18-ci-diagnostics.json). Full browser CI remains pending;
-this instrumentation is not a latency repair, and C19 has not started.
+Follow-up **1110305** is pushed. Its
+[PR CI run](https://github.com/huytruong1810/Vibe/actions/runs/41759172479) fails the
+browser step (12m23s, exit 1), with a public C18 receipt: **393.2 ms total**, split
+into **192 ms pause**, **198.5 ms content**, **0.2 ms render**, **2.5 ms modal**.
+Only two pages mount. The delay is in the two sequential worker round-trip waits,
+not spread rendering/modal layout on this measured run. Worker service time versus
+main-thread delivery/render scheduling still needs profiling before choosing a repair.
+The [push run](https://github.com/huytruong1810/Vibe/actions/runs/41759162909) also
+fails (browser step16m42s, exit1 within the job envelope): **607.8 ms total**,
+**305.5 ms pause**, **297.8 ms content**, **0.2 ms render**, **4.3 ms modal**.
+Both runs' aggregate `verify` correctly fails; CPU checks and both beta bases pass.
+The push browser artifact uploaded successfully (id13290199166); its raw trace has
+not been downloaded because GitHub requires authentication. Public timing notices
+were inspected. No stored credentials accessed.
+The first diagnostic run failed (16m37s browser step, exit 1, within the job limit);
+CPU checks and both production beta paths passed. See
+[diagnostic evidence](c18-ci-diagnostics.json). This is not a latency repair;
+the 100 ms gate remains, and C19 has not started.
 
 Use [team-comms](../../../../.agents/skills/team-comms/SKILL.md), pull only with a clean
 index, read new addressed messages and re-read `docs/team/briefs/codex.md` after compaction.

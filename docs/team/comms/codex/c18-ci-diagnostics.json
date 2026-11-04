@@ -49,16 +49,130 @@
     "hygiene": "passed; 0 errors, 0 warnings"
   },
   "ci": {
-    "sourceCommit": "c73cdb8",
-    "run": "https://github.com/huytruong1810/Vibe/actions/runs/41758344674",
-    "checks": "success",
-    "beta": "both production bases passed",
-    "ecology": "scope-skipped; not a full soak",
-    "browser": "running",
-    "artifactAccess": "Unauthenticated GitHub artifact download returns 401. Added CI-only public notice with timing receipt; no credentials accessed."
+    "firstDiagnosticRun": {
+      "sourceCommit": "c73cdb8",
+      "run": "https://github.com/huytruong1810/Vibe/actions/runs/41758344674",
+      "checks": "success",
+      "beta": "both production bases passed",
+      "ecology": "scope-skipped; not a full soak",
+      "browser": "failure; exit code 1; browser step 16m37s within 20-minute job envelope",
+      "verify": "failure",
+      "failureDetail": "Exact failing assertion not available from public annotations on this first diagnostic source."
+    },
+    "noticeRun": {
+      "sourceCommit": "1110305",
+      "prRun": "https://github.com/huytruong1810/Vibe/actions/runs/41759172479",
+      "prBrowser": "failure; exit code 1; browser step 12m23s",
+      "prVerify": "failure",
+      "publicReceiptSource": "https://api.github.com/repos/huytruong1810/Vibe/check-runs/126342466743/annotations",
+      "receipt": {
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "maximumPages": 48,
+        "mountedPages": 2,
+        "pageLabel": "1–2 / 48",
+        "openingMs": 393.19999999995343,
+        "phaseTimingsMs": {
+          "pause": 192,
+          "content": 198.5,
+          "render": 0.19999999995343387,
+          "show-modal": 2.5
+        },
+        "measurements": [
+          {
+            "name": "hearthwild:book-open:pause",
+            "startTime": 23771.400000000023,
+            "duration": 192
+          },
+          {
+            "name": "hearthwild:book-open",
+            "startTime": 23771.400000000023,
+            "duration": 393.19999999995343
+          },
+          {
+            "name": "hearthwild:book-open:content",
+            "startTime": 23963.400000000023,
+            "duration": 198.5
+          },
+          {
+            "name": "hearthwild:book-open:render",
+            "startTime": 24161.900000000023,
+            "duration": 0.19999999995343387
+          },
+          {
+            "name": "hearthwild:book-open:show-modal",
+            "startTime": 24162.099999999977,
+            "duration": 2.5
+          }
+        ]
+      },
+      "pushRun": "https://github.com/huytruong1810/Vibe/actions/runs/41759162909",
+      "pushBrowser": "failure; exit code 1; browser step 16m42s, within 20-minute job envelope",
+      "pushVerify": "failure",
+      "checks": "success",
+      "beta": "both production bases passed",
+      "ecology": "scope-skipped; not a full soak",
+      "pushPublicReceiptSource": "https://api.github.com/repos/huytruong1810/Vibe/check-runs/126342436407/annotations",
+      "pushReceipt": {
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "maximumPages": 48,
+        "mountedPages": 2,
+        "pageLabel": "1–2 / 48",
+        "openingMs": 607.8000000000466,
+        "phaseTimingsMs": {
+          "pause": 305.5,
+          "content": 297.80000000004657,
+          "render": 0.19999999995343387,
+          "show-modal": 4.300000000046566
+        },
+        "measurements": [
+          {
+            "name": "hearthwild:book-open:pause",
+            "startTime": 32209.800000000047,
+            "duration": 305.5
+          },
+          {
+            "name": "hearthwild:book-open",
+            "startTime": 32209.800000000047,
+            "duration": 607.8000000000466
+          },
+          {
+            "name": "hearthwild:book-open:content",
+            "startTime": 32515.300000000047,
+            "duration": 297.80000000004657
+          },
+          {
+            "name": "hearthwild:book-open:render",
+            "startTime": 32813.10000000009,
+            "duration": 0.19999999995343387
+          },
+          {
+            "name": "hearthwild:book-open:show-modal",
+            "startTime": 32813.30000000005,
+            "duration": 4.300000000046566
+          }
+        ]
+      },
+      "pushArtifact": {
+        "id": 13290199166,
+        "name": "browser-journey-artifacts",
+        "size_in_bytes": 17767707,
+        "expired": false,
+        "upload": "success",
+        "download": "Not downloaded; unauthenticated GitHub downloads require authentication."
+      }
+    },
+    "artifactAccess": "Unauthenticated GitHub artifact download returns 401. CI-only public annotation receipt inspected without credentials. Retained remote trace itself has not been downloaded."
   },
   "gaps": [
-    "Original CI slow stage remains unknown until phase receipt is collected on CI.",
+    "CI still violates the unchanged 100 ms opening gate; no latency repair implemented.",
+    "Worker service time versus main-thread delivery/render scheduling needs profiling before selecting a repair.",
+    "Retained remote trace requires authorized artifact access; public timing receipt inspected.",
     "C19 remains unstarted."
   ],
   "localCiNotice": {
@@ -75,5 +189,6 @@
     "measurementsRetained": 5,
     "mountedPages": 2,
     "pageErrors": []
-  }
+  },
+  "finding": "Both CI receipts isolate the delay to sequential pause/content worker round-trip waits: PR 390.5 of 393.2 ms; push 603.3 of 607.8 ms. Rendering plus modal costs 2.7/4.5 ms respectively, with two mounted pages. Worker service time versus main-thread delivery/render scheduling remains unseparated."
 }
