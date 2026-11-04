@@ -15,6 +15,7 @@ Commands:
   all --asset ID         run every runnable stage in order (stops at the first block)
   pose-guide --template T [--try]   grey clay pose guide for a skeleton template (concept poseGuide); --try runs one concept trial
   portrait --asset K:ID [--emotions a,b] [--n N] [--pick e=id,...]   eight expressions (96/128 px) from the neutral portrait by reference editing; --pick keeps candidates
+  upscale --asset ID [--n N] [--seed S] [--keep SEED]   re-render reference views under 1024 px tall at 1100+ px with the edit model (C28); --keep writes them over the views
   icon --item ID --prompt "..." --ramps a,b [--n N] [--pick ID]   32 px inventory icon candidates for items without a held model; --pick keeps one and logs it
   swatch --set S --material M --prompt "..." [--n N] [--pick ID]   seamless 1024 px terrain swatch candidates for tileforge; --pick keeps one and logs it
 """
@@ -1222,7 +1223,7 @@ def pose_guide_try(template: str, n: int = 4, seed: int | None = None, model: st
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("command", choices=["doctor", "selftest", "status", "next", "all", "faces", "item-plan", "items", "orient", "layout",
-                                        "concept", "views", "pose-guide", "swatch", "portrait", "icon", *STAGES])
+                                        "concept", "views", "pose-guide", "swatch", "portrait", "icon", "upscale", *STAGES])
     ap.add_argument("--asset")
     ap.add_argument("--n", type=int, default=4, help="concept: candidates to generate")
     ap.add_argument("--seed", type=int, help="concept: first seed (default: time-based)")
@@ -1237,6 +1238,7 @@ def main() -> int:
     ap.add_argument("--set", dest="tileset", help="swatch: tileforge set name")
     ap.add_argument("--material", help="swatch: material id in the set")
     ap.add_argument("--prompt", help="swatch: the feature clause (what the ground looks like)")
+    ap.add_argument("--keep", help="upscale: the candidate seed whose views replace the reference views")
     ap.add_argument("--item", help="icon: item id (e.g. berries)")
     ap.add_argument("--ramps", help="icon: comma list of palette ramps the icon may use (e.g. ember,sage)")
     ap.add_argument("--emotions", help="portrait: comma list of emotions to generate (default all eight non-neutral)")
@@ -1260,6 +1262,16 @@ def main() -> int:
             return 0
         except (ForgeError, OSError, ValueError, KeyError) as e:
             print(f"FORGE ERROR [swatch]: {e}", file=sys.stderr)
+            return 2
+    if a.command == "upscale":
+        if not a.asset:
+            ap.error("upscale needs --asset <id>")
+        try:
+            from forgelib import upscale as upscale_mod
+            print(f"[upscale] {upscale_mod.upscale(a.asset, a.n if a.n != 4 else 2, a.seed, a.keep, a.model)}")
+            return 0
+        except (ForgeError, OSError, ValueError, KeyError) as e:
+            print(f"FORGE ERROR [upscale]: {e}", file=sys.stderr)
             return 2
     if a.command == "icon":
         if not a.item:

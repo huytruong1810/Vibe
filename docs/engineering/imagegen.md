@@ -115,6 +115,20 @@ brown stem with two small green leaves" --ramps ember,sage,timber [--n 4] [--see
   the stem, leaves and berries read at 1x. Flint with `basalt,glass` gets teal patches; with `basalt` alone it is a
   low-contrast grey slab with few facets. Name every material's ramp, and expect to re-seed. Not approved: B23 picks and
   the reviewer judges.
+- **View upscale (C28, built).** `forge.py upscale --asset mireling [--n 2] [--seed S]` takes every reference view under
+  1024 px tall, enlarges it (Lanczos, about 2.4x) onto a flat canvas in its own background colour and gives it to klein 9B
+  as the only reference: redraw the same image sharper, change nothing else. One model load serves all views. Each result
+  is cropped to the subject, shifted in OKLab a/b to the original's mean chroma (the model warms and reddens greens and
+  greys; lightness stays), padded with its own background and compared with the original (silhouette IoU, colour drift).
+  `--keep <seed>` writes the views over `art/source/references/<asset>/` and records `upscale` in `sheet.json`; the
+  `sheet.png` they were cut from stays. Trial on Mireling (seeds 500, 501; board
+  `docs/team/comms/claude/boards/2026-11-04-c28-upscale-mireling.png`): every view 1267-1304 px tall (from 489-493),
+  silhouette IoU 0.98-0.99, colour drift 7-12 after the chroma step (13-16 before). Look: pose, plates, ferns and
+  flowers hold; skin and shell stay browner than the olive-grey originals (seed 501 more so, its back legs go red),
+  and fine detail (scutes, scales, claws) is added. Pick by eye. Not run: gen3d on upscaled views (the ticket's
+  "unchanged or better" check), so nothing was kept over blender's references. Humans, NPCs, props and tall creatures
+  are already above 1024 px; the low ones are wide quadrupeds and small creatures (Bramblefang, Mireling, Marshstalker,
+  Rivallie, Zephyrit, Cindermoth).
 - **Swatches (C30a, built):** `forge.py swatch`, see the tile-forge skill.
 - **Shared GPU.** Every model stage runs inside `core.gpu_window`, which now serializes forge jobs: a live
   forge process holding `PAUSE` makes the next one wait (two klein jobs on 16 GB spilled to swap and took 51

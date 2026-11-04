@@ -286,12 +286,13 @@ fit → C9c.
 
 ### C28 · Reference views at 1024 px or more
 
-- status: open
+- status: candidate (tool built and trialled 2026-11-04; gen3d comparison pending)
 - owner: claude
 - goal: generated views meet PRD-3.1 (today about 620 px tall on a 2304 × 1344 sheet).
 - work: per-view upscale pass (the edit model re-rendering each cropped view at 1024+ with the sheet as reference) or larger sheets within VRAM; keep identity.
 - done when: `views` writes every view ≥ 1024 px tall without `prep` warnings, `gen3d` unchanged or better
-- evidence:
+- result: `forge.py upscale --asset ID [--n N] [--seed S] [--keep SEED]` (`forgelib/upscale.py`): per-view edit-model re-render at 1100+ px with a chroma match to the original. Mireling trial: 489-493 px views became 1267-1304 px, IoU 0.98-0.99. Colour still runs browner than the original. Open: run gen3d on original vs upscaled views of one creature, and judge `prep` warnings.
+- evidence: `upscale_selftest.py` 5/5; trial `art/source/forge/work/upscale-mireling/`; board `docs/team/comms/claude/boards/2026-11-04-c28-upscale-mireling.png`
 
 ### C29 · Image model bake-off: klein 9B, klein 4B, Qwen-Image-2.1
 
