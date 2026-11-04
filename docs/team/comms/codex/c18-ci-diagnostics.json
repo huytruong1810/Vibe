@@ -190,5 +190,726 @@
     "mountedPages": 2,
     "pageErrors": []
   },
-  "finding": "Both CI receipts isolate the delay to sequential pause/content worker round-trip waits: PR 390.5 of 393.2 ms; push 603.3 of 607.8 ms. Rendering plus modal costs 2.7/4.5 ms respectively, with two mounted pages. Worker service time versus main-thread delivery/render scheduling remains unseparated."
+  "finding": "Both CI receipts isolate the delay to sequential pause/content worker round-trip waits: PR 390.5 of 393.2 ms; push 603.3 of 607.8 ms. Rendering plus modal costs 2.7/4.5 ms respectively, with two mounted pages. Worker service time versus main-thread delivery/render scheduling remains unseparated.",
+  "workerWaitInvestigation": {
+    "status": "diagnostics implemented; no repair",
+    "normal": {
+      "command": "npm run test:browser -- tests/browser/literacy.spec.ts",
+      "result": "1 passed in 1.6 minutes",
+      "concurrentLoad": "Full four-worker npm run check was active; not an isolated latency measurement.",
+      "receipt": {
+        "workerWaits": {
+          "start": 89160.70000004768,
+          "end": 89213.70000004768,
+          "requests": [
+            {
+              "id": "world:9f152cac-2273-48b0-9e56-bdd6b496e6e3:42:c35",
+              "type": "command",
+              "dispatched": 89160.80000007153,
+              "received": 89174.5,
+              "worker": {
+                "requestId": "world:9f152cac-2273-48b0-9e56-bdd6b496e6e3:42:c35",
+                "received": 31190.299999952316,
+                "serviceEnd": 31193.700000047684,
+                "reply": 31193.700000047684,
+                "recent": [
+                  {
+                    "name": "periodic-work",
+                    "start": 30970.700000047684,
+                    "end": 30970.700000047684
+                  },
+                  {
+                    "name": "publish-frame",
+                    "start": 30991.200000047684,
+                    "end": 30995.200000047684
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 30985.899999976158,
+                    "end": 30995.200000047684
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 31002.899999976158,
+                    "end": 31002.899999976158
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 31021.200000047684,
+                    "end": 31028.299999952316
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 31044.600000023842,
+                    "end": 31044.700000047684
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 31051,
+                    "end": 31070.200000047684
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 31070.5,
+                    "end": 31070.5
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 31085.200000047684,
+                    "end": 31103.799999952316
+                  },
+                  {
+                    "name": "publish-frame",
+                    "start": 31103.899999976158,
+                    "end": 31115.799999952316
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 31103.899999976158,
+                    "end": 31115.799999952316
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 31115.899999976158,
+                    "end": 31115.899999976158
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 31130.5,
+                    "end": 31145.5
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 31145.799999952316,
+                    "end": 31145.799999952316
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 31172.899999976158,
+                    "end": 31190.200000047684
+                  },
+                  {
+                    "name": "host-submit",
+                    "start": 31190.299999952316,
+                    "end": 31193.600000023842
+                  }
+                ]
+              },
+              "resolved": 89174.5
+            },
+            {
+              "id": "artifact:36",
+              "type": "artifactContent",
+              "dispatched": 89174.70000004768,
+              "received": 89207.80000007153,
+              "worker": {
+                "requestId": "artifact:36",
+                "received": 31227.299999952316,
+                "serviceEnd": 31228.799999952316,
+                "reply": 31228.799999952316,
+                "recent": [
+                  {
+                    "name": "periodic-work",
+                    "start": 31044.600000023842,
+                    "end": 31044.700000047684
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 31051,
+                    "end": 31070.200000047684
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 31070.5,
+                    "end": 31070.5
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 31085.200000047684,
+                    "end": 31103.799999952316
+                  },
+                  {
+                    "name": "publish-frame",
+                    "start": 31103.899999976158,
+                    "end": 31115.799999952316
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 31103.899999976158,
+                    "end": 31115.799999952316
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 31115.899999976158,
+                    "end": 31115.899999976158
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 31130.5,
+                    "end": 31145.5
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 31145.799999952316,
+                    "end": 31145.799999952316
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 31172.899999976158,
+                    "end": 31190.200000047684
+                  },
+                  {
+                    "name": "host-submit",
+                    "start": 31190.299999952316,
+                    "end": 31193.600000023842
+                  },
+                  {
+                    "name": "publish-frame",
+                    "start": 31194,
+                    "end": 31210.200000047684
+                  },
+                  {
+                    "name": "command-publish",
+                    "start": 31194,
+                    "end": 31210.200000047684
+                  },
+                  {
+                    "name": "publish-frame",
+                    "start": 31210.299999952316,
+                    "end": 31226.799999952316
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 31210.299999952316,
+                    "end": 31226.799999952316
+                  },
+                  {
+                    "name": "host-artifact-content",
+                    "start": 31227.299999952316,
+                    "end": 31228.799999952316
+                  }
+                ]
+              },
+              "resolved": 89207.80000007153
+            }
+          ],
+          "main": [
+            {
+              "name": "renderer-tick",
+              "start": 89162.89999997616,
+              "end": 89168.20000004768
+            },
+            {
+              "name": "renderer-apply",
+              "start": 89181.20000004768,
+              "end": 89184.5
+            },
+            {
+              "name": "hud-update",
+              "start": 89184.5,
+              "end": 89191.5
+            },
+            {
+              "name": "frame-handler",
+              "start": 89181.20000004768,
+              "end": 89191.60000002384
+            },
+            {
+              "name": "renderer-tick",
+              "start": 89194,
+              "end": 89199
+            },
+            {
+              "name": "renderer-tick",
+              "start": 89201.20000004768,
+              "end": 89201.20000004768
+            },
+            {
+              "name": "renderer-apply",
+              "start": 89203.39999997616,
+              "end": 89204.39999997616
+            },
+            {
+              "name": "hud-update",
+              "start": 89204.39999997616,
+              "end": 89206.89999997616
+            },
+            {
+              "name": "frame-handler",
+              "start": 89203.39999997616,
+              "end": 89206.89999997616
+            }
+          ]
+        },
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "maximumPages": 48,
+        "mountedPages": 2,
+        "pageLabel": "1–2 / 48",
+        "openingMs": 52.699999928474426,
+        "phaseTimingsMs": {
+          "pause": 13.899999976158142,
+          "content": 33.200000047683716,
+          "render": 0.2999999523162842,
+          "show-modal": 5.299999952316284
+        },
+        "measurements": [
+          {
+            "name": "hearthwild:book-open:pause",
+            "startTime": 89160.70000004768,
+            "duration": 13.899999976158142
+          },
+          {
+            "name": "hearthwild:book-open",
+            "startTime": 89160.70000004768,
+            "duration": 52.699999928474426
+          },
+          {
+            "name": "hearthwild:book-open:content",
+            "startTime": 89174.60000002384,
+            "duration": 33.200000047683716
+          },
+          {
+            "name": "hearthwild:book-open:render",
+            "startTime": 89207.80000007153,
+            "duration": 0.2999999523162842
+          },
+          {
+            "name": "hearthwild:book-open:show-modal",
+            "startTime": 89208.10000002384,
+            "duration": 5.299999952316284
+          }
+        ],
+        "pageErrors": []
+      },
+      "cpuTrace": {
+        "path": "artifacts/c18-book-cpu-normal.json",
+        "sha256": "e4bdbc8162cf6171ec1e29159055fd9a94501efe12539a2174b3288240d8ae85",
+        "bytes": 1121994,
+        "openingWindowMs": 52.699,
+        "callsOver0_5ms": [
+          {
+            "name": "FunctionCall",
+            "thread": 23048,
+            "relativeStartMs": -16.942,
+            "durationMs": 19.064,
+            "function": "",
+            "url": "http://127.0.0.1:4173/src/worker/simulation.worker.ts?worker_file&type=module"
+          },
+          {
+            "name": "FunctionCall",
+            "thread": 23048,
+            "relativeStartMs": 2.179,
+            "durationMs": 19.911,
+            "function": "worker.onmessage",
+            "url": "http://127.0.0.1:4173/src/worker/simulation.worker.ts?worker_file&type=module"
+          },
+          {
+            "name": "FunctionCall",
+            "thread": 37584,
+            "relativeStartMs": 2.23,
+            "durationMs": 5.339,
+            "function": "_tick",
+            "url": "http://127.0.0.1:4173/node_modules/.vite/deps/chunk-JDQYCZKZ.js?v=796ff6c1"
+          },
+          {
+            "name": "FunctionCall",
+            "thread": 37584,
+            "relativeStartMs": 11.937,
+            "durationMs": 1.915,
+            "function": "WorkerBridge.worker.onmessage",
+            "url": "http://127.0.0.1:4173/src/adapters/worker-bridge.ts"
+          },
+          {
+            "name": "FunctionCall",
+            "thread": 37584,
+            "relativeStartMs": 18.35,
+            "durationMs": 12.531,
+            "function": "WorkerBridge.worker.onmessage",
+            "url": "http://127.0.0.1:4173/src/adapters/worker-bridge.ts"
+          },
+          {
+            "name": "FunctionCall",
+            "thread": 23048,
+            "relativeStartMs": 22.176,
+            "durationMs": 16.482,
+            "function": "",
+            "url": "http://127.0.0.1:4173/src/worker/simulation.worker.ts?worker_file&type=module"
+          },
+          {
+            "name": "FunctionCall",
+            "thread": 37584,
+            "relativeStartMs": 33.341,
+            "durationMs": 5.028,
+            "function": "_tick",
+            "url": "http://127.0.0.1:4173/node_modules/.vite/deps/chunk-JDQYCZKZ.js?v=796ff6c1"
+          },
+          {
+            "name": "FunctionCall",
+            "thread": 23048,
+            "relativeStartMs": 39.138,
+            "durationMs": 6.598,
+            "function": "worker.onmessage",
+            "url": "http://127.0.0.1:4173/src/worker/simulation.worker.ts?worker_file&type=module"
+          },
+          {
+            "name": "FunctionCall",
+            "thread": 37584,
+            "relativeStartMs": 41.235,
+            "durationMs": 5.078,
+            "function": "WorkerBridge.worker.onmessage",
+            "url": "http://127.0.0.1:4173/src/adapters/worker-bridge.ts"
+          }
+        ],
+        "caution": "Nested trace intervals and named work intervals overlap; do not sum them. CPU-profiler startup overhead preceded the measured opening."
+      }
+    },
+    "invalidAttempt": "Source edit caused Vite reload before maximum-size opening; discarded for timing evidence. Screenshot inspected.",
+    "interpretation": "Local receipt separates small request service times from waits. Command-triggered and periodic frame publication plus main-thread frame work overlap the content wait. Remote failure remains unprofiled.",
+    "localCi": {
+      "command": "CI=1 npm run test:browser -- tests/browser/literacy.spec.ts",
+      "result": "1 passed in 1.3 minutes; notice emitted",
+      "receipt": {
+        "workerWaits": {
+          "start": 68245.69999992847,
+          "end": 68277.5,
+          "requests": [
+            {
+              "id": "world:5f88cf03-d94c-4006-b00a-49f5d00e65c3:42:c35",
+              "type": "command",
+              "dispatched": 68245.79999995232,
+              "received": 68257.59999990463,
+              "worker": {
+                "requestId": "world:5f88cf03-d94c-4006-b00a-49f5d00e65c3:42:c35",
+                "received": 20574.899999976158,
+                "serviceEnd": 20575,
+                "reply": 20575,
+                "recent": [
+                  {
+                    "name": "clock-consume",
+                    "start": 20488.599999904633,
+                    "end": 20488.599999904633
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 20488.599999904633,
+                    "end": 20488.599999904633
+                  },
+                  {
+                    "name": "clock-consume",
+                    "start": 20507.299999952316,
+                    "end": 20516.5
+                  },
+                  {
+                    "name": "host-frame",
+                    "start": 20516.699999928474,
+                    "end": 20528.799999952316
+                  },
+                  {
+                    "name": "post-frame",
+                    "start": 20528.799999952316,
+                    "end": 20531.099999904633
+                  },
+                  {
+                    "name": "publish-frame",
+                    "start": 20516.699999928474,
+                    "end": 20531.099999904633
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 20507.299999952316,
+                    "end": 20531.099999904633
+                  },
+                  {
+                    "name": "clock-consume",
+                    "start": 20531.399999976158,
+                    "end": 20538.199999928474
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 20531.399999976158,
+                    "end": 20538.199999928474
+                  },
+                  {
+                    "name": "clock-consume",
+                    "start": 20538.5,
+                    "end": 20538.5
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 20538.5,
+                    "end": 20538.5
+                  },
+                  {
+                    "name": "clock-consume",
+                    "start": 20550.899999976158,
+                    "end": 20551
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 20550.899999976158,
+                    "end": 20551
+                  },
+                  {
+                    "name": "clock-consume",
+                    "start": 20566.199999928474,
+                    "end": 20574.399999976158
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 20566.199999928474,
+                    "end": 20574.399999976158
+                  },
+                  {
+                    "name": "host-submit",
+                    "start": 20574.899999976158,
+                    "end": 20575
+                  }
+                ]
+              },
+              "resolved": 68257.79999995232
+            },
+            {
+              "id": "artifact:36",
+              "type": "artifactContent",
+              "dispatched": 68258.89999997616,
+              "received": 68271.59999990463,
+              "worker": {
+                "requestId": "artifact:36",
+                "received": 20584.099999904633,
+                "serviceEnd": 20584.799999952316,
+                "reply": 20584.799999952316,
+                "recent": [
+                  {
+                    "name": "periodic-work",
+                    "start": 20507.299999952316,
+                    "end": 20531.099999904633
+                  },
+                  {
+                    "name": "clock-consume",
+                    "start": 20531.399999976158,
+                    "end": 20538.199999928474
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 20531.399999976158,
+                    "end": 20538.199999928474
+                  },
+                  {
+                    "name": "clock-consume",
+                    "start": 20538.5,
+                    "end": 20538.5
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 20538.5,
+                    "end": 20538.5
+                  },
+                  {
+                    "name": "clock-consume",
+                    "start": 20550.899999976158,
+                    "end": 20551
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 20550.899999976158,
+                    "end": 20551
+                  },
+                  {
+                    "name": "clock-consume",
+                    "start": 20566.199999928474,
+                    "end": 20574.399999976158
+                  },
+                  {
+                    "name": "periodic-work",
+                    "start": 20566.199999928474,
+                    "end": 20574.399999976158
+                  },
+                  {
+                    "name": "host-submit",
+                    "start": 20574.899999976158,
+                    "end": 20575
+                  },
+                  {
+                    "name": "post-result",
+                    "start": 20575.099999904633,
+                    "end": 20575.799999952316
+                  },
+                  {
+                    "name": "host-frame",
+                    "start": 20575.799999952316,
+                    "end": 20581.599999904633
+                  },
+                  {
+                    "name": "post-frame",
+                    "start": 20581.799999952316,
+                    "end": 20583.899999976158
+                  },
+                  {
+                    "name": "publish-frame",
+                    "start": 20575.799999952316,
+                    "end": 20583.899999976158
+                  },
+                  {
+                    "name": "command-publish",
+                    "start": 20575.799999952316,
+                    "end": 20583.899999976158
+                  },
+                  {
+                    "name": "host-artifact-content",
+                    "start": 20584.099999904633,
+                    "end": 20584.799999952316
+                  }
+                ]
+              },
+              "resolved": 68271.59999990463
+            }
+          ],
+          "main": [
+            {
+              "name": "renderer-tick",
+              "start": 68251,
+              "end": 68253.39999997616
+            },
+            {
+              "name": "renderer-apply",
+              "start": 68261.09999990463,
+              "end": 68263
+            },
+            {
+              "name": "hud-update",
+              "start": 68263,
+              "end": 68266.79999995232
+            },
+            {
+              "name": "frame-handler",
+              "start": 68261.09999990463,
+              "end": 68266.89999997616
+            },
+            {
+              "name": "renderer-tick",
+              "start": 68268.69999992847,
+              "end": 68270
+            }
+          ]
+        },
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "maximumPages": 48,
+        "mountedPages": 2,
+        "pageLabel": "1–2 / 48",
+        "openingMs": 31.5,
+        "phaseTimingsMs": {
+          "pause": 12.5,
+          "content": 13.299999952316284,
+          "render": 0.40000009536743164,
+          "show-modal": 5.299999952316284
+        },
+        "measurements": [
+          {
+            "name": "hearthwild:book-open:pause",
+            "startTime": 68245.79999995232,
+            "duration": 12.5
+          },
+          {
+            "name": "hearthwild:book-open",
+            "startTime": 68245.79999995232,
+            "duration": 31.5
+          },
+          {
+            "name": "hearthwild:book-open:content",
+            "startTime": 68258.29999995232,
+            "duration": 13.299999952316284
+          },
+          {
+            "name": "hearthwild:book-open:render",
+            "startTime": 68271.59999990463,
+            "duration": 0.40000009536743164
+          },
+          {
+            "name": "hearthwild:book-open:show-modal",
+            "startTime": 68272,
+            "duration": 5.299999952316284
+          }
+        ],
+        "pageErrors": []
+      },
+      "cpuTrace": {
+        "path": "artifacts/c18-book-cpu-ci.json",
+        "sha256": "3e3b2e5e4149bff2863c871ff4551fa2f5d52e8eb0149a385224007afad3f15b",
+        "bytes": 1372241,
+        "openingWindowMs": 31.5,
+        "callsOver0_5ms": [
+          {
+            "name": "FunctionCall",
+            "thread": 25624,
+            "relativeStartMs": -4.075,
+            "durationMs": 8.245,
+            "function": "",
+            "url": "http://127.0.0.1:4173/src/worker/simulation.worker.ts?worker_file&type=module"
+          },
+          {
+            "name": "FunctionCall",
+            "thread": 25624,
+            "relativeStartMs": 4.517,
+            "durationMs": 9.104,
+            "function": "worker.onmessage",
+            "url": "http://127.0.0.1:4173/src/worker/simulation.worker.ts?worker_file&type=module"
+          },
+          {
+            "name": "FunctionCall",
+            "thread": 31804,
+            "relativeStartMs": 5.198,
+            "durationMs": 2.406,
+            "function": "_tick",
+            "url": "http://127.0.0.1:4173/node_modules/.vite/deps/chunk-JDQYCZKZ.js?v=796ff6c1"
+          },
+          {
+            "name": "FunctionCall",
+            "thread": 31804,
+            "relativeStartMs": 11.46,
+            "durationMs": 0.713,
+            "function": "WorkerBridge.worker.onmessage",
+            "url": "http://127.0.0.1:4173/src/adapters/worker-bridge.ts"
+          },
+          {
+            "name": "FunctionCall",
+            "thread": 25624,
+            "relativeStartMs": 13.756,
+            "durationMs": 1.172,
+            "function": "worker.onmessage",
+            "url": "http://127.0.0.1:4173/src/worker/simulation.worker.ts?worker_file&type=module"
+          },
+          {
+            "name": "FunctionCall",
+            "thread": 31804,
+            "relativeStartMs": 14.316,
+            "durationMs": 6.828,
+            "function": "WorkerBridge.worker.onmessage",
+            "url": "http://127.0.0.1:4173/src/adapters/worker-bridge.ts"
+          },
+          {
+            "name": "FunctionCall",
+            "thread": 31804,
+            "relativeStartMs": 22.941,
+            "durationMs": 1.359,
+            "function": "_tick",
+            "url": "http://127.0.0.1:4173/node_modules/.vite/deps/chunk-JDQYCZKZ.js?v=796ff6c1"
+          }
+        ]
+      }
+    },
+    "checks": {
+      "command": "VITEST_MAX_WORKERS=4 npm run check",
+      "result": "passed; 468 tests in 36 files; unit/test project duration 60.66 seconds; types, architecture, assets, hygiene and production build pass",
+      "focusedRegressions": "19 bridge/literacy/reading tests passed; actual worker regression passed 1/1",
+      "screenshots": "All three generated spread captures inspected",
+      "processCleanup": "All three Playwright-owned Vite process IDs were absent after the journeys"
+    },
+    "nextRepair": "Obtain the new remote receipt first. Local evidence identifies intervening frame publication and main-thread work rather than expensive pause/content service, but cannot explain the previous 393-608 ms CI failures. Select the repair against the remote dominant interval; combining requests alone is not justified."
+  }
 }

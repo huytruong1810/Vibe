@@ -42,6 +42,7 @@ export class GameBootstrap {
       (command) => this.bridge.send(command),
     );
     this.hud = new HudPresenter(root, {
+      bookDiagnostics: (active) => this.bridge.bookDiagnostics(active),
       artifactContent: (id) => this.bridge.artifactContent(id),
       send: (command) => this.bridge.send(command),
       enter: (options) => this.enter(options),
@@ -89,11 +90,14 @@ export class GameBootstrap {
             .catch((error) => this.hud.notify(String(error)));
       }
       this.frame = frame;
+      const applyStarted = performance.now();
       this.renderer.apply(frame);
+      this.bridge.recordWork('renderer-apply', applyStarted, performance.now());
       const hudStarted = performance.now();
       this.hud.update(frame, this.inference?.usage ?? null, this.renderer.stats);
       this.updateGuard();
       this.hudMs = performance.now() - hudStarted;
+      this.bridge.recordWork('hud-update', hudStarted, performance.now());
       this.inference?.setBackgroundDeferred(frame.timeScale > 1);
       for (const job of frame.jobs) this.inference?.enqueue(job);
       if (frame.events.at(-1)?.id !== this.lastEventId) {
@@ -113,6 +117,8 @@ export class GameBootstrap {
         void this.bridge.send({ type: 'pause', token: 'menu' });
     };
     this.bindInput();
+    this.renderer.onDiagnostic = (start, end) =>
+      this.bridge.recordWork('renderer-tick', start, end);
     this.autoSave = setInterval(() => {
       if (this.frame && !this.frame.paused.length)
         void this.save().catch((error) => this.hud.notify(`Autosave failed: ${String(error)}`));
@@ -124,6 +130,7 @@ export class GameBootstrap {
           checkpoint: () => this.bridge.checkpoint(),
           frame: () => this.frame,
           stats: () => ({ ...this.renderer.stats, hudMs: this.hudMs }),
+          bookDiagnostics: () => this.bridge.diagnosticReceipt(),
         },
       });
     }

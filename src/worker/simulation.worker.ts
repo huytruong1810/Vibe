@@ -2,7 +2,7 @@
 import { SimulationHost } from '../domain/simulation';
 import { FixedStepClock } from '../domain/core';
 import { migrateSave } from '../domain/save-schema';
-import type { FromWorker, ToWorker } from '../domain/contracts';
+import type { FromWorker, ToWorker, WorkTiming } from '../domain/contracts';
 
 const worker = self as unknown as DedicatedWorkerGlobalScope;
 let host: SimulationHost | null = null;
@@ -11,11 +11,21 @@ const buffers: ArrayBuffer[] = [];
 let previous = performance.now(),
   lastFrame = 0;
 let publishedScene = '';
-const send = (message: FromWorker, transfer: Transferable[] = []): void =>
+const recent: WorkTiming[] = [];
+const record = (name: string, start: number): void => {
+  recent.push({ name, start, end: performance.now() });
+  if (recent.length > 16) recent.shift();
+};
+const send = (message: FromWorker, transfer: Transferable[] = []): void => {
+  const started = performance.now();
   worker.postMessage(message, transfer);
+  record(`post-${message.type}`, started);
+};
 const publish = (type: 'ready' | 'frame' | 'restored', requestId = ''): void => {
   if (!host) return;
+  const started = performance.now();
   const frame = host.frame(buffers.pop());
+  record('host-frame', started);
   if (type === 'frame' && publishedScene === frame.scene.id)
     send({ type, frame }, [frame.packed.buffer]);
   else {
@@ -37,9 +47,28 @@ const publish = (type: 'ready' | 'frame' | 'restored', requestId = ''): void => 
       terrain.quantity.buffer,
     ]);
   }
+  record('publish-frame', started);
 };
 worker.onmessage = (message: MessageEvent<ToWorker>): void => {
   const data = message.data;
+  const received = performance.now();
+  const reply = (response: FromWorker, requestId: string): void => {
+    const serviceEnd = performance.now();
+    send(
+      data.diagnostic
+        ? {
+            ...response,
+            diagnostic: {
+              requestId,
+              received,
+              serviceEnd,
+              reply: performance.now(),
+              recent: recent.slice(),
+            },
+          }
+        : response,
+    );
+  };
   try {
     switch (data.type) {
       case 'initialize':
@@ -51,22 +80,34 @@ worker.onmessage = (message: MessageEvent<ToWorker>): void => {
         break;
       case 'command':
         if (host) {
-          send({ type: 'result', result: host.submit(data.envelope) });
+          const started = performance.now();
+          const result = host.submit(data.envelope);
+          record('host-submit', started);
+          reply({ type: 'result', result }, data.envelope.id);
+          const publishStarted = performance.now();
           publish('frame');
+          record('command-publish', publishStarted);
         }
         break;
       case 'checkpoint':
         if (host)
           send({ type: 'checkpoint', requestId: data.requestId, snapshot: host.snapshot() });
         break;
-      case 'artifactContent':
+      case 'artifactContent': {
         if (!host) throw Error('Start a journey before reading');
-        send({
-          type: 'artifactContent',
-          requestId: data.requestId,
-          artifact: host.artifactContent(data.artifactId),
-        });
+        const started = performance.now();
+        const artifact = host.artifactContent(data.artifactId);
+        record('host-artifact-content', started);
+        reply(
+          {
+            type: 'artifactContent',
+            requestId: data.requestId,
+            artifact,
+          },
+          data.requestId,
+        );
         break;
+      }
       case 'restore': {
         const save = migrateSave(data.snapshot);
         const restored = new SimulationHost(save.seed, save.player.origin, 0);
@@ -97,6 +138,7 @@ worker.onmessage = (message: MessageEvent<ToWorker>): void => {
 };
 const timer = setInterval(() => {
   if (!host) return;
+  const started = performance.now();
   const now = performance.now();
   try {
     clock.consume(now - previous, host.pauses.paused, () => {
@@ -107,6 +149,7 @@ const timer = setInterval(() => {
         if (host!.timeScale !== scale || host!.pauses.paused) break;
       }
     });
+    record('clock-consume', started);
     previous = now;
     if (now - lastFrame >= 100) {
       publish('frame');
@@ -118,5 +161,7 @@ const timer = setInterval(() => {
       type: 'error',
       message: error instanceof Error ? error.message : 'Simulation step failed',
     });
+  } finally {
+    record('periodic-work', started);
   }
 }, 1000 / 60);

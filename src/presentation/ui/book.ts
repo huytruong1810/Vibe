@@ -4,6 +4,7 @@ import { NPC_PROFILES } from '../../content/definitions';
 
 type TextArtifact = Extract<Artifact, { kind: 'note' | 'book' }>;
 interface BookHandlers {
+  diagnostics?(active: boolean): void;
   frame(): RenderSnapshot | null;
   send(command: CommandPayload): Promise<CommandResult>;
   content(id: string): Promise<Artifact | null>;
@@ -139,6 +140,7 @@ export class BookScreen {
     const item = slot === null ? null : frame.inventory[slot];
     if (slot !== null && item?.id !== 'book' && item?.id !== 'note') return;
     this.opening = true;
+    this.handlers.diagnostics?.(true);
     for (const name of ['hearthwild:book-open', 'pause', 'content', 'render', 'show-modal'])
       performance.clearMeasures(
         name === 'hearthwild:book-open' ? name : `hearthwild:book-open:${name}`,
@@ -189,6 +191,7 @@ export class BookScreen {
       if (!document.querySelector('dialog[open]'))
         await this.handlers.send({ type: 'resume', token: 'menu' });
     } finally {
+      this.handlers.diagnostics?.(false);
       this.opening = false;
     }
   }

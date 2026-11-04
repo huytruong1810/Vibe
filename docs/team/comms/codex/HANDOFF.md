@@ -1,10 +1,12 @@
 # Codex session handoff
 
-## Next session: repair C18 worker waits, then C19 and C20
+## Current work: investigate C18 worker waits, then repair before C19 and C20
 
 Branch `eng/hd-presentation`, workspace `C:/Users/htruong/source/repos/Vibe`.
-Clean pickup at **b17d0c4** on 2026-11-03 (America/Chicago). This handoff is a
-documentation-only follow-up; no latency repair or C19 implementation has started.
+Clean pickup at **3ccf5ab** on 2026-11-03 (America/Chicago). The director
+authorized bounded worker/main-thread diagnostics and a focused CPU trace.
+Instrumentation is implemented locally; no latency repair or C19 implementation
+has started.
 
 Completed and pushed:
 
@@ -21,6 +23,41 @@ Use [team-comms](../../../../.agents/skills/team-comms/SKILL.md) and
 Read `docs/team/briefs/codex.md` at pickup and after compaction. Keep the existing
 [session log](session-2026-11-02.md) current. Leave Vibe-art and other review
 worktrees alone. No alarm, hourly automation or owned server is left running.
+
+## Worker-wait instrumentation
+
+- BookScreen brackets its opening with a fresh diagnostic window. WorkerBridge
+  retains only that opening: up to eight request receipts and 32 main-thread work
+  intervals. The existing five performance measurements remain unchanged.
+- Optional worker message diagnostics correlate request IDs and worker-local
+  receipt/service/reply timestamps with bridge-local dispatch/receipt/resolution.
+  Worker replies include at most 16 recent work intervals. Do not subtract clocks
+  across threads or add overlapping nested work intervals.
+- Work timings cover host submission/content, frame construction, synchronous
+  postMessage cost, command publication and periodic clock/frame work; the main
+  thread records renderer apply, HUD update, full frame handler and renderer ticks.
+- The literacy journey captures artifacts/c18-book-cpu.json with Chromium tracing
+  around the maximum-size opening. The existing JSON and public notice include
+  the latest bridge receipt, still saved on assertion failure. Raw local normal
+  trace is retained as artifacts/c18-book-cpu-normal.json; its hash and opening
+  window call summary are in [diagnostic evidence](c18-ci-diagnostics.json).
+- Stable-source normal journey passed 1/1 in 1.6 minutes: 52.7 ms total,
+  pause/content 13.9/33.2 ms, worker request service 3.4/1.5 ms. Command and periodic
+  publications took 16.2/16.5 ms between the requests, with main-thread frame work
+  overlapping the content wait. Full four-worker check ran concurrently, so this
+  is diagnostic evidence under load rather than isolated latency acceptance.
+- The CPU trace confirms worker command/timer work and main-thread frame/ticker
+  work in that opening window. No remote root-cause or repair claim follows from
+  this local passing capture. Isolated CI-enabled local capture passed 1/1 in
+  1.3 minutes: 31.5 ms total; pause/content 12.5/13.3 ms, request service 0.1/0.7 ms,
+  command frame build/post 5.8/2.1 ms and main frame handler 5.8 ms. The raw CI
+  trace is artifacts/c18-book-cpu-ci.json; hash and call summary are in evidence.
+- Final four-worker check passed 468 tests/36 files in 60.66 s plus types,
+  architecture, assets, production build, hygiene and full formatting.
+  Trace cleanup preserves the existing receipt/notice
+  even when CPU stream capture fails.
+- An initial local browser attempt was invalidated by my source edit triggering a
+  Vite reload before maximum-size opening; it is excluded from timing evidence.
 
 ## First actions: finish the browser CI repair
 

@@ -22,6 +22,67 @@ class TestWorker {
 }
 afterEach(() => vi.unstubAllGlobals());
 describe('worker presentation failure boundary', () => {
+  it('retains only the current bounded opening and correlates out-of-order worker receipts', async () => {
+    vi.stubGlobal('Worker', TestWorker);
+    const bridge = new WorkerBridge();
+    const initializing = bridge.initialize(42, 1);
+    TestWorker.latest.ready();
+    await initializing;
+    bridge.bookDiagnostics(true);
+    const first = bridge.artifactContent('art:1');
+    const second = bridge.artifactContent('art:2');
+    const requests = TestWorker.latest.messages.filter(
+      (m) => (m as { type: string }).type === 'artifactContent',
+    ) as { requestId: string; diagnostic?: boolean }[];
+    expect(requests.every((r) => r.diagnostic)).toBe(true);
+    for (const request of [...requests].reverse()) {
+      TestWorker.latest.onmessage?.({
+        data: {
+          type: 'artifactContent',
+          requestId: request.requestId,
+          artifact: null,
+          diagnostic: {
+            requestId: request.requestId,
+            received: 10,
+            serviceEnd: 12,
+            reply: 13,
+            recent: [],
+          },
+        },
+      } as unknown as MessageEvent<FromWorker>);
+    }
+    await Promise.all([first, second]);
+    for (let n = 0; n < 100; n++) bridge.recordWork('renderer-tick', n, n + 1);
+    bridge.bookDiagnostics(false);
+    const receipt = bridge.diagnosticReceipt() as {
+      requests: { id: string; resolved: number; worker: { requestId: string } }[];
+      main: unknown[];
+    };
+    expect(receipt.requests.map((r) => r.worker.requestId)).toEqual(
+      requests.map((r) => r.requestId),
+    );
+    expect(receipt.requests.every((r) => Number.isFinite(r.resolved))).toBe(true);
+    expect(receipt.main).toHaveLength(32);
+    bridge.recordWork('after-close', 200, 201);
+    expect(bridge.diagnosticReceipt()).toEqual(receipt);
+    receipt.main.length = 0;
+    expect((bridge.diagnosticReceipt() as { main: unknown[] }).main).toHaveLength(32);
+    bridge.bookDiagnostics(true);
+    expect((bridge.diagnosticReceipt() as { requests: unknown[] }).requests).toEqual([]);
+    bridge.dispose();
+  });
+  it('bounds request diagnostics and rejects pending work on disposal while diagnostics are active', async () => {
+    vi.stubGlobal('Worker', TestWorker);
+    const bridge = new WorkerBridge();
+    const initializing = bridge.initialize(42, 1);
+    TestWorker.latest.ready();
+    await initializing;
+    bridge.bookDiagnostics(true);
+    const pending = Array.from({ length: 20 }, () => bridge.artifactContent('art:1').catch(String));
+    expect((bridge.diagnosticReceipt() as { requests: unknown[] }).requests).toHaveLength(8);
+    bridge.dispose();
+    expect(await Promise.all(pending)).toEqual(Array(20).fill('Error: Game closed'));
+  });
   it('queries artifact content on demand and correlates null or content responses', async () => {
     vi.stubGlobal('Worker', TestWorker);
     const bridge = new WorkerBridge();
@@ -63,6 +124,7 @@ describe('worker presentation failure boundary', () => {
     bridge.onFrame = () => {
       throw Error('Missing HUD target');
     };
+    bridge.bookDiagnostics(true);
     const pending = bridge.initialize(42, 1);
     const result = expect(pending).rejects.toThrow('Missing HUD target');
     TestWorker.latest.ready();

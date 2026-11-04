@@ -307,19 +307,34 @@ export interface TerrainView {
   readonly groundNames?: readonly string[];
   readonly buildings: readonly Building[];
 }
-export type ToWorker =
+/** Diagnostic timestamps are local to their thread; only durations may be compared. */
+export interface WorkTiming {
+  name: string;
+  start: number;
+  end: number;
+}
+export interface WorkerTiming {
+  requestId: string;
+  received: number;
+  serviceEnd: number;
+  reply: number;
+  recent: readonly WorkTiming[];
+}
+export type ToWorker = (
   | { type: 'artifactContent'; requestId: string; artifactId: string }
   | { type: 'initialize'; seed: number; origin: number; population?: number }
   | { type: 'command'; envelope: WorldCommand }
   | { type: 'checkpoint'; requestId: string }
   | { type: 'restore'; requestId: string; snapshot: unknown }
   | { type: 'recycle'; buffer: ArrayBuffer }
-  | { type: 'dispose' };
-export type FromWorker =
+  | { type: 'dispose' }
+) & { diagnostic?: boolean };
+export type FromWorker = (
   | { type: 'artifactContent'; requestId: string; artifact: Artifact | null }
   | { type: 'ready'; terrain: TerrainView; frame: RenderSnapshot }
   | { type: 'frame'; frame: RenderSnapshot; terrain?: TerrainView }
   | { type: 'result'; result: CommandResult }
   | { type: 'checkpoint'; requestId: string; snapshot: unknown }
   | { type: 'restored'; requestId: string; terrain: TerrainView; frame: RenderSnapshot }
-  | { type: 'error'; message: string; requestId?: string };
+  | { type: 'error'; message: string; requestId?: string }
+) & { diagnostic?: WorkerTiming };

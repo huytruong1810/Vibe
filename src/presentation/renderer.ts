@@ -193,6 +193,7 @@ export class LightingRenderer {
 
 /** Owns disposable terrain caches and copied actor read models, never authoritative worker arrays. */
 export class WorldRenderer {
+  onDiagnostic: (start: number, end: number) => void = () => undefined;
   readonly app = new Application();
   readonly projection = new WorldProjection();
   readonly camera = new CameraController(this.projection);
@@ -392,7 +393,9 @@ export class WorldRenderer {
     // DOM menus remain responsive without continuously redrawing a frozen world.
     this.app.ticker.remove(this.app.render, this.app);
     this.app.ticker.add(() => {
+      const started = performance.now();
       if (this.render()) this.app.render();
+      this.onDiagnostic(started, performance.now());
     });
   }
   fit(width: number, height: number): void {

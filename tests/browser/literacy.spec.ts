@@ -2,7 +2,31 @@ import { test, expect } from '@playwright/test';
 import type { GameSave } from '../../src/domain/save-schema';
 import { mkdir, writeFile } from 'node:fs/promises';
 
-test('C18 writes three pages, seals and reopens a read-only spread', async ({ page }) => {
+test('C18 writes three pages, seals and reopens a read-only spread', async ({ page, context }) => {
+  const cpu = await context.newCDPSession(page);
+  let tracing = false;
+  const saveCpuTrace = async () => {
+    if (!tracing) return;
+    tracing = false;
+    const complete = new Promise<{ stream?: string }>((resolve) =>
+      cpu.once('Tracing.tracingComplete', resolve),
+    );
+    await cpu.send('Tracing.end');
+    const { stream } = await complete;
+    if (!stream) throw Error('Chromium did not return a CPU trace stream');
+    const chunks: Buffer[] = [];
+    try {
+      for (;;) {
+        const chunk = await cpu.send('IO.read', { handle: stream });
+        chunks.push(Buffer.from(chunk.data, chunk.base64Encoded ? 'base64' : 'utf8'));
+        if (chunk.eof) break;
+      }
+      await mkdir('artifacts', { recursive: true });
+      await writeFile('artifacts/c18-book-cpu.json', Buffer.concat(chunks));
+    } finally {
+      await cpu.send('IO.close', { handle: stream });
+    }
+  };
   await page.setViewportSize({ width: 1920, height: 1080 });
   const errors: string[] = [];
   page.on('pageerror', (error) => errors.push(error.message));
@@ -17,6 +41,7 @@ test('C18 writes three pages, seals and reopens a read-only spread', async ({ pa
               entry.name.startsWith('hearthwild:book-open:'),
           );
         return {
+          workerWaits: (window as any).__hearthwild.bookDiagnostics(),
           viewport: { width: innerWidth, height: innerHeight },
           maximumPages: 48,
           mountedPages: document.querySelectorAll('#book-spread article').length,
@@ -136,8 +161,15 @@ test('C18 writes three pages, seals and reopens a read-only spread', async ({ pa
     book.revision++;
     await importSave(full);
     await page.getByRole('button', { name: 'Close settings' }).click();
+    await cpu.send('Tracing.start', {
+      categories:
+        'devtools.timeline,v8,disabled-by-default-v8.cpu_profiler,blink.user_timing,toplevel',
+      transferMode: 'ReturnAsStream',
+    });
+    tracing = true;
     await use.click();
     await expect(page.locator('#book-spread article')).toHaveCount(2);
+    await saveCpuTrace();
     const diagnostics = await saveDiagnostics();
     if (!('openingMs' in diagnostics)) throw Error(diagnostics.diagnosticError);
     const { openingMs } = diagnostics;
@@ -149,8 +181,18 @@ test('C18 writes three pages, seals and reopens a read-only spread', async ({ pa
       Object.values(diagnostics.phaseTimingsMs).reduce<number>((sum, ms) => sum + (ms ?? 0), 0),
     ).toBeCloseTo(openingMs!, 5);
   } finally {
-    const diagnostics = await saveDiagnostics();
-    if (process.env.CI)
-      console.log(`::notice title=C18 book opening diagnostics::${JSON.stringify(diagnostics)}`);
+    try {
+      await saveCpuTrace();
+    } finally {
+      try {
+        const diagnostics = await saveDiagnostics();
+        if (process.env.CI)
+          console.log(
+            `::notice title=C18 book opening diagnostics::${JSON.stringify(diagnostics)}`,
+          );
+      } finally {
+        await cpu.detach();
+      }
+    }
   }
 });

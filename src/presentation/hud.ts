@@ -31,6 +31,7 @@ const percent = (n: number): number => Math.round(Math.max(0, Math.min(1, n)) * 
 const meter = (label: string, value: number, _color = 'sage'): string => meterMarkup(label, value);
 
 export interface HudHandlers {
+  bookDiagnostics?(active: boolean): void;
   artifactContent(id: string): Promise<Artifact | null>;
   send(command: CommandPayload): Promise<CommandResult>;
   enter(options: {
@@ -77,6 +78,7 @@ export class HudPresenter {
     this.handlers = handlers;
     mountHudView(root);
     this.book = new BookScreen(root, {
+      diagnostics: (active) => this.handlers.bookDiagnostics?.(active),
       frame: () => this.frame,
       send: (command) => this.handlers.send(command),
       content: (id) => this.handlers.artifactContent(id),

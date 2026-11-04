@@ -5,11 +5,38 @@ import type {
   RenderSnapshot,
   TerrainView,
   ToWorker,
+  WorkerTiming,
+  WorkTiming,
 } from '../domain/contracts';
 import { migrateSave, type GameSave } from '../domain/save-schema';
 import type { Artifact } from '../domain/artifacts';
 
 export class WorkerBridge {
+  private diagnostic: {
+    start: number;
+    end: number | null;
+    requests: {
+      id: string;
+      type: string;
+      dispatched: number;
+      received?: number;
+      resolved?: number;
+      worker?: WorkerTiming;
+    }[];
+    main: WorkTiming[];
+  } | null = null;
+  bookDiagnostics(active: boolean): void {
+    if (active) this.diagnostic = { start: performance.now(), end: null, requests: [], main: [] };
+    else if (this.diagnostic) this.diagnostic.end = performance.now();
+  }
+  diagnosticReceipt(): unknown {
+    return this.diagnostic ? structuredClone(this.diagnostic) : null;
+  }
+  recordWork(name: string, start: number, end: number): void {
+    if (!this.diagnostic || this.diagnostic.end !== null) return;
+    this.diagnostic.main.push({ name, start, end });
+    if (this.diagnostic.main.length > 32) this.diagnostic.main.shift();
+  }
   private readonly worker = new Worker(new URL('../worker/simulation.worker.ts', import.meta.url), {
     type: 'module',
   });
@@ -34,6 +61,16 @@ export class WorkerBridge {
     this.worker.onmessage = (event: MessageEvent<FromWorker>): void => {
       try {
         const message = event.data;
+        const received = performance.now();
+        if (message.diagnostic && this.diagnostic?.end === null) {
+          const request = this.diagnostic.requests.find(
+            (r) => r.id === message.diagnostic!.requestId,
+          );
+          if (request) {
+            request.received = received;
+            request.worker = message.diagnostic;
+          }
+        }
         switch (message.type) {
           case 'ready':
           case 'restored':
@@ -49,6 +86,7 @@ export class WorkerBridge {
           case 'frame':
             if (message.frame.session === this.session)
               this.onFrame(message.frame, message.terrain);
+            this.recordWork('frame-handler', received, performance.now());
             break;
           case 'result':
             this.resolve(message.result.id, message.result);
@@ -91,12 +129,19 @@ export class WorkerBridge {
         reject(new Error('Simulation did not respond in time'));
       }, 20_000);
       this.waiting.set(id, { resolve: (value) => resolve(value as T), reject, timeout });
-      this.post(message);
+      if (this.diagnostic?.end === null) {
+        this.diagnostic.requests.push({ id, type: message.type, dispatched: performance.now() });
+        if (this.diagnostic.requests.length > 8) this.diagnostic.requests.shift();
+        this.post({ ...message, diagnostic: true });
+      } else this.post(message);
     });
   }
   private resolve(id: string, value: unknown): void {
     const pending = this.waiting.get(id);
     if (!pending) return;
+    const request =
+      this.diagnostic?.end === null ? this.diagnostic.requests.find((r) => r.id === id) : undefined;
+    if (request) request.resolved = performance.now();
     clearTimeout(pending.timeout);
     pending.resolve(value);
     this.waiting.delete(id);
