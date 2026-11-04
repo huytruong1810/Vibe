@@ -61,7 +61,14 @@ export function summarizeBookTrace(events: readonly TraceEvent[]) {
 }
 
 interface BookReceipt {
-  bootstrap?: { setupStatus: string; loadMs: number; assetError: string; gpu: string };
+  bootstrap?: {
+    setupStatus: string;
+    loadMs: number;
+    assetError: string;
+    gpu: string;
+    hasFrame?: boolean;
+    io?: readonly (readonly [string, number])[];
+  };
   journeyPhase?: string;
   openingMs?: number | null;
   phaseTimingsMs?: Record<string, number | null>;
@@ -117,6 +124,12 @@ export function bookNotice(
       loadMs: receipt.bootstrap.loadMs,
       assetError: receipt.bootstrap.assetError.slice(0, 128),
       gpu: receipt.bootstrap.gpu.slice(0, 96),
+      ...(receipt.openingMs == null
+        ? {
+            hasFrame: receipt.bootstrap.hasFrame,
+            io: receipt.bootstrap.io?.slice(-12).map(([label, ms]) => [label.slice(0, 64), ms]),
+          }
+        : {}),
     },
     openingMs: receipt.openingMs,
     phaseTimingsMs: receipt.phaseTimingsMs,
@@ -135,6 +148,7 @@ export function bookNotice(
     else if (main.length) main.pop();
     else if (requests?.some((r) => r.recent.length))
       requests.find((r) => r.recent.length)!.recent.pop();
+    else if (summary.bootstrap?.io?.length) summary.bootstrap.io.shift();
     else break;
   }
   return JSON.stringify(summary);

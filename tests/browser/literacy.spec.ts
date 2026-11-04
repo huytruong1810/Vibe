@@ -78,6 +78,8 @@ test('C18 writes three pages, seals and reopens a read-only spread', async ({ pa
             loadMs: stats?.loadMs ?? 0,
             assetError: stats?.assetError ?? '',
             gpu: stats?.gpu ?? '',
+            hasFrame: !!(window as any).__hearthwild?.frame(),
+            io: (window as any).__c18BootstrapIo ?? [],
           },
           workerWaits: (window as any).__hearthwild.bookDiagnostics(),
           viewport: { width: innerWidth, height: innerHeight },
@@ -109,6 +111,48 @@ test('C18 writes three pages, seals and reopens a read-only spread', async ({ pa
     return diagnostics;
   };
   try {
+    await page.addInitScript(() => {
+      const events: [string, number][] = [];
+      (window as any).__c18BootstrapIo = events;
+      const record = (label: string) => {
+        events.push([label.slice(0, 64), Math.round(performance.now())]);
+        if (events.length > 64) events.shift();
+      };
+      const watched = new WeakSet<Worker>();
+      const post = Worker.prototype.postMessage;
+      (Worker.prototype as any).postMessage = function (this: Worker, ...args: any[]) {
+        const value = args[0];
+        if (!watched.has(this)) {
+          watched.add(this);
+          this.addEventListener('message', (event) => {
+            if (event.data?.type && event.data.type !== 'frame')
+              record(`worker in:${event.data.type}`);
+          });
+        }
+        if (value?.type && value.type !== 'recycle')
+          record(
+            `worker out:${value.type === 'command' ? value.envelope?.command?.type : value.type}`,
+          );
+        return Reflect.apply(post, this, args);
+      };
+      const open = IDBFactory.prototype.open;
+      (IDBFactory.prototype as any).open = function (this: IDBFactory, ...args: any[]) {
+        record('idb open');
+        const request: IDBOpenDBRequest = Reflect.apply(open, this, args);
+        for (const event of ['success', 'error', 'blocked'])
+          request.addEventListener(event, () => record(`idb open:${event}`), { once: true });
+        return request;
+      };
+      const transaction = IDBDatabase.prototype.transaction;
+      (IDBDatabase.prototype as any).transaction = function (this: IDBDatabase, ...args: any[]) {
+        const mode = String(args[1] ?? 'readonly').slice(0, 20);
+        record(`idb tx:${mode}`);
+        const tx: IDBTransaction = Reflect.apply(transaction, this, args);
+        for (const event of ['complete', 'error', 'abort'])
+          tx.addEventListener(event, () => record(`idb tx:${mode}:${event}`), { once: true });
+        return tx;
+      };
+    });
     await page.goto('/?test=1');
     journeyPhase = 'start offline world';
     await page.getByRole('button', { name: 'Play without local AI', exact: true }).click();

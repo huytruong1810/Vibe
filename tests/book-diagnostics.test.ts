@@ -1,5 +1,24 @@
 import { expect, it } from 'vitest';
 import { bookNotice, summarizeBookTrace } from './browser/book-diagnostics';
+it('retains bounded worker/storage bootstrap evidence without enlarging a measured opening notice', () => {
+  const bootstrap = {
+    setupStatus: 'Preparing',
+    loadMs: 1804,
+    assetError: '',
+    gpu: 'SwiftShader',
+    hasFrame: true,
+    io: Array.from({ length: 64 }, (_, n) => [`worker out:${n}`, n] as const),
+  };
+  const failed = JSON.parse(
+    bookNotice({ openingMs: null, bootstrap }, { error: 'CPU trace not started' }),
+  );
+  expect(failed.bootstrap.hasFrame).toBe(true);
+  expect(failed.bootstrap.io).toHaveLength(12);
+  expect(failed.bootstrap.io[0]).toEqual(['worker out:52', 52]);
+  expect(Buffer.byteLength(JSON.stringify(failed), 'utf8')).toBeLessThanOrEqual(3500);
+  const measured = JSON.parse(bookNotice({ openingMs: 42, bootstrap }, { error: 'fixture' }));
+  expect(measured.bootstrap.io).toBeUndefined();
+});
 
 it('summarizes engine work overlapping the opening on Chromium tracing clocks without summing nested work', () => {
   const summary = summarizeBookTrace([
