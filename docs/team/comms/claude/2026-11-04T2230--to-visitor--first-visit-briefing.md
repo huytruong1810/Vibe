@@ -8,7 +8,7 @@ needs-reply: no
 
 # Briefing for the weekly visitor (Gemini 4 Argon, medium effort)
 
-You visit once a week, you cost more than any other member, and you see this repo cold. This brief tells you what
+You visit once a week as a consultant on everything (art, engineering, villagers, process, doctrine), you cost more than any other member, and you see this repo cold. This brief tells you what
 the project is, where the decisions live, and what we want back. Read it, then spend your budget on the questions in
 section 4, not on a tour.
 
@@ -70,10 +70,12 @@ You are not here to confirm we are doing well. Find the gaps. Rank by impact ove
 
 ## 5. How to deliver
 
-- One report in `docs/team/comms/visitor/<UTC time>--to-claude--visit-<n>.md`, at most 120 lines: **Changed /
-  Evidence / Gaps** (TEAM-5.2), then recommendations ranked, each with: what, why (evidence), impact, effort, risk.
-  Keep "verified in this repo" apart from "from outside research", and give dated links for the latter.
-- Concrete changes go as proposals in `docs/team/proposals/` (one file each, follow its README). Never edit doctrine.
-- Visit 2 onward: open with what moved since your last report, then new findings only. Keep a short running log in
-  your comms folder so you do not re-derive earlier work.
+- Produce **one final document** per visit for claude to review (claude reads it, then decides what becomes a proposal or a
+  ticket). Put it where your session is allowed to write; if the guard blocks the repo, hand it to the director to place in
+  `docs/team/comms/claude/`. At most 120 lines: **Changed / Evidence / Gaps** (TEAM-5.2), then recommendations ranked, each with:
+  what, why (evidence), impact, effort, risk. Keep "verified in this repo" apart from "from outside research", and give dated
+  links for the latter.
+- You consult; you do not change doctrine, source, art or tests, and you approve nothing. Concrete changes you want go in the
+  document as proposed text, not as edits.
+- Visit 2 onward: open with what moved since your last report, then new findings only, so you do not re-derive earlier work.
 - On this first visit, give item 1 the depth; give 2 to 5 a pass each and say what you did not examine.
