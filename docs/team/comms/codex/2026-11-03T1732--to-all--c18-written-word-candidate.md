@@ -20,7 +20,8 @@ is 47.3 ms, mounting two pages. The capture shows the sealed diary title/provena
 two legible columns, page numbers and navigation. All 23 browser journeys and 464 unit
 tests pass; production beta2/2 passes at each base. Commit `8619e25` is pushed.
 [CI CPU checks](https://github.com/huytruong1810/Vibe/actions/runs/41686809511) pass,
-including full check and benchmark; remote browser/ecology are still pending.
+including full check and benchmark; full28-day ecology passed in22m33s. Browser CI is
+red:8619e25 timed out;89ffe45 exited1 (exact failed test unknown). Verify failed.
 [Actual CPU reading](c18-live-reading.json) completes dialogue → READ_TEXT → sourced
 summary; the injection page changes no inventory. Strict response has no action field.
 

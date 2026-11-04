@@ -1,16 +1,88 @@
 # Codex session handoff
 
-## Current: C13 and C18 candidates pushed; remote journeys/soak pending
+## Next session: repair browser CI, then pick up C19
 
 Branch `eng/hd-presentation`, workspace `C:/Users/htruong/source/repos/Vibe`.
-C13 commits **9b229bd** and **de93730**, C18 **8619e25** are pushed;
-follow [its plan](c18-plan.md), written before implementation. Codex reaches candidate
-at most; only the director approves. C19 is next after C18 delivery, not started here.
+C13 commits **9b229bd** and **de93730**, C18 **8619e25** and evidence **89ffe45**
+are pushed. Pickup was clean at **89ffe45**; this handoff is a documentation-only
+follow-up. C13/C18 are candidates, never approvals. C19 is the next open feature
+ticket and has not started. The [C18 plan](c18-plan.md) preceded its implementation.
 
 Use [team-comms](../../../../.agents/skills/team-comms/SKILL.md), pull only with a clean
 index, read new addressed messages and re-read `docs/team/briefs/codex.md` after compaction.
 Keep the existing [session log](session-2026-11-02.md) current. Leave Vibe-art and other
 review worktrees alone. No alarm or hourly automation was scheduled.
+
+## First actions before C19 code
+
+1. Confirm branch/workspace, inspect `git status`, then `git pull --ff-only` with a
+   clean tree. Read new addressed messages after `.last-read`, especially replies to
+   the [C18 machine-A request](2026-11-03T1730--to-blender--test-c18-reading.md).
+   Update the existing session log; do not restart completed C13/C18 implementation.
+2. Resolve the known red browser job as the CI follow-up. On source **8619e25**,
+   [push run41686809511](https://github.com/huytruong1810/Vibe/actions/runs/41686809511)
+   passed CPU checks, both beta paths and the full 28-day ecology soak (**22m33s**).
+   Browser job126094603227 exceeded the unchanged 20-minute limit (public annotation
+   confirms it); aggregate `verify` failed. Separating CPU/browser jobs was insufficient.
+3. Latest evidence-only **89ffe45**,
+   [push run41688294291](https://github.com/huytruong1810/Vibe/actions/runs/41688294291),
+   again passed CPU and both beta paths; its documentation-only ecology job was
+   scope-skipped, not another full soak. Browser job126099802397 instead exited with
+   code 1 after 12m31s in `npm run test:browser`, within its job envelope. Public
+   annotations identify only exit code 1; the exact failed test is **unknown**. PR twin
+   run41688308406 also failed. Do not describe this second failure as another timeout.
+4. Obtain the failed-test name/trace from that run's `browser-journey-artifacts` or
+   authorized job logs, reproduce its actual failure, then repair it before C19.
+   All 23 local journeys previously passed; that does not establish the remote cause.
+   Keep assertions, HD/artifact budgets and aggregate `verify`. Consider deterministic
+   sharding only if evidence shows total browser runtime remains the problem; do not
+   merely raise timeouts or skip cases. Stored-credential access was rejected earlier;
+   do not repeat or bypass it. Record unavailable logs honestly if access is still absent.
+5. Re-read the C19 ticket/spec and record any plan adjustments before implementation.
+   Keep the CI repair and C19 feature in separate commits, with validation for each.
+
+## C19 plan prepared before code
+
+Inputs: [ticket](../../queue/codex.md#c19--image-provider-adapter-gpu-arbiter-palette-quantizer-operations-guide),
+[artifact specification](../../../engineering/authored-artifacts.md) §§6,6.1,7.4,10,12,
+ADR031 and [Claude's research](../claude/2026-11-02T0139--to-codex--artifacts-and-image-generation.md).
+Binding AGT-6.4: "Image generation goes through a configurable **loopback image
+endpoint**"; "No endpoint means no new paintings, never a broken game: existing
+paintings still show." Read the complete rule in `docs/doctrine/11-living-minds.md`.
+
+1. Golden slice: a mocked `SdCppProvider` request → bounded PNG decode in a worker →
+   pure deterministic 48×32 quantization. Add `src/adapters/image.ts` and
+   `src/domain/painting-quantize.ts`; neither exists yet. Validate loopback-only URLs,
+   no credentials/path/query, an 8 MB response cap,90 s timeout, abort and single flight.
+   Ollama image provider remains an explicit unavailable stub; ComfyUI is out of scope.
+2. Quantize: centre-crop to 3:2; box-area downsample in linear light; nearest OKLab
+   doctrine palette colour excluding outline steps; keep at most 16 colours with stable
+   tie breaks, remap deterministically, no dithering, packed 4-bit indices. Prove a
+   fixture golden hash, palette membership, repeatability and the specified 5 ms budget.
+3. Integrate `GpuArbiter` beside `src/adapters/inference.ts`. Existing
+   `InferenceScheduler.exclusive` aborts/settles active work and serializes controls;
+   review its cancellation/requeue behavior before extending it. Preserve C18 reading,
+   dialogue priority and C24/C25 jobs. Optional Ollama unload defaults on; await unload
+   before image generation. Villager jobs require no dialogue plus pause/sleep/
+   acceleration; dialogue aborts/requeues them. Player image jobs finish before chat.
+4. Extend connection settings in `src/presentation/hud.ts` / `src/main.ts`: endpoint
+   empty by default, provider, unload toggle and Test receipt. Preserve the current
+   `hearthwild-connection` settings and fallback entry; no endpoint must remain usable.
+5. Write `docs/operations/image-generation.md`. At implementation time verify exact
+   API/launch/CORS details against primary project docs and pin a release. Document
+   Windows CUDA/Linux commands, model+encoder+VAE files and troubleshooting. Permit
+   Apache-2.0 Z-Image Turbo or FLUX.2 klein 4B; exclude klein 9B/non-commercial weights.
+   Research in the spec is input, not proof of a currently verified launch command.
+6. Validate mocked success/HTTP/oversize/timeout/abort/non-loopback cases; scheduler
+   exclusion, unload, dialogue preemption/requeue and player non-preemption; worker
+   decode and quantizer golden fixture. Run four-worker check, format and hygiene;
+   retain C13/C14/C25, artifact and root/subpath regressions where affected.
+7. Send an own-folder `--to-blender--test-` request with a concrete smoke command.
+   A measures real painting VRAM and the 30 s Generate→preview target including model
+   unload/reload. B uses mocks/functional checks only; no image-model/GPU latency runs.
+   Inspect every produced review image before describing it. Deliver Changed/Evidence/
+   Gaps and candidate evidence; update the handoff. C20 painting actions, screens,
+   hanging/captions and C21 pixel editing are separate tickets, not C19 scope.
 
 ## C18 implementation
 
@@ -53,7 +125,8 @@ are retained; do not rerun model latency on B or relax gates.
 
 [Push CI41686809511](https://github.com/huytruong1810/Vibe/actions/runs/41686809511)
 CPU `checks` **passed**, including full check, artifact timing, formatting and benchmark.
-Both beta jobs passed; remote browser journeys and full ecology remain in progress.
+Both beta jobs and full ecology passed; browser timed out and aggregate `verify`
+failed. The89ffe45 follow-up browser step exited1; see the first-actions section.
 No full-workflow-green claim. See [validation](c18-validation.json) and
 [benchmark](c18-benchmark.json). C18 is candidate; A latency and director review remain.
 
@@ -81,7 +154,7 @@ completed the full 28-day ecology soak successfully in **22m50s**, unchanged 25-
 limit. Both beta jobs passed. Its verify job exceeded 20 minutes in browser journeys.
 The pushed CI edit separates CPU checks and browser journeys into bounded 20-minute
 jobs and preserves required `verify` as an aggregate requiring both. CPU checks pass;
-the aggregate still awaits browser completion. All existing gates remain.
+browser CI remains red as recorded above. All existing gates remain.
 
 Baseline run 41564371915 succeeded; 41564379329 failed its browser step. Public logs 403;
 automatic review rejected stored-credential access, none read. Isolated unchanged

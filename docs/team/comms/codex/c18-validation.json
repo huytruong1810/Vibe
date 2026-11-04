@@ -41,7 +41,18 @@
     "event": "push",
     "beta": "both production bases passed",
     "checks": "success; includes full check, formatting, artifact timing and benchmark assertions unchanged",
-    "browserEcology": "in progress; no full-workflow-green claim"
+    "ecology": "success; full 28-day soak, 22m33s, completed 2026-11-03T18:04:58Z",
+    "browser": "cancelled; public annotation confirms 20-minute job timeout; browser step ran 16m40s",
+    "verify": "failure; aggregate correctly rejected the cancelled browser job",
+    "followup": {
+      "commit": "89ffe45",
+      "run": "https://github.com/huytruong1810/Vibe/actions/runs/41688294291",
+      "checksAndBeta": "success",
+      "ecology": "scope-skipped for documentation-only changes; not another full soak",
+      "browser": "failure; npm run test:browser exited 1 after 12m31s; exact failed test unknown from public annotations",
+      "verify": "failure",
+      "note": "No full-workflow-green claim. Next session must inspect the failed-test trace before C19."
+    }
   },
   "book": {
     "receipt": "c18-book-browser.json",
@@ -74,10 +85,10 @@
     "run": "https://github.com/huytruong1810/Vibe/actions/runs/41665593398",
     "ecology": "full 28-day soak passed in 22m50s; 25-minute limit unchanged",
     "beta": "both production bases passed",
-    "verify": "timed out in browser step; separate CPU/browser jobs now require remote verification"
+    "verify": "timed out in combined browser step; separated jobs still show timeout on 8619e25 and a browser-step failure on 89ffe45; repair remains"
   },
   "gaps": [
-    "Local timing misses retained; CI CPU checks passed, remote browser/ecology pending",
+    "Local timing misses retained; CI CPU checks and full ecology passed, remote browser CI is red",
     "Machine-A reading latency acceptance",
     "Conservative writing vocabulary rejects some ordinary words",
     "Incremental HUD dialogue remains C20",
