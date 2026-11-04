@@ -36,6 +36,24 @@ POSE_CLAUSE = ("THE FIRST REFERENCE IMAGE IS A GREY CLAY POSE GUIDE: MATCH ITS P
                "LAYOUT EXACTLY, BUT TAKE NO COLOURS, SURFACE DETAIL OR SPECIES DESIGN FROM IT.")
 
 
+# Readability clause (C26): added only when the recipe names a `signature` (the one or two features that must survive at
+# game size). Creatures also get an oversized head and eyes (ART-6.3, ART-7.2); humans keep doctrine proportions (L3), so
+# they get the signature-shape part only. Lives here, not in the protected spec templates, because it is optional.
+READABILITY = {
+    "creature": ("READABILITY AT GAME SIZE: A CHUNKY, SIMPLIFIED SILHOUETTE; THE HEAD AND EYES SLIGHTLY OVERSIZED; THE SIGNATURE "
+                 "FEATURES ({signature}) EXAGGERATED IN SIZE, CLEARLY SEPARATED FROM THE BODY AND DRAWN AS LARGE CLEAN SHAPES, EACH AT "
+                 "LEAST A TENTH OF THE BODY HEIGHT; NO FINE FUR, SCALE OR FEATHER TEXTURE."),
+    "human": ("READABILITY AT GAME SIZE: A CLEAR SIMPLIFIED SILHOUETTE; THE SIGNATURE SHAPES ({signature}) BOLD, LARGE AND CLEANLY "
+              "SEPARATED FROM THE BODY, NO FINE PATTERN OR TEXTURE. KEEP 4.5 TO 5 HEAD PROPORTIONS."),
+}
+
+
+def readability(template: str, fields: dict) -> str:
+    sig = str(fields.get("signature", "")).strip()
+    kind = "creature" if template.startswith("creature-") else "human" if template.startswith("human-") else None
+    return READABILITY[kind].format(signature=sig) if sig and kind else ""
+
+
 class _Fields(dict):
     def __missing__(self, key):  # a template field the recipe forgot: fail loudly
         raise ForgeError(f"concept.fields lacks '{key}' (template placeholder)")
@@ -49,7 +67,9 @@ def plan(asset: str, model: str | None = None, recipe: dict | None = None) -> di
     templates = json.loads((SPEC_DIR / "concept_templates.json").read_text())["templates"]
     t = templates.get(c["template"]) or (_ for _ in ()).throw(ForgeError(f"Unknown concept template {c['template']}"))
     style = json.loads(STYLE.read_text())
-    prompt = t["text"].format_map(_Fields(c.get("fields", {}))) + " " + style["styleBlock"]
+    prompt = t["text"].format_map(_Fields(c.get("fields", {})))
+    clause = readability(c["template"], c.get("fields", {}))
+    prompt = prompt + (" " + clause if clause else "") + " " + style["styleBlock"]
     refs = []
     if c.get("poseGuide"):  # a grey clay render of the target pose (art/source/style/pose-guides/)
         refs.append(str(REPO / c["poseGuide"]))

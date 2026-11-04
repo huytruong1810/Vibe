@@ -15,6 +15,7 @@ Commands:
   all --asset ID         run every runnable stage in order (stops at the first block)
   pose-guide --template T [--try]   grey clay pose guide for a skeleton template (concept poseGuide); --try runs one concept trial
   portrait --asset K:ID [--emotions a,b] [--n N] [--pick e=id,...]   eight expressions (96/128 px) from the neutral portrait by reference editing; --pick keeps candidates
+  headroom [--asset ID]   canvas room from the anchor (spec table), or how far an asset's frames reach and the largest heightArtPx that keeps the 2 px margin (C26)
   upscale --asset ID [--n N] [--seed S] [--keep SEED]   re-render reference views under 1024 px tall at 1100+ px with the edit model (C28); --keep writes them over the views
   icon --item ID --prompt "..." --ramps a,b [--n N] [--pick ID]   32 px inventory icon candidates for items without a held model; --pick keeps one and logs it
   swatch --set S --material M --prompt "..." [--n N] [--pick ID]   seamless 1024 px terrain swatch candidates for tileforge; --pick keeps one and logs it
@@ -1223,7 +1224,7 @@ def pose_guide_try(template: str, n: int = 4, seed: int | None = None, model: st
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("command", choices=["doctor", "selftest", "status", "next", "all", "faces", "item-plan", "items", "orient", "layout",
-                                        "concept", "views", "pose-guide", "swatch", "portrait", "icon", "upscale", *STAGES])
+                                        "concept", "views", "pose-guide", "swatch", "portrait", "icon", "upscale", "headroom", *STAGES])
     ap.add_argument("--asset")
     ap.add_argument("--n", type=int, default=4, help="concept: candidates to generate")
     ap.add_argument("--seed", type=int, help="concept: first seed (default: time-based)")
@@ -1262,6 +1263,14 @@ def main() -> int:
             return 0
         except (ForgeError, OSError, ValueError, KeyError) as e:
             print(f"FORGE ERROR [swatch]: {e}", file=sys.stderr)
+            return 2
+    if a.command == "headroom":
+        try:
+            from forgelib import headroom as headroom_mod
+            print(headroom_mod.report(a.asset))
+            return 0
+        except (ForgeError, OSError, ValueError, KeyError) as e:
+            print(f"FORGE ERROR [headroom]: {e}", file=sys.stderr)
             return 2
     if a.command == "upscale":
         if not a.asset:

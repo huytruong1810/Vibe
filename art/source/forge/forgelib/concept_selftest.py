@@ -11,6 +11,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from forgelib import concept as C  # noqa: E402
 from forgelib.concept import split_views  # noqa: E402
 from forgelib.core import ForgeError  # noqa: E402
 
@@ -36,6 +37,16 @@ class SplitViews(unittest.TestCase):
         # a tail tip separated by a thin background gap still belongs to the middle subject
         im = sheet([(60, 80, 300, 460), (450, 100, 700, 450), (712, 300, 760, 340), (880, 70, 1120, 470)])
         self.assertEqual(len(split_views(im, 3)), 3)
+
+    def test_readability_clause_only_with_a_signature(self):
+        self.assertEqual(C.readability("creature-v1", {"species": "x"}), "")
+        c = C.readability("creature-v1", {"signature": "curved saber fangs, flaming mane"})
+        self.assertIn("curved saber fangs, flaming mane", c)
+        self.assertIn("HEAD AND EYES SLIGHTLY OVERSIZED", c)
+        h = C.readability("human-apose-v1", {"signature": "a tall teal hat"})
+        self.assertIn("a tall teal hat", h)
+        self.assertNotIn("OVERSIZED", h)                      # humans keep doctrine proportions (L3)
+        self.assertEqual(C.readability("prop-v1", {"signature": "x"}), "")
 
     def test_wrong_subject_count_refuses(self):
         im = sheet([(60, 80, 500, 460), (700, 100, 1100, 450)])

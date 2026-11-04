@@ -261,7 +261,7 @@ fit → C9c.
 
 ### C26 · Sprite readability: features survive the bake and pixelize step
 
-- status: direction approved (2026-11-02); open items: `heightArtPx` headroom and the concept clause
+- status: direction approved (2026-11-02); `heightArtPx` headroom tool and concept clause done (2026-11-04); creature face decals stay with C3b
 - owner: claude
 - goal: a creature reads as itself at game size: Bramblefang's fangs and fire mane, Rivallie's crest and bib, Mireling's face and moss, a human's face and hair.
 - evidence of the problem: [comparison boards](../comms/blender/2026-11-02T0500--to-director--sprite-comparison-boards.md): every shipped body loses its defining features; the pixel grid is clean, so shapes are lost in bake/pixelize, not outline or palette.
@@ -272,7 +272,8 @@ fit → C9c.
 - result: opt-in recipe fields `supersample` (extra 4× albedo pass in `blender/bake.py`) and `features` (`forgelib/pixelize.py` `_ss_labels`: a slot wins a pixel near a socket and on a host region; at least 2 px, never an orphan; hidden from behind), plus the existing `rampShift`. Without them every published creature re-pixelizes pixel-identical (2,464 frames). Eyes stay out: creature faces are runtime decals (ART-8.1), so that part belongs to C3b. A 2-px eye decal at the mouth/head anchor reads at 1× (tried and removed).
 - proof recipes (for blender in B20, after the director agrees): Bramblefang `"supersample": 4, "rampShift": {"pelt": -1, "mane": -1}, "features": {"fangs": {"minSamples": 1, "on": ["pelt", "edge"], "near": ["Socket_Mouth"], "radiusPx": 4, "maxPx": 2}}`; Rivallie `"supersample": 4, "rampShift": {"body": -1, "fins": 1}`.
 - evidence: boards `docs/team/comms/claude/boards/2026-11-02-c26-bramblefang.png`, `…-c26-bramblefang-run.png` (fang in every face-facing run frame), `…-c26-rivallie.png`; QA palette/colour/outline/orphan checks pass on the proof frames (9 and 12 colours of 20, 0 orphans); `pixelize_selftest.py` 6/6
-- open: `heightArtPx` headroom per canvas and the concept-template clause (oversized head and signature features) are not done; creature face decals are C3b.
+- result 2026-11-04: `forge.py headroom [--asset ID]` (`forgelib/headroom.py`, `headroom_selftest.py` 5/5) prints the room each canvas leaves above, below and beside the anchor, and for an asset the largest `heightArtPx` that keeps the 2 px margin. **Finding: nearly every creature and human sits at the margin on its tightest clip** (`downed`, a strike or a drink): Bramblefang 42 (max 42), Mireling 26 (26), Marshstalker 34 (34), Neris 44 (44), the player 46 (46); Cindermoth 22 (23), Ignicap 24 (25), Zephyrit 22 (23), Rivallie 25 (27); Steamshell 36 (42). A larger body on screen needs a larger canvas (spec change, DOC-5), not a higher heightArtPx. Concept clause: optional `concept.fields.signature` adds a readability clause (`concept.readability`; creatures: chunky silhouette, oversized head and eyes, exaggerated separated signature features; humans: bold signature shapes, 4.5-5 head proportions kept); no signature, no change, so digests hold. Bramblefang trial (seeds 700 and 701, boards `…-c26-clause-base.png` and `…-c26-clause-signature.png`): with the clause the saber fangs come out longer and bolder (c701 clearly), the head a little larger and the mane in cleaner flame shapes; the stance still sits in both, so the pose guide stays the fix for that. One seed pair; blender judges in B20.
+- open: creature face decals are C3b; whether to grow the creature canvases is a spec decision to take with the director.
 
 ### C27 · Pose guides for every template
 

@@ -78,6 +78,12 @@ spec (`../spec/`); a recipe never overrides spec numbers.
 
 - `template` and its fields: `art/source/forge/spec/concept_templates.json`; a missing field
   fails loudly. `references` are identity sources passed as reference images.
+- `fields.signature` (optional, C26): the one or two features that must survive at game size, e.g. "two curved saber
+  fangs, flaming ember mane". With it, creature and human templates get a readability clause: chunky silhouette, oversized
+  head and eyes for creatures (humans keep 4.5-5 heads), signature features exaggerated and separated from the body.
+  Without it nothing changes, so existing recipes and their digests hold. Check how much a bigger sprite can grow with
+  `forge.py headroom --asset ID` (most assets sit at the 2 px margin on `downed` or a strike, so a larger body needs a
+  larger canvas, a spec change under DOC-5).
 - `poseGuide`: always set it to the guide for the species' skeleton template. It goes in as the
   first reference image with a fixed clause (match pose, views and layout; take no design).
   Without it the image model drifts to upright or cartoon poses (`docs/engineering/imagegen.md`).
