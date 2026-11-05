@@ -104,7 +104,7 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
 
 ### V7 · Audit and decide `B24` (18 flora state sprites) and `B26` (worldforge map dressing)
 
-- status: open (waits on `blender` `B24`, `B26`; note that `B25` portraits after `visitor` implements `C33` are decided by `communicator` or `claude` per `TEAM-4.2` rule 5)
+- status: open (NEXT, top of the visitor queue: blender's `B24` flora packets (`art/review/2026-11-05-env-flora-*`), `B5` (18 landmarks) and `B18` (4 display furniture) are `candidate` and waiting; `B26` still waits on blender; `B25` portraits are decided by `communicator` or `claude` per `TEAM-4.2` rule 5. Order and context: `docs/team/comms/visitor/2026-11-05T1330--to-all--handoff-beta-wiring-path.md`)
 - goal: inspect and decide the 3-state flora sprites (`B24`) and dressed Aqualia level packets (`B26`).
 - done when: `B24` and `B26` packets are audited and decided
 - evidence:
