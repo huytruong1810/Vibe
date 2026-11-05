@@ -14,13 +14,17 @@ async function captureBeat(
   // round trips can outlast a brief notice or windup on software-rendered CI.
   const observed = page.evaluate(
     async ({ ids, beat }) => {
-      const api = (window as any).__hearthwild,
-        deadline = performance.now() + 15000;
+      const api = (window as any).__hearthwild;
       let captured = false;
-      const sample = async () => {
-        while (performance.now() < deadline) {
-          const f = api.frame(),
-            actors = f.actors.filter((a: any) => ids.includes(a.id));
+      const pending = new Promise<number>((resolve, reject) => {
+        const timeout = setTimeout(() => {
+          delete (window as any).__c13OnFrame;
+          reject(Error(`Missing ${beat} beat`));
+        }, 15000);
+        const sample = (f: any) => {
+          if (captured || !f || f.session !== api.frame()?.session) return;
+          if (beat === 'notice' && document.querySelector('#settings-dialog[open]')) return;
+          const actors = f.actors.filter((a: any) => ids.includes(a.id));
           const ready =
             beat === 'notice'
               ? actors.some((a: any) => a.pose === 'guard' && !a.action)
@@ -36,16 +40,27 @@ async function captureBeat(
                 : actors.some((a: any) => a.action && f.tick < a.action.activeAt);
           if (ready) {
             captured = true;
-            await api.command({ type: 'pause', token: 'c13:capture' });
-            return f.tick;
+            clearTimeout(timeout);
+            delete (window as any).__c13OnFrame;
+            void api
+              .command({ type: 'pause', token: 'menu' })
+              .then(
+                (receipt: any) =>
+                  receipt.ok
+                    ? resolve(f.tick)
+                    : reject(Error(`Capture pause rejected: ${receipt.message}`)),
+                reject,
+              );
           }
-          await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
-        }
-        throw Error(`Missing ${beat} beat`);
-      };
-      const pending = sample();
+        };
+        (window as any).__c13OnFrame = sample;
+        sample(api.frame());
+      });
       (window as any).__c13CaptureArmed = true;
-      if (!captured) void api.command({ type: 'resume', token: 'c13:capture' });
+      if (!captured && beat !== 'notice') {
+        const receipt = await api.command({ type: 'resume', token: 'menu' });
+        if (!receipt.ok) throw Error(`Capture resume rejected: ${receipt.message}`);
+      }
       return pending;
     },
     { ids, beat },
@@ -67,6 +82,19 @@ for (const [name, species, count] of [
     await page.setViewportSize({ width: 1920, height: 1080 });
     const errors: string[] = [];
     page.on('pageerror', (e) => errors.push(e.message));
+    await page.addInitScript(() => {
+      // Observe every delivered simulation frame before rendering can replace it.
+      // rAF polling can miss an entire short notice beat while CDP/GPU work stalls.
+      const NativeWorker = Worker;
+      window.Worker = class extends NativeWorker {
+        constructor(url: string | URL, options?: WorkerOptions) {
+          super(url, options);
+          this.addEventListener('message', (event) => {
+            if (event.data?.frame) (window as any).__c13OnFrame?.(event.data.frame);
+          });
+        }
+      };
+    });
     await page.goto('/?test=1');
     await page.getByRole('button', { name: 'Play without local AI', exact: true }).click();
     await expect(page.locator('#setup-dialog')).not.toBeVisible({ timeout: 30000 });
@@ -140,7 +168,7 @@ for (const [name, species, count] of [
         starts = new Set<number>();
       let previous = -1;
       const end = api.frame().tick + 420;
-      void api.command({ type: 'resume', token: 'c13:capture' });
+      void api.command({ type: 'resume', token: 'menu' });
       while (api.frame().tick < end) {
         await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
         const f = api.frame();
