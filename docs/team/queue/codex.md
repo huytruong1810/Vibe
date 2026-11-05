@@ -15,7 +15,7 @@ and local-generation tickets (C26–C31) sit in their own section.
 
 ### C22 · Beta channel: green CI, a deploy on every green push, a playtest loop
 
-- status: candidate (implementation delivered; current-source browser/verify and director Pages activation remain)
+- status: candidate (sourcef46fb6dc hosted verify passes; director Pages activation, local painting CPU budget and software C18 timing remain)
 - owner: codex
 - goal: the director plays the latest green build from a URL on any day, files playtest notes in one place, and they become tickets, without anyone on machine A.
 - context: CI was red for 100+ runs (`format:check` failed on machine-written sources, so browser tests and the benchmark never ran) until claude's `88b11ba`. The repo is public, so GitHub Pages is free.
@@ -76,7 +76,8 @@ and local-generation tickets (C26–C31) sit in their own section.
 
 ### C13 · Creature minds v1: engagement, perception, intents, scripted brain, flight (CRM-1…3, CRM-10)
 
-- status: candidate regression follow-up (feature approval retained; current CI remains open)
+- status: candidate regression follow-up (feature approval retained; sourcef46fb6dc hosted/native/software C13 pass; authored-art acceptance remains)
+- evidence: 2026-11-05 native exact HEAD pack/Zephyrit and draft/C18 suite5/5 pass; all11 captures inspected. Both C13 journeys also pass forced SwiftShader. Push42092547479 browser shards/checks/beta/verify pass. See [resume checkpoint](../comms/codex/HANDOFF.md#current-resume-checkpoint-supersedes-pause-state-below); software C18 timing and local painting budget failures remain separately recorded there.
 - owner: codex
 - goal: creatures notice, stalk, commit and break like animals, each species recognisably itself, within budget and deterministic.
 - spec: [creature minds](../../engineering/creature-minds.md) §2–§6, §8–§11; doctrine CRM-1.4, CRM-2 (incl. flight), CRM-3, CRM-6.1, CRM-6.4, CRM-8, CRM-9, CRM-10; ADR 033.
@@ -108,6 +109,8 @@ and local-generation tickets (C26–C31) sit in their own section.
 - evidence:
 
 ### C18 · The written word: book screen, villager reading and writing
+
+- evidence: 2026-11-05 exact HEADf46fb6dc native5/5 includes both async-draft regressions and full C18; opening30.7ms,5measurements,2mounted pages,0page errors. SwiftShader draft regressions pass, but C18 fails100ms opening at1433.2ms combined/149.9ms isolated; all23 images inspected. Build49.74s and full format pass. Hosted source-matched checks/browser/beta/verify pass; unchanged local full check569pass/1painting-budget failure remains. See [resume checkpoint](../comms/codex/HANDOFF.md#current-resume-checkpoint-supersedes-pause-state-below).
 
 - status: candidate (feature delivered; focused production performance repair authorized by Huy)
 - owner: codex
@@ -183,6 +186,8 @@ and local-generation tickets (C26–C31) sit in their own section.
 - gaps: communicator must integrate the approved19 actors; then measure the real catalog and recheck scale against M11 humans. Current compact catalog does not prove full integration. Proposal007 Part2 base eyes is excluded; Part3 portrait work is tracked in C33.
 
 ### C7 · Authored world in the engine (WLD-M1…M4)
+
+- evidence: 2026-11-05 director-requested refresh: studio76ef620c records layout+dressing approval for village/Riverlands R3 (source ae34ae141d48512ab02607d274973751db79a0853fdebb74eaa3c6d982b66d5b). Not yet merged into engineering; pass008 flora are Decor, so gameplay ResourceNode and C7 activation dependencies remain. Communicator M28 tracks the integration relay and Blender forage-node request.
 
 - status: partial (candidate compiler/loader slice). Claude scoped activation on 2026-11-01 and handed it back: `Simulation` builds only from `WorldGenerator().generate(seed)` (`simulation.ts:187`), saves regenerate from seed (`save-schema.ts:447`), 40 sites read fixed `VILLAGES` coordinates, and the authored map is one 90×68 level, so 20 villagers of the other two villages would be in void. Next: map-driven settlements and player spawn (WLD-M2), save `worldSource` versioning (WLD-M3), then a beta toggle. Village layout approved (village-1/-2 records); Riverlands layout approved 2026-11-02 (`world-aqualia--world-aqualia-aqualia_riverlands-2.md`)
 - goal: a new game loads the authored LDtk map; procedural world generation is retired.

@@ -1,4 +1,56 @@
-# Codex handoff: paused 2026-11-05
+# Codex handoff: resumed 2026-11-05
+
+## Current resume checkpoint (supersedes pause state below)
+
+Huy explicitly resumed the validation plan in chat. Workspace remains `Vibe`,
+branch `eng/hd-presentation`, HEAD `f46fb6dc`, engineering code `33788a03`.
+Fast-forward pull is up to date. No studio merge or scheduled wake was created.
+
+- Public push42092547479: checks (including benchmark), both browser shards,
+  both beta bases and verify pass at exact HEAD. PR42092568549 has the same
+  successful checks; its workflow is cancelled because ecology was cancelled.
+  Push ecology's actual soak step was skipped, not passed. See
+  [current CI receipt](current-ci-receipt.json).
+- Local unchanged-source full check:569pass/1painting-budget failure at7.853ms
+  against5ms; isolated retry7.609ms. Logs: `artifacts/resume-20261105-check-elevated.log`
+  and `artifacts/resume-20261105-budgets.log`. Do not replace these with hosted results.
+- Quantizer experiments preserved golden output but did not reliably meet the
+  local budget; all runtime/test edits were reverted. Logs remain under
+  `artifacts/resume-20261105-quantizer-*`; two experimental full-check failures
+  remain at `artifacts/resume-20261105-check-quantizer.log` and
+  `artifacts/resume-20261105-check-interior.log`. No experimental code is delivered.
+- Huy also requested the communicator unblock LDtk levels. Studio76ef620c has
+  director-approved village/Riverlands R3 layout+dressing, source digest
+  ae34ae141d48512ab02607d274973751db79a0853fdebb74eaa3c6d982b66d5b.
+  Communicator M28 tracks intake/relay and Blender gameplay forage-node input.
+  Pass008 flora are Decor, not ResourceNode. C7 activation stays separate;
+  controlled studio integration and existing engineering overlap remain open.
+- Build49.74s and full formatting pass on unchanged runtime source. Logs:
+  `artifacts/resume-20261105-build.log`, `artifacts/resume-20261105-format.log`.
+- Exact HEAD native5/5 passes in2.1min: both draft regressions, both C13 journeys,
+  C18. Opening30.7ms,5measurements,2mounted pages,0page errors; Intel D3D11.
+  All11 images inspected. Source/hash-bound receipt:
+  `artifacts/resume-native-f46fb6dc-20261105T2046/receipt.json`.
+- Exact HEAD forced SwiftShader combined run4pass/1fail in4.7min: drafts and
+  C13 pass; C18 opening1433.2ms fails100ms (pause1367.4ms). Isolated C18 retry
+  also fails149.9ms (pause129.9ms). Both have5measurements,2mounted pages and
+  0page errors. All11+1 images inspected. Receipts/raw CPU retained under
+  `artifacts/resume-software-f46fb6dc-20261105T2049/` and
+  `artifacts/resume-software-c18-f46fb6dc-20261105T2055/`.
+  Unique failed traces remain under the matching `test-results/resume-*` paths.
+  Do not count either run as software acceptance or substitute the older40.6ms run.
+- Isolated failed CPU window shows73.3ms minor GC (71.7ms safepoint wait) and
+  49.6ms compositor commit wait during the pause phase. Combined run has long
+  profiler/worker tasks. These observations do not establish a production fix.
+  [Structured receipt](resume-validation.json) `resumedValidation` retains all data.
+
+Next: resolve the local painting5ms budget and traced software-opening failure
+without weakening runner/assertions/limits; retain current hosted/native passes.
+Communicator M28 can progress LDtk intake/relay independently. C7 activation,
+studio overlap, face-format intake, A acceptance and Pages remain separate.
+No local whole-check or software acceptance is advanced by this checkpoint.
+
+Historical pause evidence follows and must remain preserved.
 
 **PAUSED by Huy at 2026-11-05T18:20Z for continuation in a new session.**
 Do not resume automatically or create another wake task. Resume only on Huy's instruction.

@@ -519,7 +519,7 @@
       },
       "maximumPages": 48,
       "mountedPages": 2,
-      "pageLabel": "1\u00e2\u20ac\u201c2 / 48",
+      "pageLabel": "1â€“2 / 48",
       "openingMs": 25.299999952316284,
       "phaseTimingsMs": {
         "pause": 11.099999904632568,
@@ -747,7 +747,7 @@
   ],
   "nativeCiBrowser": {
     "passed": 3,
-    "minutes": 2.0,
+    "minutes": 2,
     "includes": [
       "C13 pack with worker-frame observer",
       "C13 zephyrit with worker-frame observer",
@@ -1243,7 +1243,7 @@
       },
       "maximumPages": 48,
       "mountedPages": 2,
-      "pageLabel": "1\u00e2\u20ac\u201c2 / 48",
+      "pageLabel": "1â€“2 / 48",
       "openingMs": 26.199999809265137,
       "phaseTimingsMs": {
         "pause": 9.399999856948853,
@@ -1950,7 +1950,7 @@
       },
       "maximumPages": 48,
       "mountedPages": 2,
-      "pageLabel": "1\u00e2\u20ac\u201c2 / 48",
+      "pageLabel": "1â€“2 / 48",
       "openingMs": 114.59999990463257,
       "phaseTimingsMs": {
         "pause": 78.09999990463257,
@@ -2090,7 +2090,7 @@
     "frames": 3966,
     "pages": 5,
     "fullMiB": 79.73,
-    "halfMiB": 20.0,
+    "halfMiB": 20,
     "approvedAppearances": 2,
     "assetCheck": "passed",
     "sliceGaps": 1517
@@ -2330,6 +2330,353 @@
       "C33 hair/fringe and mean/std evidence",
       "Unchanged HD1519 gaps and full19actor scale acceptance",
       "Studio d97206ca duplicate C34/gallery reconciliation"
+    ]
+  },
+  "resumedValidation": {
+    "at": "2026-11-05T20:58:51.995Z",
+    "requestedBy": "Huy direct chat: implement validation plan, plus communicator LDtk unblock",
+    "head": "f46fb6dca5009183fa074cfd06c000f216ac9806",
+    "codeCommit": "33788a034901b333ab12d38cdfc211ab15d1e680",
+    "runtimeChanges": false,
+    "acceptance": "candidate; local CPU and software timing failures remain",
+    "pull": "ff-only up to date",
+    "wholeCheck": {
+      "passed": 569,
+      "failed": 1,
+      "paintingMedianMs": 7.853,
+      "limitMs": 5,
+      "log": "artifacts/resume-20261105-check-elevated.log",
+      "isolatedPaintingMedianMs": 7.609,
+      "isolatedLog": "artifacts/resume-20261105-budgets.log"
+    },
+    "experiments": {
+      "adopted": false,
+      "note": "Quantizer optimization trials preserved golden outputs but did not reliably pass the unchanged CPU budget. All source/test edits reverted. Logs retained in artifacts/resume-20261105-quantizer-* and experimental full checks."
+    },
+    "build": {
+      "passed": true,
+      "seconds": 49.74,
+      "log": "artifacts/resume-20261105-build.log"
+    },
+    "format": {
+      "passed": true,
+      "log": "artifacts/resume-20261105-format.log"
+    },
+    "native": {
+      "sourceSha": "f46fb6dca5009183fa074cfd06c000f216ac9806",
+      "mountedPages": 2,
+      "passed": 5,
+      "openingMs": 30.699999809265137,
+      "files": [
+        {
+          "sha256": "5916daed1b0089a27300c26efab816d2703b27e8cddf69bdd775e57d1b6e67c9",
+          "path": "artifacts/resume-native-f46fb6dc-20261105T2046/c13-pack-1080p.png"
+        },
+        {
+          "sha256": "18e4a01454558ff391c2e8161ad113c3b1f387a5efe5854faba540714a60c922",
+          "path": "artifacts/resume-native-f46fb6dc-20261105T2046/c13-pack-break-1080p.png"
+        },
+        {
+          "sha256": "72b5c175786a2363f4d43a700522c76353e4d0e2c9413f5458709a440cdd2493",
+          "path": "artifacts/resume-native-f46fb6dc-20261105T2046/c13-pack-browser.json"
+        },
+        {
+          "sha256": "576fec1973801cb928875604f43360b8a33d93ac0cb474c8cb10298766f1d7dd",
+          "path": "artifacts/resume-native-f46fb6dc-20261105T2046/c13-pack-commit-1080p.png"
+        },
+        {
+          "sha256": "51c661512314ff68df138a52242c143fdebc1e239d06abe300facac709532484",
+          "path": "artifacts/resume-native-f46fb6dc-20261105T2046/c13-pack-notice-1080p.png"
+        },
+        {
+          "sha256": "2f8c60305b5c461f613623613361b82f202071d87eefeab96a2dfc7d38a02bed",
+          "path": "artifacts/resume-native-f46fb6dc-20261105T2046/c13-pack-stalk-1080p.png"
+        },
+        {
+          "sha256": "9d6f12b2cd2153c0eb34ef9ba49a700072e7abe91883c06d81cc1982cd3bfef4",
+          "path": "artifacts/resume-native-f46fb6dc-20261105T2046/c13-zephyrit-1080p.png"
+        },
+        {
+          "sha256": "6eadcc075b638de297a55aafe490a8714564c42868c828beaac328d33f0fb0e9",
+          "path": "artifacts/resume-native-f46fb6dc-20261105T2046/c13-zephyrit-break-1080p.png"
+        },
+        {
+          "sha256": "133d7b98656d5fe35fe44139ce8b8b82437b971fd5dbcae6672ec0f9071274d1",
+          "path": "artifacts/resume-native-f46fb6dc-20261105T2046/c13-zephyrit-browser.json"
+        },
+        {
+          "sha256": "c7836bfc2850011cb9bbc912e1b5899e189974d13e5b30e63b442a1c95d8f1ae",
+          "path": "artifacts/resume-native-f46fb6dc-20261105T2046/c13-zephyrit-commit-1080p.png"
+        },
+        {
+          "sha256": "6db158e682e7b8a8070b98025790dea25ddbad1e0713741a472e25942fb5b304",
+          "path": "artifacts/resume-native-f46fb6dc-20261105T2046/c13-zephyrit-notice-1080p.png"
+        },
+        {
+          "sha256": "f391d7464b6c739836f0291f947295c7a7a08732f01ab99581a088f0ba93404f",
+          "path": "artifacts/resume-native-f46fb6dc-20261105T2046/c13-zephyrit-stalk-1080p.png"
+        },
+        {
+          "sha256": "b9c8b81ab476283c25297d02daaaa24acf79f5abf109d894a883e3af25af0661",
+          "path": "artifacts/resume-native-f46fb6dc-20261105T2046/c18-book-browser.json"
+        },
+        {
+          "sha256": "eaf1ab7ef0d25ce4a557753443e9cf439636ccd33369e8243e085b494c28b5c6",
+          "path": "artifacts/resume-native-f46fb6dc-20261105T2046/c18-book-cpu.json"
+        },
+        {
+          "sha256": "43edcec2ba8951f3fd204585d510fdaa847a7f953b14d0f82f46eb145de58966",
+          "path": "artifacts/resume-native-f46fb6dc-20261105T2046/c18-book-spread-1080p.png"
+        },
+        {
+          "sha256": "3837286645c5d9191f8d86219a11c8ed061cb01474f3f9392384a21966747c99",
+          "path": "artifacts/resume-native-f46fb6dc-20261105T2046/resume-20261105-native.log"
+        }
+      ],
+      "recordedAt": "2026-11-05T20:48:40.5062937Z",
+      "imagesInspected": 11,
+      "pageErrors": 0,
+      "phaseTimingsMs": {
+        "pause": 17.5,
+        "content": 5,
+        "render": 2.5999999046325684,
+        "show-modal": 5.599999904632568
+      },
+      "gpu": "ANGLE (Intel, Intel(R) Iris(R) Xe Graphics (0x0000A7A1) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "measurements": 5,
+      "codeCommit": "33788a034901b333ab12d38cdfc211ab15d1e680",
+      "observations": "Pack and Zephyrit phases show changed positions, commitment arcs and retreat; legacy NPC bodies remain. Sealed River diary spread shows two readable columns and navigation, with the world dimmed behind the modal.",
+      "receipt": "artifacts/resume-native-f46fb6dc-20261105T2046/receipt.json",
+      "receiptSha256": "eb3d7b87e62fdc8397700682c764aa43c1eedd2c4bfba65a1c64e3ee1e3119db"
+    },
+    "software": {
+      "sourceSha": "f46fb6dca5009183fa074cfd06c000f216ac9806",
+      "mountedPages": 2,
+      "passed": 4,
+      "openingMs": 1433.1999998092651,
+      "files": [
+        {
+          "sha256": "f4bd681d86230895b5d4b1176dfac36188d25f87694478934f79844255eb7b6c",
+          "path": "artifacts/resume-software-f46fb6dc-20261105T2049/c13-pack-1080p.png"
+        },
+        {
+          "sha256": "a578e365f4ba29f320f81a9b2e060128ce461eb394c67ecfa86ecff94dc6273b",
+          "path": "artifacts/resume-software-f46fb6dc-20261105T2049/c13-pack-break-1080p.png"
+        },
+        {
+          "sha256": "a9a1a6fc7806511aa2cd985b70fef025a0bfa64c886fdd08e30137a58f878798",
+          "path": "artifacts/resume-software-f46fb6dc-20261105T2049/c13-pack-browser.json"
+        },
+        {
+          "sha256": "fb6debf4bf242720d87bd00b2dd0ea3583edeb89c63f2cd182d52e95864b0aa8",
+          "path": "artifacts/resume-software-f46fb6dc-20261105T2049/c13-pack-commit-1080p.png"
+        },
+        {
+          "sha256": "bb0f34e3e74d530bd519a3c13b91cfc7c8ee3c755768c3e30e490a6daf345b4f",
+          "path": "artifacts/resume-software-f46fb6dc-20261105T2049/c13-pack-notice-1080p.png"
+        },
+        {
+          "sha256": "41670a36427222c3da7a205e2f3cb6ea7ab3273f240c39c25cdd5b0a19f0d9de",
+          "path": "artifacts/resume-software-f46fb6dc-20261105T2049/c13-pack-stalk-1080p.png"
+        },
+        {
+          "sha256": "103499ed19b6b766cc93c651709ad956815aeea9a19c3d281437ac21e9a238a9",
+          "path": "artifacts/resume-software-f46fb6dc-20261105T2049/c13-zephyrit-1080p.png"
+        },
+        {
+          "sha256": "d4bbbcd21f272e252b660afd93db430c81243bb77d8cf6d62c12b409ffba1972",
+          "path": "artifacts/resume-software-f46fb6dc-20261105T2049/c13-zephyrit-break-1080p.png"
+        },
+        {
+          "sha256": "66eba2628a0badccf7f707f9f2088b263197b42a9b3f2650dad3711d84301583",
+          "path": "artifacts/resume-software-f46fb6dc-20261105T2049/c13-zephyrit-browser.json"
+        },
+        {
+          "sha256": "ff71359a1afd378a04960bb5430e50d8a60661f8ba0ab8ae50e8048f7b726cdb",
+          "path": "artifacts/resume-software-f46fb6dc-20261105T2049/c13-zephyrit-commit-1080p.png"
+        },
+        {
+          "sha256": "df3a4de5b72d0d9f2087e3cbbbc3f314db5236c66ce0a2f12b3e1d422573ef92",
+          "path": "artifacts/resume-software-f46fb6dc-20261105T2049/c13-zephyrit-notice-1080p.png"
+        },
+        {
+          "sha256": "1d6cbc8d68841d7b37b8a9839f97708b55588daf03f9411db7e62b8b01abdb58",
+          "path": "artifacts/resume-software-f46fb6dc-20261105T2049/c13-zephyrit-stalk-1080p.png"
+        },
+        {
+          "sha256": "77a72d1303859e02dfc41071615ef3b09c4066379f44f7ae84339e3cb69cd50f",
+          "path": "artifacts/resume-software-f46fb6dc-20261105T2049/c18-book-browser.json"
+        },
+        {
+          "sha256": "010807f47a742e6eb13aea5d231346cd17d54b65573b25dec94b58f949a0a1b2",
+          "path": "artifacts/resume-software-f46fb6dc-20261105T2049/c18-book-cpu.json"
+        },
+        {
+          "sha256": "eb4338eed889afbee9f3f5dabe6842a28cef906d6fe2382d4b35ada90dedee05",
+          "path": "artifacts/resume-software-f46fb6dc-20261105T2049/c18-book-spread-1080p.png"
+        },
+        {
+          "sha256": "9483944300ab80846ca6089ebfbc06d78c589781cc95709333f834606582dd02",
+          "path": "artifacts/resume-software-f46fb6dc-20261105T2049/resume-20261105-software.log"
+        }
+      ],
+      "recordedAt": "2026-11-05T20:54:48.5298820Z",
+      "trace": "test-results/resume-software-f46fb6dc-20261105T2049/literacy-C18-writes-three--4dc98--reopens-a-read-only-spread-journeys/trace.zip",
+      "imagesInspected": 11,
+      "pageErrors": 0,
+      "phaseTimingsMs": {
+        "pause": 1367.3999998569489,
+        "content": 61.60000014305115,
+        "render": 0.2999999523162842,
+        "show-modal": 3.8999998569488525
+      },
+      "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "measurements": 5,
+      "codeCommit": "33788a034901b333ab12d38cdfc211ab15d1e680",
+      "observations": "Pack and Zephyrit captures show approach, attack arcs and retreat. Sealed two-column book spread remains readable. Pause-wait timing fails; do not count as software acceptance.",
+      "failed": 1,
+      "receipt": "artifacts/resume-software-f46fb6dc-20261105T2049/receipt.json",
+      "receiptSha256": "9360853d90479fd012d2fc0a7b49836a2d71f777210b8786421f33dc17ab9d0d"
+    },
+    "softwareC18Isolated": {
+      "sourceSha": "f46fb6dca5009183fa074cfd06c000f216ac9806",
+      "codeCommit": "33788a034901b333ab12d38cdfc211ab15d1e680",
+      "recordedAt": "2026-11-05T20:58:51.962Z",
+      "passed": 0,
+      "failed": 1,
+      "openingMs": 149.89999985694885,
+      "phaseTimingsMs": {
+        "pause": 129.89999985694885,
+        "content": 4.5,
+        "render": 6.700000047683716,
+        "show-modal": 8.799999952316284
+      },
+      "measurements": 5,
+      "mountedPages": 2,
+      "pageErrors": 0,
+      "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "imagesInspected": 1,
+      "cpuSummary": {
+        "windowMs": 149.9,
+        "main": [
+          [
+            "CrRendererMain:ThreadControllerImpl::RunTask:",
+            4.7,
+            73.3,
+            73.3
+          ],
+          [
+            "CrRendererMain:MinorGC:",
+            4.7,
+            73.3,
+            73.3
+          ],
+          [
+            "CrRendererMain:V8.GCScavenger:",
+            4.7,
+            73.3,
+            73.3
+          ],
+          [
+            "CrRendererMain:V8.GC_TIME_TO_SAFEPOINT:",
+            4.7,
+            71.7,
+            71.7
+          ],
+          [
+            "CrRendererMain:ProxyMain::BeginMainFrame:",
+            78.1,
+            51.1,
+            51.1
+          ],
+          [
+            "CrRendererMain:LayerTreeHost::WaitForCommitCompletion:",
+            79.3,
+            49.6,
+            49.6
+          ]
+        ],
+        "other": [
+          [
+            "ThreadPoolForegroundWorker:ThreadPool_RunTask:",
+            -59.9,
+            206.4,
+            146.5
+          ],
+          [
+            "ThreadPoolForegroundWorker:V8.GC_BACKGROUND_SAFEPOINT:",
+            24.8,
+            108.7,
+            108.7
+          ],
+          [
+            "DedicatedWorker thread:ThreadControllerImpl::RunTask:",
+            56.6,
+            68.1,
+            68.1
+          ],
+          [
+            "DedicatedWorker thread:HandlePostMessage:",
+            56.6,
+            68,
+            68
+          ]
+        ]
+      },
+      "observations": "Sealed River diary shows readable two-column spread and navigation. Timing fails; GC and compositor waits overlap pause. No software acceptance.",
+      "trace": "test-results/resume-software-c18-f46fb6dc-20261105T2055/literacy-C18-writes-three--4dc98--reopens-a-read-only-spread-journeys/trace.zip",
+      "files": [
+        {
+          "path": "artifacts/resume-software-c18-f46fb6dc-20261105T2055/c18-book-browser.json",
+          "sha256": "395f137a33b36779070e9d26b5148f2f4d13b8162a00f168a69a8853d4fa8bc6"
+        },
+        {
+          "path": "artifacts/resume-software-c18-f46fb6dc-20261105T2055/c18-book-cpu.json",
+          "sha256": "23f7d705ff44b38dbf73bf8d257d04a3f8714a1e71753fa4d6dc94bae1f2c9de"
+        },
+        {
+          "path": "artifacts/resume-software-c18-f46fb6dc-20261105T2055/c18-book-spread-1080p.png",
+          "sha256": "ae729e4450cc470e3818e0206b173bf35630ab50b2a2ec112b110aeb4528d7f5"
+        },
+        {
+          "path": "artifacts/resume-software-c18-f46fb6dc-20261105T2055/resume-20261105-software-c18.log",
+          "sha256": "bafb2e82fd7e5cdab4cb285d3dd00020f51df4a6a5edc614980c0a2baf3e763b"
+        }
+      ],
+      "receipt": "artifacts/resume-software-c18-f46fb6dc-20261105T2055/receipt.json",
+      "receiptSha256": "4ce835c36138be4a2f0ba40e170657f2ca7ed08a9c6cec517173c3958ad7a9a3"
+    },
+    "CI": {
+      "receipt": "current-ci-receipt.json",
+      "sourceSha": "f46fb6dca5009183fa074cfd06c000f216ac9806",
+      "push": 42092547479,
+      "pullRequest": 42092568549,
+      "checks": "success including benchmark",
+      "browserShards": "both success",
+      "betaBases": "both success",
+      "verify": "success on both runs",
+      "ecology": "push soak step skipped; PR soak cancelled; no soak pass claim"
+    },
+    "world": {
+      "studio": "76ef620c",
+      "merged": false,
+      "approved": [
+        "layout:aqualia_village",
+        "dressing:aqualia_village",
+        "layout:aqualia_riverlands",
+        "dressing:aqualia_riverlands"
+      ],
+      "sourceDigest": "ae34ae141d48512ab02607d274973751db79a0853fdebb74eaa3c6d982b66d5b",
+      "communicatorTicket": "M28",
+      "gap": "Pass008 flora are Decor, not gameplay ResourceNode. C7 activation and controlled studio integration remain."
+    },
+    "gaps": [
+      "Local painting CPU budget",
+      "Software C18 100ms opening:1433.2ms combined /149.9ms isolated",
+      "Machine-A live-model and painting acceptance",
+      "Manifest/face-format intake and unchanged HD coverage",
+      "Controlled studio merge, C7 authored gameplay and ResourceNode input",
+      "Director Pages activation; no source-matched soak pass"
     ]
   }
 }

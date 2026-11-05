@@ -42,6 +42,14 @@ directive 017 (`TEAM-4.2`), `visitor` acts as standing director until `2026-11-1
 - done when: all `B29` and `B20` packets have verified digests and approval records
 - evidence: docs/team/comms/director/approvals/{icons-items--2026-11-04-icons-items-1,steamshell--2026-11-05-steamshell,rivallie--2026-11-05-rivallie,bramblefang--2026-11-05-bramblefang,marshstalker--2026-11-05-marshstalker,mireling--2026-11-05-mireling,item-hatchet--2026-11-05-item-hatchet,npc-oren--2026-11-05-npc-oren,npc-reed--2026-11-05-npc-reed,item-copper-sword--2026-11-05-item-copper-sword,item-shortbow--2026-11-05-item-shortbow}.md
 
+### M28 - Relay approved LDtk R3 levels and C7 map dependencies
+
+- status: open (director request, 2026-11-05)
+- goal: unblock intake of approved village/Riverlands R3 and relay remaining gameplay map inputs to their owners.
+- work: relay exact R3 world approval/source and M25 environment/terrain integration SHAs to Codex; coordinate studio overlap before engineering merge; ask Blender for gameplay ResourceNode placements through worldforge passes and verify Decor asset bindings against staging.
+- done when: Codex has exact integration evidence and Blender has an actionable forage-node request; C7 activation stays Codex-owned.
+- evidence: [Codex handoff](../comms/codex/2026-11-05T2036--to-communicator--ldtk-r3-intake-and-c7-unblock.md), studio76ef620c /6c4cafaa; village and Riverlands R3 approvals bind ae34ae141d48512ab02607d274973751db79a0853fdebb74eaa3c6d982b66d5b.
+
 ## Recurring
 
 ### M8 · Weekly review digest
