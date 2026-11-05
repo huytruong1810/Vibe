@@ -1,0 +1,43 @@
+{
+  "asset": "npc:willa",
+  "kind": "human",
+  "heightArtPx": 38,
+  "ramps": {
+    "skin": "skin-tan",
+    "hair": "hair-ink",
+    "robe": "moss",
+    "sash": "plum",
+    "boots": "leather"
+  },
+  "gen3d": { "seed": 1234, "steps": 50, "views": ["front", "back"] },
+  "rig": {
+    "landmarks": {
+      "shoulder_l": [0.149, 0.029, 1.032],
+      "shoulder_r": [-0.149, 0.029, 1.032],
+      "elbow_l": [0.213, 0.027, 0.890],
+      "elbow_r": [-0.213, 0.027, 0.890],
+      "wrist_l": [0.289, -0.005, 0.766],
+      "wrist_r": [-0.289, -0.005, 0.766],
+      "palm_l": [0.336, -0.021, 0.720],
+      "palm_r": [-0.336, -0.021, 0.720],
+      "hand_end_l": [0.384, -0.037, 0.675],
+      "hand_end_r": [-0.384, -0.037, 0.675]
+    }
+  },
+  "concept": {
+    "template": "human-apose-v1",
+    "fields": {
+      "name": "Willa",
+      "age": "33",
+      "role": "wetland herbalist",
+      "home": "Aqualia marshlands",
+      "personality": "soft-spoken, exacting, quietly stubborn",
+      "appearance": "slender poised build, tan skin, straight dark ink hair tied into a low knot, wearing a layered moss-green herbalist's wrap-robe with deep pockets, an embroidered plum sash, and waterproof soft leather field boots. Proportions are 5 heads tall in clean stylized A-pose"
+    },
+    "poseGuide": "art/source/style/pose-guides/human.png",
+    "references": [
+      "public/assets/portraits/characters/portrait_npc_willa_128.png"
+    ]
+  },
+  "notes": "Aqualia wetland herbalist (B21). Slender build, 5 heads tall, guided by human.png."
+}

@@ -1,0 +1,55 @@
+{
+  "asset": "marshstalker",
+  "kind": "creature",
+  "heightArtPx": 34,
+  "supersample": 4,
+  "features": {
+    "lure": {
+      "minSamples": 1,
+      "on": ["hide", "edge"],
+      "near": ["Socket_Head"],
+      "radiusPx": 8,
+      "maxPx": 4
+    }
+  },
+  "ramps": {
+    "hide": "moss",
+    "scutes": "teal",
+    "belly": "reed",
+    "lure": "water"
+  },
+  "faceOffsetPx": [-4, 5],
+  "gen3d": {
+    "seed": 1234,
+    "steps": 50,
+    "views": [
+      "front",
+      "left",
+      "back"
+    ]
+  },
+  "notes": "3-view quadruped reference sheet (communicator ticket M10 Sequence #2). All 3 views share single standing all-fours pose with olive moss hide, teal dorsal scutes, reed celadon underbelly, and water cyan bioluminescent lure antenna. creature.large canvas (80x72, anchor 40,56).",
+  "texture": {
+    "views": [
+      "front",
+      "left",
+      "back"
+    ]
+  },
+  "concept": {
+    "template": "creature-v1",
+    "fields": {
+      "species": "Marshstalker",
+      "element": "water and wind",
+      "size": "large",
+      "stance": "standing on all four paws with its body horizontal, never sitting or standing upright",
+      "description": "a patient wetland hunter with a low rippling gait",
+      "anatomy": "long low-slung reptilian quadruped body, four clawed limbs, raised dorsal scutes along the spine, an arched angler-like antenna lure tipped with a glowing bulb rising from above the snout, long tapering tail, narrow slit eyes",
+      "colours": "olive moss green hide, deep teal dorsal scutes, pale reed belly, glowing water-blue lure"
+    },
+    "references": [
+      "public/assets/portraits/creatures/portrait_marshstalker_128.png"
+    ],
+    "poseGuide": "art/source/style/pose-guides/quadruped.png"
+  }
+}

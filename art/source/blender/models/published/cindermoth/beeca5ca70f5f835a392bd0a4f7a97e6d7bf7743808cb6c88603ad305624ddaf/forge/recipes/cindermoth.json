@@ -1,0 +1,44 @@
+{
+  "asset": "cindermoth",
+  "kind": "creature",
+  "heightArtPx": 22,
+  "ramps": {
+    "body": "ember",
+    "wings": "plum",
+    "belly": "sand",
+    "antennae": "gold"
+  },
+  "faceOffsetPx": [-1, 4],
+  "gen3d": {
+    "seed": 1234,
+    "steps": 50,
+    "views": [
+      "front",
+      "left",
+      "back"
+    ]
+  },
+  "notes": "Winged creature (cindermoth). Winged-v1 rig template with hover gait, ember body, plum and linen wings, sand belly, glowing gold antennae. creature.small canvas (40x44, anchor 20,34).",
+  "texture": {
+    "views": [
+      "front",
+      "left",
+      "back"
+    ]
+  },
+  "concept": {
+    "template": "creature-winged-v1",
+    "fields": {
+      "species": "Cindermoth",
+      "element": "fire and wind",
+      "size": "small",
+      "description": "a fluttering spark of warmth that pollinates hardy mountain wildflowers",
+      "anatomy": "fuzzy moth body with curved feathery antennae, twin pairs of patterned moth wings held spread wide, tiny tucked legs beneath fuzzy thorax, gentle glowing embers along wing margins",
+      "colours": "warm ember orange fuzzy body, dusty plum-purple and rose wings with amber borders, warm sand underbelly, glowing gold feathery antennae"
+    },
+    "references": [
+      "public/assets/portraits/creatures/portrait_cindermoth_128.png"
+    ],
+    "poseGuide": "art/source/style/pose-guides/winged.png"
+  }
+}

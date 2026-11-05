@@ -1,0 +1,1410 @@
+{
+  "asset": "npc:lark",
+  "stage": "animate",
+  "inputsDigest": "a5112fb3252582916743bd57bd2ac671f0d06dd658fb8a05cf3458885c07823b",
+  "inputs": [
+    "art/source/forge/work/npc-lark/rig.blend",
+    "art/source/forge/work/npc-lark/animate_params.json",
+    "art/source/forge/blender/retarget.py",
+    "art/source/forge/blender/animate.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/npc-lark/animate.blend": "255a07620664cc222db0efd9ee5b362a055851f4f9deffc830576e85234ef342"
+  },
+  "extra": {
+    "clips": [
+      {
+        "name": "idle",
+        "action": "idle",
+        "frames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "facings": [
+          "s",
+          "se",
+          "e",
+          "ne",
+          "n",
+          "nw",
+          "w",
+          "sw"
+        ],
+        "canvas": {
+          "key": "human.locomotion",
+          "size": [
+            56,
+            76
+          ],
+          "anchor": [
+            28,
+            66
+          ]
+        }
+      },
+      {
+        "name": "walk",
+        "action": "walk",
+        "frames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "facings": [
+          "s",
+          "se",
+          "e",
+          "ne",
+          "n",
+          "nw",
+          "w",
+          "sw"
+        ],
+        "canvas": {
+          "key": "human.locomotion",
+          "size": [
+            56,
+            76
+          ],
+          "anchor": [
+            28,
+            66
+          ]
+        }
+      },
+      {
+        "name": "run",
+        "action": "run",
+        "frames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "facings": [
+          "s",
+          "se",
+          "e",
+          "ne",
+          "n",
+          "nw",
+          "w",
+          "sw"
+        ],
+        "canvas": {
+          "key": "human.locomotion",
+          "size": [
+            56,
+            76
+          ],
+          "anchor": [
+            28,
+            66
+          ]
+        }
+      },
+      {
+        "name": "strike",
+        "action": "strike",
+        "frames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "facings": [
+          "s",
+          "se",
+          "e",
+          "ne",
+          "n",
+          "nw",
+          "w",
+          "sw"
+        ],
+        "canvas": {
+          "key": "human.combat",
+          "size": [
+            80,
+            88
+          ],
+          "anchor": [
+            40,
+            72
+          ]
+        }
+      },
+      {
+        "name": "element",
+        "action": "element",
+        "frames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "facings": [
+          "s",
+          "se",
+          "e",
+          "ne",
+          "n",
+          "nw",
+          "w",
+          "sw"
+        ],
+        "canvas": {
+          "key": "human.combat",
+          "size": [
+            80,
+            88
+          ],
+          "anchor": [
+            40,
+            72
+          ]
+        }
+      },
+      {
+        "name": "guard",
+        "action": "guard",
+        "frames": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "facings": [
+          "s",
+          "se",
+          "e",
+          "ne",
+          "n",
+          "nw",
+          "w",
+          "sw"
+        ],
+        "canvas": {
+          "key": "human.locomotion",
+          "size": [
+            56,
+            76
+          ],
+          "anchor": [
+            28,
+            66
+          ]
+        }
+      },
+      {
+        "name": "hit",
+        "action": "hit",
+        "frames": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "facings": [
+          "s",
+          "se",
+          "e",
+          "ne",
+          "n",
+          "nw",
+          "w",
+          "sw"
+        ],
+        "canvas": {
+          "key": "human.locomotion",
+          "size": [
+            56,
+            76
+          ],
+          "anchor": [
+            28,
+            66
+          ]
+        }
+      },
+      {
+        "name": "eat",
+        "action": "eat",
+        "frames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "facings": [
+          "n",
+          "e",
+          "s",
+          "w"
+        ],
+        "canvas": {
+          "key": "human.locomotion",
+          "size": [
+            56,
+            76
+          ],
+          "anchor": [
+            28,
+            66
+          ]
+        }
+      },
+      {
+        "name": "drink",
+        "action": "drink",
+        "frames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "facings": [
+          "n",
+          "e",
+          "s",
+          "w"
+        ],
+        "canvas": {
+          "key": "human.locomotion",
+          "size": [
+            56,
+            76
+          ],
+          "anchor": [
+            28,
+            66
+          ]
+        }
+      },
+      {
+        "name": "bathe",
+        "action": "bathe",
+        "frames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "facings": [
+          "n",
+          "e",
+          "s",
+          "w"
+        ],
+        "canvas": {
+          "key": "human.locomotion",
+          "size": [
+            56,
+            76
+          ],
+          "anchor": [
+            28,
+            66
+          ]
+        }
+      },
+      {
+        "name": "work",
+        "action": "work",
+        "frames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "facings": [
+          "n",
+          "e",
+          "s",
+          "w"
+        ],
+        "canvas": {
+          "key": "human.wide",
+          "size": [
+            96,
+            88
+          ],
+          "anchor": [
+            48,
+            66
+          ]
+        }
+      },
+      {
+        "name": "social",
+        "action": "social",
+        "frames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "facings": [
+          "n",
+          "e",
+          "s",
+          "w"
+        ],
+        "canvas": {
+          "key": "human.locomotion",
+          "size": [
+            56,
+            76
+          ],
+          "anchor": [
+            28,
+            66
+          ]
+        }
+      },
+      {
+        "name": "sleep",
+        "action": "sleep",
+        "frames": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "facings": [
+          "n",
+          "e",
+          "s",
+          "w"
+        ],
+        "canvas": {
+          "key": "human.wide",
+          "size": [
+            96,
+            88
+          ],
+          "anchor": [
+            48,
+            66
+          ]
+        }
+      },
+      {
+        "name": "downed",
+        "action": "downed",
+        "frames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "facings": [
+          "n",
+          "e",
+          "s",
+          "w"
+        ],
+        "canvas": {
+          "key": "human.wide",
+          "size": [
+            96,
+            88
+          ],
+          "anchor": [
+            48,
+            66
+          ]
+        }
+      },
+      {
+        "name": "recovery",
+        "action": "recovery",
+        "frames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "facings": [
+          "n",
+          "e",
+          "s",
+          "w"
+        ],
+        "canvas": {
+          "key": "human.wide",
+          "size": [
+            96,
+            88
+          ],
+          "anchor": [
+            48,
+            66
+          ]
+        }
+      },
+      {
+        "name": "sword_slash",
+        "action": "sword_slash",
+        "frames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "facings": [
+          "s",
+          "se",
+          "e",
+          "ne",
+          "n",
+          "nw",
+          "w",
+          "sw"
+        ],
+        "canvas": {
+          "key": "human.combat",
+          "size": [
+            80,
+            88
+          ],
+          "anchor": [
+            40,
+            72
+          ]
+        }
+      },
+      {
+        "name": "spear_thrust",
+        "action": "spear_thrust",
+        "frames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "facings": [
+          "s",
+          "se",
+          "e",
+          "ne",
+          "n",
+          "nw",
+          "w",
+          "sw"
+        ],
+        "canvas": {
+          "key": "human.combat",
+          "size": [
+            80,
+            88
+          ],
+          "anchor": [
+            40,
+            72
+          ]
+        }
+      },
+      {
+        "name": "bow_shot",
+        "action": "bow_shot",
+        "frames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "facings": [
+          "s",
+          "se",
+          "e",
+          "ne",
+          "n",
+          "nw",
+          "w",
+          "sw"
+        ],
+        "canvas": {
+          "key": "human.combat",
+          "size": [
+            80,
+            88
+          ],
+          "anchor": [
+            40,
+            72
+          ]
+        }
+      }
+    ],
+    "heightUnits": 1.3491,
+    "lengthUnits": 0.2306,
+    "plan": [
+      {
+        "name": "idle",
+        "frames": 6,
+        "facings": [
+          "s",
+          "se",
+          "e",
+          "ne",
+          "n",
+          "nw",
+          "w",
+          "sw"
+        ],
+        "phases": null,
+        "fps": 6,
+        "playback": "loop",
+        "runtime": {
+          "state": "idle"
+        },
+        "canvas": {
+          "key": "human.locomotion",
+          "size": [
+            56,
+            76
+          ],
+          "anchor": [
+            28,
+            66
+          ]
+        },
+        "segments": [
+          {
+            "lib": "ual1",
+            "action": "Idle_Loop",
+            "range": [
+              0.0,
+              1.0
+            ]
+          }
+        ]
+      },
+      {
+        "name": "walk",
+        "frames": 8,
+        "facings": [
+          "s",
+          "se",
+          "e",
+          "ne",
+          "n",
+          "nw",
+          "w",
+          "sw"
+        ],
+        "phases": null,
+        "fps": 10,
+        "playback": "distance",
+        "runtime": {
+          "state": "walk"
+        },
+        "canvas": {
+          "key": "human.locomotion",
+          "size": [
+            56,
+            76
+          ],
+          "anchor": [
+            28,
+            66
+          ]
+        },
+        "segments": [
+          {
+            "lib": "ual1",
+            "action": "Walk_Loop",
+            "range": [
+              0.0,
+              1.0
+            ]
+          }
+        ]
+      },
+      {
+        "name": "run",
+        "frames": 8,
+        "facings": [
+          "s",
+          "se",
+          "e",
+          "ne",
+          "n",
+          "nw",
+          "w",
+          "sw"
+        ],
+        "phases": null,
+        "fps": 12,
+        "playback": "distance",
+        "runtime": {
+          "state": "run"
+        },
+        "canvas": {
+          "key": "human.locomotion",
+          "size": [
+            56,
+            76
+          ],
+          "anchor": [
+            28,
+            66
+          ]
+        },
+        "segments": [
+          {
+            "lib": "ual1",
+            "action": "Jog_Fwd_Loop",
+            "range": [
+              0.0,
+              1.0
+            ]
+          }
+        ]
+      },
+      {
+        "name": "strike",
+        "frames": 12,
+        "facings": [
+          "s",
+          "se",
+          "e",
+          "ne",
+          "n",
+          "nw",
+          "w",
+          "sw"
+        ],
+        "phases": {
+          "windup": [
+            0,
+            3
+          ],
+          "active": [
+            3,
+            5
+          ],
+          "recovery": [
+            5,
+            12
+          ]
+        },
+        "fps": null,
+        "playback": "combat",
+        "runtime": {
+          "state": "attack",
+          "moveId": "strike"
+        },
+        "canvas": {
+          "key": "human.combat",
+          "size": [
+            80,
+            88
+          ],
+          "anchor": [
+            40,
+            72
+          ]
+        },
+        "segments": [
+          {
+            "lib": "ual1",
+            "action": "Punch_Jab",
+            "range": [
+              0.0,
+              1.0
+            ]
+          }
+        ]
+      },
+      {
+        "name": "element",
+        "frames": 12,
+        "facings": [
+          "s",
+          "se",
+          "e",
+          "ne",
+          "n",
+          "nw",
+          "w",
+          "sw"
+        ],
+        "phases": {
+          "windup": [
+            0,
+            3
+          ],
+          "active": [
+            3,
+            5
+          ],
+          "recovery": [
+            5,
+            12
+          ]
+        },
+        "fps": null,
+        "playback": "combat",
+        "runtime": {
+          "state": "attack",
+          "moveId": "element"
+        },
+        "canvas": {
+          "key": "human.combat",
+          "size": [
+            80,
+            88
+          ],
+          "anchor": [
+            40,
+            72
+          ]
+        },
+        "segments": [
+          {
+            "lib": "ual1",
+            "action": "Spell_Simple_Shoot",
+            "range": [
+              0.0,
+              1.0
+            ]
+          }
+        ]
+      },
+      {
+        "name": "guard",
+        "frames": 4,
+        "facings": [
+          "s",
+          "se",
+          "e",
+          "ne",
+          "n",
+          "nw",
+          "w",
+          "sw"
+        ],
+        "phases": null,
+        "fps": 8,
+        "playback": "once",
+        "runtime": {
+          "state": "guard"
+        },
+        "canvas": {
+          "key": "human.locomotion",
+          "size": [
+            56,
+            76
+          ],
+          "anchor": [
+            28,
+            66
+          ]
+        },
+        "segments": [
+          {
+            "lib": "ual2",
+            "action": "Sword_Block",
+            "range": [
+              0.25,
+              0.75
+            ]
+          }
+        ]
+      },
+      {
+        "name": "hit",
+        "frames": 4,
+        "facings": [
+          "s",
+          "se",
+          "e",
+          "ne",
+          "n",
+          "nw",
+          "w",
+          "sw"
+        ],
+        "phases": null,
+        "fps": 12,
+        "playback": "once",
+        "runtime": {
+          "state": "hit"
+        },
+        "canvas": {
+          "key": "human.locomotion",
+          "size": [
+            56,
+            76
+          ],
+          "anchor": [
+            28,
+            66
+          ]
+        },
+        "segments": [
+          {
+            "lib": "ual1",
+            "action": "Hit_Chest",
+            "range": [
+              0.0,
+              1.0
+            ]
+          }
+        ]
+      },
+      {
+        "name": "eat",
+        "frames": 6,
+        "facings": [
+          "n",
+          "e",
+          "s",
+          "w"
+        ],
+        "phases": null,
+        "fps": 6,
+        "playback": "loop",
+        "runtime": {
+          "state": "eat"
+        },
+        "canvas": {
+          "key": "human.locomotion",
+          "size": [
+            56,
+            76
+          ],
+          "anchor": [
+            28,
+            66
+          ]
+        },
+        "segments": [
+          {
+            "lib": "ual2",
+            "action": "Consume",
+            "range": [
+              0.2,
+              0.8
+            ]
+          }
+        ]
+      },
+      {
+        "name": "drink",
+        "frames": 6,
+        "facings": [
+          "n",
+          "e",
+          "s",
+          "w"
+        ],
+        "phases": null,
+        "fps": 6,
+        "playback": "loop",
+        "runtime": {
+          "state": "drink"
+        },
+        "canvas": {
+          "key": "human.locomotion",
+          "size": [
+            56,
+            76
+          ],
+          "anchor": [
+            28,
+            66
+          ]
+        },
+        "segments": [
+          {
+            "lib": "ual2",
+            "action": "Consume",
+            "range": [
+              0.3,
+              0.9
+            ]
+          }
+        ]
+      },
+      {
+        "name": "bathe",
+        "frames": 6,
+        "facings": [
+          "n",
+          "e",
+          "s",
+          "w"
+        ],
+        "phases": null,
+        "fps": 6,
+        "playback": "loop",
+        "runtime": {
+          "state": "bathe"
+        },
+        "canvas": {
+          "key": "human.locomotion",
+          "size": [
+            56,
+            76
+          ],
+          "anchor": [
+            28,
+            66
+          ]
+        },
+        "segments": [
+          {
+            "lib": "ual1",
+            "action": "Swim_Idle_Loop",
+            "range": [
+              0.0,
+              1.0
+            ]
+          }
+        ]
+      },
+      {
+        "name": "work",
+        "frames": 6,
+        "facings": [
+          "n",
+          "e",
+          "s",
+          "w"
+        ],
+        "phases": null,
+        "fps": 6,
+        "playback": "loop",
+        "runtime": {
+          "state": "work"
+        },
+        "canvas": {
+          "key": "human.wide",
+          "size": [
+            96,
+            88
+          ],
+          "anchor": [
+            48,
+            66
+          ]
+        },
+        "segments": [
+          {
+            "lib": "ual2",
+            "action": "Farm_Harvest",
+            "range": [
+              0.0,
+              1.0
+            ]
+          }
+        ]
+      },
+      {
+        "name": "social",
+        "frames": 6,
+        "facings": [
+          "n",
+          "e",
+          "s",
+          "w"
+        ],
+        "phases": null,
+        "fps": 6,
+        "playback": "loop",
+        "runtime": {
+          "state": "social"
+        },
+        "canvas": {
+          "key": "human.locomotion",
+          "size": [
+            56,
+            76
+          ],
+          "anchor": [
+            28,
+            66
+          ]
+        },
+        "segments": [
+          {
+            "lib": "ual1",
+            "action": "Idle_Talking_Loop",
+            "range": [
+              0.0,
+              1.0
+            ]
+          }
+        ]
+      },
+      {
+        "name": "sleep",
+        "frames": 4,
+        "facings": [
+          "n",
+          "e",
+          "s",
+          "w"
+        ],
+        "phases": null,
+        "fps": 3,
+        "playback": "loop",
+        "runtime": {
+          "state": "sleep"
+        },
+        "canvas": {
+          "key": "human.wide",
+          "size": [
+            96,
+            88
+          ],
+          "anchor": [
+            48,
+            66
+          ]
+        },
+        "segments": [
+          {
+            "lib": "ual2",
+            "action": "LayToIdle",
+            "range": [
+              0.0,
+              0.08
+            ]
+          }
+        ]
+      },
+      {
+        "name": "downed",
+        "frames": 6,
+        "facings": [
+          "n",
+          "e",
+          "s",
+          "w"
+        ],
+        "phases": null,
+        "fps": 8,
+        "playback": "once",
+        "runtime": {
+          "state": "downed"
+        },
+        "canvas": {
+          "key": "human.wide",
+          "size": [
+            96,
+            88
+          ],
+          "anchor": [
+            48,
+            66
+          ]
+        },
+        "segments": [
+          {
+            "lib": "ual1",
+            "action": "Death01",
+            "range": [
+              0.0,
+              1.0
+            ]
+          }
+        ]
+      },
+      {
+        "name": "recovery",
+        "frames": 6,
+        "facings": [
+          "n",
+          "e",
+          "s",
+          "w"
+        ],
+        "phases": null,
+        "fps": 8,
+        "playback": "once",
+        "runtime": {
+          "state": "recovery"
+        },
+        "canvas": {
+          "key": "human.wide",
+          "size": [
+            96,
+            88
+          ],
+          "anchor": [
+            48,
+            66
+          ]
+        },
+        "segments": [
+          {
+            "lib": "ual2",
+            "action": "LayToIdle",
+            "range": [
+              0.0,
+              1.0
+            ]
+          }
+        ]
+      },
+      {
+        "name": "sword_slash",
+        "frames": 12,
+        "facings": [
+          "s",
+          "se",
+          "e",
+          "ne",
+          "n",
+          "nw",
+          "w",
+          "sw"
+        ],
+        "phases": {
+          "windup": [
+            0,
+            3
+          ],
+          "active": [
+            3,
+            5
+          ],
+          "recovery": [
+            5,
+            12
+          ]
+        },
+        "fps": null,
+        "playback": "combat",
+        "runtime": {
+          "state": "attack",
+          "moveId": "sword_slash"
+        },
+        "canvas": {
+          "key": "human.combat",
+          "size": [
+            80,
+            88
+          ],
+          "anchor": [
+            40,
+            72
+          ]
+        },
+        "segments": [
+          {
+            "lib": "ual2",
+            "action": "Sword_Regular_A",
+            "range": [
+              0.0,
+              1.0
+            ]
+          },
+          {
+            "lib": "ual2",
+            "action": "Sword_Regular_A_Rec",
+            "range": [
+              0.0,
+              1.0
+            ]
+          }
+        ]
+      },
+      {
+        "name": "spear_thrust",
+        "frames": 12,
+        "facings": [
+          "s",
+          "se",
+          "e",
+          "ne",
+          "n",
+          "nw",
+          "w",
+          "sw"
+        ],
+        "phases": {
+          "windup": [
+            0,
+            4
+          ],
+          "active": [
+            4,
+            5
+          ],
+          "recovery": [
+            5,
+            12
+          ]
+        },
+        "fps": null,
+        "playback": "combat",
+        "runtime": {
+          "state": "attack",
+          "moveId": "spear_thrust"
+        },
+        "canvas": {
+          "key": "human.combat",
+          "size": [
+            80,
+            88
+          ],
+          "anchor": [
+            40,
+            72
+          ]
+        },
+        "segments": [
+          {
+            "lib": "ual2",
+            "action": "Sword_Regular_C",
+            "range": [
+              0.0,
+              0.6
+            ]
+          }
+        ]
+      },
+      {
+        "name": "bow_shot",
+        "frames": 12,
+        "facings": [
+          "s",
+          "se",
+          "e",
+          "ne",
+          "n",
+          "nw",
+          "w",
+          "sw"
+        ],
+        "phases": {
+          "windup": [
+            0,
+            6
+          ],
+          "active": [
+            6,
+            7
+          ],
+          "recovery": [
+            7,
+            12
+          ]
+        },
+        "fps": null,
+        "playback": "combat",
+        "runtime": {
+          "state": "attack",
+          "moveId": "bow_shot"
+        },
+        "canvas": {
+          "key": "human.combat",
+          "size": [
+            80,
+            88
+          ],
+          "anchor": [
+            40,
+            72
+          ]
+        },
+        "segments": [
+          {
+            "lib": "ual1",
+            "action": "Pistol_Aim_Neutral",
+            "range": [
+              0.0,
+              1.0
+            ]
+          },
+          {
+            "lib": "ual1",
+            "action": "Pistol_Shoot",
+            "range": [
+              0.0,
+              1.0
+            ]
+          }
+        ]
+      }
+    ],
+    "strideTiles": {
+      "walk": 1.0,
+      "run": 2.0
+    },
+    "rigId": "ual2-humanoid"
+  },
+  "at": "2026-11-04T21:30:03Z"
+}

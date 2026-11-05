@@ -18,7 +18,7 @@
     "belly": "reed",
     "lure": "water"
   },
-  "faceOffsetPx": [-4, 5],
+  "faceOffsetPx": [-7, 8],
   "gen3d": {
     "seed": 1234,
     "steps": 50,

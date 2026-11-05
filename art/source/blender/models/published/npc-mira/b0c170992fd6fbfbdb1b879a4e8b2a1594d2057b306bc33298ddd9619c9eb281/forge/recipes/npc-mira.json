@@ -1,0 +1,29 @@
+{
+  "asset": "npc:mira",
+  "kind": "human",
+  "heightArtPx": 40,
+  "ramps": {
+    "skin": "skin-porcelain",
+    "hair": "hair-ink",
+    "vest": "teal",
+    "trousers": "sand",
+    "boots": "leather"
+  },
+  "gen3d": { "seed": 1234, "steps": 50, "views": ["front", "back"] },
+  "concept": {
+    "template": "human-apose-v1",
+    "fields": {
+      "name": "Mira",
+      "age": "25",
+      "role": "river wildlife surveyor",
+      "home": "Aqualia Riverlands",
+      "personality": "observant, enthusiastic about creatures, dislikes needless fighting",
+      "appearance": "slender nimble build, porcelain skin, neat chin-length dark ink hair with teal feather clips behind ear, bright blue eyes, wearing a teal river surveyor vest with utility pockets over a field tunic, pale sand canvas trousers, and flexible brown leather field boots. Proportions are 5 heads tall in clean stylized A-pose"
+    },
+    "poseGuide": "art/source/style/pose-guides/human.png",
+    "references": [
+      "public/assets/portraits/characters/portrait_npc_mira_128.png"
+    ]
+  },
+  "notes": "Aqualia wildlife surveyor (B21). Slender build, 5 heads tall, guided by human.png."
+}

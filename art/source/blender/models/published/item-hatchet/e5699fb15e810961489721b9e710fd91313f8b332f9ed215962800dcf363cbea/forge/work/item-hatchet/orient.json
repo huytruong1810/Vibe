@@ -1,0 +1,66 @@
+{
+  "asset": "item:hatchet",
+  "stage": "orient",
+  "inputsDigest": "15fea9144ec580f92f4ed3b2df2d075d88dd95b976729fefb1a69ee0e627e577",
+  "inputs": [
+    "art/source/forge/work/item-hatchet/texture.blend",
+    "art/source/forge/work/item-hatchet/orient_params.json",
+    "art/source/forge/blender/item_orient.py",
+    "art/source/forge/forgelib/item_orient.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/item-hatchet/item_model.blend": "5b6a2021709616ecfd710bd8a0470a0a27ba93ca1fff0c142215abf4c068e5b5",
+    "art/source/forge/work/item-hatchet/orient_preview.png": "bc37e48fd4a8d2fb2f0b7a27afb35f21703b0fab2ea120d3c6647370b616e718"
+  },
+  "extra": {
+    "matrix": [
+      [
+        0.000281,
+        0.958076,
+        0.000849,
+        8.7e-05
+      ],
+      [
+        -0.958038,
+        0.000273,
+        0.008644,
+        -0.001667
+      ],
+      [
+        0.008644,
+        -0.000851,
+        0.958037,
+        -0.06079
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "grip": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "iconPivot": [
+      0.000313,
+      -0.015376,
+      0.142188
+    ],
+    "reachArtPx": 11.302,
+    "lengthArtPx": 13,
+    "haftWidthArtPx": 1.499,
+    "headFlipped": false,
+    "forwardFlipped": false,
+    "dimensions": [
+      0.071826,
+      0.141603,
+      0.40625
+    ],
+    "inflateArtPx": 0.5,
+    "iconScale": 1.88
+  },
+  "at": "2026-11-03T00:41:00Z"
+}

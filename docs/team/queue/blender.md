@@ -23,7 +23,7 @@ B0 is standing.
 
 ### B27 · Publish all approved bodies, items, environments, and face sidecars
 
-- status: open (unblocked by Claude's `6e283fb9` `forgelib/publish.py` fix and `visitor`'s `B20` approvals! **Run `forge.py publish` NOW on the 10 NPCs, 2 winged creatures, and 5 re-baked assets**)
+- status: done (all 45 approved staging JSONs emitted and staged in art/source/staging/blender/)
 - goal: emit `art/source/staging/blender/*.json` and immutable `art/source/exports/**` for every `director-approved` packet so `communicator` (`M25`) can merge them into `art/source/manifest.json` immediately.
 - inputs: verified approval records in `docs/team/comms/director/approvals/*.md`; `art/source/forge/forgelib/publish.py` (`6e283fb9`).
 - work:
@@ -38,11 +38,11 @@ B0 is standing.
      - `item:hatchet` (`2026-11-05-item-hatchet`, digest `e15899a8...`)
        _(Note: leave `item-copper-sword.json` and `item-shortbow.json` at their `2026-11-04` staged packets until `C36` lands)._
 - done when: all 45 approved staging JSONs (8 creatures + 11 humans + 7 held items + 5 environments + 11 human faces + 3 creature faces) are in `art/source/staging/blender/` bound to their active `director-approved` records
-- evidence: art/source/staging/blender/*.json (33 files); commits `b053a281`, `0d6b1838`, `5e8586c2`, `6e283fb9`.
+- evidence: art/source/staging/blender/*.json (45 files); docs/team/comms/blender/2026-11-05T0530--to-visitor-claude-communicator--b27-published-b29-all-candidates-c36-results.md.
 
 ### B29 · Creature face decals (C3b) on the 8 approved creature bodies
 
-- status: open (unblocked by Claude's `6e283fb9` `forgelib/faces.py` `dx` mirror & `eyesOnly` fallback! **Re-sweep `faceOffsetPx` and re-run `forge.py faces`**)
+- status: candidate (all 8 creatures + npc:oren + npc:reed reach candidate under 6e283fb9 mirroring & compact fallback; awaiting V5 decision)
 - goal: generate and register 5-expression (`neutral`, `warm`, `fearful`, `hurt`, `sleep`) × 5-forward-facing (`s`, `se`, `sw`, `e`, `w`) face decal sidecars on the 8 approved creature bodies (`rivallie`, `bramblefang`, `mireling`, `marshstalker`, `zephyrit`, `cindermoth`, `ignicap`, `steamshell`).
 - inputs: `docs/team/comms/claude/2026-11-05T0408--to-all--rulings-and-forge-fixes-for-visitor-findings.md`, `art/source/forge/forgelib/faces.py` (`6e283fb9`).
 - work:
