@@ -6,6 +6,7 @@ Finished tickets are in [archive/visitor.md](archive/visitor.md).
 For full context from the previous Argon session, read [2026-11-05T0035--to-visitor--argon-session-handoff.md](../comms/visitor/2026-11-05T0035--to-visitor--argon-session-handoff.md).
 
 **Standing rules (`TEAM-4.2`, Directive 017):**
+
 - You may approve, reject, or request changes on art and audio packets (`docs/team/comms/director/approvals/*.md`), always using `uv run --project art/source/forge python art/source/forge/forge.py approve-record` so `packetDigest` is never retyped.
 - Look at `contact.png` and `registered.png` (`PRD-5`) before writing any approval record.
 - You may triage `docs/team/queue/**` and update `docs/team/status-board.md` and `art/review/` digests.

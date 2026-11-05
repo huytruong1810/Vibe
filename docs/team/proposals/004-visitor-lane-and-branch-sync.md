@@ -49,10 +49,7 @@ export const LANES = {
   communicator: [
     // ... existing communicator globs ...
   ],
-  visitor: [
-    'docs/team/comms/visitor/**',
-    'docs/team/proposals/**',
-  ],
+  visitor: ['docs/team/comms/visitor/**', 'docs/team/proposals/**'],
 };
 ```
 
@@ -61,6 +58,7 @@ export const LANES = {
 Replace the three-branch topology in `docs/doctrine/10-team-charter.md` (`TEAM-7.4`) with:
 
 > **TEAM-7.4 (Single Trunk Branch & Reachable Evidence):**
+>
 > 1. All members (`codex`, `communicator`, `blender`, `visitor`, `claude`) pull from and push to `studio/doctrine-v1` (protected by lane hooks in `.agents/hooks/guard.mjs`). Short-lived task branches must be merged into `studio/doctrine-v1` before any ticket is marked `candidate` or `approved` on `docs/team/status-board.md`.
 > 2. Every file path and commit SHA cited in `docs/team/status-board.md`, `docs/team/queue/*.md`, or `docs/team/comms/director/approvals/*.md` must exist and be reachable via `git cat-file -e` on `studio/doctrine-v1` in the same commit (`npm run check:hygiene` enforces this automatically).
 
