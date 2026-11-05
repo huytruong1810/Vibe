@@ -90,7 +90,7 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
 
 ### V5 · Audit and decide `B29` (C3b creature face sidecars for 8 creatures + re-bound `npc:oren`/`npc:reed` faces)
 
-- status: in-progress (**initial 8 creature face packets decided (`rivallie`, `bramblefang`, `mireling` `director-approved`; 5 `changes-requested`)**; waiting on `blender` to re-run `forge.py faces` on the 5 creatures + re-bind `rivallie`, `bramblefang`, `mireling`, `npc:oren`, and `npc:reed` to their `2026-11-05` body digests)
+- status: done (2026-11-05: all 10 `B29` face packets `director-approved` after PRD-5 inspection of `registered.png` and hard QA in `faces.json`, on the director's instruction; records are `docs/team/comms/director/approvals/*faces-{530d9980cd71,0ebb7e1031f3,33befc31258d,772a2fb440e1,95948f6a2416,298b0b5ff39e,c2f18a05c6ca,d86e98622329,c81fe80f2503,439e13321a12}.md`; blender can run `publish --faces`)
 - goal: inspect `contact.png` and `registered.png` (`PRD-5`) for each updated face packet and record decisions via `forge.py approve-record`.
 - done when: all 8 T0 species and 11 humans have approved C3b face sidecars bound to their latest approved body digests and staged via `publish --faces`
 - evidence: docs/team/comms/director/approvals/{rivallie--2026-11-05-rivallie-faces-26d6823a60de,bramblefang--2026-11-05-bramblefang-faces-e4615567901f,mireling--2026-11-05-mireling-faces-dd867942c9f2,steamshell--2026-11-05-steamshell-faces-0dce8f2a1ee7,ignicap--2026-11-05-ignicap-faces-b697f6962d69,zephyrit--2026-11-05-zephyrit-faces-24bbc81717f6,cindermoth--2026-11-05-cindermoth-faces-676432066d2a,marshstalker--2026-11-05-marshstalker-faces-b6801512aa14}.md.
