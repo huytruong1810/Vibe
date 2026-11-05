@@ -15,7 +15,7 @@ and local-generation tickets (C26–C31) sit in their own section.
 
 ### C22 · Beta channel: green CI, a deploy on every green push, a playtest loop
 
-- status: open (first)
+- status: in-progress (visitor; non-workflow parts only: BASE_URL asset resolve, build stamp, beta-notes, operations doc; .github/ stays with codex)
 - owner: codex
 - goal: the director plays the latest green build from a URL on any day, files playtest notes in one place, and they become tickets, without anyone on machine A.
 - context: CI was red for 100+ runs (`format:check` failed on machine-written sources, so browser tests and the benchmark never ran) until claude's `88b11ba`. The repo is public, so GitHub Pages is free.
