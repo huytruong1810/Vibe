@@ -3,9 +3,10 @@
 ## Current work
 
 Branch `eng/hd-presentation`, workspace `C:/Users/htruong/source/repos/Vibe`.
-C20 source **e2e2b0f1** push/PR verify failed. C3g **7a3ae74b**, C18 startup diagnostics **f9f9e5dd**, and C13 phase capture **ab636702** are separately committed; fresh source CI is next.
-The director asked to continue through all unblocked Codex tickets. The earlier
-pause/cron request was cancelled; no cron was created. C21 still needs explicit go.
+C20 source **e2e2b0f1** push/PR verify failed. C3g **7a3ae74b**, C18 startup diagnostics **f9f9e5dd**, and C13 phase capture **ab636702** are separately committed; Source98416654 CI fails startup in both literacy shards; creature shards pass. C32 **c998d532** is committed; final pause checkpoint is pushed separately.
+The director asked to continue through all unblocked Codex tickets. The latest director instruction is HALT, commit/push completed work, then resume
+after3h30. A one-time Windows scheduled resume is being configured for03:40 UTC
+(Nov4 21:40 America/Chicago); verify the local scheduled-task receipt. C21 still needs explicit go.
 
 Read the codex brief and charter after compaction. Use
 [team-comms](../../../../.agents/skills/team-comms/SKILL.md) and
@@ -92,8 +93,16 @@ Mock worker6ms exceeds5ms target; startup149.3ms/total542.5ms, golden bytes unch
 ## Next actions
 
 1. C3g, C18 startup diagnostics and C13 transient capture repair are separate commits. Evidence: c3g-validation.json, c18-ci-diagnostics.json,
-   c13-capture-validation.json. Temporary software config removed.
-2. Pull/push and verify fresh public browser + aggregate verify receipts before
+   c13-capture-validation.json. Temporary software config removed; original literacy source restored.
+2. Current98416654 push41935313601 and PR41935324774 both fail C18 startup;
+   frame exists, IDB open delays25s and initial write60s. Creature shards pass.
+   Push ecology scope-skips; PR ecology cancelled at25-minute limit; never passing evidence. Investigate before
+   accepting C20 CI. Full-Chromium native experiment passes fresh48-page37.3ms;
+   forced full Chromium fails188.1ms; full-GLES variant fails seal confirmation.
+  720p startup/1080p journey also times out; all experiments were rejected/reverted.
+   CPU-raster-only experiment fails
+   opening3241.8ms; do not adopt that flag. Keep trace/thresholds/assertions.
+   Pull/push and verify fresh public browser + aggregate verify receipts before
    claiming C20 CI acceptance. Source e2e2b0f1 push41930714385/PR41930723882 fail:
    C13 Zephyrit misses notice/commit; push C18 startup times out, sibling passes.
    Ecology cancelled around25 minutes in both, never passing evidence.
@@ -103,9 +112,10 @@ Mock worker6ms exceeds5ms target; startup149.3ms/total542.5ms, golden bytes unch
 4. C3g now selects all5 pages and distinguishes79.84MiB catalog from resident128MiB
    page-cache cap; ADR038 documents overhead exclusions. Seven gallery tests pass;
    final two atlas checks and all5 inspected captures retained. Scale awaits M11.
-5. C32 is NOT implemented: review.py still trusts cached draft before-overview.
-   Fix render/packet revision provenance in worldlib (world-builder skill applies),
-   test fail-closed lineage, then request machine-A Riverlands revision3 proof.
+5. C32 is implemented in c998d532: render/packet revision lineage and before-image
+   inspection gates;27 worldforge +5 terrain tests pass and actual Riverlands
+   predecessor resolution selects2 for target3. Request2347 is committed;
+   machine-A actual revision3 packet/inspection remains external.
 6. Audit remaining open tickets. C7 activation is separately gated; C15/C16 and
    C21 require explicit director authorization. No schedule was created.
 

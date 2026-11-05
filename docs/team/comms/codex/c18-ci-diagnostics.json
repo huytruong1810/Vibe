@@ -10440,5 +10440,363 @@
       "result": "pass",
       "log": "artifacts/c18-bootstrap-format.log"
     }
+  },
+  "startupInvestigationPause": {
+    "recordedAt": "2026-11-05T00:13:34.917Z",
+    "source": "98416654072a3e4a1bfe142804f6e0c2356b29ef",
+    "remote": {
+      "receipt": {
+        "path": "artifacts/c18-bootstrap/source-ci.json",
+        "sha256": "7ce47497c3fae5c1dd93cc19ebb19831db2166cceb81b21f4808afbfc39b22a4"
+      },
+      "runs": [
+        {
+          "id": 41935313601,
+          "conclusion": "failure",
+          "jobs": [
+            {
+              "id": 126942177221,
+              "name": "checks",
+              "conclusion": "success",
+              "startedAt": "2026-11-04T23:38:32Z",
+              "completedAt": "2026-11-04T23:42:03Z"
+            },
+            {
+              "id": 126942177609,
+              "name": "beta-browser (/)",
+              "conclusion": "success",
+              "startedAt": "2026-11-04T23:38:32Z",
+              "completedAt": "2026-11-04T23:40:06Z"
+            },
+            {
+              "id": 126942177621,
+              "name": "ecology-soak",
+              "conclusion": "success",
+              "startedAt": "2026-11-04T23:38:32Z",
+              "completedAt": "2026-11-04T23:38:43Z",
+              "steps": [
+                {
+                  "name": "Set up job",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Run actions/checkout@v4",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Run if [ \"$EVENT\" = schedule ] || [ \"$EVENT\" = workflow_dispatch ] || ! git cat-file -e \"$BASE^{commit}\" 2>/dev/null; then",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Run actions/setup-node@v4",
+                  "conclusion": "skipped"
+                },
+                {
+                  "name": "Run npm ci",
+                  "conclusion": "skipped"
+                },
+                {
+                  "name": "Run npm run soak",
+                  "conclusion": "skipped"
+                },
+                {
+                  "name": "Run actions/upload-artifact@v4",
+                  "conclusion": "skipped"
+                },
+                {
+                  "name": "Post Run actions/checkout@v4",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Complete job",
+                  "conclusion": "success"
+                }
+              ]
+            },
+            {
+              "id": 126942177684,
+              "name": "browser-journeys (2)",
+              "conclusion": "failure",
+              "startedAt": "2026-11-04T23:38:33Z",
+              "completedAt": "2026-11-04T23:53:52Z"
+            },
+            {
+              "id": 126942177710,
+              "name": "browser-journeys (1)",
+              "conclusion": "success",
+              "startedAt": "2026-11-04T23:38:32Z",
+              "completedAt": "2026-11-04T23:49:25Z"
+            },
+            {
+              "id": 126942177742,
+              "name": "beta-browser (/Vibe/)",
+              "conclusion": "success",
+              "startedAt": "2026-11-04T23:38:32Z",
+              "completedAt": "2026-11-04T23:40:05Z"
+            },
+            {
+              "id": 126948754125,
+              "name": "verify",
+              "conclusion": "failure",
+              "startedAt": "2026-11-04T23:53:55Z",
+              "completedAt": "2026-11-04T23:53:58Z"
+            }
+          ]
+        },
+        {
+          "id": 41935324774,
+          "conclusion": "failure",
+          "jobs": [
+            {
+              "id": 126942216043,
+              "name": "ecology-soak",
+              "conclusion": "cancelled",
+              "startedAt": "2026-11-04T23:38:38Z",
+              "completedAt": "2026-11-05T00:03:54Z",
+              "steps": [
+                {
+                  "name": "Set up job",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Run actions/checkout@v4",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Run if [ \"$EVENT\" = schedule ] || [ \"$EVENT\" = workflow_dispatch ] || ! git cat-file -e \"$BASE^{commit}\" 2>/dev/null; then",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Run actions/setup-node@v4",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Run npm ci",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Run npm run soak",
+                  "conclusion": "cancelled"
+                },
+                {
+                  "name": "Run actions/upload-artifact@v4",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Run actions/setup-node@v4",
+                  "conclusion": "skipped"
+                },
+                {
+                  "name": "Post Run actions/checkout@v4",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Complete job",
+                  "conclusion": "success"
+                }
+              ]
+            },
+            {
+              "id": 126942216342,
+              "name": "beta-browser (/)",
+              "conclusion": "success",
+              "startedAt": "2026-11-04T23:38:38Z",
+              "completedAt": "2026-11-04T23:40:40Z"
+            },
+            {
+              "id": 126942216407,
+              "name": "checks",
+              "conclusion": "success",
+              "startedAt": "2026-11-04T23:38:38Z",
+              "completedAt": "2026-11-04T23:41:56Z"
+            },
+            {
+              "id": 126942216412,
+              "name": "browser-journeys (2)",
+              "conclusion": "failure",
+              "startedAt": "2026-11-04T23:38:38Z",
+              "completedAt": "2026-11-04T23:53:28Z"
+            },
+            {
+              "id": 126942216424,
+              "name": "browser-journeys (1)",
+              "conclusion": "success",
+              "startedAt": "2026-11-04T23:38:38Z",
+              "completedAt": "2026-11-04T23:44:47Z"
+            },
+            {
+              "id": 126942216432,
+              "name": "beta-browser (/Vibe/)",
+              "conclusion": "success",
+              "startedAt": "2026-11-04T23:38:38Z",
+              "completedAt": "2026-11-04T23:40:19Z"
+            },
+            {
+              "id": 126948582207,
+              "name": "verify",
+              "conclusion": "failure",
+              "startedAt": "2026-11-04T23:53:31Z",
+              "completedAt": "2026-11-04T23:53:34Z"
+            }
+          ]
+        }
+      ],
+      "annotations": [
+        {
+          "path": "artifacts/c18-bootstrap/push-shard2-annotations.json",
+          "sha256": "1d05818826172d237f0d6bfedf77c20be7e8579e4038f6176893621a5db8a841"
+        },
+        {
+          "path": "artifacts/c18-bootstrap/pr-shard2-annotations.json",
+          "sha256": "65d1f4d6efaf68c2fa8095e9ea2384ad3db231261887e889be42dd2501096b43"
+        }
+      ],
+      "finding": "Both creature shards pass; both literacy shards fail setup while awaiting initial save. First frame exists. IDB open at8.8s succeeds33.4s; readwrite completion93-96s. No measured opening result in either run. Push ecology scope-skips; PR ecology cancels at25-minute limit, not passing."
+    },
+    "experiments": [
+      {
+        "kind": "extra startup CPU profile, old GLES headless shell",
+        "result": "timeout at keyboard/gamepad before explicit screenshot/maximum opening",
+        "artifacts": [
+          {
+            "path": "artifacts/c18-startup-profile/c18-book-browser.json",
+            "sha256": "df1a37c4804ce93000a88f3af6bb7ceeefca017bec7f77f02eb17d9881386de0"
+          },
+          {
+            "path": "artifacts/c18-startup-profile/c18-bootstrap-cpu.json",
+            "sha256": "d4a98385f2e0dbe83dab363e4810d179880fd48b27d6ad7c2cc7c683544915b8"
+          },
+          {
+            "path": "artifacts/c18-startup-profile/trace.zip",
+            "sha256": "1d3904e676df759dea63a42e5762c3e7c56474079b7b52fd8a32a8c74528dc3b"
+          }
+        ],
+        "finding": "RasterImplementation::Finish aggregate16.382s (nested timings not additive), max3.070s; WaitForToken max5.576s. Main JS timeline alone does not establish storage-thread cause."
+      },
+      {
+        "kind": "disable-gpu-rasterization, old GLES headless shell",
+        "result": "fail opening3241.8ms; rejected",
+        "artifacts": [
+          {
+            "path": "artifacts/c18-cpu-raster/c18-book-browser.json",
+            "sha256": "833334e2e6059bd858bd651c753b2d5b5a73ee4c8bcd1babc7b08e2d095e8718"
+          },
+          {
+            "path": "artifacts/c18-cpu-raster/c18-book-cpu.json",
+            "sha256": "45fac46d0f76a9988fd10f091d44e31d61030b99c480c296d2694bcf10866688"
+          },
+          {
+            "path": "artifacts/c18-cpu-raster/c18-book-spread-1080p.png",
+            "sha256": "ac347098bfbb7ad1b231717d56dc5d9c44efc72b115c7b67e805c55c9eb27a03"
+          },
+          {
+            "path": "artifacts/c18-cpu-raster/trace.zip",
+            "sha256": "8b5a6e11aeeaae71e51a0147f16fd365d8c6a48bff0de7002f7f333a635111c5"
+          }
+        ],
+        "screenshotInspected": true
+      },
+      {
+        "kind": "full Chromium native",
+        "result": "pass1/1,29.5s journey/38.5s run; opening37.3ms,fresh48-page label,2mounted",
+        "artifacts": [
+          {
+            "path": "artifacts/c18-full-chromium/native/c18-book-browser.json",
+            "sha256": "ff5aaf8c547dda25494d5420e5783561c17a0e427723472e505e174e3987dd93"
+          },
+          {
+            "path": "artifacts/c18-full-chromium/native/c18-book-cpu.json",
+            "sha256": "b4de9484eb82bbc5b080163931d7f463656ab5fdded2c44137390ab7af8cca6c"
+          },
+          {
+            "path": "artifacts/c18-full-chromium/native/c18-book-spread-1080p.png",
+            "sha256": "9d9cdb5429e461ab48f60de1accc9965ae2b1a139a49a82614dfb116f9aa8597"
+          }
+        ],
+        "screenshotInspected": true
+      },
+      {
+        "kind": "full Chromium SwiftShader, default compositor",
+        "result": "fail opening188.1ms; rejected",
+        "artifacts": [
+          {
+            "path": "artifacts/c18-full-chromium/software-default/c18-book-browser.json",
+            "sha256": "e5630c2162fbf602823f2e3c61db61f6fdb6cbe2e5fac18bddfb553bfe6d0a6d"
+          },
+          {
+            "path": "artifacts/c18-full-chromium/software-default/c18-book-cpu.json",
+            "sha256": "08a8821256a68696c9c81c57fa32622198e59661d156ca76a3bcf7560edf672f"
+          },
+          {
+            "path": "artifacts/c18-full-chromium/software-default/c18-book-spread-1080p.png",
+            "sha256": "257c6e079622633be0a8cc5b81d4e8c62eb69fa2990f44b192334c544245ff68"
+          },
+          {
+            "path": "artifacts/c18-full-chromium/software-default/trace.zip",
+            "sha256": "a61525b72d32da5dab22d3ef2fb7d3a0bd543e82d143e9da403853444b5e8e87"
+          }
+        ],
+        "screenshotInspected": true
+      },
+      {
+        "kind": "full Chromium SwiftShader, original GLES flags",
+        "result": "fail at seal confirmation before maximum opening; rejected",
+        "artifacts": [
+          {
+            "path": "artifacts/c18-full-chromium/software-gles/c18-book-browser.json",
+            "sha256": "649b622ce482e5d482a624f24eff1cb77d4aa104376cd8c7617fa98fb86c9122"
+          },
+          {
+            "path": "artifacts/c18-full-chromium/software-gles/trace.zip",
+            "sha256": "613864903984aba305ac2433f988122034b0c5890c0e3a31de14ec8a2338e26b"
+          }
+        ]
+      },
+      {
+        "kind": "old GLES headless shell,720p startup then1080p functional journey",
+        "result": "timeout opening maximum spread; rejected and reverted",
+        "artifacts": [
+          {
+            "path": "artifacts/c18-bootstrap-720/c18-book-browser.json",
+            "sha256": "8fe42b12c0c1414d37f78acd63d00c7051781529ff2bb86a2b17d4fbf223aecc"
+          },
+          {
+            "path": "artifacts/c18-bootstrap-720/c18-book-spread-1080p.png",
+            "sha256": "0e2623533f361dd1d7a39110f61a185e37db8328dc8a503d1231bdba81073b44"
+          },
+          {
+            "path": "artifacts/c18-bootstrap-720/trace.zip",
+            "sha256": "18fce49a66207a00ba5ec3f646aa37f91b3f9a58f7d48238c02830938e385aa9"
+          }
+        ],
+        "screenshotInspected": true
+      }
+    ],
+    "traceEvidence": [
+      {
+        "path": "artifacts/c18-startup-profile/trace.zip",
+        "screencastFrames": 0,
+        "domSnapshots": 99
+      },
+      {
+        "path": "artifacts/c18-cpu-raster/trace.zip",
+        "screencastFrames": 0,
+        "domSnapshots": 159
+      },
+      {
+        "path": "artifacts/c18-full-chromium/software-default/trace.zip",
+        "screencastFrames": 0,
+        "domSnapshots": 157
+      }
+    ],
+    "sources": [
+      "https://playwright.dev/docs/browsers",
+      "https://chromium.googlesource.com/chromium/src.git/+/refs/heads/main/gpu/config/gpu_switches.cc"
+    ],
+    "gaps": [
+      "No new startup repair adopted. All experiment source edits reverted and temporary config removed.",
+      "Only native full-Chromium passes; this does not establish GPU-less CI acceptance.",
+      "All assertions,1080p explicit capture,five measurements,two mounted pages,100ms limit,retries and job limits unchanged."
+    ]
   }
 }
