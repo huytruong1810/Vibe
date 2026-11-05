@@ -1,141 +1,213 @@
-# Codex session handoff
+# Codex handoff: remaining tickets and execution plan
 
-## Current work
+## Start here
 
-Branch `eng/hd-presentation`, workspace `C:/Users/htruong/source/repos/Vibe`.
-C20 source **e2e2b0f1** push/PR verify failed. C3g **7a3ae74b**, C18 startup diagnostics **f9f9e5dd**, and C13 phase capture **ab636702** are separately committed; Source98416654 CI fails startup in both literacy shards; creature shards pass. C32 **c998d532** is committed; final pause checkpoint is pushed separately.
-The director asked to continue through all unblocked Codex tickets. The latest director instruction is HALT, commit/push completed work, then resume
-after3h30. A one-time Windows scheduled resume is REGISTERED for03:40 UTC
-(Nov4 21:40 America/Chicago); see [schedule receipt](resume-schedule.json).
-The task removes itself before CLI resume, with workspace-write/on-request approvals. C21 still needs explicit go.
+Workspace: `C:/Users/htruong/source/repos/Vibe`; branch: `eng/hd-presentation`.
+Last published checkpoint before this planning update: **f25fd8fb**. All completed
+engineering work is pushed; experimental literacy changes were reverted. The
+workspace was clean at pause. Do not work in the separate `Vibe-art` checkout.
 
-Read the codex brief and charter after compaction. Use
-[team-comms](../../../../.agents/skills/team-comms/SKILL.md) and
+The director requested a pause, a one-time resume after3h30, and this plan for a
+fresh Codex session. **This document is a plan, not evidence that remaining tickets
+are done.** C18 CI repair comes first; then continue unblocked Codex engineering.
+
+A Windows task is registered for **2026-11-04 21:40:19 America/Chicago**
+(2026-11-05 03:40:19 UTC):
+`Hearthwild-Codex-Resume-01a1a4df-20261105`.
+It removes its schedule before resuming the previous session. See
+[schedule receipt](resume-schedule.json). It retains workspace-write sandboxing and
+on-request approvals; automatic approval was rejected and is not enabled. Windows
+must remain logged in/available. A fresh session must check whether that scheduled
+session has started and avoid concurrent edits; do not create a second wake task.
+
+Use [team-comms](../../../../.agents/skills/team-comms/SKILL.md) and
 [doctrine-lookup](../../../../.agents/skills/doctrine-lookup/SKILL.md).
-Keep the existing [session log](session-2026-11-02.md) and `.last-read` current.
-Before pushing: pull `--ff-only`, read new addressed messages at one directory
-level (no archives), run hygiene, stop owned processes. Leave Vibe-art alone.
 
-## Changed
+1. Read `AGENTS.md`, `docs/team/briefs/codex.md`, the charter and the live
+   [queue](../../queue/codex.md); repeat brief/charter after compaction.
+2. Run `git status --short`, confirm branch/ownership, then `git pull --ff-only`.
+   Preserve unfamiliar edits. Read new top-level `--to-codex--`/`--to-all--`
+   messages and update `.last-read` with real UTC time (YYYY-MM-DDTHHMM).
+3. Continue [the existing session log](session-2026-11-02.md); do not restart the
+   implementation from scratch. Refresh public CI receipts for the actual latest
+   source SHA before choosing a repair. Queue evidence contains some older
+   "pending CI" lines; the receipts below record later failures.
 
-C18 CI repair is separately committed and pushed. C19 implementation is committed
-in **8f1c399** and **1c14403**; C18 phase diagnostics/hygiene entry-point repairs
-are **842765c**, **ef890fd**, **1df43a7**. Do not restart those implementations.
+## Changed: already implemented and pushed
 
-C20 adds shared painting content rules/canonical subjects/affinity; durable canvas
-identity and request/result/Keep/Discard/Retry; kit modal with keyboard/gamepad,
-progress and nearest previews; native-flight recovery across reload; NPC
-CREATE_PAINTING/HANG_PAINTING with free home-hook reservation and durable rates;
-one-time caption encoding/vision call/fallback, painter semantic memory and nearby
-caption sight notices; framed hooks,32-resident pinned LRU and16x11 thumbnails.
-See [ADR037](../../../engineering/decisions.md#adr-037--durable-painting-requests-and-native-gpu-recovery),
-[artifact specification](../../../engineering/authored-artifacts.md) and
-[pinned operations](../../../operations/image-generation.md).
+| Ticket | Delivered work | Commit / evidence | Remaining acceptance |
+| --- | --- | --- | --- |
+| C18 | Written-word workflow, scoped trace repair, phase/bootstrap diagnostics | Original8619e25; repair5e9c3e4/ec22a07;842765c/ef890fd/1df43a7; startup breadcrumbs **f9f9e5dd**; [diagnostics](c18-ci-diagnostics.json) | Current startup CI failure; machine-A reading latency; director review |
+| C19 | Provider/arbiter/quantizer golden slice, managed native cancellation, settings/operations | **8f1c399**, **1c14403**; [validation](c19-validation.json) | Actual model, latency/VRAM/cancellation acceptance on A |
+| C20 | Durable player/NPC painting, captions/memory, recovery, hooks and texture cache | **e2e2b0f1**; [validation](c20-validation.json); ADR037 | Browser/verify regression gate; A overnight/latency/VRAM; pending cloth art; director review |
+| C13 follow-up | Observer armed before transient phases resume | **ab636702**; [capture validation](c13-capture-validation.json) | Latest tested source passes both creature shards; overall CI still fails C18 |
+| C3g | Every atlas page selectable; catalog versus resident decoded memory; ADR038 | **7a3ae74b**; [validation](c3g-validation.json) | Legacy scale comparison after M11 humans |
+| C32 | Exact previous-revision overview provenance, before-image inspection gate, ADR039 | **c998d532**; [validation](c32-validation.json) | Actual machine-A Riverlands revision3 packet showing revision2 as before |
 
-Player subjects retain1�240 characters; NPCs retain3�160. Save v9 fields are reused,
-no migration/new field. NPC reservations remain covered/unsealed until explicit
-HANG at home. Retained authored records provide rates. Caption pixels are not
-resent to later dialogue. Missing endpoint rejects new player/NPC requests.
+C22/C24/C25/C14/C13 earlier implementations remain candidates with their recorded
+external acceptance gaps. C8/C8b/C11b and the parked forge tickets retain the live
+queue's scope and ownership. Do not mark every ticket done from unit tests alone.
 
-Native marker `hearthwild-image-flight` is browser-local and written before POST.
-Web Locks serialize image flights; recovery cancels/polls terminal state before a
-new submission or warming Ollama. Unknown state suspends chat/image use until the
-operator restarts sd-server and explicitly resets recovery in Settings. Use one
-active game tab; LLM scheduling remains per instance. Main dispatch bounds queued
-NPC work and reserves a player slot. Request seeds combine world seed/artifact ID.
+## Evidence: current baseline
 
-## Evidence
+- Final combined local `VITEST_MAX_WORKERS=4 npm run check`: **545 tests /45 files**,
+  **59.87s**, plus types, architecture, assets, hygiene and build. Full formatting
+  passes. Logs: `artifacts/c18-bootstrap-check.log` and
+  `artifacts/c18-bootstrap-format.log`.
+- C20's full browser suite passed **27/27 in7.6min**, before the two C3g tests.
+  Both beta bases passed2/2. All48 retained PNGs inspected; local C18 opening42.7ms.
+  The current total is expected to be29 journeys; confirm through discovery before
+  reporting a new full-suite result. Do not describe29 as already passing locally.
+- C3g:7 gallery tests; final2 atlas checks;5 inspected captures. Five2046-square
+  atlas pages,3908 frames,79.84MiB full RGBA/19.88MiB half. Existing128MiB gallery
+  page-cache cap is separate from canvas/UI/driver overhead and runtime budgets.
+- C32: **27 worldforge tests /48.973s**, **5 terrain tests**, read-only village
+  check152 placements. Real predecessor resolution selects revision2 for target3;
+  overview SHA `6dc24989b15fa96c20f47949e9014c13427d2031131882118701bae040596ef0`.
+  Synthetic fixtures prove tooling behavior, not visual acceptance.
 
-[C18 diagnostic evidence](c18-ci-diagnostics.json) retains the complete failed
-history, timing receipts, artifact hashes and public CI jobs. Latest source1df43a7:
+Source **98416654072a3e4a1bfe142804f6e0c2356b29ef**:
 
-- [Push41873320685](https://github.com/huytruong1810/Vibe/actions/runs/41873320685)
-  **success**, including checks, both browser shards, both beta bases and aggregate
-  `verify`. This satisfies the required C18 browser/verify gate before C19/C20.
-- [PR41873343384](https://github.com/huytruong1810/Vibe/actions/runs/41873343384)
-  browser/CPU/beta/verify jobs pass, but workflow is **cancelled** during ecology.
-- Push ecology is scope-skipped, PR ecology cancelled: neither proves a soak.
-  Independently, ef890fd push41868358995 ecology126708375448 actually passes22m52s;
-  sibling PR ecology126708438813 times out at25 minutes. Keep outcomes separate.
-- Public receipts: `artifacts/c18-trace-repair/phase-diagnostics/1df43a7-ci.json` and
-  `ef890fd-ci.json`. Never retry rejected stored-credential access. Public REST only;
-  append a receipt timestamp to avoid stale GitHub API cache responses.
+- [Push41935313601](https://github.com/huytruong1810/Vibe/actions/runs/41935313601)
+  and [PR41935324774](https://github.com/huytruong1810/Vibe/actions/runs/41935324774):
+  CPU checks, both beta bases and creature shard pass; literacy shard and aggregate
+  `verify` fail in both. Latest checkpoint's CI must be inspected afresh.
+- Both literacy failures occur during **start offline world**, awaiting setup close.
+  First frame exists, no page errors; renderer load about1.6-1.8s. IndexedDB open
+  begins about8.8s, success callback about33.4s; first write completes about93-96s.
+  Setup awaits the initial save. This identifies the waiting phase; it does not
+  prove that IndexedDB itself, rather than delayed callbacks, is the root cause.
+- Push ecology is **scope-skipped** despite a successful job conclusion. PR ecology
+  is **cancelled at the25-minute limit**. Neither is passing soak evidence.
+- Historical1df43a7 [push41873320685](https://github.com/huytruong1810/Vibe/actions/runs/41873320685)
+  did pass browser/verify before the later work. Independently, ef890fd
+  push41868358995 ecology126708375448 passed22m52s; sibling PR ecology timed out.
+  Preserve these as separate historical outcomes, never current-source acceptance.
 
-C18 file-scoped trace retains failures/DOM snapshots, disables continuous trace
-screenshots. Explicit1080p screenshot, CPU trace, compact notice, functional
-assertions, five measurements, two mounted pages and100ms limit remain. The Linux
-CI literacy test uses the measured SwiftShader GLES compositor args; other journeys'
-tracing/retries/deadlines are unchanged. Two one-worker browser shards retain the
-20-minute job limits and required aggregate verify. Historical screenshot-only
-repair still failed619/633ms remotely; full headless compositor experiment61.2ms,
-ec22a07 PR11.3ms and ef890fd PR21.2ms passed with fresh48-page receipts. Bootstrap
-phase/status diagnostics expose the intermittent setup timeout without hiding it.
-Temporary experiments were removed; earlier spread screenshots were inspected.
+Raw latest receipts: `artifacts/c18-bootstrap/source-ci.json`,
+`push-shard2-annotations.json`, `pr-shard2-annotations.json`.
+Tracked history/hashes: `c18-ci-diagnostics.json.startupInvestigationPause`.
+Ignored local artifacts are not guaranteed available to a fresh machine.
 
-[C19 evidence](c19-validation.json): golden JSON hash
-`80bd3049d7d65ff7f8ce461f9ca0ffb7489b50e1f9780879482b62281f14ba01`.
-Four-worker check513 tests/42 files in56.80s; full browser25/25 in6.7min, all42 PNGs
-inspected under `artifacts/c19-browser/`. Latest mock worker quant2.6ms, startup106.6ms,
-total296ms; historical cold46ms and focused5.2/6.7ms gaps retained. Unchanged5ms Node
-budget runs in existing serial budget project. Provider is pinned sd-server native
-managed jobs; fetch abort alone is not GPU cancellation. No real GPU model ran on B.
+## Plan 1: finish C18 browser and aggregate verify CI
 
-[C20 evidence](c20-validation.json): four-worker `npm run check` passes **544 tests /
-45 files**,63.12s, plus types/architecture/assets/hygiene/build. Final typecheck passes.
-Focused player hook and pending-native-recovery browser **2/2** in1.0min; screenshots
-inspected. Reload preserves immutable brief/identity and cancels prior native job
-before the second POST. NPC real-save restore/quota/hang/nearby-caption test passes.
-Full27-journey suite passes7.6min; C18 opening42.7ms/two pages/complete.
-Root/subpath beta each2/2 pass19.3/19.2s. All48 retained PNGs inspected under
-`artifacts/c20-browser/screenshots/`; hashes, CPU and golden receipts retained.
-Formatting/hygiene pass; no owned4173 listener remains. Source CI is pending.
-Mock worker6ms exceeds5ms target; startup149.3ms/total542.5ms, golden bytes unchanged.
+**Scope:** a separate, evidence-backed CI/test repair. Keep production code, public
+APIs, save schema, other journeys' tracing, retries, CI gates and timeouts unchanged.
+Keep file-scoped retain-on-failure tracing with screenshots:false and snapshots:true;
+explicit1080p capture; CPU trace; compact notice; every functional assertion; all
+five performance measurements; two-page mounting; and the100ms opening limit.
 
-## Next actions
+1. Refresh latest source browser/verify/ecology jobs and annotations using public,
+   unauthenticated GitHub REST. Never retry rejected stored-credential access.
+   Add a receipt timestamp to avoid stale cache responses; normalize PowerShell
+   array wrappers when reading retained JSON. Cite the source SHA and run/job URLs.
+2. Diagnose the initial-save wait before changing behavior. Separate storage work
+   from main-thread/GPU callback starvation and worker service time. Existing
+   breadcrumbs already prove a frame arrived. If another profile is necessary,
+   keep it separate from the original opening CPU trace and retain failed evidence.
+   Do not infer a storage defect solely from delayed IndexedDB callbacks.
+3. Make one justified, reversible change at a time. Do not bypass storage, pause or
+   shrink the world to manufacture a pass, discard assertions, or increase limits.
+   If evidence points to a production defect outside the authorized repair scope,
+   record it explicitly instead of silently broadening this ticket.
+4. Run focused literacy **sequentially** in normal mode, CI=1, and forced SwiftShader
+   using the temporary-config pattern. The experiment must inherit the test's actual
+   trace settings. Keep scratch under own comms/tmp or OS temp; remove it afterward.
+   Inspect every emitted screenshot; retain timing receipts, CPU/Playwright trace
+   evidence and artifact hashes, including failures.
+5. Validate the final candidate with the full browser suite, four-worker
+   `npm run check`, `npm run format:check`, `npm run check:hygiene` and diff checks.
+   Stop owned processes. Commit the repair separately, pull/read messages, push.
+6. Require green remote **all browser shards and aggregate verify for that source
+   commit**. Record ecology independently by whether the soak step actually ran.
+   Update handoff, session, queue evidence and C18 diagnostics with Changed / Evidence /
+   Gaps and risks. Only then move on from the current CI blocker.
 
-1. C3g, C18 startup diagnostics and C13 transient capture repair are separate commits. Evidence: c3g-validation.json, c18-ci-diagnostics.json,
-   c13-capture-validation.json. Temporary software config removed; original literacy source restored.
-2. Current98416654 push41935313601 and PR41935324774 both fail C18 startup;
-   frame exists, IDB open delays25s and initial write60s. Creature shards pass.
-   Push ecology scope-skips; PR ecology cancelled at25-minute limit; never passing evidence. Investigate before
-   accepting C20 CI. Full-Chromium native experiment passes fresh48-page37.3ms;
-   forced full Chromium fails188.1ms; full-GLES variant fails seal confirmation.
-  720p startup/1080p journey also times out; all experiments were rejected/reverted.
-   CPU-raster-only experiment fails
-   opening3241.8ms; do not adopt that flag. Keep trace/thresholds/assertions.
-   Pull/push and verify fresh public browser + aggregate verify receipts before
-   claiming C20 CI acceptance. Source e2e2b0f1 push41930714385/PR41930723882 fail:
-   C13 Zephyrit misses notice/commit; push C18 startup times out, sibling passes.
-   Ecology cancelled around25 minutes in both, never passing evidence.
-3. C20 machine-A request is already pushed in
-   [smoke request](2026-11-04T2252--to-blender--test-c20-painting-workflow.md);
-   C19 request is also pushed. Both actual model/GPU acceptances remain external.
-4. C3g now selects all5 pages and distinguishes79.84MiB catalog from resident128MiB
-   page-cache cap; ADR038 documents overhead exclusions. Seven gallery tests pass;
-   final two atlas checks and all5 inspected captures retained. Scale awaits M11.
-5. C32 is implemented in c998d532: render/packet revision lineage and before-image
-   inspection gates;27 worldforge +5 terrain tests pass and actual Riverlands
-   predecessor resolution selects2 for target3. Request2347 is committed;
-   machine-A actual revision3 packet/inspection remains external.
-6. Audit remaining open tickets. C7 activation is separately gated; C15/C16 and
-   C21 require explicit director authorization. No schedule was created.
+Do not repeat these rejected experiments without new evidence:
 
-## Gaps and risks
+| Experiment | Observed result |
+| --- | --- |
+| Extra startup CPU profile on current GLES headless shell | Timed out at keyboard/gamepad. RasterImplementation::Finish aggregate16.38s/max3.07s; WaitForToken max5.58s. Nested timings are not additive. |
+| Disable GPU rasterization | Opening3241.8ms; rejected. |
+| Full Chromium, native graphics on B | Passed37.3ms with fresh48-page label; does not establish GPU-less CI acceptance. |
+| Full Chromium, forced SwiftShader/default compositor | Opening188.1ms; rejected. |
+| Full Chromium, forced SwiftShader/original GLES flags | Failed seal confirmation before maximum opening. |
+|720p startup then1080p functional journey | Timed out opening maximum spread; rejected/reverted. |
 
-Machine-A26b/sd-server overnight, cancellation, VRAM and30-second player pipeline
-acceptance are external, as is director review.192�128 nearest PNG plus140 output
-tokens does not prove the model's actual140-image-token cost. Pending cover is cream
-runtime UI/status over the placeholder easel; actual easel/cloth art remains external.
-Brand/person lists are finite; NPC memory vocabulary is deliberately conservative.
-Real-time notice cooldown is session-local, not a cross-restart replay guarantee.
+All experimental source edits were restored and temporary config deleted. Failed
+traces inspected for continuous screencast frames:0; DOM snapshots remain. The
+latest failures are retained, not passing performance receipts.
 
-C13 candidate receipts: [validation](c13-validation.json), [benchmark](c13-benchmark.json),
-[failed timing history](c13-benchmark-history.json). Save v8 intent/motion replay hash
-`d0c664d43d5cdd3110d6d3105c376d719589d609e15b34034e281ae8a599f10e`.
-C18 live B reading is functional evidence only: [receipt](c18-live-reading.json).
-Do not repeat model latency tests on B; director clarified B is functional checks only.
+## Plan 2: close acceptance gaps without rebuilding shipped slices
 
-C22/C24/C25/C14/C13/C18/C19 remain candidates with external acceptance. Only director
-merges main/activates Pages; draft PR1 remains unmerged. Art ledger requires actual
-digest-bound director records; communicator owns manifest/status integration.
-Current assets:3908 frames,5 pages,79.84/19.88MiB; HD gaps1515, approvals4/41.
+After C18's gate, reread replies and collect actual evidence:
+
+- **C19/C20:** existing machine-A requests are already pushed:
+  [C19 smoke](2026-11-04T1619--to-blender--test-c19-painting.md),
+  [C20 workflow](2026-11-04T2252--to-blender--test-c20-painting-workflow.md).
+  Verify native cancellation/terminal acknowledgement before chat resumes, GPU
+  unload/recovery, reload identity, complete player pipeline, VRAM and overnight NPC
+  workflows. Run no actual model/GPU latency tests on B. Request missing receipts;
+  do not count mocks as A acceptance. Record defects as scoped fixes.
+- **C32:** follow the pushed [revision3 request](2026-11-04T2347--to-blender--test-c32-previous-revision.md).
+  Blender runs check/render/inspection/packet with revision3. Require before-overview
+  bytes/hash to match revision2/overview.png, exact lineage receipts, and inspection
+  of every overview/crop. Do not regenerate historical packets or approvals on B.
+- **C3g:** keep the engineering slice candidate; compare scale when M11 human art is
+  integrated. Do not resize authored assets or weaken the HD gate to close this item.
+- **C22/C24/C25/C14/C13:** reconcile outstanding Pages/live deployment, A smokes,
+  reference-machine playtests, authored clips and director review against receipts.
+  The director handles main/Pages activation; communicator owns manifest/status.
+
+## Plan 3: advance C7's unblocked engineering, then gated activation
+
+C7 is **partial**, not implemented end-to-end. Use
+[world-builder](../../../../.agents/skills/world-builder/SKILL.md),
+[worldforge guide](../../../engineering/worldforge.md), ADR021, WLD-M1..M4, the
+protected Aqualia bible/plan and the current compiler/loader tests.
+
+Current map audit:2 authored levels,1 Aqualia settlement,1 new-game spawn,10 NPCs
+with50 role anchors,5 services,8 habitats and **0 ResourceNodes**. The legacy host
+still creates30 NPCs/9 settlements from fixed locations. Do not put20 villagers
+in void or invent missing resource/layout coordinates.
+
+1. Re-audit current map and consumer assumptions; split concrete engineering and
+   external map dependencies in the existing queue. Preserve stable IDs. Obtain
+   explicit scope decisions where the one-region map and30-NPC host disagree.
+2. Build one tested authored slice before expanding: map-driven player spawn,
+   settlements, NPC schedule/home anchors, services and entrances. Derive positions
+   from map entities; remove fixed-coordinate assumptions from consumers, including
+   supplies, queries, schedules, scenes, HUD and presentation. Keep this staged
+   separately from gameplay activation until all consumers are covered.
+3. Adapt resource and population seeding to authored nodes/habitat regions. Request
+   missing forage placements from blender through passes; never edit LDtk JSON,
+   protected plans or art sources directly. Test void, navigation and level seams.
+4. Design the separate WLD-M3 world/content/save version change and world provenance.
+   Old generated-world saves are rejected under doctrine, not silently migrated.
+   Keep this out of C18/C19/C20 fixes; preserve their working behavior in regressions.
+5. Activate only after map/scope/input and review gates are satisfied. Prove new game,
+   save/reload/import compatibility behavior, authored browser journeys and an actual
+   authored-world soak with unchanged CI gates. Until then, call the result a
+   candidate adapter/compiler slice, not authored gameplay completion.
+
+## Gaps and risks / stop conditions
+
+- **C21** pixel editing remains unstarted until explicit director go after C20 review.
+  **C15/C16** learned brains remain gated. Do not infer authorization from "all tickets".
+- Forge tickets under "Waiting for claude" and the separately owned tool/art tickets
+  retain their lane/machine constraints. Audit evidence and route to owners; do not
+  claim Blender-dependent work was performed on B.
+- **C23** is standing: update the ledger only from actual digest-bound director records
+  after integration; never self-approve. **C12** is recurring: keep queues actionable,
+  maintain evidence and communicate concrete blockers without inventing completion.
+- C20 uses existing save-v9 fields. Native-flight marker/Web Locks fail closed on
+  unknown jobs. Only one active game tab is supported; LLM scheduling is per instance.
+  Caption192x128 pixels and140 output tokens do not prove a140-image-token budget.
+  Mock C20 regression quant6ms exceeded5ms despite unchanged golden bytes; retain it.
+  Brand lists/grounding are conservative; notice cooldown is session-local; pending
+  cloth/easel art and actual A latency/VRAM/director acceptance remain external.
+- End each checkpoint with **Changed / Evidence / Gaps and risks**. Pull/read new
+  messages before push, run hygiene, remove scratch and stop owned processes. A
+  skipped/cancelled/timed-out soak is never passing evidence. Do not claim all
+  tickets done while external acceptance, unfinished engineering or explicit gates
+  remain.
