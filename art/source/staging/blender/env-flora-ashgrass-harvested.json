@@ -1,0 +1,121 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/env-flora-ashgrass-harvested--2026-11-05-env-flora-ashgrass-harvested.md",
+  "approvalSha256": "5263ea323df78deb35f8ce417688d8ade70a2064e275afa76b7263150ff3b0ae",
+  "asset": "env:flora-ashgrass-harvested",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset env:flora-ashgrass-harvested",
+    "id": "forge-env-flora-ashgrass-harvested",
+    "inputs": [
+      {
+        "path": "blender/models/published/env-flora-ashgrass-harvested/79edc6c3ffa049719aa9af5312ec2bfa6be309972b52d790f5eaa45395e477dc/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/env-flora-ashgrass-harvested/79edc6c3ffa049719aa9af5312ec2bfa6be309972b52d790f5eaa45395e477dc/forge/blender/env_layout.py",
+        "role": "script",
+        "sha256": "b2fa291498b97eb55fc8450d37b55208b1d22550aa81a70b6c8c06d9cc08388b"
+      },
+      {
+        "path": "blender/models/published/env-flora-ashgrass-harvested/79edc6c3ffa049719aa9af5312ec2bfa6be309972b52d790f5eaa45395e477dc/forge/forge.py",
+        "role": "script",
+        "sha256": "72344e74be14dd4324bbc2a158d9c160ff2dfbdfc1325d5166dc5baa5fb6b531"
+      },
+      {
+        "path": "blender/models/published/env-flora-ashgrass-harvested/79edc6c3ffa049719aa9af5312ec2bfa6be309972b52d790f5eaa45395e477dc/forge/forgelib/environment.py",
+        "role": "script",
+        "sha256": "4b3443c051f8076ebdc9abd18152831dfbfe74c0053e7c4622ef3d7f483e397c"
+      },
+      {
+        "path": "blender/models/published/env-flora-ashgrass-harvested/79edc6c3ffa049719aa9af5312ec2bfa6be309972b52d790f5eaa45395e477dc/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/env-flora-ashgrass-harvested/79edc6c3ffa049719aa9af5312ec2bfa6be309972b52d790f5eaa45395e477dc/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "2963b6c95098f03aadf7fffe21507c8b3aa6b4fb4d13e657a9b7921e761ba629"
+      },
+      {
+        "path": "blender/models/published/env-flora-ashgrass-harvested/79edc6c3ffa049719aa9af5312ec2bfa6be309972b52d790f5eaa45395e477dc/forge/recipes/env-flora-ashgrass-harvested.json",
+        "role": "pose-config",
+        "sha256": "475a80b4e57cd76b09e6696c4c23d2e9385f62dbeb0ce9a1c79f374b6afebe72"
+      },
+      {
+        "path": "blender/models/published/env-flora-ashgrass-harvested/79edc6c3ffa049719aa9af5312ec2bfa6be309972b52d790f5eaa45395e477dc/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/env-flora-ashgrass-harvested/79edc6c3ffa049719aa9af5312ec2bfa6be309972b52d790f5eaa45395e477dc/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/env-flora-ashgrass-harvested/79edc6c3ffa049719aa9af5312ec2bfa6be309972b52d790f5eaa45395e477dc/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/env-flora-ashgrass-harvested/79edc6c3ffa049719aa9af5312ec2bfa6be309972b52d790f5eaa45395e477dc/forge/work/env-flora-ashgrass-harvested/layout.json",
+        "role": "pose-config",
+        "sha256": "594644504301ef042a9dda45fa826677b6841f461898084bb155937896a29c3a"
+      },
+      {
+        "path": "blender/models/published/env-flora-ashgrass-harvested/79edc6c3ffa049719aa9af5312ec2bfa6be309972b52d790f5eaa45395e477dc/forge/work/env-flora-ashgrass-harvested/layout/base.blend",
+        "role": "model",
+        "sha256": "a75c9845741ff82ae87dcef53bdae01a43b6d3c5b993bd2438612d6578c1ff19"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "footprint": [
+    1,
+    1
+  ],
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 64,
+        "y": 126
+      },
+      "file": "exports/env-flora-ashgrass-harvested/69a6687ff09b3464fcc5a8a6e20fb646d3b1bf4d194fe256ce4aca27c3a75d92/frames/shadow.png",
+      "id": "env-flora-ashgrass-harvested-shadow",
+      "layer": "shadow",
+      "sha256": "55ee8fcef84d88b474e41d02a43276b3a7b0ebbd6ff065d974f1c5d696d3b974",
+      "sourceSize": {
+        "h": 132,
+        "w": 128
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 64,
+        "y": 126
+      },
+      "file": "exports/env-flora-ashgrass-harvested/69a6687ff09b3464fcc5a8a6e20fb646d3b1bf4d194fe256ce4aca27c3a75d92/frames/base.png",
+      "id": "env-flora-ashgrass-harvested-base",
+      "layer": "base",
+      "sha256": "ba56631a23962c36ff29a9aedcc40ce3e10c6f70d2c7f3cdfe116d889f99879f",
+      "sourceSize": {
+        "h": 132,
+        "w": 128
+      }
+    }
+  ],
+  "lightPools": [],
+  "packet": "art/review/2026-11-05-env-flora-ashgrass-harvested",
+  "packetDigest": "69a6687ff09b3464fcc5a8a6e20fb646d3b1bf4d194fe256ce4aca27c3a75d92",
+  "packetSha256": "8836d039494f7e33868e121311611ef8277fada8481d20e6f8cf1cc555e3d255",
+  "schemaVersion": 1,
+  "scope": [
+    "shadow",
+    "base"
+  ]
+}

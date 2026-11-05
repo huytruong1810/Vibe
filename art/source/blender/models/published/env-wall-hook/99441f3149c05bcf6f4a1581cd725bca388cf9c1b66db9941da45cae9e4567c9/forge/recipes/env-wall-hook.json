@@ -1,0 +1,37 @@
+{
+  "asset": "env:wall-hook",
+  "kind": "environment",
+  "ramps": {
+    "walls": "timber",
+    "roof": "teal",
+    "trim": "wood",
+    "metal": "copper"
+  },
+  "gen3d": {
+    "seed": 2009,
+    "steps": 50,
+    "views": [
+      "front",
+      "left"
+    ]
+  },
+  "environment": {
+    "footprint": [
+      1,
+      1
+    ],
+    "split": null,
+    "contactShadow": true
+  },
+  "concept": {
+    "template": "building-v1",
+    "fields": {
+      "building": "iron display hook for notes",
+      "region": "Aqualia Village & Riverlands",
+      "description": "small wrought iron hook mounted on wall for hanging notices",
+      "materials": "wrought iron, brass screw"
+    },
+    "references": []
+  },
+  "notes": "AQ-2 Landmark/Kit prop (B5). 1x1 footprint."
+}

@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 1,
+  "asset": "ui:authored-artifacts",
+  "kind": "ui-review",
+  "status": "candidate",
+  "frames": [
+    {
+      "id": "frame_book_spread",
+      "file": "frames/frame_book_spread.png",
+      "sha256": "dedc5935cc43d5ea841a237790b6fa27dc12a436d6d581dc5266bec701c815d5",
+      "width": 240,
+      "height": 140
+    },
+    {
+      "id": "frame_note_page",
+      "file": "frames/frame_note_page.png",
+      "sha256": "0839cdf5514d3df6de354dfefa8db1f86cb3b0cc113b01fc75e41add1ae03236",
+      "width": 120,
+      "height": 140
+    },
+    {
+      "id": "icon_page_prev",
+      "file": "frames/icon_page_prev.png",
+      "sha256": "3b1945a99a6e43317f7247b713a671ec7908f2cf390bbb9a2379d7802dfa04c3",
+      "width": 20,
+      "height": 20
+    },
+    {
+      "id": "icon_page_next",
+      "file": "frames/icon_page_next.png",
+      "sha256": "ba0c3cd720204bee82206dae052131c1171d31990526e459ccc51d4583641ab8",
+      "width": 20,
+      "height": 20
+    },
+    {
+      "id": "seal_stamp",
+      "file": "frames/seal_stamp.png",
+      "sha256": "e89cf98dcc88a177071f8c47c5a565396b7ec1d2748c644ab25a28b668b1c919",
+      "width": 24,
+      "height": 24
+    },
+    {
+      "id": "frame_painting_wall",
+      "file": "frames/frame_painting_wall.png",
+      "sha256": "5ccdc103f0682bc2175a80c9f7319c25e4b1b2debf1129c424106d91b4e77cd0",
+      "width": 56,
+      "height": 40
+    },
+    {
+      "id": "frame_painting_preview",
+      "file": "frames/frame_painting_preview.png",
+      "sha256": "aa8e3807165eb13cb62e228a0c7dff39f52c143116a6d1782583e3414274c20d",
+      "width": 208,
+      "height": 144
+    },
+    {
+      "id": "easel_cloth",
+      "file": "frames/easel_cloth.png",
+      "sha256": "a001fc6289ad76d963ad4f6304eaf4873b762e2d8d64ca947b677e250b0422a6",
+      "width": 48,
+      "height": 48
+    },
+    {
+      "id": "icon_note-blank",
+      "file": "frames/icon_note-blank.png",
+      "sha256": "0032a43f49d2a9fd1fc026eedc5ccd923d03c9ea8cb57afa1f878cab9b9942cc",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "id": "icon_note-written",
+      "file": "frames/icon_note-written.png",
+      "sha256": "e08aba18cfb444051a39943dbd04b7d395bc1be4e808cee5d6311da1441729b2",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "id": "icon_book-blank",
+      "file": "frames/icon_book-blank.png",
+      "sha256": "45a48abb456c7ddf95d75b598a996ff68a8607c75083be6c59a4b7c4e2dfa868",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "id": "icon_book-written",
+      "file": "frames/icon_book-written.png",
+      "sha256": "617638c597a176b10cf92e3cf48121ae699fed33dc98c3f0575bfd6a581fad7f",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "id": "icon_canvas-blank",
+      "file": "frames/icon_canvas-blank.png",
+      "sha256": "7c24b19cd9981bd25a2dc17a8840efaff8b0cb4023e5db7bad50a2df0c824d79",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "id": "icon_canvas-painted",
+      "file": "frames/icon_canvas-painted.png",
+      "sha256": "2499e3c7d139454b13ec866049d3a3212f5ae7bad76289c539a8591e15223e9c",
+      "width": 32,
+      "height": 32
+    }
+  ],
+  "qa": [
+    {
+      "check": "paletteMembership",
+      "rule": "ART-4.1",
+      "pass": true,
+      "detail": "0 off-palette colors",
+      "hard": true
+    },
+    {
+      "check": "itemIcons",
+      "rule": "AGT-8",
+      "pass": true,
+      "detail": "6 32-px icons staged",
+      "hard": true
+    },
+    {
+      "check": "uiFrames",
+      "rule": "UI-1",
+      "pass": true,
+      "detail": "8 UI kit elements generated",
+      "hard": true
+    }
+  ],
+  "sourceDigest": "6cd75bdd8799fa7417302c8792276be0eacbe1a9c9d063aa7ea0cdb860263e37"
+}

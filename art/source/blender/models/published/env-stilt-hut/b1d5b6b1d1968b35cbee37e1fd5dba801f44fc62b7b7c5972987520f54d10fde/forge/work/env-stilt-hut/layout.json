@@ -1,0 +1,48 @@
+{
+  "asset": "env:stilt-hut",
+  "stage": "layout",
+  "inputsDigest": "3348f29ce9be067648afedba7b0a19805cb23e70c92df7215d36799d6669d4cb",
+  "inputs": [
+    "art/source/forge/work/env-stilt-hut/texture.blend",
+    "art/source/forge/work/env-stilt-hut/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-stilt-hut/layout/base.blend": "7bd3109dd9564ed1e942f08ff1a307961edc130797b0025e7a3fd48f67fe43c1",
+    "art/source/forge/work/env-stilt-hut/layout/roof.blend": "1a7fffb5ff9a3d853f21a9e70772077a2f056ee5b95b84c8078bdf9f28d869d6",
+    "art/source/forge/work/env-stilt-hut/layout_preview.png": "278033457971d3773cfbcbcc3b9571720bf9a1643b8662e46af57d045b1a0878"
+  },
+  "extra": {
+    "scale": 0.157407,
+    "heightUnits": 2.7361,
+    "contactDepthTiles": 1.938,
+    "footprint": [
+      2,
+      2
+    ],
+    "canvas": {
+      "size": [
+        128,
+        128
+      ],
+      "anchor": [
+        64,
+        123
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -1.0,
+      0.0
+    ],
+    "layers": [
+      "base",
+      "roof"
+    ],
+    "faces": {
+      "base": 4948,
+      "roof": 9052
+    }
+  },
+  "at": "2026-11-05T09:55:11Z"
+}

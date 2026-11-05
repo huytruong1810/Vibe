@@ -1,0 +1,121 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/env-boardwalk--2026-11-05-env-boardwalk.md",
+  "approvalSha256": "50cfa598d8deb8754a32936c865ee3396a03023f1aa79e14b918fff0796d034a",
+  "asset": "env:boardwalk",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset env:boardwalk",
+    "id": "forge-env-boardwalk",
+    "inputs": [
+      {
+        "path": "blender/models/published/env-boardwalk/bdff40e790a1d086e48bbc12bd1b1e3880f11aaf9c586aafabbe62004761112b/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/env-boardwalk/bdff40e790a1d086e48bbc12bd1b1e3880f11aaf9c586aafabbe62004761112b/forge/blender/env_layout.py",
+        "role": "script",
+        "sha256": "b2fa291498b97eb55fc8450d37b55208b1d22550aa81a70b6c8c06d9cc08388b"
+      },
+      {
+        "path": "blender/models/published/env-boardwalk/bdff40e790a1d086e48bbc12bd1b1e3880f11aaf9c586aafabbe62004761112b/forge/forge.py",
+        "role": "script",
+        "sha256": "72344e74be14dd4324bbc2a158d9c160ff2dfbdfc1325d5166dc5baa5fb6b531"
+      },
+      {
+        "path": "blender/models/published/env-boardwalk/bdff40e790a1d086e48bbc12bd1b1e3880f11aaf9c586aafabbe62004761112b/forge/forgelib/environment.py",
+        "role": "script",
+        "sha256": "4b3443c051f8076ebdc9abd18152831dfbfe74c0053e7c4622ef3d7f483e397c"
+      },
+      {
+        "path": "blender/models/published/env-boardwalk/bdff40e790a1d086e48bbc12bd1b1e3880f11aaf9c586aafabbe62004761112b/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/env-boardwalk/bdff40e790a1d086e48bbc12bd1b1e3880f11aaf9c586aafabbe62004761112b/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "2963b6c95098f03aadf7fffe21507c8b3aa6b4fb4d13e657a9b7921e761ba629"
+      },
+      {
+        "path": "blender/models/published/env-boardwalk/bdff40e790a1d086e48bbc12bd1b1e3880f11aaf9c586aafabbe62004761112b/forge/recipes/env-boardwalk.json",
+        "role": "pose-config",
+        "sha256": "79ae28e456fe0173ede8e1a349b3dae6b0488553b3bf51d1a1ceb4e320c6f069"
+      },
+      {
+        "path": "blender/models/published/env-boardwalk/bdff40e790a1d086e48bbc12bd1b1e3880f11aaf9c586aafabbe62004761112b/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/env-boardwalk/bdff40e790a1d086e48bbc12bd1b1e3880f11aaf9c586aafabbe62004761112b/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/env-boardwalk/bdff40e790a1d086e48bbc12bd1b1e3880f11aaf9c586aafabbe62004761112b/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/env-boardwalk/bdff40e790a1d086e48bbc12bd1b1e3880f11aaf9c586aafabbe62004761112b/forge/work/env-boardwalk/layout.json",
+        "role": "pose-config",
+        "sha256": "224c1d607ee75dc310b7848b3daccbc543208aab93e38aefb293273f7762c6fb"
+      },
+      {
+        "path": "blender/models/published/env-boardwalk/bdff40e790a1d086e48bbc12bd1b1e3880f11aaf9c586aafabbe62004761112b/forge/work/env-boardwalk/layout/base.blend",
+        "role": "model",
+        "sha256": "a862d7265efae978873ef5f1cf9b92dd9ae8733613fc5015b1bf67d1d0c530dd"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "footprint": [
+    2,
+    1
+  ],
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 96,
+        "y": 310
+      },
+      "file": "exports/env-boardwalk/9f8d3763d1bd0c41bf0d13bba0eb720b03b94a984e0fae084ab2e81f399f7b6d/frames/shadow.png",
+      "id": "env-boardwalk-shadow",
+      "layer": "shadow",
+      "sha256": "93d5b9e9177cc491d7c1d1d182027a2f677fb5038a336bb5e539d06dfb4f7fb0",
+      "sourceSize": {
+        "h": 324,
+        "w": 192
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 96,
+        "y": 310
+      },
+      "file": "exports/env-boardwalk/9f8d3763d1bd0c41bf0d13bba0eb720b03b94a984e0fae084ab2e81f399f7b6d/frames/base.png",
+      "id": "env-boardwalk-base",
+      "layer": "base",
+      "sha256": "c4c84a9b400884b61ffdc2f1672d4e109dcdbbc3e337826338b233e0862362af",
+      "sourceSize": {
+        "h": 324,
+        "w": 192
+      }
+    }
+  ],
+  "lightPools": [],
+  "packet": "art/review/2026-11-05-env-boardwalk",
+  "packetDigest": "9f8d3763d1bd0c41bf0d13bba0eb720b03b94a984e0fae084ab2e81f399f7b6d",
+  "packetSha256": "6cec9cfa38ffd7a5fe40c97a690c7d432eae0e2f06ce838b2656dcbb5d9a7194",
+  "schemaVersion": 1,
+  "scope": [
+    "shadow",
+    "base"
+  ]
+}

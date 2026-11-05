@@ -1,0 +1,141 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/env-gauge-tower--2026-11-05-env-gauge-tower.md",
+  "approvalSha256": "4bfbd8ad5d3e10e50ac527c85b9c51b345044a69ca09f16118ea0c474fc2b495",
+  "asset": "env:gauge-tower",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset env:gauge-tower",
+    "id": "forge-env-gauge-tower",
+    "inputs": [
+      {
+        "path": "blender/models/published/env-gauge-tower/c78a21db2bf7ef322103c85945e36529601d0699a06a78079f66407db24ce5a8/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/env-gauge-tower/c78a21db2bf7ef322103c85945e36529601d0699a06a78079f66407db24ce5a8/forge/blender/env_layout.py",
+        "role": "script",
+        "sha256": "b2fa291498b97eb55fc8450d37b55208b1d22550aa81a70b6c8c06d9cc08388b"
+      },
+      {
+        "path": "blender/models/published/env-gauge-tower/c78a21db2bf7ef322103c85945e36529601d0699a06a78079f66407db24ce5a8/forge/forge.py",
+        "role": "script",
+        "sha256": "72344e74be14dd4324bbc2a158d9c160ff2dfbdfc1325d5166dc5baa5fb6b531"
+      },
+      {
+        "path": "blender/models/published/env-gauge-tower/c78a21db2bf7ef322103c85945e36529601d0699a06a78079f66407db24ce5a8/forge/forgelib/environment.py",
+        "role": "script",
+        "sha256": "4b3443c051f8076ebdc9abd18152831dfbfe74c0053e7c4622ef3d7f483e397c"
+      },
+      {
+        "path": "blender/models/published/env-gauge-tower/c78a21db2bf7ef322103c85945e36529601d0699a06a78079f66407db24ce5a8/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/env-gauge-tower/c78a21db2bf7ef322103c85945e36529601d0699a06a78079f66407db24ce5a8/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "2963b6c95098f03aadf7fffe21507c8b3aa6b4fb4d13e657a9b7921e761ba629"
+      },
+      {
+        "path": "blender/models/published/env-gauge-tower/c78a21db2bf7ef322103c85945e36529601d0699a06a78079f66407db24ce5a8/forge/recipes/env-gauge-tower.json",
+        "role": "pose-config",
+        "sha256": "102030e2b3a4c719c93fc2553f939bd3156bf70e2431b74644ab43dc81945b51"
+      },
+      {
+        "path": "blender/models/published/env-gauge-tower/c78a21db2bf7ef322103c85945e36529601d0699a06a78079f66407db24ce5a8/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/env-gauge-tower/c78a21db2bf7ef322103c85945e36529601d0699a06a78079f66407db24ce5a8/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/env-gauge-tower/c78a21db2bf7ef322103c85945e36529601d0699a06a78079f66407db24ce5a8/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/env-gauge-tower/c78a21db2bf7ef322103c85945e36529601d0699a06a78079f66407db24ce5a8/forge/work/env-gauge-tower/layout.json",
+        "role": "pose-config",
+        "sha256": "9bb1d5ed16220b43d0cebc1a3a096f22256140be8cd5202da286b421f0c5cfd6"
+      },
+      {
+        "path": "blender/models/published/env-gauge-tower/c78a21db2bf7ef322103c85945e36529601d0699a06a78079f66407db24ce5a8/forge/work/env-gauge-tower/layout/base.blend",
+        "role": "model",
+        "sha256": "609a8bc71fda71cfcf6002db78a2340b20b75a11f8f4c9a0a000ea4f3645824a"
+      },
+      {
+        "path": "blender/models/published/env-gauge-tower/c78a21db2bf7ef322103c85945e36529601d0699a06a78079f66407db24ce5a8/forge/work/env-gauge-tower/layout/roof.blend",
+        "role": "model",
+        "sha256": "97d9c39186584e05d3f4e60cc2764f3737704ba4e3ff3a88ff720ba08c11a2ba"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "footprint": [
+    2,
+    2
+  ],
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 96,
+        "y": 340
+      },
+      "file": "exports/env-gauge-tower/11b0ca3aaba5f8a2d4f8b1bdee97462cec7e504e22f0c74f359d7aa65fd49722/frames/shadow.png",
+      "id": "env-gauge-tower-shadow",
+      "layer": "shadow",
+      "sha256": "c26076f21da2fc04d09064e8ebcda6e992777da3a3b57ef5114eb3c18b8fcb4e",
+      "sourceSize": {
+        "h": 348,
+        "w": 192
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 96,
+        "y": 340
+      },
+      "file": "exports/env-gauge-tower/11b0ca3aaba5f8a2d4f8b1bdee97462cec7e504e22f0c74f359d7aa65fd49722/frames/base.png",
+      "id": "env-gauge-tower-base",
+      "layer": "base",
+      "sha256": "0463b5411bd6d3b2615a970fcb5261d50ed1683ba2b8bb58cd62c2e750d7647b",
+      "sourceSize": {
+        "h": 348,
+        "w": 192
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 96,
+        "y": 340
+      },
+      "file": "exports/env-gauge-tower/11b0ca3aaba5f8a2d4f8b1bdee97462cec7e504e22f0c74f359d7aa65fd49722/frames/roof.png",
+      "id": "env-gauge-tower-roof",
+      "layer": "roof",
+      "sha256": "88a378357560a370f8cca6ab172f985060fdacb8401d26ec4b1b7c1f4272e35e",
+      "sourceSize": {
+        "h": 348,
+        "w": 192
+      }
+    }
+  ],
+  "lightPools": [],
+  "packet": "art/review/2026-11-05-env-gauge-tower",
+  "packetDigest": "11b0ca3aaba5f8a2d4f8b1bdee97462cec7e504e22f0c74f359d7aa65fd49722",
+  "packetSha256": "c1ca737ae6b06aa98f3097fbabbeb2365e3d06a2fdaabe6f3ae84ef461b92f03",
+  "schemaVersion": 1,
+  "scope": [
+    "shadow",
+    "base",
+    "roof"
+  ]
+}

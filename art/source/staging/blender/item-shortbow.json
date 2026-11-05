@@ -7,79 +7,79 @@
     "id": "forge-item-shortbow",
     "inputs": [
       {
-        "path": "blender/models/published/item-shortbow/b835ee4c16d912cf5782f5bcb0ef0be021142079c909143a65c8c60d024b640f/forge/blender/bake.py",
+        "path": "blender/models/published/item-shortbow/a13e309d38ced412c2303c06c01c06d4237f241e6012e2720073233887bdca09/forge/blender/bake.py",
         "role": "script",
         "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
       },
       {
-        "path": "blender/models/published/item-shortbow/b835ee4c16d912cf5782f5bcb0ef0be021142079c909143a65c8c60d024b640f/forge/blender/item_orient.py",
+        "path": "blender/models/published/item-shortbow/a13e309d38ced412c2303c06c01c06d4237f241e6012e2720073233887bdca09/forge/blender/item_orient.py",
         "role": "script",
-        "sha256": "a68d9fcfc9cae6f56c882c76e9e294d3c24bd02fb7826d9da3eaa086b7de362f"
+        "sha256": "8a27e1389c7bf96b9a6e47aa80a7e7d3af1caf5310cdad402bd81c17a1238599"
       },
       {
-        "path": "blender/models/published/item-shortbow/b835ee4c16d912cf5782f5bcb0ef0be021142079c909143a65c8c60d024b640f/forge/forge.py",
+        "path": "blender/models/published/item-shortbow/a13e309d38ced412c2303c06c01c06d4237f241e6012e2720073233887bdca09/forge/forge.py",
         "role": "script",
-        "sha256": "7ba07e846a522d199a522a011cfb1f87d35b47233bcb33aaeb9cb27e09644319"
+        "sha256": "72344e74be14dd4324bbc2a158d9c160ff2dfbdfc1325d5166dc5baa5fb6b531"
       },
       {
-        "path": "blender/models/published/item-shortbow/b835ee4c16d912cf5782f5bcb0ef0be021142079c909143a65c8c60d024b640f/forge/forgelib/item_orient.py",
+        "path": "blender/models/published/item-shortbow/a13e309d38ced412c2303c06c01c06d4237f241e6012e2720073233887bdca09/forge/forgelib/item_orient.py",
         "role": "script",
-        "sha256": "03534083c34c47428d83b477a4e98678e6e547ef21b9a65b751d508a0e164600"
+        "sha256": "ed949856992b519c0af5631cb748405adae566fee90bc5bb4e9f999f912e476d"
       },
       {
-        "path": "blender/models/published/item-shortbow/b835ee4c16d912cf5782f5bcb0ef0be021142079c909143a65c8c60d024b640f/forge/forgelib/item_render.py",
+        "path": "blender/models/published/item-shortbow/a13e309d38ced412c2303c06c01c06d4237f241e6012e2720073233887bdca09/forge/forgelib/item_render.py",
         "role": "script",
         "sha256": "3290c864b563263170efcc626acce2a1dc88141d320d9cf186f5bc48b3e6f2d0"
       },
       {
-        "path": "blender/models/published/item-shortbow/b835ee4c16d912cf5782f5bcb0ef0be021142079c909143a65c8c60d024b640f/forge/forgelib/items.py",
+        "path": "blender/models/published/item-shortbow/a13e309d38ced412c2303c06c01c06d4237f241e6012e2720073233887bdca09/forge/forgelib/items.py",
         "role": "script",
         "sha256": "22221017285c31c893c28260a13caf407e646913c63e32ad723c8671f1a9d84c"
       },
       {
-        "path": "blender/models/published/item-shortbow/b835ee4c16d912cf5782f5bcb0ef0be021142079c909143a65c8c60d024b640f/forge/forgelib/pixelize.py",
+        "path": "blender/models/published/item-shortbow/a13e309d38ced412c2303c06c01c06d4237f241e6012e2720073233887bdca09/forge/forgelib/pixelize.py",
         "role": "script",
         "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
       },
       {
-        "path": "blender/models/published/item-shortbow/b835ee4c16d912cf5782f5bcb0ef0be021142079c909143a65c8c60d024b640f/forge/forgelib/publish.py",
+        "path": "blender/models/published/item-shortbow/a13e309d38ced412c2303c06c01c06d4237f241e6012e2720073233887bdca09/forge/forgelib/publish.py",
         "role": "script",
-        "sha256": "7c2e7b1994f6c5f8cb4c00bb8bf92f8078a8e7aa1ce405f18f5541e9aaf8452e"
+        "sha256": "2963b6c95098f03aadf7fffe21507c8b3aa6b4fb4d13e657a9b7921e761ba629"
       },
       {
-        "path": "blender/models/published/item-shortbow/b835ee4c16d912cf5782f5bcb0ef0be021142079c909143a65c8c60d024b640f/forge/recipes/item-shortbow.json",
+        "path": "blender/models/published/item-shortbow/a13e309d38ced412c2303c06c01c06d4237f241e6012e2720073233887bdca09/forge/recipes/item-shortbow.json",
         "role": "pose-config",
-        "sha256": "3e4211c97915ee02b075f40cdd1a560fb91ac4baa39e52c2e742e522f85d0267"
+        "sha256": "8be2c58395fddcdd82fd1fe9688ce9c71cc814fb7b161a747a26a70a248c5390"
       },
       {
-        "path": "blender/models/published/item-shortbow/b835ee4c16d912cf5782f5bcb0ef0be021142079c909143a65c8c60d024b640f/forge/spec/palette.json",
+        "path": "blender/models/published/item-shortbow/a13e309d38ced412c2303c06c01c06d4237f241e6012e2720073233887bdca09/forge/spec/palette.json",
         "role": "palette",
         "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
       },
       {
-        "path": "blender/models/published/item-shortbow/b835ee4c16d912cf5782f5bcb0ef0be021142079c909143a65c8c60d024b640f/forge/spec/render_spec.json",
+        "path": "blender/models/published/item-shortbow/a13e309d38ced412c2303c06c01c06d4237f241e6012e2720073233887bdca09/forge/spec/render_spec.json",
         "role": "pose-config",
         "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
       },
       {
-        "path": "blender/models/published/item-shortbow/b835ee4c16d912cf5782f5bcb0ef0be021142079c909143a65c8c60d024b640f/forge/uv.lock",
+        "path": "blender/models/published/item-shortbow/a13e309d38ced412c2303c06c01c06d4237f241e6012e2720073233887bdca09/forge/uv.lock",
         "role": "dependency-lock",
         "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
       },
       {
-        "path": "blender/models/published/item-shortbow/b835ee4c16d912cf5782f5bcb0ef0be021142079c909143a65c8c60d024b640f/forge/work/item-shortbow/item_model.blend",
+        "path": "blender/models/published/item-shortbow/a13e309d38ced412c2303c06c01c06d4237f241e6012e2720073233887bdca09/forge/work/item-shortbow/item_model.blend",
         "role": "model",
-        "sha256": "892a75b7e28e9ee0c732fc60d5a45ba766c82db8a8e679c80211252c062db75e"
+        "sha256": "880f2d4c8d26a50e0ec5e51612f817d394fa0ae0b93a24394747476a8a7526c5"
       },
       {
-        "path": "blender/models/published/item-shortbow/b835ee4c16d912cf5782f5bcb0ef0be021142079c909143a65c8c60d024b640f/forge/work/item-shortbow/orient.json",
+        "path": "blender/models/published/item-shortbow/a13e309d38ced412c2303c06c01c06d4237f241e6012e2720073233887bdca09/forge/work/item-shortbow/orient.json",
         "role": "pose-config",
-        "sha256": "4252750d7b2aff85295bdbb64316a3fa02bdd8bf7f730b8c70144caaa5ab0219"
+        "sha256": "83131f98fc92041a9745e2907f10828399a2dc8786900d80649cb303b1bc0410"
       },
       {
-        "path": "blender/models/published/item-shortbow/b835ee4c16d912cf5782f5bcb0ef0be021142079c909143a65c8c60d024b640f/forge/work/item-shortbow/orient_params.json",
+        "path": "blender/models/published/item-shortbow/a13e309d38ced412c2303c06c01c06d4237f241e6012e2720073233887bdca09/forge/work/item-shortbow/orient_params.json",
         "role": "pose-config",
-        "sha256": "778b8fe481aa24f7d2488879592165665860ed4d8d03a6ec69278aa119f4f9c8"
+        "sha256": "e86e1f7f78e3af268a0144d28ed8f8d0d3beb877e6e1e7943e4f5a551a6604f6"
       }
     ],
     "method": "blender-bake",

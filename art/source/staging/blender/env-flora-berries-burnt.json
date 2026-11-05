@@ -1,0 +1,121 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/env-flora-berries-burnt--2026-11-05-env-flora-berries-burnt.md",
+  "approvalSha256": "e26c4ec1644247dc772aa232cd626e9d716809c72287ec9520916a51fe022f8f",
+  "asset": "env:flora-berries-burnt",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset env:flora-berries-burnt",
+    "id": "forge-env-flora-berries-burnt",
+    "inputs": [
+      {
+        "path": "blender/models/published/env-flora-berries-burnt/14c4f8d158309c3eda3f686015869bcd25ef8f7ed44247efd82b1adfa71eeb26/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/env-flora-berries-burnt/14c4f8d158309c3eda3f686015869bcd25ef8f7ed44247efd82b1adfa71eeb26/forge/blender/env_layout.py",
+        "role": "script",
+        "sha256": "b2fa291498b97eb55fc8450d37b55208b1d22550aa81a70b6c8c06d9cc08388b"
+      },
+      {
+        "path": "blender/models/published/env-flora-berries-burnt/14c4f8d158309c3eda3f686015869bcd25ef8f7ed44247efd82b1adfa71eeb26/forge/forge.py",
+        "role": "script",
+        "sha256": "72344e74be14dd4324bbc2a158d9c160ff2dfbdfc1325d5166dc5baa5fb6b531"
+      },
+      {
+        "path": "blender/models/published/env-flora-berries-burnt/14c4f8d158309c3eda3f686015869bcd25ef8f7ed44247efd82b1adfa71eeb26/forge/forgelib/environment.py",
+        "role": "script",
+        "sha256": "4b3443c051f8076ebdc9abd18152831dfbfe74c0053e7c4622ef3d7f483e397c"
+      },
+      {
+        "path": "blender/models/published/env-flora-berries-burnt/14c4f8d158309c3eda3f686015869bcd25ef8f7ed44247efd82b1adfa71eeb26/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/env-flora-berries-burnt/14c4f8d158309c3eda3f686015869bcd25ef8f7ed44247efd82b1adfa71eeb26/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "2963b6c95098f03aadf7fffe21507c8b3aa6b4fb4d13e657a9b7921e761ba629"
+      },
+      {
+        "path": "blender/models/published/env-flora-berries-burnt/14c4f8d158309c3eda3f686015869bcd25ef8f7ed44247efd82b1adfa71eeb26/forge/recipes/env-flora-berries-burnt.json",
+        "role": "pose-config",
+        "sha256": "ed2e12792c5b8b3c88ad9072691b663b231bfb08f8fadd501daf1e362e03612f"
+      },
+      {
+        "path": "blender/models/published/env-flora-berries-burnt/14c4f8d158309c3eda3f686015869bcd25ef8f7ed44247efd82b1adfa71eeb26/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/env-flora-berries-burnt/14c4f8d158309c3eda3f686015869bcd25ef8f7ed44247efd82b1adfa71eeb26/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/env-flora-berries-burnt/14c4f8d158309c3eda3f686015869bcd25ef8f7ed44247efd82b1adfa71eeb26/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/env-flora-berries-burnt/14c4f8d158309c3eda3f686015869bcd25ef8f7ed44247efd82b1adfa71eeb26/forge/work/env-flora-berries-burnt/layout.json",
+        "role": "pose-config",
+        "sha256": "4cfb54fc06a6860e7c4a5a0258543e917f70135a54f10dc6626f3a3986e5e75c"
+      },
+      {
+        "path": "blender/models/published/env-flora-berries-burnt/14c4f8d158309c3eda3f686015869bcd25ef8f7ed44247efd82b1adfa71eeb26/forge/work/env-flora-berries-burnt/layout/base.blend",
+        "role": "model",
+        "sha256": "a02c1c5f83b1eb5d0b34f88f55748afc7a8c60d72597dc89531454daa268164e"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "footprint": [
+    1,
+    1
+  ],
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 96,
+        "y": 178
+      },
+      "file": "exports/env-flora-berries-burnt/bdc7dd0c1fa3a8e6a104a59e7a09d6e327caac0f7a5fe958a98cf80f9debb456/frames/shadow.png",
+      "id": "env-flora-berries-burnt-shadow",
+      "layer": "shadow",
+      "sha256": "4338ab9e00d8b475e0d64a652ee2a3831ec997cead5e1dee38f75258da1848c5",
+      "sourceSize": {
+        "h": 188,
+        "w": 192
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 96,
+        "y": 178
+      },
+      "file": "exports/env-flora-berries-burnt/bdc7dd0c1fa3a8e6a104a59e7a09d6e327caac0f7a5fe958a98cf80f9debb456/frames/base.png",
+      "id": "env-flora-berries-burnt-base",
+      "layer": "base",
+      "sha256": "fcedd17c2d1520f61c08af8d2589cbd1fee8985299a41f11286f7d59d2761aed",
+      "sourceSize": {
+        "h": 188,
+        "w": 192
+      }
+    }
+  ],
+  "lightPools": [],
+  "packet": "art/review/2026-11-05-env-flora-berries-burnt",
+  "packetDigest": "bdc7dd0c1fa3a8e6a104a59e7a09d6e327caac0f7a5fe958a98cf80f9debb456",
+  "packetSha256": "290a78b0dc7b6e8ad79ed4f121d411be7d9bb9528bd517d00f6253f01a6cc222",
+  "schemaVersion": 1,
+  "scope": [
+    "shadow",
+    "base"
+  ]
+}

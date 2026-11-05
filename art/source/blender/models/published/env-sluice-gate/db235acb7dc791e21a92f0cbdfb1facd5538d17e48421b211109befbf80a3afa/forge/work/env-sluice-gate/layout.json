@@ -1,0 +1,45 @@
+{
+  "asset": "env:sluice-gate",
+  "stage": "layout",
+  "inputsDigest": "edc8e95ce9d74452a2a39081fb7f052cf08d2120caed8040cf989f7e2bd5edee",
+  "inputs": [
+    "art/source/forge/work/env-sluice-gate/texture.blend",
+    "art/source/forge/work/env-sluice-gate/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-sluice-gate/layout/base.blend": "9094984585b953099b2dda1eb94833c5b46425650de4c2aae6f8cdfbb8ce7d0b",
+    "art/source/forge/work/env-sluice-gate/layout_preview.png": "0ec6d922324aa17128fa01a742fc8c815ff92ad3255ffe3050db21400369bbb2"
+  },
+  "extra": {
+    "scale": 0.162327,
+    "heightUnits": 2.5419,
+    "contactDepthTiles": 1.962,
+    "footprint": [
+      2,
+      2
+    ],
+    "canvas": {
+      "size": [
+        96,
+        118
+      ],
+      "anchor": [
+        48,
+        115
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -1.0,
+      0.0
+    ],
+    "layers": [
+      "base"
+    ],
+    "faces": {
+      "base": 14000
+    }
+  },
+  "at": "2026-11-05T11:42:12Z"
+}

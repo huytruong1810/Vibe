@@ -1,0 +1,45 @@
+{
+  "asset": "env:shrine-spring",
+  "stage": "layout",
+  "inputsDigest": "6763d97c955fc9c1cbc61575586d160baedb110067ef569e9923efa19ec2200b",
+  "inputs": [
+    "art/source/forge/work/env-shrine-spring/texture.blend",
+    "art/source/forge/work/env-shrine-spring/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-shrine-spring/layout/base.blend": "2b43416e30f3678501e9f1aa090c4628526d453c14c16510697a29c1891f83f9",
+    "art/source/forge/work/env-shrine-spring/layout_preview.png": "98e0966563fc9777996bb3ec5df306c7dbaf496b967663d9e047e966563da156"
+  },
+  "extra": {
+    "scale": 0.154086,
+    "heightUnits": 2.6552,
+    "contactDepthTiles": 2.999,
+    "footprint": [
+      3,
+      3
+    ],
+    "canvas": {
+      "size": [
+        128,
+        140
+      ],
+      "anchor": [
+        64,
+        135
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -1.5,
+      0.0
+    ],
+    "layers": [
+      "base"
+    ],
+    "faces": {
+      "base": 14000
+    }
+  },
+  "at": "2026-11-05T11:42:18Z"
+}

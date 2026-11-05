@@ -1,0 +1,48 @@
+{
+  "asset": "env:gauge-tower",
+  "stage": "layout",
+  "inputsDigest": "c4b990f1005da7fd8faf3e6337b3a4df3f288ade075f930691007dbcee54a48b",
+  "inputs": [
+    "art/source/forge/work/env-gauge-tower/texture.blend",
+    "art/source/forge/work/env-gauge-tower/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-gauge-tower/layout/base.blend": "609a8bc71fda71cfcf6002db78a2340b20b75a11f8f4c9a0a000ea4f3645824a",
+    "art/source/forge/work/env-gauge-tower/layout/roof.blend": "97d9c39186584e05d3f4e60cc2764f3737704ba4e3ff3a88ff720ba08c11a2ba",
+    "art/source/forge/work/env-gauge-tower/layout_preview.png": "18908f524af82338ab68c90c9bfb3ae91a88061a40a934ffb98ade5182f8c8a9"
+  },
+  "extra": {
+    "scale": 0.255055,
+    "heightUnits": 4.685,
+    "contactDepthTiles": 1.961,
+    "footprint": [
+      2,
+      2
+    ],
+    "canvas": {
+      "size": [
+        96,
+        174
+      ],
+      "anchor": [
+        48,
+        170
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -1.0,
+      0.0
+    ],
+    "layers": [
+      "base",
+      "roof"
+    ],
+    "faces": {
+      "base": 8214,
+      "roof": 5786
+    }
+  },
+  "at": "2026-11-05T09:41:55Z"
+}

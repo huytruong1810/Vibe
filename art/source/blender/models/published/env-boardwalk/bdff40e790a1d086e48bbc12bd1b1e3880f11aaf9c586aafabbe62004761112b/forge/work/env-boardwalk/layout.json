@@ -1,0 +1,45 @@
+{
+  "asset": "env:boardwalk",
+  "stage": "layout",
+  "inputsDigest": "013cf1d7489e7e5be3addbd97788f5e2e4dbeb6d0130a201f85517d101618212",
+  "inputs": [
+    "art/source/forge/work/env-boardwalk/texture.blend",
+    "art/source/forge/work/env-boardwalk/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-boardwalk/layout/base.blend": "a862d7265efae978873ef5f1cf9b92dd9ae8733613fc5015b1bf67d1d0c530dd",
+    "art/source/forge/work/env-boardwalk/layout_preview.png": "ec39e2cd93cd5bd04efc79d83ee96902419473c9cd376e32c71d4f069f79374d"
+  },
+  "extra": {
+    "scale": 0.225445,
+    "heightUnits": 3.6537,
+    "contactDepthTiles": 1.257,
+    "footprint": [
+      2,
+      1
+    ],
+    "canvas": {
+      "size": [
+        96,
+        162
+      ],
+      "anchor": [
+        48,
+        155
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -0.5,
+      0.0
+    ],
+    "layers": [
+      "base"
+    ],
+    "faces": {
+      "base": 14000
+    }
+  },
+  "at": "2026-11-05T11:42:39Z"
+}

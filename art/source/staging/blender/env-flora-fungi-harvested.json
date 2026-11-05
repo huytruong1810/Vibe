@@ -1,0 +1,121 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/env-flora-fungi-harvested--2026-11-05-env-flora-fungi-harvested.md",
+  "approvalSha256": "184a29003c96d2a2a2d2b92e333443ab0b29a59090bb8e0645867bb6354698d7",
+  "asset": "env:flora-fungi-harvested",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset env:flora-fungi-harvested",
+    "id": "forge-env-flora-fungi-harvested",
+    "inputs": [
+      {
+        "path": "blender/models/published/env-flora-fungi-harvested/274ff69359ec33f7f3cab4ef56b8f992e8b88294c86f5d36a8fbded179dfc018/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/env-flora-fungi-harvested/274ff69359ec33f7f3cab4ef56b8f992e8b88294c86f5d36a8fbded179dfc018/forge/blender/env_layout.py",
+        "role": "script",
+        "sha256": "b2fa291498b97eb55fc8450d37b55208b1d22550aa81a70b6c8c06d9cc08388b"
+      },
+      {
+        "path": "blender/models/published/env-flora-fungi-harvested/274ff69359ec33f7f3cab4ef56b8f992e8b88294c86f5d36a8fbded179dfc018/forge/forge.py",
+        "role": "script",
+        "sha256": "72344e74be14dd4324bbc2a158d9c160ff2dfbdfc1325d5166dc5baa5fb6b531"
+      },
+      {
+        "path": "blender/models/published/env-flora-fungi-harvested/274ff69359ec33f7f3cab4ef56b8f992e8b88294c86f5d36a8fbded179dfc018/forge/forgelib/environment.py",
+        "role": "script",
+        "sha256": "4b3443c051f8076ebdc9abd18152831dfbfe74c0053e7c4622ef3d7f483e397c"
+      },
+      {
+        "path": "blender/models/published/env-flora-fungi-harvested/274ff69359ec33f7f3cab4ef56b8f992e8b88294c86f5d36a8fbded179dfc018/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/env-flora-fungi-harvested/274ff69359ec33f7f3cab4ef56b8f992e8b88294c86f5d36a8fbded179dfc018/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "2963b6c95098f03aadf7fffe21507c8b3aa6b4fb4d13e657a9b7921e761ba629"
+      },
+      {
+        "path": "blender/models/published/env-flora-fungi-harvested/274ff69359ec33f7f3cab4ef56b8f992e8b88294c86f5d36a8fbded179dfc018/forge/recipes/env-flora-fungi-harvested.json",
+        "role": "pose-config",
+        "sha256": "3dddec2597ae398fc9c2735af8514592d7360911c410ff2155d43bdd94a7fdb7"
+      },
+      {
+        "path": "blender/models/published/env-flora-fungi-harvested/274ff69359ec33f7f3cab4ef56b8f992e8b88294c86f5d36a8fbded179dfc018/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/env-flora-fungi-harvested/274ff69359ec33f7f3cab4ef56b8f992e8b88294c86f5d36a8fbded179dfc018/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/env-flora-fungi-harvested/274ff69359ec33f7f3cab4ef56b8f992e8b88294c86f5d36a8fbded179dfc018/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/env-flora-fungi-harvested/274ff69359ec33f7f3cab4ef56b8f992e8b88294c86f5d36a8fbded179dfc018/forge/work/env-flora-fungi-harvested/layout.json",
+        "role": "pose-config",
+        "sha256": "75cde6bba90fb8ce46ca70f8ca8807279837a9079ecdf8286e4ad576e368de89"
+      },
+      {
+        "path": "blender/models/published/env-flora-fungi-harvested/274ff69359ec33f7f3cab4ef56b8f992e8b88294c86f5d36a8fbded179dfc018/forge/work/env-flora-fungi-harvested/layout/base.blend",
+        "role": "model",
+        "sha256": "c0fae82ef1f395385a0b1d347359709c497af6ba48f64af8af23904e64d76773"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "footprint": [
+    1,
+    1
+  ],
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 64,
+        "y": 160
+      },
+      "file": "exports/env-flora-fungi-harvested/777fab3ac5e0dd8e2bcf8c64200b5aa1646810df0e38837344f963e4b7c2a2ab/frames/shadow.png",
+      "id": "env-flora-fungi-harvested-shadow",
+      "layer": "shadow",
+      "sha256": "15a18c6d5fe3de10ca031a20e0835a272d5e0debaf04efcd535ae65eb5fd26de",
+      "sourceSize": {
+        "h": 168,
+        "w": 128
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 64,
+        "y": 160
+      },
+      "file": "exports/env-flora-fungi-harvested/777fab3ac5e0dd8e2bcf8c64200b5aa1646810df0e38837344f963e4b7c2a2ab/frames/base.png",
+      "id": "env-flora-fungi-harvested-base",
+      "layer": "base",
+      "sha256": "3f05f07b4595d08e11940a70e064e767a51416ecf62879b8fef94fc6d15ba16f",
+      "sourceSize": {
+        "h": 168,
+        "w": 128
+      }
+    }
+  ],
+  "lightPools": [],
+  "packet": "art/review/2026-11-05-env-flora-fungi-harvested",
+  "packetDigest": "777fab3ac5e0dd8e2bcf8c64200b5aa1646810df0e38837344f963e4b7c2a2ab",
+  "packetSha256": "5cf2d863b0ba1924740bd2f8f56bd962fe34e902d968db84ebe3116d0f809f49",
+  "schemaVersion": 1,
+  "scope": [
+    "shadow",
+    "base"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "asset": "env:shrine-spring",
+  "kind": "environment",
+  "ramps": {
+    "walls": "timber",
+    "roof": "teal",
+    "trim": "wood",
+    "metal": "copper"
+  },
+  "gen3d": {
+    "seed": 2013,
+    "steps": 50,
+    "views": [
+      "front",
+      "left"
+    ]
+  },
+  "environment": {
+    "footprint": [
+      3,
+      3
+    ],
+    "split": null,
+    "contactShadow": true
+  },
+  "concept": {
+    "template": "building-v1",
+    "fields": {
+      "building": "sacred thermal spring cave cavern mouth",
+      "region": "Aqualia Village & Riverlands",
+      "description": "natural cavern entrance framed by volcanic basalt with gentle rising steam",
+      "materials": "dark basalt rocks, teal thermal pool, offering bowls"
+    },
+    "references": []
+  },
+  "notes": "AQ-2 Landmark/Kit prop (B5). 3x2 footprint."
+}

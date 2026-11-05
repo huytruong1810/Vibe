@@ -1,0 +1,42 @@
+{
+  "dependenciesDigest": "87bf25c8b3de40f4862dfb9eedc1e32ea36faf4878b4b44ea7a8e56be3c926b7",
+  "files": {
+    "README.md": "560c84a15dc7399458549cfe28d188cf2a27ab02b5efb5c9dd7a996a2425668a",
+    "before-overview.png": "ae1435667932147be5c59ca8cbe1634673475da681782b2788defa22a7aa0a77",
+    "overview.png": "72b0e332ac2ec083e160a270574cd64cb35d19018dac43e36b01585564de6b39",
+    "passes/001-village.json": "c2d00c0c317979cbe5e2914d8946cd1a3432fac7377934a3934a95c1c9470001",
+    "passes/002-village-details.json": "3b9d419c95ec91e0fdcf5f8f86ec58d75fbbc6dff4962493175a19accda4a143",
+    "passes/003-riverlands-layout.json": "02d66059d9349d7b809f8553671aaff73465453e77a3affb4f8d87f906d29bc6",
+    "passes/004-riverlands-water-roads.json": "760a6c9ffbf71ac8d3b52c82aaec409ba3cae4937301d34a63d33163a64b6a92",
+    "passes/005-riverlands-zones.json": "421b52d6764ed8f311d4d5d68c36554849b4aebd516badd5393e5eb84d135c4a",
+    "passes/006-riverlands-screen-decor.json": "0b6956537020672694b8ecc0958d6bc580bd7a6c6878617dcace79c5d0b5e1f0",
+    "passes/007-village-dressing.json": "7e3c76706b324ba9632de8fa89ed9b33ba2a5846801feba055ef7e7edca19f80",
+    "passes/008-riverlands-dressing.json": "ed13abebeea20423be08857c70861ffe2e82382f9d3286a596cc1f7a3e5a8d30",
+    "qa_report.json": "19395e022b4493271d3e27370c496dff2746351c52634045be4b7ed2a4f27799",
+    "render.json": "d0a1952b0a2efd605fdaa4a2ce0fb0a716435cdf25c1ec1db784760913bcaa2f",
+    "screen-0-0.png": "8b54676b40dc868b423dd1066a98c25bba1076fdfca4f6e0c3d9440dc578cff5",
+    "screen-0-1.png": "6a6beb141e1d63b7e4286b3d34324220b8dbeb6d2dfff3e9d03844de361bf0a0",
+    "screen-0-2.png": "d28ba325eb4929fa535c49943e66b2962c7a6b45af1d9675f32b29a77a813cc9",
+    "screen-0-3.png": "70332a1ae1bfcc2be5df90e7e15cd467e437eb878a39bdd1150f6a51baeda52c",
+    "screen-1-0.png": "3d37694d4b7eef2ab46cede3d77f42448ab1ba72bbd775c7f29b533fa1d152e5",
+    "screen-1-1.png": "322447ad4a4dc634780e88af6a4d2666799571edfa43e51c2d0c2ddb00e75249",
+    "screen-1-2.png": "f10681d7e055ccbb555b012d3367395ba97e3665ed718616e56079ccdb10f06f",
+    "screen-1-3.png": "bd34fb889550501ac23eac75779516e07a13a633cf236b764a478d89c99f9fad",
+    "screen-2-0.png": "e07c911cdf64a6f0f9638051db24869703c1207239a257faa30c7c876961a7dd",
+    "screen-2-1.png": "8c075fee9a24330c2f6e73161bbdac90d357f3dc237028dfbc49d1ef32dc40bc",
+    "screen-2-2.png": "21329cd541dfcb07148981057c4bf95f626d023402c86d911dfb4c0e09d8484a",
+    "screen-2-3.png": "8a71b84cc0f375aaa67248f7b093892a15ef3917df0307589ca4f28cf457f496",
+    "screen-3-0.png": "03642335b16d0d366449d49d5138622ed30e4faa6cd2235dac0a592cfd0ec16c",
+    "screen-3-1.png": "1d3ba32ecb91c01fcf644689b62f8cf87873bbf18649b06fcd76b7cae14085d8",
+    "screen-3-2.png": "553dc3f1ea3be0cbc04189a55bd1cf6604878d75f954594101332fec8540415e",
+    "screen-3-3.png": "59fd96c9a3cbd80ff56511a38435fc8ee0bbee24e74fe8a7ddfb56194ac51e06"
+  },
+  "level": "aqualia_riverlands",
+  "schemaVersion": 2,
+  "source": {
+    "path": "art/source/world/hearthwild.ldtk",
+    "sha256": "ae34ae141d48512ab02607d274973751db79a0853fdebb74eaa3c6d982b66d5b"
+  },
+  "sourceDigest": "ae34ae141d48512ab02607d274973751db79a0853fdebb74eaa3c6d982b66d5b",
+  "status": "candidate"
+}

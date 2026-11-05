@@ -1,0 +1,36 @@
+{
+  "asset": "env:flora-reeds-healthy",
+  "kind": "environment",
+  "ramps": {
+    "stalks": "reed",
+    "plumes": "sand",
+    "base": "moss"
+  },
+  "gen3d": {
+    "seed": 1005,
+    "steps": 50,
+    "views": [
+      "front",
+      "left"
+    ]
+  },
+  "environment": {
+    "footprint": [
+      1,
+      1
+    ],
+    "split": null,
+    "contactShadow": true
+  },
+  "concept": {
+    "template": "building-v1",
+    "fields": {
+      "building": "tall clump of river reeds with feathery seed plumes and slender jointed stalks (healthy state)",
+      "region": "Aqualia canal margins",
+      "description": "a dense water-edge clump of tall green reeds in healthy condition",
+      "materials": "slender celadon reed stems, pale sand-colored feathery plumes, deep moss-green mud base (healthy)"
+    },
+    "references": []
+  },
+  "notes": "Gatherable flora reeds in healthy state (B24). 1x1 tile footprint."
+}

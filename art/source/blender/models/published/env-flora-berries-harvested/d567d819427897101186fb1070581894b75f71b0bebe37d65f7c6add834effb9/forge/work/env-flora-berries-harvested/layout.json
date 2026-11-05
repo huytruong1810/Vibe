@@ -1,0 +1,45 @@
+{
+  "asset": "env:flora-berries-harvested",
+  "stage": "layout",
+  "inputsDigest": "1a34975937b5fd76b8d6e4e6ea4cab82b8761470e97442585fe78bb4120a10c2",
+  "inputs": [
+    "art/source/forge/work/env-flora-berries-harvested/texture.blend",
+    "art/source/forge/work/env-flora-berries-harvested/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-flora-berries-harvested/layout/base.blend": "017981c6cdf1b00ee6208696e17c94fd1510b32e1d2989f39aadf50fd12bff35",
+    "art/source/forge/work/env-flora-berries-harvested/layout_preview.png": "df0151a1cee98838004a453f6a6fbd6836f423ecec3d69f6166d5a29475cb9ee"
+  },
+  "extra": {
+    "scale": 0.121538,
+    "heightUnits": 1.9786,
+    "contactDepthTiles": 0.919,
+    "footprint": [
+      1,
+      1
+    ],
+    "canvas": {
+      "size": [
+        96,
+        98
+      ],
+      "anchor": [
+        48,
+        91
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -0.5,
+      0.0
+    ],
+    "layers": [
+      "base"
+    ],
+    "faces": {
+      "base": 14000
+    }
+  },
+  "at": "2026-11-05T07:08:48Z"
+}

@@ -1,0 +1,48 @@
+{
+  "asset": "env:studio-lark",
+  "stage": "layout",
+  "inputsDigest": "5540b0d18f957af68f2018a117b8366f4f09518e6dc8b7105ba368f207a5c74e",
+  "inputs": [
+    "art/source/forge/work/env-studio-lark/texture.blend",
+    "art/source/forge/work/env-studio-lark/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-studio-lark/layout/base.blend": "d46a847e59916b9b7425129acbc3be2b21109620869daa1596866a2df2e85c06",
+    "art/source/forge/work/env-studio-lark/layout/roof.blend": "1567671e4f62d9f91c4213870b2cfede248075fad865647675360c10d5bb6519",
+    "art/source/forge/work/env-studio-lark/layout_preview.png": "dbd08330f3ab54f9bdba1103ca8414803767cf801f067afa6a5c926cb6d7cecc"
+  },
+  "extra": {
+    "scale": 0.178795,
+    "heightUnits": 2.8683,
+    "contactDepthTiles": 2.71,
+    "footprint": [
+      3,
+      3
+    ],
+    "canvas": {
+      "size": [
+        128,
+        150
+      ],
+      "anchor": [
+        64,
+        145
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -1.5,
+      0.0
+    ],
+    "layers": [
+      "base",
+      "roof"
+    ],
+    "faces": {
+      "base": 9927,
+      "roof": 4073
+    }
+  },
+  "at": "2026-11-05T11:42:23Z"
+}

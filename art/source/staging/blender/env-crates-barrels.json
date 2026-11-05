@@ -1,0 +1,121 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/env-crates-barrels--2026-11-05-env-crates-barrels.md",
+  "approvalSha256": "a342f21cfef6b962b59e067b9c92673879764ad3e4ffb47467d2bd6533c73175",
+  "asset": "env:crates-barrels",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset env:crates-barrels",
+    "id": "forge-env-crates-barrels",
+    "inputs": [
+      {
+        "path": "blender/models/published/env-crates-barrels/29541a85db236da3d7471baee938a9df6b53659532f7a0881279bdb784d91f82/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/env-crates-barrels/29541a85db236da3d7471baee938a9df6b53659532f7a0881279bdb784d91f82/forge/blender/env_layout.py",
+        "role": "script",
+        "sha256": "b2fa291498b97eb55fc8450d37b55208b1d22550aa81a70b6c8c06d9cc08388b"
+      },
+      {
+        "path": "blender/models/published/env-crates-barrels/29541a85db236da3d7471baee938a9df6b53659532f7a0881279bdb784d91f82/forge/forge.py",
+        "role": "script",
+        "sha256": "72344e74be14dd4324bbc2a158d9c160ff2dfbdfc1325d5166dc5baa5fb6b531"
+      },
+      {
+        "path": "blender/models/published/env-crates-barrels/29541a85db236da3d7471baee938a9df6b53659532f7a0881279bdb784d91f82/forge/forgelib/environment.py",
+        "role": "script",
+        "sha256": "4b3443c051f8076ebdc9abd18152831dfbfe74c0053e7c4622ef3d7f483e397c"
+      },
+      {
+        "path": "blender/models/published/env-crates-barrels/29541a85db236da3d7471baee938a9df6b53659532f7a0881279bdb784d91f82/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/env-crates-barrels/29541a85db236da3d7471baee938a9df6b53659532f7a0881279bdb784d91f82/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "2963b6c95098f03aadf7fffe21507c8b3aa6b4fb4d13e657a9b7921e761ba629"
+      },
+      {
+        "path": "blender/models/published/env-crates-barrels/29541a85db236da3d7471baee938a9df6b53659532f7a0881279bdb784d91f82/forge/recipes/env-crates-barrels.json",
+        "role": "pose-config",
+        "sha256": "57c8ddd827323edd953590147a1a882b89c91362810d055f6f0256c415eb7e71"
+      },
+      {
+        "path": "blender/models/published/env-crates-barrels/29541a85db236da3d7471baee938a9df6b53659532f7a0881279bdb784d91f82/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/env-crates-barrels/29541a85db236da3d7471baee938a9df6b53659532f7a0881279bdb784d91f82/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/env-crates-barrels/29541a85db236da3d7471baee938a9df6b53659532f7a0881279bdb784d91f82/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/env-crates-barrels/29541a85db236da3d7471baee938a9df6b53659532f7a0881279bdb784d91f82/forge/work/env-crates-barrels/layout.json",
+        "role": "pose-config",
+        "sha256": "a7db3a8a0af2c3fe5bf120b69c95884b7342158f84f43f14fb245d0520fe7fab"
+      },
+      {
+        "path": "blender/models/published/env-crates-barrels/29541a85db236da3d7471baee938a9df6b53659532f7a0881279bdb784d91f82/forge/work/env-crates-barrels/layout/base.blend",
+        "role": "model",
+        "sha256": "b9d2b34b2147c29c7bb9ddc1167d1a173e1472abff48b7b554a74e42f2bfb5ef"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "footprint": [
+    1,
+    1
+  ],
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 64,
+        "y": 104
+      },
+      "file": "exports/env-crates-barrels/c9450bebe79e26ccd04d46d379cef8c42a1588b840f60785d996837aedb706d6/frames/shadow.png",
+      "id": "env-crates-barrels-shadow",
+      "layer": "shadow",
+      "sha256": "7c2661fba3109be73336ae4afa842fbd59113e557b0e149944d32a63dfc34504",
+      "sourceSize": {
+        "h": 112,
+        "w": 128
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 64,
+        "y": 104
+      },
+      "file": "exports/env-crates-barrels/c9450bebe79e26ccd04d46d379cef8c42a1588b840f60785d996837aedb706d6/frames/base.png",
+      "id": "env-crates-barrels-base",
+      "layer": "base",
+      "sha256": "bb90fe4550f3f494c69a07fe36860a08b2ed21791a282d229dd58c6e26521814",
+      "sourceSize": {
+        "h": 112,
+        "w": 128
+      }
+    }
+  ],
+  "lightPools": [],
+  "packet": "art/review/2026-11-05-env-crates-barrels",
+  "packetDigest": "c9450bebe79e26ccd04d46d379cef8c42a1588b840f60785d996837aedb706d6",
+  "packetSha256": "88982114065d52f4b1345f483243a837ca296505ecc0bfc964e552769420e485",
+  "schemaVersion": 1,
+  "scope": [
+    "shadow",
+    "base"
+  ]
+}

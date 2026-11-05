@@ -1,0 +1,45 @@
+{
+  "asset": "env:flora-nectar-harvested",
+  "stage": "layout",
+  "inputsDigest": "85161a824885eb55b3647788a7373b329c0f5b522ceb0f237c996b6c900c21a6",
+  "inputs": [
+    "art/source/forge/work/env-flora-nectar-harvested/texture.blend",
+    "art/source/forge/work/env-flora-nectar-harvested/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-flora-nectar-harvested/layout/base.blend": "1e696894db0f478b2f89d5ce356a6942799f4218a9cfb0d9d792c745a40db2f0",
+    "art/source/forge/work/env-flora-nectar-harvested/layout_preview.png": "9f6d0a29b363dcfcc5a45c9a184b30669d9f7553352293d8213a6308069821d4"
+  },
+  "extra": {
+    "scale": 0.229272,
+    "heightUnits": 4.0767,
+    "contactDepthTiles": 2.058,
+    "footprint": [
+      1,
+      2
+    ],
+    "canvas": {
+      "size": [
+        128,
+        158
+      ],
+      "anchor": [
+        64,
+        154
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -1.0,
+      0.0
+    ],
+    "layers": [
+      "base"
+    ],
+    "faces": {
+      "base": 14000
+    }
+  },
+  "at": "2026-11-05T11:34:47Z"
+}

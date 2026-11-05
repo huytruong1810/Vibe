@@ -1,0 +1,45 @@
+{
+  "asset": "env:flora-wheat-harvested",
+  "stage": "layout",
+  "inputsDigest": "045ff6813a5763abf0d5a8af21946738434c73b42ab821b0b8e99972ef88db4a",
+  "inputs": [
+    "art/source/forge/work/env-flora-wheat-harvested/texture.blend",
+    "art/source/forge/work/env-flora-wheat-harvested/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-flora-wheat-harvested/layout/base.blend": "c0b580a5d72e048bf84bd129973deb297cdaee3a6d7bb73319bd8b09f27fad4b",
+    "art/source/forge/work/env-flora-wheat-harvested/layout_preview.png": "6ef51fb485f97c3b4fda144a9c048823e7b51e6d50521ceb302b00bd66d7132b"
+  },
+  "extra": {
+    "scale": 0.096925,
+    "heightUnits": 1.6314,
+    "contactDepthTiles": 0.809,
+    "footprint": [
+      1,
+      1
+    ],
+    "canvas": {
+      "size": [
+        64,
+        76
+      ],
+      "anchor": [
+        32,
+        73
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -0.5,
+      0.0
+    ],
+    "layers": [
+      "base"
+    ],
+    "faces": {
+      "base": 14000
+    }
+  },
+  "at": "2026-11-05T07:50:21Z"
+}

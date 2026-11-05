@@ -1,0 +1,48 @@
+{
+  "asset": "env:mill-waterwheel",
+  "stage": "layout",
+  "inputsDigest": "415e830d488e62226d17ffd7ef02f25ce122b9884a812e2ffce87e7bed0ab0d9",
+  "inputs": [
+    "art/source/forge/work/env-mill-waterwheel/texture.blend",
+    "art/source/forge/work/env-mill-waterwheel/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-mill-waterwheel/layout/base.blend": "6a6491ae3756bc4c5d699d6f034c7c2b11a20df9bf73377d845fc9fc10b4194e",
+    "art/source/forge/work/env-mill-waterwheel/layout/roof.blend": "dcc0d0b9dfea4051ae5dc117b6dfdf0a2bbab5d1c73689c69132cd5fe1f0d0b2",
+    "art/source/forge/work/env-mill-waterwheel/layout_preview.png": "05a73783e93c4c89634bf8f42265f5c768de6d1329242b359743a13cfd41f3a8"
+  },
+  "extra": {
+    "scale": 0.175226,
+    "heightUnits": 2.885,
+    "contactDepthTiles": 3.32,
+    "footprint": [
+      3,
+      3
+    ],
+    "canvas": {
+      "size": [
+        128,
+        160
+      ],
+      "anchor": [
+        64,
+        151
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -1.5,
+      0.0
+    ],
+    "layers": [
+      "base",
+      "roof"
+    ],
+    "faces": {
+      "base": 10566,
+      "roof": 3434
+    }
+  },
+  "at": "2026-11-05T11:42:04Z"
+}

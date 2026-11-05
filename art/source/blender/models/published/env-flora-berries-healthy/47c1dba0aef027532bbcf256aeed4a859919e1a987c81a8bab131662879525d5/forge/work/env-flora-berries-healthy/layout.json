@@ -1,0 +1,45 @@
+{
+  "asset": "env:flora-berries-healthy",
+  "stage": "layout",
+  "inputsDigest": "8e6d0db1a1a719f90ef78c78022afc082655a0c1a51b3aa8b0952538f18ca412",
+  "inputs": [
+    "art/source/forge/work/env-flora-berries-healthy/texture.blend",
+    "art/source/forge/work/env-flora-berries-healthy/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-flora-berries-healthy/layout/base.blend": "40510cefcffb76be7f4b6bbd11708f801f657194500b84532bb55e3ec2c1cd99",
+    "art/source/forge/work/env-flora-berries-healthy/layout_preview.png": "9dbb36664894b69de05602b462e7931bb592285067b7853243c734b08dd1aec0"
+  },
+  "extra": {
+    "scale": 0.078657,
+    "heightUnits": 1.3831,
+    "contactDepthTiles": 1.058,
+    "footprint": [
+      1,
+      1
+    ],
+    "canvas": {
+      "size": [
+        64,
+        68
+      ],
+      "anchor": [
+        32,
+        63
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -0.5,
+      0.0
+    ],
+    "layers": [
+      "base"
+    ],
+    "faces": {
+      "base": 14000
+    }
+  },
+  "at": "2026-11-05T06:59:25Z"
+}

@@ -1,0 +1,141 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/env-mill-waterwheel--2026-11-05-env-mill-waterwheel.md",
+  "approvalSha256": "43acf471c372c40faa524a7e789177249be4997a9d6badc32843feef42404038",
+  "asset": "env:mill-waterwheel",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset env:mill-waterwheel",
+    "id": "forge-env-mill-waterwheel",
+    "inputs": [
+      {
+        "path": "blender/models/published/env-mill-waterwheel/f650d48e318c95a9d28131745d8bcb91e43919d009b2d1f47c42a55f057bb34c/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/env-mill-waterwheel/f650d48e318c95a9d28131745d8bcb91e43919d009b2d1f47c42a55f057bb34c/forge/blender/env_layout.py",
+        "role": "script",
+        "sha256": "b2fa291498b97eb55fc8450d37b55208b1d22550aa81a70b6c8c06d9cc08388b"
+      },
+      {
+        "path": "blender/models/published/env-mill-waterwheel/f650d48e318c95a9d28131745d8bcb91e43919d009b2d1f47c42a55f057bb34c/forge/forge.py",
+        "role": "script",
+        "sha256": "72344e74be14dd4324bbc2a158d9c160ff2dfbdfc1325d5166dc5baa5fb6b531"
+      },
+      {
+        "path": "blender/models/published/env-mill-waterwheel/f650d48e318c95a9d28131745d8bcb91e43919d009b2d1f47c42a55f057bb34c/forge/forgelib/environment.py",
+        "role": "script",
+        "sha256": "4b3443c051f8076ebdc9abd18152831dfbfe74c0053e7c4622ef3d7f483e397c"
+      },
+      {
+        "path": "blender/models/published/env-mill-waterwheel/f650d48e318c95a9d28131745d8bcb91e43919d009b2d1f47c42a55f057bb34c/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/env-mill-waterwheel/f650d48e318c95a9d28131745d8bcb91e43919d009b2d1f47c42a55f057bb34c/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "2963b6c95098f03aadf7fffe21507c8b3aa6b4fb4d13e657a9b7921e761ba629"
+      },
+      {
+        "path": "blender/models/published/env-mill-waterwheel/f650d48e318c95a9d28131745d8bcb91e43919d009b2d1f47c42a55f057bb34c/forge/recipes/env-mill-waterwheel.json",
+        "role": "pose-config",
+        "sha256": "1481aca70ff6c6f9e4eae83bc770a2954a8df6bf7db8ddbe307298215335b93a"
+      },
+      {
+        "path": "blender/models/published/env-mill-waterwheel/f650d48e318c95a9d28131745d8bcb91e43919d009b2d1f47c42a55f057bb34c/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/env-mill-waterwheel/f650d48e318c95a9d28131745d8bcb91e43919d009b2d1f47c42a55f057bb34c/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/env-mill-waterwheel/f650d48e318c95a9d28131745d8bcb91e43919d009b2d1f47c42a55f057bb34c/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/env-mill-waterwheel/f650d48e318c95a9d28131745d8bcb91e43919d009b2d1f47c42a55f057bb34c/forge/work/env-mill-waterwheel/layout.json",
+        "role": "pose-config",
+        "sha256": "7743b2fc451f0c5519ecc952dcb506c982eaa7b4e0397bdd2948296535030e3f"
+      },
+      {
+        "path": "blender/models/published/env-mill-waterwheel/f650d48e318c95a9d28131745d8bcb91e43919d009b2d1f47c42a55f057bb34c/forge/work/env-mill-waterwheel/layout/base.blend",
+        "role": "model",
+        "sha256": "6a6491ae3756bc4c5d699d6f034c7c2b11a20df9bf73377d845fc9fc10b4194e"
+      },
+      {
+        "path": "blender/models/published/env-mill-waterwheel/f650d48e318c95a9d28131745d8bcb91e43919d009b2d1f47c42a55f057bb34c/forge/work/env-mill-waterwheel/layout/roof.blend",
+        "role": "model",
+        "sha256": "dcc0d0b9dfea4051ae5dc117b6dfdf0a2bbab5d1c73689c69132cd5fe1f0d0b2"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "footprint": [
+    3,
+    3
+  ],
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 128,
+        "y": 302
+      },
+      "file": "exports/env-mill-waterwheel/5c38cb359923b83b6790f5b8a401b8bfc451102569176e145f783804b95a0087/frames/shadow.png",
+      "id": "env-mill-waterwheel-shadow",
+      "layer": "shadow",
+      "sha256": "04356a257442cb67931a632d9cefd863c58fecb28553128758c80be462f3e5a2",
+      "sourceSize": {
+        "h": 320,
+        "w": 256
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 128,
+        "y": 302
+      },
+      "file": "exports/env-mill-waterwheel/5c38cb359923b83b6790f5b8a401b8bfc451102569176e145f783804b95a0087/frames/base.png",
+      "id": "env-mill-waterwheel-base",
+      "layer": "base",
+      "sha256": "de1d3c2d21e6a0c507e45c19fef397ddc2b85b07b857120412e4b31ee3908e96",
+      "sourceSize": {
+        "h": 320,
+        "w": 256
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 128,
+        "y": 302
+      },
+      "file": "exports/env-mill-waterwheel/5c38cb359923b83b6790f5b8a401b8bfc451102569176e145f783804b95a0087/frames/roof.png",
+      "id": "env-mill-waterwheel-roof",
+      "layer": "roof",
+      "sha256": "7c7440023efdc4353de3c59c9385f52d3ec6660c47227fdc521aa40acefbc71e",
+      "sourceSize": {
+        "h": 320,
+        "w": 256
+      }
+    }
+  ],
+  "lightPools": [],
+  "packet": "art/review/2026-11-05-env-mill-waterwheel",
+  "packetDigest": "5c38cb359923b83b6790f5b8a401b8bfc451102569176e145f783804b95a0087",
+  "packetSha256": "d116403d708942fa0cb6a2e94f86ba3ffd16707fba9f1ae3f1b0d883ccf4e261",
+  "schemaVersion": 1,
+  "scope": [
+    "shadow",
+    "base",
+    "roof"
+  ]
+}

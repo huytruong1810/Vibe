@@ -1,0 +1,121 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/env-divers-pool--2026-11-05-env-divers-pool.md",
+  "approvalSha256": "dd4c0a78a39b5a462ef0b57cec6718f22b07f00a9317d693eb20ea7dfc1ee290",
+  "asset": "env:divers-pool",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset env:divers-pool",
+    "id": "forge-env-divers-pool",
+    "inputs": [
+      {
+        "path": "blender/models/published/env-divers-pool/76a9c7a2280d44ae85b16951cc5804d18f8979249241a426a981f64fab6d2d9b/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/env-divers-pool/76a9c7a2280d44ae85b16951cc5804d18f8979249241a426a981f64fab6d2d9b/forge/blender/env_layout.py",
+        "role": "script",
+        "sha256": "b2fa291498b97eb55fc8450d37b55208b1d22550aa81a70b6c8c06d9cc08388b"
+      },
+      {
+        "path": "blender/models/published/env-divers-pool/76a9c7a2280d44ae85b16951cc5804d18f8979249241a426a981f64fab6d2d9b/forge/forge.py",
+        "role": "script",
+        "sha256": "72344e74be14dd4324bbc2a158d9c160ff2dfbdfc1325d5166dc5baa5fb6b531"
+      },
+      {
+        "path": "blender/models/published/env-divers-pool/76a9c7a2280d44ae85b16951cc5804d18f8979249241a426a981f64fab6d2d9b/forge/forgelib/environment.py",
+        "role": "script",
+        "sha256": "4b3443c051f8076ebdc9abd18152831dfbfe74c0053e7c4622ef3d7f483e397c"
+      },
+      {
+        "path": "blender/models/published/env-divers-pool/76a9c7a2280d44ae85b16951cc5804d18f8979249241a426a981f64fab6d2d9b/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/env-divers-pool/76a9c7a2280d44ae85b16951cc5804d18f8979249241a426a981f64fab6d2d9b/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "2963b6c95098f03aadf7fffe21507c8b3aa6b4fb4d13e657a9b7921e761ba629"
+      },
+      {
+        "path": "blender/models/published/env-divers-pool/76a9c7a2280d44ae85b16951cc5804d18f8979249241a426a981f64fab6d2d9b/forge/recipes/env-divers-pool.json",
+        "role": "pose-config",
+        "sha256": "377b84dfe6356d4baca500680856123c3fd9488d66b3166c85281ddeebf8660a"
+      },
+      {
+        "path": "blender/models/published/env-divers-pool/76a9c7a2280d44ae85b16951cc5804d18f8979249241a426a981f64fab6d2d9b/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/env-divers-pool/76a9c7a2280d44ae85b16951cc5804d18f8979249241a426a981f64fab6d2d9b/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/env-divers-pool/76a9c7a2280d44ae85b16951cc5804d18f8979249241a426a981f64fab6d2d9b/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/env-divers-pool/76a9c7a2280d44ae85b16951cc5804d18f8979249241a426a981f64fab6d2d9b/forge/work/env-divers-pool/layout.json",
+        "role": "pose-config",
+        "sha256": "2d632dc10d16b874ffe3352c46847e2bb8548d47cbcf3193cea3576eb0b5fb1b"
+      },
+      {
+        "path": "blender/models/published/env-divers-pool/76a9c7a2280d44ae85b16951cc5804d18f8979249241a426a981f64fab6d2d9b/forge/work/env-divers-pool/layout/base.blend",
+        "role": "model",
+        "sha256": "775ea93dfbf8510f68f1eb605a35b1d4b06a113cd10c949b29e13076d0e211e6"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "footprint": [
+    2,
+    2
+  ],
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 96,
+        "y": 208
+      },
+      "file": "exports/env-divers-pool/2a47c557dd56545ce61598f9757e3f9c2a0b8c8434f8bdbf2afa4bf574be206f/frames/shadow.png",
+      "id": "env-divers-pool-shadow",
+      "layer": "shadow",
+      "sha256": "ae5b43d4b5ea3a041720dfcdbe6b822cc2cd6fb956728a2d23da5167ca4a803b",
+      "sourceSize": {
+        "h": 216,
+        "w": 192
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 96,
+        "y": 208
+      },
+      "file": "exports/env-divers-pool/2a47c557dd56545ce61598f9757e3f9c2a0b8c8434f8bdbf2afa4bf574be206f/frames/base.png",
+      "id": "env-divers-pool-base",
+      "layer": "base",
+      "sha256": "c3f470ff897a39b2c8b75639fbbafbcd69fab618ebc56dbb05956701ec388ff5",
+      "sourceSize": {
+        "h": 216,
+        "w": 192
+      }
+    }
+  ],
+  "lightPools": [],
+  "packet": "art/review/2026-11-05-env-divers-pool",
+  "packetDigest": "2a47c557dd56545ce61598f9757e3f9c2a0b8c8434f8bdbf2afa4bf574be206f",
+  "packetSha256": "f98788dc3eacf76aec548a47ac4e15a566b8154d729c92930cbfcb2ab4439855",
+  "schemaVersion": 1,
+  "scope": [
+    "shadow",
+    "base"
+  ]
+}

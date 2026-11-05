@@ -1,0 +1,199 @@
+{
+  "version": 1,
+  "id": "aqualia-riverlands-dressing-008",
+  "region": "aqualia",
+  "level": "aqualia_riverlands",
+  "baseDigest": "b43b78fa0d0961f160b9c8725d25a12617a9a199b5563cfcb46efc76dcee32b7",
+  "operations": [
+    {
+      "op": "place",
+      "id": "decor/rl-kite-oak",
+      "entity": "Decor",
+      "at": [44, 8],
+      "fields": {
+        "asset": "env:kite_oak",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/rl-willow-footbridge",
+      "entity": "Decor",
+      "at": [76, 31],
+      "fields": {
+        "asset": "env:willow_footbridge",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/rl-bell-post",
+      "entity": "Decor",
+      "at": [5, 44],
+      "fields": {
+        "asset": "env:bell_post",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/rl-fungi-ring",
+      "entity": "Decor",
+      "at": [44, 60],
+      "fields": {
+        "asset": "env:fungi_ring",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/rl-boardwalk-bridge-w",
+      "entity": "Decor",
+      "at": [74, 31],
+      "fields": {
+        "asset": "env:boardwalk",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/rl-boardwalk-bridge-e",
+      "entity": "Decor",
+      "at": [78, 31],
+      "fields": {
+        "asset": "env:boardwalk",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/rl-reed-confluence-1",
+      "entity": "Decor",
+      "at": [10, 22],
+      "fields": {
+        "asset": "env:reed_clump",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/rl-reed-confluence-2",
+      "entity": "Decor",
+      "at": [14, 26],
+      "fields": {
+        "asset": "env:flora_reeds_healthy",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/rl-reed-confluence-3",
+      "entity": "Decor",
+      "at": [16, 28],
+      "fields": {
+        "asset": "env:flora_reeds_harvested",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/rl-berries-meadow-1",
+      "entity": "Decor",
+      "at": [40, 10],
+      "fields": {
+        "asset": "env:flora_berries_healthy",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/rl-berries-meadow-2",
+      "entity": "Decor",
+      "at": [42, 12],
+      "fields": {
+        "asset": "env:flora_berries_harvested",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/rl-wheat-meadow-1",
+      "entity": "Decor",
+      "at": [46, 14],
+      "fields": {
+        "asset": "env:flora_wheat_healthy",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/rl-wheat-meadow-2",
+      "entity": "Decor",
+      "at": [48, 16],
+      "fields": {
+        "asset": "env:flora_wheat_harvested",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/rl-nectar-spring-1",
+      "entity": "Decor",
+      "at": [78, 10],
+      "fields": {
+        "asset": "env:flora_nectar_healthy",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/rl-ashgrass-spring-1",
+      "entity": "Decor",
+      "at": [80, 12],
+      "fields": {
+        "asset": "env:flora_ashgrass_healthy",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/rl-fungi-ring-flora-1",
+      "entity": "Decor",
+      "at": [42, 58],
+      "fields": {
+        "asset": "env:flora_fungi_healthy",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/rl-fungi-ring-flora-2",
+      "entity": "Decor",
+      "at": [46, 62],
+      "fields": {
+        "asset": "env:flora_fungi_harvested",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/rl-reed-nesting-1",
+      "entity": "Decor",
+      "at": [72, 42],
+      "fields": {
+        "asset": "env:reed_clump",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/rl-reed-drowned-1",
+      "entity": "Decor",
+      "at": [102, 40],
+      "fields": {
+        "asset": "env:reed_clump",
+        "blocks": false
+      }
+    }
+  ]
+}

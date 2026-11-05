@@ -1,0 +1,141 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/env-kite-oak--2026-11-05-env-kite-oak.md",
+  "approvalSha256": "45fa6fec087880e795b7c036c053951522e4518a9aff2d1ec7fb469119567848",
+  "asset": "env:kite-oak",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset env:kite-oak",
+    "id": "forge-env-kite-oak",
+    "inputs": [
+      {
+        "path": "blender/models/published/env-kite-oak/7f994c59050da5b3a3e7b9e22706285160611667f785314cc5e5875c0d55dd49/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/env-kite-oak/7f994c59050da5b3a3e7b9e22706285160611667f785314cc5e5875c0d55dd49/forge/blender/env_layout.py",
+        "role": "script",
+        "sha256": "b2fa291498b97eb55fc8450d37b55208b1d22550aa81a70b6c8c06d9cc08388b"
+      },
+      {
+        "path": "blender/models/published/env-kite-oak/7f994c59050da5b3a3e7b9e22706285160611667f785314cc5e5875c0d55dd49/forge/forge.py",
+        "role": "script",
+        "sha256": "72344e74be14dd4324bbc2a158d9c160ff2dfbdfc1325d5166dc5baa5fb6b531"
+      },
+      {
+        "path": "blender/models/published/env-kite-oak/7f994c59050da5b3a3e7b9e22706285160611667f785314cc5e5875c0d55dd49/forge/forgelib/environment.py",
+        "role": "script",
+        "sha256": "4b3443c051f8076ebdc9abd18152831dfbfe74c0053e7c4622ef3d7f483e397c"
+      },
+      {
+        "path": "blender/models/published/env-kite-oak/7f994c59050da5b3a3e7b9e22706285160611667f785314cc5e5875c0d55dd49/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/env-kite-oak/7f994c59050da5b3a3e7b9e22706285160611667f785314cc5e5875c0d55dd49/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "2963b6c95098f03aadf7fffe21507c8b3aa6b4fb4d13e657a9b7921e761ba629"
+      },
+      {
+        "path": "blender/models/published/env-kite-oak/7f994c59050da5b3a3e7b9e22706285160611667f785314cc5e5875c0d55dd49/forge/recipes/env-kite-oak.json",
+        "role": "pose-config",
+        "sha256": "281ce16b80587b5daf42fce6a7fdb7630cbc87c002d5ed6cbb5f98b6df6b31a2"
+      },
+      {
+        "path": "blender/models/published/env-kite-oak/7f994c59050da5b3a3e7b9e22706285160611667f785314cc5e5875c0d55dd49/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/env-kite-oak/7f994c59050da5b3a3e7b9e22706285160611667f785314cc5e5875c0d55dd49/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/env-kite-oak/7f994c59050da5b3a3e7b9e22706285160611667f785314cc5e5875c0d55dd49/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/env-kite-oak/7f994c59050da5b3a3e7b9e22706285160611667f785314cc5e5875c0d55dd49/forge/work/env-kite-oak/layout.json",
+        "role": "pose-config",
+        "sha256": "7dc97d5b0fa4bcccad1536ccb0ede3c5ed7ee3caaa3ed841cb49bdbaa4077acf"
+      },
+      {
+        "path": "blender/models/published/env-kite-oak/7f994c59050da5b3a3e7b9e22706285160611667f785314cc5e5875c0d55dd49/forge/work/env-kite-oak/layout/base.blend",
+        "role": "model",
+        "sha256": "4e639372483b618035abda44c3feab56f492bdba2bd07a62c485d80d9be9b11a"
+      },
+      {
+        "path": "blender/models/published/env-kite-oak/7f994c59050da5b3a3e7b9e22706285160611667f785314cc5e5875c0d55dd49/forge/work/env-kite-oak/layout/canopy.blend",
+        "role": "model",
+        "sha256": "2b26dd0499bd921cbd0c774d21ee77bac977c3dc06cef2fa8fdf0feef46c9b12"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "footprint": [
+    2,
+    2
+  ],
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 128,
+        "y": 302
+      },
+      "file": "exports/env-kite-oak/3bea1b9721f9041450d6fc5ce013dedc82094c41fb6872c63f5887113d831da2/frames/shadow.png",
+      "id": "env-kite-oak-shadow",
+      "layer": "shadow",
+      "sha256": "f9aaabf8a1c61f492351cb5abbdce0fa586b84d5af8449abf7af08f2cc02c7ef",
+      "sourceSize": {
+        "h": 312,
+        "w": 256
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 128,
+        "y": 302
+      },
+      "file": "exports/env-kite-oak/3bea1b9721f9041450d6fc5ce013dedc82094c41fb6872c63f5887113d831da2/frames/base.png",
+      "id": "env-kite-oak-base",
+      "layer": "base",
+      "sha256": "87766b581a3f7b35ed925f6ae28b5fba91aea4ec8cafdce81574a489a45ac5b5",
+      "sourceSize": {
+        "h": 312,
+        "w": 256
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 128,
+        "y": 302
+      },
+      "file": "exports/env-kite-oak/3bea1b9721f9041450d6fc5ce013dedc82094c41fb6872c63f5887113d831da2/frames/canopy.png",
+      "id": "env-kite-oak-canopy",
+      "layer": "canopy",
+      "sha256": "05d63196fdd416b17a07862f58fb01c0fcdc740fc3ed9b1dc01ba655a136c9f5",
+      "sourceSize": {
+        "h": 312,
+        "w": 256
+      }
+    }
+  ],
+  "lightPools": [],
+  "packet": "art/review/2026-11-05-env-kite-oak",
+  "packetDigest": "3bea1b9721f9041450d6fc5ce013dedc82094c41fb6872c63f5887113d831da2",
+  "packetSha256": "287aa465f4824791a6f7d6423bc8204a351616bd165f88ae327f2ccb999f3aa3",
+  "schemaVersion": 1,
+  "scope": [
+    "shadow",
+    "base",
+    "canopy"
+  ]
+}

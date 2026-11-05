@@ -1,0 +1,121 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/env-flora-wheat-harvested--2026-11-05-env-flora-wheat-harvested.md",
+  "approvalSha256": "769a7ed76e64849e0d2dee33d87484ffd334993b41c19aeab2ac78c07ea8c41b",
+  "asset": "env:flora-wheat-harvested",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset env:flora-wheat-harvested",
+    "id": "forge-env-flora-wheat-harvested",
+    "inputs": [
+      {
+        "path": "blender/models/published/env-flora-wheat-harvested/9e776f936606e14ad7f8b02164402eadb3e91e40f9c8c157fd9fcae6ce4f5715/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/env-flora-wheat-harvested/9e776f936606e14ad7f8b02164402eadb3e91e40f9c8c157fd9fcae6ce4f5715/forge/blender/env_layout.py",
+        "role": "script",
+        "sha256": "b2fa291498b97eb55fc8450d37b55208b1d22550aa81a70b6c8c06d9cc08388b"
+      },
+      {
+        "path": "blender/models/published/env-flora-wheat-harvested/9e776f936606e14ad7f8b02164402eadb3e91e40f9c8c157fd9fcae6ce4f5715/forge/forge.py",
+        "role": "script",
+        "sha256": "72344e74be14dd4324bbc2a158d9c160ff2dfbdfc1325d5166dc5baa5fb6b531"
+      },
+      {
+        "path": "blender/models/published/env-flora-wheat-harvested/9e776f936606e14ad7f8b02164402eadb3e91e40f9c8c157fd9fcae6ce4f5715/forge/forgelib/environment.py",
+        "role": "script",
+        "sha256": "4b3443c051f8076ebdc9abd18152831dfbfe74c0053e7c4622ef3d7f483e397c"
+      },
+      {
+        "path": "blender/models/published/env-flora-wheat-harvested/9e776f936606e14ad7f8b02164402eadb3e91e40f9c8c157fd9fcae6ce4f5715/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/env-flora-wheat-harvested/9e776f936606e14ad7f8b02164402eadb3e91e40f9c8c157fd9fcae6ce4f5715/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "2963b6c95098f03aadf7fffe21507c8b3aa6b4fb4d13e657a9b7921e761ba629"
+      },
+      {
+        "path": "blender/models/published/env-flora-wheat-harvested/9e776f936606e14ad7f8b02164402eadb3e91e40f9c8c157fd9fcae6ce4f5715/forge/recipes/env-flora-wheat-harvested.json",
+        "role": "pose-config",
+        "sha256": "24dbbcd7562b8c00bab14866892b3dc4731522dd82f432249be9b22a006c72ed"
+      },
+      {
+        "path": "blender/models/published/env-flora-wheat-harvested/9e776f936606e14ad7f8b02164402eadb3e91e40f9c8c157fd9fcae6ce4f5715/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/env-flora-wheat-harvested/9e776f936606e14ad7f8b02164402eadb3e91e40f9c8c157fd9fcae6ce4f5715/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/env-flora-wheat-harvested/9e776f936606e14ad7f8b02164402eadb3e91e40f9c8c157fd9fcae6ce4f5715/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/env-flora-wheat-harvested/9e776f936606e14ad7f8b02164402eadb3e91e40f9c8c157fd9fcae6ce4f5715/forge/work/env-flora-wheat-harvested/layout.json",
+        "role": "pose-config",
+        "sha256": "aa562c10c5e380e138b93bdfcfe250d26e5c140ac9a7e6f7b9f470475e0c0533"
+      },
+      {
+        "path": "blender/models/published/env-flora-wheat-harvested/9e776f936606e14ad7f8b02164402eadb3e91e40f9c8c157fd9fcae6ce4f5715/forge/work/env-flora-wheat-harvested/layout/base.blend",
+        "role": "model",
+        "sha256": "c0b580a5d72e048bf84bd129973deb297cdaee3a6d7bb73319bd8b09f27fad4b"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "footprint": [
+    1,
+    1
+  ],
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 64,
+        "y": 146
+      },
+      "file": "exports/env-flora-wheat-harvested/ca7c93d7e170055e346e8b2f603613e78b58eaa80c05b46ef1575446304ff982/frames/shadow.png",
+      "id": "env-flora-wheat-harvested-shadow",
+      "layer": "shadow",
+      "sha256": "58883ca7a9938c711f3b6599a7ee6d81cea99cb5fa168ac3c4f30aca26f124dc",
+      "sourceSize": {
+        "h": 152,
+        "w": 128
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 64,
+        "y": 146
+      },
+      "file": "exports/env-flora-wheat-harvested/ca7c93d7e170055e346e8b2f603613e78b58eaa80c05b46ef1575446304ff982/frames/base.png",
+      "id": "env-flora-wheat-harvested-base",
+      "layer": "base",
+      "sha256": "89821e01d5fd8f54b4f3191a59bc0fc338221ee30f008c68207a3b10d5603392",
+      "sourceSize": {
+        "h": 152,
+        "w": 128
+      }
+    }
+  ],
+  "lightPools": [],
+  "packet": "art/review/2026-11-05-env-flora-wheat-harvested",
+  "packetDigest": "ca7c93d7e170055e346e8b2f603613e78b58eaa80c05b46ef1575446304ff982",
+  "packetSha256": "836484c628a615a2bde329ab2226d9fb41d4d9541b4baaaed9bb1d4507d8d737",
+  "schemaVersion": 1,
+  "scope": [
+    "shadow",
+    "base"
+  ]
+}

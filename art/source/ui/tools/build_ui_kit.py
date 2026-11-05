@@ -203,6 +203,201 @@ def save(img: Image.Image, name: str) -> None:
     img.resize((img.width * 2, img.height * 2), Image.NEAREST).save(KIT / "export" / f"{name}.png")
 
 
+def book_spread(w: int = 240, h: int = 140) -> Image.Image:
+    """Two-page spread open book frame for notes and books (B18, AGT-8.1)."""
+    img = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    p = img.load()
+    cover_deep, cover_mid, cover_light = c("timber", "deep"), c("timber", "mid"), c("timber", "light")
+    page_hl, page_light, page_mid = c("cream", "highlight"), c("cream", "light"), c("cream", "mid")
+    page_shad, page_deep = c("cream", "shadow"), c("cream", "deep")
+    outline = c("outline-neutral", "deep")
+    gold_accent = c("gold", "mid")
+
+    for y in range(h):
+        for x in range(w):
+            if x == 0 or x == w - 1 or y == 0 or y == h - 1:
+                p[x, y] = outline
+            elif x < 4 or x >= w - 4 or y < 4 or y >= h - 4:
+                top_left = (y < 4 or x < 4)
+                p[x, y] = cover_light if top_left else cover_deep
+            elif x < 6 or x >= w - 6 or y < 6 or y >= h - 6:
+                p[x, y] = cover_mid
+
+    half = w // 2
+    for y in range(8, h - 8):
+        for x in range(8, half - 2):
+            if x == 8 or y == 8:
+                p[x, y] = page_hl
+            elif x == half - 3 or y == h - 9:
+                p[x, y] = page_shad
+            else:
+                p[x, y] = page_light
+        for x in range(half - 2, half + 2):
+            gutter_t = abs(x - half + 0.5) / 2.0
+            p[x, y] = page_deep if gutter_t < 0.5 else page_shad
+        for x in range(half + 2, w - 8):
+            if x == half + 2 or y == 8:
+                p[x, y] = page_hl
+            elif x == w - 9 or y == h - 9:
+                p[x, y] = page_shad
+            else:
+                p[x, y] = page_light
+
+    for cx, cy in [(2, 2), (w - 7, 2), (2, h - 7), (w - 7, h - 7)]:
+        for dy in range(5):
+            for dx in range(5):
+                if dx + dy < 5:
+                    p[cx + dx, cy + dy] = gold_accent
+    return img
+
+
+def note_page(w: int = 120, h: int = 140) -> Image.Image:
+    """Single-page note parchment frame (B18, AGT-8.1)."""
+    img = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    p = img.load()
+    page_hl, page_light, page_mid = c("cream", "highlight"), c("cream", "light"), c("cream", "mid")
+    page_shad = c("cream", "shadow")
+    outline = c("outline-neutral", "deep")
+    dogear_size = 14
+
+    for y in range(h):
+        for x in range(w):
+            if x >= w - dogear_size and y < dogear_size and (x - (w - dogear_size)) + (dogear_size - y) <= dogear_size:
+                continue
+            if x == 0 or x == w - 1 or y == 0 or y == h - 1:
+                p[x, y] = outline
+            elif x == 1 or y == 1:
+                p[x, y] = page_hl
+            elif x == w - 2 or y == h - 2:
+                p[x, y] = page_shad
+            else:
+                p[x, y] = page_light
+
+    for dy in range(dogear_size):
+        for dx in range(dogear_size):
+            if dx + dy < dogear_size:
+                fx = w - dogear_size + dx
+                fy = dy
+                p[fx, fy] = page_mid if (dx + dy == dogear_size - 1) else page_hl
+    return img
+
+
+def page_arrow(direction: str, size: int = 20) -> Image.Image:
+    """Page turn arrow navigation button (B18)."""
+    img = ring(size, band=2, inner="n")
+    dr = ImageDraw.Draw(img)
+    hl = c("gold", "highlight")
+    mid = c("gold", "mid")
+    cx, cy = size // 2, size // 2
+    if direction == "prev":
+        points = [(cx + 3, cy - 5), (cx - 3, cy), (cx + 3, cy + 5)]
+    else:
+        points = [(cx - 3, cy - 5), (cx + 3, cy), (cx - 3, cy + 5)]
+    dr.polygon(points, fill=mid, outline=hl)
+    return img
+
+
+def seal_stamp(d: int = 24) -> Image.Image:
+    """Wax seal stamp decal in crimson ramp (B18, AGT-8.1)."""
+    img = Image.new("RGBA", (d, d), (0, 0, 0, 0))
+    p = img.load()
+    r = d / 2.0
+    deep, shadow, mid, light, hl = (
+        c("crimson", "deep"), c("crimson", "shadow"), c("crimson", "mid"),
+        c("crimson", "light"), c("crimson", "highlight")
+    )
+    for y in range(d):
+        for x in range(d):
+            dx, dy = x + 0.5 - r, y + 0.5 - r
+            dist = (dx * dx + dy * dy) ** 0.5
+            if dist > r:
+                continue
+            lit = (dx + dy) < 0
+            if dist > r - 1.5:
+                p[x, y] = deep if not lit else shadow
+            elif dist > r - 3.5:
+                p[x, y] = hl if (lit and dist > r - 2.5) else (light if lit else shadow)
+            elif dist > r - 5.5:
+                p[x, y] = deep if lit else shadow
+            else:
+                inner_r = r - 5.5
+                p[x, y] = light if (lit and dist < inner_r * 0.6) else mid
+    return img
+
+
+def painting_wall_frame(w: int = 56, h: int = 40) -> Image.Image:
+    """Wall display frame for 48x32 paintings (B18, AGT-7.5)."""
+    img = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    p = img.load()
+    t_hl = c("timber", "highlight")
+    t_light = c("timber", "light")
+    t_mid = c("timber", "mid")
+    t_shad = c("timber", "shadow")
+    t_deep = c("timber", "deep")
+    outline = c("outline-neutral", "deep")
+    gold_boss = c("gold", "mid")
+    bw = 4
+
+    for y in range(h):
+        for x in range(w):
+            if x < bw or x >= w - bw or y < bw or y >= h - bw:
+                if x == 0 or x == w - 1 or y == 0 or y == h - 1:
+                    p[x, y] = outline
+                elif x == 1 or y == 1:
+                    p[x, y] = t_hl
+                elif x == bw - 1 or y == bw - 1:
+                    p[x, y] = t_shad if (x >= w - bw or y >= h - bw) else t_mid
+                elif x >= w - 2 or y >= h - 2:
+                    p[x, y] = t_deep
+                else:
+                    p[x, y] = t_light if (x < bw or y < bw) else t_shad
+            else:
+                p[x, y] = (0, 0, 0, 0)
+
+    for cx, cy in [(1, 1), (w - 4, 1), (1, h - 4), (w - 4, h - 4)]:
+        for dy in range(3):
+            for dx in range(3):
+                p[cx + dx, cy + dy] = gold_boss
+    return img
+
+
+def painting_preview_frame(w: int = 208, h: int = 144) -> Image.Image:
+    """4x preview modal frame for 48x32 paintings (192x128 inner) (B18, AGT-8.2)."""
+    return frame(BOSS_RADIUS["ornate"], ORNATE_EDGE_TOP, ORNATE_EDGE_BOTTOM, w, h)
+
+
+def easel_cloth(w: int = 48, h: int = 48) -> Image.Image:
+    """Cloth-covered studio easel for in-progress painting state (B18, AGT-7.5)."""
+    img = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    p = img.load()
+    dr = ImageDraw.Draw(img)
+    t_mid, t_deep = c("timber", "mid"), c("timber", "deep")
+    c_hl, c_light, c_mid, c_shad = (
+        c("cream", "highlight"), c("cream", "light"), c("cream", "mid"), c("cream", "shadow")
+    )
+    outline = c("outline-neutral", "deep")
+
+    dr.line([(12, h - 2), (24, 6)], fill=t_mid, width=2)
+    dr.line([(36, h - 2), (24, 6)], fill=t_deep, width=2)
+    dr.line([(24, h - 4), (24, 6)], fill=t_deep, width=2)
+    dr.line([(24, 2), (24, 8)], fill=t_mid, width=2)
+    dr.line([(8, 32), (40, 32)], fill=t_mid, width=2)
+
+    cx0, cy0, cw, ch = 10, 12, 28, 20
+    for y in range(cy0, cy0 + ch):
+        for x in range(cx0, cx0 + cw):
+            wave = (x % 6) < 3
+            if y == cy0 or x == cx0 or x == cx0 + cw - 1 or y == cy0 + ch - 1:
+                p[x, y] = outline
+            elif y < cy0 + 3:
+                p[x, y] = c_hl if wave else c_light
+            elif y >= cy0 + ch - 3:
+                p[x, y] = c_shad
+            else:
+                p[x, y] = c_light if wave else c_mid
+    return img
+
+
 def main() -> None:
     font = ImageFont.truetype(str(FONT), 19)
     parts = {
@@ -214,6 +409,14 @@ def main() -> None:
         "medallion_player": ring(52, band=3, inner=None), "medallion_companion": ring(36, band=2, inner=None), "minimap_ring": ring(76, band=3, inner="b"),
         "button_strike": key_button("J", 44, font), "button_element": key_button("K", 34, font),
         "button_dash": key_button("Spc", 30, font),
+        "frame_book_spread": book_spread(240, 140),
+        "frame_note_page": note_page(120, 140),
+        "icon_page_prev": page_arrow("prev", 20),
+        "icon_page_next": page_arrow("next", 20),
+        "seal_stamp": seal_stamp(24),
+        "frame_painting_wall": painting_wall_frame(56, 40),
+        "frame_painting_preview": painting_preview_frame(208, 144),
+        "easel_cloth": easel_cloth(48, 48),
     }
     for r in THEME["rarity"]:
         parts[f"slot_{r}"] = slot(r)
