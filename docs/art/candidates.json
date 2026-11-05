@@ -584,14 +584,14 @@
     "subjectKind": "appearance",
     "subjectId": "species:bramblefang",
     "digest": "f731cfbaf1a3fee932e783aa983345c4ae54a51cc6a4886ed9ac97af367889ca",
-    "approvalMatches": true,
-    "runtimeStage": "approved"
+    "approvalMatches": false,
+    "runtimeStage": "candidate"
   },
   {
     "subjectKind": "appearance",
     "subjectId": "species:marshstalker",
     "digest": "3e88e7fb5a77ae1f45c0c469c3d4bf293a3a408e32042160c898d4d1fc09e567",
-    "approvalMatches": true,
-    "runtimeStage": "approved"
+    "approvalMatches": false,
+    "runtimeStage": "candidate"
   }
 ]

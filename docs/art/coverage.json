@@ -2,7 +2,7 @@
   "requiredAppearances": 19,
   "declaredHdAppearances": 19,
   "completeAnimationAppearances": 4,
-  "approvedAppearances": 2,
+  "approvedAppearances": 0,
   "portraitPairs": 19,
   "completePortraitSets": 0,
   "approvedPortraitSets": 0,
@@ -1746,7 +1746,15 @@
     },
     {
       "appearanceId": "species:bramblefang",
+      "requirement": "engineering approval for this source digest"
+    },
+    {
+      "appearanceId": "species:bramblefang",
       "requirement": "nine identity-matched portrait expressions at both HUD tiers"
+    },
+    {
+      "appearanceId": "species:marshstalker",
+      "requirement": "engineering approval for this source digest"
     },
     {
       "appearanceId": "species:marshstalker",
@@ -1805,7 +1813,7 @@
     "requiredAppearances": 41,
     "declaredHdAppearances": 41,
     "completeAnimationAppearances": 4,
-    "approvedAppearances": 2,
+    "approvedAppearances": 0,
     "portraitPairs": 32,
     "completePortraitSets": 0,
     "approvedPortraitSets": 0,
@@ -7475,7 +7483,15 @@
       },
       {
         "appearanceId": "species:bramblefang",
+        "requirement": "engineering approval for this source digest"
+      },
+      {
+        "appearanceId": "species:bramblefang",
         "requirement": "nine identity-matched portrait expressions at both HUD tiers"
+      },
+      {
+        "appearanceId": "species:marshstalker",
+        "requirement": "engineering approval for this source digest"
       },
       {
         "appearanceId": "species:marshstalker",
@@ -7483,12 +7499,12 @@
       }
     ]
   },
-  "reviewAppearanceCount": 39,
-  "fullTextureBytes": 83599560,
-  "halfTextureBytes": 20971520,
+  "reviewAppearanceCount": 41,
+  "fullTextureBytes": 49988160,
+  "halfTextureBytes": 12801184,
   "terrain": {
-    "pageIds": ["bundle-0", "bundle-1", "bundle-2"],
-    "fullTextureBytes": 50159736,
-    "halfTextureBytes": 16777216
+    "pageIds": ["bundle-0", "bundle-1"],
+    "fullTextureBytes": 33325440,
+    "halfTextureBytes": 12801184
   }
 }
