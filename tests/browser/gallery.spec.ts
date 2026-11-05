@@ -7,10 +7,17 @@ test('atlas review renders every catalog page and reports catalog and resident b
   await page.setViewportSize({ width: 1920, height: 1080 });
   const catalog = await (await page.request.get('/assets/generated/catalog.json')).json();
   const full = catalog.pages.reduce((sum: number, p: any) => sum + p.width * p.height * 4, 0);
-  const half = catalog.pages.reduce((sum: number, p: any) => {
-    const v = p.variants.find((v: any) => v.resolution === 0.5);
-    return sum + (v ? v.width * v.height * 4 : 0);
-  }, 0);
+  // Measure actual unique PNGs, independently of the catalog's per-page aliases.
+  const halfImages = new Set<string>(
+    catalog.pages.flatMap((p: any) =>
+      p.variants.filter((v: any) => v.resolution === 0.5).map((v: any) => v.imageUrl),
+    ),
+  );
+  let half = 0;
+  for (const image of halfImages) {
+    const png = await (await page.request.get(image)).body();
+    half += png.readUInt32BE(16) * png.readUInt32BE(20) * 4;
+  }
   await page.goto('/?gallery=1');
   await page.locator('#tab-atlas').click();
   await expect(page.locator('#atlas-page option')).toHaveCount(catalog.pages.length);

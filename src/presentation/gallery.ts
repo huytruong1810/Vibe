@@ -1582,10 +1582,12 @@ export async function initializeArtGallery(root: HTMLElement): Promise<() => voi
       catalog.pages[0]!;
     requiredPages = new Set([page.id]);
     const bytes = catalog.pages.reduce((sum, p) => sum + p.width * p.height * 4, 0);
-    const half = catalog.pages.reduce((sum, p) => {
-      const v = p.variants.find((v) => v.resolution === 0.5);
-      return sum + (v ? v.width * v.height * 4 : 0);
-    }, 0);
+    const halfPages = new Map(
+      catalog.pages.flatMap((p) =>
+        p.variants.filter((v) => v.resolution === 0.5).map((v) => [v.imageUrl, v] as const),
+      ),
+    );
+    const half = [...halfPages.values()].reduce((sum, v) => sum + v.width * v.height * 4, 0);
     const resident = [...images.values()].reduce(
       (sum, p) => sum + p.naturalWidth * p.naturalHeight * 4,
       0,
