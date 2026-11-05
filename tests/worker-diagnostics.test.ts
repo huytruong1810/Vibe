@@ -1,5 +1,6 @@
 import { afterEach, expect, it, vi } from 'vitest';
 import type { FromWorker, ToWorker } from '../src/domain/contracts';
+import { migrateSave } from '../src/domain/save-schema';
 
 afterEach(() => {
   vi.useRealTimers();
@@ -59,4 +60,55 @@ it('keeps worker result/frame order and bounds opt-in service diagnostics withou
   expect(messages.at(-1)!.diagnostic).toBeUndefined();
   send({ type: 'dispose' });
   expect(worker.close).toHaveBeenCalledOnce();
+});
+
+it('keeps paused commands and checkpoints current without repeatedly rebuilding the same frame', async () => {
+  vi.resetModules();
+  vi.useFakeTimers();
+  const messages: FromWorker[] = [];
+  const worker = {
+    onmessage: null as ((event: MessageEvent<ToWorker>) => void) | null,
+    postMessage: (message: FromWorker) => messages.push(structuredClone(message)),
+    close: vi.fn(),
+  };
+  vi.stubGlobal('self', worker);
+  await import('../src/worker/simulation.worker');
+  const send = (data: ToWorker) => worker.onmessage!({ data } as MessageEvent<ToWorker>);
+  send({ type: 'initialize', seed: 42, origin: 1, population: 0 });
+  const initial = messages[0]!;
+  if (initial.type !== 'ready') throw Error('Expected ready');
+  let serial = 0;
+  const command = (type: 'pause' | 'resume', token: 'menu' | 'hidden') =>
+    send({
+      type: 'command',
+      envelope: {
+        id: `cadence:${++serial}`,
+        session: initial.frame.session,
+        issuer: 'player',
+        command: { type, token },
+      },
+    });
+  command('pause', 'menu');
+  const count = messages.length;
+  await vi.advanceTimersByTimeAsync(5000);
+  expect(messages).toHaveLength(count);
+  send({ type: 'checkpoint', requestId: 'paused-save' });
+  const checkpoint = messages.at(-1)!;
+  if (checkpoint.type !== 'checkpoint') throw Error('Expected checkpoint');
+  expect(migrateSave(checkpoint.snapshot).tick).toBe(initial.frame.tick);
+  command('pause', 'hidden');
+  const changed = messages.at(-1)!;
+  if (changed.type !== 'frame') throw Error('Expected command frame');
+  expect(changed.frame.paused).toEqual(['menu', 'hidden']);
+  expect(changed.frame.tick).toBe(initial.frame.tick);
+  command('resume', 'menu');
+  const stillPaused = messages.length;
+  await vi.advanceTimersByTimeAsync(500);
+  expect(messages).toHaveLength(stillPaused);
+  command('resume', 'hidden');
+  await vi.advanceTimersByTimeAsync(250);
+  const resumed = messages.filter((m) => m.type === 'frame').at(-1)!;
+  expect(resumed.frame.paused).toEqual([]);
+  expect(resumed.frame.tick).toBeGreaterThan(initial.frame.tick);
+  send({ type: 'dispose' });
 });

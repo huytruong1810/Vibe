@@ -11,6 +11,8 @@ const buffers: ArrayBuffer[] = [];
 let previous = performance.now(),
   lastFrame = 0;
 let publishedScene = '';
+let publishedTick = -1;
+let publishedPauses = '';
 const recent: WorkTiming[] = [];
 const record = (name: string, start: number): void => {
   recent.push({ name, start, end: performance.now() });
@@ -25,6 +27,8 @@ const publish = (type: 'ready' | 'frame' | 'restored', requestId = ''): void => 
   if (!host) return;
   const started = performance.now();
   const frame = host.frame(buffers.pop());
+  publishedTick = frame.tick;
+  publishedPauses = JSON.stringify(frame.paused);
   record('host-frame', started);
   if (type === 'frame' && publishedScene === frame.scene.id)
     send({ type, frame }, [frame.packed.buffer]);
@@ -151,7 +155,12 @@ const timer = setInterval(() => {
     });
     record('clock-consume', started);
     previous = now;
-    if (now - lastFrame >= 100) {
+    // Commands still publish immediately. An unchanged paused world has no new
+    // snapshot to construct/clone/apply; repeated copies compete with menu I/O.
+    if (
+      now - lastFrame >= 100 &&
+      (host.tick !== publishedTick || JSON.stringify(host.pauses.reasons) !== publishedPauses)
+    ) {
       publish('frame');
       lastFrame = now;
     }
