@@ -14,6 +14,7 @@ before any work:
 - codex → `docs/team/briefs/codex.md`
 - communicator → `docs/team/briefs/communicator.md`
 - blender → `docs/team/briefs/blender.md`
+- visitor → `docs/team/briefs/visitor.md` (weekly auditor; acting director while directive 017 stands, TEAM-4.2)
 
 Antigravity agents: the session hooks tell you your role (set once per machine
 with `node .agents/hooks/set-role.mjs <role>`). If no role is set, ask the director.

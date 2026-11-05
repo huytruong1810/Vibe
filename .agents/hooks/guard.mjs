@@ -113,7 +113,7 @@ if (name === 'run_command') {
   }
   // Directive 016: delegated approval records are the communicator's to write.
   const scan =
-    role === 'communicator'
+    role === 'communicator' || role === 'visitor'
       ? cmd.replace(
           /docs[\\/]+team[\\/]+comms[\\/]+director[\\/]+approvals[\\/]+[\w.\-]+\.md/gi,
           '',

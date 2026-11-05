@@ -8,6 +8,7 @@
 | `claude`       | Claude (Anthropic)             | A       | Senior game-dev counsel; doctrine author. On call only from 2026-10-31 (DOC-5).                                                       |
 | `codex`        | Codex Sol 6.1                  | B       | Senior engineer and system designer: simulation, renderer, tooling, tests, engineering docs, art contract.                            |
 | `communicator` | Gemini Flash 3.8 (Antigravity) | B       | Team hub: comms relay, status board, review digests, manifest integration, music scores (AUD). No image generation since 2026-11-02.  |
+| `visitor`      | Gemini 4 Argon (Antigravity)   | A       | Weekly outside auditor (consultant). While directive 017 stands, also acting director for review and triage (TEAM-4.2).               |
 | `blender`      | Gemini Flash 3.8 (Antigravity) | A       | All art production: reference sheets and image generation, 2D art, 3D through the forge, world layout through `worldforge` (WLD-4.3). |
 
 Git is the only channel between machines A and B. Anything a member must know
@@ -103,14 +104,14 @@ Split by **medium and machine**, because only machine A has Blender:
 
 ## TEAM-4 Status vocabulary
 
-| Status              | Who can set it                                  | Meaning                                                             |
-| ------------------- | ----------------------------------------------- | ------------------------------------------------------------------- |
-| `draft`             | anyone                                          | Work in progress; may not render                                    |
-| `candidate`         | forge QA pass plus author                       | Structurally valid, packet ready, awaiting the director             |
-| `changes-requested` | director                                        | Specific revisions listed in the approval folder                    |
-| `director-approved` | director, or claude/communicator under TEAM-4.1 | Accepted for runtime integration                                    |
-| `rejected`          | director (or claude on the director's behalf)   | Method or result retired                                            |
-| `superseded`        | director (or claude on the director's behalf)   | An earlier record whose packet was regenerated; it approves nothing |
+| Status              | Who can set it                                                                 | Meaning                                                             |
+| ------------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------- |
+| `draft`             | anyone                                                                         | Work in progress; may not render                                    |
+| `candidate`         | forge QA pass plus author                                                      | Structurally valid, packet ready, awaiting the director             |
+| `changes-requested` | director                                                                       | Specific revisions listed in the approval folder                    |
+| `director-approved` | director, or claude/communicator under TEAM-4.1, or the visitor under TEAM-4.2 | Accepted for runtime integration                                    |
+| `rejected`          | director (or claude on the director's behalf)                                  | Method or result retired                                            |
+| `superseded`        | director (or claude on the director's behalf)                                  | An earlier record whose packet was regenerated; it approves nothing |
 
 ### TEAM-4.1 Standing review delegation (directive 016, director decision 2026-11-04)
 
@@ -132,6 +133,24 @@ The director delegates art approval, as a standing grant, to **claude** and the
   the guard allows nothing else under `docs/team/comms/director/`. Other agents still reach `candidate`
   at most.
 - The director's own approval, and any direct instruction, always wins.
+
+### TEAM-4.2 Acting director: the visitor (directive 017, director decision 2026-11-04, temporary)
+
+To save claude's and the director's capacity, the director lends the **visitor** the standing review
+power of TEAM-4.1 and ticket triage, from 2026-11-04 until **2026-11-11T00:00Z** or until the director or claude
+ends it, whichever is first. Nothing here outlives the date; extending it needs a new directive.
+
+- **May:** approve, reject, request changes on or supersede art and audio packets with the same evidence rules
+  as TEAM-4.1 (looks at every image, QA numbers, `forge.py approve-record` so the digest is bound, never retyped);
+  review the communicator's and blender's work; triage `docs/team/queue/**` and the status board; turn findings
+  into tickets for blender and the communicator; report to claude and the director.
+- **May not:** edit doctrine, hooks, specs, briefs, code, art sources or the manifest; decide proposals it
+  wrote (004-007 wait for claude or the director); approve engineering or simulation milestones; run the
+  integration commands (`art:integrate`, `forge publish`); approve anything it made.
+- Records say "recordedBy: visitor acting as director under TEAM-4.2 (directive 017)". Claude's record governs the
+  visitor's on a disagreement; the director's always wins; claude reviews a sample at the next call-back and may
+  supersede any record.
+- The guard role is `visitor` (session env `HEARTHWILD_ROLE=visitor`); its lane is in `.agents/hooks/lib.mjs`.
 
 No other status words ("complete", "stable", "done", "final", "AAA") may be
 used for art.

@@ -23,6 +23,7 @@ messages** (DOC-2). The higher source wins every disagreement.
 | **codex**        | [codex brief](team/briefs/codex.md) (engineering mandates backlog) → [master plan](engineering/master-plan.md) → [art contract](art/contract.md)                                                    |
 | **communicator** | [communicator brief](team/briefs/communicator.md) → [production doctrine](doctrine/09-production-doctrine.md) → [art bible](doctrine/03-art-bible.md) → [UI direction](doctrine/04-ui-direction.md) |
 | **blender**      | [blender brief](team/briefs/blender.md) → [production doctrine](doctrine/09-production-doctrine.md) → [art bible](doctrine/03-art-bible.md) → [forge pipeline](art/forge-pipeline.md)               |
+| **visitor**      | [visitor brief](team/briefs/visitor.md) → [team charter TEAM-4.2](doctrine/10-team-charter.md) → [first-visit briefing](team/comms/claude/2026-11-04T2230--to-visitor--first-visit-briefing.md)     |
 | **director**     | [doctrine README](doctrine/README.md) → [status board](team/status-board.md) → `art/review/` packets                                                                                                |
 
 ## Where to write

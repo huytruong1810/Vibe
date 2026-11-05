@@ -95,7 +95,7 @@ test('stop binds world map writes to their authoring receipt', () => {
 
 test('doctrine writes are denied for every role, absolute or relative, quoted or not', () => {
   const fx = fixtureRepo();
-  for (const role of ['blender', 'communicator']) {
+  for (const role of ['blender', 'communicator', 'visitor']) {
     assert.equal(
       run('guard.mjs', write('docs/doctrine/03-art-bible.md'), fx, role).decision,
       'deny',
@@ -469,4 +469,30 @@ test('art moved to blender (2026-11-02): blender writes every art source, commun
     assert.equal(decide(path, 'communicator'), 'allow', path);
   // forge exports stay publish-only for blender
   assert.equal(decide('art/source/exports/rivallie/x/frames/idle/s_0.png', 'blender'), 'deny');
+});
+
+test('visitor (directive 017): acting-director lane, records only in approvals, nothing else protected', () => {
+  const fx = fixtureRepo();
+  const decide = (p) => run('guard.mjs', write(p), fx, 'visitor').decision;
+  for (const p of [
+    'docs/team/comms/visitor/report.md',
+    'docs/team/proposals/008-x.md',
+    'docs/team/queue/blender.md',
+    'docs/team/status-board.md',
+    'docs/team/comms/director/approvals/a--p.md',
+  ])
+    assert.equal(decide(p), 'allow', p);
+  for (const p of [
+    'docs/team/comms/director/approvals/README.md',
+    'docs/team/comms/director/directive.md',
+    'docs/art/approvals.json',
+    '.agents/hooks/lib.mjs',
+    'docs/doctrine/10-team-charter.md',
+    'src/domain/creatures.ts',
+    'art/source/manifest.json',
+    'art/source/forge/forge.py',
+    'art/source/references/x/y.png',
+    'docs/team/comms/blender/x.md',
+  ])
+    assert.equal(decide(p), 'deny', p);
 });
