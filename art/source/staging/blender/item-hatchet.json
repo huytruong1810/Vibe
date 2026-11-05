@@ -1,83 +1,83 @@
 {
-  "approvalRecord": "docs/team/comms/director/approvals/item-hatchet--2026-11-03-item-hatchet.md",
-  "approvalSha256": "4df12853c50992b85f97d6ba8553090685e7f5be955315ad3d802a5607b409bb",
+  "approvalRecord": "docs/team/comms/director/approvals/item-hatchet--2026-11-05-item-hatchet.md",
+  "approvalSha256": "9e92c255f2ca5fa5fb697b48cc2d6969bdab879f312b420f33c8547e648c7ab4",
   "asset": "item:hatchet",
   "authoringProvenance": {
     "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset item:hatchet",
     "id": "forge-item-hatchet",
     "inputs": [
       {
-        "path": "blender/models/published/item-hatchet/625762d46807468f6aeff781ffb5c4ffa935aa64e468ce7fbe4b1efb36cde75f/forge/blender/bake.py",
+        "path": "blender/models/published/item-hatchet/e5699fb15e810961489721b9e710fd91313f8b332f9ed215962800dcf363cbea/forge/blender/bake.py",
         "role": "script",
         "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
       },
       {
-        "path": "blender/models/published/item-hatchet/625762d46807468f6aeff781ffb5c4ffa935aa64e468ce7fbe4b1efb36cde75f/forge/blender/item_orient.py",
+        "path": "blender/models/published/item-hatchet/e5699fb15e810961489721b9e710fd91313f8b332f9ed215962800dcf363cbea/forge/blender/item_orient.py",
         "role": "script",
-        "sha256": "a68d9fcfc9cae6f56c882c76e9e294d3c24bd02fb7826d9da3eaa086b7de362f"
+        "sha256": "8a27e1389c7bf96b9a6e47aa80a7e7d3af1caf5310cdad402bd81c17a1238599"
       },
       {
-        "path": "blender/models/published/item-hatchet/625762d46807468f6aeff781ffb5c4ffa935aa64e468ce7fbe4b1efb36cde75f/forge/forge.py",
+        "path": "blender/models/published/item-hatchet/e5699fb15e810961489721b9e710fd91313f8b332f9ed215962800dcf363cbea/forge/forge.py",
         "role": "script",
-        "sha256": "7ba07e846a522d199a522a011cfb1f87d35b47233bcb33aaeb9cb27e09644319"
+        "sha256": "1a916c3c75af60a291bdfb1129f283d867e8c1b698e4e156efa4b50c7e472629"
       },
       {
-        "path": "blender/models/published/item-hatchet/625762d46807468f6aeff781ffb5c4ffa935aa64e468ce7fbe4b1efb36cde75f/forge/forgelib/item_orient.py",
+        "path": "blender/models/published/item-hatchet/e5699fb15e810961489721b9e710fd91313f8b332f9ed215962800dcf363cbea/forge/forgelib/item_orient.py",
         "role": "script",
-        "sha256": "03534083c34c47428d83b477a4e98678e6e547ef21b9a65b751d508a0e164600"
+        "sha256": "ed949856992b519c0af5631cb748405adae566fee90bc5bb4e9f999f912e476d"
       },
       {
-        "path": "blender/models/published/item-hatchet/625762d46807468f6aeff781ffb5c4ffa935aa64e468ce7fbe4b1efb36cde75f/forge/forgelib/item_render.py",
+        "path": "blender/models/published/item-hatchet/e5699fb15e810961489721b9e710fd91313f8b332f9ed215962800dcf363cbea/forge/forgelib/item_render.py",
         "role": "script",
         "sha256": "3290c864b563263170efcc626acce2a1dc88141d320d9cf186f5bc48b3e6f2d0"
       },
       {
-        "path": "blender/models/published/item-hatchet/625762d46807468f6aeff781ffb5c4ffa935aa64e468ce7fbe4b1efb36cde75f/forge/forgelib/items.py",
+        "path": "blender/models/published/item-hatchet/e5699fb15e810961489721b9e710fd91313f8b332f9ed215962800dcf363cbea/forge/forgelib/items.py",
         "role": "script",
         "sha256": "22221017285c31c893c28260a13caf407e646913c63e32ad723c8671f1a9d84c"
       },
       {
-        "path": "blender/models/published/item-hatchet/625762d46807468f6aeff781ffb5c4ffa935aa64e468ce7fbe4b1efb36cde75f/forge/forgelib/pixelize.py",
+        "path": "blender/models/published/item-hatchet/e5699fb15e810961489721b9e710fd91313f8b332f9ed215962800dcf363cbea/forge/forgelib/pixelize.py",
         "role": "script",
         "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
       },
       {
-        "path": "blender/models/published/item-hatchet/625762d46807468f6aeff781ffb5c4ffa935aa64e468ce7fbe4b1efb36cde75f/forge/forgelib/publish.py",
+        "path": "blender/models/published/item-hatchet/e5699fb15e810961489721b9e710fd91313f8b332f9ed215962800dcf363cbea/forge/forgelib/publish.py",
         "role": "script",
-        "sha256": "7c2e7b1994f6c5f8cb4c00bb8bf92f8078a8e7aa1ce405f18f5541e9aaf8452e"
+        "sha256": "2963b6c95098f03aadf7fffe21507c8b3aa6b4fb4d13e657a9b7921e761ba629"
       },
       {
-        "path": "blender/models/published/item-hatchet/625762d46807468f6aeff781ffb5c4ffa935aa64e468ce7fbe4b1efb36cde75f/forge/recipes/item-hatchet.json",
+        "path": "blender/models/published/item-hatchet/e5699fb15e810961489721b9e710fd91313f8b332f9ed215962800dcf363cbea/forge/recipes/item-hatchet.json",
         "role": "pose-config",
-        "sha256": "07d0a101c5df435f427dfd44b8c4a3cdbcfbfa9e506ab7fde60e81008c84be97"
+        "sha256": "2d4b4e55100f586224d3452e6b57fe35ed1353454f2a2cc1637cabd60f402c95"
       },
       {
-        "path": "blender/models/published/item-hatchet/625762d46807468f6aeff781ffb5c4ffa935aa64e468ce7fbe4b1efb36cde75f/forge/spec/palette.json",
+        "path": "blender/models/published/item-hatchet/e5699fb15e810961489721b9e710fd91313f8b332f9ed215962800dcf363cbea/forge/spec/palette.json",
         "role": "palette",
         "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
       },
       {
-        "path": "blender/models/published/item-hatchet/625762d46807468f6aeff781ffb5c4ffa935aa64e468ce7fbe4b1efb36cde75f/forge/spec/render_spec.json",
+        "path": "blender/models/published/item-hatchet/e5699fb15e810961489721b9e710fd91313f8b332f9ed215962800dcf363cbea/forge/spec/render_spec.json",
         "role": "pose-config",
         "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
       },
       {
-        "path": "blender/models/published/item-hatchet/625762d46807468f6aeff781ffb5c4ffa935aa64e468ce7fbe4b1efb36cde75f/forge/uv.lock",
+        "path": "blender/models/published/item-hatchet/e5699fb15e810961489721b9e710fd91313f8b332f9ed215962800dcf363cbea/forge/uv.lock",
         "role": "dependency-lock",
         "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
       },
       {
-        "path": "blender/models/published/item-hatchet/625762d46807468f6aeff781ffb5c4ffa935aa64e468ce7fbe4b1efb36cde75f/forge/work/item-hatchet/item_model.blend",
+        "path": "blender/models/published/item-hatchet/e5699fb15e810961489721b9e710fd91313f8b332f9ed215962800dcf363cbea/forge/work/item-hatchet/item_model.blend",
         "role": "model",
         "sha256": "5b6a2021709616ecfd710bd8a0470a0a27ba93ca1fff0c142215abf4c068e5b5"
       },
       {
-        "path": "blender/models/published/item-hatchet/625762d46807468f6aeff781ffb5c4ffa935aa64e468ce7fbe4b1efb36cde75f/forge/work/item-hatchet/orient.json",
+        "path": "blender/models/published/item-hatchet/e5699fb15e810961489721b9e710fd91313f8b332f9ed215962800dcf363cbea/forge/work/item-hatchet/orient.json",
         "role": "pose-config",
         "sha256": "aeef265bc21b5e77e1e6d384f303a23882d41a5f63230d19d090b409c8a10e49"
       },
       {
-        "path": "blender/models/published/item-hatchet/625762d46807468f6aeff781ffb5c4ffa935aa64e468ce7fbe4b1efb36cde75f/forge/work/item-hatchet/orient_params.json",
+        "path": "blender/models/published/item-hatchet/e5699fb15e810961489721b9e710fd91313f8b332f9ed215962800dcf363cbea/forge/work/item-hatchet/orient_params.json",
         "role": "pose-config",
         "sha256": "29a864cca686edc2ab9fc36acf74e526bc9bbbab09ac4c231092c381ea52e62f"
       }
@@ -97,7 +97,7 @@
         "y": 32
       },
       "facing": "s",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_0/s_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_0/s_0.png",
       "gripBucket": 0,
       "gripDegrees": 0.0,
       "id": "item-hatchet-held-s-0",
@@ -121,7 +121,7 @@
         "y": 32
       },
       "facing": "s",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_1/s_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_1/s_0.png",
       "gripBucket": 1,
       "gripDegrees": 45.0,
       "id": "item-hatchet-held-s-1",
@@ -145,7 +145,7 @@
         "y": 32
       },
       "facing": "s",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_2/s_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_2/s_0.png",
       "gripBucket": 2,
       "gripDegrees": 90.0,
       "id": "item-hatchet-held-s-2",
@@ -169,7 +169,7 @@
         "y": 32
       },
       "facing": "s",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_3/s_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_3/s_0.png",
       "gripBucket": 3,
       "gripDegrees": 135.0,
       "id": "item-hatchet-held-s-3",
@@ -193,7 +193,7 @@
         "y": 32
       },
       "facing": "s",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_4/s_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_4/s_0.png",
       "gripBucket": 4,
       "gripDegrees": 180.0,
       "id": "item-hatchet-held-s-4",
@@ -217,7 +217,7 @@
         "y": 32
       },
       "facing": "s",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_5/s_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_5/s_0.png",
       "gripBucket": 5,
       "gripDegrees": 225.0,
       "id": "item-hatchet-held-s-5",
@@ -241,7 +241,7 @@
         "y": 32
       },
       "facing": "s",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_6/s_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_6/s_0.png",
       "gripBucket": 6,
       "gripDegrees": 270.0,
       "id": "item-hatchet-held-s-6",
@@ -265,7 +265,7 @@
         "y": 32
       },
       "facing": "s",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_7/s_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_7/s_0.png",
       "gripBucket": 7,
       "gripDegrees": 315.0,
       "id": "item-hatchet-held-s-7",
@@ -289,7 +289,7 @@
         "y": 32
       },
       "facing": "se",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_0/se_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_0/se_0.png",
       "gripBucket": 0,
       "gripDegrees": 0.0,
       "id": "item-hatchet-held-se-0",
@@ -313,7 +313,7 @@
         "y": 32
       },
       "facing": "se",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_1/se_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_1/se_0.png",
       "gripBucket": 1,
       "gripDegrees": 45.0,
       "id": "item-hatchet-held-se-1",
@@ -337,7 +337,7 @@
         "y": 32
       },
       "facing": "se",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_2/se_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_2/se_0.png",
       "gripBucket": 2,
       "gripDegrees": 90.0,
       "id": "item-hatchet-held-se-2",
@@ -361,7 +361,7 @@
         "y": 32
       },
       "facing": "se",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_3/se_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_3/se_0.png",
       "gripBucket": 3,
       "gripDegrees": 135.0,
       "id": "item-hatchet-held-se-3",
@@ -385,7 +385,7 @@
         "y": 32
       },
       "facing": "se",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_4/se_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_4/se_0.png",
       "gripBucket": 4,
       "gripDegrees": 180.0,
       "id": "item-hatchet-held-se-4",
@@ -409,7 +409,7 @@
         "y": 32
       },
       "facing": "se",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_5/se_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_5/se_0.png",
       "gripBucket": 5,
       "gripDegrees": 225.0,
       "id": "item-hatchet-held-se-5",
@@ -433,7 +433,7 @@
         "y": 32
       },
       "facing": "se",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_6/se_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_6/se_0.png",
       "gripBucket": 6,
       "gripDegrees": 270.0,
       "id": "item-hatchet-held-se-6",
@@ -457,7 +457,7 @@
         "y": 32
       },
       "facing": "se",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_7/se_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_7/se_0.png",
       "gripBucket": 7,
       "gripDegrees": 315.0,
       "id": "item-hatchet-held-se-7",
@@ -481,7 +481,7 @@
         "y": 32
       },
       "facing": "e",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_0/e_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_0/e_0.png",
       "gripBucket": 0,
       "gripDegrees": 0.0,
       "id": "item-hatchet-held-e-0",
@@ -505,7 +505,7 @@
         "y": 32
       },
       "facing": "e",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_1/e_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_1/e_0.png",
       "gripBucket": 1,
       "gripDegrees": 45.0,
       "id": "item-hatchet-held-e-1",
@@ -529,7 +529,7 @@
         "y": 32
       },
       "facing": "e",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_2/e_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_2/e_0.png",
       "gripBucket": 2,
       "gripDegrees": 90.0,
       "id": "item-hatchet-held-e-2",
@@ -553,7 +553,7 @@
         "y": 32
       },
       "facing": "e",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_3/e_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_3/e_0.png",
       "gripBucket": 3,
       "gripDegrees": 135.0,
       "id": "item-hatchet-held-e-3",
@@ -577,7 +577,7 @@
         "y": 32
       },
       "facing": "e",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_4/e_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_4/e_0.png",
       "gripBucket": 4,
       "gripDegrees": 180.0,
       "id": "item-hatchet-held-e-4",
@@ -601,7 +601,7 @@
         "y": 32
       },
       "facing": "e",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_5/e_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_5/e_0.png",
       "gripBucket": 5,
       "gripDegrees": 225.0,
       "id": "item-hatchet-held-e-5",
@@ -625,7 +625,7 @@
         "y": 32
       },
       "facing": "e",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_6/e_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_6/e_0.png",
       "gripBucket": 6,
       "gripDegrees": 270.0,
       "id": "item-hatchet-held-e-6",
@@ -649,7 +649,7 @@
         "y": 32
       },
       "facing": "e",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_7/e_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_7/e_0.png",
       "gripBucket": 7,
       "gripDegrees": 315.0,
       "id": "item-hatchet-held-e-7",
@@ -673,7 +673,7 @@
         "y": 32
       },
       "facing": "ne",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_0/ne_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_0/ne_0.png",
       "gripBucket": 0,
       "gripDegrees": 0.0,
       "id": "item-hatchet-held-ne-0",
@@ -697,7 +697,7 @@
         "y": 32
       },
       "facing": "ne",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_1/ne_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_1/ne_0.png",
       "gripBucket": 1,
       "gripDegrees": 45.0,
       "id": "item-hatchet-held-ne-1",
@@ -721,7 +721,7 @@
         "y": 32
       },
       "facing": "ne",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_2/ne_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_2/ne_0.png",
       "gripBucket": 2,
       "gripDegrees": 90.0,
       "id": "item-hatchet-held-ne-2",
@@ -745,7 +745,7 @@
         "y": 32
       },
       "facing": "ne",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_3/ne_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_3/ne_0.png",
       "gripBucket": 3,
       "gripDegrees": 135.0,
       "id": "item-hatchet-held-ne-3",
@@ -769,7 +769,7 @@
         "y": 32
       },
       "facing": "ne",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_4/ne_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_4/ne_0.png",
       "gripBucket": 4,
       "gripDegrees": 180.0,
       "id": "item-hatchet-held-ne-4",
@@ -793,7 +793,7 @@
         "y": 32
       },
       "facing": "ne",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_5/ne_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_5/ne_0.png",
       "gripBucket": 5,
       "gripDegrees": 225.0,
       "id": "item-hatchet-held-ne-5",
@@ -817,7 +817,7 @@
         "y": 32
       },
       "facing": "ne",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_6/ne_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_6/ne_0.png",
       "gripBucket": 6,
       "gripDegrees": 270.0,
       "id": "item-hatchet-held-ne-6",
@@ -841,7 +841,7 @@
         "y": 32
       },
       "facing": "ne",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_7/ne_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_7/ne_0.png",
       "gripBucket": 7,
       "gripDegrees": 315.0,
       "id": "item-hatchet-held-ne-7",
@@ -865,7 +865,7 @@
         "y": 32
       },
       "facing": "n",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_0/n_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_0/n_0.png",
       "gripBucket": 0,
       "gripDegrees": 0.0,
       "id": "item-hatchet-held-n-0",
@@ -889,7 +889,7 @@
         "y": 32
       },
       "facing": "n",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_1/n_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_1/n_0.png",
       "gripBucket": 1,
       "gripDegrees": 45.0,
       "id": "item-hatchet-held-n-1",
@@ -913,7 +913,7 @@
         "y": 32
       },
       "facing": "n",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_2/n_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_2/n_0.png",
       "gripBucket": 2,
       "gripDegrees": 90.0,
       "id": "item-hatchet-held-n-2",
@@ -937,7 +937,7 @@
         "y": 32
       },
       "facing": "n",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_3/n_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_3/n_0.png",
       "gripBucket": 3,
       "gripDegrees": 135.0,
       "id": "item-hatchet-held-n-3",
@@ -961,7 +961,7 @@
         "y": 32
       },
       "facing": "n",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_4/n_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_4/n_0.png",
       "gripBucket": 4,
       "gripDegrees": 180.0,
       "id": "item-hatchet-held-n-4",
@@ -985,7 +985,7 @@
         "y": 32
       },
       "facing": "n",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_5/n_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_5/n_0.png",
       "gripBucket": 5,
       "gripDegrees": 225.0,
       "id": "item-hatchet-held-n-5",
@@ -1009,7 +1009,7 @@
         "y": 32
       },
       "facing": "n",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_6/n_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_6/n_0.png",
       "gripBucket": 6,
       "gripDegrees": 270.0,
       "id": "item-hatchet-held-n-6",
@@ -1033,7 +1033,7 @@
         "y": 32
       },
       "facing": "n",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_7/n_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_7/n_0.png",
       "gripBucket": 7,
       "gripDegrees": 315.0,
       "id": "item-hatchet-held-n-7",
@@ -1057,7 +1057,7 @@
         "y": 32
       },
       "facing": "nw",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_0/nw_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_0/nw_0.png",
       "gripBucket": 0,
       "gripDegrees": 0.0,
       "id": "item-hatchet-held-nw-0",
@@ -1081,7 +1081,7 @@
         "y": 32
       },
       "facing": "nw",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_1/nw_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_1/nw_0.png",
       "gripBucket": 1,
       "gripDegrees": 45.0,
       "id": "item-hatchet-held-nw-1",
@@ -1105,7 +1105,7 @@
         "y": 32
       },
       "facing": "nw",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_2/nw_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_2/nw_0.png",
       "gripBucket": 2,
       "gripDegrees": 90.0,
       "id": "item-hatchet-held-nw-2",
@@ -1129,7 +1129,7 @@
         "y": 32
       },
       "facing": "nw",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_3/nw_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_3/nw_0.png",
       "gripBucket": 3,
       "gripDegrees": 135.0,
       "id": "item-hatchet-held-nw-3",
@@ -1153,7 +1153,7 @@
         "y": 32
       },
       "facing": "nw",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_4/nw_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_4/nw_0.png",
       "gripBucket": 4,
       "gripDegrees": 180.0,
       "id": "item-hatchet-held-nw-4",
@@ -1177,7 +1177,7 @@
         "y": 32
       },
       "facing": "nw",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_5/nw_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_5/nw_0.png",
       "gripBucket": 5,
       "gripDegrees": 225.0,
       "id": "item-hatchet-held-nw-5",
@@ -1201,7 +1201,7 @@
         "y": 32
       },
       "facing": "nw",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_6/nw_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_6/nw_0.png",
       "gripBucket": 6,
       "gripDegrees": 270.0,
       "id": "item-hatchet-held-nw-6",
@@ -1225,7 +1225,7 @@
         "y": 32
       },
       "facing": "nw",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_7/nw_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_7/nw_0.png",
       "gripBucket": 7,
       "gripDegrees": 315.0,
       "id": "item-hatchet-held-nw-7",
@@ -1249,7 +1249,7 @@
         "y": 32
       },
       "facing": "w",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_0/w_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_0/w_0.png",
       "gripBucket": 0,
       "gripDegrees": 0.0,
       "id": "item-hatchet-held-w-0",
@@ -1273,7 +1273,7 @@
         "y": 32
       },
       "facing": "w",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_1/w_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_1/w_0.png",
       "gripBucket": 1,
       "gripDegrees": 45.0,
       "id": "item-hatchet-held-w-1",
@@ -1297,7 +1297,7 @@
         "y": 32
       },
       "facing": "w",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_2/w_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_2/w_0.png",
       "gripBucket": 2,
       "gripDegrees": 90.0,
       "id": "item-hatchet-held-w-2",
@@ -1321,7 +1321,7 @@
         "y": 32
       },
       "facing": "w",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_3/w_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_3/w_0.png",
       "gripBucket": 3,
       "gripDegrees": 135.0,
       "id": "item-hatchet-held-w-3",
@@ -1345,7 +1345,7 @@
         "y": 32
       },
       "facing": "w",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_4/w_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_4/w_0.png",
       "gripBucket": 4,
       "gripDegrees": 180.0,
       "id": "item-hatchet-held-w-4",
@@ -1369,7 +1369,7 @@
         "y": 32
       },
       "facing": "w",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_5/w_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_5/w_0.png",
       "gripBucket": 5,
       "gripDegrees": 225.0,
       "id": "item-hatchet-held-w-5",
@@ -1393,7 +1393,7 @@
         "y": 32
       },
       "facing": "w",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_6/w_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_6/w_0.png",
       "gripBucket": 6,
       "gripDegrees": 270.0,
       "id": "item-hatchet-held-w-6",
@@ -1417,7 +1417,7 @@
         "y": 32
       },
       "facing": "w",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_7/w_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_7/w_0.png",
       "gripBucket": 7,
       "gripDegrees": 315.0,
       "id": "item-hatchet-held-w-7",
@@ -1441,7 +1441,7 @@
         "y": 32
       },
       "facing": "sw",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_0/sw_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_0/sw_0.png",
       "gripBucket": 0,
       "gripDegrees": 0.0,
       "id": "item-hatchet-held-sw-0",
@@ -1465,7 +1465,7 @@
         "y": 32
       },
       "facing": "sw",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_1/sw_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_1/sw_0.png",
       "gripBucket": 1,
       "gripDegrees": 45.0,
       "id": "item-hatchet-held-sw-1",
@@ -1489,7 +1489,7 @@
         "y": 32
       },
       "facing": "sw",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_2/sw_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_2/sw_0.png",
       "gripBucket": 2,
       "gripDegrees": 90.0,
       "id": "item-hatchet-held-sw-2",
@@ -1513,7 +1513,7 @@
         "y": 32
       },
       "facing": "sw",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_3/sw_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_3/sw_0.png",
       "gripBucket": 3,
       "gripDegrees": 135.0,
       "id": "item-hatchet-held-sw-3",
@@ -1537,7 +1537,7 @@
         "y": 32
       },
       "facing": "sw",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_4/sw_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_4/sw_0.png",
       "gripBucket": 4,
       "gripDegrees": 180.0,
       "id": "item-hatchet-held-sw-4",
@@ -1561,7 +1561,7 @@
         "y": 32
       },
       "facing": "sw",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_5/sw_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_5/sw_0.png",
       "gripBucket": 5,
       "gripDegrees": 225.0,
       "id": "item-hatchet-held-sw-5",
@@ -1585,7 +1585,7 @@
         "y": 32
       },
       "facing": "sw",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_6/sw_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_6/sw_0.png",
       "gripBucket": 6,
       "gripDegrees": 270.0,
       "id": "item-hatchet-held-sw-6",
@@ -1609,7 +1609,7 @@
         "y": 32
       },
       "facing": "sw",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_7/sw_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_7/sw_0.png",
       "gripBucket": 7,
       "gripDegrees": 315.0,
       "id": "item-hatchet-held-sw-7",
@@ -1633,7 +1633,7 @@
         "y": 32
       },
       "facing": "se",
-      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/icon/se_0.png",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/icon/se_0.png",
       "gripBucket": 1,
       "gripDegrees": 45.0,
       "id": "item-hatchet-icon",
@@ -1648,9 +1648,9 @@
     }
   ],
   "gripConvention": "clockwise-screen-from-up-after-facing-yaw",
-  "packet": "art/review/2026-11-03-item-hatchet",
-  "packetDigest": "e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0",
-  "packetSha256": "6652fb300009e0cab4e91c67a87df107f744cc8d6ff4f2ad80d623d8a83abe89",
+  "packet": "art/review/2026-11-05-item-hatchet",
+  "packetDigest": "e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067",
+  "packetSha256": "2f43804eb35b8ae6df6435216792013d8e0a5480047f58ba3efa5b7f6305ce7f",
   "schemaVersion": 1,
   "scope": [
     "held-item",

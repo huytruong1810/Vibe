@@ -93,7 +93,7 @@ mirror. C35 owns registry/doctor implementation. Before a live run, machine A mu
 record each alias's Ollama manifest bytes/hash, referenced GGUF blob SHA256, model
 revision/quantization, and a private mirror receipt verified by rehashing restored
 bytes. Record the actual values in this document when supplied; no mirror location
-or weight digest is currently asserted here. Model aliases alone are insufficient
+is currently asserted here; incoming C35 layer digests below remain separately reported evidence. Model aliases alone are insufficient
 provenance. This is an operational gate, not a determination of model licence terms.
 
 Choose **Play without local AI** or **Resume without local AI** to use deterministic fallback dialogue without any Ollama requests. Export/import and checkpoint loading work in that mode. If you select Connect, the check must succeed before that session starts. During play, a timeout, HTTP error, malformed response, or canceled background request is bounded and reported; deterministic schedules and dialogue fallback keep the session usable. The fallback cannot waive action prerequisites.
@@ -123,7 +123,7 @@ characters at much slower replies. Neither refused the in-character threat test 
 ### Conversation context and compaction (C24)
 
 In setup, expand **Conversation settings** to select the background model, CPU placement
-(default on), and context size (4,096 to 131,072; default 8,192). The selected context size is
+(default off), and context size (4,096 to 131,072; default 8,192). The selected context size is
 sent as `num_ctx`; input reserves 384 reply tokens and 5% of the window. Compaction reserves
 768 reply tokens. Missing background aliases produce a visible warning and use the dialogue
 model instead; install aliases with the pull/copy recipe above, not `ollama pull` on a local alias.
@@ -188,6 +188,17 @@ pending until machine A returns evidence.
 `npm run benchmark` includes a separate warmed 400-record fixture with cached 256-dimensional
 vectors and full prompt construction. It reports p95 and maximum timing and fails when
 p95 exceeds the 5 ms retrieval budget. Run it without competing timing work.
+
+#### Pinned GGUF & Projector SHA256 Digests (`L10.1` / `C35` Provenance)
+
+Because community Hugging Face GGUF repositories (`HauhauCS/...`, `llmfan46/...`) can be renamed or DMCA-removed, every workstation and mirror must verify the exact Ollama layer digests in `~/.ollama/models/manifests-v2/ollama.com/library/gemma4-abliterated/<tag>`:
+
+| Local Model Tag          | Upstream HF Source                                                          | GGUF Model Layer SHA256 (`application/vnd.ollama.image.model`)            | Vision Projector SHA256 (`application/vnd.ollama.image.projector`)        |
+| ------------------------ | --------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| `gemma4-abliterated:e4b` | `hf.co/llmfan46/gemma-4-E4B-it-ultra-uncensored-heretic-GGUF:Q5_K_M`        | `sha256:2079c8215603d58ce7e493f6bb03cdd760abe69ca78a5d2224415b08705d27a6` | `sha256:ffa64aebf7144bbadd5a1e143b77794d88e76a81cc0168d91de0770eb49e88e0` |
+| `gemma4-abliterated:26b` | `hf.co/HauhauCS/Gemma4-26B-A4B-QAT-Uncensored-HauhauCS-Balanced-MTP:Q4_K_M` | `sha256:3c13133469e431312fffb8b1d9c85ae42199e6bb5746ea1da84e8ddf2097d73c` | `sha256:b5346e5bfd906f5e16878c2d0b8243e948ca7410fa28ea35be9b0c54a0ac10b7` |
+
+Keep a local backup copy of the matching blob files under `~/.ollama/models/blobs/sha256-*` on an offline drive so a workstation rebuild never depends on third-party repository availability.
 
 ### Browser origins and permissions
 

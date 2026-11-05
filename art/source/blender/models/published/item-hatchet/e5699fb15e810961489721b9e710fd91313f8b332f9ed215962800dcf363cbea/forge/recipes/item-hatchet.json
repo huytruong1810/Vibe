@@ -1,0 +1,28 @@
+{
+  "asset": "item:hatchet",
+  "kind": "item",
+  "supersample": 4,
+  "ramps": { "blade": "iron", "haft": "wood", "grip": "leather", "lashing": "reed" },
+  "gen3d": { "seed": 1234, "steps": 50 },
+  "orient": { "lengthArtPx": 13, "gripFraction": 0.15 },
+  "item": {
+    "model": "auto",
+    "grip": "auto",
+    "socket": "Socket_Hand.R",
+    "iconPivot": "auto",
+    "iconScale": "auto"
+  },
+  "concept": {
+    "template": "prop-v1",
+    "fields": {
+      "object": "chunky woodcutter's hatchet with a heavy iron hammer poll and thick wedge-shaped blade",
+      "owner": "an Aqualia woodcutter",
+      "materials": "forged dark iron head with thick hammer poll and wide bevel, chunky ash wood handle, wrapped leather grip, heavy rope cross-lashing around the eye",
+      "scale": "hand tool, about 40 cm long overall"
+    },
+    "references": [
+      "art/source/references/player-aqualia/prop-hatchet.png"
+    ]
+  },
+  "notes": "Golden held-item sample (claude, C9b; B19 local generation). lengthArtPx 13 = about 0.23 of the player's 58 px, a 40 cm hatchet beside a 1.7 m adult. Grip 15% up from the butt, inside the leather wrap."
+}

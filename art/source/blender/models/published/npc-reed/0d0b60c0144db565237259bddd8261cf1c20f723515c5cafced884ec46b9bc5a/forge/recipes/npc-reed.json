@@ -1,0 +1,46 @@
+{
+  "asset": "npc:reed",
+  "kind": "human",
+  "heightArtPx": 40,
+  "rampShift": {
+    "shirt": 1
+  },
+  "ramps": {
+    "skin": "skin-warm",
+    "hair": "hair-blonde",
+    "shirt": "linen",
+    "overalls": "leather",
+    "boots": "timber"
+  },
+  "gen3d": { "seed": 1234, "steps": 50, "views": ["front", "back"] },
+  "rig": {
+    "landmarks": {
+      "shoulder_l": [0.141, 0.032, 1.090],
+      "shoulder_r": [-0.141, 0.032, 1.090],
+      "elbow_l": [0.227, 0.023, 0.937],
+      "elbow_r": [-0.227, 0.023, 0.937],
+      "wrist_l": [0.290, -0.011, 0.802],
+      "wrist_r": [-0.290, -0.011, 0.802],
+      "palm_l": [0.342, -0.034, 0.744],
+      "palm_r": [-0.342, -0.034, 0.744],
+      "hand_end_l": [0.394, -0.057, 0.687],
+      "hand_end_r": [-0.394, -0.057, 0.687]
+    }
+  },
+  "concept": {
+    "template": "human-apose-v1",
+    "fields": {
+      "name": "Reed",
+      "age": "28",
+      "role": "grain farmer",
+      "home": "Aqualia floodplain fields",
+      "personality": "practical, optimistic, proud of modest improvements",
+      "appearance": "standard healthy farmer build, warm sun-tanned skin, tousled honey-blonde hair, wearing a loose off-white linen work shirt under sturdy brown leather farmer's overalls, and thick mud-resistant timber boots. Proportions are 5 heads tall in clean stylized A-pose"
+    },
+    "poseGuide": "art/source/style/pose-guides/human.png",
+    "references": [
+      "public/assets/portraits/characters/portrait_npc_reed_128.png"
+    ]
+  },
+  "notes": "Aqualia grain farmer (B21). Standard build, 5 heads tall, guided by human.png."
+}

@@ -129,6 +129,9 @@ spec (`../spec/`); a recipe never overrides spec numbers.
   player is 58 px, so a 40 cm hatchet is about 13. The grip-to-tip reach must stay
   within the 32x32 held canvas (orient refuses more and says so).
 - `orient.gripFraction` (default 0.15): where the hand sits, measured from the butt.
+- `orient.inflate` (`"all"` default, or `"thin"`): `all` thickens every axis by one offset sized from the haft width (spear, hatchet, hoe).
+  `thin` thickens only the axes whose model extent is under `minFeaturePx`, never the length: use it on flat weapons (sword,
+  bow) so the blade keeps its width and the gap between a bow's stave and string stays open (C36).
 - `orient.flipHead` / `orient.flipForward`: the input levers when `orient_preview.png`
   shows the head down or the blade facing backward.
 - `orient.minFeaturePx` (default 2, ART-6.3): thin hafts are inflated in the model to

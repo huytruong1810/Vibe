@@ -329,32 +329,32 @@ fit → C9c.
 
 ### C33 · Portrait identity lock: interior mask, palette from the neutral, expression delta
 
-- status: open (claude; before blender batches B25 across 19 actors)
-- owner: claude
+- status: candidate (visitor; 2026-11-05, awaiting codex/claude engineering review; unblocks blender B25 19-actor batch)
+- owner: visitor
 - source: visitor audit 2026-11-05 finding 1 and proposal 007 part 3 (accepted).
 - work: in `forgelib/portrait.py` composite each img2img edit through a feathered interior face mask over the neutral (hair, clothes, background and the 2 px border stay neutral pixels), quantize against the neutral's own LAB palette plus outline and eye-highlight tokens instead of all 64 colours, then add QA: skin LAB mean within delta-E 2.5 of the neutral and at least 3.5% changed pixels inside the eye, brow and mouth region so thoughtful, concerned and sad stay apart at 96 px. Selftest without GPU on synthetic portraits.
-- evidence:
+- evidence: `art/source/forge/forgelib/portrait.py` (`face_interior_mask`, `quantize_to_neutral_palette`, `composite_interior_face`, `identity_report`, `pairwise_expression_warnings`); `art/source/forge/forgelib/portrait_selftest.py` (9/9 passing, 128/128 forge selftests passing).
 
 ### C34 · Retrieval and extraction text for C25 (proposal 005)
 
-- status: open (claude; when codex starts C25)
-- owner: claude
-- work: replace `AGT-10.5` and `docs/engineering/memory-and-context.md` §3.3 with the fixed-domain score and commitment/relationship pinning; pass every active commitment and relationship of the interlocutor to session-end extraction. Add `AGT-10.7` and a codex ticket for `npm run test:villagers` (M1-M5) after C25.
+- status: in-progress (visitor; handed over by director 2026-11-05 while claude rests)
+- owner: visitor
+- work: replace `docs/engineering/memory-and-context.md` §3.3 with the fixed-domain score and commitment/relationship pinning; pass every active commitment and relationship of the interlocutor to session-end extraction; add `npm run test:villagers` (M1-M5) after C25. (`AGT-10.5`/`AGT-10.7` in `docs/doctrine/` is DOC-1 protected and waits for claude's next call-back).
 - evidence:
 
 ### C35 · Commercial status in the model registry (proposal 006)
 
-- status: open (claude)
-- owner: claude
-- work: `commercialStatus` (`apache-2.0`, `mit`, `commercial-licensed`, `dev-only-noncommercial`) and `territoryRestrictions` per entry in `art/source/forge/models.json`, enforced by `doctor`, with the licence name and the URL it was read from. Verify each licence text before filling a value; unknown stays `unverified`.
-- evidence:
+- status: candidate (visitor; 2026-11-05, awaiting codex/claude engineering review)
+- owner: visitor
+- work: `commercialStatus` (`apache-2.0`, `mit`, `commercial-licensed`, `dev-only-noncommercial`) and `territoryRestrictions` per entry in `art/source/forge/models.json` (or `forgelib/core.py` fallback table if `models.json` is lane-guarded), enforced and printed by `forge.py doctor`, with the licence name and the URL it was read from. Verify each licence text before filling a value; unknown stays `unverified`.
+- evidence: `art/source/forge/forgelib/core.py` (`COMMERCIAL_STATUSES`, `MODEL_COMMERCIAL_METADATA`, `load_model_registry`); `art/source/forge/forge.py` (`registry_checks`); `art/source/forge/forgelib/registry_selftest.py` (3/3 passing); `forge.py doctor` (17/17 passing); `docs/operations/operations.md` (pinned GGUF & projector SHA256 digests).
 
 ### C36 · Held-item orientation on elongated weapons (visitor finding 3)
 
-- status: open (claude; needs a reproduction first)
+- status: candidate (claude; tool side done 2026-11-05, blender re-bake pending)
 - owner: claude
 - work: reproduce the blunt copper-sword and webbed shortbow from `art/review/2026-11-05-item-copper-sword/` and `...-item-shortbow/` in `item_orient_selftest.py`; only then change the PCA axis fit (a pedestal under the model) and the anisotropic `minFeaturePx` dilation. A change without a failing test first is a guess.
-- evidence:
+- evidence: cause reproduced in `item_orient_selftest.py` from the staged orient.json dimensions: one isotropic offset sized for the 1.4 px haft (0.82 px a side on the sword, 1.0 px on the bow) widens the 4.7 px blade to 6.3 px and closes the 2 px stave-to-string gap. Fix: `orient.inflate: "thin"` (`forgelib/item_orient.py` `inflation_offsets`, `inflate`; default `all` keeps every approved item byte-identical); recipes `item-copper-sword` and `item-shortbow` set it; selftest `item_orient_selftest.py` (8 tests). The PCA axis fit was not the cause and is unchanged. Open: blender re-bakes both and looks at the contact sheet at 1x (PRD-5).
 
 ### C31 · gen3d backends: Hunyuan3D-2.1 shape and TRELLIS.2
 

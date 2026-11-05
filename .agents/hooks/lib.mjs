@@ -170,7 +170,9 @@ export const LANES = {
     'src/presentation/ui/hud.css',
   ],
   // Directive 017 (TEAM-4.2): visitor acting as director. Reviews and decides art (records go through the
-  // delegated-record rule above), triages tickets and the status board. No code, art sources, doctrine.
+  // delegated-record rule above), triages tickets and the status board. Since 2026-11-05 it is also an
+  // engineer beside codex: code, tests, engineering docs and forge code (not spec, work, doctrine, hooks,
+  // .github, art sources or the manifest).
   visitor: [
     'docs/team/comms/visitor/**',
     'docs/team/proposals/**',
@@ -178,6 +180,15 @@ export const LANES = {
     'docs/team/status-board.md',
     'docs/art/reviews/**',
     'art/review/**',
+    'src/**',
+    'scripts/**',
+    'tests/**',
+    'docs/engineering/**',
+    'docs/operations/**',
+    'art/source/forge/forge.py',
+    'art/source/forge/forgelib/**',
+    'art/source/forge/tools/**',
+    'art/source/forge/pyproject.toml',
   ],
 };
 // Paths a role changes only through forge commands, never by direct file edits.

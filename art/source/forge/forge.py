@@ -513,7 +513,7 @@ def st_faces(asset: str) -> str:
     return f"{report['status']}: {_rel(output)}; OPEN contact.png and registered.png; request a separate faces decision"
 
 
-ORIENT_FIELDS = {"lengthArtPx", "gripFraction", "flipHead", "flipForward", "minFeaturePx"}
+ORIENT_FIELDS = {"lengthArtPx", "gripFraction", "flipHead", "flipForward", "minFeaturePx", "inflate"}
 
 
 def st_orient(asset: str) -> str:
@@ -1080,14 +1080,23 @@ def doctor() -> int:
 
 def registry_checks() -> list[tuple[str, bool, str]]:
     """models.json is the registry of what machine A keeps installed (one most-capable model per tool).
-    Any weights, vendored code or venv on disk that it doesn't list fails doctor; open trials are reported."""
-    reg = json.loads((core.FORGE / "models.json").read_text())
+    Any weights, vendored code or venv on disk that it doesn't list fails doctor; open trials are reported.
+    Also enforces and prints commercialStatus, territoryRestrictions, licenseName, and licenseUrl (C35)."""
+    reg = core.load_model_registry()
     out = []
     for tool, t in reg["tools"].items():
         models = t["models"]
         trials = sorted(m for m, s in models.items() if s["status"] == "trial")
         if trials:
             out.append((f"{tool}: bake-off open ({', '.join(trials)} on trial vs {t['default']})", True, ""))
+        for mid, s in models.items():
+            cs = s.get("commercialStatus", "unverified")
+            tr = s.get("territoryRestrictions", "")
+            ln = s.get("licenseName", "")
+            lu = s.get("licenseUrl", "")
+            valid = bool(cs in core.COMMERCIAL_STATUSES and cs != "unverified" and tr and ln and lu.startswith("https://"))
+            label = f"{tool}/{mid}: commercialStatus={cs}; territoryRestrictions={tr}; licenseName={ln}; licenseUrl={lu}"
+            out.append((label, valid, f"verify commercialStatus, territoryRestrictions, licenseName, and https licenseUrl for {tool}/{mid} (C35)"))
         if "cache" not in t:
             continue
         listed = {"models--" + s["repo"].replace("/", "--") for s in models.values() if "repo" in s}

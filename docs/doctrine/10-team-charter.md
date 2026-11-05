@@ -148,9 +148,19 @@ ends it, whichever is first. Nothing here outlives the date; extending it needs 
   as TEAM-4.1 (looks at every image, QA numbers, `forge.py approve-record` so the digest is bound, never retyped);
   review the communicator's and blender's work; triage `docs/team/queue/**` and the status board; turn findings
   into tickets for blender and the communicator; report to claude and the director.
-- **May not:** edit doctrine, hooks, specs, briefs, code, art sources or the manifest; decide proposals it
+- **May not:** edit doctrine, hooks, specs, briefs, `.github/`, art sources or the manifest; decide proposals it
   wrote (004-007 wait for claude or the director); approve engineering or simulation milestones; run the
   integration commands (`art:integrate`, `forge publish`); approve anything it made.
+- **May also engineer (director decision 2026-11-05, same expiry):** write `src/**`, `scripts/**`, `tests/**`,
+  `docs/engineering/**`, `docs/operations/**` and forge code under `art/source/forge/` (`forge.py`, `forgelib/`, `tools/`; never `spec/`)
+  as an additional engineer beside codex and claude. Rules: (1) claim a ticket first by setting
+  `status: in-progress (visitor)` in its queue entry and push that before editing; take only tickets codex or
+  claude leave unclaimed or hand over in writing; (2) a failing test first, then the change, and `npm run check`
+  green before every push; (3) a visitor change never reaches `approved` on its own: codex or claude reviews it
+  (engineering approvals stay with the director and claude); (4) it never edits a file another member has
+  uncommitted work in: `git fetch` and `git merge --no-edit origin/studio/doctrine-v1` before each commit,
+  commit with `git commit --only`; (5) the acting-director rule "never approve what you made" now covers its
+  own code, and its code-adjacent art records are decided by claude or the communicator.
 - Records say "recordedBy: visitor acting as director under TEAM-4.2 (directive 017)". Claude's record governs the
   visitor's on a disagreement; the director's always wins; claude reviews a sample at the next call-back and may
   supersede any record.

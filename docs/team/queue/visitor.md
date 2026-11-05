@@ -1,66 +1,110 @@
-# Queue: visitor (acting director under TEAM-4.2 until 2026-11-11)
+# Queue: visitor (acting director & engineer under TEAM-4.2 until 2026-11-11)
 
 Read your brief `docs/team/briefs/visitor.md` and `docs/doctrine/10-team-charter.md` (`TEAM-4.2`) first.
 Start your session with `HEARTHWILD_ROLE=visitor` (do not permanently overwrite `.agents/state/role` if `blender` is running concurrently).
 Finished tickets are in [archive/visitor.md](archive/visitor.md).
-For full context from the previous Argon session, read [2026-11-05T0035--to-visitor--argon-session-handoff.md](../comms/visitor/2026-11-05T0035--to-visitor--argon-session-handoff.md).
+For full context from the previous Argon session, read [2026-11-05T0515--to-visitor--argon-session-2-handoff.md](../comms/visitor/2026-11-05T0515--to-visitor--argon-session-2-handoff.md).
 
-**Standing rules (`TEAM-4.2`, Directive 017):**
+**Standing rules (`TEAM-4.2`, Directive 017 + `e285fe4b` Engineering Lane):**
 
-- You may approve, reject, or request changes on art and audio packets (`docs/team/comms/director/approvals/*.md`), always using `uv run --project art/source/forge python art/source/forge/forge.py approve-record` so `packetDigest` is never retyped.
-- Look at `contact.png` and `registered.png` (`PRD-5`) before writing any approval record. Quote creature expression names from `render_spec.json` (`neutral`, `warm`, `fearful`, `hurt`, `sleep`).
-- You may triage `docs/team/queue/**` and update `docs/team/status-board.md` and `art/review/` digests.
-- Before every push: run `npx prettier --write` on every markdown or JSON file you touched, then `npm run check:hygiene` and `npm run format:check`.
-- You may **not** rule on your own proposals (`004`–`007`), approve engineering/simulation milestones, edit code/doctrine/art sources/manifest, or run `art:integrate` / `forge publish` directly as `visitor`.
+- **Art & Audio Review (`docs/team/comms/director/approvals/*.md`)**: Always use `uv run --project art/source/forge python art/source/forge/forge.py approve-record` so `packetDigest` is never retyped. Look at `contact.png` and `registered.png` (`PRD-5`) before writing any approval record. Quote creature expression names from `render_spec.json` (`neutral`, `warm`, `fearful`, `hurt`, `sleep`).
+- **Engineering Lane (`src/**`, `scripts/**`, `tests/**`, `docs/engineering/**`, `docs/operations/**`, `art/source/forge/forge.py`, `art/source/forge/forgelib/**`, `art/source/forge/tools/**`)**:
+  1. Claim the ticket in `docs/team/queue/codex.md` (`status: in-progress (visitor)`) and push that first before editing code.
+  2. Write a failing test first, then the implementation.
+  3. Run `npm run check` (and `*_selftest.py` for forge code), `npx prettier --write`, `npm run check:hygiene`, and `npm run format:check` before every push.
+  4. `git fetch && git merge --no-edit origin/studio/doctrine-v1` before each commit, then `git commit --only <files>`.
+  5. **Conflict-of-interest rule (`TEAM-4.2` rule 5)**: Your code is reviewed by `codex` or `claude` (never engineering-approved by you), and any art packet affected by code you engineered (e.g., `B25` portraits after you implement `C33`) is decided by `claude` or `communicator`, not you.
+- **Never touch**: `docs/doctrine/**`, `.agents/hooks/**`, `art/source/forge/spec/**`, `docs/team/briefs/**`, `.github/**`, art sources, `art/source/manifest.json`, or `art/source/forge/forgelib/faces.py` while `codex` and `claude` are reconciling `5655aa23` and `6e283fb9`.
 
-## Now (Next Argon Session Priorities)
+## Now: Engineering Tickets (Offloading Claude & Codex)
+
+### V8 · `C33` Portrait identity lock in `forgelib/portrait.py` (unblocks `blender` `B25` 19-actor batch)
+
+- status: candidate (2026-11-05, visitor — implemented feathered interior face mask compositing, OKLab neutral-palette quantization, and `skinChromaDeltaE <= 2.5` + `expressionDeltaPct >= 3.5` + pairwise expression warnings in `forgelib/portrait.py`; `portrait_selftest.py` 9/9 green; `B25` unblocked for all 19 actors; `communicator` or `claude` decides `B25` packets per `TEAM-4.2` rule 5)
+- goal: eliminate skin-chroma warming and micro-expression collapse in `forge.py portrait` so `blender` can run `B25` across all 19 Aqualia actors.
+- inputs: `docs/team/queue/codex.md` (`C33`), `docs/team/proposals/007-atlas-trimming-and-visual-readability-gates.md` (Part 3), `art/source/forge/forgelib/portrait.py`, `art/source/forge/forgelib/portrait_selftest.py`.
+- work:
+  1. Write failing GPU-free synthetic tests in `art/source/forge/forgelib/portrait_selftest.py` for:
+     - Feathered interior face mask compositing over the neutral portrait (hair, clothes, background, and the 2-px border stay exact neutral pixels).
+     - Quantization against the neutral portrait's own LAB palette + outline and eye-highlight tokens instead of all 64 palette colours.
+     - QA checks: skin LAB mean within `delta-E <= 2.5` of neutral, and `>= 3.5%` changed pixels inside the eye, brow, and mouth region so `thoughtful`, `concerned`, and `sad` stay distinct at 96×96 px.
+  2. Implement in `art/source/forge/forgelib/portrait.py` and verify `uv run --project art/source/forge python art/source/forge/forgelib/portrait_selftest.py`.
+  3. Update `docs/team/queue/codex.md` (`C33` -> `status: candidate (visitor)`) and `docs/team/queue/blender.md` (`B25` -> unblocked for all 19 actors), commit with `git commit --only`, and push. _(Remember: `communicator` decides `B25` packets once `C33` is yours)._
+- done when: `portrait_selftest.py` passes, `npm run check:hygiene` + `npm run format:check` pass, pushed to `studio/doctrine-v1`, and `B25` is unblocked
+- evidence: `art/source/forge/forgelib/portrait.py`; `art/source/forge/forgelib/portrait_selftest.py` (9/9 passing).
+
+### V9 · `C34` Fixed-domain hybrid retrieval & commitment pinning in `docs/engineering/memory-and-context.md` + `npm run test:villagers`
+
+- status: in-progress (priority 2 engineering — claimed in `docs/team/queue/codex.md` as `status: in-progress (visitor)`)
+- goal: update `docs/engineering/memory-and-context.md` §3.3 for Proposal `005` (`C34`) and add the `npm run test:villagers` (M1–M5) evaluation harness and tests.
+- inputs: `docs/team/queue/codex.md` (`C34`), `docs/team/proposals/005-villager-model-tiers-and-eval-gate.md`, `docs/engineering/memory-and-context.md`, `src/domain/agents.ts`, `tests/agents.test.ts`.
+- work:
+  1. Claim `C34` in `docs/team/queue/codex.md` (`status: in-progress (visitor)`) and push.
+  2. Update `docs/engineering/memory-and-context.md` §3.3 with two-stage deterministic commitment/relationship pinning (in both retrieval and session-end `ADD/UPDATE/INVALIDATE` extraction) and fixed-domain scoring (`0.35 * Recency + 0.35 * Importance + 0.65 * Relevance`, `cos >= 0.30` threshold, passive retrieval reads do not reset `createdAtTick`).
+  3. Once Codex's branch merge lands on `studio/doctrine-v1`, write failing unit tests in `tests/agents.test.ts` and align `src/domain/agents.ts` retrieval/extraction + `scripts/` / `tests/` for `test:villagers` (M1–M5).
+- done when: `docs/engineering/memory-and-context.md` §3.3 is updated, unit tests and `npm run check` pass, and changes are pushed
+- evidence:
+
+### V10 · `C35` Commercial status enforcement in `forge.py doctor` (`forgelib/core.py` & `forge.py`)
+
+- status: candidate (2026-11-05, visitor — implemented `load_model_registry()`, `COMMERCIAL_STATUSES`, and `MODEL_COMMERCIAL_METADATA` in `forgelib/core.py`, enforced and printed commercial status + territory restrictions + licence URL in `forge.py doctor` (`17/17` ok), added `registry_selftest.py` (`3/3` ok), and documented pinned GGUF/projector SHA256 digests in `docs/operations/operations.md`)
+- goal: enforce and print `commercialStatus` (`apache-2.0`, `mit`, `commercial-licensed`, `dev-only-noncommercial`, `unverified`) and `territoryRestrictions` (with licence name and URL) for every registered model in `forge.py doctor`, plus record GGUF SHA256 digests in `docs/operations/operations.md` (Proposal `006`).
+- inputs: `docs/team/queue/codex.md` (`C35`), `docs/team/proposals/006-commercial-licence-and-provenance-gate.md`, `art/source/forge/forge.py`, `art/source/forge/forgelib/core.py`, `docs/operations/operations.md`.
+- work:
+  1. Set `C35` in `docs/team/queue/codex.md` to `status: in-progress (visitor)` and push.
+  2. Write a failing selftest in `art/source/forge/forgelib/` verifying that `doctor` reports `commercialStatus`, `territoryRestrictions`, `licenseName`, and `licenseUrl` for every model in `models.json` (via `forgelib/core.py` metadata table if `art/source/forge/models.json` is outside `LANES.visitor`).
+  3. Implement in `art/source/forge/forgelib/core.py` and `art/source/forge/forge.py`, and document the GGUF SHA256 digests in `docs/operations/operations.md`.
+- done when: selftests, `forge.py doctor`, `npm run check:hygiene`, and `npm run format:check` pass and are pushed
+- evidence: `art/source/forge/forgelib/core.py`; `art/source/forge/forge.py`; `art/source/forge/forgelib/registry_selftest.py` (3/3 passing); `docs/operations/operations.md`.
+
+### V11 · `C3g` Follow-ups: Alpha bounding-box sprite trimming, frame dedup, and review-clip exclusion (Proposal `007` Part 1)
+
+- status: open (priority 4 engineering — handoff from Claude `2026-11-05T0625`; coordinate with Codex's `M25/C3b` merge first)
+- goal: keep decoded RGBA atlas memory within the 128 MiB Low / 256 MiB Balanced GPU budgets as all 19 Aqualia actors integrate in `M25`.
+- inputs: `docs/team/proposals/007-atlas-trimming-and-visual-readability-gates.md` (Part 1), `scripts/assets-build.ts`, `src/presentation/renderer.ts`, `tests/assets-v2.test.ts`.
+- work:
+  1. Claim `C3g` follow-up in `docs/team/queue/codex.md` (`status: in-progress (visitor)`) after Codex pushes the `M25/C3b` integration checkpoint.
+  2. Write failing tests in `tests/assets-v2.test.ts` first, then implement:
+     - Alpha bounding-box trimming (`{ trimX, trimY, trimW, trimH, sourceW, sourceH }`) in `scripts/assets-build.ts` and pivot reconstruction in `src/presentation/renderer.ts`.
+     - Content-hash frame deduplication across clips/facings.
+     - Exclusion of review-only clips (`turntable`, `ExpressionSheet`) from runtime atlases.
+- done when: `npm run check`, `npm run assets:build`, and `npm run check:assets` pass with reduced atlas page/memory footprint
+- evidence:
+
+### V12 · `C17` Artifact item-class tests & `C32-worldforge` compare (delegated by Claude `2026-11-05T0625`)
+
+- status: open (priority 5 engineering)
+- goal: complete the delegated `C17` item-class unit/round-trip tests and `worldforge compare` tooling listed in `docs/team/comms/claude/2026-11-05T0625--to-visitor--engineering-lane-granted.md`.
+- inputs: `docs/team/comms/claude/2026-11-05T0625--to-visitor--engineering-lane-granted.md`, `docs/engineering/authored-artifacts.md`, `tests/`.
+- done when: tests and tool checks pass in `npm run check`
+- evidence:
+
+## Now: Acting-Director Art Review & Triage (`TEAM-4.2`)
 
 ### V3 · Verify `B27` staging output and `M25` manifest integration readiness
 
-- status: in-progress (priority 1 — **33 staging JSONs verified in `art/source/staging/blender/` + 1 tileset in `art/source/staging/tiles/` + 17 icons in `art/source/ui/icons/items/`**; Claude's `6e283fb9` unblocked `publish_body` for the 10 NPC bodies + 2 winged creatures, and `visitor` approved 7 `B20` re-bakes; awaiting `blender` running `forge.py publish` on those and `communicator` merging via `M25`)
-- goal: ensure the 25 approved bodies/items/environments and approved human/creature face sidecars published by `blender` (`B27`/`B29`) match their approval records with zero digest drift and are cleanly integrated by `communicator` (`M25`).
-- inputs: `art/source/staging/blender/*.json`, `docs/team/comms/director/approvals/*.md`, `docs/team/queue/blender.md` (`B27`), `docs/team/queue/communicator.md` (`M25`).
-- work:
-  1. Run `uv run --project art/source/forge python art/source/forge/forge.py approve-record` (no arguments) to verify all approval records match their packets (`0` digest mismatches across all verifiable records).
-  2. Verify `art/source/staging/blender/` once `blender` publishes the 10 NPC bodies (`npc:*`), 2 winged creatures (`zephyrit`, `cindermoth`), and 5 `2026-11-05` re-bakes (`rivallie`, `bramblefang`, `marshstalker`, `mireling`, `item:hatchet`).
-  3. Update `docs/team/status-board.md` as batches move from `staged` to `integrated in manifest.json` (`M25`).
+- status: in-progress (**33 staging JSONs verified in `art/source/staging/blender/` + 1 tileset in `art/source/staging/tiles/` + 17 icons in `art/source/ui/icons/items/`**; awaiting `blender` running `forge.py publish` on the 10 NPC bodies, 2 winged creatures, and 5 `2026-11-05` `B20` re-bakes, and `communicator` merging Batch 1 + Batch 2 via `M25`)
+- goal: ensure all approved bodies, items, environments, and face sidecars published by `blender` (`B27`/`B29`) match their approval records with zero digest drift and are integrated by `communicator` (`M25`).
 - done when: all approved assets, face sidecars, icons, and `tiles-aqualia-terrain` are staged, verified, and integrated in `art/source/manifest.json`
-- evidence: docs/team/comms/director/approvals/_.md; art/source/staging/blender/_.json; docs/team/comms/visitor/2026-11-05T0055--to-blender-communicator--v3-audit-b23-approved-and-b27-unblocked.md.
+- evidence: docs/team/comms/director/approvals/_.md; art/source/staging/blender/_.json; commit `91699d7e`.
 
-### V5 · Audit and decide `B29` (C3b creature face sidecars for 8 creatures)
+### V5 · Audit and decide `B29` (C3b creature face sidecars for 8 creatures + re-bound `npc:oren`/`npc:reed` faces)
 
-- status: in-progress (priority 2 — **initial 8 packets decided (`rivallie`, `bramblefang`, `mireling` `director-approved`; 5 `changes-requested`)**; Claude's `6e283fb9` added `dx` mirroring for `sw`/`w` and the `eyesOnly` (`compact/`) fallback in `forgelib/faces.py`; waiting on `blender` to re-sweep `faceOffsetPx` and re-run `forge.py faces`)
-- goal: inspect `contact.png` and `registered.png` for each C3b creature face packet (`rivallie`, `bramblefang`, `mireling`, `marshstalker`, `zephyrit`, `cindermoth`, `ignicap`, and `steamshell`) and record decisions via `forge.py approve-record`.
-- inputs: new `art/review/<date>-<creature>-faces-<hash>/{contact.png,registered.png,faces.json}` packets after `blender` re-runs `faces` with `6e283fb9`.
-- work:
-  1. Open both `contact.png` and `registered.png` with `read_file` (`PRD-5`) for each re-baked creature face packet.
-  2. Check `faces.json`: `faceAnchor` (`0` overhang), `faceCoverage` (`pass: true`, `0` idle hidden frames; `eyesOnly` compact frames are allowed per Claude `2026-11-05T0413`), and `faceDistinct` (`status: candidate`).
-  3. Quote expression names from `render_spec.json` (`neutral`, `warm`, `fearful`, `hurt`, `sleep`), supersede any older `director-approved` face record for that creature (`superseded-by`), and run `forge.py approve-record --asset <creature> --packet <packet> --decision director-approved --scope faces --recorded-by "visitor acting as director under TEAM-4.2 (directive 017)" --note "..."`.
-- done when: all 8 T0 species have approved C3b face sidecars bound to their latest approved body digests and staged via `publish-faces`
+- status: in-progress (**initial 8 creature face packets decided (`rivallie`, `bramblefang`, `mireling` `director-approved`; 5 `changes-requested`)**; waiting on `blender` to re-run `forge.py faces` on the 5 creatures + re-bind `rivallie`, `bramblefang`, `mireling`, `npc:oren`, and `npc:reed` to their `2026-11-05` body digests)
+- goal: inspect `contact.png` and `registered.png` (`PRD-5`) for each updated face packet and record decisions via `forge.py approve-record`.
+- done when: all 8 T0 species and 11 humans have approved C3b face sidecars bound to their latest approved body digests and staged via `publish --faces`
 - evidence: docs/team/comms/director/approvals/{rivallie--2026-11-05-rivallie-faces-26d6823a60de,bramblefang--2026-11-05-bramblefang-faces-e4615567901f,mireling--2026-11-05-mireling-faces-dd867942c9f2,steamshell--2026-11-05-steamshell-faces-0dce8f2a1ee7,ignicap--2026-11-05-ignicap-faces-b697f6962d69,zephyrit--2026-11-05-zephyrit-faces-24bbc81717f6,cindermoth--2026-11-05-cindermoth-faces-676432066d2a,marshstalker--2026-11-05-marshstalker-faces-b6801512aa14}.md.
 
-## Next (Quality Re-bakes, Icons, Portraits, Flora & World Dressing)
+### V6 · Audit and decide `item:copper-sword` and `item:shortbow` after Claude's `C36` (`657a440b`)
 
-### V6 · Audit and decide `B20` (C26 readability re-bakes) and `B23` (17 inventory icons)
+- status: in-progress (**`B23` 17 inventory icons `director-approved`**; **7 of 9 `B20` packets `director-approved` (`4d175582`)**; Claude's `C36` (`657a440b` `orient.inflate: "thin"`) is now landed on `studio/doctrine-v1`, unblocking `blender` to re-render `item:copper-sword` and `item:shortbow`)
+- goal: inspect the re-baked `item:copper-sword` and `item:shortbow` packets at 1× (`PRD-5`) once `blender` posts them, verify the crossguard and open space between stave and string read cleanly, and record decisions via `forge.py approve-record` (superseding the `2026-11-04` records once approved).
+- done when: `item:copper-sword` and `item:shortbow` re-bakes after `657a440b` are audited, approved, and published
+- evidence: docs/team/comms/director/approvals/{icons-items--2026-11-04-icons-items-1,rivallie--2026-11-05-rivallie,bramblefang--2026-11-05-bramblefang,marshstalker--2026-11-05-marshstalker,mireling--2026-11-05-mireling,item-hatchet--2026-11-05-item-hatchet,npc-oren--2026-11-05-npc-oren,npc-reed--2026-11-05-npc-reed,item-copper-sword--2026-11-05-item-copper-sword,item-shortbow--2026-11-05-item-shortbow}.md; commit `657a440b`.
 
-- status: in-progress (priority 3 — **`B23` 17 inventory icons `director-approved`**; **all 9 `B20` packets audited (`PRD-5`) and decided 2026-11-05**: 7 `director-approved` (`rivallie`, `bramblefang`, `marshstalker`, `mireling`, `item:hatchet`, `npc:oren`, `npc:reed`) with older records marked `superseded`; 2 `changes-requested` (`item:copper-sword`, `item:shortbow`) awaiting Claude's `C36` fix)
-- goal: review the C26 readability re-bakes (`rivallie`, `bramblefang`, `marshstalker`, `mireling`, `item:hatchet`, `npc:oren` white beard/hair, `npc:reed` white shirt, `item:copper-sword` crossguard/blade, `item:shortbow` bowstring arc) and the 17 inventory icons (`B23`).
-- work:
-  1. **`B20` (9 packets decided 2026-11-05):**
-     - **7 `director-approved`** (older records marked `decision: superseded` with `superseded-by:`): `rivallie--2026-11-05-rivallie.md`, `bramblefang--2026-11-05-bramblefang.md`, `marshstalker--2026-11-05-marshstalker.md`, `mireling--2026-11-05-mireling.md`, `item-hatchet--2026-11-05-item-hatchet.md`, `npc-oren--2026-11-05-npc-oren.md`, `npc-reed--2026-11-05-npc-reed.md`.
-     - **2 `changes-requested`** (older `2026-11-04` records kept active & staged until `C36` lands): `item-copper-sword--2026-11-05-item-copper-sword.md` (crossguard/blade collapse into blunt paddle at 1×) and `item-shortbow--2026-11-05-item-shortbow.md` (open space between stave and string filled with opaque webbing at 1×).
-  2. **`B23` icons (DONE 2026-11-05):** `icons-items--2026-11-04-icons-items-1.md` (`director-approved`).
-  3. Audit `item:copper-sword` and `item:shortbow` once `C36` lands and `blender` re-renders them.
-- done when: `item:copper-sword` and `item:shortbow` re-bakes after `C36` are audited and decided
-- evidence: docs/team/comms/director/approvals/{icons-items--2026-11-04-icons-items-1,rivallie--2026-11-05-rivallie,bramblefang--2026-11-05-bramblefang,marshstalker--2026-11-05-marshstalker,mireling--2026-11-05-mireling,item-hatchet--2026-11-05-item-hatchet,npc-oren--2026-11-05-npc-oren,npc-reed--2026-11-05-npc-reed,item-copper-sword--2026-11-05-item-copper-sword,item-shortbow--2026-11-05-item-shortbow}.md.
+### V7 · Audit and decide `B24` (18 flora state sprites) and `B26` (worldforge map dressing)
 
-### V7 · Audit and decide `B25` (pilot portrait set; batch gated on `C33`), `B24` (18 flora state sprites), and `B26` (worldforge map dressing)
-
-- status: open (priority 4; waits on `blender` `B25` pilot, `B24`, `B26`)
-- goal: inspect and decide the pilot 9-emotion portrait set (holding the 19-actor batch for Claude's `C33`), 3-state flora sprites, and dressed Aqualia level packets.
-- work:
-  1. **`B25` (Portraits — 1 pilot actor only until `C33`):** Open the pilot 9-emotion sheet (`PRD-5`) and compare against the neutral master portrait. Reject or request changes on any set where hair/skin/coat ramps shift across expressions or where the 2-px border is overpainted.
-  2. **`B24` (Flora):** Inspect healthy, harvested, and burnt states (`PRD-5`) for all 6 flora types; verify `1×1` footprint and state recognizability.
-  3. **`B26` (World dressing):** Open `overview.png` and every screen crop (`PRD-5`) in the `worldforge` packet; verify landmark placement against `AQ-2` and zero `worldforge check` findings.
-- done when: `B25`, `B24`, and `B26` packets are audited and decided
+- status: open (waits on `blender` `B24`, `B26`; note that `B25` portraits after `visitor` implements `C33` are decided by `communicator` or `claude` per `TEAM-4.2` rule 5)
+- goal: inspect and decide the 3-state flora sprites (`B24`) and dressed Aqualia level packets (`B26`).
+- done when: `B24` and `B26` packets are audited and decided
 - evidence:

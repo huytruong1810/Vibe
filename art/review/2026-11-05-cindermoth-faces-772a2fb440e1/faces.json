@@ -1,0 +1,2511 @@
+{
+  "schemaVersion": 1,
+  "asset": "cindermoth",
+  "scope": [
+    "faces"
+  ],
+  "status": "candidate",
+  "bodyPacketDigest": "fcb972ff37ed4488f0d8cdcb4e606035a540f404ac54e6b643a9d872f2a1a383",
+  "bodyManifestSha256": "da1e7813f7608d6d34eb0a33d5049b786ada9a083a3efb9d158b70118eae9c7b",
+  "frames": [
+    {
+      "expression": "neutral",
+      "facing": "s",
+      "file": "neutral/s.png",
+      "sha256": "560d804fc63684b599d62c9260571fdfac73adf76539263574b599129695f559",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "neutral",
+      "facing": "se",
+      "file": "neutral/se.png",
+      "sha256": "0d88f53fd7563b77735a3faa479c1b08d81e83802c3abcd9e47c412e1ea3adc6",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "neutral",
+      "facing": "sw",
+      "file": "neutral/sw.png",
+      "sha256": "9b3709856a10d20ba3a229e61487552eb83df8e1f7190b79b9db24845fb7f64f",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "neutral",
+      "facing": "e",
+      "file": "neutral/e.png",
+      "sha256": "c7f2bcc83dcd8b665c3254d4b4b91735077c7869e67c5e3a850ba8f3cd27c776",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "neutral",
+      "facing": "w",
+      "file": "neutral/w.png",
+      "sha256": "9a9860408460555c6ddb218afe05cbc19c43e86938f82d58d9d0c58469329fe1",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "warm",
+      "facing": "s",
+      "file": "warm/s.png",
+      "sha256": "9e55be0232387e28cd7b1377b1ba80489a3418f2ad6eed3551e0fbf008a9ad81",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "warm",
+      "facing": "se",
+      "file": "warm/se.png",
+      "sha256": "438537b456ae9b0c8e0a776bdd1f963e452c459a8fef1aa69d8eda44b81c9603",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "warm",
+      "facing": "sw",
+      "file": "warm/sw.png",
+      "sha256": "085275716ed3073e52099f7422bb91a97205b13713a9d5275b3cebcc85ca9948",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "warm",
+      "facing": "e",
+      "file": "warm/e.png",
+      "sha256": "1d0def96ce3dfa6e33ec0ab911ffb9eff8c477d096951e1f1a6fc34e24ddc6d6",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "warm",
+      "facing": "w",
+      "file": "warm/w.png",
+      "sha256": "45dce88e09ca630bacebd61fe2c62b92387391a0bf4312bae205d988a5ec105d",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "fearful",
+      "facing": "s",
+      "file": "fearful/s.png",
+      "sha256": "bbddac7cb8bd7aaf7e73ed30dc26eeb05b09c881aa41f1680796d10a1d303cfa",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "fearful",
+      "facing": "se",
+      "file": "fearful/se.png",
+      "sha256": "33003e938992223c692b629913f64a36a27925e7fbdfd2726afd2c6bc960a2ff",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "fearful",
+      "facing": "sw",
+      "file": "fearful/sw.png",
+      "sha256": "d6f71205f258937b77b624a38c4cc474860ebd0bc74437c0e641d3db8bf24462",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "fearful",
+      "facing": "e",
+      "file": "fearful/e.png",
+      "sha256": "657ee6a88fe6cf902f8ecf22647c1ba0195b440d8ad835fe071519ec9ab48555",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "fearful",
+      "facing": "w",
+      "file": "fearful/w.png",
+      "sha256": "083c0bf21e11120f26b967be6f9528bcfc7274cf56a2a86bbd9cd453f442b510",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "hurt",
+      "facing": "s",
+      "file": "hurt/s.png",
+      "sha256": "f0ad143c98ee7aa876bc78b8aa1b82fd9fe17d160d87ae7e4b970617f6c9a10d",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "hurt",
+      "facing": "se",
+      "file": "hurt/se.png",
+      "sha256": "d5251b97c30df82763f0076abe8854cd28311b20e2f62861b6df1bb09d630c34",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "hurt",
+      "facing": "sw",
+      "file": "hurt/sw.png",
+      "sha256": "3e5db620325a5b0499d9b523b512c69fedf99d82ff83ad1387972e334a0b5052",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "hurt",
+      "facing": "e",
+      "file": "hurt/e.png",
+      "sha256": "fe38be4205ef96bbe98d552d6db4050fd376a2be42cf4a8e674caaf116ee8247",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "hurt",
+      "facing": "w",
+      "file": "hurt/w.png",
+      "sha256": "cec7ccda16e39aafa6c09b2d44a522150ed34759f279150d95ad607cbdd4d8ad",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "sleep",
+      "facing": "s",
+      "file": "sleep/s.png",
+      "sha256": "a0fc9f0157cd1a29e52655a18f7c3fa6ff472974c33f6d7ca83a56205e1a3de0",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "sleep",
+      "facing": "se",
+      "file": "sleep/se.png",
+      "sha256": "c86f256c2ff0969055a4bbc11dd5dbaffd0d9489d9a43834a328f999cc8ec386",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "sleep",
+      "facing": "sw",
+      "file": "sleep/sw.png",
+      "sha256": "dc61f833d84bd445d727b68a50fdbf4761f07edbd50e42c2793e6135b9c08e02",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "sleep",
+      "facing": "e",
+      "file": "sleep/e.png",
+      "sha256": "84210f48847e9cf2fd56a1832a583bcff578236df381d0a8bb9f5f7dd45710fe",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "sleep",
+      "facing": "w",
+      "file": "sleep/w.png",
+      "sha256": "b8dfb7fd7a3a2f34c957965bcb1c3ea6e7d6423f68ffd917050323c69800c633",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "neutral",
+      "facing": "s",
+      "file": "compact/neutral/s.png",
+      "variant": "compact",
+      "sha256": "015dee83c11e0017ef88e9880c552a9ab28c5464231d5b52099645b12e634751",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "neutral",
+      "facing": "se",
+      "file": "compact/neutral/se.png",
+      "variant": "compact",
+      "sha256": "768ca24d3bb871807d32bf727a61952108d6aada7f90ebe2fc9bb266d1f09f77",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "neutral",
+      "facing": "sw",
+      "file": "compact/neutral/sw.png",
+      "variant": "compact",
+      "sha256": "a001863c349f5b0860b93a3384834e2e721db9b9eb0ca9c202bf5ae6d06a9bc8",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "neutral",
+      "facing": "e",
+      "file": "compact/neutral/e.png",
+      "variant": "compact",
+      "sha256": "b9c282d077d05df6a4065ca0f08da3651d45a7ab4a0e8531b22dde18b69762f8",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "neutral",
+      "facing": "w",
+      "file": "compact/neutral/w.png",
+      "variant": "compact",
+      "sha256": "a2408bf3161bce91dafeee633091fa8b2ca95da0f73c25e56e7fd562b6e17f1e",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "warm",
+      "facing": "s",
+      "file": "compact/warm/s.png",
+      "variant": "compact",
+      "sha256": "42951041891acdd1a8a2fd697e096a3cfe9f42a66a2aa6edff42df8b2bdd64cd",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "warm",
+      "facing": "se",
+      "file": "compact/warm/se.png",
+      "variant": "compact",
+      "sha256": "2cf9d926b12456042f16742d3c03a7f75fed813ec57b2b381221bf3c080b1f0f",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "warm",
+      "facing": "sw",
+      "file": "compact/warm/sw.png",
+      "variant": "compact",
+      "sha256": "6c3dfa7cf3a31400bf858323173723acbc7a747932dd86525d3ba75140e007e2",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "warm",
+      "facing": "e",
+      "file": "compact/warm/e.png",
+      "variant": "compact",
+      "sha256": "4cf7b785c2e908395ef01519daddf5ccac7ef0efbb454cbf3943783dc72e1d8e",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "warm",
+      "facing": "w",
+      "file": "compact/warm/w.png",
+      "variant": "compact",
+      "sha256": "626451bd3f7fced177497707a51bf3c28c8066a8425dbc93a658ac940e3ecf26",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "fearful",
+      "facing": "s",
+      "file": "compact/fearful/s.png",
+      "variant": "compact",
+      "sha256": "bc8eeef64d64baf0690797b11dbe6b364bdcec293982f3e93233f91daf71dd59",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "fearful",
+      "facing": "se",
+      "file": "compact/fearful/se.png",
+      "variant": "compact",
+      "sha256": "3b505b3bfd069b52d62d187478ce2c7b4ca2bfc829a56b2af4af61a02fd162e8",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "fearful",
+      "facing": "sw",
+      "file": "compact/fearful/sw.png",
+      "variant": "compact",
+      "sha256": "199745c4974010bc7df04c7d328e5130d0f8e7d807f8aee92c0e2f75c8d2d6d0",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "fearful",
+      "facing": "e",
+      "file": "compact/fearful/e.png",
+      "variant": "compact",
+      "sha256": "71f236193b6911ed8cdd80c6600e402ba2437fb66d9b1194ed1997008a80817b",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "fearful",
+      "facing": "w",
+      "file": "compact/fearful/w.png",
+      "variant": "compact",
+      "sha256": "e89838b9e6d523e1f5392b82ddaf2ac26fa6bcd227d8c32ef602d0c85c8abee4",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "hurt",
+      "facing": "s",
+      "file": "compact/hurt/s.png",
+      "variant": "compact",
+      "sha256": "18091c9c5942b9abe19be8ad09fd3b4b62d27907e685eabc67e20b21dba08239",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "hurt",
+      "facing": "se",
+      "file": "compact/hurt/se.png",
+      "variant": "compact",
+      "sha256": "d6382f01085c8bd0d4e06e3567db45145ce28b60ee1ebaea347a5e03ad7fca78",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "hurt",
+      "facing": "sw",
+      "file": "compact/hurt/sw.png",
+      "variant": "compact",
+      "sha256": "7c4f137a8ead2844ac84e63181d8cb786f396c8dd0a7f8ddc7f0fc567bf77890",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "hurt",
+      "facing": "e",
+      "file": "compact/hurt/e.png",
+      "variant": "compact",
+      "sha256": "7b7d60d9f4f1b9333275c5b31d9462579d9eea594025ce00c2ca434e9f84bed9",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "hurt",
+      "facing": "w",
+      "file": "compact/hurt/w.png",
+      "variant": "compact",
+      "sha256": "b95e5d70396c77e7a2684c0a73e26d4b403ca8f9426ba10b10677973b5453c01",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "sleep",
+      "facing": "s",
+      "file": "compact/sleep/s.png",
+      "variant": "compact",
+      "sha256": "87574f29eaa3d4a21c19231b7811960911585610181465f8ca9ae71a78fd1ba8",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "sleep",
+      "facing": "se",
+      "file": "compact/sleep/se.png",
+      "variant": "compact",
+      "sha256": "2edba84d93bfa9d0aea8c6fe78af8634ff0ffeb54f3c7952a62548c9ec26e5ed",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "sleep",
+      "facing": "sw",
+      "file": "compact/sleep/sw.png",
+      "variant": "compact",
+      "sha256": "89ed496d5c611b6f4931db36a441c359596650993fa77bc86d7b708bfe1f4f22",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "sleep",
+      "facing": "e",
+      "file": "compact/sleep/e.png",
+      "variant": "compact",
+      "sha256": "f001ff092282241f920158a42bbe61136e41fd6879f59ad5490bd0e33d0e65f6",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "sleep",
+      "facing": "w",
+      "file": "compact/sleep/w.png",
+      "variant": "compact",
+      "sha256": "3f76ac39bcec4ef6be80a5d479b7ad8c57094438c0833f4e8dca371495aa9c0d",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    }
+  ],
+  "qa": [
+    {
+      "check": "faceAnchor",
+      "rule": "ART-8.1/ART-8.2",
+      "hard": true,
+      "pass": true,
+      "detail": "2015 registrations; "
+    },
+    {
+      "check": "faceCoverage",
+      "rule": "ART-8.2",
+      "hard": true,
+      "pass": true,
+      "detail": "5 of 408 forward frames hide the face (limit 10%), 68 show eyes only; idle hidden: 0"
+    },
+    {
+      "check": "faceDistinct",
+      "rule": "ART-8.3",
+      "hard": true,
+      "pass": true,
+      "detail": "every expression differs from neutral in every facing"
+    },
+    {
+      "check": "faceDistinctCompact",
+      "rule": "ART-8.3",
+      "hard": true,
+      "pass": true,
+      "detail": "every expression differs from neutral in every facing"
+    }
+  ],
+  "registration": {
+    "unit": "frame px from Socket_Head, added to the decal anchor. Horizontal offsets are per facing, already mirrored.",
+    "rule": "a frame listed in eyesOnly uses the compact/ decals at that offset; otherwise frames[id] is the full-decal offset, null hides the face",
+    "frames": {
+      "cindermoth:bathe:e:0": [
+        -6,
+        8
+      ],
+      "cindermoth:bathe:e:1": [
+        -4,
+        10
+      ],
+      "cindermoth:bathe:e:2": [
+        -6,
+        8
+      ],
+      "cindermoth:bathe:e:3": [
+        -4,
+        10
+      ],
+      "cindermoth:bathe:e:4": [
+        -6,
+        8
+      ],
+      "cindermoth:bathe:e:5": [
+        -4,
+        10
+      ],
+      "cindermoth:bathe:s:0": [
+        -2,
+        10
+      ],
+      "cindermoth:bathe:s:1": [
+        -2,
+        10
+      ],
+      "cindermoth:bathe:s:2": [
+        -2,
+        10
+      ],
+      "cindermoth:bathe:s:3": [
+        -2,
+        10
+      ],
+      "cindermoth:bathe:s:4": [
+        -2,
+        10
+      ],
+      "cindermoth:bathe:s:5": [
+        -2,
+        10
+      ],
+      "cindermoth:bathe:w:0": [
+        4,
+        10
+      ],
+      "cindermoth:bathe:w:1": [
+        4,
+        10
+      ],
+      "cindermoth:bathe:w:2": [
+        4,
+        10
+      ],
+      "cindermoth:bathe:w:3": [
+        4,
+        10
+      ],
+      "cindermoth:bathe:w:4": [
+        4,
+        10
+      ],
+      "cindermoth:bathe:w:5": [
+        4,
+        10
+      ],
+      "cindermoth:downed:e:0": [
+        -6,
+        8
+      ],
+      "cindermoth:downed:e:1": null,
+      "cindermoth:downed:e:2": null,
+      "cindermoth:downed:e:3": null,
+      "cindermoth:downed:e:4": null,
+      "cindermoth:downed:e:5": null,
+      "cindermoth:downed:s:0": [
+        -2,
+        10
+      ],
+      "cindermoth:downed:s:1": [
+        -2,
+        8
+      ],
+      "cindermoth:downed:s:2": [
+        -2,
+        8
+      ],
+      "cindermoth:downed:s:3": [
+        -2,
+        8
+      ],
+      "cindermoth:downed:s:4": [
+        -2,
+        8
+      ],
+      "cindermoth:downed:s:5": [
+        -2,
+        8
+      ],
+      "cindermoth:downed:w:0": [
+        6,
+        8
+      ],
+      "cindermoth:downed:w:1": null,
+      "cindermoth:downed:w:2": null,
+      "cindermoth:downed:w:3": null,
+      "cindermoth:downed:w:4": null,
+      "cindermoth:downed:w:5": null,
+      "cindermoth:drink:e:0": null,
+      "cindermoth:drink:e:1": null,
+      "cindermoth:drink:e:2": null,
+      "cindermoth:drink:e:3": null,
+      "cindermoth:drink:e:4": null,
+      "cindermoth:drink:e:5": null,
+      "cindermoth:drink:s:0": [
+        -2,
+        8
+      ],
+      "cindermoth:drink:s:1": [
+        -2,
+        8
+      ],
+      "cindermoth:drink:s:2": [
+        -2,
+        8
+      ],
+      "cindermoth:drink:s:3": [
+        -2,
+        8
+      ],
+      "cindermoth:drink:s:4": [
+        -2,
+        8
+      ],
+      "cindermoth:drink:s:5": [
+        -2,
+        8
+      ],
+      "cindermoth:drink:w:0": null,
+      "cindermoth:drink:w:1": null,
+      "cindermoth:drink:w:2": null,
+      "cindermoth:drink:w:3": null,
+      "cindermoth:drink:w:4": null,
+      "cindermoth:drink:w:5": null,
+      "cindermoth:eat:e:0": null,
+      "cindermoth:eat:e:1": null,
+      "cindermoth:eat:e:2": null,
+      "cindermoth:eat:e:3": null,
+      "cindermoth:eat:e:4": null,
+      "cindermoth:eat:e:5": null,
+      "cindermoth:eat:s:0": [
+        -2,
+        8
+      ],
+      "cindermoth:eat:s:1": [
+        -2,
+        8
+      ],
+      "cindermoth:eat:s:2": [
+        -2,
+        8
+      ],
+      "cindermoth:eat:s:3": [
+        -2,
+        8
+      ],
+      "cindermoth:eat:s:4": [
+        -2,
+        8
+      ],
+      "cindermoth:eat:s:5": [
+        -2,
+        8
+      ],
+      "cindermoth:eat:w:0": null,
+      "cindermoth:eat:w:1": null,
+      "cindermoth:eat:w:2": null,
+      "cindermoth:eat:w:3": null,
+      "cindermoth:eat:w:4": null,
+      "cindermoth:eat:w:5": null,
+      "cindermoth:element:e:0": [
+        -6,
+        8
+      ],
+      "cindermoth:element:e:1": [
+        -6,
+        8
+      ],
+      "cindermoth:element:e:2": null,
+      "cindermoth:element:e:3": [
+        -6,
+        10
+      ],
+      "cindermoth:element:e:4": [
+        -6,
+        10
+      ],
+      "cindermoth:element:e:5": null,
+      "cindermoth:element:e:6": null,
+      "cindermoth:element:e:7": null,
+      "cindermoth:element:e:8": null,
+      "cindermoth:element:e:9": [
+        -6,
+        8
+      ],
+      "cindermoth:element:e:10": [
+        -4,
+        10
+      ],
+      "cindermoth:element:e:11": [
+        -6,
+        8
+      ],
+      "cindermoth:element:s:0": [
+        -2,
+        10
+      ],
+      "cindermoth:element:s:1": [
+        -2,
+        10
+      ],
+      "cindermoth:element:s:2": [
+        -2,
+        8
+      ],
+      "cindermoth:element:s:3": [
+        -2,
+        10
+      ],
+      "cindermoth:element:s:4": [
+        -2,
+        10
+      ],
+      "cindermoth:element:s:5": [
+        -2,
+        8
+      ],
+      "cindermoth:element:s:6": [
+        -2,
+        10
+      ],
+      "cindermoth:element:s:7": [
+        -2,
+        8
+      ],
+      "cindermoth:element:s:8": [
+        -2,
+        10
+      ],
+      "cindermoth:element:s:9": [
+        -2,
+        10
+      ],
+      "cindermoth:element:s:10": [
+        -2,
+        10
+      ],
+      "cindermoth:element:s:11": [
+        -2,
+        10
+      ],
+      "cindermoth:element:se:0": [
+        -2,
+        10
+      ],
+      "cindermoth:element:se:1": [
+        -6,
+        10
+      ],
+      "cindermoth:element:se:2": [
+        -4,
+        10
+      ],
+      "cindermoth:element:se:3": [
+        -4,
+        12
+      ],
+      "cindermoth:element:se:4": [
+        -4,
+        12
+      ],
+      "cindermoth:element:se:5": [
+        -6,
+        10
+      ],
+      "cindermoth:element:se:6": [
+        -6,
+        10
+      ],
+      "cindermoth:element:se:7": [
+        -6,
+        10
+      ],
+      "cindermoth:element:se:8": [
+        -2,
+        10
+      ],
+      "cindermoth:element:se:9": [
+        -6,
+        10
+      ],
+      "cindermoth:element:se:10": [
+        -2,
+        10
+      ],
+      "cindermoth:element:se:11": [
+        -4,
+        10
+      ],
+      "cindermoth:element:sw:0": [
+        2,
+        10
+      ],
+      "cindermoth:element:sw:1": [
+        4,
+        10
+      ],
+      "cindermoth:element:sw:2": [
+        2,
+        10
+      ],
+      "cindermoth:element:sw:3": [
+        2,
+        12
+      ],
+      "cindermoth:element:sw:4": [
+        2,
+        12
+      ],
+      "cindermoth:element:sw:5": [
+        4,
+        10
+      ],
+      "cindermoth:element:sw:6": [
+        4,
+        10
+      ],
+      "cindermoth:element:sw:7": [
+        4,
+        10
+      ],
+      "cindermoth:element:sw:8": [
+        2,
+        10
+      ],
+      "cindermoth:element:sw:9": [
+        4,
+        10
+      ],
+      "cindermoth:element:sw:10": [
+        2,
+        10
+      ],
+      "cindermoth:element:sw:11": [
+        2,
+        10
+      ],
+      "cindermoth:element:w:0": [
+        6,
+        8
+      ],
+      "cindermoth:element:w:1": [
+        6,
+        8
+      ],
+      "cindermoth:element:w:2": null,
+      "cindermoth:element:w:3": [
+        6,
+        10
+      ],
+      "cindermoth:element:w:4": [
+        6,
+        10
+      ],
+      "cindermoth:element:w:5": null,
+      "cindermoth:element:w:6": null,
+      "cindermoth:element:w:7": null,
+      "cindermoth:element:w:8": null,
+      "cindermoth:element:w:9": [
+        6,
+        8
+      ],
+      "cindermoth:element:w:10": [
+        4,
+        8
+      ],
+      "cindermoth:element:w:11": [
+        6,
+        8
+      ],
+      "cindermoth:guard:e:0": null,
+      "cindermoth:guard:e:1": null,
+      "cindermoth:guard:e:2": null,
+      "cindermoth:guard:e:3": null,
+      "cindermoth:guard:s:0": [
+        -2,
+        8
+      ],
+      "cindermoth:guard:s:1": [
+        -2,
+        8
+      ],
+      "cindermoth:guard:s:2": [
+        -2,
+        8
+      ],
+      "cindermoth:guard:s:3": [
+        -2,
+        8
+      ],
+      "cindermoth:guard:se:0": [
+        -4,
+        8
+      ],
+      "cindermoth:guard:se:1": [
+        -4,
+        8
+      ],
+      "cindermoth:guard:se:2": [
+        -4,
+        8
+      ],
+      "cindermoth:guard:se:3": [
+        -4,
+        8
+      ],
+      "cindermoth:guard:sw:0": [
+        4,
+        8
+      ],
+      "cindermoth:guard:sw:1": [
+        4,
+        8
+      ],
+      "cindermoth:guard:sw:2": [
+        4,
+        8
+      ],
+      "cindermoth:guard:sw:3": [
+        4,
+        8
+      ],
+      "cindermoth:guard:w:0": null,
+      "cindermoth:guard:w:1": null,
+      "cindermoth:guard:w:2": null,
+      "cindermoth:guard:w:3": null,
+      "cindermoth:hit:e:0": [
+        -6,
+        8
+      ],
+      "cindermoth:hit:e:1": [
+        -6,
+        8
+      ],
+      "cindermoth:hit:e:2": [
+        -6,
+        8
+      ],
+      "cindermoth:hit:e:3": [
+        -6,
+        8
+      ],
+      "cindermoth:hit:s:0": [
+        -2,
+        10
+      ],
+      "cindermoth:hit:s:1": [
+        -2,
+        10
+      ],
+      "cindermoth:hit:s:2": [
+        -2,
+        10
+      ],
+      "cindermoth:hit:s:3": [
+        -2,
+        10
+      ],
+      "cindermoth:hit:se:0": [
+        -2,
+        10
+      ],
+      "cindermoth:hit:se:1": [
+        -4,
+        10
+      ],
+      "cindermoth:hit:se:2": [
+        -4,
+        10
+      ],
+      "cindermoth:hit:se:3": [
+        -2,
+        10
+      ],
+      "cindermoth:hit:sw:0": [
+        2,
+        8
+      ],
+      "cindermoth:hit:sw:1": [
+        2,
+        8
+      ],
+      "cindermoth:hit:sw:2": [
+        2,
+        10
+      ],
+      "cindermoth:hit:sw:3": [
+        2,
+        10
+      ],
+      "cindermoth:hit:w:0": null,
+      "cindermoth:hit:w:1": [
+        6,
+        12
+      ],
+      "cindermoth:hit:w:2": [
+        6,
+        8
+      ],
+      "cindermoth:hit:w:3": [
+        6,
+        8
+      ],
+      "cindermoth:idle:e:0": [
+        -6,
+        8
+      ],
+      "cindermoth:idle:e:1": [
+        -6,
+        8
+      ],
+      "cindermoth:idle:e:2": [
+        -6,
+        8
+      ],
+      "cindermoth:idle:e:3": [
+        -6,
+        8
+      ],
+      "cindermoth:idle:e:4": [
+        -6,
+        8
+      ],
+      "cindermoth:idle:e:5": [
+        -6,
+        8
+      ],
+      "cindermoth:idle:s:0": [
+        -2,
+        10
+      ],
+      "cindermoth:idle:s:1": [
+        -2,
+        10
+      ],
+      "cindermoth:idle:s:2": [
+        -2,
+        10
+      ],
+      "cindermoth:idle:s:3": [
+        -2,
+        10
+      ],
+      "cindermoth:idle:s:4": [
+        -2,
+        10
+      ],
+      "cindermoth:idle:s:5": [
+        -2,
+        10
+      ],
+      "cindermoth:idle:se:0": [
+        -4,
+        10
+      ],
+      "cindermoth:idle:se:1": [
+        -4,
+        10
+      ],
+      "cindermoth:idle:se:2": [
+        -2,
+        10
+      ],
+      "cindermoth:idle:se:3": [
+        -2,
+        10
+      ],
+      "cindermoth:idle:se:4": [
+        -2,
+        10
+      ],
+      "cindermoth:idle:se:5": [
+        -2,
+        10
+      ],
+      "cindermoth:idle:sw:0": [
+        2,
+        10
+      ],
+      "cindermoth:idle:sw:1": [
+        2,
+        10
+      ],
+      "cindermoth:idle:sw:2": [
+        2,
+        10
+      ],
+      "cindermoth:idle:sw:3": [
+        2,
+        10
+      ],
+      "cindermoth:idle:sw:4": [
+        2,
+        10
+      ],
+      "cindermoth:idle:sw:5": [
+        2,
+        10
+      ],
+      "cindermoth:idle:w:0": [
+        6,
+        8
+      ],
+      "cindermoth:idle:w:1": [
+        6,
+        8
+      ],
+      "cindermoth:idle:w:2": [
+        6,
+        8
+      ],
+      "cindermoth:idle:w:3": [
+        6,
+        8
+      ],
+      "cindermoth:idle:w:4": [
+        6,
+        8
+      ],
+      "cindermoth:idle:w:5": [
+        6,
+        8
+      ],
+      "cindermoth:recovery:e:0": null,
+      "cindermoth:recovery:e:1": null,
+      "cindermoth:recovery:e:2": null,
+      "cindermoth:recovery:e:3": [
+        -6,
+        8
+      ],
+      "cindermoth:recovery:e:4": [
+        -6,
+        8
+      ],
+      "cindermoth:recovery:e:5": [
+        -6,
+        8
+      ],
+      "cindermoth:recovery:s:0": [
+        -2,
+        8
+      ],
+      "cindermoth:recovery:s:1": [
+        -2,
+        8
+      ],
+      "cindermoth:recovery:s:2": [
+        -2,
+        10
+      ],
+      "cindermoth:recovery:s:3": [
+        -2,
+        10
+      ],
+      "cindermoth:recovery:s:4": [
+        -2,
+        10
+      ],
+      "cindermoth:recovery:s:5": [
+        -2,
+        10
+      ],
+      "cindermoth:recovery:w:0": null,
+      "cindermoth:recovery:w:1": null,
+      "cindermoth:recovery:w:2": null,
+      "cindermoth:recovery:w:3": [
+        4,
+        10
+      ],
+      "cindermoth:recovery:w:4": [
+        6,
+        8
+      ],
+      "cindermoth:recovery:w:5": [
+        6,
+        8
+      ],
+      "cindermoth:run:e:0": [
+        -2,
+        10
+      ],
+      "cindermoth:run:e:1": [
+        -2,
+        10
+      ],
+      "cindermoth:run:e:2": [
+        -2,
+        10
+      ],
+      "cindermoth:run:e:3": [
+        -2,
+        10
+      ],
+      "cindermoth:run:e:4": [
+        -2,
+        10
+      ],
+      "cindermoth:run:e:5": [
+        -2,
+        10
+      ],
+      "cindermoth:run:e:6": [
+        -2,
+        10
+      ],
+      "cindermoth:run:e:7": [
+        -2,
+        10
+      ],
+      "cindermoth:run:s:0": [
+        -2,
+        8
+      ],
+      "cindermoth:run:s:1": [
+        -2,
+        10
+      ],
+      "cindermoth:run:s:2": [
+        -2,
+        16
+      ],
+      "cindermoth:run:s:3": [
+        -2,
+        10
+      ],
+      "cindermoth:run:s:4": [
+        -2,
+        8
+      ],
+      "cindermoth:run:s:5": [
+        -2,
+        10
+      ],
+      "cindermoth:run:s:6": [
+        -2,
+        16
+      ],
+      "cindermoth:run:s:7": [
+        -2,
+        10
+      ],
+      "cindermoth:run:se:0": [
+        -2,
+        8
+      ],
+      "cindermoth:run:se:1": [
+        -2,
+        10
+      ],
+      "cindermoth:run:se:2": [
+        -2,
+        10
+      ],
+      "cindermoth:run:se:3": [
+        -2,
+        10
+      ],
+      "cindermoth:run:se:4": [
+        -2,
+        8
+      ],
+      "cindermoth:run:se:5": [
+        -2,
+        10
+      ],
+      "cindermoth:run:se:6": [
+        -2,
+        10
+      ],
+      "cindermoth:run:se:7": [
+        -2,
+        10
+      ],
+      "cindermoth:run:sw:0": [
+        2,
+        8
+      ],
+      "cindermoth:run:sw:1": [
+        2,
+        10
+      ],
+      "cindermoth:run:sw:2": [
+        0,
+        12
+      ],
+      "cindermoth:run:sw:3": [
+        2,
+        10
+      ],
+      "cindermoth:run:sw:4": [
+        2,
+        8
+      ],
+      "cindermoth:run:sw:5": [
+        2,
+        10
+      ],
+      "cindermoth:run:sw:6": [
+        0,
+        12
+      ],
+      "cindermoth:run:sw:7": [
+        2,
+        10
+      ],
+      "cindermoth:run:w:0": [
+        2,
+        8
+      ],
+      "cindermoth:run:w:1": [
+        2,
+        8
+      ],
+      "cindermoth:run:w:2": [
+        2,
+        10
+      ],
+      "cindermoth:run:w:3": [
+        2,
+        8
+      ],
+      "cindermoth:run:w:4": [
+        2,
+        8
+      ],
+      "cindermoth:run:w:5": [
+        2,
+        8
+      ],
+      "cindermoth:run:w:6": [
+        2,
+        10
+      ],
+      "cindermoth:run:w:7": [
+        2,
+        8
+      ],
+      "cindermoth:sleep:e:0": null,
+      "cindermoth:sleep:e:1": null,
+      "cindermoth:sleep:e:2": null,
+      "cindermoth:sleep:e:3": null,
+      "cindermoth:sleep:s:0": [
+        -2,
+        8
+      ],
+      "cindermoth:sleep:s:1": [
+        -2,
+        8
+      ],
+      "cindermoth:sleep:s:2": [
+        -2,
+        8
+      ],
+      "cindermoth:sleep:s:3": [
+        -2,
+        8
+      ],
+      "cindermoth:sleep:w:0": null,
+      "cindermoth:sleep:w:1": null,
+      "cindermoth:sleep:w:2": null,
+      "cindermoth:sleep:w:3": null,
+      "cindermoth:social:e:0": [
+        -2,
+        8
+      ],
+      "cindermoth:social:e:1": [
+        -4,
+        8
+      ],
+      "cindermoth:social:e:2": [
+        -4,
+        8
+      ],
+      "cindermoth:social:e:3": [
+        -6,
+        8
+      ],
+      "cindermoth:social:e:4": [
+        -6,
+        8
+      ],
+      "cindermoth:social:e:5": [
+        -2,
+        8
+      ],
+      "cindermoth:social:s:0": [
+        -2,
+        8
+      ],
+      "cindermoth:social:s:1": [
+        -2,
+        10
+      ],
+      "cindermoth:social:s:2": [
+        -2,
+        10
+      ],
+      "cindermoth:social:s:3": [
+        -2,
+        10
+      ],
+      "cindermoth:social:s:4": [
+        -2,
+        10
+      ],
+      "cindermoth:social:s:5": [
+        -2,
+        8
+      ],
+      "cindermoth:social:w:0": [
+        2,
+        8
+      ],
+      "cindermoth:social:w:1": [
+        6,
+        12
+      ],
+      "cindermoth:social:w:2": [
+        6,
+        12
+      ],
+      "cindermoth:social:w:3": [
+        4,
+        8
+      ],
+      "cindermoth:social:w:4": [
+        4,
+        8
+      ],
+      "cindermoth:social:w:5": [
+        2,
+        8
+      ],
+      "cindermoth:strike:e:0": [
+        -6,
+        8
+      ],
+      "cindermoth:strike:e:1": [
+        -6,
+        8
+      ],
+      "cindermoth:strike:e:2": null,
+      "cindermoth:strike:e:3": [
+        -2,
+        14
+      ],
+      "cindermoth:strike:e:4": [
+        -2,
+        14
+      ],
+      "cindermoth:strike:e:5": [
+        -2,
+        10
+      ],
+      "cindermoth:strike:e:6": [
+        -2,
+        10
+      ],
+      "cindermoth:strike:e:7": [
+        -2,
+        12
+      ],
+      "cindermoth:strike:e:8": [
+        -2,
+        12
+      ],
+      "cindermoth:strike:e:9": [
+        -6,
+        8
+      ],
+      "cindermoth:strike:e:10": [
+        -6,
+        8
+      ],
+      "cindermoth:strike:e:11": [
+        -6,
+        8
+      ],
+      "cindermoth:strike:s:0": [
+        -2,
+        10
+      ],
+      "cindermoth:strike:s:1": [
+        -2,
+        10
+      ],
+      "cindermoth:strike:s:2": [
+        -2,
+        10
+      ],
+      "cindermoth:strike:s:3": [
+        -2,
+        10
+      ],
+      "cindermoth:strike:s:4": [
+        -2,
+        10
+      ],
+      "cindermoth:strike:s:5": [
+        -2,
+        10
+      ],
+      "cindermoth:strike:s:6": [
+        -2,
+        10
+      ],
+      "cindermoth:strike:s:7": [
+        -2,
+        10
+      ],
+      "cindermoth:strike:s:8": [
+        -2,
+        10
+      ],
+      "cindermoth:strike:s:9": [
+        -2,
+        10
+      ],
+      "cindermoth:strike:s:10": [
+        -2,
+        10
+      ],
+      "cindermoth:strike:s:11": [
+        -2,
+        10
+      ],
+      "cindermoth:strike:se:0": [
+        -2,
+        10
+      ],
+      "cindermoth:strike:se:1": [
+        -4,
+        10
+      ],
+      "cindermoth:strike:se:2": [
+        -4,
+        10
+      ],
+      "cindermoth:strike:se:3": [
+        -2,
+        14
+      ],
+      "cindermoth:strike:se:4": [
+        -2,
+        14
+      ],
+      "cindermoth:strike:se:5": [
+        -2,
+        14
+      ],
+      "cindermoth:strike:se:6": [
+        -2,
+        16
+      ],
+      "cindermoth:strike:se:7": [
+        -2,
+        10
+      ],
+      "cindermoth:strike:se:8": [
+        -2,
+        10
+      ],
+      "cindermoth:strike:se:9": [
+        -4,
+        10
+      ],
+      "cindermoth:strike:se:10": [
+        -2,
+        10
+      ],
+      "cindermoth:strike:se:11": [
+        -4,
+        8
+      ],
+      "cindermoth:strike:sw:0": [
+        2,
+        10
+      ],
+      "cindermoth:strike:sw:1": [
+        2,
+        10
+      ],
+      "cindermoth:strike:sw:2": [
+        2,
+        10
+      ],
+      "cindermoth:strike:sw:3": [
+        2,
+        16
+      ],
+      "cindermoth:strike:sw:4": [
+        2,
+        16
+      ],
+      "cindermoth:strike:sw:5": [
+        2,
+        16
+      ],
+      "cindermoth:strike:sw:6": [
+        2,
+        12
+      ],
+      "cindermoth:strike:sw:7": [
+        2,
+        10
+      ],
+      "cindermoth:strike:sw:8": [
+        0,
+        12
+      ],
+      "cindermoth:strike:sw:9": [
+        2,
+        10
+      ],
+      "cindermoth:strike:sw:10": [
+        2,
+        10
+      ],
+      "cindermoth:strike:sw:11": [
+        2,
+        10
+      ],
+      "cindermoth:strike:w:0": [
+        6,
+        8
+      ],
+      "cindermoth:strike:w:1": [
+        6,
+        8
+      ],
+      "cindermoth:strike:w:2": null,
+      "cindermoth:strike:w:3": [
+        2,
+        12
+      ],
+      "cindermoth:strike:w:4": [
+        2,
+        12
+      ],
+      "cindermoth:strike:w:5": [
+        2,
+        10
+      ],
+      "cindermoth:strike:w:6": [
+        2,
+        10
+      ],
+      "cindermoth:strike:w:7": [
+        2,
+        10
+      ],
+      "cindermoth:strike:w:8": [
+        2,
+        10
+      ],
+      "cindermoth:strike:w:9": [
+        4,
+        8
+      ],
+      "cindermoth:strike:w:10": [
+        4,
+        8
+      ],
+      "cindermoth:strike:w:11": [
+        6,
+        8
+      ],
+      "cindermoth:walk:e:0": [
+        -6,
+        8
+      ],
+      "cindermoth:walk:e:1": [
+        -6,
+        8
+      ],
+      "cindermoth:walk:e:2": [
+        -6,
+        8
+      ],
+      "cindermoth:walk:e:3": [
+        -6,
+        8
+      ],
+      "cindermoth:walk:e:4": [
+        -6,
+        8
+      ],
+      "cindermoth:walk:e:5": [
+        -6,
+        8
+      ],
+      "cindermoth:walk:e:6": [
+        -6,
+        8
+      ],
+      "cindermoth:walk:e:7": [
+        -6,
+        8
+      ],
+      "cindermoth:walk:s:0": [
+        -2,
+        10
+      ],
+      "cindermoth:walk:s:1": [
+        -2,
+        10
+      ],
+      "cindermoth:walk:s:2": [
+        -2,
+        16
+      ],
+      "cindermoth:walk:s:3": [
+        -2,
+        10
+      ],
+      "cindermoth:walk:s:4": [
+        -2,
+        10
+      ],
+      "cindermoth:walk:s:5": [
+        -2,
+        10
+      ],
+      "cindermoth:walk:s:6": [
+        -2,
+        16
+      ],
+      "cindermoth:walk:s:7": [
+        -2,
+        10
+      ],
+      "cindermoth:walk:se:0": [
+        -2,
+        8
+      ],
+      "cindermoth:walk:se:1": [
+        -2,
+        10
+      ],
+      "cindermoth:walk:se:2": [
+        -2,
+        10
+      ],
+      "cindermoth:walk:se:3": [
+        -2,
+        10
+      ],
+      "cindermoth:walk:se:4": [
+        -2,
+        8
+      ],
+      "cindermoth:walk:se:5": [
+        -2,
+        10
+      ],
+      "cindermoth:walk:se:6": [
+        -2,
+        10
+      ],
+      "cindermoth:walk:se:7": [
+        -2,
+        10
+      ],
+      "cindermoth:walk:sw:0": [
+        2,
+        8
+      ],
+      "cindermoth:walk:sw:1": [
+        2,
+        12
+      ],
+      "cindermoth:walk:sw:2": [
+        0,
+        10
+      ],
+      "cindermoth:walk:sw:3": [
+        2,
+        10
+      ],
+      "cindermoth:walk:sw:4": [
+        2,
+        8
+      ],
+      "cindermoth:walk:sw:5": [
+        2,
+        12
+      ],
+      "cindermoth:walk:sw:6": [
+        0,
+        10
+      ],
+      "cindermoth:walk:sw:7": [
+        2,
+        10
+      ],
+      "cindermoth:walk:w:0": [
+        4,
+        8
+      ],
+      "cindermoth:walk:w:1": [
+        4,
+        8
+      ],
+      "cindermoth:walk:w:2": [
+        4,
+        8
+      ],
+      "cindermoth:walk:w:3": [
+        4,
+        8
+      ],
+      "cindermoth:walk:w:4": [
+        4,
+        8
+      ],
+      "cindermoth:walk:w:5": [
+        4,
+        8
+      ],
+      "cindermoth:walk:w:6": [
+        4,
+        8
+      ],
+      "cindermoth:walk:w:7": [
+        4,
+        8
+      ],
+      "cindermoth:work:e:0": [
+        -6,
+        12
+      ],
+      "cindermoth:work:e:1": [
+        -6,
+        12
+      ],
+      "cindermoth:work:e:2": null,
+      "cindermoth:work:e:3": [
+        -6,
+        12
+      ],
+      "cindermoth:work:e:4": [
+        -6,
+        12
+      ],
+      "cindermoth:work:e:5": null,
+      "cindermoth:work:s:0": [
+        -2,
+        10
+      ],
+      "cindermoth:work:s:1": [
+        -2,
+        10
+      ],
+      "cindermoth:work:s:2": [
+        -2,
+        8
+      ],
+      "cindermoth:work:s:3": [
+        -2,
+        10
+      ],
+      "cindermoth:work:s:4": [
+        -2,
+        10
+      ],
+      "cindermoth:work:s:5": [
+        -2,
+        8
+      ],
+      "cindermoth:work:w:0": [
+        6,
+        8
+      ],
+      "cindermoth:work:w:1": [
+        6,
+        8
+      ],
+      "cindermoth:work:w:2": null,
+      "cindermoth:work:w:3": [
+        6,
+        8
+      ],
+      "cindermoth:work:w:4": [
+        6,
+        8
+      ],
+      "cindermoth:work:w:5": null
+    },
+    "eyesOnly": {
+      "cindermoth:downed:e:1": [
+        -6,
+        14
+      ],
+      "cindermoth:downed:e:2": [
+        -6,
+        14
+      ],
+      "cindermoth:downed:e:3": [
+        -6,
+        14
+      ],
+      "cindermoth:downed:e:4": [
+        -6,
+        14
+      ],
+      "cindermoth:downed:e:5": [
+        -6,
+        14
+      ],
+      "cindermoth:downed:w:1": [
+        4,
+        14
+      ],
+      "cindermoth:downed:w:2": [
+        4,
+        14
+      ],
+      "cindermoth:downed:w:3": [
+        4,
+        14
+      ],
+      "cindermoth:downed:w:4": [
+        4,
+        14
+      ],
+      "cindermoth:downed:w:5": [
+        4,
+        14
+      ],
+      "cindermoth:drink:e:0": [
+        -6,
+        16
+      ],
+      "cindermoth:drink:e:1": [
+        -6,
+        16
+      ],
+      "cindermoth:drink:e:2": [
+        -6,
+        16
+      ],
+      "cindermoth:drink:e:3": [
+        -6,
+        16
+      ],
+      "cindermoth:drink:e:4": [
+        -6,
+        16
+      ],
+      "cindermoth:drink:e:5": [
+        -6,
+        16
+      ],
+      "cindermoth:drink:w:0": [
+        4,
+        16
+      ],
+      "cindermoth:drink:w:1": [
+        4,
+        16
+      ],
+      "cindermoth:drink:w:2": [
+        4,
+        16
+      ],
+      "cindermoth:drink:w:3": [
+        4,
+        16
+      ],
+      "cindermoth:drink:w:4": [
+        4,
+        16
+      ],
+      "cindermoth:drink:w:5": [
+        4,
+        16
+      ],
+      "cindermoth:eat:e:1": [
+        -6,
+        14
+      ],
+      "cindermoth:eat:e:3": [
+        -6,
+        14
+      ],
+      "cindermoth:eat:e:5": [
+        -6,
+        14
+      ],
+      "cindermoth:eat:w:0": [
+        6,
+        14
+      ],
+      "cindermoth:eat:w:1": [
+        4,
+        14
+      ],
+      "cindermoth:eat:w:2": [
+        6,
+        14
+      ],
+      "cindermoth:eat:w:3": [
+        4,
+        14
+      ],
+      "cindermoth:eat:w:4": [
+        6,
+        14
+      ],
+      "cindermoth:eat:w:5": [
+        4,
+        14
+      ],
+      "cindermoth:element:e:2": [
+        -2,
+        6
+      ],
+      "cindermoth:element:e:5": [
+        -6,
+        8
+      ],
+      "cindermoth:element:e:6": [
+        -6,
+        10
+      ],
+      "cindermoth:element:e:7": [
+        -4,
+        16
+      ],
+      "cindermoth:element:e:8": [
+        -6,
+        10
+      ],
+      "cindermoth:element:w:2": [
+        2,
+        8
+      ],
+      "cindermoth:element:w:5": [
+        4,
+        8
+      ],
+      "cindermoth:element:w:6": [
+        4,
+        10
+      ],
+      "cindermoth:element:w:7": [
+        6,
+        8
+      ],
+      "cindermoth:element:w:8": [
+        4,
+        10
+      ],
+      "cindermoth:guard:e:0": [
+        -6,
+        14
+      ],
+      "cindermoth:guard:e:1": [
+        -6,
+        14
+      ],
+      "cindermoth:guard:e:2": [
+        -6,
+        14
+      ],
+      "cindermoth:guard:e:3": [
+        -6,
+        14
+      ],
+      "cindermoth:guard:w:0": [
+        6,
+        8
+      ],
+      "cindermoth:guard:w:1": [
+        6,
+        8
+      ],
+      "cindermoth:guard:w:2": [
+        6,
+        8
+      ],
+      "cindermoth:guard:w:3": [
+        6,
+        8
+      ],
+      "cindermoth:hit:w:0": [
+        2,
+        10
+      ],
+      "cindermoth:recovery:e:0": [
+        -6,
+        14
+      ],
+      "cindermoth:recovery:e:1": [
+        -6,
+        14
+      ],
+      "cindermoth:recovery:e:2": [
+        -4,
+        16
+      ],
+      "cindermoth:recovery:w:0": [
+        4,
+        14
+      ],
+      "cindermoth:recovery:w:1": [
+        4,
+        12
+      ],
+      "cindermoth:recovery:w:2": [
+        6,
+        8
+      ],
+      "cindermoth:sleep:e:0": [
+        -6,
+        16
+      ],
+      "cindermoth:sleep:e:3": [
+        -6,
+        16
+      ],
+      "cindermoth:sleep:w:0": [
+        4,
+        14
+      ],
+      "cindermoth:sleep:w:1": [
+        4,
+        14
+      ],
+      "cindermoth:sleep:w:2": [
+        4,
+        14
+      ],
+      "cindermoth:sleep:w:3": [
+        4,
+        14
+      ],
+      "cindermoth:strike:e:2": [
+        -4,
+        8
+      ],
+      "cindermoth:strike:w:2": [
+        2,
+        8
+      ],
+      "cindermoth:work:e:2": [
+        -4,
+        16
+      ],
+      "cindermoth:work:e:5": [
+        -4,
+        16
+      ],
+      "cindermoth:work:w:2": [
+        2,
+        16
+      ],
+      "cindermoth:work:w:5": [
+        2,
+        16
+      ]
+    }
+  },
+  "sourceDigest": "44940160e3a49cde5e65473165336b842d62cfeb124e7b345f57b96f73de3174"
+}

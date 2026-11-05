@@ -70,6 +70,53 @@ class PortraitTest(unittest.TestCase):
         with self.assertRaises(P.ForgeError):
             P._keep("npc:selftest-nobody", Path("/nonexistent"), fake(), "sad=warm-1")
 
+    def test_composite_interior_face_locks_silhouette_and_clothing_and_skin_chroma(self):
+        neutral = fake(size=96, head=(24, 12, 72, 60), body=(16, 60, 80, 96), skin=(212, 165, 138), cloth=(42, 68, 122))
+        # Candidate with drifted clothing, drifted silhouette, warm-shifted skin, and an expression change in the face interior
+        candidate = fake(size=96, head=(20, 10, 76, 62), body=(12, 58, 84, 96), skin=(235, 140, 95), cloth=(190, 50, 45))
+        d = ImageDraw.Draw(candidate)
+        # Draw expression features (brows/eyes/mouth) inside the face interior
+        d.rectangle((36, 28, 44, 33), fill=(26, 28, 44, 255))
+        d.rectangle((52, 28, 60, 33), fill=(26, 28, 44, 255))
+        d.rectangle((40, 44, 56, 48), fill=(26, 28, 44, 255))
+
+        locked = P.composite_interior_face(candidate, neutral)
+        rep = P.identity_report(locked, neutral)
+        self.assertEqual(rep["silhouetteIoU"], 1.0)
+        self.assertEqual(rep["clothingColourDrift"], 0.0)
+        self.assertLessEqual(rep["skinChromaDeltaE"], 2.5)
+        self.assertGreaterEqual(rep["expressionDeltaPct"], 3.5)
+        self.assertEqual(P._warnings(rep, "sad"), [])
+
+    def test_identity_report_flags_skin_chroma_drift_and_low_expression_delta(self):
+        neutral = fake(size=96, head=(24, 12, 72, 60), body=(16, 60, 80, 96), skin=(212, 165, 138), cloth=(42, 68, 122))
+        warm_shifted = fake(size=96, head=(24, 12, 72, 60), body=(16, 60, 80, 96), skin=(240, 130, 80), cloth=(42, 68, 122))
+        ImageDraw.Draw(warm_shifted).rectangle((36, 28, 58, 34), fill=(26, 28, 44, 255))
+        rep = P.identity_report(warm_shifted, neutral)
+        self.assertGreater(rep["skinChromaDeltaE"], 2.5)
+        self.assertTrue(any("skin chroma drift" in w for w in P._warnings(rep, "warm")))
+
+        tiny_change = neutral.copy()
+        tiny_change.putpixel((48, 36), (26, 28, 44, 255))
+        rep_tiny = P.identity_report(tiny_change, neutral)
+        self.assertLess(rep_tiny["expressionDeltaPct"], 3.5)
+        self.assertTrue(any("expression delta" in w or "nearly identical" in w for w in P._warnings(rep_tiny, "thoughtful")))
+
+    def test_pairwise_expression_warnings_detects_identical_trio(self):
+        neutral = fake(size=96, head=(24, 12, 72, 60), body=(16, 60, 80, 96))
+        thoughtful = neutral.copy()
+        ImageDraw.Draw(thoughtful).rectangle((36, 28, 60, 33), fill=(26, 28, 44, 255))
+        concerned = thoughtful.copy()  # identical to thoughtful
+        sad = neutral.copy()
+        ImageDraw.Draw(sad).rectangle((36, 42, 60, 48), fill=(26, 28, 44, 255))
+
+        warnings = P.pairwise_expression_warnings({"neutral": neutral, "thoughtful": thoughtful, "concerned": concerned, "sad": sad})
+        self.assertTrue(any("thoughtful" in w and "concerned" in w for w in warnings))
+
+        ImageDraw.Draw(concerned).rectangle((36, 35, 60, 41), fill=(26, 28, 44, 255))
+        warnings_distinct = P.pairwise_expression_warnings({"neutral": neutral, "thoughtful": thoughtful, "concerned": concerned, "sad": sad})
+        self.assertEqual(warnings_distinct, [])
+
 
 if __name__ == "__main__":
     unittest.main()

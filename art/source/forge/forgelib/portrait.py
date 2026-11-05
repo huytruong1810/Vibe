@@ -22,6 +22,7 @@ from PIL import Image, ImageDraw
 from scipy import ndimage
 
 from . import concept as C
+from .color import rgb8_to_oklab as srgb_to_oklab
 from .core import REPO, ForgeError, gpu_window, slug, work_dir
 
 PORTRAITS = REPO / "art/source/exports/portraits"
@@ -30,6 +31,16 @@ EMOTIONS = ["neutral", "warm", "thoughtful", "curious", "concerned", "amused", "
 SIZES = (128, 96)
 BG = (128, 128, 128)
 WORK_PX = 1024
+FEATURE_TOKENS_RGB = np.array(
+    [
+        [26, 28, 44],     # outline-neutral.deep
+        [51, 60, 87],     # outline-neutral.shadow
+        [86, 108, 134],   # outline-neutral.mid
+        [244, 244, 244],  # highlight cream
+        [255, 247, 228],  # highlight sail
+    ],
+    dtype=np.uint8,
+)
 
 # What changes in the face, in words an edit model follows. Eyes, brows and mouth carry it; the head stays put.
 FACE = {
@@ -113,9 +124,84 @@ def downscale(img: Image.Image, size: int) -> Image.Image:
     return img.resize((size, size), Image.LANCZOS)
 
 
+def face_interior_mask(neutral: Image.Image) -> tuple[np.ndarray, tuple[int, int, int, int]]:
+    """Return a feathered float32 [0, 1] mask for the interior face (brows, eyes, nose, cheeks, mouth)
+    and the integer bounding box (fx0, fy0, fx1, fy1) of the expression zone.
+    Strictly excludes the 2-px silhouette border and all pixels below the chin (clothing/shoulders)."""
+    na = np.asarray(neutral.split()[3]) > 127
+    x0, y0, x1, y1 = _bbox(neutral)
+    bw, bh = max(1, x1 - x0), max(1, y1 - y0)
+    fx0 = x0 + int(round(0.18 * bw))
+    fx1 = x0 + int(round(0.82 * bw))
+    fy0 = y0 + int(round(0.12 * bh))
+    fy1 = y0 + int(round(0.55 * bh))
+    chin_y = min(neutral.height, int(neutral.height * 0.60), y0 + int(round(0.58 * bh)))
+
+    h, w = na.shape
+    yy, xx = np.ogrid[:h, :w]
+    cx, cy = 0.5 * (fx0 + fx1), 0.5 * (fy0 + fy1)
+    rx, ry = max(2.0, 0.5 * (fx1 - fx0)), max(2.0, 0.5 * (fy1 - fy0))
+    ellipse = (((xx - cx) / rx) ** 2 + ((yy - cy) / ry) ** 2) <= 1.0
+    eroded = ndimage.binary_erosion(na, iterations=2)
+    core = ellipse & eroded & (yy < chin_y)
+    sigma = max(0.8, neutral.width / 96.0)
+    mask = ndimage.gaussian_filter(core.astype(np.float32), sigma=sigma)
+    mask = np.where(eroded & (yy < chin_y), mask, 0.0)
+    if mask.max() > 0:
+        mask = np.clip(mask / mask.max(), 0.0, 1.0)
+    return mask.astype(np.float32), (fx0, fy0, fx1, max(fy0 + 1, min(fy1, chin_y)))
+
+
+def quantize_to_neutral_palette(candidate: Image.Image, neutral: Image.Image, mask: np.ndarray | None = None) -> Image.Image:
+    """Snap candidate RGB pixels within the face mask to the neutral's head palette + canonical eye/mouth tokens in OKLab."""
+    cand_rgba = np.asarray(candidate.convert("RGBA")).copy()
+    neut_rgba = np.asarray(neutral.convert("RGBA"))
+    if mask is None:
+        mask, fbox = face_interior_mask(neutral)
+    else:
+        _, fbox = face_interior_mask(neutral)
+    na = neut_rgba[:, :, 3] > 127
+    head_zone = np.zeros_like(na)
+    head_zone[: fbox[3] + 4, :] = True
+    src_mask = na & head_zone
+    if not src_mask.any():
+        src_mask = na
+    neutral_colors = np.unique(neut_rgba[:, :, :3][src_mask], axis=0)
+    palette_rgb = np.unique(np.vstack([neutral_colors, FEATURE_TOKENS_RGB]), axis=0)
+    palette_lab = srgb_to_oklab(palette_rgb)
+
+    active = (mask > 0.02) & (cand_rgba[:, :, 3] > 0)
+    if not active.any():
+        return Image.fromarray(cand_rgba)
+    pts_rgb = cand_rgba[:, :, :3][active]
+    pts_lab = srgb_to_oklab(pts_rgb)
+    # Compute squared OKLab distance to each palette entry
+    diff = pts_lab[:, None, :] - palette_lab[None, :, :]
+    dist2 = (diff * diff).sum(axis=2)
+    nearest = palette_rgb[dist2.argmin(axis=1)]
+    cand_rgba[:, :, :3][active] = nearest
+    return Image.fromarray(cand_rgba)
+
+
+def composite_interior_face(candidate: Image.Image, neutral: Image.Image) -> Image.Image:
+    """Align candidate to neutral, blend only the feathered interior face region, and lock palette to neutral."""
+    if candidate.size != neutral.size:
+        candidate = candidate.resize(neutral.size, Image.LANCZOS)
+    mask, _ = face_interior_mask(neutral)
+    neut_rgba = np.asarray(neutral.convert("RGBA")).astype(np.float32)
+    cand_rgba = np.asarray(candidate.convert("RGBA")).astype(np.float32)
+    m3 = mask[:, :, None]
+    blended_rgb = np.clip(np.round(neut_rgba[:, :, :3] * (1.0 - m3) + cand_rgba[:, :, :3] * m3), 0, 255).astype(np.uint8)
+    # Preserve neutral's exact alpha channel and all outer pixels where mask <= 0.02
+    out_rgba = np.asarray(neutral.convert("RGBA")).copy()
+    interior = mask > 0.02
+    out_rgba[:, :, :3][interior] = blended_rgb[interior]
+    return quantize_to_neutral_palette(Image.fromarray(out_rgba), neutral, mask)
+
+
 def identity_report(candidate: Image.Image, neutral: Image.Image) -> dict:
-    """Cheap identity checks on the aligned 128 px images: silhouette overlap and clothing/hair colour drift.
-    These flag drift; they never prove an expression is right (look at the sheet)."""
+    """Cheap identity checks on the aligned 128/96 px images: silhouette overlap, clothing colour drift,
+    skin chroma delta-E in LAB space, and expression pixel change inside the interior face box."""
     ca, na = np.asarray(candidate.split()[3]) > 127, np.asarray(neutral.split()[3]) > 127
     iou = float((ca & na).sum() / max(1, (ca | na).sum()))
     h = candidate.height
@@ -134,8 +220,40 @@ def identity_report(candidate: Image.Image, neutral: Image.Image) -> dict:
         c = np.asarray(candidate.convert("RGB")).astype(np.float32)
         n = np.asarray(neutral.convert("RGB")).astype(np.float32)
         face_diff = float(np.abs(c - n)[upper].mean())
-    return {"silhouetteIoU": round(iou, 3), "clothingColourDrift": None if drift is None else round(drift, 1),
-            "faceMeanAbsDiff": None if face_diff is None else round(face_diff, 1)}
+
+    mask, (fx0, fy0, fx1, fy1) = face_interior_mask(neutral)
+    c_rgb = np.asarray(candidate.convert("RGB")).astype(np.float32)
+    n_rgb = np.asarray(neutral.convert("RGB")).astype(np.float32)
+    face_zone = (mask > 0.25) & ca & na
+    skin_chroma_de = None
+    if face_zone.sum() >= 10:
+        c_lab = srgb_to_oklab(c_rgb[face_zone])
+        n_lab = srgb_to_oklab(n_rgb[face_zone])
+        c_skin = c_lab[c_lab[:, 0] >= 0.42]
+        n_skin = n_lab[n_lab[:, 0] >= 0.42]
+        if len(c_skin) >= 5 and len(n_skin) >= 5:
+            ca_ab = np.median(c_skin[:, 1:], axis=0)
+            na_ab = np.median(n_skin[:, 1:], axis=0)
+            skin_chroma_de = float(np.hypot(ca_ab[0] - na_ab[0], ca_ab[1] - na_ab[1]) * 100.0)
+        else:
+            skin_chroma_de = 0.0
+
+    fbox_mask = np.zeros_like(ca)
+    fbox_mask[fy0:fy1, fx0:fx1] = True
+    expr_zone = fbox_mask & ca & na
+    if expr_zone.sum() >= 10:
+        pix_diff = np.abs(c_rgb[expr_zone] - n_rgb[expr_zone]).max(axis=1) >= 10.0
+        expr_delta_pct = float(pix_diff.sum() / expr_zone.sum() * 100.0)
+    else:
+        expr_delta_pct = 0.0
+
+    return {
+        "silhouetteIoU": round(iou, 3),
+        "clothingColourDrift": None if drift is None else round(drift, 1),
+        "faceMeanAbsDiff": None if face_diff is None else round(face_diff, 1),
+        "skinChromaDeltaE": None if skin_chroma_de is None else round(skin_chroma_de, 2),
+        "expressionDeltaPct": round(expr_delta_pct, 1),
+    }
 
 
 def _warnings(rep: dict, emotion: str) -> list[str]:
@@ -144,9 +262,39 @@ def _warnings(rep: dict, emotion: str) -> list[str]:
         w.append(f"silhouette IoU {rep['silhouetteIoU']} < 0.85 (head or shoulders moved)")
     if rep["clothingColourDrift"] is not None and rep["clothingColourDrift"] > 30:
         w.append(f"clothing colour drift {rep['clothingColourDrift']} > 30")
-    if emotion != "neutral" and rep["faceMeanAbsDiff"] is not None and rep["faceMeanAbsDiff"] < 1.5:
-        w.append("face nearly identical to neutral (expression may not have changed)")
+    if rep.get("skinChromaDeltaE") is not None and rep["skinChromaDeltaE"] > 2.5:
+        w.append(f"skin chroma drift {rep['skinChromaDeltaE']} > 2.5")
+    if emotion != "neutral":
+        if rep["faceMeanAbsDiff"] is not None and rep["faceMeanAbsDiff"] < 1.5:
+            w.append("face nearly identical to neutral (expression may not have changed)")
+        elif rep.get("expressionDeltaPct") is not None and rep["expressionDeltaPct"] < 3.5:
+            w.append(f"expression delta {rep['expressionDeltaPct']}% < 3.5% (face nearly identical to neutral)")
     return w
+
+
+def pairwise_expression_warnings(images: dict[str, Image.Image], min_delta_pct: float = 3.5) -> list[str]:
+    """Flag any pair of non-neutral expressions that differ by less than min_delta_pct inside the face box."""
+    if not images:
+        return []
+    ref = images.get("neutral") or next(iter(images.values()))
+    _, (fx0, fy0, fx1, fy1) = face_interior_mask(ref)
+    ref_a = np.asarray(ref.split()[3]) > 127
+    fbox_mask = np.zeros_like(ref_a)
+    fbox_mask[fy0:fy1, fx0:fx1] = True
+    zone = fbox_mask & ref_a
+    if zone.sum() < 10:
+        return []
+    emos = sorted(e for e in images if e != "neutral")
+    warnings = []
+    for i, e1 in enumerate(emos):
+        rgb1 = np.asarray(images[e1].resize(ref.size, Image.NEAREST).convert("RGB")).astype(np.float32)[zone]
+        for e2 in emos[i + 1 :]:
+            rgb2 = np.asarray(images[e2].resize(ref.size, Image.NEAREST).convert("RGB")).astype(np.float32)[zone]
+            changed = (np.abs(rgb1 - rgb2).max(axis=1) >= 10.0).sum()
+            pct = float(changed / zone.sum() * 100.0)
+            if pct < min_delta_pct:
+                warnings.append(f"{e1} vs {e2}: expression delta {pct:.1f}% < {min_delta_pct}% (expressions nearly identical)")
+    return warnings
 
 
 def portrait(asset: str, emotions: list[str] | None, n: int, seed: int | None, pick: str | None, model: str | None = None) -> str:
@@ -184,13 +332,15 @@ def portrait(asset: str, emotions: list[str] | None, n: int, seed: int | None, p
     info = json.loads(lines[-1][9:])
     (out / f"portrait-{base}.json").write_text(json.dumps({"asset": asset, "imagegen": info}, indent=1))
     cells, warnings = [], []
+    neutral96 = downscale(neutral, 96)
     for it in info["items"]:
         emotion = it["id"].rsplit("-", 1)[0]
         keyed = align(cutout(Image.open(it["file"])).resize((neutral.width * 4, neutral.height * 4), Image.LANCZOS),
                       neutral.resize((neutral.width * 4, neutral.height * 4), Image.LANCZOS))
-        p128 = downscale(keyed, 128)
+        p128 = composite_interior_face(downscale(keyed, 128), neutral)
         p128.save(out / f"{it['id']}_128.png")
-        downscale(keyed, 96).save(out / f"{it['id']}_96.png")
+        p96 = composite_interior_face(downscale(keyed, 96), neutral96)
+        p96.save(out / f"{it['id']}_96.png")
         rep = identity_report(p128, neutral)
         w = _warnings(rep, emotion)
         warnings += [f"{it['id']}: {x}" for x in w]
@@ -246,8 +396,15 @@ def _keep(asset: str, out: Path, neutral: Image.Image, pick: str) -> str:
         kept.append(emotion)
     have = sorted(p.name.split("_")[0] for p in dest_dir.glob("*_128.png"))
     missing = [e for e in EMOTIONS if e != "neutral" and e not in have]
+    imgs96 = {"neutral": downscale(neutral, 96)}
+    for e in have:
+        p96 = dest_dir / f"{e}_96.png"
+        if p96.exists():
+            imgs96[e] = Image.open(p96).convert("RGBA")
+    pw = pairwise_expression_warnings(imgs96)
+    pw_note = f"; PAIRWISE WARNINGS: {'; '.join(pw)}" if pw else ""
     return (f"kept {', '.join(kept)} in {dest_dir.relative_to(REPO)}; set has {len(have)} generated expressions "
-            f"(+ the neutral); " + (f"still missing: {', '.join(missing)}" if missing else "all eight generated: ready for a review packet"))
+            f"(+ the neutral); " + (f"still missing: {', '.join(missing)}" if missing else "all eight generated: ready for a review packet") + pw_note)
 
 
 def _ledger(asset: str, emotion: str, model: str, seed, dest: Path) -> None:

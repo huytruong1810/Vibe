@@ -41,6 +41,33 @@ def inflation(haft_width_px: float, min_feature_px: float, art_px_per_unit: floa
     return max(0.0, (1.25 * min_feature_px - haft_width_px) / 2) / art_px_per_unit
 
 
+INFLATE_MODES = ("all", "thin")
+
+
+def inflation_offsets(dimensions: list[float], min_feature_px: float, art_px_per_unit: float,
+                      mode: str = "all", haft_width_px: float | None = None) -> list[float]:
+    """Per-axis world-unit offsets (x, y, z) for the ART-6.3 minimum width, applied along vertex normals by `inflate`.
+
+    `all` (default, every approved item so far): one offset from the haft width on every axis.
+    `thin` (flat weapons, C36): each of x and y grows only if the model's own extent on that axis is under
+    `minFeaturePx`, so a 4.7 px blade stays 4.7 px wide and the open gap between a bow's stave and string
+    survives; z (the length) is never inflated."""
+    if mode not in INFLATE_MODES:
+        raise ValueError(f"orient.inflate must be one of {INFLATE_MODES}, got {mode!r}")
+    if mode == "all":
+        if haft_width_px is None:
+            raise ValueError("inflate 'all' needs the measured haft width")
+        d = inflation(haft_width_px, min_feature_px, art_px_per_unit)
+        return [d, d, d]
+    return [max(0.0, (1.25 * min_feature_px - dimensions[i] * art_px_per_unit) / 2) / art_px_per_unit if dimensions[i] * art_px_per_unit < min_feature_px else 0.0
+            for i in (0, 1)] + [0.0]
+
+
+def inflate(vertices: np.ndarray, normals: np.ndarray, offsets: list[float]) -> np.ndarray:
+    """vertices + normals scaled per axis by `offsets` (equal offsets are the old uniform normal offset)."""
+    return np.asarray(vertices, dtype=float) + np.asarray(normals, dtype=float) * np.asarray(offsets, dtype=float)
+
+
 def orient(vertices: np.ndarray, length_art_px: float, art_px_per_unit: float, *,
            grip_fraction: float = 0.15, flip_head: bool = False, flip_forward: bool = False,
            max_reach_art_px: float | None = None) -> dict:
