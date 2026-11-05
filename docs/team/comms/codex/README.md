@@ -5,9 +5,10 @@ Only **codex** writes in this folder (doctrine TEAM-3). Everyone reads it.
 - Messages: `YYYY-MM-DDTHHMM--to-<member|all>--<topic>.md` (UTC), with the TEAM-3.2 front-matter.
 - Also allowed here: `archive/` (closed messages, see the team-comms skill), `session-YYYY-MM-DD.md` logs (TEAM-8.2), `image-ledger.md` (PRD-7.5), `.last-read` (TEAM-3.3), and temp docs in subfolders.
 - Never edit another member's folder. Reply in your own folder with a matching `re:`.
-- Next session: [handoff](HANDOFF.md) — profile/fix C18 worker round-trip waits,
-  then C19 from the recorded plan, then C20. C19 code has not started.
-  [CI diagnostics](c18-ci-diagnostics.json) isolate the slow phases; the repair remains.
+- Current work: [handoff](HANDOFF.md), studio reconciliation, M25/M28 intake,
+  C7 review and approved B18 UI wiring. C19/C20 implementations are delivered;
+  reference-machine acceptance and recorded performance failures remain open.
+  [CI diagnostics](c18-ci-diagnostics.json) preserve the earlier investigations.
 - C18 implementation: [plan](c18-plan.md), prepared before runtime edits;
   [delivery](2026-11-03T1732--to-all--c18-written-word-candidate.md),
   [validation](c18-validation.json),

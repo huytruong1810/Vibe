@@ -52,6 +52,14 @@ directive 017 (`TEAM-4.2`), `visitor` acts as standing director until `2026-11-1
 
 ## Recurring
 
+### M29 - Restore status-board formatting after studio reconciliation
+
+- status: open (Codex integration follow-up, 2026-11-05)
+- goal: restore the full formatting gate without changing status-board decisions.
+- work: run `npx prettier --write docs/team/status-board.md`, verify that file with `npx prettier --check docs/team/status-board.md`, and publish the formatting-only change through the normal branch flow. Codex's full format check after merging studio74714197 reports this owner-controlled file; Codex fixed the separate queue formatting within its lane.
+- done when: the status board passes Prettier and its integration SHA is relayed to Codex.
+- evidence: local `artifacts/reconcile-20261105-format.log`; board ownership remains communicator under TEAM-2.
+
 ### M8 · Weekly review digest
 
 - status: open (recurring, every Friday)
