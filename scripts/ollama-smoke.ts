@@ -17,7 +17,7 @@ if (process.argv.includes('--painting')) {
 const model =
   process.argv.slice(2).find((arg) => !arg.startsWith('--')) ??
   process.env.OLLAMA_MODEL ??
-  'gemma4-abliterated:26b';
+  'gemma4-abliterated:e4b';
 const adapter = new OllamaAdapter(
   process.env.OLLAMA_URL ?? 'http://127.0.0.1:11434',
   undefined,
@@ -150,7 +150,7 @@ try {
     const settings = ContextSettingsSchema.parse({
       dialogueModel: model,
       backgroundModel,
-      backgroundCpu: process.env.OLLAMA_BACKGROUND_CPU !== '0',
+      backgroundCpu: process.env.OLLAMA_BACKGROUND_CPU === '1',
       contextTokens: Number(process.env.OLLAMA_CONTEXT_TOKENS ?? 8192),
     });
     let serial = 0;

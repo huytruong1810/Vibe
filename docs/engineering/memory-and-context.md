@@ -119,7 +119,8 @@ telemetry. No token estimator guarantees the exact tokenizer count; the 5% reser
 ### 3.2 Long-term memory (C25)
 
 ```ts
-type MemoryType = 'episodic' | 'semantic' | 'commitment' | 'reflection' | 'sight' | 'reading';
+type MemoryType =
+  'episodic' | 'semantic' | 'commitment' | 'relationship' | 'reflection' | 'sight' | 'reading';
 interface MemoryRecordV2 {
   id: string;
   type: MemoryType;
@@ -144,16 +145,25 @@ interface CoreBlocks {
   existing `PerceptionSystem`/action paths write typed records directly.
 - **Extraction at session end** (`gemma4-abliterated:e4b`, background): input = final
   `CompactionSummary` + last K turns + the top-10 most similar existing memories (ids) +
-  core blocks. Output: `operations: ({op:'ADD', type, text, subjects, importance} | {op:
+  all active commitment and relationship records involving the interlocutor, deduplicated,
+  plus core blocks. Mandatory records are never silently dropped: if they cannot fit after
+  removing uncovered transcript entries, extraction returns no job and retains the session.
+  Output: `operations: ({op:'ADD', type, text, subjects, importance} | {op:
 'UPDATE', id, text, importance?} | {op:'INVALIDATE', id, reason} | {op:'NOOP'})[] ≤ 8`
   and `blocks: {block, value}[] ≤ 2`. Validation: ids only from the supplied set; the
   grounding filter (entities must exist; player claims stay `told`); caps; ≤ 1 extraction
   per session. Applied by the simulation with provenance `{kind:'session', ids:[sessionId]}`.
-- **Retrieval**: score = recency + importance + relevance, each min-max normalized over
-  the candidates, weights 1. Recency = 0.995^(game hours since `lastAccessTick`);
-  relevance = cosine similarity of `embeddinggemma` vectors (256-d Matryoshka) of the
-  query and the record, keyword overlap when no embedding model is installed. Exclude
-  invalidated records. Update `lastAccessTick` for records that make it into a prompt.
+- **Retrieval (ratified proposal005 / C34)**: pin up to four active commitment or
+  relationship records involving the player or a named villager, newest first with an ID
+  tie break. Fill the remaining slots up to eight with `0.35 * recency + 0.35 * importance
+  - 0.65 * relevance`. Recency is `0.995^(game hours since createdTick)`, importance is
+`importance / 10`, and vector relevance is `clamp((cosine - 0.30) / 0.70, 0, 1)`.
+Without embeddings, relevance is query-word overlap divided by query-word count.
+Neither uses pool-relative stretching. Invalidated/superseded records are excluded.
+`lastAccessTick`remains bookkeeping; passive reads never reset ranking age. Maintenance
+queries may request more records, without dialogue pinning. Required pins survive the
+optional 600-token memory cap; an impossible context fails explicitly.
+The existing schema spells proposal`kind/status/createdAtTick`as`type/invalidAtTick/createdTick`; no redundant persistent fields are introduced.
 - **Embeddings** are a cache, not save data: IndexedDB keyed by (model, dimensions, record
   id, text hash), recomputed on demand in the background. Saves stay small.
 - **Reflection**: when the importance sum since the last reflection reaches a threshold

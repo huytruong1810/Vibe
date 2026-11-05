@@ -13,7 +13,7 @@ import { quantizePainting } from '../src/domain/painting-quantize';
 export async function paintingSmoke(): Promise<void> {
   const directory = process.env.OLLAMA_SMOKE_DIR ?? join(tmpdir(), 'hearthwild-painting-smoke');
   await mkdir(directory, { recursive: true });
-  const model = process.env.OLLAMA_MODEL ?? 'gemma4-abliterated:26b';
+  const model = process.env.OLLAMA_MODEL ?? 'gemma4-abliterated:e4b';
   const images = new SdCppProvider(process.env.IMAGE_ENDPOINT ?? 'http://127.0.0.1:8080');
   const ollama = new OllamaAdapter(process.env.OLLAMA_URL ?? 'http://127.0.0.1:11434');
   const files: { path: string; sha256: string }[] = [];

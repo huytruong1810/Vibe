@@ -14,6 +14,7 @@
     "format": "prettier --write src tests scripts docs art/source .github README.md *.json *.ts index.html gallery.html",
     "format:check": "prettier --check src tests scripts docs art/source .github README.md *.json *.ts index.html gallery.html",
     "test:ollama": "tsx scripts/ollama-smoke.ts",
+    "test:villagers": "tsx scripts/verify-villagers.ts",
     "test:browser": "playwright test --project=journeys",
     "benchmark": "tsx scripts/benchmark.ts",
     "soak": "tsx scripts/soak.ts",

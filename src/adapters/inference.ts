@@ -401,7 +401,7 @@ export class OllamaAdapter implements InferenceProvider {
       signal,
       job.contextTokens ?? 8192,
       job.numGpu,
-      job.kind === 'reading',
+      job.kind === 'reading' || job.kind === 'dialogue',
     );
     return {
       output: JSON.parse(response.message.content),

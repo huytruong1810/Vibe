@@ -69,6 +69,7 @@ describe('local inference adapter and scheduling', () => {
               action: { type: 'READ_TEXT', artifactId: 'art:1', pages: [1, 2] },
             }),
           },
+          done: true,
         }),
       );
     });

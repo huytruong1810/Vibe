@@ -10,6 +10,7 @@ export const MemoryTypeSchema = z.enum([
   'episodic',
   'semantic',
   'commitment',
+  'relationship',
   'reflection',
   'sight',
   'reading',
@@ -229,55 +230,70 @@ export function cosine(a: readonly number[], b: readonly number[]): number {
   return aa && bb ? dot / Math.sqrt(aa * bb) : 0;
 }
 export class MemoryRetriever {
+  /** These are persistent claims, not simulation action commitments. */
+  pinned(npc: Owner, subjects: readonly string[] = ['player']): MemoryRecordV2[] {
+    return npc.memory.records
+      .filter(
+        (r) =>
+          validMemory(r) &&
+          !r.supersededBy &&
+          (r.type === 'commitment' || r.type === 'relationship') &&
+          r.subjects.some((subject) => subjects.includes(subject)),
+      )
+      .sort((a, b) => b.createdTick - a.createdTick || a.id.localeCompare(b.id));
+  }
   retrieve(
     npc: Owner,
     query: string,
     now: number,
-    count = 12,
+    count = 8,
     vectors?: MemoryVectors,
     mode: 'combined' | 'relevance' = 'combined',
+    subjects: readonly string[] = ['player'],
   ): MemoryRecordV2[] {
     const words = new Set(query.toLowerCase().match(/[\p{L}\p{N}]+/gu) ?? []);
-    const rows = npc.memory.records.filter(validMemory).map((record) => {
-      const cached = vectors?.records.get(record.id);
-      let relevance: number;
-      if (vectors && cached?.text === record.text) relevance = cosine(vectors.query, cached.vector);
-      else {
-        const terms = new Set(record.text.toLowerCase().match(/[\p{L}\p{N}]+/gu) ?? []);
-        relevance = [...words].filter((w) => terms.has(w)).length / Math.max(1, words.size);
-      }
-      return {
-        record,
-        values: [
-          Math.pow(
-            0.995,
-            Math.max(0, now - record.lastAccessTick) / ((CONFIG.tickRate * CONFIG.daySeconds) / 24),
-          ),
-          record.importance,
-          relevance,
-        ],
-        score: 0,
-      };
-    });
-    for (let i = 0; i < 3; i++) {
-      if (mode === 'relevance' && i < 2) continue;
-      let min = Infinity,
-        max = -Infinity;
-      for (const row of rows) {
-        min = Math.min(min, row.values[i]!);
-        max = Math.max(max, row.values[i]!);
-      }
-      for (const row of rows) row.score += max > min ? (row.values[i]! - min) / (max - min) : 0;
-    }
-    return rows
-      .sort(
-        (a, b) =>
-          b.score - a.score ||
-          b.record.createdTick - a.record.createdTick ||
-          (a.record.id < b.record.id ? -1 : a.record.id > b.record.id ? 1 : 0),
-      )
-      .slice(0, count)
-      .map((r) => r.record);
+    const rows = npc.memory.records
+      .filter((r) => validMemory(r) && !r.supersededBy)
+      .map((record) => {
+        const cached = vectors?.records.get(record.id);
+        let relevance: number;
+        if (vectors && cached?.text === record.text)
+          relevance = Math.max(0, Math.min(1, (cosine(vectors.query, cached.vector) - 0.3) / 0.7));
+        else {
+          const terms = new Set(record.text.toLowerCase().match(/[\p{L}\p{N}]+/gu) ?? []);
+          relevance = [...words].filter((w) => terms.has(w)).length / Math.max(1, words.size);
+        }
+        const recency = Math.pow(
+          0.995,
+          Math.max(0, now - record.createdTick) / ((CONFIG.tickRate * CONFIG.daySeconds) / 24),
+        );
+        return {
+          record,
+          score:
+            mode === 'relevance'
+              ? relevance
+              : 0.35 * recency + 0.35 * (record.importance / 10) + 0.65 * relevance,
+        };
+      });
+    // Explicit counts above eight are maintenance/embedding queries, not dialogue prompts.
+    const pinned =
+      mode === 'combined' && count <= 8
+        ? this.pinned(npc, subjects).slice(0, Math.min(4, count))
+        : [];
+    const pinnedIds = new Set(pinned.map((r) => r.id));
+    return [
+      ...pinned,
+      ...rows
+        .filter((r) => !pinnedIds.has(r.record.id))
+        .sort(
+          (a, b) =>
+            b.score - a.score ||
+            b.record.createdTick - a.record.createdTick ||
+            (a.record.id < b.record.id ? -1 : a.record.id > b.record.id ? 1 : 0),
+        )
+        .slice(0, Math.max(0, count - pinned.length))
+        .map((r) => r.record),
+    ];
   }
 }
 

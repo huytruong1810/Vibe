@@ -43,6 +43,85 @@ const target = (npc: ReturnType<typeof owner>) => ({
 const vector = (x = 1, y = 0) => [x, y, ...Array<number>(254).fill(0)];
 
 describe('typed persistent memory', () => {
+  it('supplies every active interlocutor claim to extraction beyond the semantic ten', () => {
+    const npc = owner();
+    const claims = Array.from({ length: 18 }, (_, i) => {
+      const r = add(npc, `Quiet obligation ${i}`);
+      r.type = 'commitment';
+      return r;
+    });
+    for (let i = 0; i < 12; i++) add(npc, `Bridge ${i}`);
+    const plans = new PlanService(repository);
+    plans.context.open(npc.profileId);
+    plans.context.append('player', 'bridge');
+    const job = plans.extraction(npc, 'world:test', 50)!;
+    expect(job.sourceIds).toEqual(expect.arrayContaining(claims.map((r) => r.id)));
+    expect(job.sourceIds).toHaveLength(28);
+    expect(new Set(job.sourceIds).size).toBe(job.sourceIds.length);
+  });
+  it('round-trips additive relationship records through existing version9 save validation', () => {
+    const host = new SimulationHost(42, 1);
+    try {
+      const record = add(host.npcs[0]!, 'The player and I are cautious acquaintances.');
+      record.type = 'relationship';
+      const restored = migrateSave(JSON.parse(JSON.stringify(host.snapshot())));
+      expect(restored.version).toBe(9);
+      expect(restored.npcs[0]!.memory.records.find((r) => r.id === record.id)?.type).toBe(
+        'relationship',
+      );
+    } finally {
+      host.dispose();
+    }
+  });
+  it('pins four interlocutor claims, fills eight slots and never revives superseded promises', () => {
+    const npc = owner();
+    for (let i = 0; i < 12; i++) add(npc, `River ${i}`);
+    const claims = Array.from({ length: 5 }, (_, i) => {
+      const claim = add(npc, `Unrelated promise ${i}`);
+      claim.type = i % 2 ? 'relationship' : 'commitment';
+      claim.createdTick = 20 + i;
+      return claim;
+    });
+    claims[0]!.invalidAtTick = 100;
+    claims[0]!.supersededBy = claims[1]!.id;
+    const found = new MemoryRetriever().retrieve(npc, 'river', 100);
+    expect(found).toHaveLength(8);
+    expect(new Set(found.slice(0, 4).map((r) => r.id))).toEqual(
+      new Set(claims.slice(1).map((r) => r.id)),
+    );
+    expect(found).not.toContain(claims[0]);
+    const plans = new PlanService(repository);
+    plans.context.open(npc.profileId);
+    plans.context.append('player', 'river');
+    const extraction = plans.extraction(npc, 'world:test', 100)!;
+    expect(extraction.sourceIds).toEqual(expect.arrayContaining(claims.slice(1).map((r) => r.id)));
+    expect(extraction.sourceIds).not.toContain(claims[0]!.id);
+    const prompt = plans.job(npc, NPC_PROFILES[0]!, 'world:test', 100, 'dialogue', 'river');
+    const supplied = JSON.parse(
+      prompt.messages.find((m) => m.content.startsWith('memories:'))!.content.slice(10),
+    );
+    expect(supplied.map((r: { id: string }) => r.id)).toEqual(
+      expect.arrayContaining(claims.slice(1).map((r) => r.id)),
+    );
+  });
+  it('does not stretch low vector noise or refresh recency on passive reads', () => {
+    const npc = owner(),
+      important = add(npc, 'Important old event.', 10),
+      noise = add(npc, 'Noise.', 1);
+    important.lastAccessTick = 100000;
+    const vectors = {
+      query: vector(),
+      records: new Map([
+        [important.id, { text: important.text, vector: vector(0.02, Math.sqrt(1 - 0.02 ** 2)) }],
+        [noise.id, { text: noise.text, vector: vector(0.08, Math.sqrt(1 - 0.08 ** 2)) }],
+      ]),
+    };
+    const retriever = new MemoryRetriever();
+    expect(retriever.retrieve(npc, '', 100, 2, vectors)[0]).toBe(important);
+    important.lastAccessTick = 1;
+    expect(retriever.retrieve(npc, '', 100, 2, vectors)[0]).toBe(important);
+    expect(important.createdTick).toBe(1);
+  });
   it('applies add, update, invalidate and noop atomically with session provenance and told confidence', () => {
     const npc = owner(),
       a = add(npc),
@@ -160,7 +239,7 @@ describe('typed persistent memory', () => {
     expect(npc.memory.records[0]!.confidence).toBe('told');
     expect(npc.commitments).toEqual([]);
   });
-  it('normalizes recency, importance and fixed-vector relevance equally, excludes invalidation and does not touch unselected records', () => {
+  it('uses fixed-domain relevance, excludes invalidation and does not touch unselected records', () => {
     const npc = owner(),
       a = add(npc, 'River bridge.'),
       b = add(npc, 'Wheat.'),

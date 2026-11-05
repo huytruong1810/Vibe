@@ -22,9 +22,9 @@ export type CompactionSummary = z.infer<typeof CompactionSummarySchema>;
 export const ContextSettingsSchema = z
   .object({
     contextTokens: z.number().int().min(4096).max(131072).default(8192),
-    dialogueModel: z.string().min(1).max(200).default('gemma4-abliterated:26b'),
+    dialogueModel: z.string().min(1).max(200).default('gemma4-abliterated:e4b'),
     backgroundModel: z.string().min(1).max(200).default('gemma4-abliterated:e4b'),
-    backgroundCpu: z.boolean().default(true),
+    backgroundCpu: z.boolean().default(false),
     embeddingEnabled: z.boolean().default(false),
   })
   .strict();
@@ -158,6 +158,7 @@ export class ConversationContext {
     memories: readonly unknown[],
     facts: unknown,
     input: string,
+    requiredMemoryIds: ReadonlySet<string> = new Set(),
   ): PromptMessage[] {
     const session = this.session;
     const base: PromptMessage[] = [{ role: 'system', content: system }];
@@ -165,9 +166,17 @@ export class ConversationContext {
       if (content) base.push({ role: 'user', content: `${label}: ${content}` });
     };
     add('core', this.capped(core, 300));
-    const selected: unknown[] = [];
+    const selected: unknown[] = memories.filter(
+      (record) =>
+        record !== null &&
+        typeof record === 'object' &&
+        'id' in record &&
+        typeof record.id === 'string' &&
+        requiredMemoryIds.has(record.id),
+    );
     for (const record of memories)
-      if (this.estimate(JSON.stringify([...selected, record])) <= 600) selected.push(record);
+      if (!selected.includes(record) && this.estimate(JSON.stringify([...selected, record])) <= 600)
+        selected.push(record);
     add('memories', JSON.stringify(selected));
     const { readables, continueReading, ...ordinaryFacts } =
       facts && typeof facts === 'object' && !Array.isArray(facts)
@@ -212,10 +221,16 @@ export class ConversationContext {
     // Defensive trimming also covers unexpectedly large identities or calibrated token ratios.
     while (
       this.count(messages) > budget &&
-      base.some((m) => m.content.startsWith('worldFacts:') || m.content.startsWith('memories:'))
+      base.some(
+        (m) =>
+          m.content.startsWith('worldFacts:') ||
+          (!requiredMemoryIds.size && m.content.startsWith('memories:')),
+      )
     ) {
       const optional = base.findIndex(
-        (m) => m.content.startsWith('worldFacts:') || m.content.startsWith('memories:'),
+        (m) =>
+          m.content.startsWith('worldFacts:') ||
+          (!requiredMemoryIds.size && m.content.startsWith('memories:')),
       );
       base.splice(optional, 1);
       truncated = true;
@@ -232,6 +247,7 @@ export class ConversationContext {
       line.content = line.content.slice(0, Math.floor(line.content.length * 0.8));
       truncated = true;
     }
+    if (this.count(messages) > budget) throw new Error('Pinned memories exceed the context budget');
     Object.assign(this.debug, { tokens: this.count(messages), budget, truncated });
     return messages;
   }

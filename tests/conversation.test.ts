@@ -60,7 +60,7 @@ describe('conversation context', () => {
     expect(job).not.toBeNull();
     expect(plans.compaction(npc, 'world:test')).toBeNull();
     expect(job.model).toBe('gemma4-abliterated:e4b');
-    expect(job.numGpu).toBe(0);
+    expect(job.numGpu).toBeUndefined();
     expect(context.count(job.messages, job.model)).toBeLessThanOrEqual(context.budget(768));
     expect(context.apply(job.id, job.compactionTarget!, summary)).toBe(true);
     const messages = context.prompt('rules', {}, [], {}, 'next question');
