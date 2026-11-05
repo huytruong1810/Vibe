@@ -348,6 +348,70 @@
             "enum": ["body", "hair", "face", "garment", "held", "overlay"]
           },
           "appearanceId": { "type": "string", "minLength": 1, "maxLength": 160 },
+          "face": {
+            "type": "object",
+            "properties": {
+              "bodyAppearanceId": { "type": "string", "minLength": 1, "maxLength": 160 },
+              "bodyPacketDigest": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+              "frames": {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string",
+                  "enum": [
+                    "neutral",
+                    "warm",
+                    "thoughtful",
+                    "curious",
+                    "concerned",
+                    "amused",
+                    "angry",
+                    "sad",
+                    "fearful",
+                    "blink",
+                    "sleep",
+                    "hurt"
+                  ]
+                },
+                "additionalProperties": {
+                  "type": "object",
+                  "propertyNames": {
+                    "type": "string",
+                    "enum": ["n", "ne", "e", "se", "s", "sw", "w", "nw"]
+                  },
+                  "additionalProperties": { "type": "string", "minLength": 1, "maxLength": 160 }
+                }
+              },
+              "registration": {
+                "type": "object",
+                "propertyNames": { "type": "string", "minLength": 1, "maxLength": 160 },
+                "additionalProperties": {
+                  "anyOf": [
+                    {
+                      "type": "array",
+                      "prefixItems": [
+                        {
+                          "type": "integer",
+                          "minimum": -9007199254740991,
+                          "maximum": 9007199254740991
+                        },
+                        {
+                          "type": "integer",
+                          "minimum": -9007199254740991,
+                          "maximum": 9007199254740991
+                        }
+                      ],
+                      "items": false,
+                      "minItems": 2,
+                      "maxItems": 2
+                    },
+                    { "type": "null" }
+                  ]
+                }
+              }
+            },
+            "required": ["bodyAppearanceId", "bodyPacketDigest", "frames", "registration"],
+            "additionalProperties": false
+          },
           "stage": { "type": "string", "enum": ["proof", "candidate", "approved"] },
           "sourceDigest": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
         },
@@ -692,7 +756,10 @@
         "type": "object",
         "properties": {
           "id": { "type": "string", "minLength": 1, "maxLength": 160 },
-          "method": { "type": "string", "enum": ["pillow", "blender-bake", "master-ingestion"] },
+          "method": {
+            "type": "string",
+            "enum": ["pillow", "blender-bake", "master-ingestion", "reviewed-export"]
+          },
           "inputs": {
             "minItems": 1,
             "type": "array",

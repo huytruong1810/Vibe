@@ -2,7 +2,7 @@
   "requiredAppearances": 19,
   "declaredHdAppearances": 19,
   "completeAnimationAppearances": 4,
-  "approvedAppearances": 4,
+  "approvedAppearances": 2,
   "portraitPairs": 19,
   "completePortraitSets": 0,
   "approvedPortraitSets": 0,
@@ -1454,6 +1454,10 @@
     },
     {
       "appearanceId": "species:rivallie",
+      "requirement": "engineering approval for this source digest"
+    },
+    {
+      "appearanceId": "species:rivallie",
       "requirement": "nine identity-matched portrait expressions at both HUD tiers"
     },
     { "appearanceId": "species:zephyrit", "requirement": "walk/n: 8 authored frames" },
@@ -1539,6 +1543,10 @@
     {
       "appearanceId": "species:zephyrit",
       "requirement": "nine identity-matched portrait expressions at both HUD tiers"
+    },
+    {
+      "appearanceId": "species:mireling",
+      "requirement": "engineering approval for this source digest"
     },
     {
       "appearanceId": "species:mireling",
@@ -1797,7 +1805,7 @@
     "requiredAppearances": 41,
     "declaredHdAppearances": 41,
     "completeAnimationAppearances": 4,
-    "approvedAppearances": 4,
+    "approvedAppearances": 2,
     "portraitPairs": 32,
     "completePortraitSets": 0,
     "approvedPortraitSets": 0,
@@ -7091,6 +7099,10 @@
       },
       {
         "appearanceId": "species:rivallie",
+        "requirement": "engineering approval for this source digest"
+      },
+      {
+        "appearanceId": "species:rivallie",
         "requirement": "nine identity-matched portrait expressions at both HUD tiers"
       },
       { "appearanceId": "species:zephyrit", "requirement": "walk/n: 8 authored frames" },
@@ -7188,6 +7200,10 @@
       {
         "appearanceId": "species:zephyrit",
         "requirement": "nine identity-matched portrait expressions at both HUD tiers"
+      },
+      {
+        "appearanceId": "species:mireling",
+        "requirement": "engineering approval for this source digest"
       },
       {
         "appearanceId": "species:mireling",
@@ -7467,12 +7483,12 @@
       }
     ]
   },
-  "reviewAppearanceCount": 37,
-  "fullTextureBytes": 83722320,
-  "halfTextureBytes": 20848820,
+  "reviewAppearanceCount": 39,
+  "fullTextureBytes": 83599560,
+  "halfTextureBytes": 20971520,
   "terrain": {
     "pageIds": ["bundle-0", "bundle-1", "bundle-2"],
-    "fullTextureBytes": 50233392,
-    "halfTextureBytes": 16679056
+    "fullTextureBytes": 50159736,
+    "halfTextureBytes": 16777216
   }
 }

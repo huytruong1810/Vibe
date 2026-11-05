@@ -346,8 +346,8 @@
     "subjectKind": "appearance",
     "subjectId": "species:mireling",
     "digest": "fa52c6000baa2f4b37f8afcf105911b9e9cb807a18bb7b12869ee281602f06d5",
-    "approvalMatches": true,
-    "runtimeStage": "approved"
+    "approvalMatches": false,
+    "runtimeStage": "candidate"
   },
   {
     "subjectKind": "appearance",
@@ -577,8 +577,8 @@
     "subjectKind": "appearance",
     "subjectId": "species:rivallie",
     "digest": "081a7f661d34b4d8738f2262fad74f6a11d9212833862d9dff0466d2e79a8611",
-    "approvalMatches": true,
-    "runtimeStage": "approved"
+    "approvalMatches": false,
+    "runtimeStage": "candidate"
   },
   {
     "subjectKind": "appearance",
