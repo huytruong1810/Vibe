@@ -329,24 +329,24 @@ fit → C9c.
 
 ### C33 · Portrait identity lock: interior mask, palette from the neutral, expression delta
 
-- status: open (claude; before blender batches B25 across 19 actors)
-- owner: claude
+- status: in-progress (visitor; handed over by director 2026-11-05 while claude rests; before blender batches B25 across 19 actors)
+- owner: visitor
 - source: visitor audit 2026-11-05 finding 1 and proposal 007 part 3 (accepted).
 - work: in `forgelib/portrait.py` composite each img2img edit through a feathered interior face mask over the neutral (hair, clothes, background and the 2 px border stay neutral pixels), quantize against the neutral's own LAB palette plus outline and eye-highlight tokens instead of all 64 colours, then add QA: skin LAB mean within delta-E 2.5 of the neutral and at least 3.5% changed pixels inside the eye, brow and mouth region so thoughtful, concerned and sad stay apart at 96 px. Selftest without GPU on synthetic portraits.
 - evidence:
 
 ### C34 · Retrieval and extraction text for C25 (proposal 005)
 
-- status: open (claude; when codex starts C25)
-- owner: claude
-- work: replace `AGT-10.5` and `docs/engineering/memory-and-context.md` §3.3 with the fixed-domain score and commitment/relationship pinning; pass every active commitment and relationship of the interlocutor to session-end extraction. Add `AGT-10.7` and a codex ticket for `npm run test:villagers` (M1-M5) after C25.
+- status: open (visitor; handed over by director 2026-11-05 while claude rests)
+- owner: visitor
+- work: replace `docs/engineering/memory-and-context.md` §3.3 with the fixed-domain score and commitment/relationship pinning; pass every active commitment and relationship of the interlocutor to session-end extraction; add `npm run test:villagers` (M1-M5) after C25. (`AGT-10.5`/`AGT-10.7` in `docs/doctrine/` is DOC-1 protected and waits for claude's next call-back).
 - evidence:
 
 ### C35 · Commercial status in the model registry (proposal 006)
 
-- status: open (claude)
-- owner: claude
-- work: `commercialStatus` (`apache-2.0`, `mit`, `commercial-licensed`, `dev-only-noncommercial`) and `territoryRestrictions` per entry in `art/source/forge/models.json`, enforced by `doctor`, with the licence name and the URL it was read from. Verify each licence text before filling a value; unknown stays `unverified`.
+- status: open (visitor; handed over by director 2026-11-05 while claude rests)
+- owner: visitor
+- work: `commercialStatus` (`apache-2.0`, `mit`, `commercial-licensed`, `dev-only-noncommercial`) and `territoryRestrictions` per entry in `art/source/forge/models.json` (or `forgelib/core.py` fallback table if `models.json` is lane-guarded), enforced and printed by `forge.py doctor`, with the licence name and the URL it was read from. Verify each licence text before filling a value; unknown stays `unverified`.
 - evidence:
 
 ### C36 · Held-item orientation on elongated weapons (visitor finding 3)

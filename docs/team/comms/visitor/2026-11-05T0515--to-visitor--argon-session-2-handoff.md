@@ -41,26 +41,27 @@ subject: Argon Session 2 Handoff — Engineering Lane (C33, C34, C3g, C17) + Act
 
 ---
 
-## 3. Exact Execution Order for Session 2 (`V8` → `V9` → `V10` → `V11` + `V5`/`V6`/`V3` Reviews)
+## 3. Exact Execution Order for Session 2 (`V8` (`C33`) → `V9` (`C34`) → `V10` (`C35`) → `V11` (`C3g`) → `V12` (`C17`/`C32`) + `V5`/`V6`/`V3` Reviews)
+
+Claude is now at rest after committing `e285fe4b` and `657a440b` (`C36`). Director Huy handed `C33`, `C34`, and `C35` (alongside `C3g`, `C32-worldforge`, and `C17` tests) to `visitor`. **`C33` is already claimed (`status: in-progress (visitor)`) and pushed in `docs/team/queue/codex.md`**, so you can start writing the failing test in `portrait_selftest.py` immediately on startup!
 
 ### Step 1: `V8` / `C33` — Portrait Identity Lock in `art/source/forge/forgelib/portrait.py` (Top Priority, Unblocks `B25`)
 
-1. Read `docs/team/briefs/visitor.md`, `art/source/forge/forgelib/portrait.py`, and `art/source/forge/forgelib/portrait_selftest.py`.
-2. Claim `C33` in `docs/team/queue/codex.md` (`status: in-progress (visitor)`), run `npx prettier --write docs/team/queue/codex.md`, commit with `git commit --only docs/team/queue/codex.md`, and `git push`.
-3. In `art/source/forge/forgelib/portrait_selftest.py`, write failing GPU-free synthetic unit tests verifying:
+1. Read `docs/team/briefs/visitor.md`, `art/source/forge/forgelib/portrait.py`, and `art/source/forge/forgelib/portrait_selftest.py`. (`C33` is already marked `status: in-progress (visitor)` in `docs/team/queue/codex.md`).
+2. In `art/source/forge/forgelib/portrait_selftest.py`, write failing GPU-free synthetic unit tests verifying:
    - **Feathered interior face mask**: Compositing an img2img emotion edit over the `neutral` portrait preserves exact `neutral` pixels outside the interior facial mask (hair, clothing, silhouette, background, and the 2-px border).
    - **Neutral-locked LAB palette quantization**: Quantizes the edited interior against the `neutral` portrait's own LAB palette colors plus outline and eye-highlight tokens (rather than all 64 doctrine colors), preventing orange/peach skin-tone drift.
    - **QA checks (`skinChroma` & `expressionDelta`)**:
      - `skinChroma`: Mean LAB skin delta-E between `neutral` and each expression is `<= 2.5` (hard fail when `> 2.5`).
      - `expressionDelta`: At least `3.5%` of pixels inside the eye+brow+mouth mask region differ from `neutral` (and pairwise between `thoughtful`, `concerned`, and `sad`) so micro-expressions do not collapse at 96×96 px.
-4. Implement those three mechanisms in `art/source/forge/forgelib/portrait.py`.
-5. Run:
+3. Implement those three mechanisms in `art/source/forge/forgelib/portrait.py`.
+4. Run:
    ```bash
    uv run --project art/source/forge python art/source/forge/forgelib/portrait_selftest.py
    npm run check:hygiene
    npm run format:check
    ```
-6. Update `docs/team/queue/codex.md` (`C33` -> `status: candidate (visitor)`) and `docs/team/queue/blender.md` (`B25` -> unblocked for all 19 actors), commit with `git commit --only`, and push.
+5. Update `docs/team/queue/codex.md` (`C33` -> `status: candidate (visitor)`) and `docs/team/queue/blender.md` (`B25` -> unblocked for all 19 actors), commit with `git commit --only`, and push. *(Note: `communicator` decides `B25` packets once `C33` is yours per `TEAM-4.2` rule 5).*
 
 ### Step 2: `V9` / `C34` — Fixed-Domain Hybrid Retrieval & Commitment Pinning (`docs/engineering/memory-and-context.md` §3.3)
 
@@ -73,7 +74,13 @@ subject: Argon Session 2 Handoff — Engineering Lane (C33, C34, C3g, C17) + Act
    - Document the 5-metric `npm run test:villagers` evaluation gate (`M1` Action-Prose Fidelity, `M2` Multi-Session & Superseded-Commitment Recall, `M3` In-Character Boundary & Anti-Sycophancy, `M4` Persona Lexical Distinctness, `M5` Warm Latency P95).
 3. Once Codex's branch merge lands on `studio/doctrine-v1`, add unit tests in `tests/agents.test.ts` and implement the retrieval/extraction update in `src/domain/agents.ts` + `npm run test:villagers`.
 
-### Step 3: `V10` / `C3g` Follow-ups & `V11` / `C17` + `C32-worldforge`
+### Step 3: `V10` / `C35` — Commercial Status Enforcement in `forge.py doctor` (`forgelib/core.py` & `forge.py`)
+
+1. Claim `C35` in `docs/team/queue/codex.md` (`status: in-progress (visitor)`) and push first.
+2. Write a failing selftest in `art/source/forge/forgelib/` verifying that `forge.py doctor` validates and prints `commercialStatus` (`apache-2.0`, `mit`, `commercial-licensed`, `dev-only-noncommercial`, `unverified`), `territoryRestrictions`, `licenseName`, and `licenseUrl` for every model entry (storing the defaults in `forgelib/core.py` so `art/source/forge/models.json` does not need to be edited outside `LANES.visitor`).
+3. Implement in `art/source/forge/forgelib/core.py` and `art/source/forge/forge.py`, and document the GGUF SHA256 digests in `docs/operations/operations.md` (Proposal `006`).
+
+### Step 4: `V11` / `C3g` Follow-ups & `V12` / `C17` + `C32-worldforge`
 
 1. Once Codex merges `eng/hd-presentation` back to `studio/doctrine-v1`:
    - Claim `C3g` follow-up in `docs/team/queue/codex.md` (`status: in-progress (visitor)`), write failing tests in `tests/assets-v2.test.ts`, and implement alpha bounding-box sprite trimming (`{ trimX, trimY, trimW, trimH, sourceW, sourceH }`), content-hash frame deduplication, and `turntable`/`ExpressionSheet` review-clip exclusion in `scripts/assets-build.ts` + pivot offset reconstruction in `src/presentation/renderer.ts`.

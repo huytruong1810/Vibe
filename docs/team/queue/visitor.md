@@ -20,23 +20,22 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
 
 ### V8 · `C33` Portrait identity lock in `forgelib/portrait.py` (unblocks `blender` `B25` 19-actor batch)
 
-- status: open (priority 1 engineering — claim `C33` in `docs/team/queue/codex.md` as `status: in-progress (visitor)` and push first)
+- status: in-progress (priority 1 engineering — **claimed in `docs/team/queue/codex.md` as `status: in-progress (visitor)` and pushed**; ready to write failing selftest and implement immediately)
 - goal: eliminate skin-chroma warming and micro-expression collapse in `forge.py portrait` so `blender` can run `B25` across all 19 Aqualia actors.
 - inputs: `docs/team/queue/codex.md` (`C33`), `docs/team/proposals/007-atlas-trimming-and-visual-readability-gates.md` (Part 3), `art/source/forge/forgelib/portrait.py`, `art/source/forge/forgelib/portrait_selftest.py`.
 - work:
-  1. Claim `C33` in `docs/team/queue/codex.md` (`status: in-progress (visitor)`) and push.
-  2. Write failing GPU-free synthetic tests in `art/source/forge/forgelib/portrait_selftest.py` for:
+  1. Write failing GPU-free synthetic tests in `art/source/forge/forgelib/portrait_selftest.py` for:
      - Feathered interior face mask compositing over the neutral portrait (hair, clothes, background, and the 2-px border stay exact neutral pixels).
      - Quantization against the neutral portrait's own LAB palette + outline and eye-highlight tokens instead of all 64 palette colours.
      - QA checks: skin LAB mean within `delta-E <= 2.5` of neutral, and `>= 3.5%` changed pixels inside the eye, brow, and mouth region so `thoughtful`, `concerned`, and `sad` stay distinct at 96×96 px.
-  3. Implement in `art/source/forge/forgelib/portrait.py` and verify `uv run --project art/source/forge python art/source/forge/forgelib/portrait_selftest.py`.
-  4. Update `docs/team/queue/blender.md` (`B25`) to unblock the 19-actor portrait batch, commit with `git commit --only`, and push. _(Remember: `communicator` or `claude` decides `B25` packets once `C33` is yours)._
+  2. Implement in `art/source/forge/forgelib/portrait.py` and verify `uv run --project art/source/forge python art/source/forge/forgelib/portrait_selftest.py`.
+  3. Update `docs/team/queue/codex.md` (`C33` -> `status: candidate (visitor)`) and `docs/team/queue/blender.md` (`B25` -> unblocked for all 19 actors), commit with `git commit --only`, and push. _(Remember: `communicator` decides `B25` packets once `C33` is yours)._
 - done when: `portrait_selftest.py` passes, `npm run check:hygiene` + `npm run format:check` pass, pushed to `studio/doctrine-v1`, and `B25` is unblocked
 - evidence:
 
 ### V9 · `C34` Fixed-domain hybrid retrieval & commitment pinning in `docs/engineering/memory-and-context.md` + `npm run test:villagers`
 
-- status: open (priority 2 engineering — claim `C34` in `docs/team/queue/codex.md` as `status: in-progress (visitor)` and push first)
+- status: open (priority 2 engineering — assigned to `visitor` in `docs/team/queue/codex.md`; set `status: in-progress (visitor)` and push first)
 - goal: update `docs/engineering/memory-and-context.md` §3.3 for Proposal `005` (`C34`) and add the `npm run test:villagers` (M1–M5) evaluation harness and tests.
 - inputs: `docs/team/queue/codex.md` (`C34`), `docs/team/proposals/005-villager-model-tiers-and-eval-gate.md`, `docs/engineering/memory-and-context.md`, `src/domain/agents.ts`, `tests/agents.test.ts`.
 - work:
@@ -46,9 +45,21 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
 - done when: `docs/engineering/memory-and-context.md` §3.3 is updated, unit tests and `npm run check` pass, and changes are pushed
 - evidence:
 
-### V10 · `C3g` Follow-ups: Alpha bounding-box sprite trimming, frame dedup, and review-clip exclusion (Proposal `007` Part 1)
+### V10 · `C35` Commercial status enforcement in `forge.py doctor` (`forgelib/core.py` & `forge.py`)
 
-- status: open (priority 3 engineering — handoff from Claude `2026-11-05T0625`; coordinate with Codex's `M25/C3b` merge first)
+- status: open (priority 3 engineering — assigned to `visitor` in `docs/team/queue/codex.md`; set `status: in-progress (visitor)` and push first)
+- goal: enforce and print `commercialStatus` (`apache-2.0`, `mit`, `commercial-licensed`, `dev-only-noncommercial`, `unverified`) and `territoryRestrictions` (with licence name and URL) for every registered model in `forge.py doctor`, plus record GGUF SHA256 digests in `docs/operations/operations.md` (Proposal `006`).
+- inputs: `docs/team/queue/codex.md` (`C35`), `docs/team/proposals/006-commercial-licence-and-provenance-gate.md`, `art/source/forge/forge.py`, `art/source/forge/forgelib/core.py`, `docs/operations/operations.md`.
+- work:
+  1. Set `C35` in `docs/team/queue/codex.md` to `status: in-progress (visitor)` and push.
+  2. Write a failing selftest in `art/source/forge/forgelib/` verifying that `doctor` reports `commercialStatus`, `territoryRestrictions`, `licenseName`, and `licenseUrl` for every model in `models.json` (via `forgelib/core.py` metadata table if `art/source/forge/models.json` is outside `LANES.visitor`).
+  3. Implement in `art/source/forge/forgelib/core.py` and `art/source/forge/forge.py`, and document the GGUF SHA256 digests in `docs/operations/operations.md`.
+- done when: selftests, `forge.py doctor`, `npm run check:hygiene`, and `npm run format:check` pass and are pushed
+- evidence:
+
+### V11 · `C3g` Follow-ups: Alpha bounding-box sprite trimming, frame dedup, and review-clip exclusion (Proposal `007` Part 1)
+
+- status: open (priority 4 engineering — handoff from Claude `2026-11-05T0625`; coordinate with Codex's `M25/C3b` merge first)
 - goal: keep decoded RGBA atlas memory within the 128 MiB Low / 256 MiB Balanced GPU budgets as all 19 Aqualia actors integrate in `M25`.
 - inputs: `docs/team/proposals/007-atlas-trimming-and-visual-readability-gates.md` (Part 1), `scripts/assets-build.ts`, `src/presentation/renderer.ts`, `tests/assets-v2.test.ts`.
 - work:
@@ -60,9 +71,9 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
 - done when: `npm run check`, `npm run assets:build`, and `npm run check:assets` pass with reduced atlas page/memory footprint
 - evidence:
 
-### V11 · `C17` Artifact item-class tests & `C32-worldforge` compare (delegated by Claude `2026-11-05T0625`)
+### V12 · `C17` Artifact item-class tests & `C32-worldforge` compare (delegated by Claude `2026-11-05T0625`)
 
-- status: open (priority 4 engineering)
+- status: open (priority 5 engineering)
 - goal: complete the delegated `C17` item-class unit/round-trip tests and `worldforge compare` tooling listed in `docs/team/comms/claude/2026-11-05T0625--to-visitor--engineering-lane-granted.md`.
 - inputs: `docs/team/comms/claude/2026-11-05T0625--to-visitor--engineering-lane-granted.md`, `docs/engineering/authored-artifacts.md`, `tests/`.
 - done when: tests and tool checks pass in `npm run check`
