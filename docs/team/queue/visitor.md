@@ -20,7 +20,7 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
 
 ### V8 · `C33` Portrait identity lock in `forgelib/portrait.py` (unblocks `blender` `B25` 19-actor batch)
 
-- status: in-progress (priority 1 engineering — **claimed in `docs/team/queue/codex.md` as `status: in-progress (visitor)` and pushed**; ready to write failing selftest and implement immediately)
+- status: candidate (2026-11-05, visitor — implemented feathered interior face mask compositing, OKLab neutral-palette quantization, and `skinChromaDeltaE <= 2.5` + `expressionDeltaPct >= 3.5` + pairwise expression warnings in `forgelib/portrait.py`; `portrait_selftest.py` 9/9 green; `B25` unblocked for all 19 actors; `communicator` or `claude` decides `B25` packets per `TEAM-4.2` rule 5)
 - goal: eliminate skin-chroma warming and micro-expression collapse in `forge.py portrait` so `blender` can run `B25` across all 19 Aqualia actors.
 - inputs: `docs/team/queue/codex.md` (`C33`), `docs/team/proposals/007-atlas-trimming-and-visual-readability-gates.md` (Part 3), `art/source/forge/forgelib/portrait.py`, `art/source/forge/forgelib/portrait_selftest.py`.
 - work:
@@ -31,7 +31,7 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
   2. Implement in `art/source/forge/forgelib/portrait.py` and verify `uv run --project art/source/forge python art/source/forge/forgelib/portrait_selftest.py`.
   3. Update `docs/team/queue/codex.md` (`C33` -> `status: candidate (visitor)`) and `docs/team/queue/blender.md` (`B25` -> unblocked for all 19 actors), commit with `git commit --only`, and push. _(Remember: `communicator` decides `B25` packets once `C33` is yours)._
 - done when: `portrait_selftest.py` passes, `npm run check:hygiene` + `npm run format:check` pass, pushed to `studio/doctrine-v1`, and `B25` is unblocked
-- evidence:
+- evidence: `art/source/forge/forgelib/portrait.py`; `art/source/forge/forgelib/portrait_selftest.py` (9/9 passing).
 
 ### V9 · `C34` Fixed-domain hybrid retrieval & commitment pinning in `docs/engineering/memory-and-context.md` + `npm run test:villagers`
 

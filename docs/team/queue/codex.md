@@ -329,11 +329,11 @@ fit → C9c.
 
 ### C33 · Portrait identity lock: interior mask, palette from the neutral, expression delta
 
-- status: in-progress (visitor; handed over by director 2026-11-05 while claude rests; before blender batches B25 across 19 actors)
+- status: candidate (visitor; 2026-11-05, awaiting codex/claude engineering review; unblocks blender B25 19-actor batch)
 - owner: visitor
 - source: visitor audit 2026-11-05 finding 1 and proposal 007 part 3 (accepted).
 - work: in `forgelib/portrait.py` composite each img2img edit through a feathered interior face mask over the neutral (hair, clothes, background and the 2 px border stay neutral pixels), quantize against the neutral's own LAB palette plus outline and eye-highlight tokens instead of all 64 colours, then add QA: skin LAB mean within delta-E 2.5 of the neutral and at least 3.5% changed pixels inside the eye, brow and mouth region so thoughtful, concerned and sad stay apart at 96 px. Selftest without GPU on synthetic portraits.
-- evidence:
+- evidence: `art/source/forge/forgelib/portrait.py` (`face_interior_mask`, `quantize_to_neutral_palette`, `composite_interior_face`, `identity_report`, `pairwise_expression_warnings`); `art/source/forge/forgelib/portrait_selftest.py` (9/9 passing, 128/128 forge selftests passing).
 
 ### C34 · Retrieval and extraction text for C25 (proposal 005)
 
@@ -344,7 +344,7 @@ fit → C9c.
 
 ### C35 · Commercial status in the model registry (proposal 006)
 
-- status: open (visitor; handed over by director 2026-11-05 while claude rests)
+- status: in-progress (visitor; handed over by director 2026-11-05 while claude rests)
 - owner: visitor
 - work: `commercialStatus` (`apache-2.0`, `mit`, `commercial-licensed`, `dev-only-noncommercial`) and `territoryRestrictions` per entry in `art/source/forge/models.json` (or `forgelib/core.py` fallback table if `models.json` is lane-guarded), enforced and printed by `forge.py doctor`, with the licence name and the URL it was read from. Verify each licence text before filling a value; unknown stays `unverified`.
 - evidence:
