@@ -201,6 +201,46 @@ The commands (`scripts/art-integrate.ts`, 2026-11-02):
 
 Re-running `merge` on an integrated asset is a no-op apart from key order (tested on
 Mireling: same source digest, byte-identical build).
+
+### Approved creature faces and inventory icons
+
+Communicator runs `npm run art:integrate -- merge-faces <species>` after merging
+the matching published body. This verifies both approval records, packet hashes,
+all exported bytes, the integrated body clips/sockets and the face-to-body digest.
+The three current approved sidecars are Rivallie, Bramblefang and Mireling.
+The later B20 body candidates cannot inherit these earlier face approvals.
+Per-frame offsets and null hidden markers enter an optional `face` attachment on
+the face layer set, with the expression/facing frame table and bound body digest.
+The runtime uses the body sample's head socket, hides back facings, selects the
+expression independently of body cadence and includes attachment position in its
+composite key. Offset edits and every decal participate in source digests.
+
+For the inventory packet, communicator runs
+`npm run art:integrate -- merge-icons docs/team/comms/director/approvals/icons-items--2026-11-04-icons-items-1.md`.
+The 17 images bind to 34 existing item identities: 16 individual items plus the
+shared garment image for the 18 canonical garments. No generic garment item is
+introduced. Inventory markup draws approved atlas rectangles with their original
+transparent margins; URLs resolve at both `/` and `/Vibe/`.
+
+Both commands validate before installing immutable intake receipts under
+`art/source/exports/intake/`. The additive `reviewed-export` provenance method
+pins the approved PNGs, packet, approval records, intake script, dependency lock
+and actual Node version. It describes intake only; the staged face generator's
+hash remains in the receipt, without invented historical Python/Pillow versions.
+Existing Blender and image-generation provenance rules remain in force.
+
+After communicator commits the manifest and intake receipts, Codex runs
+`npm run assets:build`, then `npm run art:integrate -- ledger-faces <species>`
+and/or the equivalent `ledger-icons <approval-record>`, followed by another
+`assets:build` and asset checks. Ledger commands revalidate intake and reject a
+stale catalog digest. Face intake transcribes the body, face and composition
+subjects only from their matching body/face approvals. Repeated intake is tested;
+changed, superseded or mismatched records fail before manifest or ledger writes.
+
+Codex can run `npm run art:integrate -- reconcile-ledger` to withdraw grants whose
+cited director records are superseded or no longer approve them. Withdrawal does
+not create a rejection or approve a replacement. Rebuild the catalog afterward;
+replacement activation still needs the matching manifest and approval records.
 Commit the complete source-bundle directory together with staging and exports, so
 Machine B and CI can verify provenance without Blender, the original workspace or
 network access. Internal historical paths inside the copied animate record remain

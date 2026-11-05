@@ -25,6 +25,7 @@ export interface ActionTiming {
   readonly endsAt: number;
 }
 export interface ActorPresentation {
+  readonly faceExpression?: import('./dialogue').DialogueEmotion | 'blink' | 'sleep' | 'hurt';
   readonly attackTarget?: number;
   readonly telegraph?: AttackTelegraph;
   readonly intent?: import('./creature-minds').CreatureIntent;

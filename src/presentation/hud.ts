@@ -27,6 +27,7 @@ import type { ImageSettings, ImageProbe } from '../adapters/image';
 import type { Quality } from './renderer';
 import { GARMENT_SLOTS, type GearSlot } from '../domain/equipment';
 import { latestNpcEmotion } from './ui/dialogue';
+import { inventoryIcon } from './ui/inventory-icon';
 import { updateExploration } from './ui/exploration';
 import { meterMarkup, refreshMeters } from './ui/meters';
 
@@ -729,7 +730,7 @@ export class HudPresenter {
     const html = frame.inventory
       .map(
         (item, i) =>
-          `<div class="hand-slot ${item ? 'filled' : ''}" data-key="carry:${i}" data-carry-slot="${i}" tabindex="0" role="group" aria-label="Carried slot ${i + 1}: ${item ? escapeHtml(ITEMS[item.id].name) : 'empty'}"><span class="slot-number">0${i + 1} <span>${i === 0 ? 'LEFT' : 'RIGHT'} HAND</span></span><div class="slot-item">${item ? `<span class="item-pixel" style="--item:#${ITEMS[item.id].color.toString(16)}"></span><b>${escapeHtml(ITEMS[item.id].name)}</b>${item.charges !== undefined ? `<small>${item.charges} charges remaining</small>` : ''}` : '<span class="empty-hand">+</span><span>Room for a discovery</span>'}</div>${item ? `<div class="slot-actions"><button data-action="use" data-id="${i}">Use</button>${ITEMS[item.id].garment ? `<button data-action="equip" data-id="${i}" aria-label="Equip ${escapeHtml(ITEMS[item.id].name)}">Equip</button>` : ''}<button data-action="drop" data-id="${i}">Drop</button></div>` : ''}</div>`,
+          `<div class="hand-slot ${item ? 'filled' : ''}" data-key="carry:${i}" data-carry-slot="${i}" tabindex="0" role="group" aria-label="Carried slot ${i + 1}: ${item ? escapeHtml(ITEMS[item.id].name) : 'empty'}"><span class="slot-number">0${i + 1} <span>${i === 0 ? 'LEFT' : 'RIGHT'} HAND</span></span><div class="slot-item">${item ? `${inventoryIcon(this.appearance, item.id) || `<span class="item-pixel" style="--item:#${ITEMS[item.id].color.toString(16)}"></span>`}<b>${escapeHtml(ITEMS[item.id].name)}</b>${item.charges !== undefined ? `<small>${item.charges} charges remaining</small>` : ''}` : '<span class="empty-hand">+</span><span>Room for a discovery</span>'}</div>${item ? `<div class="slot-actions"><button data-action="use" data-id="${i}">Use</button>${ITEMS[item.id].garment ? `<button data-action="equip" data-id="${i}" aria-label="Equip ${escapeHtml(ITEMS[item.id].name)}">Equip</button>` : ''}<button data-action="drop" data-id="${i}">Drop</button></div>` : ''}</div>`,
       )
       .join('');
     this.setHtml('inventory', html);

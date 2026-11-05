@@ -643,3 +643,24 @@ packets stay intact. Current dependency hashes require fresh check/render receip
 Machine-A Riverlands revision 3 and director review remain external; synthetic
 receipt tests establish tooling behavior, never visual acceptance. See
 [worldforge review semantics](worldforge.md#qa-and-review-semantics).
+
+## ADR 040 - bind creature face composition to approved body poses
+
+**Problem:** published C3b face sidecars carry expression decals and per-body-frame
+offsets, while body-only integration and cadence-based layers cannot consume them.
+The approved inventory packet also contains one shared garment icon rather than
+an invented generic garment item.
+
+**Decision:** add optional face attachment metadata to layer sets and explicit
+face/icon intake and ledger commands. Verify packet bytes, approval scope and
+body identity before writing. Expression selection follows the sampled body pose;
+hidden frames and back facings remain hidden. Preserve the original sprite frame
+and socket registration, and include target positions in composite cache keys.
+Map the garment export to existing canonical garment identities.
+
+**Consequences:** source digests cover every decal and registration. Separate
+`reviewed-export` provenance captures immutable intake receipts and pins the
+actual intake toolchain without claiming missing generator versions. Existing
+body publication and provenance requirements remain. Communicator owns manifest
+merges; Codex transcribes approvals and owns generated outputs. New face art
+still needs new approval. See [intake commands](hd-presentation.md#approved-creature-faces-and-inventory-icons).

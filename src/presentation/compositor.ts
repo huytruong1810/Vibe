@@ -203,6 +203,28 @@ export interface ModularSelection {
   readonly layers: readonly ModularLayer[];
   readonly complete: boolean;
 }
+/** Face poses are expression-indexed, independent of the body's animation cadence. */
+export function faceLayerPose(
+  layer: LayerSet,
+  actor: ActorPresentation,
+  body: Pick<AssetFrame, 'id' | 'sockets'>,
+  facing: Facing,
+): { frameId: string; target: PixelPoint } | undefined {
+  const face = layer.face;
+  const offset = face?.registration[body.id];
+  const head = body.sockets?.Socket_Head;
+  if (!face || !offset || !head || ['n', 'ne', 'nw'].includes(facing)) return undefined;
+  const expression =
+    actor.pose === 'sleep'
+      ? 'sleep'
+      : actor.pose === 'hit' || actor.pose === 'downed'
+        ? 'hurt'
+        : (actor.faceExpression ?? 'neutral');
+  const frameId = face.frames[expression]?.[facing] ?? face.frames.neutral?.[facing];
+  return frameId
+    ? { frameId, target: { x: head.x + offset[0], y: head.y + offset[1] } }
+    : undefined;
+}
 export function selectModularLayers(
   catalog: AssetCatalog,
   resolver: AppearanceResolver,
@@ -239,7 +261,7 @@ export function selectModularLayers(
     // body frame's held pose picks the frame (heldLayerFrame), whatever the body is doing.
     const clip =
       layerAppearance &&
-      (layerSet.slot === 'held'
+      (layerSet.slot === 'held' || layerSet.face
         ? resolver.clip(layerAppearance, 'idle', facing)
         : resolver.clip(layerAppearance, state, facing, actor.action?.move));
     if (!layerSet || !layerAppearance || !clip) {

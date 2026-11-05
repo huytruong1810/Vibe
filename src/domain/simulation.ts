@@ -2466,6 +2466,13 @@ export class SimulationHost {
                                       )
                                     : 'idle';
       actors.push({
+        ...(npc && this.dialogue?.npcId === npc.profileId
+          ? {
+              faceExpression:
+                [...this.dialogue.lines].reverse().find((l) => l.speaker === 'npc')?.emotion ??
+                ('neutral' as const),
+            }
+          : {}),
         ...(action && id !== 0
           ? {
               telegraph: this.combat.telegraph(id, this.tick),

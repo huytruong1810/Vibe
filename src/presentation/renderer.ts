@@ -54,6 +54,7 @@ import {
   layerSockets,
   selectModularLayers,
   heldLayerFrame,
+  faceLayerPose,
   socketWorld,
   frameAnchor,
   type CompositeLease,
@@ -1529,12 +1530,21 @@ export class WorldRenderer {
     }[] = [];
     const bodyZ = selection.layers.find((l) => l.layerSet.slot === 'body')?.definition.z ?? 0;
     for (const layer of selection.layers) {
+      const face = layer.layerSet.face
+        ? faceLayerPose(
+            layer.layerSet,
+            { ...e.actor, pose: sample.state },
+            bodyFrame,
+            sample.facing,
+          )
+        : undefined;
+      if (layer.layerSet.face && !face) continue;
       const held =
         layer.layerSet.slot === 'held' && layer.definition.socketId
           ? heldLayerFrame(layer.clip, bodyFrame, layer.definition.socketId)
           : undefined;
       if (layer.layerSet.slot === 'held' && !held) continue; // this pose shows no item
-      const id = held ? held.frameId : layerFrameId(layer.clip, sample),
+      const id = face?.frameId ?? (held ? held.frameId : layerFrameId(layer.clip, sample)),
         frame = id && this.frames.get(id),
         texture = id && this.assets.texture(id);
       const socket = layer.definition.socketId
@@ -1547,7 +1557,7 @@ export class WorldRenderer {
       layers.push({
         texture,
         frame,
-        target: socket ?? registration.anchorPx,
+        target: face?.target ?? socket ?? registration.anchorPx,
         order: held?.behind ? bodyZ - 0.5 : layer.definition.z,
       });
     }
@@ -1561,7 +1571,7 @@ export class WorldRenderer {
     const key = compositeKey(
       e.actor,
       recipe.id,
-      layers.map((l) => `${l.frame.id}:${l.texture.uid}`),
+      layers.map((l) => `${l.frame.id}:${l.texture.uid}@${l.target.x},${l.target.y}`),
       this.loadedTextureResolution,
     );
     if (e.compositeKey !== key || !e.composite) {

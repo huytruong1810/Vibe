@@ -62,7 +62,7 @@ const SourceDependencyPath = z
 export const AuthoringProvenanceSchema = z
   .object({
     id: Id,
-    method: z.enum(['pillow', 'blender-bake', 'master-ingestion']),
+    method: z.enum(['pillow', 'blender-bake', 'master-ingestion', 'reviewed-export']),
     inputs: z
       .array(
         z
@@ -104,6 +104,18 @@ export const AuthoringProvenanceSchema = z
       issue(`Duplicate authoring dependency: ${record.id}`);
     if (new Set(record.toolchain.map((t) => t.name.toLowerCase())).size !== record.toolchain.length)
       issue(`Duplicate toolchain pin: ${record.id}`);
+    if (record.method === 'reviewed-export') {
+      if (
+        !record.inputs.some((i) => i.role === 'script' && i.path.endsWith('.ts')) ||
+        !record.inputs.some((i) => i.role === 'master') ||
+        !record.inputs.some((i) => i.role === 'dependency-lock') ||
+        !record.toolchain.some((t) => t.name === 'node')
+      )
+        issue(
+          `Reviewed export needs its intake script, approved masters, lock and Node pin: ${record.id}`,
+        );
+      return;
+    }
     if (!record.inputs.some((i) => i.role === 'script' && i.path.endsWith('.py')))
       issue(`Authoring pipeline needs its pinned Python script: ${record.id}`);
     if (record.method === 'blender-bake') {
@@ -219,6 +231,16 @@ export const RigDefinitionSchema = RigRegistrationSchema.extend({
 export const BuildProfileSchema = z
   .object({ id: Id, rigId: Id, label: z.string().min(1).max(100) })
   .strict();
+export const FACE_EXPRESSIONS = [...DIALOGUE_EMOTIONS, 'blink', 'sleep', 'hurt'] as const;
+export const FaceExpressionSchema = z.enum(FACE_EXPRESSIONS);
+export const FaceAttachmentSchema = z
+  .object({
+    bodyAppearanceId: Id,
+    bodyPacketDigest: Digest,
+    frames: z.partialRecord(FaceExpressionSchema, z.partialRecord(FacingSchema, Id)),
+    registration: z.record(Id, z.tuple([z.number().int(), z.number().int()]).nullable()),
+  })
+  .strict();
 export const LayerSetSchema = z
   .object({
     id: Id,
@@ -226,6 +248,7 @@ export const LayerSetSchema = z
     buildProfileIds: z.array(Id).min(1),
     slot: z.enum(['body', 'hair', 'face', 'garment', 'held', 'overlay']),
     appearanceId: Id,
+    face: FaceAttachmentSchema.optional(),
     stage: ArtStageSchema.optional(),
     sourceDigest: Digest.optional(),
   })
@@ -762,7 +785,22 @@ export function validateV2Graph(graph: AssetGraph, issue: (message: string) => v
         if (clip && (clip.state !== 'idle' || clip.frameIds.length !== 8))
           issue(`Held layer needs one idle clip per facing with 8 grip frames: ${layer.id}/${id}`);
       }
-    if (appearance && rig && layer.slot !== 'held')
+    if (layer.face) {
+      if (layer.slot !== 'face' || !appearances.has(layer.face.bodyAppearanceId))
+        issue(`Invalid face body binding: ${layer.id}`);
+      const body = appearances.get(layer.face.bodyAppearanceId);
+      const bodyIds = new Set(body ? appearanceFrames(body).map((f) => f?.id) : []);
+      for (const [id, offset] of Object.entries(layer.face.registration)) {
+        if (!bodyIds.has(id) || (offset && offset.some((n) => n % 2)))
+          issue(`Invalid face registration: ${layer.id}/${id}`);
+      }
+      for (const poses of Object.values(layer.face.frames))
+        for (const [facing, id] of Object.entries(poses ?? {})) {
+          if (['n', 'ne', 'nw'].includes(facing) || !frames.has(id))
+            issue(`Invalid face decal: ${layer.id}/${id}`);
+        }
+    }
+    if (appearance && rig && layer.slot !== 'held' && !layer.face)
       for (const f of appearanceFrames(appearance)) {
         if (!f || !rigRegistration(rig, f))
           issue(`Layer registration incompatible with rig: ${layer.id}`);
@@ -799,7 +837,10 @@ export function validateV2Graph(graph: AssetGraph, issue: (message: string) => v
         ITEMS[part.itemId as keyof typeof ITEMS]?.garment?.slot !== part.gearSlot
       )
         issue(`Item/garment slot mismatch: ${recipe.id}/${part.itemId}`);
-      if (part.socketId && (!rig?.socketIds.includes(part.socketId) || layer?.slot !== 'held'))
+      if (
+        part.socketId &&
+        (!rig?.socketIds.includes(part.socketId) || !['held', 'face'].includes(layer?.slot ?? ''))
+      )
         issue(`Invalid attachment socket: ${recipe.id}/${part.socketId}`);
       if (
         layer?.slot === 'held' &&

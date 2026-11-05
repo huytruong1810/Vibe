@@ -20,6 +20,14 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { format, resolveConfig } from 'prettier';
 import { SPECIES } from '../src/content/definitions';
 import { SourceManifestSchema } from '../src/presentation/assets/source';
+import {
+  mergeFaces,
+  mergeIcons,
+  installIntake,
+  approvalEntries,
+  verifyPublishedBody,
+  reconcileLedger,
+} from './art-sidecars';
 
 type Json = Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
 const read = (p: string): Json => JSON.parse(readFileSync(p, 'utf8'));
@@ -29,6 +37,49 @@ const fail = (m: string): never => {
   process.exit(1);
 };
 const [command, asset, ...rest] = process.argv.slice(2);
+if (command === 'reconcile-ledger') {
+  const path = 'docs/art/approvals.json';
+  const result = reconcileLedger(process.cwd(), read(path));
+  await writeJson(path, result.ledger);
+  console.log(`Withdrew superseded ledger grants: ${result.withdrawn.join(', ') || 'none'}`);
+  process.exit(0);
+}
+if (['merge-faces', 'ledger-faces', 'merge-icons', 'ledger-icons'].includes(command ?? '')) {
+  if (!asset)
+    fail('usage: merge-faces|ledger-faces <species> OR merge-icons|ledger-icons <approval-record>');
+  const manifestPath = 'art/source/manifest.json';
+  const manifest = read(manifestPath);
+  const intake = command!.endsWith('faces')
+    ? mergeFaces(process.cwd(), manifest, asset!)
+    : mergeIcons(process.cwd(), manifest, asset!);
+  if (command!.startsWith('merge-')) {
+    installIntake(process.cwd(), intake);
+    await writeJson(manifestPath, intake.manifest);
+    console.log(
+      `Merged ${asset}; run assets:build, then ${command!.replace('merge-', 'ledger-')}.`,
+    );
+  } else {
+    const { canonicalSourceJson } = await import('../src/presentation/assets/source');
+    if (canonicalSourceJson(manifest) !== canonicalSourceJson(intake.manifest))
+      fail('manifest differs from verified intake; merge first');
+    const entries = approvalEntries(
+      process.cwd(),
+      intake,
+      read('public/assets/generated/catalog.json'),
+    );
+    const ledger = read('docs/art/approvals.json');
+    ledger.records = [
+      ...ledger.records.filter(
+        (r: Json) =>
+          !entries.some((e) => e.subjectKind === r.subjectKind && e.subjectId === r.subjectId),
+      ),
+      ...entries,
+    ];
+    await writeJson('docs/art/approvals.json', ledger);
+    console.log(`Ledger transcribed ${entries.length} subjects from ${intake.records.join(', ')}.`);
+  }
+  process.exit(0);
+}
 if (!['merge', 'ledger'].includes(command ?? '') || !asset)
   fail('usage: merge|ledger <asset> [--appearance species:<id>|npc:<id>]');
 const flag = rest.indexOf('--appearance');
@@ -43,6 +94,7 @@ const appearanceId =
 const [kind, contentId] = appearanceId.split(':') as [string, string];
 const stagingPath = `art/source/staging/blender/${asset}.json`;
 const staging = read(stagingPath);
+verifyPublishedBody(process.cwd(), staging);
 const MANIFEST = 'art/source/manifest.json';
 
 async function writeJson(path: string, value: unknown) {
@@ -143,7 +195,11 @@ async function ledger() {
       .split('\n')
       .map((l) => l.split(/:(.*)/s).map((s) => s.trim())),
   );
-  if (meta.decision !== 'director-approved' || meta.packetDigest !== staging.packetDigest)
+  if (
+    meta.decision !== 'director-approved' ||
+    meta['superseded-by'] ||
+    meta.packetDigest !== staging.packetDigest
+  )
     fail('the approval record is not director-approved for the staged packet digest');
   const m = read(MANIFEST);
   const appearance = m.appearances.find((a: Json) => a.id === appearanceId);
