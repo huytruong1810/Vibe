@@ -5,8 +5,9 @@
 Branch `eng/hd-presentation`, workspace `C:/Users/htruong/source/repos/Vibe`.
 C20 source **e2e2b0f1** push/PR verify failed. C3g **7a3ae74b**, C18 startup diagnostics **f9f9e5dd**, and C13 phase capture **ab636702** are separately committed; Source98416654 CI fails startup in both literacy shards; creature shards pass. C32 **c998d532** is committed; final pause checkpoint is pushed separately.
 The director asked to continue through all unblocked Codex tickets. The latest director instruction is HALT, commit/push completed work, then resume
-after3h30. A one-time Windows scheduled resume is being configured for03:40 UTC
-(Nov4 21:40 America/Chicago); verify the local scheduled-task receipt. C21 still needs explicit go.
+after3h30. A one-time Windows scheduled resume is REGISTERED for03:40 UTC
+(Nov4 21:40 America/Chicago); see [schedule receipt](resume-schedule.json).
+The task removes itself before CLI resume, with workspace-write/on-request approvals. C21 still needs explicit go.
 
 Read the codex brief and charter after compaction. Use
 [team-comms](../../../../.agents/skills/team-comms/SKILL.md) and
