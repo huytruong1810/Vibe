@@ -351,10 +351,10 @@ fit → C9c.
 
 ### C36 · Held-item orientation on elongated weapons (visitor finding 3)
 
-- status: open (claude; needs a reproduction first)
+- status: candidate (claude; tool side done 2026-11-05, blender re-bake pending)
 - owner: claude
 - work: reproduce the blunt copper-sword and webbed shortbow from `art/review/2026-11-05-item-copper-sword/` and `...-item-shortbow/` in `item_orient_selftest.py`; only then change the PCA axis fit (a pedestal under the model) and the anisotropic `minFeaturePx` dilation. A change without a failing test first is a guess.
-- evidence:
+- evidence: cause reproduced in `item_orient_selftest.py` from the staged orient.json dimensions: one isotropic offset sized for the 1.4 px haft (0.82 px a side on the sword, 1.0 px on the bow) widens the 4.7 px blade to 6.3 px and closes the 2 px stave-to-string gap. Fix: `orient.inflate: "thin"` (`forgelib/item_orient.py` `inflation_offsets`, `inflate`; default `all` keeps every approved item byte-identical); recipes `item-copper-sword` and `item-shortbow` set it; selftest `item_orient_selftest.py` (8 tests). The PCA axis fit was not the cause and is unchanged. Open: blender re-bakes both and looks at the contact sheet at 1x (PRD-5).
 
 ### C31 · gen3d backends: Hunyuan3D-2.1 shape and TRELLIS.2
 

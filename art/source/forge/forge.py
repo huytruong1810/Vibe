@@ -513,7 +513,7 @@ def st_faces(asset: str) -> str:
     return f"{report['status']}: {_rel(output)}; OPEN contact.png and registered.png; request a separate faces decision"
 
 
-ORIENT_FIELDS = {"lengthArtPx", "gripFraction", "flipHead", "flipForward", "minFeaturePx"}
+ORIENT_FIELDS = {"lengthArtPx", "gripFraction", "flipHead", "flipForward", "minFeaturePx", "inflate"}
 
 
 def st_orient(asset: str) -> str:

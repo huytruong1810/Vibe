@@ -14,7 +14,8 @@
   "orient": {
     "lengthArtPx": 17,
     "gripFraction": 0.47,
-    "minFeaturePx": 2.7
+    "minFeaturePx": 2.7,
+    "inflate": "thin"
   },
   "item": {
     "model": "auto",

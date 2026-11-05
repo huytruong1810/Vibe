@@ -6,7 +6,7 @@ from pathlib import Path
 import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from forgelib.item_orient import inflation, orient
+from forgelib.item_orient import inflate, inflation, inflation_offsets, orient
 
 
 def synthetic_hatchet(seed: int = 3) -> tuple[np.ndarray, np.ndarray]:
@@ -69,6 +69,49 @@ class ItemOrientTest(unittest.TestCase):
         self.assertLess(width, 1.0)              # a 0.04-wide haft at 12 px is under 1 px
         self.assertGreater(inflation(width, 2, 32), 0)
         self.assertEqual(inflation(3.0, 2, 32), 0.0)
+
+    # C36 (visitor finding 3): the copper sword and shortbow read as a paddle and a sausage because one isotropic
+    # offset, sized for the thin axis, also fattens the blade width and fills the stave-to-string gap.
+    SWORD_DIMS = [0.032584, 0.146749, 0.4375]   # x thickness, y width, z length (world units), item-copper-sword orient.json
+    BOW_DIMS = [0.042621, 0.105624, 0.53125]    # item-shortbow orient.json
+
+    @staticmethod
+    def box(x, y, z, cx=0.0, cy=0.0, cz=0.0):
+        """Eight corner vertices of an axis-aligned box with the corner's outward normal."""
+        pts, nrm = [], []
+        for sx in (-1, 1):
+            for sy in (-1, 1):
+                for sz in (-1, 1):
+                    pts.append([cx + sx * x / 2, cy + sy * y / 2, cz + sz * z / 2])
+                    nrm.append([sx, sy, 0.0])
+        return np.array(pts), np.array(nrm, dtype=float)
+
+    def test_thin_axis_inflation_keeps_a_blade_as_wide_as_it_is(self):
+        iso = inflation_offsets(self.SWORD_DIMS, 2.4, 32, "all", 1.367)
+        thin = inflation_offsets(self.SWORD_DIMS, 2.4, 32, "thin")
+        self.assertAlmostEqual(iso[1] * 32, 0.817, places=2)   # today's behaviour: width also grows 0.82 px a side
+        self.assertEqual(thin[1], 0.0)                         # 4.7 px wide already clears 2.4 px
+        self.assertGreater(thin[0] * 32, 0.0)                  # the 1.0 px thickness still thickens
+        self.assertEqual(thin[2], 0.0)                         # length is never touched
+        v, n = self.box(*self.SWORD_DIMS)
+        out = inflate(v, n, thin)
+        self.assertAlmostEqual(np.ptp(out[:, 1]), self.SWORD_DIMS[1], places=6)
+        self.assertGreaterEqual(np.ptp(out[:, 0]) * 32, 1.25 * 2.4 - 1e-6)
+
+    def test_thin_axis_inflation_keeps_the_bow_gap(self):
+        gap = 0.07  # stave to string, about 2.2 px at 32 px per unit
+        a, na = self.box(0.0426, 0.02, 0.5, cy=-gap / 2 - 0.01)
+        b, nb = self.box(0.0426, 0.02, 0.5, cy=gap / 2 + 0.01)
+        off = inflation_offsets(self.BOW_DIMS, 2.7, 32, "thin")
+        ia, ib = inflate(a, na, off), inflate(b, nb, off)
+        self.assertAlmostEqual(ib[:, 1].min() - ia[:, 1].max(), gap, places=6)
+        wide = inflation_offsets(self.BOW_DIMS, 2.7, 32, "all", 1.387)
+        self.assertLess(inflate(b, nb, wide)[:, 1].min() - inflate(a, na, wide)[:, 1].max(), gap - 0.02)  # the old fill
+
+    def test_default_mode_is_the_old_isotropic_offset(self):
+        self.assertEqual(inflation_offsets(self.SWORD_DIMS, 2.4, 32, haft_width_px=1.367), inflation_offsets(self.SWORD_DIMS, 2.4, 32, "all", 1.367))
+        with self.assertRaisesRegex(ValueError, "inflate"):
+            inflation_offsets(self.SWORD_DIMS, 2.4, 32, "bogus", 1.367)
 
     def test_deterministic(self):
         _, posed = synthetic_hatchet()

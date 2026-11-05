@@ -2,7 +2,7 @@
 
 blender -b --factory-startup -P item_orient.py -- <texture.blend> <out.blend> <params.json>
 params: {"lengthArtPx": float, "artPxPerUnit": 32, "gripFraction": 0.15, "flipHead": bool,
-         "flipForward": bool, "maxReachArtPx": float, "minFeaturePx": 2 (ART-6.3)}
+         "flipForward": bool, "maxReachArtPx": float, "minFeaturePx": 2 (ART-6.3), "inflate": "all"|"thin"}
 Applies the transform from forgelib/item_orient.py to the mesh data (rigid + uniform
 scale, never mirrored), keeps the "Col" vertex colours from texture, and prints
 ITEM_ORIENT {...} with the grip (origin) and icon pivot for the item recipe.
@@ -17,7 +17,7 @@ import numpy as np
 from mathutils import Matrix
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from forgelib.item_orient import icon_scale, inflation, orient  # noqa: E402
+from forgelib.item_orient import icon_scale, inflate, inflation_offsets, orient  # noqa: E402
 
 argv = sys.argv[sys.argv.index("--") + 1:]
 src, out, params = argv[0], argv[1], json.loads(open(argv[2]).read())
@@ -34,14 +34,18 @@ obj.data.transform(Matrix(result["matrix"]) @ obj.matrix_world)
 obj.matrix_world = Matrix.Identity(4)
 # ART-6.3: thin features thicken in the model. Offset every vertex along its normal so
 # the haft clears the minimum width; the blade and head grow by the same small offset.
-d = inflation(result["haftWidthArtPx"], params.get("minFeaturePx", 2), params["artPxPerUnit"])
-if d > 0:
+offsets = inflation_offsets(result["dimensions"], params.get("minFeaturePx", 2), params["artPxPerUnit"],
+                            params.get("inflate", "all"), result["haftWidthArtPx"])
+if any(o > 0 for o in offsets):
     obj.data.update()
-    for v in obj.data.vertices:
-        v.co += v.normal * d
+    verts = obj.data.vertices
+    moved = inflate(np.array([v.co for v in verts]), np.array([v.normal for v in verts]), offsets)
+    for v, co in zip(verts, moved):
+        v.co = co
+d = max(offsets)
 result["inflateArtPx"] = round(d * params["artPxPerUnit"], 3)
-depth_px = result["dimensions"][1] * params["artPxPerUnit"] + 2 * result["inflateArtPx"]
-result["iconScale"] = icon_scale(result["lengthArtPx"] + 2 * result["inflateArtPx"], depth_px,
+depth_px = result["dimensions"][1] * params["artPxPerUnit"] + 2 * offsets[1] * params["artPxPerUnit"]
+result["iconScale"] = icon_scale(result["lengthArtPx"] + 2 * offsets[2] * params["artPxPerUnit"], depth_px,
                                  params["iconSizePx"], params["marginPx"])
 obj.name = obj.data.name = "Item"
 for o in list(bpy.data.objects):
