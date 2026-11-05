@@ -703,3 +703,37 @@ Part3 portrait identity work remains with its assigned owner.
 shared pixels with distinct offsets, review artifact classification and catalog checks.
 The 128 MiB Low / 256 MiB Balanced budgets remain unchanged. A compact current catalog
 is not evidence that all nineteen actors have been integrated.
+
+## ADR 043 - Checkpoint storage outside the UI event loop
+
+**Evidence:** native source688eab26 completed the C18 functional journey but opening
+measured323.5ms, pause262.5ms, with a221.6ms main-thread worker-message task. CPU
+samples include checkpoint validation, serialization and hashing while autosave
+was active. Raw CPU/Playwright evidence is retained separately from later runs.
+
+**Decision:** routine save requests capture the same owned SimulationHost snapshot
+and send it directly from the simulation worker to a lazy checkpoint worker. The
+existing IndexedDbSaveRepository performs migration/validation, JSON serialization,
+checksumming and the same atomic rotating-slot transaction there. The UI receives a
+request-correlated completion or error only after the transaction completes. The
+writer serializes requests, recovers its queue after rejected input, and reports
+storage errors. Explicit checkpoint/export/restore APIs and save version9 remain.
+
+Periodic presentation additionally requires a recycled buffer, acknowledging that
+the main thread consumed earlier transport. Simulation ticks still advance when no
+buffer is available; command replies and command frames remain immediate. The
+existing100ms healthy publication cadence and all simulation rates/limits remain.
+This bounds stale frame queues without pausing or shrinking the world.
+
+**Validation:** real fake-indexeddb writer tests verify ordered commits, existing
+restore compatibility, rejected-save recovery and terminal errors; worker/bridge
+tests verify receipt correlation, no full checkpoint on the UI path, continued ticks
+and immediate commands under presentation backpressure. Native source4bbabb7b C8,
+atlas and C18 checks pass; opening61.3ms, two pages, all five measurements and no
+page errors. Forced software startup remains under investigation; neither this
+local result nor mocked storage establishes current-source remote verify acceptance.
+
+**Related:**9469018a excludes immutable published-art trees and build/test receipts
+from development source watching, keeping explicit HTTP asset fetching intact.
+C482b30b counts each shared half-resolution PNG once in the gallery and verifies
+that total against actual PNG headers.

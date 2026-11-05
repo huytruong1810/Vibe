@@ -2094,5 +2094,164 @@
     "approvedAppearances": 2,
     "assetCheck": "passed",
     "sliceGaps": 1517
+  },
+  "ratifiedProposalCheckpoint": {
+    "recordedAt": "2026-11-05T16:55:57.764442+00:00",
+    "requestedStudioMerge": "aace9882",
+    "laterStudioMerge": "112ca67e",
+    "laterStudioSource": "047ee6b9",
+    "facesBlob": "b24e1e9620c7e567d58d00230a0df40707b232a8",
+    "C34": "522d85ae",
+    "C3g": "3f2cb346",
+    "generated": "8051a212",
+    "bindingRegression": "a633e817",
+    "browserMocks": "688eab26",
+    "check": {
+      "tests": 566,
+      "files": 47,
+      "seconds": 64.87,
+      "log": "artifacts/resume-c34-check.log",
+      "scope": "before later studio merge; final whole-source checks pending"
+    },
+    "pythonAfterMerge": {
+      "portrait": 9,
+      "registry": 3,
+      "creatureFaces": 11,
+      "finish": 26,
+      "facePublication": 5
+    },
+    "focusedAfterMerge": 49,
+    "atlas": {
+      "frames": 4024,
+      "fullPages": 3,
+      "fullMiB": 47.67,
+      "halfMiB": 12.21,
+      "approvedActors": 0,
+      "hdGateGaps": 1519,
+      "inspected": [
+        "bundle-0.png",
+        "bundle-1.png",
+        "bundle-2.png",
+        "bundle@0.5x.png"
+      ]
+    },
+    "gaps": [
+      "B29 current creature packets use 50 frames; require fresh 25-frame publications and approvals",
+      "Communicator manifest integration",
+      "A live official/development model quality, manifest and private mirror receipts",
+      "C33/C35 review findings",
+      "C18 software startup/performance and current-source verify"
+    ]
+  },
+  "followupCheckpoint": {
+    "recordedAt": "2026-11-05T17:43:52.322718+00:00",
+    "source": "001c7cf8",
+    "commits": {
+      "browserMocks": "688eab26",
+      "registryRepair": "89d2bbb9",
+      "galleryAccounting": "c482b30b",
+      "devWatcher": "9469018a",
+      "checkpointWriter": "4bbabb7b",
+      "frameBackpressure": "001c7cf8"
+    },
+    "nativeControl": {
+      "source": "688eab26",
+      "passed": 27,
+      "failed": 2,
+      "skipped": 1,
+      "seconds": 834,
+      "openingMs": 323.5,
+      "failures": [
+        "C8 cold page load",
+        "C18 opening exceeds 100ms"
+      ],
+      "artifacts": "artifacts/c18-control-688eab26/"
+    },
+    "nativeFocused": {
+      "source": "4bbabb7b",
+      "passed": 3,
+      "openingMs": 61.3,
+      "mountedPages": 2,
+      "pageErrors": 0,
+      "artifacts": "artifacts/c18-native-4bbabb7b/"
+    },
+    "softwareFocused": {
+      "source": "4bbabb7b",
+      "status": "interrupted after C13 startup failure; no passing C18 receipt"
+    },
+    "finalValidation": {
+      "source": "001c7cf8",
+      "fullChecks": [
+        {
+          "log": "artifacts/resume-final-check.log",
+          "passed": 568,
+          "failed": 2,
+          "failures": {
+            "artifactValidationMs": 76.9779,
+            "paintingMedianMs": 6.1293
+          }
+        },
+        {
+          "log": "artifacts/resume-final-check-isolated.log",
+          "passed": 568,
+          "failed": 2,
+          "failures": {
+            "artifactValidationMs": 252.0948,
+            "paintingMedianMs": 6.786
+          }
+        }
+      ],
+      "freshProcessBudgets": {
+        "log": "artifacts/resume-isolated-budgets.log",
+        "passed": 2,
+        "artifactValidationMs": 45.57,
+        "thresholdsUnchanged": true
+      },
+      "pythonFocused": {
+        "tests": 55,
+        "seconds": 23.921,
+        "log": "artifacts/resume-forge-focused-final.log",
+        "modules": [
+          "faces_creature_selftest",
+          "finish_selftest",
+          "publish_faces_selftest",
+          "portrait_selftest",
+          "registry_selftest"
+        ]
+      },
+      "broadForge": "Interrupted Windows discovery after gpu_window removed-after-exception test; no whole-suite pass claim",
+      "build": {
+        "passed": true,
+        "seconds": 41.56,
+        "log": "artifacts/resume-final-build.log"
+      },
+      "format": {
+        "passed": true,
+        "log": "artifacts/resume-final-format-recheck.log"
+      },
+      "browser": "pending",
+      "assets": {
+        "build": "passed",
+        "check": "passed",
+        "generatedDiff": false,
+        "frames": 4024,
+        "fullPages": 3,
+        "fullMiB": 47.67,
+        "halfMiB": 12.21,
+        "approvedActors": 0,
+        "buildLog": "artifacts/resume-assets-final-build.log",
+        "checkLog": "artifacts/resume-assets-final-check.log",
+        "hd": "unchanged expected failure:1519 coverage gaps",
+        "hdLog": "artifacts/resume-hd-final.log"
+      }
+    },
+    "newStudio": {
+      "source": "d97206ca",
+      "merged": false,
+      "findings": [
+        "10 new face approvals recognized on studio; creature packet format remains 50 frames",
+        "visitor duplicates already delivered C34 and C3g work; route ownership before another merge"
+      ]
+    }
   }
 }

@@ -6,7 +6,7 @@ Workspace: `C:/Users/htruong/source/repos/Vibe`; branch: `eng/hd-presentation`.
 The pre-resume checkpoint was **45a10ccf**. Studio was normally merged at
 **296a7598** and the tested B27/B29 Python unblocks committed at **5655aa23**.
 Current validation and outstanding acceptance live in
-[resume validation](resume-validation.json) and [public CI receipt](resume-ci-receipt.json).
+[resume validation](resume-validation.json) and [historical public CI receipt](resume-ci-receipt.json) and [current CI receipt](current-ci-receipt.json).
 Do not work in the separate `Vibe-art` checkout.
 
 The director resumed this work and reordered it: Python forge unblocks first,
@@ -37,6 +37,67 @@ Use [team-comms](../../../../.agents/skills/team-comms/SKILL.md) and
    implementation from scratch. Refresh public CI receipts for the actual latest
    source SHA before choosing a repair. Queue evidence contains some older
    "pending CI" lines; the receipts below record later failures.
+
+## Latest checkpoint: ratified proposals and studio synchronization
+
+- Exact requested studio4d175582 merge landed/pushed at**aace9882**. Kept5655aa23
+  faces.py exactly and studio approvals/queues/status. Later normally merged current
+  studio047ee6b9 at**112ca67e** to adopt C33/C35 and B27 publications. No doctrine,
+  approval record, recipe or art packet was edited by Codex in either merge.
+- **522d85ae**: C34 GPU e4b defaults, shared scheduler, fixed-domain/pinned retrieval,
+  all active interlocutor claims in extraction, additive relationship type (existing
+  save9 remains readable), streamed dialogue TTFT, and `npm run test:villagers`.
+  Offline evaluator tests cannot establish actual model quality. Machine A must run
+  both official/development e4b and supply independent transcript-bound ratings.
+- **3f2cb346**: exact alpha bounds, cropped-RGBA hash deduplication with independent
+  logical registration, and review-sheet exclusion. Existing renderer pivot handling
+  remains valid. **8051a212** rebuilt4024frames/3full pages at47.67MiB full/12.21MiB
+  half; all four atlas PNGs inspected. Standard asset validation passes. The unchanged
+  HD gate fails1519requirements. Approved actors0 until current approved bodies and
+  fresh matching faces are integrated by communicator. Do not reuse withdrawn grants.
+- **a633e817** regression recognizes current body / stale face mismatches. Current
+  public push41976368350 and PR41976379820: CPU and both beta bases pass; browser and
+  verify fail. Push ecology's soak step actually passes; PR soak is canceled. Keep
+  ecology separate. **688eab26** updates obsolete browser Ollama fixtures while
+  preserving larger-model and missing-background fallback coverage; browser rerun is
+  underway. First corrected run has a cold page.goto timeout in C8 with pending CSS;
+  inspect retained trace before attributing that failure to simulation or storage.
+- Merged C33 portrait9, C35 registry3, retained creature-face11, finish26 and
+  face-publication5 pass. Focused post-merge intake/presentation49pass. Before this
+  later studio merge, full check566tests/47files passes in64.87s plus all build gates
+  except intentional HD coverage. Final whole-source checks remain required.
+- New B29 candidate creature packets from studio use**50frames**, not the required
+  25frame single-grammar format. Earlier25frame packets for B20 species bind older
+  bodies. Blender must rerun with5655aa23 and seek fresh face approval. Human60frame
+  face packets are a different format. Never expand the integrator to accept eyesOnly
+  alternatives as a shortcut. Copper-sword/shortbow retain Nov4 approvals pending C36.
+- Huy's direct chat ratifies005/006/007 Parts1&3 and excludes Part2 base creature eyes.
+  C33/C35 are inherited candidates, not self-approved engineering. Review gaps sent
+  to visitor: C33 fringe/hair preservation and mean/std skin QA; C35 string restrictions
+  versus006 arrays and primary-source licence verification. Actual GGUF manifest and
+  private mirror receipts remain open. Current primary Google terms page links Gemma4
+  to an Apache2 licence; do not carry older Gemma terms forward without verification.
+
+- Follow-up commits: **89d2bbb9** C35 array contract/all-entry verification;
+  unverified derivative aliases fail closed, primary-source receipts in operations.
+  **c482b30b** fixes shared-half-page gallery accounting; **9469018a** excludes
+  immutable art/receipt trees from dev watching. **4bbabb7b** moves routine checkpoint
+  persistence between workers; native focused3/3 pass, opening61.3ms/two pages.
+  Source688eab26 full-native had27pass/2fail/1skip in13.9min (C8 cold page load and
+  C18 opening323.5ms), with all screenshots inspected. Forced4bbabb7b run failed C13
+  pack startup and was interrupted while the next case ran; no passing SW claim.
+  **001c7cf8** adds recycled-buffer backpressure only for periodic frames; focused
+  worker/bridge/writer11pass, ticks/commands unchanged. Final focused Python55pass.
+  Whole-source check568pass/2timing failures in two runs; both budget tests pass
+  alone in a fresh process (artifact45.57ms). Thresholds/runner unchanged; no full
+  check pass claimed. Build/format pass. Final assets rebuild/check pass and reproduce generated files
+  with no diff; unchanged HD gate1519 gaps. Latest browser/CI checks remain. Native control/raw evidence: artifacts/c18-control-688eab26; passing
+  native4bb evidence: artifacts/c18-native-4bbabb7b. Use unique Playwright output
+  directories for every new comparison. See ADR043.
+
+The following baseline sections preserve earlier receipts. Their test/source numbers
+are historical unless repeated above. Preserve C13/C14/C18 outstanding acceptance,
+C24/C25 live-A quality, C19/C20 A GPU acceptance, and C21/learned-brain gates.
 
 ## Resume checkpoint: forge and integration support
 
@@ -123,8 +184,9 @@ Ignored local artifacts are not guaranteed available to a fresh machine.
 
 ## Plan 1: finish C18 browser and aggregate verify CI
 
-**Scope:** a separate, evidence-backed CI/test repair. Keep production code, public
-APIs, save schema, other journeys' tracing, retries, CI gates and timeouts unchanged.
+**Scope:** Huy explicitly authorized focused production performance work in chat,
+overriding the original test-only restriction. Preserve simulation behavior, public
+APIs, save compatibility, other journeys' tracing, retries, CI gates and timeouts.
 Keep file-scoped retain-on-failure tracing with screenshots:false and snapshots:true;
 explicit1080p capture; CPU trace; compact notice; every functional assertion; all
 five performance measurements; two-page mounting; and the100ms opening limit.
@@ -243,3 +305,8 @@ in void or invent missing resource/layout coordinates.
   skipped/cancelled/timed-out soak is never passing evidence. Do not claim all
   tickets done while external acceptance, unfinished engineering or explicit gates
   remain.
+
+Latest studio fetch d97206ca is read but not merged: ten new face approvals are
+recognized, while the creature packet format mismatch remains. Visitor C34/gallery
+changes overlap already delivered engineering work; ownership reconciliation is
+requested in the1752 all-team message. Preserve the live-model evaluator.
