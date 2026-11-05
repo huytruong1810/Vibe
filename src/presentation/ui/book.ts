@@ -327,6 +327,9 @@ export class BookScreen {
     this.el('book-write').hidden = !this.writable;
     const pages = this.record?.kind === 'book' ? this.record.pages : [this.record?.lines ?? []];
     const spread = this.el('book-spread');
+    this.dialog.dataset.kind = this.kind;
+    this.dialog.dataset.sealed = String(!!this.record?.sealed);
+    this.dialog.dataset.written = String(pages.some((page) => page?.some((line) => line.trim())));
     spread.replaceChildren();
     if (this.editing) {
       this.el<HTMLInputElement>('book-title').value = this.record?.title ?? `Untitled ${this.kind}`;

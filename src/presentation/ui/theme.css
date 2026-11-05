@@ -793,6 +793,23 @@ body {
   object-fit: contain;
   image-rendering: pixelated;
 }
+#painting-palette {
+  border: 16px solid transparent;
+  border-image: url('/assets/generated/ui/frame_painting_preview.png') 16 fill / 16px / 0 stretch;
+}
+#painting-heading::before {
+  content: '';
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  margin-right: 12px;
+  vertical-align: middle;
+  image-rendering: pixelated;
+  background: url('/assets/generated/ui/artifact-canvas-blank.png') center / 32px 32px no-repeat;
+}
+.painting-dialog[data-painted='true'] #painting-heading::before {
+  background-image: url('/assets/generated/ui/artifact-canvas-painted.png');
+}
 .painting-thumbnail {
   display: block;
   width: 32px;

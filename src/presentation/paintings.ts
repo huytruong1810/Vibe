@@ -1,4 +1,4 @@
-import { Assets, Container, NineSliceSprite, Sprite, Text, Texture, TextStyle } from 'pixi.js';
+import { Assets, Container, Sprite, Text, Texture, TextStyle } from 'pixi.js';
 import type { Artifact } from '../domain/artifacts';
 import type { RenderSnapshot } from '../domain/contracts';
 import type { Painting } from '../domain/painting';
@@ -18,9 +18,11 @@ export class WorldPaintings {
   private frame: Frame | null = null;
   private session = '';
   private frameTexture: Texture | null = null;
+  private clothTexture: Texture | null = null;
   private loadingFrame = false;
   private disposed = false;
-  private readonly frameUrl = appUrl('/assets/generated/ui/frame_thin.png');
+  private readonly frameUrl = appUrl('/assets/generated/ui/frame_painting_wall.png');
+  private readonly clothUrl = appUrl('/assets/generated/ui/easel_cloth.png');
   constructor(
     private readonly parent: Container,
     private readonly projection: WorldProjection,
@@ -34,9 +36,11 @@ export class WorldPaintings {
   get bytes(): number {
     return (
       this.textures.size * 48 * 32 * 4 +
-      (this.frameTexture
-        ? this.frameTexture.source.pixelWidth * this.frameTexture.source.pixelHeight * 4
-        : 0)
+      [this.frameTexture, this.clothTexture].reduce(
+        (bytes, texture) =>
+          bytes + (texture ? texture.source.pixelWidth * texture.source.pixelHeight * 4 : 0),
+        0,
+      )
     );
   }
   apply(frame: Frame): void {
@@ -72,11 +76,13 @@ export class WorldPaintings {
     const wanted = new Set<string>();
     if (placements.length && !this.frameTexture && !this.loadingFrame) {
       this.loadingFrame = true;
-      void Assets.load<Texture>(this.frameUrl)
-        .then((texture) => {
+      void Promise.all([Assets.load<Texture>(this.frameUrl), Assets.load<Texture>(this.clothUrl)])
+        .then(([texture, cloth]) => {
           if (this.disposed) return;
           texture.source.scaleMode = 'nearest';
           this.frameTexture = texture;
+          cloth.source.scaleMode = 'nearest';
+          this.clothTexture = cloth;
           if (this.frame) this.apply(this.frame);
           this.changed();
         })
@@ -141,19 +147,9 @@ export class WorldPaintings {
   }
   private create(record: Painting, pinned: ReadonlySet<string>): Container {
     const node = new Container();
-    node.pivot.set(54, 76);
-    node.addChild(
-      new NineSliceSprite({
-        texture: this.frameTexture!,
-        leftWidth: 6,
-        rightWidth: 6,
-        topHeight: 6,
-        bottomHeight: 6,
-        width: 108,
-        height: 76,
-      }),
-    );
+    node.pivot.set(56, 80);
     if (record.status === 'ready' && record.sealed && record.pixels && record.palette) {
+      node.addChild(new Sprite(this.frameTexture!));
       const texture = this.textures.get(
         `${this.session}:${record.id}:${record.revision}`,
         () => {
@@ -178,17 +174,13 @@ export class WorldPaintings {
         pinned,
       );
       const image = new Sprite(texture);
-      image.position.set(6, 6);
+      image.position.set(8, 8);
       image.scale.set(2);
       node.addChild(image);
     } else {
-      // Runtime UI cover over the authored easel; no new baked art or model pixels while pending.
-      const cover = new Sprite(Texture.WHITE);
-      cover.tint = 0xece0c2;
-      cover.position.set(6, 6);
-      cover.width = 96;
-      cover.height = 64;
-      node.addChild(cover);
+      const cloth = new Sprite(this.clothTexture!);
+      cloth.position.set(8, -16);
+      node.addChild(cloth);
       const label = new Text({
         text:
           record.status === 'failed'
@@ -199,12 +191,12 @@ export class WorldPaintings {
         style: new TextStyle({
           fontFamily: 'Silver',
           fontSize: 24,
-          fill: 0x191928,
+          fill: 0xece0c2,
           align: 'center',
         }),
       });
       label.anchor.set(0.5);
-      label.position.set(54, 38);
+      label.position.set(56, 92);
       node.addChild(label);
     }
     return node;
@@ -220,6 +212,9 @@ export class WorldPaintings {
     this.disposed = true;
     this.clear();
     this.frame = null;
-    if (this.loadingFrame) void Assets.unload(this.frameUrl).catch(() => {});
+    if (this.loadingFrame) {
+      void Assets.unload(this.frameUrl).catch(() => {});
+      void Assets.unload(this.clothUrl).catch(() => {});
+    }
   }
 }
