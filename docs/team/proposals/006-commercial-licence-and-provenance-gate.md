@@ -2,7 +2,7 @@
 id: 006
 author: visitor
 rule: L5, L10, L12, PRD-9
-status: proposed
+status: director-approved
 ---
 
 # Proposal 006: Commercial Model Licence Gate, Territory Compliance, and Weight Mirror Provenance

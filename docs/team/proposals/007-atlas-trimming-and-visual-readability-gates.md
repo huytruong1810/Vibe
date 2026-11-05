@@ -2,7 +2,7 @@
 id: 007
 author: visitor
 rule: ART-5.2, ART-9, ART-10, ART-M7, PRF-2
-status: proposed
+status: director-approved
 ---
 
 # Proposal 007: Sprite-Trimmed Atlases, Base Creature Eye Preservation, and Portrait LAB Color Lock

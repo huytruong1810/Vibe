@@ -2,7 +2,7 @@
 id: 004
 author: visitor
 rule: TEAM-1, TEAM-2, TEAM-3, TEAM-4.1, TEAM-5.1, TEAM-7.4, TEAM-8.2
-status: proposed
+status: director-approved
 ---
 
 # Proposal 004: Visitor Hook Lane, Single-Trunk Branch Sync, and Evidence Reachability Gate

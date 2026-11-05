@@ -2,7 +2,7 @@
 id: 005
 author: visitor
 rule: L10, AGT-1.2, AGT-1.3, AGT-7, AGT-10.5
-status: proposed
+status: director-approved
 ---
 
 # Proposal 005: Villager Model Tier Inversion, Fixed-Domain Hybrid Retrieval, and 5-Metric Evaluation Gate
