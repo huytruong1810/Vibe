@@ -360,6 +360,7 @@ export type ToWorker = (
   | { type: 'initialize'; seed: number; origin: number; population?: number }
   | { type: 'command'; envelope: WorldCommand }
   | { type: 'checkpoint'; requestId: string }
+  | { type: 'persistCheckpoint'; requestId: string }
   | { type: 'restore'; requestId: string; snapshot: unknown }
   | { type: 'recycle'; buffer: ArrayBuffer }
   | { type: 'dispose' }
@@ -370,6 +371,7 @@ export type FromWorker = (
   | { type: 'frame'; frame: RenderSnapshot; terrain?: TerrainView }
   | { type: 'result'; result: CommandResult }
   | { type: 'checkpoint'; requestId: string; snapshot: unknown }
+  | { type: 'checkpointSaved'; requestId: string }
   | { type: 'restored'; requestId: string; terrain: TerrainView; frame: RenderSnapshot }
   | { type: 'error'; message: string; requestId?: string }
 ) & { diagnostic?: WorkerTiming };

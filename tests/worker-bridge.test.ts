@@ -22,6 +22,28 @@ class TestWorker {
 }
 afterEach(() => vi.unstubAllGlobals());
 describe('worker presentation failure boundary', () => {
+  it('saves through a completion-only worker request and propagates storage failures', async () => {
+    vi.stubGlobal('Worker', TestWorker);
+    const bridge = new WorkerBridge();
+    await expect(bridge.persistCheckpoint()).rejects.toThrow(/journey/);
+    const initialize = bridge.initialize(42, 1);
+    TestWorker.latest.ready();
+    await initialize;
+    const saving = bridge.persistCheckpoint();
+    const request = TestWorker.latest.messages.at(-1) as { type: string; requestId: string };
+    expect(request.type).toBe('persistCheckpoint');
+    TestWorker.latest.onmessage!({
+      data: { type: 'checkpointSaved', requestId: request.requestId },
+    } as MessageEvent<FromWorker>);
+    await expect(saving).resolves.toBeUndefined();
+    const rejected = bridge.persistCheckpoint();
+    const next = TestWorker.latest.messages.at(-1) as { requestId: string };
+    TestWorker.latest.onmessage!({
+      data: { type: 'error', requestId: next.requestId, message: 'Storage full' },
+    } as MessageEvent<FromWorker>);
+    await expect(rejected).rejects.toThrow('Storage full');
+    bridge.dispose();
+  });
   it('retains only the current bounded opening and correlates out-of-order worker receipts', async () => {
     vi.stubGlobal('Worker', TestWorker);
     const bridge = new WorkerBridge();

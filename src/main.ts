@@ -13,11 +13,7 @@ import {
 } from './adapters/image';
 import { GpuArbiter } from './adapters/gpu-arbiter';
 import { paintingCaptionFallback } from './domain/painting';
-import {
-  IndexedDbSaveRepository,
-  IndexedDbEmbeddingCache,
-  SaveCoordinator,
-} from './adapters/persistence';
+import { IndexedDbSaveRepository, IndexedDbEmbeddingCache } from './adapters/persistence';
 import { WorkerBridge } from './adapters/worker-bridge';
 import type { CommandPayload, RenderSnapshot } from './domain/contracts';
 import { AudioDirector } from './presentation/audio';
@@ -29,7 +25,6 @@ import { nearestInteraction, PortalEntryController } from './presentation/ui/int
 export class GameBootstrap {
   private readonly bridge = new WorkerBridge();
   private readonly repository = new IndexedDbSaveRepository();
-  private readonly saves = new SaveCoordinator(this.repository);
   private readonly renderer = new WorldRenderer();
   private readonly audio = new AudioDirector();
   private readonly hud: HudPresenter;
@@ -503,7 +498,7 @@ export class GameBootstrap {
       }
   }
   private async save(): Promise<void> {
-    await this.saves.checkpoint(await this.bridge.checkpoint());
+    await this.bridge.persistCheckpoint();
   }
   private async load(): Promise<void> {
     await this.requireConnection();

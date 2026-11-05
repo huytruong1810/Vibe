@@ -94,6 +94,9 @@ export class WorkerBridge {
           case 'checkpoint':
             this.resolve(message.requestId, message.snapshot);
             break;
+          case 'checkpointSaved':
+            this.resolve(message.requestId, undefined);
+            break;
           case 'artifactContent':
             this.resolve(message.requestId, message.artifact);
             break;
@@ -201,6 +204,12 @@ export class WorkerBridge {
   restore(snapshot: GameSave): Promise<void> {
     const requestId = `restore:${++this.serial}`;
     return this.request(requestId, { type: 'restore', requestId, snapshot: migrateSave(snapshot) });
+  }
+  /** Routine saves never clone the full world through the UI thread. */
+  persistCheckpoint(): Promise<void> {
+    if (!this.session) return Promise.reject(new Error('Start a journey before saving'));
+    const requestId = `persist:${++this.serial}`;
+    return this.request(requestId, { type: 'persistCheckpoint', requestId });
   }
   recycle(buffer: ArrayBuffer): void {
     if (buffer.byteLength) this.post({ type: 'recycle', buffer }, [buffer]);

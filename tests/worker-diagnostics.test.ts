@@ -7,7 +7,55 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
+it('routes routine snapshots directly to storage and forwards only success or failure receipts to the UI', async () => {
+  vi.resetModules();
+  vi.useFakeTimers();
+  const messages: FromWorker[] = [];
+  class Writer {
+    static latest: Writer;
+    onmessage: ((event: MessageEvent) => void) | null = null;
+    onerror: ((event: ErrorEvent) => void) | null = null;
+    messages: any[] = [];
+    constructor() {
+      Writer.latest = this;
+    }
+    postMessage(message: unknown) {
+      this.messages.push(structuredClone(message));
+    }
+    terminate = vi.fn();
+  }
+  const scope = {
+    onmessage: null as ((event: MessageEvent<ToWorker>) => void) | null,
+    postMessage: (message: FromWorker) => messages.push(structuredClone(message)),
+    close: vi.fn(),
+  };
+  vi.stubGlobal('self', scope);
+  vi.stubGlobal('Worker', Writer);
+  await import('../src/worker/simulation.worker');
+  const send = (data: ToWorker) => scope.onmessage!({ data } as MessageEvent<ToWorker>);
+  send({ type: 'initialize', seed: 42, origin: 1, population: 0 });
+  const before = messages.length;
+  send({ type: 'persistCheckpoint', requestId: 'save' });
+  expect(messages).toHaveLength(before);
+  expect(Writer.latest.messages[0]).toMatchObject({
+    type: 'checkpoint',
+    requestId: 'save',
+    snapshot: { version: 9, seed: 42 },
+  });
+  Writer.latest.onmessage!({ data: { type: 'saved', requestId: 'save' } } as MessageEvent);
+  expect(messages.at(-1)).toEqual({ type: 'checkpointSaved', requestId: 'save' });
+  send({ type: 'persistCheckpoint', requestId: 'error' });
+  Writer.latest.onmessage!({
+    data: { type: 'error', requestId: 'error', message: 'Storage full' },
+  } as MessageEvent);
+  expect(messages.at(-1)).toEqual({ type: 'error', requestId: 'error', message: 'Storage full' });
+  expect(messages.every((m) => m.type !== 'checkpoint')).toBe(true);
+  send({ type: 'dispose' });
+  expect(Writer.latest.messages.at(-1)).toEqual({ type: 'dispose' });
+});
+
 it('keeps worker result/frame order and bounds opt-in service diagnostics without changing content', async () => {
+  vi.resetModules();
   vi.useFakeTimers();
   const messages: FromWorker[] = [];
   const worker = {

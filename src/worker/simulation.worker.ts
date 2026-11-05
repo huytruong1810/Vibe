@@ -3,6 +3,7 @@ import { SimulationHost } from '../domain/simulation';
 import { FixedStepClock } from '../domain/core';
 import { migrateSave } from '../domain/save-schema';
 import type { FromWorker, ToWorker, WorkTiming } from '../domain/contracts';
+import type { CheckpointWriteReply } from './checkpoint.worker';
 
 const worker = self as unknown as DedicatedWorkerGlobalScope;
 let host: SimulationHost | null = null;
@@ -14,6 +15,31 @@ let publishedScene = '';
 let publishedTick = -1;
 let publishedPauses = '';
 const recent: WorkTiming[] = [];
+let checkpointWriter: Worker | null = null;
+const checkpointRequests = new Set<string>();
+const writer = (): Worker => {
+  if (checkpointWriter) return checkpointWriter;
+  checkpointWriter = new Worker(new URL('./checkpoint.worker.ts', import.meta.url), {
+    type: 'module',
+  });
+  checkpointWriter.onmessage = (event: MessageEvent<CheckpointWriteReply>) => {
+    const reply = event.data;
+    if (!checkpointRequests.delete(reply.requestId)) return;
+    send(
+      reply.type === 'saved'
+        ? { type: 'checkpointSaved', requestId: reply.requestId }
+        : { type: 'error', requestId: reply.requestId, message: reply.message },
+    );
+  };
+  checkpointWriter.onerror = (event) => {
+    for (const requestId of checkpointRequests)
+      send({ type: 'error', requestId, message: event.message || 'Checkpoint writer failed' });
+    checkpointRequests.clear();
+    checkpointWriter?.terminate();
+    checkpointWriter = null;
+  };
+  return checkpointWriter;
+};
 const record = (name: string, start: number): void => {
   recent.push({ name, start, end: performance.now() });
   if (recent.length > 16) recent.shift();
@@ -97,6 +123,19 @@ worker.onmessage = (message: MessageEvent<ToWorker>): void => {
         if (host)
           send({ type: 'checkpoint', requestId: data.requestId, snapshot: host.snapshot() });
         break;
+      case 'persistCheckpoint': {
+        if (!host) throw Error('Start a journey before saving');
+        const destination = writer();
+        const snapshot = host.snapshot();
+        checkpointRequests.add(data.requestId);
+        try {
+          destination.postMessage({ type: 'checkpoint', requestId: data.requestId, snapshot });
+        } catch (error) {
+          checkpointRequests.delete(data.requestId);
+          throw error;
+        }
+        break;
+      }
       case 'artifactContent': {
         if (!host) throw Error('Start a journey before reading');
         const started = performance.now();
@@ -128,6 +167,7 @@ worker.onmessage = (message: MessageEvent<ToWorker>): void => {
         break;
       case 'dispose':
         host?.dispose();
+        checkpointWriter?.postMessage({ type: 'dispose' });
         clearInterval(timer);
         worker.close();
         break;
