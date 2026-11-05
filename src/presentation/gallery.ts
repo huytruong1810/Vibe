@@ -322,6 +322,9 @@ export async function initializeArtGallery(root: HTMLElement): Promise<() => voi
         </div>
         <div class="art-atlas-viewer">
           <div class="art-controls" style="margin-top:0">
+            <label>Atlas page
+              <select id="atlas-page"></select>
+            </label>
             <label>Atlas view zoom
               <select id="atlas-zoom">
                 <option value="0.5">0.5× Fit</option>
@@ -329,7 +332,7 @@ export async function initializeArtGallery(root: HTMLElement): Promise<() => voi
                 <option value="1.5">1.5× Zoom</option>
               </select>
             </label>
-            <p id="atlas-status" class="art-status" style="margin:0;align-self:center">Single page: bundle.png (1921 × 1908)</p>
+            <p id="atlas-status" class="art-status" style="margin:0;align-self:center">Loading atlas pages…</p>
           </div>
           <div class="art-atlas-canvas-wrap">
             <canvas id="art-atlas-canvas" width="1921" height="1908" role="img" aria-label="Packed bundle texture atlas"></canvas>
@@ -1574,7 +1577,22 @@ export async function initializeArtGallery(root: HTMLElement): Promise<() => voi
   // --- TAB 5: ATLAS SHEET & MEMORY ---
   const renderAtlas = (): void => {
     if (!catalog?.pages.length) return;
-    const page = catalog.pages[0]!;
+    const pageSelect = el<HTMLSelectElement>('atlas-page');
+    if (pageSelect.options.length !== catalog.pages.length) {
+      pageSelect.replaceChildren(
+        ...catalog.pages.map((p, index) => {
+          const option = document.createElement('option');
+          option.value = String(index);
+          option.textContent = `Page ${index + 1} of ${catalog!.pages.length} (${p.width} × ${p.height})`;
+          return option;
+        }),
+      );
+    }
+    const page = catalog.pages[Math.min(catalog.pages.length - 1, Number(pageSelect.value) || 0)]!;
+    const decodedMiB =
+      catalog.pages.reduce((sum, p) => sum + p.width * p.height * 4, 0) / (1024 * 1024);
+    el('atlas-status').textContent =
+      `${catalog.pages.length} full-resolution pages, ${decodedMiB.toFixed(1)} MiB decoded RGBA`;
     const image = images.get(page.id);
     if (!image) {
       ensurePage(page.id);
@@ -1662,6 +1680,7 @@ export async function initializeArtGallery(root: HTMLElement): Promise<() => voi
   ])
     listen(id, 'change', renderStaging);
   listen('atlas-zoom', 'change', renderAtlas);
+  listen('atlas-page', 'change', renderAtlas);
 
   listen('art-next', 'click', () => {
     frameIndex++;

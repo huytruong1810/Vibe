@@ -503,3 +503,11 @@ three shared JSON Schemas without packing textures. Run it before consuming new
 fields in the Python publisher or the source manifest. The source manifest remains
 the communicator's integration artifact; the tested 1,848-frame V2 graph in
 `assets-v2.test.ts` is a fixture, not a committed production manifest or approval.
+
+## Atlas memory budget (C3g, proposal 007 part 1)
+
+Decoded RGBA atlas memory is `sum(width × height × 4)` over `catalog.pages`. Budgets: 128 MiB on the Low tier and
+256 MiB on Balanced. The gallery's Atlas tab lists every page in `#atlas-page` and prints the page count and decoded
+MiB total from the catalog. The 2026-11-01 beta slice measured 63.88 MiB across four 2048 pages. Still open: alpha
+bounding-box trimming of per-clip canvases, content-hash frame deduplication and keeping review-only clips
+(`turntable`, `ExpressionSheet`) out of the runtime atlas (`scripts/assets-build.ts`, `src/presentation/renderer.ts`).

@@ -59,7 +59,7 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
 
 ### V11 · `C3g` Follow-ups: Alpha bounding-box sprite trimming, frame dedup, and review-clip exclusion (Proposal `007` Part 1)
 
-- status: open (priority 4 engineering — handoff from Claude `2026-11-05T0625`; coordinate with Codex's `M25/C3b` merge first)
+- status: partial (2026-11-05, visitor: gallery Atlas tab now lists every page with decoded-MiB total, budget written in `docs/engineering/hd-presentation.md`; still open: alpha-trim, frame dedup, review-clip exclusion in `scripts/assets-build.ts`/`renderer.ts`, which need failing tests and an `assets:build` run first)
 - goal: keep decoded RGBA atlas memory within the 128 MiB Low / 256 MiB Balanced GPU budgets as all 19 Aqualia actors integrate in `M25`.
 - inputs: `docs/team/proposals/007-atlas-trimming-and-visual-readability-gates.md` (Part 1), `scripts/assets-build.ts`, `src/presentation/renderer.ts`, `tests/assets-v2.test.ts`.
 - work:
