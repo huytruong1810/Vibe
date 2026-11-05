@@ -664,3 +664,42 @@ actual intake toolchain without claiming missing generator versions. Existing
 body publication and provenance requirements remain. Communicator owns manifest
 merges; Codex transcribes approvals and owns generated outputs. New face art
 still needs new approval. See [intake commands](hd-presentation.md#approved-creature-faces-and-inventory-icons).
+
+## ADR 041 ? Shared reference GPU and deterministic memory pinning
+
+**Decision:** implement the director-ratified Proposal005 on the existing memory
+representation: `type` and absence of `invalidAtTick` express kind and active state.
+Add relationship records without adding save fields; existing version9 saves remain
+readable. Pin four relevant persistent claims, rank remaining slots with fixed-domain
+scores and creation-time age, and supply all active interlocutor claims to extraction.
+A claim is remembered data and never authorizes a simulation action. Required prompt
+pins survive optional memory caps; an impossible budget fails explicitly.
+
+New settings share GPU e4b across dialogue/background requests; explicit saved model
+and CPU choices remain. Dialogue uses the existing bounded stream collector to report
+TTFT while validating complete structured output before display. Existing scheduler
+preemption and image-GPU arbitration remain the serialization boundary.
+
+**Validation:** focused retrieval/conversation/inference tests and the separate
+`test:villagers` collector/evaluator. Offline fixtures prove gate behavior only. Live
+M1?M5, both official/development weights, actual weight hashes/private mirror and
+reference-GPU timing remain external acceptance. See [operations](../operations/operations.md#ratified-reference-tier-and-villager-evaluation-proposals005006).
+
+## ADR 042 ? Exact alpha bounds and shared atlas rectangles
+
+**Decision:** compute bounds using alpha greater than zero at each runtime resolution,
+hash cropped RGBA plus dimensions, and pack one representative of identical pixels.
+Expand aliases with independent logical source sizes and trim offsets. Existing frame
+anchors, sockets and held metadata remain independent even when atlas rectangles share
+bytes. Existing renderer Sprite orig/trim handling and Graphics trim reconstruction
+preserve pivots; deduplication never changes logical actor coordinates.
+
+Exclude turntable and ExpressionSheet review artifacts from runtime clip reachability;
+source approval digests still cover original packet bytes. Runtime expression decals
+are retained. This applies only Proposal007 Part1. Part2 base-body eyes is excluded;
+Part3 portrait identity work remains with its assigned owner.
+
+**Validation:** shuffled-input determinism at full/half resolutions, faint-alpha bounds,
+shared pixels with distinct offsets, review artifact classification and catalog checks.
+The 128 MiB Low / 256 MiB Balanced budgets remain unchanged. A compact current catalog
+is not evidence that all nineteen actors have been integrated.

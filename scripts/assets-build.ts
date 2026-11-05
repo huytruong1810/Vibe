@@ -1,6 +1,6 @@
 import { writeCoverageReport } from './lib/coverage-report';
 import { writeAssetSchemas } from './lib/asset-schemas';
-import { packAtlasTextures } from './lib/atlas-packer';
+import { packAtlasTextures, isReviewOnlySprite } from './lib/atlas-packer';
 import sharp from 'sharp';
 import { buildUi } from './ui-build';
 import { format } from 'prettier';
@@ -304,6 +304,22 @@ for (const frame of source.frames) {
     source: frame,
   });
 }
+// Exclude review clips before reachability; approval/source digests still cover their source bytes.
+const reviewOnlyFrames = new Set(
+  [...frameSources]
+    .filter(([id, f]) => isReviewOnlySprite(id) || isReviewOnlySprite(f.path ?? ''))
+    .map(([id]) => id),
+);
+for (const list of [clips, reviewClips]) {
+  for (let i = list.length - 1; i >= 0; i--) {
+    const clip = list[i]!;
+    if (isReviewOnlySprite(clip.id) || clip.frameIds.some((id) => reviewOnlyFrames.has(id)))
+      list.splice(i, 1);
+  }
+}
+for (const list of [appearances, reviewAppearances])
+  for (let i = list.length - 1; i >= 0; i--)
+    if (list[i]!.frameId && reviewOnlyFrames.has(list[i]!.frameId!)) list.splice(i, 1);
 const referenced = new Set([
   ...appearances.flatMap((a) => (a.frameId ? [a.frameId] : [])),
   ...clips.flatMap((c) => c.frameIds),
