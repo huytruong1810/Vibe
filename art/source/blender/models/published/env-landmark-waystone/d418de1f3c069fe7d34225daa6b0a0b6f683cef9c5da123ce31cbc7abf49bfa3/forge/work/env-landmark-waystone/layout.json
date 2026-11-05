@@ -1,0 +1,45 @@
+{
+  "asset": "env:landmark-waystone",
+  "stage": "layout",
+  "inputsDigest": "ae1a6ee8cf23c741bc5678cb8d87c3355823b3228bf24f357b3c4ec6406b0ba9",
+  "inputs": [
+    "art/source/forge/work/env-landmark-waystone/texture.blend",
+    "art/source/forge/work/env-landmark-waystone/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-landmark-waystone/layout/base.blend": "3b0583200b67dbf84f4fe4d39ede89cf371f0860f33257a83362b295ee7d144c",
+    "art/source/forge/work/env-landmark-waystone/layout_preview.png": "c9a6b8c700e26c79e77eacda1946411f8dfb8248c181e24168ba3ce1f89a635a"
+  },
+  "extra": {
+    "scale": 0.076854,
+    "heightUnits": 1.3828,
+    "contactDepthTiles": 1.013,
+    "footprint": [
+      1,
+      1
+    ],
+    "canvas": {
+      "size": [
+        64,
+        64
+      ],
+      "anchor": [
+        32,
+        60
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -0.5,
+      0.0
+    ],
+    "layers": [
+      "base"
+    ],
+    "faces": {
+      "base": 14000
+    }
+  },
+  "at": "2026-11-03T04:50:05Z"
+}

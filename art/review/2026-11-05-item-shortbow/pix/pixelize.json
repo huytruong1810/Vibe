@@ -1,0 +1,587 @@
+{
+ "held_0/e_0": {
+  "labels": {
+   "stave": 11,
+   "grip": 50,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_0/n_0": {
+  "labels": {
+   "stave": 0,
+   "grip": 40,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_0/ne_0": {
+  "labels": {
+   "stave": 0,
+   "grip": 54,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_0/nw_0": {
+  "labels": {
+   "stave": 26,
+   "grip": 28,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_0/s_0": {
+  "labels": {
+   "stave": 6,
+   "grip": 32,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_0/se_0": {
+  "labels": {
+   "stave": 6,
+   "grip": 48,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_0/sw_0": {
+  "labels": {
+   "stave": 23,
+   "grip": 32,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_0/w_0": {
+  "labels": {
+   "stave": 29,
+   "grip": 31,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/e_0": {
+  "labels": {
+   "stave": 5,
+   "grip": 56,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/n_0": {
+  "labels": {
+   "stave": 5,
+   "grip": 39,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/ne_0": {
+  "labels": {
+   "stave": 5,
+   "grip": 49,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/nw_0": {
+  "labels": {
+   "stave": 26,
+   "grip": 27,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/s_0": {
+  "labels": {
+   "stave": 7,
+   "grip": 34,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/se_0": {
+  "labels": {
+   "stave": 4,
+   "grip": 51,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/sw_0": {
+  "labels": {
+   "stave": 19,
+   "grip": 30,
+   "string": 5,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/w_0": {
+  "labels": {
+   "stave": 26,
+   "grip": 25,
+   "string": 4,
+   "tips": 6
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/e_0": {
+  "labels": {
+   "stave": 11,
+   "grip": 50,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/n_0": {
+  "labels": {
+   "stave": 0,
+   "grip": 40,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/ne_0": {
+  "labels": {
+   "stave": 0,
+   "grip": 54,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/nw_0": {
+  "labels": {
+   "stave": 22,
+   "grip": 28,
+   "string": 4,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/s_0": {
+  "labels": {
+   "stave": 6,
+   "grip": 32,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/se_0": {
+  "labels": {
+   "stave": 6,
+   "grip": 48,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/sw_0": {
+  "labels": {
+   "stave": 14,
+   "grip": 35,
+   "string": 6,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/w_0": {
+  "labels": {
+   "stave": 28,
+   "grip": 31,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/e_0": {
+  "labels": {
+   "stave": 5,
+   "grip": 56,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/n_0": {
+  "labels": {
+   "stave": 5,
+   "grip": 39,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/ne_0": {
+  "labels": {
+   "stave": 5,
+   "grip": 49,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/nw_0": {
+  "labels": {
+   "stave": 26,
+   "grip": 27,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/s_0": {
+  "labels": {
+   "stave": 7,
+   "grip": 34,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/se_0": {
+  "labels": {
+   "stave": 4,
+   "grip": 51,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/sw_0": {
+  "labels": {
+   "stave": 19,
+   "grip": 30,
+   "string": 5,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/w_0": {
+  "labels": {
+   "stave": 26,
+   "grip": 25,
+   "string": 4,
+   "tips": 6
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/e_0": {
+  "labels": {
+   "stave": 11,
+   "grip": 50,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/n_0": {
+  "labels": {
+   "stave": 0,
+   "grip": 40,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/ne_0": {
+  "labels": {
+   "stave": 0,
+   "grip": 54,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/nw_0": {
+  "labels": {
+   "stave": 22,
+   "grip": 28,
+   "string": 4,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/s_0": {
+  "labels": {
+   "stave": 6,
+   "grip": 32,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/se_0": {
+  "labels": {
+   "stave": 6,
+   "grip": 48,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/sw_0": {
+  "labels": {
+   "stave": 14,
+   "grip": 35,
+   "string": 6,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/w_0": {
+  "labels": {
+   "stave": 28,
+   "grip": 31,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/e_0": {
+  "labels": {
+   "stave": 5,
+   "grip": 56,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/n_0": {
+  "labels": {
+   "stave": 5,
+   "grip": 39,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/ne_0": {
+  "labels": {
+   "stave": 5,
+   "grip": 49,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/nw_0": {
+  "labels": {
+   "stave": 26,
+   "grip": 27,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/s_0": {
+  "labels": {
+   "stave": 7,
+   "grip": 34,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/se_0": {
+  "labels": {
+   "stave": 4,
+   "grip": 51,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/sw_0": {
+  "labels": {
+   "stave": 19,
+   "grip": 30,
+   "string": 5,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/w_0": {
+  "labels": {
+   "stave": 26,
+   "grip": 25,
+   "string": 4,
+   "tips": 6
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/e_0": {
+  "labels": {
+   "stave": 11,
+   "grip": 50,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/n_0": {
+  "labels": {
+   "stave": 0,
+   "grip": 40,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/ne_0": {
+  "labels": {
+   "stave": 0,
+   "grip": 54,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/nw_0": {
+  "labels": {
+   "stave": 25,
+   "grip": 29,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/s_0": {
+  "labels": {
+   "stave": 6,
+   "grip": 32,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/se_0": {
+  "labels": {
+   "stave": 6,
+   "grip": 48,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/sw_0": {
+  "labels": {
+   "stave": 23,
+   "grip": 32,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/w_0": {
+  "labels": {
+   "stave": 29,
+   "grip": 31,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/e_0": {
+  "labels": {
+   "stave": 5,
+   "grip": 56,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/n_0": {
+  "labels": {
+   "stave": 5,
+   "grip": 39,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/ne_0": {
+  "labels": {
+   "stave": 5,
+   "grip": 49,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/nw_0": {
+  "labels": {
+   "stave": 26,
+   "grip": 27,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/s_0": {
+  "labels": {
+   "stave": 7,
+   "grip": 34,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/se_0": {
+  "labels": {
+   "stave": 4,
+   "grip": 51,
+   "string": 0,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/sw_0": {
+  "labels": {
+   "stave": 19,
+   "grip": 30,
+   "string": 5,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/w_0": {
+  "labels": {
+   "stave": 26,
+   "grip": 25,
+   "string": 4,
+   "tips": 6
+  },
+  "interiorLinePx": 0
+ },
+ "icon/se_0": {
+  "labels": {
+   "stave": 14,
+   "grip": 86,
+   "string": 20,
+   "tips": 0
+  },
+  "interiorLinePx": 0
+ }
+}

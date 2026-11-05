@@ -1,0 +1,48 @@
+{
+  "asset": "env:tree-oak",
+  "stage": "layout",
+  "inputsDigest": "77e9ed8d631b2d11e600a7b8c6b326301010b1cb575207d5320e338ad46c12db",
+  "inputs": [
+    "art/source/forge/work/env-tree-oak/texture.blend",
+    "art/source/forge/work/env-tree-oak/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-tree-oak/layout/base.blend": "a2472256417deb4bfe5d5f1f9b75aa533bd2842736a30a7f63505cd8960ebf8d",
+    "art/source/forge/work/env-tree-oak/layout/canopy.blend": "e143a52da9dae2b8a21aa5201e221238954c810e631a822f5e4c7945664da240",
+    "art/source/forge/work/env-tree-oak/layout_preview.png": "54beb42a33217f7c24ab64a2b5dd1f73cb88863b219f4f4f90a08fd1d1e78e2a"
+  },
+  "extra": {
+    "scale": 0.183667,
+    "heightUnits": 3.0756,
+    "contactDepthTiles": 1.853,
+    "footprint": [
+      2,
+      2
+    ],
+    "canvas": {
+      "size": [
+        128,
+        142
+      ],
+      "anchor": [
+        64,
+        138
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -1.0,
+      0.0
+    ],
+    "layers": [
+      "base",
+      "canopy"
+    ],
+    "faces": {
+      "base": 836,
+      "canopy": 13164
+    }
+  },
+  "at": "2026-11-03T04:30:34Z"
+}

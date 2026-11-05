@@ -1,0 +1,66 @@
+{
+  "asset": "item:shortbow",
+  "stage": "orient",
+  "inputsDigest": "908a0cdbd99fabd76597dd379e2a54e18f5a8e76146d01cabd3844330c218b29",
+  "inputs": [
+    "art/source/forge/work/item-shortbow/texture.blend",
+    "art/source/forge/work/item-shortbow/orient_params.json",
+    "art/source/forge/blender/item_orient.py",
+    "art/source/forge/forgelib/item_orient.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/item-shortbow/item_model.blend": "892a75b7e28e9ee0c732fc60d5a45ba766c82db8a8e679c80211252c062db75e",
+    "art/source/forge/work/item-shortbow/orient_preview.png": "649147ec0690ce45011c8d2fff6703b689a4688084de81c36fcd686cac12be54"
+  },
+  "extra": {
+    "matrix": [
+      [
+        -0.004646,
+        -1.139465,
+        0.000173,
+        -0.001228
+      ],
+      [
+        1.139318,
+        -0.004649,
+        -0.018304,
+        -0.051029
+      ],
+      [
+        0.018304,
+        9.8e-05,
+        1.139328,
+        -0.249699
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "grip": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "iconPivot": [
+      -0.001553,
+      -0.019661,
+      0.015938
+    ],
+    "reachArtPx": 9.213,
+    "lengthArtPx": 17,
+    "haftWidthArtPx": 1.387,
+    "headFlipped": false,
+    "forwardFlipped": false,
+    "dimensions": [
+      0.042621,
+      0.105624,
+      0.53125
+    ],
+    "inflateArtPx": 0.994,
+    "iconScale": 1.5
+  },
+  "at": "2026-11-04T05:25:57Z"
+}

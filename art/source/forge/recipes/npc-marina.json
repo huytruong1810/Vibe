@@ -1,7 +1,7 @@
 {
   "asset": "npc:marina",
   "kind": "human",
-  "heightArtPx": 46,
+  "heightArtPx": 40,
   "ramps": {
     "skin": "skin-porcelain",
     "hair": "hair-auburn",

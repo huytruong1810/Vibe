@@ -1,0 +1,962 @@
+{
+  "asset": "ignicap",
+  "stage": "animate",
+  "inputsDigest": "447a5edc9f7c7eb34ed9910b2a4ab2b8dadea548e27deaf38c97c9ccd554fa89",
+  "inputs": [
+    "art/source/forge/work/ignicap/rig.blend",
+    "art/source/forge/work/ignicap/animate_params.json",
+    "art/source/forge/blender/gaits.py",
+    "art/source/forge/blender/animate.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/ignicap/animate.blend": "60e091a3da8bdb9727c8ab46b5a8af7b2fb52bea4062fa132017d737a7218a00"
+  },
+  "extra": {
+    "clips": [
+      {
+        "name": "idle",
+        "action": "idle",
+        "frames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "facings": [
+          "s",
+          "se",
+          "e",
+          "ne",
+          "n",
+          "nw",
+          "w",
+          "sw"
+        ],
+        "canvas": {
+          "key": "creature.small",
+          "size": [
+            40,
+            44
+          ],
+          "anchor": [
+            20,
+            34
+          ]
+        }
+      },
+      {
+        "name": "walk",
+        "action": "walk",
+        "frames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "facings": [
+          "s",
+          "se",
+          "e",
+          "ne",
+          "n",
+          "nw",
+          "w",
+          "sw"
+        ],
+        "canvas": {
+          "key": "creature.small",
+          "size": [
+            40,
+            44
+          ],
+          "anchor": [
+            20,
+            34
+          ]
+        }
+      },
+      {
+        "name": "run",
+        "action": "run",
+        "frames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "facings": [
+          "s",
+          "se",
+          "e",
+          "ne",
+          "n",
+          "nw",
+          "w",
+          "sw"
+        ],
+        "canvas": {
+          "key": "creature.small",
+          "size": [
+            40,
+            44
+          ],
+          "anchor": [
+            20,
+            34
+          ]
+        }
+      },
+      {
+        "name": "strike",
+        "action": "strike",
+        "frames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "facings": [
+          "s",
+          "se",
+          "e",
+          "ne",
+          "n",
+          "nw",
+          "w",
+          "sw"
+        ],
+        "canvas": {
+          "key": "creature.small",
+          "size": [
+            40,
+            44
+          ],
+          "anchor": [
+            20,
+            34
+          ]
+        }
+      },
+      {
+        "name": "element",
+        "action": "element",
+        "frames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "facings": [
+          "s",
+          "se",
+          "e",
+          "ne",
+          "n",
+          "nw",
+          "w",
+          "sw"
+        ],
+        "canvas": {
+          "key": "creature.small",
+          "size": [
+            40,
+            44
+          ],
+          "anchor": [
+            20,
+            34
+          ]
+        }
+      },
+      {
+        "name": "guard",
+        "action": "guard",
+        "frames": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "facings": [
+          "s",
+          "se",
+          "e",
+          "ne",
+          "n",
+          "nw",
+          "w",
+          "sw"
+        ],
+        "canvas": {
+          "key": "creature.small",
+          "size": [
+            40,
+            44
+          ],
+          "anchor": [
+            20,
+            34
+          ]
+        }
+      },
+      {
+        "name": "hit",
+        "action": "hit",
+        "frames": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "facings": [
+          "s",
+          "se",
+          "e",
+          "ne",
+          "n",
+          "nw",
+          "w",
+          "sw"
+        ],
+        "canvas": {
+          "key": "creature.small",
+          "size": [
+            40,
+            44
+          ],
+          "anchor": [
+            20,
+            34
+          ]
+        }
+      },
+      {
+        "name": "eat",
+        "action": "eat",
+        "frames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "facings": [
+          "n",
+          "e",
+          "s",
+          "w"
+        ],
+        "canvas": {
+          "key": "creature.small",
+          "size": [
+            40,
+            44
+          ],
+          "anchor": [
+            20,
+            34
+          ]
+        }
+      },
+      {
+        "name": "drink",
+        "action": "drink",
+        "frames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "facings": [
+          "n",
+          "e",
+          "s",
+          "w"
+        ],
+        "canvas": {
+          "key": "creature.small",
+          "size": [
+            40,
+            44
+          ],
+          "anchor": [
+            20,
+            34
+          ]
+        }
+      },
+      {
+        "name": "bathe",
+        "action": "bathe",
+        "frames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "facings": [
+          "n",
+          "e",
+          "s",
+          "w"
+        ],
+        "canvas": {
+          "key": "creature.small",
+          "size": [
+            40,
+            44
+          ],
+          "anchor": [
+            20,
+            34
+          ]
+        }
+      },
+      {
+        "name": "work",
+        "action": "work",
+        "frames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "facings": [
+          "n",
+          "e",
+          "s",
+          "w"
+        ],
+        "canvas": {
+          "key": "creature.small",
+          "size": [
+            40,
+            44
+          ],
+          "anchor": [
+            20,
+            34
+          ]
+        }
+      },
+      {
+        "name": "social",
+        "action": "social",
+        "frames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "facings": [
+          "n",
+          "e",
+          "s",
+          "w"
+        ],
+        "canvas": {
+          "key": "creature.small",
+          "size": [
+            40,
+            44
+          ],
+          "anchor": [
+            20,
+            34
+          ]
+        }
+      },
+      {
+        "name": "sleep",
+        "action": "sleep",
+        "frames": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "facings": [
+          "n",
+          "e",
+          "s",
+          "w"
+        ],
+        "canvas": {
+          "key": "creature.small",
+          "size": [
+            40,
+            44
+          ],
+          "anchor": [
+            20,
+            34
+          ]
+        }
+      },
+      {
+        "name": "downed",
+        "action": "downed",
+        "frames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "facings": [
+          "n",
+          "e",
+          "s",
+          "w"
+        ],
+        "canvas": {
+          "key": "creature.small",
+          "size": [
+            40,
+            44
+          ],
+          "anchor": [
+            20,
+            34
+          ]
+        }
+      },
+      {
+        "name": "recovery",
+        "action": "recovery",
+        "frames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "facings": [
+          "n",
+          "e",
+          "s",
+          "w"
+        ],
+        "canvas": {
+          "key": "creature.small",
+          "size": [
+            40,
+            44
+          ],
+          "anchor": [
+            20,
+            34
+          ]
+        }
+      }
+    ],
+    "heightUnits": 0.846,
+    "lengthUnits": 0.4885,
+    "plan": [
+      {
+        "name": "idle",
+        "frames": 6,
+        "facings": [
+          "s",
+          "se",
+          "e",
+          "ne",
+          "n",
+          "nw",
+          "w",
+          "sw"
+        ],
+        "phases": null,
+        "fps": 6,
+        "playback": "loop",
+        "runtime": {
+          "state": "idle"
+        },
+        "canvas": {
+          "key": "creature.small",
+          "size": [
+            40,
+            44
+          ],
+          "anchor": [
+            20,
+            34
+          ]
+        }
+      },
+      {
+        "name": "walk",
+        "frames": 8,
+        "facings": [
+          "s",
+          "se",
+          "e",
+          "ne",
+          "n",
+          "nw",
+          "w",
+          "sw"
+        ],
+        "phases": null,
+        "fps": 10,
+        "playback": "distance",
+        "runtime": {
+          "state": "walk"
+        },
+        "canvas": {
+          "key": "creature.small",
+          "size": [
+            40,
+            44
+          ],
+          "anchor": [
+            20,
+            34
+          ]
+        }
+      },
+      {
+        "name": "run",
+        "frames": 8,
+        "facings": [
+          "s",
+          "se",
+          "e",
+          "ne",
+          "n",
+          "nw",
+          "w",
+          "sw"
+        ],
+        "phases": null,
+        "fps": 12,
+        "playback": "distance",
+        "runtime": {
+          "state": "run"
+        },
+        "canvas": {
+          "key": "creature.small",
+          "size": [
+            40,
+            44
+          ],
+          "anchor": [
+            20,
+            34
+          ]
+        }
+      },
+      {
+        "name": "strike",
+        "frames": 12,
+        "facings": [
+          "s",
+          "se",
+          "e",
+          "ne",
+          "n",
+          "nw",
+          "w",
+          "sw"
+        ],
+        "phases": {
+          "windup": [
+            0,
+            3
+          ],
+          "active": [
+            3,
+            5
+          ],
+          "recovery": [
+            5,
+            12
+          ]
+        },
+        "fps": null,
+        "playback": "combat",
+        "runtime": {
+          "state": "attack",
+          "moveId": "strike"
+        },
+        "canvas": {
+          "key": "creature.small",
+          "size": [
+            40,
+            44
+          ],
+          "anchor": [
+            20,
+            34
+          ]
+        }
+      },
+      {
+        "name": "element",
+        "frames": 12,
+        "facings": [
+          "s",
+          "se",
+          "e",
+          "ne",
+          "n",
+          "nw",
+          "w",
+          "sw"
+        ],
+        "phases": {
+          "windup": [
+            0,
+            3
+          ],
+          "active": [
+            3,
+            5
+          ],
+          "recovery": [
+            5,
+            12
+          ]
+        },
+        "fps": null,
+        "playback": "combat",
+        "runtime": {
+          "state": "attack",
+          "moveId": "element"
+        },
+        "canvas": {
+          "key": "creature.small",
+          "size": [
+            40,
+            44
+          ],
+          "anchor": [
+            20,
+            34
+          ]
+        }
+      },
+      {
+        "name": "guard",
+        "frames": 4,
+        "facings": [
+          "s",
+          "se",
+          "e",
+          "ne",
+          "n",
+          "nw",
+          "w",
+          "sw"
+        ],
+        "phases": null,
+        "fps": 8,
+        "playback": "once",
+        "runtime": {
+          "state": "guard"
+        },
+        "canvas": {
+          "key": "creature.small",
+          "size": [
+            40,
+            44
+          ],
+          "anchor": [
+            20,
+            34
+          ]
+        }
+      },
+      {
+        "name": "hit",
+        "frames": 4,
+        "facings": [
+          "s",
+          "se",
+          "e",
+          "ne",
+          "n",
+          "nw",
+          "w",
+          "sw"
+        ],
+        "phases": null,
+        "fps": 12,
+        "playback": "once",
+        "runtime": {
+          "state": "hit"
+        },
+        "canvas": {
+          "key": "creature.small",
+          "size": [
+            40,
+            44
+          ],
+          "anchor": [
+            20,
+            34
+          ]
+        }
+      },
+      {
+        "name": "eat",
+        "frames": 6,
+        "facings": [
+          "n",
+          "e",
+          "s",
+          "w"
+        ],
+        "phases": null,
+        "fps": 6,
+        "playback": "loop",
+        "runtime": {
+          "state": "eat"
+        },
+        "canvas": {
+          "key": "creature.small",
+          "size": [
+            40,
+            44
+          ],
+          "anchor": [
+            20,
+            34
+          ]
+        }
+      },
+      {
+        "name": "drink",
+        "frames": 6,
+        "facings": [
+          "n",
+          "e",
+          "s",
+          "w"
+        ],
+        "phases": null,
+        "fps": 6,
+        "playback": "loop",
+        "runtime": {
+          "state": "drink"
+        },
+        "canvas": {
+          "key": "creature.small",
+          "size": [
+            40,
+            44
+          ],
+          "anchor": [
+            20,
+            34
+          ]
+        }
+      },
+      {
+        "name": "bathe",
+        "frames": 6,
+        "facings": [
+          "n",
+          "e",
+          "s",
+          "w"
+        ],
+        "phases": null,
+        "fps": 6,
+        "playback": "loop",
+        "runtime": {
+          "state": "bathe"
+        },
+        "canvas": {
+          "key": "creature.small",
+          "size": [
+            40,
+            44
+          ],
+          "anchor": [
+            20,
+            34
+          ]
+        }
+      },
+      {
+        "name": "work",
+        "frames": 6,
+        "facings": [
+          "n",
+          "e",
+          "s",
+          "w"
+        ],
+        "phases": null,
+        "fps": 6,
+        "playback": "loop",
+        "runtime": {
+          "state": "work"
+        },
+        "canvas": {
+          "key": "creature.small",
+          "size": [
+            40,
+            44
+          ],
+          "anchor": [
+            20,
+            34
+          ]
+        }
+      },
+      {
+        "name": "social",
+        "frames": 6,
+        "facings": [
+          "n",
+          "e",
+          "s",
+          "w"
+        ],
+        "phases": null,
+        "fps": 6,
+        "playback": "loop",
+        "runtime": {
+          "state": "social"
+        },
+        "canvas": {
+          "key": "creature.small",
+          "size": [
+            40,
+            44
+          ],
+          "anchor": [
+            20,
+            34
+          ]
+        }
+      },
+      {
+        "name": "sleep",
+        "frames": 4,
+        "facings": [
+          "n",
+          "e",
+          "s",
+          "w"
+        ],
+        "phases": null,
+        "fps": 3,
+        "playback": "loop",
+        "runtime": {
+          "state": "sleep"
+        },
+        "canvas": {
+          "key": "creature.small",
+          "size": [
+            40,
+            44
+          ],
+          "anchor": [
+            20,
+            34
+          ]
+        }
+      },
+      {
+        "name": "downed",
+        "frames": 6,
+        "facings": [
+          "n",
+          "e",
+          "s",
+          "w"
+        ],
+        "phases": null,
+        "fps": 8,
+        "playback": "once",
+        "runtime": {
+          "state": "downed"
+        },
+        "canvas": {
+          "key": "creature.small",
+          "size": [
+            40,
+            44
+          ],
+          "anchor": [
+            20,
+            34
+          ]
+        }
+      },
+      {
+        "name": "recovery",
+        "frames": 6,
+        "facings": [
+          "n",
+          "e",
+          "s",
+          "w"
+        ],
+        "phases": null,
+        "fps": 8,
+        "playback": "once",
+        "runtime": {
+          "state": "recovery"
+        },
+        "canvas": {
+          "key": "creature.small",
+          "size": [
+            40,
+            44
+          ],
+          "anchor": [
+            20,
+            34
+          ]
+        }
+      }
+    ],
+    "strideTiles": {
+      "walk": 0.22,
+      "run": 0.34
+    },
+    "rigId": "mushroom-biped-v1"
+  },
+  "at": "2026-11-03T08:59:48Z"
+}

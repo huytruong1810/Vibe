@@ -1,0 +1,1660 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/item-fishing-rod--2026-11-04-item-fishing-rod.md",
+  "approvalSha256": "0e6f1cf5b1f6236c14c5900b3497800e8f7418b3d3d141018b4ee482f2dcec61",
+  "asset": "item:fishing-rod",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset item:fishing-rod",
+    "id": "forge-item-fishing-rod",
+    "inputs": [
+      {
+        "path": "blender/models/published/item-fishing-rod/4cb3249e952962d4145a86e574c7c7f071c39c36ed2151e8eb1d0198e2363ad5/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/item-fishing-rod/4cb3249e952962d4145a86e574c7c7f071c39c36ed2151e8eb1d0198e2363ad5/forge/blender/item_orient.py",
+        "role": "script",
+        "sha256": "a68d9fcfc9cae6f56c882c76e9e294d3c24bd02fb7826d9da3eaa086b7de362f"
+      },
+      {
+        "path": "blender/models/published/item-fishing-rod/4cb3249e952962d4145a86e574c7c7f071c39c36ed2151e8eb1d0198e2363ad5/forge/forge.py",
+        "role": "script",
+        "sha256": "7ba07e846a522d199a522a011cfb1f87d35b47233bcb33aaeb9cb27e09644319"
+      },
+      {
+        "path": "blender/models/published/item-fishing-rod/4cb3249e952962d4145a86e574c7c7f071c39c36ed2151e8eb1d0198e2363ad5/forge/forgelib/item_orient.py",
+        "role": "script",
+        "sha256": "03534083c34c47428d83b477a4e98678e6e547ef21b9a65b751d508a0e164600"
+      },
+      {
+        "path": "blender/models/published/item-fishing-rod/4cb3249e952962d4145a86e574c7c7f071c39c36ed2151e8eb1d0198e2363ad5/forge/forgelib/item_render.py",
+        "role": "script",
+        "sha256": "3290c864b563263170efcc626acce2a1dc88141d320d9cf186f5bc48b3e6f2d0"
+      },
+      {
+        "path": "blender/models/published/item-fishing-rod/4cb3249e952962d4145a86e574c7c7f071c39c36ed2151e8eb1d0198e2363ad5/forge/forgelib/items.py",
+        "role": "script",
+        "sha256": "22221017285c31c893c28260a13caf407e646913c63e32ad723c8671f1a9d84c"
+      },
+      {
+        "path": "blender/models/published/item-fishing-rod/4cb3249e952962d4145a86e574c7c7f071c39c36ed2151e8eb1d0198e2363ad5/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/item-fishing-rod/4cb3249e952962d4145a86e574c7c7f071c39c36ed2151e8eb1d0198e2363ad5/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "7c2e7b1994f6c5f8cb4c00bb8bf92f8078a8e7aa1ce405f18f5541e9aaf8452e"
+      },
+      {
+        "path": "blender/models/published/item-fishing-rod/4cb3249e952962d4145a86e574c7c7f071c39c36ed2151e8eb1d0198e2363ad5/forge/recipes/item-fishing-rod.json",
+        "role": "pose-config",
+        "sha256": "02c6aec85cb478c883f6d1b0480b4a912488ae380ae1e219bbccd1445186033b"
+      },
+      {
+        "path": "blender/models/published/item-fishing-rod/4cb3249e952962d4145a86e574c7c7f071c39c36ed2151e8eb1d0198e2363ad5/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/item-fishing-rod/4cb3249e952962d4145a86e574c7c7f071c39c36ed2151e8eb1d0198e2363ad5/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/item-fishing-rod/4cb3249e952962d4145a86e574c7c7f071c39c36ed2151e8eb1d0198e2363ad5/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/item-fishing-rod/4cb3249e952962d4145a86e574c7c7f071c39c36ed2151e8eb1d0198e2363ad5/forge/work/item-fishing-rod/item_model.blend",
+        "role": "model",
+        "sha256": "b2216eb90ed6084cec285489fd339feed6edf2d560a085a4b372c0d7eb9d81a1"
+      },
+      {
+        "path": "blender/models/published/item-fishing-rod/4cb3249e952962d4145a86e574c7c7f071c39c36ed2151e8eb1d0198e2363ad5/forge/work/item-fishing-rod/orient.json",
+        "role": "pose-config",
+        "sha256": "4ba24888458de7979705ef12382322b74f495c8874793aa8ecff017f76f13923"
+      },
+      {
+        "path": "blender/models/published/item-fishing-rod/4cb3249e952962d4145a86e574c7c7f071c39c36ed2151e8eb1d0198e2363ad5/forge/work/item-fishing-rod/orient_params.json",
+        "role": "pose-config",
+        "sha256": "d891c1d8e9eb73dd2ad1aa60e6f42399c859a762d7a00e87c661bcf95534eb05"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_0/s_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-fishing-rod-held-s-0",
+      "sha256": "432ed46032fe6b53dc7bebfb33d9056ed78cf9a42c195a22d832d4adec52c7d7",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_1/s_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-fishing-rod-held-s-1",
+      "sha256": "85336df28c13607ad446687decc9a4aadf6209322a1e1518d4765c567acd098f",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_2/s_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-fishing-rod-held-s-2",
+      "sha256": "abc27c3e515b072d2b76a247300e76ba89ff3a1ba33dbb896f95ae7e459c5602",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_3/s_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-fishing-rod-held-s-3",
+      "sha256": "fdbba025b3d2ae95f95a082c5522832fe1d55b0ddf5466820e43cb52d162252d",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_4/s_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-fishing-rod-held-s-4",
+      "sha256": "591bc9ccdc1dc18c04eb0b1d4506d7a0f774764aaf2e5e140681a1bf17d973b2",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_5/s_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-fishing-rod-held-s-5",
+      "sha256": "3d55371954e8149f44215d501cb8b129903f96268acdabe7f1f2cd4982373fdb",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_6/s_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-fishing-rod-held-s-6",
+      "sha256": "2763e8609d4829e61900371c6bbc33d81ba8a2009651deedd9576f5577f68709",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_7/s_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-fishing-rod-held-s-7",
+      "sha256": "2a0d6189b03df38e1dfdce633d074ed012ea71360771394f0814c0ccfa2659f4",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_0/se_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-fishing-rod-held-se-0",
+      "sha256": "f0448befeb2b71cbe01a2e81c48c1a39fd6d8bab34fbb7b0f8101d84958800cc",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_1/se_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-fishing-rod-held-se-1",
+      "sha256": "12f9846459656f4b60cf4237afe121299c50bd657aff62fd9d07d295c4c5ac23",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_2/se_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-fishing-rod-held-se-2",
+      "sha256": "3e3676b10435dab63ce24d18aac2b0d76154233fb1c619c84f3b6ca5b70e56c3",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_3/se_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-fishing-rod-held-se-3",
+      "sha256": "62d7da635a4be72fff763477bbbcde0e1b28e82ea267faeb838041cf2a70fa90",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_4/se_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-fishing-rod-held-se-4",
+      "sha256": "92e80b6bccf04562912603205ecf6700285fac9a09e845f480a345143e8a872a",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_5/se_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-fishing-rod-held-se-5",
+      "sha256": "aadae71afa6d4d9f34013c83f369e74c91dc95bdebc1058a6429a4eaee5e8059",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_6/se_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-fishing-rod-held-se-6",
+      "sha256": "6b927e858dddc2194d78573d13d8760d9b218cd7ea5e26de29f8012ee56e1714",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_7/se_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-fishing-rod-held-se-7",
+      "sha256": "49f9cc81dc7f74fcdbcd8913316cb71fb1f461db3392dd0e2a0134d748c37557",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_0/e_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-fishing-rod-held-e-0",
+      "sha256": "1cea0836f6fed67bc7ea9c57df70402ce348ce3b8ab1b196bc32fc470db438f2",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_1/e_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-fishing-rod-held-e-1",
+      "sha256": "76095320939c041f3e0669dec502911300e1bac228ee4f63caeb7d5a7aef7a99",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_2/e_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-fishing-rod-held-e-2",
+      "sha256": "9310e0c5094651e8da0a607744019b5d24421b47a53414977d3a967d12990145",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_3/e_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-fishing-rod-held-e-3",
+      "sha256": "98211e0ba080e0878f5e001869525b8129eb96de787c0c954b89d4f08153b75b",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_4/e_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-fishing-rod-held-e-4",
+      "sha256": "8b6645703a6dd2a7f7a59de2de5ababbe0fff7461a14c432527d4f2a7cc04573",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_5/e_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-fishing-rod-held-e-5",
+      "sha256": "65ea0fa5235e99cfff7a056f4835e183eaa2b7523ec361940826dd8772ff874d",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_6/e_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-fishing-rod-held-e-6",
+      "sha256": "a19cc7da0d44e4f02c13aafd800f02f518ed09e00e50c876be11f7a570a86462",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_7/e_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-fishing-rod-held-e-7",
+      "sha256": "d3f23f7b60ecb7ca9b2c736f444f4fb9a44834530c8f4af2ac6b75eae720d6ec",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_0/ne_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-fishing-rod-held-ne-0",
+      "sha256": "c7032b5d129f8aa71ea5c776b13a2b1571f4f8d7cb83bc8b76db3b087c097921",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_1/ne_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-fishing-rod-held-ne-1",
+      "sha256": "e0985da87aefbd7ca221f4505380fa7310a11daf2ec5e931fa77dad95c79f155",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_2/ne_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-fishing-rod-held-ne-2",
+      "sha256": "5db70d4b225d205709f660be1b934727405f2a5fbded3317e27a87365d926303",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_3/ne_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-fishing-rod-held-ne-3",
+      "sha256": "bd0ba1392b89c4d251d6ca3949e9dfcbc84eaac9632c5c3af92fa1efa219689c",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_4/ne_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-fishing-rod-held-ne-4",
+      "sha256": "15e7c6d4d5a1f54ad214e825160cfa9a1a741e049022a90cb1b165c0ad899f02",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_5/ne_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-fishing-rod-held-ne-5",
+      "sha256": "2329af6f1eb46c692e3bbbb6da15a11d11c3101456cdc2d9a685de1c22c0e8cd",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_6/ne_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-fishing-rod-held-ne-6",
+      "sha256": "c302ad6566fbeefde34eff5f1ba58d885626afbfb45e4b198bd7eb5a640395f1",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_7/ne_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-fishing-rod-held-ne-7",
+      "sha256": "8cc94273e1d068f3e6607c6a56650e972b529b9568e7ea788866dfc05a45b867",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_0/n_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-fishing-rod-held-n-0",
+      "sha256": "1d95d91a8c50d6d7c15e6178b49b64a53fa845e74ca59926968b918b2bfb4b6f",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_1/n_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-fishing-rod-held-n-1",
+      "sha256": "f78eb24aeb796a4b84ca9a80039354e8a5e8fb643682378785f81ab121df6da6",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_2/n_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-fishing-rod-held-n-2",
+      "sha256": "78c09b1ae4adf989b64ec0645799339fc1588d194fa81ddbf737cea1b86d1cf4",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_3/n_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-fishing-rod-held-n-3",
+      "sha256": "f6487fd707f350ee824086982aee22d79742f98cc0389af4f3d3b02aa728c128",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_4/n_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-fishing-rod-held-n-4",
+      "sha256": "ed62f05bdc89b090b5b4e5443934c9891c7751d9776325eb5b85e40a17060d90",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_5/n_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-fishing-rod-held-n-5",
+      "sha256": "9c00581283664d6871175ec332e76add0487f790bc27b58dea5ba0a106725fdd",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_6/n_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-fishing-rod-held-n-6",
+      "sha256": "fa14a01013a5741ea96efa69ee43da91be39ee86ffe6f9ccdaa2ba0aa70364ba",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_7/n_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-fishing-rod-held-n-7",
+      "sha256": "b2a4117c3ec5d3bc324ca72d3d1697982480538dc3093680a3bb7d0c9d8715dc",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_0/nw_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-fishing-rod-held-nw-0",
+      "sha256": "48b234a317dbb643868073263c0329fc612c2530d2f347a7a5e9880f39264229",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_1/nw_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-fishing-rod-held-nw-1",
+      "sha256": "8780bb52c9faf7f944071b775c8b5334d8e4d232bf6b0fe202e5ff2a8ca80210",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_2/nw_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-fishing-rod-held-nw-2",
+      "sha256": "4728a94e572062dbfdba0fae053baa8162def06fac8add1916f433f3000fabc4",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_3/nw_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-fishing-rod-held-nw-3",
+      "sha256": "92d8f1334e82dd3c3c10b15c805ed980af12175014a36a8bfc148d6365eccef0",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_4/nw_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-fishing-rod-held-nw-4",
+      "sha256": "1d07856cdce2582fc356ccf25dea88990d86efc339e1c9e5d40f3ae3101aa9c8",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_5/nw_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-fishing-rod-held-nw-5",
+      "sha256": "21f68955b4fb6b18db99d8966057729c9143993682fdd9b6cba702d347aeb058",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_6/nw_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-fishing-rod-held-nw-6",
+      "sha256": "ed87d2f147bc0ad07606b37f8fddc2471db8be29a5d0ccb56c9e924d7a726519",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_7/nw_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-fishing-rod-held-nw-7",
+      "sha256": "aeafdc60aa318da6a9c6c4b26a46020d34125a56a9617276740b7a48749f8f1d",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_0/w_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-fishing-rod-held-w-0",
+      "sha256": "2699aeede79d6c36bb4f8110935d5777d7253f6e0d296bc43b6d188b47567fbe",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_1/w_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-fishing-rod-held-w-1",
+      "sha256": "bc6de17ce110298681f231bc95883ed4bca179e53725e52f851b3fab51c6b493",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_2/w_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-fishing-rod-held-w-2",
+      "sha256": "4e71a5da8351a92e6da3502d327fd0b148fb84d1589be1fcd2cdd2e030da7df3",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_3/w_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-fishing-rod-held-w-3",
+      "sha256": "ed19e27f69a27ed04bd2cf9fc8e9cda0cc4c34fc40067aea486ca8814e859faa",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_4/w_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-fishing-rod-held-w-4",
+      "sha256": "05290d51b9782e455d526dc23423736c45c1caf0dc7affaf8b07abb29c62176e",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_5/w_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-fishing-rod-held-w-5",
+      "sha256": "959c5cba8705d534bc43afc886d0f8cf689ae9753f333a356e64b2466fd16ff1",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_6/w_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-fishing-rod-held-w-6",
+      "sha256": "3ecbd5f499384df7969fa40ebdd9663866ab9927224c3e022bae931c56f889ff",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_7/w_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-fishing-rod-held-w-7",
+      "sha256": "a7e520e34dd2c8a822b039fff18f03745f83b6be1e0e3985d35980b047d3e4e4",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_0/sw_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-fishing-rod-held-sw-0",
+      "sha256": "2c0d813da736a9845dffe67e1f0405c0b702c30d4cb082b60b3d446477bd7ab4",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_1/sw_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-fishing-rod-held-sw-1",
+      "sha256": "f4525edc88844c77ed2a180602d5af19a22c679a54b17bfeed1b48011e76f007",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_2/sw_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-fishing-rod-held-sw-2",
+      "sha256": "bdba57c121aadb2387639d54cd1c6ff7e0c9121c41403143c6d34f5dc900f87f",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_3/sw_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-fishing-rod-held-sw-3",
+      "sha256": "ca6aec57cb2d20d204ceb780f0181f69eda3f4b8a2fd0f0f86998c7d7f03c48d",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_4/sw_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-fishing-rod-held-sw-4",
+      "sha256": "9cedd2c0716668900442031fbf3e867d5a5be215e20db53bc961d8e9bd5834d3",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_5/sw_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-fishing-rod-held-sw-5",
+      "sha256": "60638d93db09792a3093b5ede5c29ce247fd7aa1497d8e4421c31d318c4c81d8",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_6/sw_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-fishing-rod-held-sw-6",
+      "sha256": "235834f9f5030e881e2174d3b88ab1611755e0682565d98f6df67424a46b8e1a",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/held_7/sw_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-fishing-rod-held-sw-7",
+      "sha256": "af7ba21b844710d5cc9b4b8ffe5212e7df67e5aa15ae0daaa19c2ed1f637bf6f",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-fishing-rod/8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417/pix/export/icon/se_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-fishing-rod-icon",
+      "sha256": "722626bf570cd8ac4855fdb9a288f73867e565feb00bfcba890195efe2a48c9e",
+      "socket": null,
+      "sockets": {},
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "icon"
+    }
+  ],
+  "gripConvention": "clockwise-screen-from-up-after-facing-yaw",
+  "packet": "art/review/2026-11-03-item-fishing-rod",
+  "packetDigest": "8bbef1d75c64ad97b6276a1a2f9109aafdb37a61c5ee4c14f0e0b618ed156417",
+  "packetSha256": "fee22a6219a6edeea63ed39057fdfff42a0a26d08a78d280128dde5c8c162a45",
+  "schemaVersion": 1,
+  "scope": [
+    "held-item",
+    "icon"
+  ],
+  "socket": "Socket_Hand.R"
+}

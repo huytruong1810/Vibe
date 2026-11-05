@@ -1,0 +1,66 @@
+{
+  "asset": "item:fishing-rod",
+  "stage": "orient",
+  "inputsDigest": "78041e7535147c2bc8a48fcedcc688ab26f87f62617daf0d2d5b07c45860cfe7",
+  "inputs": [
+    "art/source/forge/work/item-fishing-rod/texture.blend",
+    "art/source/forge/work/item-fishing-rod/orient_params.json",
+    "art/source/forge/blender/item_orient.py",
+    "art/source/forge/forgelib/item_orient.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/item-fishing-rod/item_model.blend": "b2216eb90ed6084cec285489fd339feed6edf2d560a085a4b372c0d7eb9d81a1",
+    "art/source/forge/work/item-fishing-rod/orient_preview.png": "b12cbabb4a0883c4775c331b196734e8c514fa42f11668658fa211ae910e19cb"
+  },
+  "extra": {
+    "matrix": [
+      [
+        0.581277,
+        -0.652269,
+        0.798466,
+        -0.03125
+      ],
+      [
+        0.638602,
+        0.947401,
+        0.309036,
+        0.015385
+      ],
+      [
+        -0.809437,
+        0.279038,
+        0.817211,
+        -0.074739
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "grip": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "iconPivot": [
+      -0.003284,
+      0.006108,
+      0.175
+    ],
+    "reachArtPx": 13.6,
+    "lengthArtPx": 16,
+    "haftWidthArtPx": 1.442,
+    "headFlipped": true,
+    "forwardFlipped": false,
+    "dimensions": [
+      0.063027,
+      0.073004,
+      0.5
+    ],
+    "inflateArtPx": 0.842,
+    "iconScale": 1.69
+  },
+  "at": "2026-11-03T09:21:27Z"
+}

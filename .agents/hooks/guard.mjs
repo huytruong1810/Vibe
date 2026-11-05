@@ -6,6 +6,7 @@ import {
   bannedLine,
   emit,
   litterDenial,
+  isDelegatedRecord,
   match,
   PROTECTED,
   readRole,
@@ -102,18 +103,28 @@ if (name === 'run_command') {
         ? git(['status', '--porcelain', '--untracked-files=all']).map((l) => l.slice(3))
         : []),
     ];
-    const hit = files.find((f) => match(f, PROTECTED) && !f.startsWith('.agents/state/'));
+    const hit = files.find(
+      (f) => match(f, PROTECTED) && !f.startsWith('.agents/state/') && !isDelegatedRecord(role, f),
+    );
     if (hit)
       deny(
         `This would commit the protected file ${hit}. Agents never stage or commit protected paths, director records included (DOC-1, TEAM-2a). Leave it for the director; tell them in your comms.`,
       );
   }
-  if (PROTECTED_TOKENS.test(cmd) && WRITE_OPS.test(cmd)) {
+  // Directive 016: delegated approval records are the communicator's to write.
+  const scan =
+    role === 'communicator' || role === 'visitor'
+      ? cmd.replace(
+          /docs[\\/]+team[\\/]+comms[\\/]+director[\\/]+approvals[\\/]+[\w.\-]+\.md/gi,
+          '',
+        )
+      : cmd;
+  if (PROTECTED_TOKENS.test(scan) && WRITE_OPS.test(scan)) {
     deny(
       'This command appears to modify doctrine-protected files (DOC-1). Read them with cat/grep/sed -n only; propose changes in docs/team/proposals/.',
     );
   }
-  const other = cmd.match(/comms[\\/]+(claude|codex|communicator|blender|director)[\\/]/i);
+  const other = scan.match(/comms[\\/]+(claude|codex|communicator|blender|director)[\\/]/i);
   if (other && other[1].toLowerCase() !== role && WRITE_OPS.test(cmd)) {
     deny(`This command appears to write in ${other[1]}'s comms folder (TEAM-3).`);
   }

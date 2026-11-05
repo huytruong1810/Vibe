@@ -1,0 +1,1660 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/item-hoe--2026-11-04-item-hoe.md",
+  "approvalSha256": "da5dc5cba935130575ec7d0551e2c70bb8797db6647f9bfdaa1fd5368875948b",
+  "asset": "item:hoe",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset item:hoe",
+    "id": "forge-item-hoe",
+    "inputs": [
+      {
+        "path": "blender/models/published/item-hoe/316d89be702ecb45c6acda4e1d14e46f501410edfeb2250008f1755ce155b5b0/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/item-hoe/316d89be702ecb45c6acda4e1d14e46f501410edfeb2250008f1755ce155b5b0/forge/blender/item_orient.py",
+        "role": "script",
+        "sha256": "a68d9fcfc9cae6f56c882c76e9e294d3c24bd02fb7826d9da3eaa086b7de362f"
+      },
+      {
+        "path": "blender/models/published/item-hoe/316d89be702ecb45c6acda4e1d14e46f501410edfeb2250008f1755ce155b5b0/forge/forge.py",
+        "role": "script",
+        "sha256": "7ba07e846a522d199a522a011cfb1f87d35b47233bcb33aaeb9cb27e09644319"
+      },
+      {
+        "path": "blender/models/published/item-hoe/316d89be702ecb45c6acda4e1d14e46f501410edfeb2250008f1755ce155b5b0/forge/forgelib/item_orient.py",
+        "role": "script",
+        "sha256": "03534083c34c47428d83b477a4e98678e6e547ef21b9a65b751d508a0e164600"
+      },
+      {
+        "path": "blender/models/published/item-hoe/316d89be702ecb45c6acda4e1d14e46f501410edfeb2250008f1755ce155b5b0/forge/forgelib/item_render.py",
+        "role": "script",
+        "sha256": "3290c864b563263170efcc626acce2a1dc88141d320d9cf186f5bc48b3e6f2d0"
+      },
+      {
+        "path": "blender/models/published/item-hoe/316d89be702ecb45c6acda4e1d14e46f501410edfeb2250008f1755ce155b5b0/forge/forgelib/items.py",
+        "role": "script",
+        "sha256": "22221017285c31c893c28260a13caf407e646913c63e32ad723c8671f1a9d84c"
+      },
+      {
+        "path": "blender/models/published/item-hoe/316d89be702ecb45c6acda4e1d14e46f501410edfeb2250008f1755ce155b5b0/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/item-hoe/316d89be702ecb45c6acda4e1d14e46f501410edfeb2250008f1755ce155b5b0/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "7c2e7b1994f6c5f8cb4c00bb8bf92f8078a8e7aa1ce405f18f5541e9aaf8452e"
+      },
+      {
+        "path": "blender/models/published/item-hoe/316d89be702ecb45c6acda4e1d14e46f501410edfeb2250008f1755ce155b5b0/forge/recipes/item-hoe.json",
+        "role": "pose-config",
+        "sha256": "22e1fdd996e1af724b18576427ebbd99105e38c7d34e2c2da8ef303a243d2c4f"
+      },
+      {
+        "path": "blender/models/published/item-hoe/316d89be702ecb45c6acda4e1d14e46f501410edfeb2250008f1755ce155b5b0/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/item-hoe/316d89be702ecb45c6acda4e1d14e46f501410edfeb2250008f1755ce155b5b0/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/item-hoe/316d89be702ecb45c6acda4e1d14e46f501410edfeb2250008f1755ce155b5b0/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/item-hoe/316d89be702ecb45c6acda4e1d14e46f501410edfeb2250008f1755ce155b5b0/forge/work/item-hoe/item_model.blend",
+        "role": "model",
+        "sha256": "d6eb5bdd5a22dc025a548c6ab5c6e94a6ffbc38a0ebc8d2f67177c36ae62c3f3"
+      },
+      {
+        "path": "blender/models/published/item-hoe/316d89be702ecb45c6acda4e1d14e46f501410edfeb2250008f1755ce155b5b0/forge/work/item-hoe/orient.json",
+        "role": "pose-config",
+        "sha256": "81a751431141a9839f5c49fb33c2830599c42fd1355b09f051fce768c9418645"
+      },
+      {
+        "path": "blender/models/published/item-hoe/316d89be702ecb45c6acda4e1d14e46f501410edfeb2250008f1755ce155b5b0/forge/work/item-hoe/orient_params.json",
+        "role": "pose-config",
+        "sha256": "22d1ec7546a95a5619c30e8793fcb33d11542d99370b71d50f51ad05e08535f7"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_0/s_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-hoe-held-s-0",
+      "sha256": "648097196e7a5710f63ba587442f24085825a5a18c07a06b29463308e58fead2",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_1/s_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-hoe-held-s-1",
+      "sha256": "55f0dbb6d15acb3378c77b662303570b6104b721677a2c432084a183bc8cb297",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_2/s_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-hoe-held-s-2",
+      "sha256": "3383bf45d42a2427b4f1b0187e5f351bfd05c8d448b5d1efba74016b4cb064bc",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_3/s_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-hoe-held-s-3",
+      "sha256": "39ebed20b0f664312b15745807826ae024e41b3b17c04df7379950440471969e",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_4/s_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-hoe-held-s-4",
+      "sha256": "f8a15e7310e39cfe751a0d6e1f741b947f9731b4c88ad0fd68367daf3d05f670",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_5/s_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-hoe-held-s-5",
+      "sha256": "ad13abbe0bb5a121642764ff7b042976a593a75a23ce76ee1ab9e956df69d50a",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_6/s_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-hoe-held-s-6",
+      "sha256": "547373d71562f3d2bacd83116e964b2b86475dd3bf2d40c5ddb75229288e6a1a",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_7/s_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-hoe-held-s-7",
+      "sha256": "4da184e3c70119ab72247588320e21cffe76f7f3946fd81518ef0aad995d888c",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_0/se_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-hoe-held-se-0",
+      "sha256": "c39dc0312d7e0fd2cf5d28d708408ecfa715d306f52c911e5bf29ed7eac64b16",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_1/se_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-hoe-held-se-1",
+      "sha256": "73f6058c3b6fa72b44d89a48f75c95c5c108a2f043d8bf1f10d8c35435da5a8e",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_2/se_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-hoe-held-se-2",
+      "sha256": "e5f75d78f27a2c00d612d7bce5a1759e2d50102fa7e9f8075a5c73af472fca7a",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_3/se_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-hoe-held-se-3",
+      "sha256": "f4c1588e95edb46661678044bc16ae7c65c9c3e0adcc990aa37b403f79249181",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_4/se_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-hoe-held-se-4",
+      "sha256": "4d1594343593a777cd47a888b98f81e517e0f7faa3ccb79af05d4f489776af3f",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_5/se_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-hoe-held-se-5",
+      "sha256": "50b4a79e46e1d9df5a6e25acb60982301d97b6cb5085c5629934f3e4c79a277e",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_6/se_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-hoe-held-se-6",
+      "sha256": "125083e0a5723119693418f77510d6fdd748964793d29814ed1724e9ce0c269b",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_7/se_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-hoe-held-se-7",
+      "sha256": "7bd465d61d66b41035f19176eef1744ac001895bff9d8c29442f3722bd93ecb2",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_0/e_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-hoe-held-e-0",
+      "sha256": "e39f3fc087a0b06b159820af60d71dc091cc682412c96121ce4a5ecc1b827224",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_1/e_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-hoe-held-e-1",
+      "sha256": "b7389c54f2d03b071fcf8d43bcd8703ddfcf0b48ce1406bbafdff491daa1a3d4",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_2/e_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-hoe-held-e-2",
+      "sha256": "a6d1aebd994c2dbc6ada6179d00bb456813a854704c54ec26e03eb6f6a72b893",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_3/e_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-hoe-held-e-3",
+      "sha256": "0673e0f131c43cbce3ea5685b0b5f5f374f97bf7847195086d8c2df393d6a335",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_4/e_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-hoe-held-e-4",
+      "sha256": "81a3accd773b89c23c18f13d1dc8be6f463213aea39b473172443dd5f1091b2d",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_5/e_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-hoe-held-e-5",
+      "sha256": "bb00fe730dbce844482df281bf2e76c8b56c3ffc2ff5c8276c893b8b1fef27f3",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_6/e_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-hoe-held-e-6",
+      "sha256": "ff6c2a57667c91f1f80f67165d2923161c427fb7942ad0cbbb70e6217b63bb7b",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_7/e_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-hoe-held-e-7",
+      "sha256": "fb3aeb01852b2acf6a078510b455fbb227a18292c1b2b548e1c2f4188850d60b",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_0/ne_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-hoe-held-ne-0",
+      "sha256": "13440de1317485daec659411d1737308565f831ab44a445bb85b77f09169e59f",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_1/ne_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-hoe-held-ne-1",
+      "sha256": "5c8007bcb411f3853824979d1ad5a77788ef08590f82387b80de3366835f0fd9",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_2/ne_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-hoe-held-ne-2",
+      "sha256": "819d3096a52fe51525438028ae65872df37cb0d94e9eee1eebaf9961256b405c",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_3/ne_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-hoe-held-ne-3",
+      "sha256": "220e2109c7d4c9697f869635d53e778a9899bdbb0f379086dbc087310123d074",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_4/ne_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-hoe-held-ne-4",
+      "sha256": "7943dfdf43bb33906052d2348c5a0b7c94791ef188481b1efc3f1a8a5958f491",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_5/ne_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-hoe-held-ne-5",
+      "sha256": "2fec4e284d79bb6cb3a2de5655b51580f62d46e5101f684c960fac0949941192",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_6/ne_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-hoe-held-ne-6",
+      "sha256": "d69a308d8392edcbcb93a7366fe09604b29e0f9d58964f1488dcf12af6ed5438",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_7/ne_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-hoe-held-ne-7",
+      "sha256": "741fe40416c8da698992a1ba2ad846b765cb55c052be686f234e55c1e60030ae",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_0/n_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-hoe-held-n-0",
+      "sha256": "a593589b0aaa55eca6d10b4a1c813d8b0d9482896c3ae13dbaadf223409f265d",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_1/n_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-hoe-held-n-1",
+      "sha256": "d916a12c1ac99c28429c45038838843f37ed28aad6efe59f7774fa63e1e5300f",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_2/n_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-hoe-held-n-2",
+      "sha256": "e61a7b274c100fc62403603c38324965b5c7ec8a0d4a8c02dd22e387ef4a236f",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_3/n_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-hoe-held-n-3",
+      "sha256": "7a37489946cee566bf82770d78420667fb002ae3ecb2c60a5c56919ce4f6860c",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_4/n_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-hoe-held-n-4",
+      "sha256": "e6da9d3d0896adf4954450a6c55da5f2384765e2d8485e8346561f141fe819ba",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_5/n_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-hoe-held-n-5",
+      "sha256": "314c276570236cb70e36898404b3b24718c9dd5f57f9a99dd7d679aeccc8322b",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_6/n_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-hoe-held-n-6",
+      "sha256": "99c9157d663dcc5c844eaa309530aa6567d7e4c24747649b111260501c9a4f81",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_7/n_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-hoe-held-n-7",
+      "sha256": "864944ea6f1ae0dc6f0d505dacb34c8904db7b0e5f31e4e57814d3266843b9c6",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_0/nw_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-hoe-held-nw-0",
+      "sha256": "0360064ba4063259e3bf30db3831ef25fbe947a04a021f8028b3a859dd5d2a0f",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_1/nw_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-hoe-held-nw-1",
+      "sha256": "998420354d5acc78866ab44f4988b822112fa8df4a1f105122b1584b2c60d7ff",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_2/nw_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-hoe-held-nw-2",
+      "sha256": "db51fb0e36d5899b258cf4b428aaade77746b4183e11f1f0f92fa35622336463",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_3/nw_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-hoe-held-nw-3",
+      "sha256": "91e263939af0f400fe2339f6a36b01f4f0fa9148e30a975b0fa61e94af0d6cd9",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_4/nw_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-hoe-held-nw-4",
+      "sha256": "92738fc1148a61b00848c199809eeef54f00773bc67d13806f7b0adaad7e8e50",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_5/nw_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-hoe-held-nw-5",
+      "sha256": "e8d8b1954de94144677adcdce2842a14b91143e501930fd603423da65e357da1",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_6/nw_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-hoe-held-nw-6",
+      "sha256": "6dfe5b332295a911385e96c0b0d30f4e6c8c2450b78141b01812045ca8d7681b",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_7/nw_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-hoe-held-nw-7",
+      "sha256": "2ac095f0a89c02870364e4f35634a45fe49f472eb0b65389801924c75f18b4fe",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_0/w_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-hoe-held-w-0",
+      "sha256": "7d20196ba4963ec599d14267fc980f785591d1c20d5c0e457de607beb87f805e",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_1/w_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-hoe-held-w-1",
+      "sha256": "6f37f9fba8dfa73d6adbc68ad8975fbed7e05d4c7b6fdcf2a08a75d9994a7cd6",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_2/w_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-hoe-held-w-2",
+      "sha256": "0eb8b91b86aa3a118f5b392466f1fba71396c75d9e7e4a19fd0e000da19b8e99",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_3/w_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-hoe-held-w-3",
+      "sha256": "77133892d0145619578948522a24d39ae9307b31ef8fb9875e38aeab6fa0bf0a",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_4/w_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-hoe-held-w-4",
+      "sha256": "4fda9942ef7d844dfbb7550eec299ea0c1056e2a17b2e9df96c4dc25d74be29e",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_5/w_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-hoe-held-w-5",
+      "sha256": "108dd536e51a0fa9b4c1663af7600bbada696acc24584692989c2f4e6af297aa",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_6/w_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-hoe-held-w-6",
+      "sha256": "95b1f8c600db7ffb6f4b622f17b440888282649bb55a520af73d1323f9e426cd",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_7/w_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-hoe-held-w-7",
+      "sha256": "dbc3d700e3762aecdd123bff541419812317328cfb5788dee9a7f9f89fa2f035",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_0/sw_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-hoe-held-sw-0",
+      "sha256": "435ee6579b8241d744c1da8b2ecc59145db6dbe0d14a6ed990151cc7cf33c042",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_1/sw_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-hoe-held-sw-1",
+      "sha256": "4e458dd75635a5c92d95d4dcd27a1958425e0c13b04c62e8f4e978ed6a93d865",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_2/sw_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-hoe-held-sw-2",
+      "sha256": "4aaa133bde059a83063334f5a22aeaffee627495c0a48d832152e639922fac6f",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_3/sw_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-hoe-held-sw-3",
+      "sha256": "59c28bf7580d8ce29179daeaa2ccd92dbe0921194a12352967113faad5d8bc20",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_4/sw_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-hoe-held-sw-4",
+      "sha256": "f29c2583a9740f1f0eabb40449e61d9c32a6a8bfe707a58f042863336a99106d",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_5/sw_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-hoe-held-sw-5",
+      "sha256": "798eb36f12e9644a8e2e2e8bb88127e6ee03c939147406286e07f4815aef5905",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_6/sw_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-hoe-held-sw-6",
+      "sha256": "7fc2e80be8c4feee9a47a8d65e98558c95e52f88bfcae450d6a777aa1b08d0ff",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/held_7/sw_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-hoe-held-sw-7",
+      "sha256": "e8e08c5a4bee524e81c70be82c0e2d103c9fbc96ab9b8494d118fa3edd74c774",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-hoe/a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73/pix/export/icon/se_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-hoe-icon",
+      "sha256": "e2c9325bf413c8fa79becf6e59778b2c20d23137d6eb3b65fb14aaa6ea8c8f10",
+      "socket": null,
+      "sockets": {},
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "icon"
+    }
+  ],
+  "gripConvention": "clockwise-screen-from-up-after-facing-yaw",
+  "packet": "art/review/2026-11-04-item-hoe",
+  "packetDigest": "a656d9772ab9f6b3772bb4a1ee0aa8ee62837492dfdd4cd563554fdb72e57b73",
+  "packetSha256": "718f8d806fa4f1b8d3b8b030289d3ca5f57080bb91b170ced00d522918fd099a",
+  "schemaVersion": 1,
+  "scope": [
+    "held-item",
+    "icon"
+  ],
+  "socket": "Socket_Hand.R"
+}

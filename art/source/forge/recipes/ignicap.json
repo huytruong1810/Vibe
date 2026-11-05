@@ -1,13 +1,14 @@
 {
   "asset": "ignicap",
   "kind": "creature",
-  "heightArtPx": 26,
+  "heightArtPx": 24,
   "ramps": {
     "cap": "ember",
     "stem": "linen",
     "gills": "ochre",
     "boots": "basalt"
   },
+  "faceOffsetPx": [0, 5],
   "gen3d": {
     "seed": 1234,
     "steps": 50,

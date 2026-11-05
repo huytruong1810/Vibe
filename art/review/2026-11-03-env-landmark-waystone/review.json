@@ -1,0 +1,90 @@
+{
+ "asset": "env:landmark-waystone",
+ "footprint": [
+  1,
+  1
+ ],
+ "frames": [
+  {
+   "anchorPx": {
+    "x": 64,
+    "y": 120
+   },
+   "file": "frames/shadow.png",
+   "id": "env-landmark-waystone-shadow",
+   "layer": "shadow",
+   "sha256": "7cf547c14696febd56bd9847b6598e23230ab55b7e28c8d8d33cf06a3adea4a7",
+   "sourceSize": {
+    "h": 128,
+    "w": 128
+   }
+  },
+  {
+   "anchorPx": {
+    "x": 64,
+    "y": 120
+   },
+   "file": "frames/base.png",
+   "id": "env-landmark-waystone-base",
+   "layer": "base",
+   "sha256": "921828af362f06b889c5f1e548e0145f843773383034bc00e7bdc5d3b30850d1",
+   "sourceSize": {
+    "h": 128,
+    "w": 128
+   }
+  }
+ ],
+ "kind": "environment-review",
+ "lightPools": [],
+ "qa": [
+  {
+   "check": "footprint",
+   "detail": "ground contact 1.01 tiles deep vs declared 1 (width is scaled to fit)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-11.4"
+  },
+  {
+   "check": "canvas",
+   "detail": "64x64, width multiple of 32",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec canvases.environment"
+  },
+  {
+   "check": "margins",
+   "detail": "smallest transparent margin 2px",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec marginsArtPixels"
+  },
+  {
+   "check": "paletteMembership",
+   "detail": "0 off-palette colours",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.1"
+  },
+  {
+   "check": "colorCount",
+   "detail": "10 colours (environment limit 32)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.4"
+  },
+  {
+   "check": "blocks",
+   "detail": "exports are exact 2x blocks",
+   "hard": true,
+   "pass": true,
+   "rule": "L1"
+  }
+ ],
+ "schemaVersion": 1,
+ "scope": [
+  "shadow",
+  "base"
+ ],
+ "sourceDigest": "88df49240c33b4f4e328d18779edc2a8f029ea15ba1645b88964b1cebb5471e3",
+ "status": "candidate"
+}

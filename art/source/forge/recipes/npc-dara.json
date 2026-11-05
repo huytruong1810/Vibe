@@ -1,15 +1,29 @@
 {
   "asset": "npc:dara",
   "kind": "human",
-  "heightArtPx": 46,
+  "heightArtPx": 40,
   "ramps": {
     "skin": "skin-tan",
     "hair": "hair-auburn",
-    "vest": "timber",
-    "tunic": "sail",
+    "jacket": "navy",
+    "trousers": "sail",
     "boots": "leather"
   },
   "gen3d": { "seed": 1234, "steps": 50, "views": ["front", "back"] },
+  "rig": {
+    "landmarks": {
+      "shoulder_l": [0.1298, 0.0059, 1.0502],
+      "shoulder_r": [-0.1298, 0.0059, 1.0502],
+      "elbow_l": [0.1993, -0.0036, 0.8884],
+      "elbow_r": [-0.1993, -0.0036, 0.8884],
+      "wrist_l": [0.2901, -0.0249, 0.757],
+      "wrist_r": [-0.2901, -0.0249, 0.757],
+      "palm_l": [0.3228, -0.0401, 0.7045],
+      "palm_r": [-0.3228, -0.0401, 0.7045],
+      "hand_end_l": [0.3675, -0.0525, 0.6652],
+      "hand_end_r": [-0.3675, -0.0525, 0.6652]
+    }
+  },
   "concept": {
     "template": "human-apose-v1",
     "fields": {
@@ -18,7 +32,7 @@
       "role": "outpost courier",
       "home": "Aqualia courier post",
       "personality": "organized, kind, reliable, remembers every small promise",
-      "appearance": "standard athletic courier build, warm tan skin, braided auburn hair tied high, wearing a timber-brown leather traveler's vest with strapped pouches over a clean off-white sailcloth tunic, navy fitted riding trousers, and knee-high oiled courier boots. Proportions are 5 heads tall in clean stylized A-pose"
+      "appearance": "standard athletic courier build, warm tan skin, braided auburn hair tied high into a neat braided ponytail, amber eyes, confident smile, wearing a navy blue high-collar double-breasted courier jacket with gold buttons and leather messenger satchel strap, fitted off-white riding trousers, and knee-high brown leather courier boots. Proportions are 5 heads tall in clean stylized A-pose"
     },
     "poseGuide": "art/source/style/pose-guides/human.png",
     "references": [

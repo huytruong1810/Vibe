@@ -1,0 +1,48 @@
+{
+  "asset": "env:prop-hearth",
+  "stage": "layout",
+  "inputsDigest": "e56d1e0533e759c92e8475aa8e5a292d367981a2e058ce4270dbc01a101ff060",
+  "inputs": [
+    "art/source/forge/work/env-prop-hearth/texture.blend",
+    "art/source/forge/work/env-prop-hearth/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-prop-hearth/layout/base.blend": "f1cbc21869b605ecdb1dc6ce9e72c5f1092a79ec248324b5eb73750c05ffc7da",
+    "art/source/forge/work/env-prop-hearth/layout/roof.blend": "6b7b77ef529c938e8f7b1831f41c01aca5e36a610af5c56a3fc4ef23b303bc0c",
+    "art/source/forge/work/env-prop-hearth/layout_preview.png": "d8969829e448119f549b577ee9039e54d3d702da1a49d1882619d168eb0e1a20"
+  },
+  "extra": {
+    "scale": 0.116309,
+    "heightUnits": 2.1026,
+    "contactDepthTiles": 2.057,
+    "footprint": [
+      2,
+      2
+    ],
+    "canvas": {
+      "size": [
+        96,
+        108
+      ],
+      "anchor": [
+        48,
+        103
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -1.0,
+      0.0
+    ],
+    "layers": [
+      "base",
+      "roof"
+    ],
+    "faces": {
+      "base": 9303,
+      "roof": 4697
+    }
+  },
+  "at": "2026-11-03T05:00:43Z"
+}

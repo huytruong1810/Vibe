@@ -1,13 +1,14 @@
 {
   "asset": "zephyrit",
   "kind": "creature",
-  "heightArtPx": 25,
+  "heightArtPx": 22,
   "ramps": {
     "body": "sky",
     "wings": "cream",
     "belly": "sage",
     "eyes": "gold"
   },
+  "faceOffsetPx": [-1, 4],
   "gen3d": {
     "seed": 1234,
     "steps": 50,

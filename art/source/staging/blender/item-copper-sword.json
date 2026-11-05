@@ -1,0 +1,1660 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/item-copper-sword--2026-11-04-item-copper-sword.md",
+  "approvalSha256": "1bfe2919a29942d2e891f99b4f212be3d3efec6f022174c05b74764b8c7a9d69",
+  "asset": "item:copper-sword",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset item:copper-sword",
+    "id": "forge-item-copper-sword",
+    "inputs": [
+      {
+        "path": "blender/models/published/item-copper-sword/a3526bee242110b0ea4f131db9488e4d87925a0c4d7050302cfea7a98cbc84ea/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/item-copper-sword/a3526bee242110b0ea4f131db9488e4d87925a0c4d7050302cfea7a98cbc84ea/forge/blender/item_orient.py",
+        "role": "script",
+        "sha256": "a68d9fcfc9cae6f56c882c76e9e294d3c24bd02fb7826d9da3eaa086b7de362f"
+      },
+      {
+        "path": "blender/models/published/item-copper-sword/a3526bee242110b0ea4f131db9488e4d87925a0c4d7050302cfea7a98cbc84ea/forge/forge.py",
+        "role": "script",
+        "sha256": "7ba07e846a522d199a522a011cfb1f87d35b47233bcb33aaeb9cb27e09644319"
+      },
+      {
+        "path": "blender/models/published/item-copper-sword/a3526bee242110b0ea4f131db9488e4d87925a0c4d7050302cfea7a98cbc84ea/forge/forgelib/item_orient.py",
+        "role": "script",
+        "sha256": "03534083c34c47428d83b477a4e98678e6e547ef21b9a65b751d508a0e164600"
+      },
+      {
+        "path": "blender/models/published/item-copper-sword/a3526bee242110b0ea4f131db9488e4d87925a0c4d7050302cfea7a98cbc84ea/forge/forgelib/item_render.py",
+        "role": "script",
+        "sha256": "3290c864b563263170efcc626acce2a1dc88141d320d9cf186f5bc48b3e6f2d0"
+      },
+      {
+        "path": "blender/models/published/item-copper-sword/a3526bee242110b0ea4f131db9488e4d87925a0c4d7050302cfea7a98cbc84ea/forge/forgelib/items.py",
+        "role": "script",
+        "sha256": "22221017285c31c893c28260a13caf407e646913c63e32ad723c8671f1a9d84c"
+      },
+      {
+        "path": "blender/models/published/item-copper-sword/a3526bee242110b0ea4f131db9488e4d87925a0c4d7050302cfea7a98cbc84ea/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/item-copper-sword/a3526bee242110b0ea4f131db9488e4d87925a0c4d7050302cfea7a98cbc84ea/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "7c2e7b1994f6c5f8cb4c00bb8bf92f8078a8e7aa1ce405f18f5541e9aaf8452e"
+      },
+      {
+        "path": "blender/models/published/item-copper-sword/a3526bee242110b0ea4f131db9488e4d87925a0c4d7050302cfea7a98cbc84ea/forge/recipes/item-copper-sword.json",
+        "role": "pose-config",
+        "sha256": "71c1d7b2d0c12b847c9e717dd9e7a5d89ab411a70cb2541f6b62a1235b7b9810"
+      },
+      {
+        "path": "blender/models/published/item-copper-sword/a3526bee242110b0ea4f131db9488e4d87925a0c4d7050302cfea7a98cbc84ea/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/item-copper-sword/a3526bee242110b0ea4f131db9488e4d87925a0c4d7050302cfea7a98cbc84ea/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/item-copper-sword/a3526bee242110b0ea4f131db9488e4d87925a0c4d7050302cfea7a98cbc84ea/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/item-copper-sword/a3526bee242110b0ea4f131db9488e4d87925a0c4d7050302cfea7a98cbc84ea/forge/work/item-copper-sword/item_model.blend",
+        "role": "model",
+        "sha256": "90802dcae514fe40263f43d9be8b2475b161d43e8fedd484b05f52ee3c93bbc0"
+      },
+      {
+        "path": "blender/models/published/item-copper-sword/a3526bee242110b0ea4f131db9488e4d87925a0c4d7050302cfea7a98cbc84ea/forge/work/item-copper-sword/orient.json",
+        "role": "pose-config",
+        "sha256": "6c9d08b2effdc7d37a88a139b82b90c8f07d7b58d8dfb1b73de669356ac89ed8"
+      },
+      {
+        "path": "blender/models/published/item-copper-sword/a3526bee242110b0ea4f131db9488e4d87925a0c4d7050302cfea7a98cbc84ea/forge/work/item-copper-sword/orient_params.json",
+        "role": "pose-config",
+        "sha256": "4e8b0f71cdfe2483711cb3e5cb9b1467c8cf76490c6db0cab633b2fa2075041f"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_0/s_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-copper-sword-held-s-0",
+      "sha256": "2a3e0040b4eebd9aa5be9fb3865b81bd6b24b2d34e72f621423ad2ddbb4dd6c1",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_1/s_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-copper-sword-held-s-1",
+      "sha256": "ac5095fad117ed7f7fad453f98e2fbe74037dfc202b42bd96770fc8462b63ff9",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_2/s_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-copper-sword-held-s-2",
+      "sha256": "721574b31d0890b3e66c142e3d68a354f1cd8f3bfdc4f35e60a3eea6cee36b37",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_3/s_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-copper-sword-held-s-3",
+      "sha256": "733c394856c40cff904eb1c1737ed70d474ddd14dc2887e9c4c964ad7a802f86",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_4/s_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-copper-sword-held-s-4",
+      "sha256": "d00bbaac3752aadd4437a950588142ec4661e79fd61614d0e6f579a07e581ca0",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_5/s_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-copper-sword-held-s-5",
+      "sha256": "20a7d15ee24e426d288dda4030fd1e0c59cebec2e0825343e8e6754de9b0d62d",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_6/s_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-copper-sword-held-s-6",
+      "sha256": "5cf0f9402171a8a63c135c8c6b30629bd6fc6c77d6ef72650fd53a5e0559c15f",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_7/s_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-copper-sword-held-s-7",
+      "sha256": "a499a1cbf797bc4a80e77347ee8ff14f65dba7380ebfc8c052e066b10a212f78",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_0/se_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-copper-sword-held-se-0",
+      "sha256": "0dba3a449c60429c71435fc8c497fe6769c87dfe532cec8bb0e31946f2c22350",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_1/se_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-copper-sword-held-se-1",
+      "sha256": "700f795fccdb9f5db985c56ad45a81f5d5045f59e093b2e9899e90c698ddde3b",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_2/se_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-copper-sword-held-se-2",
+      "sha256": "05d2f9aa5fb1e585cd97c79f38520480df926542ac0f59f202ae90f28e0e746b",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_3/se_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-copper-sword-held-se-3",
+      "sha256": "646692a9dd17966a4caf8ed9213b65712fc0b93c4161edfd54562fb263105bb0",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_4/se_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-copper-sword-held-se-4",
+      "sha256": "9508c38f6775c6c38eb8ef0bb689b0b6a436139c85adcd3f684c386ecee580f8",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_5/se_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-copper-sword-held-se-5",
+      "sha256": "2b65eb09d42f3d539a2d2ea7dd2d0b3217b64bc870509b32617afe5080b87f1e",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_6/se_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-copper-sword-held-se-6",
+      "sha256": "779fe29c7734075bb08e66e41605a8995c06ae06fca3ee19c8c35e15b899ce7e",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_7/se_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-copper-sword-held-se-7",
+      "sha256": "a4fbd5c8bce94ca98126b4d29d677448bddf1203a35ea424f44179a53608a216",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_0/e_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-copper-sword-held-e-0",
+      "sha256": "50bca66cbd09cd146d11edcc13430855b12fb16335a3db247d47dc3025f9d894",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_1/e_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-copper-sword-held-e-1",
+      "sha256": "2044c425d62d7fa17583e3eb3f4ac2e49b5831635cf92c4d9eff09962649c50e",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_2/e_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-copper-sword-held-e-2",
+      "sha256": "a8cef8c8c29f01c0a3ee01b6dccd344b62ac9bff14c169ccffb9ec9b74915232",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_3/e_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-copper-sword-held-e-3",
+      "sha256": "835657abaf0cb1c26768d94b22cc551d7f421f35db56f77c861e1d21c75ed94f",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_4/e_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-copper-sword-held-e-4",
+      "sha256": "b99ff07f970f14759a88e7c45486f36d5181ad27640b6d5bee3985ee00344a70",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_5/e_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-copper-sword-held-e-5",
+      "sha256": "41d4244826b19b3666760534a452cc790bda1018a1de303777e0856c6a2f4f7e",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_6/e_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-copper-sword-held-e-6",
+      "sha256": "82681e692d3c6618ea8bf96f3062fb349ddd6ac788fe320733269160ca2de261",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_7/e_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-copper-sword-held-e-7",
+      "sha256": "491e3aab8067d5302b9c2c6cd6d11a62766caabc6f647ed5b50476dec76cdf81",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_0/ne_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-copper-sword-held-ne-0",
+      "sha256": "b1b96d719ac6d2a876a611e11ecce01ab0618ba5cc38ab86e658f8ebafa44a77",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_1/ne_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-copper-sword-held-ne-1",
+      "sha256": "f053488c00d472687c575f38eb9cafcf551c977f6e4300fe0ba4b5cb206eb3b2",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_2/ne_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-copper-sword-held-ne-2",
+      "sha256": "dc665b59127ad0eeaa8d104442496da49ead2d3b51211de08e2fc1bf0b5ee561",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_3/ne_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-copper-sword-held-ne-3",
+      "sha256": "88411a64589a202c0b5e72508b339666ebdb75fae415f07336085c44dd161444",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_4/ne_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-copper-sword-held-ne-4",
+      "sha256": "79ee1dcd77fc4fbfc2ef6be29efa1bc507d60a2dadbbd019721ae000385c843a",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_5/ne_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-copper-sword-held-ne-5",
+      "sha256": "c25bb03f58b270dff8462515ebec049f978d2a8b11c4b907fd04d4809eba627b",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_6/ne_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-copper-sword-held-ne-6",
+      "sha256": "b878685c6cc18d5c838ff37f512aa105257ed31c5779eb7cd27457921ded6d2c",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_7/ne_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-copper-sword-held-ne-7",
+      "sha256": "5d5268460daaff21ff69e1906696949938fac061569d63af9047fd56e0030bb8",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_0/n_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-copper-sword-held-n-0",
+      "sha256": "59756907e4a12f612e1443d7a6c864422df081c9d095eaacfeaa1e91ae6f9c6c",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_1/n_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-copper-sword-held-n-1",
+      "sha256": "39d0262f4e4433b2471d54fd72e7c5e445e594a1aeafaf5a07a1424892c39ec2",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_2/n_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-copper-sword-held-n-2",
+      "sha256": "2e849c473208ee8231e052a4ce98ba7e9d290e4cfc8472d7ee1d5241e6f19c13",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_3/n_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-copper-sword-held-n-3",
+      "sha256": "87f8199d8222755a658d1816aa9a85c10f2b7cef628dfbdfce45d2bf0d4e40d4",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_4/n_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-copper-sword-held-n-4",
+      "sha256": "1c243fc2f740f5453139e0a5f236de55c7ac9b3b646a9fb093c91f84028de278",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_5/n_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-copper-sword-held-n-5",
+      "sha256": "72fcb948be9461871975786373982d54e6ddb1ab6ccfefd75344dd3524ecfc15",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_6/n_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-copper-sword-held-n-6",
+      "sha256": "650cd9114dcf6dc6ece825aeb97e93770a288d72b0dc902944f060814674d8c4",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_7/n_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-copper-sword-held-n-7",
+      "sha256": "eadc8e4c249c6ec47a98129d177856cea75576045012347804903a73d97d73b5",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_0/nw_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-copper-sword-held-nw-0",
+      "sha256": "404a110ab3105f5ea3fd55ab8c2da6ae5f8914536adad3356efc705319582ea5",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_1/nw_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-copper-sword-held-nw-1",
+      "sha256": "d2d1c5218fccdbcddacc421d1a0117931eb9079efc03ffaa780b2ab1e019b9e7",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_2/nw_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-copper-sword-held-nw-2",
+      "sha256": "12d0a3f31d68ded8f0dd63b2b6604ed2dc947fd77c2abebcd127537fa068d28f",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_3/nw_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-copper-sword-held-nw-3",
+      "sha256": "98a18ef0954292133d1bd88ab504f60ff2d68759460b60aa6c81ec163bec4388",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_4/nw_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-copper-sword-held-nw-4",
+      "sha256": "1a7867f459560fe4193c2121a636750f303e3100c274f60b0cee35d411e39247",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_5/nw_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-copper-sword-held-nw-5",
+      "sha256": "45fccb683adef078f3c543649b3095959e451fdc2db9b2d0212a6a07b5031cfe",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_6/nw_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-copper-sword-held-nw-6",
+      "sha256": "b05a22c6baeb791e48fb975579f0156336178385e9639d54ce6452e7fce7975f",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_7/nw_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-copper-sword-held-nw-7",
+      "sha256": "0c4a2424f5635e4af0044d3529f7a26e9db17172d417039271f66d169f849f21",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_0/w_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-copper-sword-held-w-0",
+      "sha256": "b4a1bf34b593eacc52d2b90240d24c92b658e0cbf2bc9208fc981d5b4620a2b7",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_1/w_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-copper-sword-held-w-1",
+      "sha256": "641381cac4007a8abde67264a66f5d4937dd0f0842810a053d916d8e19096cb4",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_2/w_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-copper-sword-held-w-2",
+      "sha256": "83538e0d5cbab3ab81ad4d2e75a2f37cd46b0f36ec6dc67721f3b1748da321f5",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_3/w_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-copper-sword-held-w-3",
+      "sha256": "eabb3fcf115dde9eb769f6c34d8645022b795b682293eae75d0bad61514e6e76",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_4/w_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-copper-sword-held-w-4",
+      "sha256": "e2dfc3bd7433b47f60a59b89c2100e8e45fe0ec812bed999609713bcec032da2",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_5/w_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-copper-sword-held-w-5",
+      "sha256": "6e0b0133f49135d6496e7ba148cdac721a4fc3758420cce0f1f812e46fb7d49e",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_6/w_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-copper-sword-held-w-6",
+      "sha256": "97cbb117dbf75f6640557938bcbea1a011d6390b02c0af13f83fde38f5b6eb66",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_7/w_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-copper-sword-held-w-7",
+      "sha256": "caba5cb3fdc3ee784e3e4b2033eaa7b50396b776993088c9d026fb859a37f226",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_0/sw_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-copper-sword-held-sw-0",
+      "sha256": "b50f46539f7d13e01fa06cb32bd543bc02a037a123765bd49516a4e67318e411",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_1/sw_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-copper-sword-held-sw-1",
+      "sha256": "1d259384ec762cf036c3c01df578e5259a78e384320e31c611234fdc3a32b715",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_2/sw_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-copper-sword-held-sw-2",
+      "sha256": "9fcac778c23856ee4c8bca02fb3f5b5d4f5fc639d695b711c0d2a6634feefba9",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_3/sw_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-copper-sword-held-sw-3",
+      "sha256": "145def674e369140b8618f94e55d0ccc6744f89686f5e27b61ceca91b281a496",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_4/sw_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-copper-sword-held-sw-4",
+      "sha256": "3af892afe5b635aff67be45ebf368ed3aa0842f45509b131b90c197f6d689827",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_5/sw_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-copper-sword-held-sw-5",
+      "sha256": "a12e55cb65f5664f8239a742320a1a6472dce4d83cd915f746263a164740b53d",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_6/sw_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-copper-sword-held-sw-6",
+      "sha256": "d5ea2544c6c15606207eac233100cbcd59286ce9699a9dbef59272007fb5b59f",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/held_7/sw_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-copper-sword-held-sw-7",
+      "sha256": "a01f92fbce8cce641e5fc4d29fe337f3ddfe941286335d1f86977b70f9f1ad82",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-copper-sword/e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f/pix/export/icon/se_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-copper-sword-icon",
+      "sha256": "35d5c429fef5e9176c25df9edebf08cfd2b2a440154ee00085f3a7e745a22db6",
+      "socket": null,
+      "sockets": {},
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "icon"
+    }
+  ],
+  "gripConvention": "clockwise-screen-from-up-after-facing-yaw",
+  "packet": "art/review/2026-11-04-item-copper-sword",
+  "packetDigest": "e2f8d751f65b9c342a4b32172c23e9782c638206da891e20a9d7d94bfebc260f",
+  "packetSha256": "2fb0acaceafac5f196d6e8753fdd0a54f172d133eed91b3140a4dbb09d3e42fd",
+  "schemaVersion": 1,
+  "scope": [
+    "held-item",
+    "icon"
+  ],
+  "socket": "Socket_Hand.R"
+}

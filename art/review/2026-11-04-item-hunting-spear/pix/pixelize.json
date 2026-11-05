@@ -1,0 +1,587 @@
+{
+ "held_0/e_0": {
+  "labels": {
+   "tip": 33,
+   "shaft": 11,
+   "grip": 19,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_0/n_0": {
+  "labels": {
+   "tip": 16,
+   "shaft": 0,
+   "grip": 26,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_0/ne_0": {
+  "labels": {
+   "tip": 29,
+   "shaft": 0,
+   "grip": 26,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_0/nw_0": {
+  "labels": {
+   "tip": 20,
+   "shaft": 8,
+   "grip": 23,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_0/s_0": {
+  "labels": {
+   "tip": 14,
+   "shaft": 5,
+   "grip": 23,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_0/se_0": {
+  "labels": {
+   "tip": 22,
+   "shaft": 9,
+   "grip": 24,
+   "lashing": 0
+  },
+  "interiorLinePx": 1
+ },
+ "held_0/sw_0": {
+  "labels": {
+   "tip": 22,
+   "shaft": 12,
+   "grip": 23,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_0/w_0": {
+  "labels": {
+   "tip": 27,
+   "shaft": 16,
+   "grip": 23,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/e_0": {
+  "labels": {
+   "tip": 34,
+   "shaft": 11,
+   "grip": 29,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/n_0": {
+  "labels": {
+   "tip": 22,
+   "shaft": 4,
+   "grip": 24,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/ne_0": {
+  "labels": {
+   "tip": 29,
+   "shaft": 8,
+   "grip": 31,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/nw_0": {
+  "labels": {
+   "tip": 27,
+   "shaft": 7,
+   "grip": 29,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/s_0": {
+  "labels": {
+   "tip": 15,
+   "shaft": 14,
+   "grip": 23,
+   "lashing": 0
+  },
+  "interiorLinePx": 3
+ },
+ "held_1/se_0": {
+  "labels": {
+   "tip": 28,
+   "shaft": 6,
+   "grip": 27,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/sw_0": {
+  "labels": {
+   "tip": 27,
+   "shaft": 10,
+   "grip": 29,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/w_0": {
+  "labels": {
+   "tip": 32,
+   "shaft": 13,
+   "grip": 28,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/e_0": {
+  "labels": {
+   "tip": 33,
+   "shaft": 9,
+   "grip": 21,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/n_0": {
+  "labels": {
+   "tip": 16,
+   "shaft": 0,
+   "grip": 26,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/ne_0": {
+  "labels": {
+   "tip": 29,
+   "shaft": 0,
+   "grip": 26,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/nw_0": {
+  "labels": {
+   "tip": 20,
+   "shaft": 8,
+   "grip": 23,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/s_0": {
+  "labels": {
+   "tip": 14,
+   "shaft": 5,
+   "grip": 23,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/se_0": {
+  "labels": {
+   "tip": 22,
+   "shaft": 8,
+   "grip": 25,
+   "lashing": 0
+  },
+  "interiorLinePx": 1
+ },
+ "held_2/sw_0": {
+  "labels": {
+   "tip": 22,
+   "shaft": 12,
+   "grip": 23,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/w_0": {
+  "labels": {
+   "tip": 27,
+   "shaft": 16,
+   "grip": 23,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/e_0": {
+  "labels": {
+   "tip": 34,
+   "shaft": 11,
+   "grip": 29,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/n_0": {
+  "labels": {
+   "tip": 22,
+   "shaft": 4,
+   "grip": 24,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/ne_0": {
+  "labels": {
+   "tip": 29,
+   "shaft": 8,
+   "grip": 31,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/nw_0": {
+  "labels": {
+   "tip": 27,
+   "shaft": 7,
+   "grip": 29,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/s_0": {
+  "labels": {
+   "tip": 15,
+   "shaft": 14,
+   "grip": 23,
+   "lashing": 0
+  },
+  "interiorLinePx": 3
+ },
+ "held_3/se_0": {
+  "labels": {
+   "tip": 28,
+   "shaft": 6,
+   "grip": 27,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/sw_0": {
+  "labels": {
+   "tip": 27,
+   "shaft": 11,
+   "grip": 28,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/w_0": {
+  "labels": {
+   "tip": 32,
+   "shaft": 13,
+   "grip": 28,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/e_0": {
+  "labels": {
+   "tip": 33,
+   "shaft": 9,
+   "grip": 21,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/n_0": {
+  "labels": {
+   "tip": 16,
+   "shaft": 0,
+   "grip": 26,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/ne_0": {
+  "labels": {
+   "tip": 29,
+   "shaft": 0,
+   "grip": 26,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/nw_0": {
+  "labels": {
+   "tip": 20,
+   "shaft": 8,
+   "grip": 23,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/s_0": {
+  "labels": {
+   "tip": 14,
+   "shaft": 5,
+   "grip": 23,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/se_0": {
+  "labels": {
+   "tip": 22,
+   "shaft": 8,
+   "grip": 25,
+   "lashing": 0
+  },
+  "interiorLinePx": 1
+ },
+ "held_4/sw_0": {
+  "labels": {
+   "tip": 22,
+   "shaft": 12,
+   "grip": 23,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/w_0": {
+  "labels": {
+   "tip": 28,
+   "shaft": 16,
+   "grip": 22,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/e_0": {
+  "labels": {
+   "tip": 34,
+   "shaft": 11,
+   "grip": 29,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/n_0": {
+  "labels": {
+   "tip": 22,
+   "shaft": 4,
+   "grip": 24,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/ne_0": {
+  "labels": {
+   "tip": 29,
+   "shaft": 8,
+   "grip": 31,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/nw_0": {
+  "labels": {
+   "tip": 27,
+   "shaft": 7,
+   "grip": 29,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/s_0": {
+  "labels": {
+   "tip": 15,
+   "shaft": 14,
+   "grip": 23,
+   "lashing": 0
+  },
+  "interiorLinePx": 3
+ },
+ "held_5/se_0": {
+  "labels": {
+   "tip": 28,
+   "shaft": 6,
+   "grip": 27,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/sw_0": {
+  "labels": {
+   "tip": 27,
+   "shaft": 10,
+   "grip": 29,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/w_0": {
+  "labels": {
+   "tip": 32,
+   "shaft": 13,
+   "grip": 28,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/e_0": {
+  "labels": {
+   "tip": 33,
+   "shaft": 9,
+   "grip": 21,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/n_0": {
+  "labels": {
+   "tip": 16,
+   "shaft": 0,
+   "grip": 26,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/ne_0": {
+  "labels": {
+   "tip": 29,
+   "shaft": 0,
+   "grip": 26,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/nw_0": {
+  "labels": {
+   "tip": 20,
+   "shaft": 8,
+   "grip": 23,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/s_0": {
+  "labels": {
+   "tip": 14,
+   "shaft": 5,
+   "grip": 22,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/se_0": {
+  "labels": {
+   "tip": 22,
+   "shaft": 9,
+   "grip": 24,
+   "lashing": 0
+  },
+  "interiorLinePx": 1
+ },
+ "held_6/sw_0": {
+  "labels": {
+   "tip": 22,
+   "shaft": 12,
+   "grip": 23,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/w_0": {
+  "labels": {
+   "tip": 28,
+   "shaft": 16,
+   "grip": 22,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/e_0": {
+  "labels": {
+   "tip": 34,
+   "shaft": 11,
+   "grip": 29,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/n_0": {
+  "labels": {
+   "tip": 22,
+   "shaft": 4,
+   "grip": 24,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/ne_0": {
+  "labels": {
+   "tip": 29,
+   "shaft": 8,
+   "grip": 30,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/nw_0": {
+  "labels": {
+   "tip": 27,
+   "shaft": 7,
+   "grip": 29,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/s_0": {
+  "labels": {
+   "tip": 15,
+   "shaft": 14,
+   "grip": 23,
+   "lashing": 0
+  },
+  "interiorLinePx": 3
+ },
+ "held_7/se_0": {
+  "labels": {
+   "tip": 28,
+   "shaft": 6,
+   "grip": 27,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/sw_0": {
+  "labels": {
+   "tip": 27,
+   "shaft": 10,
+   "grip": 29,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/w_0": {
+  "labels": {
+   "tip": 32,
+   "shaft": 13,
+   "grip": 28,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "icon/se_0": {
+  "labels": {
+   "tip": 40,
+   "shaft": 11,
+   "grip": 42,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ }
+}

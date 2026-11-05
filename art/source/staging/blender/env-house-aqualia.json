@@ -1,0 +1,141 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/env-house-aqualia--2026-11-03-env-house-aqualia.md",
+  "approvalSha256": "33c0a3cefe407ee12d028c78c6df028c6e1645b3f9c5d7ed04838013cdae449b",
+  "asset": "env:house-aqualia",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset env:house-aqualia",
+    "id": "forge-env-house-aqualia",
+    "inputs": [
+      {
+        "path": "blender/models/published/env-house-aqualia/3b8562dfa6ae080fea53267abf6bde92a3559eed00308cbd80ea7b2f5fe1423b/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/env-house-aqualia/3b8562dfa6ae080fea53267abf6bde92a3559eed00308cbd80ea7b2f5fe1423b/forge/blender/env_layout.py",
+        "role": "script",
+        "sha256": "b2fa291498b97eb55fc8450d37b55208b1d22550aa81a70b6c8c06d9cc08388b"
+      },
+      {
+        "path": "blender/models/published/env-house-aqualia/3b8562dfa6ae080fea53267abf6bde92a3559eed00308cbd80ea7b2f5fe1423b/forge/forge.py",
+        "role": "script",
+        "sha256": "97f60ac788e5e174ee8413a9eb7324b2f1cfe040de4c9578bddcaf9ca81a36b9"
+      },
+      {
+        "path": "blender/models/published/env-house-aqualia/3b8562dfa6ae080fea53267abf6bde92a3559eed00308cbd80ea7b2f5fe1423b/forge/forgelib/environment.py",
+        "role": "script",
+        "sha256": "4b3443c051f8076ebdc9abd18152831dfbfe74c0053e7c4622ef3d7f483e397c"
+      },
+      {
+        "path": "blender/models/published/env-house-aqualia/3b8562dfa6ae080fea53267abf6bde92a3559eed00308cbd80ea7b2f5fe1423b/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/env-house-aqualia/3b8562dfa6ae080fea53267abf6bde92a3559eed00308cbd80ea7b2f5fe1423b/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "05d8748985702d31f58141fa58ceb852acfc69a8d21de6ecb0ad11aaf013b77d"
+      },
+      {
+        "path": "blender/models/published/env-house-aqualia/3b8562dfa6ae080fea53267abf6bde92a3559eed00308cbd80ea7b2f5fe1423b/forge/recipes/env-house-aqualia.json",
+        "role": "pose-config",
+        "sha256": "4e3a2c315b6ca30b84b6978526ebcaa6ec545940164bf8fcf89c4170bf51beda"
+      },
+      {
+        "path": "blender/models/published/env-house-aqualia/3b8562dfa6ae080fea53267abf6bde92a3559eed00308cbd80ea7b2f5fe1423b/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/env-house-aqualia/3b8562dfa6ae080fea53267abf6bde92a3559eed00308cbd80ea7b2f5fe1423b/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/env-house-aqualia/3b8562dfa6ae080fea53267abf6bde92a3559eed00308cbd80ea7b2f5fe1423b/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/env-house-aqualia/3b8562dfa6ae080fea53267abf6bde92a3559eed00308cbd80ea7b2f5fe1423b/forge/work/env-house-aqualia/layout.json",
+        "role": "pose-config",
+        "sha256": "627392c40b9fa8f6a4e11018a7842d09ad119b8dd775aa6d4c96cb40935d9846"
+      },
+      {
+        "path": "blender/models/published/env-house-aqualia/3b8562dfa6ae080fea53267abf6bde92a3559eed00308cbd80ea7b2f5fe1423b/forge/work/env-house-aqualia/layout/base.blend",
+        "role": "model",
+        "sha256": "2a418ed85a5f6fdc68615267edbc22a06c99a3cad127d96d4006ee2f6db19891"
+      },
+      {
+        "path": "blender/models/published/env-house-aqualia/3b8562dfa6ae080fea53267abf6bde92a3559eed00308cbd80ea7b2f5fe1423b/forge/work/env-house-aqualia/layout/roof.blend",
+        "role": "model",
+        "sha256": "2896b0553ee89109e753272cd6a62e8df243bee08048937ed9802e4e35569731"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "footprint": [
+    3,
+    3
+  ],
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 128,
+        "y": 350
+      },
+      "file": "exports/env-house-aqualia/6aeb9234339c3367c971c53b80e621c688915f7e188cea7856b4765e0e84bb73/frames/shadow.png",
+      "id": "env-house-aqualia-shadow",
+      "layer": "shadow",
+      "sha256": "f96f7a0ed6a28a9d8cbb24641b80a16d2a150c5bd1cd6e30977036b1f71ab35d",
+      "sourceSize": {
+        "h": 364,
+        "w": 256
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 128,
+        "y": 350
+      },
+      "file": "exports/env-house-aqualia/6aeb9234339c3367c971c53b80e621c688915f7e188cea7856b4765e0e84bb73/frames/base.png",
+      "id": "env-house-aqualia-base",
+      "layer": "base",
+      "sha256": "781452bab90503c017ef8771f31086553de1b01cbdcbbe5ed1675530b74592f0",
+      "sourceSize": {
+        "h": 364,
+        "w": 256
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 128,
+        "y": 350
+      },
+      "file": "exports/env-house-aqualia/6aeb9234339c3367c971c53b80e621c688915f7e188cea7856b4765e0e84bb73/frames/roof.png",
+      "id": "env-house-aqualia-roof",
+      "layer": "roof",
+      "sha256": "f276c9a5fcc517ce4beaae99173791060b3df288ffd14ebf9a550d6da88d4a0d",
+      "sourceSize": {
+        "h": 364,
+        "w": 256
+      }
+    }
+  ],
+  "lightPools": [],
+  "packet": "art/review/2026-11-03-env-house-aqualia",
+  "packetDigest": "6aeb9234339c3367c971c53b80e621c688915f7e188cea7856b4765e0e84bb73",
+  "packetSha256": "a180713de383ccff5f6f2438f6e27c18c824795e5e9caf98d0b868a4f510c9d6",
+  "schemaVersion": 1,
+  "scope": [
+    "shadow",
+    "base",
+    "roof"
+  ]
+}

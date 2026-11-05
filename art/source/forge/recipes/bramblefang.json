@@ -2,6 +2,19 @@
   "asset": "bramblefang",
   "kind": "creature",
   "heightArtPx": 42,
+  "supersample": 4,
+  "rampShift": {
+    "pelt": -1
+  },
+  "features": {
+    "fangs": {
+      "minSamples": 1,
+      "on": ["pelt", "edge"],
+      "near": ["Socket_Mouth"],
+      "radiusPx": 4,
+      "maxPx": 2
+    }
+  },
   "ramps": {
     "pelt": "basalt",
     "mane": "ember",

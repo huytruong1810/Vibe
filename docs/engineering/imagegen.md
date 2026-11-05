@@ -87,11 +87,89 @@ Earlier klein 4B measurements: the first attempt kept the text encoder resident 
   (the long side view limits the scale). `prep` warns under 1024 px, and `gen3d` still made
   a clean mesh. Raising the sheet size, or adding an upscale pass, is open.
 
+## Approval records
+
+`forge.py approve-record --asset ID --packet art/review/<dir>/ --scope body,clips --recorded-by "claude under directive 016" --note "..." [--decision D] [--suffix -faces]`
+writes `docs/team/comms/director/approvals/<asset>--<packet dir>.md` with `packetDigest` copied from the packet's `review.json`
+`sourceDigest`, so nobody retypes a digest (33 of 36 records written by hand on 2026-11-04 had a wrong tail). It records a decision
+someone with authority already made (TEAM-4.1) and refuses to overwrite. Without `--asset` it checks every `director-approved`
+record that has no `superseded-by`: exit 1 on a digest that no longer matches (the frames changed, PRD-9), and a count of records
+whose packet has no `review.json` here. Selftest: `approval_record_selftest.py`.
+
+## Creature faces and face publish (C3b)
+
+`forge.py faces --asset <creature>` draws the five decals (neutral, warm, fearful, hurt, sleep in s/se/sw/e/w) and now
+**registers them per frame**: a head deforms in a lunge or a lap, so one offset from `Socket_Head` cannot stay on it. The default
+origin is 3 art px below the socket (recipe `faceOffsetPx` overrides it); for each forward frame `register_frames` picks the nearest
+offset (within 4 art px vertically, 2 horizontally) at which every ink pixel of every expression lands on the body interior
+(opaque with four opaque neighbours, so inside the silhouette and off the outline row). A frame with none hides the face. Hard
+checks: `faceAnchor` (integer socket, canvas), `faceCoverage` (no idle frame hidden, at most 10% of forward frames hidden),
+`faceDistinct` (every expression differs from neutral in every facing, e and w included). `faces.json` carries the table under
+`registration.frames` (frame px from `Socket_Head`, `null` = hidden); the runtime adds it to the socket. Human faces keep the
+fixed-offset check.
+
+`forge.py publish-faces --asset ID` needs a `director-approved` record with scope `faces` whose `packetDigest` equals the packet's
+`faces.json` `sourceDigest` (`forge.py approve-record` writes it). It copies the exact decals to
+`art/source/exports/<asset>-faces/<digest>/` and replaces `art/source/staging/blender/<asset>-faces.json` (decal hashes, the
+registration table, the body packet digest it was computed against, the approval hash, the generator file hash). No Blender, no GPU.
+The communicator's integration of this record and the runtime layer are separate tickets; nothing is activated. Selftests:
+`faces_creature_selftest.py`, `publish_faces_selftest.py`.
+
 ## Open
 
 - **Views at 1024 px or more** (C28).
-- **Not built yet:** `portrait` (9 emotions by reference editing) and `swatch` (seamless
-  tileforge swatches) (C30).
+- **Portraits (C30b, built).** `forge.py portrait --asset npc:neris [--emotions a,b] [--n 2] [--seed S]`
+  upscales the neutral portrait (`exports/portraits/portrait_<kind>_<id>_128.png`) onto a flat grey
+  background, passes it to klein 9B as the reference, and asks for the same character with only the
+  expression changed. Each result is keyed back to alpha, aligned to the neutral's framing, and written at
+  128 and 96 px, with a contact sheet and drift warnings (silhouette IoU, clothing colour). `--pick
+warm=warm-4100,...` copies the kept ones to `exports/portraits/expressions/<kind>_<id>/` and logs the
+  seeds in the image ledger. Trial on Neris (seeds 4100-4101, all eight, 16 candidates, 0 warnings, IoU
+  0.988-0.994; board `docs/team/comms/claude/boards/2026-11-04-c30b-portrait-neris.png`): identity held in
+  all 16. Limits seen: skin comes out warmer and brighter than the neutral's muted tone; thoughtful,
+  concerned and sad sit close together; one curious candidate reads as fearful. Pick by eye, generate
+  more seeds for the weak ones. The drift numbers do not judge the expression.
+- **Item icons (C32, built).** `forge.py icon --item berries --prompt "cluster of five round red berries on a short
+brown stem with two small green leaves" --ramps ember,sage,timber [--n 4] [--seed S]` has klein 9B draw the object
+  on flat grey (three-quarter view, upper-left light), keys it, reduces it to a 26 px body, snaps every pixel to the
+  named ramps' non-`deep` steps (OKLab nearest), cleans orphans, and adds the 1 px selective outline (`deep`, `shadow`
+  on the top-lit edge; ART-5.1/5.2). Result: 32 x 32, margin at least 2, palette-locked; the contact sheet shows the
+  raw render and the icon at 8x on dark and light grounds. `--pick <id>` checks it again and writes
+  `art/source/ui/icons/items/<id>.png`, logging the seed in the image ledger. **Route chosen: the 2D reduction.**
+  The 3D route (gen3d a prop, render the item stage's icon view) was not built: the 2D route read well enough on both
+  trial items and needs one klein call (about 1 min) instead of a sheet, a model and a bake. Trials (seeds 100-103,
+  200-203, 300-303, 400-403; boards `docs/team/comms/claude/boards/2026-11-04-c32-icon-*.png`): the `--ramps` list
+  decides the result. Berries with `ember,sage` lose the brown stem to red and green pixels; with `ember,sage,timber`
+  the stem, leaves and berries read at 1x. Flint with `basalt,glass` gets teal patches; with `basalt` alone it is a
+  low-contrast grey slab with few facets. Name every material's ramp, and expect to re-seed. Not approved: B23 picks and
+  the reviewer judges.
+- **View upscale (C28, built).** `forge.py upscale --asset mireling [--n 2] [--seed S]` takes every reference view under
+  1024 px tall, enlarges it (Lanczos, about 2.4x) onto a flat canvas in its own background colour and gives it to klein 9B
+  as the only reference: redraw the same image sharper, change nothing else. One model load serves all views. Each result
+  is cropped to the subject, shifted in OKLab a/b to the original's mean chroma (the model warms and reddens greens and
+  greys; lightness stays), padded with its own background and compared with the original (silhouette IoU, colour drift).
+  `--keep <seed>` writes the views over `art/source/references/<asset>/` and records `upscale` in `sheet.json`; the
+  `sheet.png` they were cut from stays. Trial on Mireling (seeds 500, 501; board
+  `docs/team/comms/claude/boards/2026-11-04-c28-upscale-mireling.png`): every view 1267-1304 px tall (from 489-493),
+  silhouette IoU 0.98-0.99, colour drift 7-12 after the chroma step (13-16 before). Look: pose, plates, ferns and
+  flowers hold; skin and shell stay browner than the olive-grey originals (seed 501 more so, its back legs go red),
+  and fine detail (scutes, scales, claws) is added. Pick by eye. gen3d (Hunyuan3D-2mv, seed 1234, 50 steps) on Mireling's prepped views, original against seed-500 upscaled (board
+  `docs/team/comms/claude/boards/2026-11-04-c28-gen3d-mireling.png`): 1.00 M against 1.02 M faces, both not watertight,
+  silhouette IoU between the two meshes 0.88-0.94; the upscaled mesh has slightly crisper shell moss, fern clumps, toes and
+  face, and nothing worse. Prep frames both to 1024 square, so the gain is detail, not resolution. One creature, one
+  seed; the texture stage (where the colour shift would show) was not run. Second trial on Bramblefang, a wide quadruped (seeds 600, 601; board
+  `docs/team/comms/claude/boards/2026-11-04-c28-upscale-bramblefang.png`): 528-545 px views became 1291-1393 px, IoU
+  0.95-0.98, drift 6-13; mane, tusks, flames and fur keep their colours better than Mireling's skin did, seed 601 runs
+  cooler and darker in the body. The side view's stray tail-flame fragment from the neighbouring sheet view (already in
+  the original crop) is carried through; that is a `views` crop issue. **Rules:** run `--keep` only on an asset that is
+  about to be re-forged, and never on a director-approved one without a new packet and a new approval (PRD-9 binds the
+  approval to the packet digest). Nothing was kept over blender's references. Humans, NPCs, props and tall creatures
+  are already above 1024 px; the low ones are wide quadrupeds and small creatures (Bramblefang, Mireling, Marshstalker,
+  Rivallie, Zephyrit, Cindermoth).
+- **Swatches (C30a, built):** `forge.py swatch`, see the tile-forge skill.
+- **Shared GPU.** Every model stage runs inside `core.gpu_window`, which now serializes forge jobs: a live
+  forge process holding `PAUSE` makes the next one wait (two klein jobs on 16 GB spilled to swap and took 51
+  minutes to load).
 - **gen3d:** Hunyuan3D-2mv stays the default. Hunyuan3D-2.1 was tried and removed:
   single-image only, so from the front it invents a spike tail, and from the side it gets the
   body right but faces sideways and drops the whiskers

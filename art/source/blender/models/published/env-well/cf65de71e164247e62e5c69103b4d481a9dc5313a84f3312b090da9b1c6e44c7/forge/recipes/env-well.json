@@ -1,0 +1,27 @@
+{
+  "asset": "env:well",
+  "kind": "environment",
+  "ramps": {
+    "basin": "stone",
+    "roof": "timber",
+    "fittings": "iron",
+    "water": "water"
+  },
+  "gen3d": { "seed": 1234, "steps": 50, "views": ["front", "left"] },
+  "environment": {
+    "footprint": [2, 2],
+    "split": { "layer": "roof", "aboveFraction": 0.50 },
+    "contactShadow": true
+  },
+  "concept": {
+    "template": "building-v1",
+    "fields": {
+      "building": "village stone well with pitched timber roof and iron crank winch",
+      "region": "Aqualia canal village",
+      "description": "a sturdy circular stone well with four timber posts supporting a small shingle canopy, rope winch and iron bucket",
+      "materials": "chunky river stone masonry basin, warm weathered timber posts and roof rafters, dark forged iron crank and bucket, clear water"
+    },
+    "references": []
+  },
+  "notes": "Aqualia environment kit golden well (B15 step 3 / B5). 2x2 tile footprint with depth stretch 2.0; roof split at 0.50 height fraction."
+}

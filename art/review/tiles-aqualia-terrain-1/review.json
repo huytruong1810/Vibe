@@ -1,0 +1,1742 @@
+{
+  "schemaVersion": 1,
+  "kind": "tileset",
+  "status": "candidate",
+  "asset": "tiles-aqualia-terrain",
+  "set": "aqualia-terrain",
+  "region": "aqualia",
+  "sourceDigest": "aba7b781aa3271661bb7cc425f3d43201166ba86289f170ac3d99aef1e7edf0e",
+  "tilePx": 32,
+  "exportScale": 2,
+  "tiles": [
+    {
+      "file": "tiles/boardwalk.png",
+      "role": "material",
+      "material": "boardwalk",
+      "variant": 0,
+      "runtimeId": "ground_boardwalk",
+      "refs": [
+        "wood.deep",
+        "wood.shadow",
+        "wood.mid",
+        "wood.light"
+      ],
+      "sha256": "6aff9cd426a6e0df6a55662ef6b3dbb69febaae07cd1dec2e58c322151612d0d",
+      "scale": 2
+    },
+    {
+      "file": "tiles/boardwalk_v1.png",
+      "role": "material",
+      "material": "boardwalk",
+      "variant": 1,
+      "runtimeId": "ground_boardwalk_v1",
+      "refs": [
+        "wood.deep",
+        "wood.shadow",
+        "wood.mid",
+        "wood.light"
+      ],
+      "sha256": "1e36069887ab20398e2efea6001316e3655e7b7ddd83ef549302fe4dd2e1f877",
+      "scale": 2
+    },
+    {
+      "file": "tiles/boardwalk_v2.png",
+      "role": "material",
+      "material": "boardwalk",
+      "variant": 2,
+      "runtimeId": "ground_boardwalk_v2",
+      "refs": [
+        "wood.deep",
+        "wood.shadow",
+        "wood.mid",
+        "wood.light"
+      ],
+      "sha256": "ae4750e0ccd9d2e51e31ca0b08c0107633fc6ddea5cde63446afad1d7ebe02c4",
+      "scale": 2
+    },
+    {
+      "file": "tiles/cliff.png",
+      "role": "strip",
+      "material": "cliff",
+      "variant": 0,
+      "runtimeId": "cliff_grass",
+      "refs": [
+        "stone.deep",
+        "stone.shadow",
+        "stone.mid",
+        "moss.mid"
+      ],
+      "sha256": "4bc1a764f93351da3549e78cfe12af3ec64935bbf7d4576ce57ce2a6f16fa4ea",
+      "scale": 2
+    },
+    {
+      "file": "tiles/dirt.png",
+      "role": "material",
+      "material": "dirt",
+      "variant": 0,
+      "runtimeId": "ground_dirt",
+      "refs": [
+        "timber.deep",
+        "timber.shadow",
+        "sand.shadow",
+        "sand.mid"
+      ],
+      "sha256": "c023c88ac5768a4d99eb4799c4b798ee3c55e15f0dfdf292220b3b4ad0098519",
+      "scale": 2
+    },
+    {
+      "file": "tiles/dirt_path_edge_mask_1.png",
+      "role": "overlay",
+      "overlay": "dirt_path_edge",
+      "material": "dirt",
+      "mask": 1,
+      "runtimeId": "path_dirt_mask_1",
+      "refs": [
+        "timber.deep",
+        "timber.shadow",
+        "sand.shadow",
+        "sand.mid"
+      ],
+      "sha256": "eaec6a25880e3243c2319cb0ad301ea3e87e030a32cc6ad3a5aee57adc83fdcc",
+      "scale": 2
+    },
+    {
+      "file": "tiles/dirt_path_edge_mask_10.png",
+      "role": "overlay",
+      "overlay": "dirt_path_edge",
+      "material": "dirt",
+      "mask": 10,
+      "runtimeId": "path_dirt_mask_10",
+      "refs": [
+        "timber.deep",
+        "timber.shadow",
+        "sand.shadow",
+        "sand.mid"
+      ],
+      "sha256": "0d42c96292835441c9e2b08ddf9ac511091cb3f463e90435faa6712a44950001",
+      "scale": 2
+    },
+    {
+      "file": "tiles/dirt_path_edge_mask_11.png",
+      "role": "overlay",
+      "overlay": "dirt_path_edge",
+      "material": "dirt",
+      "mask": 11,
+      "runtimeId": "path_dirt_mask_11",
+      "refs": [
+        "timber.deep",
+        "timber.shadow",
+        "sand.shadow",
+        "sand.mid"
+      ],
+      "sha256": "89d51675ea439338cc0b350e8e093e841ed6bad362740ca88fb1967ab377a77d",
+      "scale": 2
+    },
+    {
+      "file": "tiles/dirt_path_edge_mask_12.png",
+      "role": "overlay",
+      "overlay": "dirt_path_edge",
+      "material": "dirt",
+      "mask": 12,
+      "runtimeId": "path_dirt_mask_12",
+      "refs": [
+        "timber.deep",
+        "timber.shadow",
+        "sand.shadow",
+        "sand.mid"
+      ],
+      "sha256": "4931c33d9e55f5131695ea130843f8e1edca48b6ff4fbc368c966d750d859573",
+      "scale": 2
+    },
+    {
+      "file": "tiles/dirt_path_edge_mask_13.png",
+      "role": "overlay",
+      "overlay": "dirt_path_edge",
+      "material": "dirt",
+      "mask": 13,
+      "runtimeId": "path_dirt_mask_13",
+      "refs": [
+        "timber.deep",
+        "timber.shadow",
+        "sand.shadow",
+        "sand.mid"
+      ],
+      "sha256": "8334b4cb0f0219599abffb2621c6f479f45284fa720484c58c6923b3a7cecd33",
+      "scale": 2
+    },
+    {
+      "file": "tiles/dirt_path_edge_mask_14.png",
+      "role": "overlay",
+      "overlay": "dirt_path_edge",
+      "material": "dirt",
+      "mask": 14,
+      "runtimeId": "path_dirt_mask_14",
+      "refs": [
+        "timber.deep",
+        "timber.shadow",
+        "sand.shadow",
+        "sand.mid"
+      ],
+      "sha256": "4c9277c44448108b6986a4bb130f2874be27641df81a6e86a058e9464018fc64",
+      "scale": 2
+    },
+    {
+      "file": "tiles/dirt_path_edge_mask_15.png",
+      "role": "overlay",
+      "overlay": "dirt_path_edge",
+      "material": "dirt",
+      "mask": 15,
+      "runtimeId": null,
+      "refs": [
+        "timber.deep",
+        "timber.shadow",
+        "sand.shadow",
+        "sand.mid"
+      ],
+      "sha256": "c023c88ac5768a4d99eb4799c4b798ee3c55e15f0dfdf292220b3b4ad0098519",
+      "scale": 2
+    },
+    {
+      "file": "tiles/dirt_path_edge_mask_2.png",
+      "role": "overlay",
+      "overlay": "dirt_path_edge",
+      "material": "dirt",
+      "mask": 2,
+      "runtimeId": "path_dirt_mask_2",
+      "refs": [
+        "timber.deep",
+        "timber.shadow",
+        "sand.shadow",
+        "sand.mid"
+      ],
+      "sha256": "d090e38bdfbfb23fa57f93196746ef79fa72f56b44f06ec295d8457a18809c3a",
+      "scale": 2
+    },
+    {
+      "file": "tiles/dirt_path_edge_mask_3.png",
+      "role": "overlay",
+      "overlay": "dirt_path_edge",
+      "material": "dirt",
+      "mask": 3,
+      "runtimeId": "path_dirt_mask_3",
+      "refs": [
+        "timber.deep",
+        "timber.shadow",
+        "sand.shadow",
+        "sand.mid"
+      ],
+      "sha256": "a655f2f49fef132cc9168834ace5010b4857c7123f1220c6a75190ada3db2638",
+      "scale": 2
+    },
+    {
+      "file": "tiles/dirt_path_edge_mask_4.png",
+      "role": "overlay",
+      "overlay": "dirt_path_edge",
+      "material": "dirt",
+      "mask": 4,
+      "runtimeId": "path_dirt_mask_4",
+      "refs": [
+        "timber.deep",
+        "timber.shadow",
+        "sand.shadow",
+        "sand.mid"
+      ],
+      "sha256": "00167cde001d028ae3cf64f5618e06951119b68255978d38b5a8ac320c6beb0d",
+      "scale": 2
+    },
+    {
+      "file": "tiles/dirt_path_edge_mask_5.png",
+      "role": "overlay",
+      "overlay": "dirt_path_edge",
+      "material": "dirt",
+      "mask": 5,
+      "runtimeId": "path_dirt_mask_5",
+      "refs": [
+        "timber.deep",
+        "timber.shadow",
+        "sand.shadow",
+        "sand.mid"
+      ],
+      "sha256": "0be4a3df95c6a2c1d79e934923d80e899e875458f94f709759bb2dc6437c8c0b",
+      "scale": 2
+    },
+    {
+      "file": "tiles/dirt_path_edge_mask_6.png",
+      "role": "overlay",
+      "overlay": "dirt_path_edge",
+      "material": "dirt",
+      "mask": 6,
+      "runtimeId": "path_dirt_mask_6",
+      "refs": [
+        "timber.deep",
+        "timber.shadow",
+        "sand.shadow",
+        "sand.mid"
+      ],
+      "sha256": "c659eda074a292f0a7f5a9bb3dc3e19ddbd215c0bd2870827fb4555b854552f3",
+      "scale": 2
+    },
+    {
+      "file": "tiles/dirt_path_edge_mask_7.png",
+      "role": "overlay",
+      "overlay": "dirt_path_edge",
+      "material": "dirt",
+      "mask": 7,
+      "runtimeId": "path_dirt_mask_7",
+      "refs": [
+        "timber.deep",
+        "timber.shadow",
+        "sand.shadow",
+        "sand.mid"
+      ],
+      "sha256": "50fdecb768a72de636b1bb6bcabf835cb78438555105676ada2e7a839dc2183b",
+      "scale": 2
+    },
+    {
+      "file": "tiles/dirt_path_edge_mask_8.png",
+      "role": "overlay",
+      "overlay": "dirt_path_edge",
+      "material": "dirt",
+      "mask": 8,
+      "runtimeId": "path_dirt_mask_8",
+      "refs": [
+        "timber.deep",
+        "timber.shadow",
+        "sand.shadow",
+        "sand.mid"
+      ],
+      "sha256": "45bf64322cc74619a40dfd69628a506cddaa97b41768d2e5c9652047bbf51324",
+      "scale": 2
+    },
+    {
+      "file": "tiles/dirt_path_edge_mask_9.png",
+      "role": "overlay",
+      "overlay": "dirt_path_edge",
+      "material": "dirt",
+      "mask": 9,
+      "runtimeId": "path_dirt_mask_9",
+      "refs": [
+        "timber.deep",
+        "timber.shadow",
+        "sand.shadow",
+        "sand.mid"
+      ],
+      "sha256": "e0ba5e36446100933f9fa414bbf6e39b3c433c4a03c589d0a399f0c49e513a10",
+      "scale": 2
+    },
+    {
+      "file": "tiles/dirt_v1.png",
+      "role": "material",
+      "material": "dirt",
+      "variant": 1,
+      "runtimeId": "ground_dirt_v1",
+      "refs": [
+        "timber.deep",
+        "timber.shadow",
+        "sand.shadow",
+        "sand.mid"
+      ],
+      "sha256": "2670df3e9f60016c99347581495f2e4e1955022eeb9f305991d62af59d693caa",
+      "scale": 2
+    },
+    {
+      "file": "tiles/dirt_v2.png",
+      "role": "material",
+      "material": "dirt",
+      "variant": 2,
+      "runtimeId": "ground_dirt_v2",
+      "refs": [
+        "timber.deep",
+        "timber.shadow",
+        "sand.shadow",
+        "sand.mid"
+      ],
+      "sha256": "a7b1e82659e2ff473f924d6508f6fd8be4bf57692689292aa5dd20d099a81174",
+      "scale": 2
+    },
+    {
+      "file": "tiles/freshwater.png",
+      "role": "material",
+      "material": "freshwater",
+      "variant": 0,
+      "runtimeId": "ground_freshwater",
+      "refs": [
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight"
+      ],
+      "sha256": "7bb6822f2b1cd0c86effc9c694abb7fcf85fa2a9b96f00529290271a5f4c693f",
+      "scale": 2
+    },
+    {
+      "file": "tiles/freshwater_shore_mask_1.png",
+      "role": "overlay",
+      "overlay": "freshwater_shore",
+      "material": "freshwater",
+      "mask": 1,
+      "runtimeId": "shore_freshwater_mask_1",
+      "refs": [
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight",
+        "timber.deep"
+      ],
+      "sha256": "6a3545d2d5bdcef60d400be62becd08af09e6d37e8544b2e7ae05caa72e2cf06",
+      "scale": 2
+    },
+    {
+      "file": "tiles/freshwater_shore_mask_10.png",
+      "role": "overlay",
+      "overlay": "freshwater_shore",
+      "material": "freshwater",
+      "mask": 10,
+      "runtimeId": "shore_freshwater_mask_10",
+      "refs": [
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight",
+        "timber.deep"
+      ],
+      "sha256": "40a16720420a1026a4b503cadddc60152a8feb2001c4d5437262a08028673c86",
+      "scale": 2
+    },
+    {
+      "file": "tiles/freshwater_shore_mask_11.png",
+      "role": "overlay",
+      "overlay": "freshwater_shore",
+      "material": "freshwater",
+      "mask": 11,
+      "runtimeId": "shore_freshwater_mask_11",
+      "refs": [
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight",
+        "timber.deep"
+      ],
+      "sha256": "e7046f901f454e091dafb973fbb0344c53831beae23eab24b05614e98b00b808",
+      "scale": 2
+    },
+    {
+      "file": "tiles/freshwater_shore_mask_12.png",
+      "role": "overlay",
+      "overlay": "freshwater_shore",
+      "material": "freshwater",
+      "mask": 12,
+      "runtimeId": "shore_freshwater_mask_12",
+      "refs": [
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight",
+        "timber.deep"
+      ],
+      "sha256": "eb2921ff3ea76de34ddaf54e043469dbc1ff282b27f2dd3c9f107232d47c9473",
+      "scale": 2
+    },
+    {
+      "file": "tiles/freshwater_shore_mask_13.png",
+      "role": "overlay",
+      "overlay": "freshwater_shore",
+      "material": "freshwater",
+      "mask": 13,
+      "runtimeId": "shore_freshwater_mask_13",
+      "refs": [
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight",
+        "timber.deep"
+      ],
+      "sha256": "fe36ce55873e34441d9fb1ccbe01cd938681414e99bdd9e286a32367ca02647a",
+      "scale": 2
+    },
+    {
+      "file": "tiles/freshwater_shore_mask_14.png",
+      "role": "overlay",
+      "overlay": "freshwater_shore",
+      "material": "freshwater",
+      "mask": 14,
+      "runtimeId": "shore_freshwater_mask_14",
+      "refs": [
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight",
+        "timber.deep"
+      ],
+      "sha256": "1c622a30c06ff4f0cad4ba4fa20e49ebec8774cb395155566bbfc21c3bee3e4d",
+      "scale": 2
+    },
+    {
+      "file": "tiles/freshwater_shore_mask_15.png",
+      "role": "overlay",
+      "overlay": "freshwater_shore",
+      "material": "freshwater",
+      "mask": 15,
+      "runtimeId": null,
+      "refs": [
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight",
+        "timber.deep"
+      ],
+      "sha256": "7bb6822f2b1cd0c86effc9c694abb7fcf85fa2a9b96f00529290271a5f4c693f",
+      "scale": 2
+    },
+    {
+      "file": "tiles/freshwater_shore_mask_2.png",
+      "role": "overlay",
+      "overlay": "freshwater_shore",
+      "material": "freshwater",
+      "mask": 2,
+      "runtimeId": "shore_freshwater_mask_2",
+      "refs": [
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight",
+        "timber.deep"
+      ],
+      "sha256": "0c54989915ecf3e11ef16100bc74167186b6367ed401f557eaa3e43abf796ed5",
+      "scale": 2
+    },
+    {
+      "file": "tiles/freshwater_shore_mask_3.png",
+      "role": "overlay",
+      "overlay": "freshwater_shore",
+      "material": "freshwater",
+      "mask": 3,
+      "runtimeId": "shore_freshwater_mask_3",
+      "refs": [
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight",
+        "timber.deep"
+      ],
+      "sha256": "22860ce7d60f9d57ae21c0c185d1e59bf3c21395767fab39f33190ae1bac4410",
+      "scale": 2
+    },
+    {
+      "file": "tiles/freshwater_shore_mask_4.png",
+      "role": "overlay",
+      "overlay": "freshwater_shore",
+      "material": "freshwater",
+      "mask": 4,
+      "runtimeId": "shore_freshwater_mask_4",
+      "refs": [
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight",
+        "timber.deep"
+      ],
+      "sha256": "b4c1d2c3ebdddcf303732cd9a95464ac9baa38b813daa42b26d50f5b2a5babcd",
+      "scale": 2
+    },
+    {
+      "file": "tiles/freshwater_shore_mask_5.png",
+      "role": "overlay",
+      "overlay": "freshwater_shore",
+      "material": "freshwater",
+      "mask": 5,
+      "runtimeId": "shore_freshwater_mask_5",
+      "refs": [
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight",
+        "timber.deep"
+      ],
+      "sha256": "a57417e6dee008589b186cc396d6a720cc8e96f68fec88da40553d81dca5f949",
+      "scale": 2
+    },
+    {
+      "file": "tiles/freshwater_shore_mask_6.png",
+      "role": "overlay",
+      "overlay": "freshwater_shore",
+      "material": "freshwater",
+      "mask": 6,
+      "runtimeId": "shore_freshwater_mask_6",
+      "refs": [
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight",
+        "timber.deep"
+      ],
+      "sha256": "2ad4848bd76cc6c3c80e52ca63f75740e5a1c393af9856bdae3fdc355f3e9fd3",
+      "scale": 2
+    },
+    {
+      "file": "tiles/freshwater_shore_mask_7.png",
+      "role": "overlay",
+      "overlay": "freshwater_shore",
+      "material": "freshwater",
+      "mask": 7,
+      "runtimeId": "shore_freshwater_mask_7",
+      "refs": [
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight",
+        "timber.deep"
+      ],
+      "sha256": "71277bf230006963ecfdc695c08fb64fae116407833750ab58493a0f73cc0f1a",
+      "scale": 2
+    },
+    {
+      "file": "tiles/freshwater_shore_mask_8.png",
+      "role": "overlay",
+      "overlay": "freshwater_shore",
+      "material": "freshwater",
+      "mask": 8,
+      "runtimeId": "shore_freshwater_mask_8",
+      "refs": [
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight",
+        "timber.deep"
+      ],
+      "sha256": "dc0c9903a70d5b28934b6ab460eb1a5379825614844de1fe2705cc7d6d219bda",
+      "scale": 2
+    },
+    {
+      "file": "tiles/freshwater_shore_mask_9.png",
+      "role": "overlay",
+      "overlay": "freshwater_shore",
+      "material": "freshwater",
+      "mask": 9,
+      "runtimeId": "shore_freshwater_mask_9",
+      "refs": [
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight",
+        "timber.deep"
+      ],
+      "sha256": "79c5a60e2378b152f7bbcef661bb82bb6eec7f948de1d8acca132a8383251277",
+      "scale": 2
+    },
+    {
+      "file": "tiles/freshwater_v1.png",
+      "role": "material",
+      "material": "freshwater",
+      "variant": 1,
+      "runtimeId": "ground_freshwater_v1",
+      "refs": [
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight"
+      ],
+      "sha256": "c937067faaf8f8af93cd8297793270e1615e212b108d9c35f84cfb8b6d962953",
+      "scale": 2
+    },
+    {
+      "file": "tiles/freshwater_v2.png",
+      "role": "material",
+      "material": "freshwater",
+      "variant": 2,
+      "runtimeId": "ground_freshwater_v2",
+      "refs": [
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight"
+      ],
+      "sha256": "c6f89d149bceeff847c0c5c7efbcb13538f005f31201a2936f18d9df47602000",
+      "scale": 2
+    },
+    {
+      "file": "tiles/grass.png",
+      "role": "material",
+      "material": "grass",
+      "variant": 0,
+      "runtimeId": "ground_grass",
+      "refs": [
+        "foliage-deep.shadow",
+        "foliage-deep.mid",
+        "moss.mid",
+        "reed.mid"
+      ],
+      "sha256": "c48f1d96fe7bc1421e4100888585790f36cfb7cfef04d8ea5dde20511c05c713",
+      "scale": 2
+    },
+    {
+      "file": "tiles/grass_v1.png",
+      "role": "material",
+      "material": "grass",
+      "variant": 1,
+      "runtimeId": "ground_grass_v1",
+      "refs": [
+        "foliage-deep.shadow",
+        "foliage-deep.mid",
+        "moss.mid",
+        "reed.mid"
+      ],
+      "sha256": "7768896a7d81ae0626a93b234a4b16cf24149c889484f858bc84729b77a99a9b",
+      "scale": 2
+    },
+    {
+      "file": "tiles/grass_v2.png",
+      "role": "material",
+      "material": "grass",
+      "variant": 2,
+      "runtimeId": "ground_grass_v2",
+      "refs": [
+        "foliage-deep.shadow",
+        "foliage-deep.mid",
+        "moss.mid",
+        "reed.mid"
+      ],
+      "sha256": "4b58131ca9f604c952cfddb220906c0994059af5a062d39fed1c33f2b2805dba",
+      "scale": 2
+    },
+    {
+      "file": "tiles/grass_v3.png",
+      "role": "material",
+      "material": "grass",
+      "variant": 3,
+      "runtimeId": "ground_grass_v3",
+      "refs": [
+        "foliage-deep.shadow",
+        "foliage-deep.mid",
+        "moss.mid",
+        "reed.mid"
+      ],
+      "sha256": "59cce553ae839b95c02e24e7bbe7a11d80014b6174c2d3deabf126be73903168",
+      "scale": 2
+    },
+    {
+      "file": "tiles/mud.png",
+      "role": "material",
+      "material": "mud",
+      "variant": 0,
+      "runtimeId": "ground_mud",
+      "refs": [
+        "basalt.deep",
+        "timber.deep",
+        "leather.shadow",
+        "timber.shadow"
+      ],
+      "sha256": "8d9fdd264d9c24ad80a0d56d01fc43e1434e58f8ddac32616e0e494fad579047",
+      "scale": 2
+    },
+    {
+      "file": "tiles/mud_v1.png",
+      "role": "material",
+      "material": "mud",
+      "variant": 1,
+      "runtimeId": "ground_mud_v1",
+      "refs": [
+        "basalt.deep",
+        "timber.deep",
+        "leather.shadow",
+        "timber.shadow"
+      ],
+      "sha256": "6820831780811faf98f9ac99b320ac908bcb964fc5cfbcc634506db4bd9a6ac7",
+      "scale": 2
+    },
+    {
+      "file": "tiles/mud_v2.png",
+      "role": "material",
+      "material": "mud",
+      "variant": 2,
+      "runtimeId": "ground_mud_v2",
+      "refs": [
+        "basalt.deep",
+        "timber.deep",
+        "leather.shadow",
+        "timber.shadow"
+      ],
+      "sha256": "8b36d8b3ade19c9beb666a672ff7f4bfc63ac52284dd864228a69363da711908",
+      "scale": 2
+    },
+    {
+      "file": "tiles/reedbed.png",
+      "role": "material",
+      "material": "reedbed",
+      "variant": 0,
+      "runtimeId": "ground_reedbed",
+      "refs": [
+        "foliage-deep.shadow",
+        "moss.shadow",
+        "reed.mid",
+        "reed.light"
+      ],
+      "sha256": "5edbc197bc14596dd0935ca5de1ea83b910c72c26d5084837cfebc945ccf29b1",
+      "scale": 2
+    },
+    {
+      "file": "tiles/reedbed_v1.png",
+      "role": "material",
+      "material": "reedbed",
+      "variant": 1,
+      "runtimeId": "ground_reedbed_v1",
+      "refs": [
+        "foliage-deep.shadow",
+        "moss.shadow",
+        "reed.mid",
+        "reed.light"
+      ],
+      "sha256": "4fb4069228ccb7558a77c754e1366a5531dba10bf002034df49827c1d41a7541",
+      "scale": 2
+    },
+    {
+      "file": "tiles/reedbed_v2.png",
+      "role": "material",
+      "material": "reedbed",
+      "variant": 2,
+      "runtimeId": "ground_reedbed_v2",
+      "refs": [
+        "foliage-deep.shadow",
+        "moss.shadow",
+        "reed.mid",
+        "reed.light"
+      ],
+      "sha256": "f88def158bfbc136ad1527862c70eade480aa8d3cb9424d01bd2f19b6ed05798",
+      "scale": 2
+    },
+    {
+      "file": "tiles/sand.png",
+      "role": "material",
+      "material": "sand",
+      "variant": 0,
+      "runtimeId": "ground_sand",
+      "refs": [
+        "sand.deep",
+        "sand.shadow",
+        "sand.mid",
+        "sand.light"
+      ],
+      "sha256": "461ee421974281d61cb270b1a0472b29ab2f9bafd6e4ccc6cc8402904373b34f",
+      "scale": 2
+    },
+    {
+      "file": "tiles/sand_v1.png",
+      "role": "material",
+      "material": "sand",
+      "variant": 1,
+      "runtimeId": "ground_sand_v1",
+      "refs": [
+        "sand.deep",
+        "sand.shadow",
+        "sand.mid",
+        "sand.light"
+      ],
+      "sha256": "9e67f9c7c83e0cac31d0b8356a0a0725e482540a7667838ac5af75b95f7c4369",
+      "scale": 2
+    },
+    {
+      "file": "tiles/sand_v2.png",
+      "role": "material",
+      "material": "sand",
+      "variant": 2,
+      "runtimeId": "ground_sand_v2",
+      "refs": [
+        "sand.deep",
+        "sand.shadow",
+        "sand.mid",
+        "sand.light"
+      ],
+      "sha256": "fb4a6289bf0f103633306cb85c571673abd7e1df9763965b81956555ab98f0b7",
+      "scale": 2
+    },
+    {
+      "file": "tiles/stone.png",
+      "role": "material",
+      "material": "stone",
+      "variant": 0,
+      "runtimeId": "ground_stone",
+      "refs": [
+        "stone.deep",
+        "stone.shadow",
+        "stone.mid",
+        "stone.light"
+      ],
+      "sha256": "ac1eca7dec9805b3ad90f447768670a768b84488ebe8b41c85d3be45ebc7a5d7",
+      "scale": 2
+    },
+    {
+      "file": "tiles/stone_path_edge_mask_1.png",
+      "role": "overlay",
+      "overlay": "stone_path_edge",
+      "material": "stone",
+      "mask": 1,
+      "runtimeId": "path_stone_mask_1",
+      "refs": [
+        "stone.deep",
+        "stone.shadow",
+        "stone.mid",
+        "stone.light"
+      ],
+      "sha256": "75e8f4fd6e4b072e9d2f9ecee8d8c4b8bd34315bccc6e25091df0702bfde23e0",
+      "scale": 2
+    },
+    {
+      "file": "tiles/stone_path_edge_mask_10.png",
+      "role": "overlay",
+      "overlay": "stone_path_edge",
+      "material": "stone",
+      "mask": 10,
+      "runtimeId": "path_stone_mask_10",
+      "refs": [
+        "stone.deep",
+        "stone.shadow",
+        "stone.mid",
+        "stone.light"
+      ],
+      "sha256": "205c22ed4cfbf43acfcf265fa6a7e3b5a1d0a4bd8937b0ce7ddec2b80a641fb9",
+      "scale": 2
+    },
+    {
+      "file": "tiles/stone_path_edge_mask_11.png",
+      "role": "overlay",
+      "overlay": "stone_path_edge",
+      "material": "stone",
+      "mask": 11,
+      "runtimeId": "path_stone_mask_11",
+      "refs": [
+        "stone.deep",
+        "stone.shadow",
+        "stone.mid",
+        "stone.light"
+      ],
+      "sha256": "af64a2cf82aec306b372a1d9ab8f3bb901d00eb0d3519510f0688cc3c8733a13",
+      "scale": 2
+    },
+    {
+      "file": "tiles/stone_path_edge_mask_12.png",
+      "role": "overlay",
+      "overlay": "stone_path_edge",
+      "material": "stone",
+      "mask": 12,
+      "runtimeId": "path_stone_mask_12",
+      "refs": [
+        "stone.deep",
+        "stone.shadow",
+        "stone.mid",
+        "stone.light"
+      ],
+      "sha256": "2df03e0b1410e635436f01d5f82f66d7beb3fb8add61bef60ca34ce88e247e0d",
+      "scale": 2
+    },
+    {
+      "file": "tiles/stone_path_edge_mask_13.png",
+      "role": "overlay",
+      "overlay": "stone_path_edge",
+      "material": "stone",
+      "mask": 13,
+      "runtimeId": "path_stone_mask_13",
+      "refs": [
+        "stone.deep",
+        "stone.shadow",
+        "stone.mid",
+        "stone.light"
+      ],
+      "sha256": "81c8bddb8d007c0a4cd6a932d7a12f99689ede39526a29050ce9593db8127336",
+      "scale": 2
+    },
+    {
+      "file": "tiles/stone_path_edge_mask_14.png",
+      "role": "overlay",
+      "overlay": "stone_path_edge",
+      "material": "stone",
+      "mask": 14,
+      "runtimeId": "path_stone_mask_14",
+      "refs": [
+        "stone.deep",
+        "stone.shadow",
+        "stone.mid",
+        "stone.light"
+      ],
+      "sha256": "41692fb5d33dd59c7548a3426794d99758304ad47687aaac925d6e57b198026b",
+      "scale": 2
+    },
+    {
+      "file": "tiles/stone_path_edge_mask_15.png",
+      "role": "overlay",
+      "overlay": "stone_path_edge",
+      "material": "stone",
+      "mask": 15,
+      "runtimeId": null,
+      "refs": [
+        "stone.deep",
+        "stone.shadow",
+        "stone.mid",
+        "stone.light"
+      ],
+      "sha256": "ac1eca7dec9805b3ad90f447768670a768b84488ebe8b41c85d3be45ebc7a5d7",
+      "scale": 2
+    },
+    {
+      "file": "tiles/stone_path_edge_mask_2.png",
+      "role": "overlay",
+      "overlay": "stone_path_edge",
+      "material": "stone",
+      "mask": 2,
+      "runtimeId": "path_stone_mask_2",
+      "refs": [
+        "stone.deep",
+        "stone.shadow",
+        "stone.mid",
+        "stone.light"
+      ],
+      "sha256": "3b4cbcacb81b2faf2c8e7e0c51b46fa863cbfeb8020c3ecf6a09336d2aeb50eb",
+      "scale": 2
+    },
+    {
+      "file": "tiles/stone_path_edge_mask_3.png",
+      "role": "overlay",
+      "overlay": "stone_path_edge",
+      "material": "stone",
+      "mask": 3,
+      "runtimeId": "path_stone_mask_3",
+      "refs": [
+        "stone.deep",
+        "stone.shadow",
+        "stone.mid",
+        "stone.light"
+      ],
+      "sha256": "883d62ec35b024fe3270a9de7c0484b2e01afea7f50b6cb4bdeef3087dc0ee9b",
+      "scale": 2
+    },
+    {
+      "file": "tiles/stone_path_edge_mask_4.png",
+      "role": "overlay",
+      "overlay": "stone_path_edge",
+      "material": "stone",
+      "mask": 4,
+      "runtimeId": "path_stone_mask_4",
+      "refs": [
+        "stone.deep",
+        "stone.shadow",
+        "stone.mid",
+        "stone.light"
+      ],
+      "sha256": "66c38decf9ccf57979f1b9dda50ed53eaa36bbb35d81f6b90417897f4d29ac26",
+      "scale": 2
+    },
+    {
+      "file": "tiles/stone_path_edge_mask_5.png",
+      "role": "overlay",
+      "overlay": "stone_path_edge",
+      "material": "stone",
+      "mask": 5,
+      "runtimeId": "path_stone_mask_5",
+      "refs": [
+        "stone.deep",
+        "stone.shadow",
+        "stone.mid",
+        "stone.light"
+      ],
+      "sha256": "0aa2cbba844a3909c414a4d03ac9325614f91b52878e3012011f334b165a20d1",
+      "scale": 2
+    },
+    {
+      "file": "tiles/stone_path_edge_mask_6.png",
+      "role": "overlay",
+      "overlay": "stone_path_edge",
+      "material": "stone",
+      "mask": 6,
+      "runtimeId": "path_stone_mask_6",
+      "refs": [
+        "stone.deep",
+        "stone.shadow",
+        "stone.mid",
+        "stone.light"
+      ],
+      "sha256": "2acc99a95ecdfe50f2b392c339f3c975ffb8f17d9371dc08d4e9bf408d770a52",
+      "scale": 2
+    },
+    {
+      "file": "tiles/stone_path_edge_mask_7.png",
+      "role": "overlay",
+      "overlay": "stone_path_edge",
+      "material": "stone",
+      "mask": 7,
+      "runtimeId": "path_stone_mask_7",
+      "refs": [
+        "stone.deep",
+        "stone.shadow",
+        "stone.mid",
+        "stone.light"
+      ],
+      "sha256": "b57f989e6abd57bdfce2d00ca9da54de280ae386dd3b531913e259b3e35ac50d",
+      "scale": 2
+    },
+    {
+      "file": "tiles/stone_path_edge_mask_8.png",
+      "role": "overlay",
+      "overlay": "stone_path_edge",
+      "material": "stone",
+      "mask": 8,
+      "runtimeId": "path_stone_mask_8",
+      "refs": [
+        "stone.deep",
+        "stone.shadow",
+        "stone.mid",
+        "stone.light"
+      ],
+      "sha256": "3272f6d16b40eb88f42e1c9b2270dd8b7471aa42244cb7430a6136d298014aca",
+      "scale": 2
+    },
+    {
+      "file": "tiles/stone_path_edge_mask_9.png",
+      "role": "overlay",
+      "overlay": "stone_path_edge",
+      "material": "stone",
+      "mask": 9,
+      "runtimeId": "path_stone_mask_9",
+      "refs": [
+        "stone.deep",
+        "stone.shadow",
+        "stone.mid",
+        "stone.light"
+      ],
+      "sha256": "e922f83b55c3eb6e6ed641911cf299ace91646b493936b407ef42719674427b4",
+      "scale": 2
+    },
+    {
+      "file": "tiles/stone_v1.png",
+      "role": "material",
+      "material": "stone",
+      "variant": 1,
+      "runtimeId": "ground_stone_v1",
+      "refs": [
+        "stone.deep",
+        "stone.shadow",
+        "stone.mid",
+        "stone.light"
+      ],
+      "sha256": "f384c4200e701b0954e03292848a9e09d372afc32decbdcd4c3df787c317ac2a",
+      "scale": 2
+    },
+    {
+      "file": "tiles/stone_v2.png",
+      "role": "material",
+      "material": "stone",
+      "variant": 2,
+      "runtimeId": "ground_stone_v2",
+      "refs": [
+        "stone.deep",
+        "stone.shadow",
+        "stone.mid",
+        "stone.light"
+      ],
+      "sha256": "db0399e2254783630470f6069eea68a2e9347b4da025513c9ed391e11e6f6608",
+      "scale": 2
+    }
+  ],
+  "qa": [
+    {
+      "check": "grass.palette",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 pixels outside ['foliage-deep.shadow', 'foliage-deep.mid', 'moss.mid', 'reed.mid']"
+    },
+    {
+      "check": "grass.valueCount",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "4 values (limit 4)"
+    },
+    {
+      "check": "grass.seamless",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst seam step / roughest interior line 0.70 (limit 1.35; every variant beside every other)"
+    },
+    {
+      "check": "grass.variantBorders",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "3 variants; 0 border pixels differ from the base"
+    },
+    {
+      "check": "grass.orphans",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst isolated-pixel fraction 0.002 (limit 0.01)"
+    },
+    {
+      "check": "grass.lowFrequency",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "largest tile-scale lighting wave 0.017 (limit 0.02); a higher value shows as a grid when tiled; raise flatten or use an evenly lit swatch"
+    },
+    {
+      "check": "grass.proportions",
+      "rule": "recipe",
+      "pass": true,
+      "hard": false,
+      "detail": "value shares [0.12, 0.68, 0.15, 0.05] vs recipe [0.12, 0.68, 0.15, 0.05]"
+    },
+    {
+      "check": "freshwater.palette",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 pixels outside ['water.shadow', 'water.mid', 'water.light', 'water.highlight']"
+    },
+    {
+      "check": "freshwater.valueCount",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "4 values (limit 4)"
+    },
+    {
+      "check": "freshwater.seamless",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst seam step / roughest interior line 0.65 (limit 1.35; every variant beside every other)"
+    },
+    {
+      "check": "freshwater.variantBorders",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "2 variants; 0 border pixels differ from the base"
+    },
+    {
+      "check": "freshwater.orphans",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst isolated-pixel fraction 0.001 (limit 0.01)"
+    },
+    {
+      "check": "freshwater.lowFrequency",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "largest tile-scale lighting wave 0.014 (limit 0.02); a higher value shows as a grid when tiled; raise flatten or use an evenly lit swatch"
+    },
+    {
+      "check": "freshwater.proportions",
+      "rule": "recipe",
+      "pass": true,
+      "hard": false,
+      "detail": "value shares [0.23, 0.5, 0.18, 0.08] vs recipe [0.22, 0.5, 0.2, 0.08]"
+    },
+    {
+      "check": "dirt.palette",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 pixels outside ['timber.deep', 'timber.shadow', 'sand.shadow', 'sand.mid']"
+    },
+    {
+      "check": "dirt.valueCount",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "4 values (limit 4)"
+    },
+    {
+      "check": "dirt.seamless",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst seam step / roughest interior line 0.45 (limit 1.35; every variant beside every other)"
+    },
+    {
+      "check": "dirt.variantBorders",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "2 variants; 0 border pixels differ from the base"
+    },
+    {
+      "check": "dirt.orphans",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst isolated-pixel fraction 0.000 (limit 0.01)"
+    },
+    {
+      "check": "dirt.lowFrequency",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "largest tile-scale lighting wave 0.018 (limit 0.02); a higher value shows as a grid when tiled; raise flatten or use an evenly lit swatch"
+    },
+    {
+      "check": "dirt.proportions",
+      "rule": "recipe",
+      "pass": true,
+      "hard": false,
+      "detail": "value shares [0.1, 0.2, 0.56, 0.15] vs recipe [0.1, 0.2, 0.55, 0.15]"
+    },
+    {
+      "check": "sand.palette",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 pixels outside ['sand.deep', 'sand.shadow', 'sand.mid', 'sand.light']"
+    },
+    {
+      "check": "sand.valueCount",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "4 values (limit 4)"
+    },
+    {
+      "check": "sand.seamless",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst seam step / roughest interior line 0.54 (limit 1.35; every variant beside every other)"
+    },
+    {
+      "check": "sand.variantBorders",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "2 variants; 0 border pixels differ from the base"
+    },
+    {
+      "check": "sand.orphans",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst isolated-pixel fraction 0.000 (limit 0.01)"
+    },
+    {
+      "check": "sand.lowFrequency",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "largest tile-scale lighting wave 0.019 (limit 0.02); a higher value shows as a grid when tiled; raise flatten or use an evenly lit swatch"
+    },
+    {
+      "check": "sand.proportions",
+      "rule": "recipe",
+      "pass": true,
+      "hard": false,
+      "detail": "value shares [0.1, 0.19, 0.56, 0.15] vs recipe [0.1, 0.2, 0.55, 0.15]"
+    },
+    {
+      "check": "stone.palette",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 pixels outside ['stone.deep', 'stone.shadow', 'stone.mid', 'stone.light']"
+    },
+    {
+      "check": "stone.valueCount",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "4 values (limit 4)"
+    },
+    {
+      "check": "stone.seamless",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst seam step / roughest interior line 0.36 (limit 1.35; every variant beside every other)"
+    },
+    {
+      "check": "stone.variantBorders",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "2 variants; 0 border pixels differ from the base"
+    },
+    {
+      "check": "stone.orphans",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst isolated-pixel fraction 0.000 (limit 0.01)"
+    },
+    {
+      "check": "stone.lowFrequency",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "largest tile-scale lighting wave 0.013 (limit 0.02); a higher value shows as a grid when tiled; raise flatten or use an evenly lit swatch"
+    },
+    {
+      "check": "stone.proportions",
+      "rule": "recipe",
+      "pass": true,
+      "hard": false,
+      "detail": "value shares [0.15, 0.5, 0.25, 0.1] vs recipe [0.15, 0.5, 0.25, 0.1]"
+    },
+    {
+      "check": "mud.palette",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 pixels outside ['basalt.deep', 'timber.deep', 'leather.shadow', 'timber.shadow']"
+    },
+    {
+      "check": "mud.valueCount",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "4 values (limit 4)"
+    },
+    {
+      "check": "mud.seamless",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst seam step / roughest interior line 0.21 (limit 1.35; every variant beside every other)"
+    },
+    {
+      "check": "mud.variantBorders",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "2 variants; 0 border pixels differ from the base"
+    },
+    {
+      "check": "mud.orphans",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst isolated-pixel fraction 0.001 (limit 0.01)"
+    },
+    {
+      "check": "mud.lowFrequency",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "largest tile-scale lighting wave 0.008 (limit 0.02); a higher value shows as a grid when tiled; raise flatten or use an evenly lit swatch"
+    },
+    {
+      "check": "mud.proportions",
+      "rule": "recipe",
+      "pass": true,
+      "hard": false,
+      "detail": "value shares [0.2, 0.58, 0.07, 0.15] vs recipe [0.2, 0.55, 0.1, 0.15]"
+    },
+    {
+      "check": "reedbed.palette",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 pixels outside ['foliage-deep.shadow', 'moss.shadow', 'reed.mid', 'reed.light']"
+    },
+    {
+      "check": "reedbed.valueCount",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "4 values (limit 4)"
+    },
+    {
+      "check": "reedbed.seamless",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst seam step / roughest interior line 0.90 (limit 1.35; every variant beside every other)"
+    },
+    {
+      "check": "reedbed.variantBorders",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "2 variants; 0 border pixels differ from the base"
+    },
+    {
+      "check": "reedbed.orphans",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst isolated-pixel fraction 0.001 (limit 0.01)"
+    },
+    {
+      "check": "reedbed.lowFrequency",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "largest tile-scale lighting wave 0.010 (limit 0.02); a higher value shows as a grid when tiled; raise flatten or use an evenly lit swatch"
+    },
+    {
+      "check": "reedbed.proportions",
+      "rule": "recipe",
+      "pass": true,
+      "hard": false,
+      "detail": "value shares [0.16, 0.45, 0.29, 0.1] vs recipe [0.15, 0.45, 0.3, 0.1]"
+    },
+    {
+      "check": "boardwalk.palette",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 pixels outside ['wood.deep', 'wood.shadow', 'wood.mid', 'wood.light']"
+    },
+    {
+      "check": "boardwalk.valueCount",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "4 values (limit 4)"
+    },
+    {
+      "check": "boardwalk.seamless",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst seam step / roughest interior line 0.55 (limit 1.35; every variant beside every other)"
+    },
+    {
+      "check": "boardwalk.variantBorders",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "2 variants; 0 border pixels differ from the base"
+    },
+    {
+      "check": "boardwalk.orphans",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst isolated-pixel fraction 0.001 (limit 0.01)"
+    },
+    {
+      "check": "boardwalk.lowFrequency",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "largest tile-scale lighting wave 0.008 (limit 0.02); a higher value shows as a grid when tiled; raise flatten or use an evenly lit swatch"
+    },
+    {
+      "check": "boardwalk.proportions",
+      "rule": "recipe",
+      "pass": true,
+      "hard": false,
+      "detail": "value shares [0.2, 0.45, 0.25, 0.1] vs recipe [0.2, 0.45, 0.25, 0.1]"
+    },
+    {
+      "check": "cliff.palette",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 pixels outside ['stone.deep', 'stone.shadow', 'stone.mid', 'moss.mid']"
+    },
+    {
+      "check": "cliff.valueCount",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "4 values (limit 4)"
+    },
+    {
+      "check": "cliff.seamless",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst seam step / roughest interior line 0.17 (limit 1.35; every variant beside every other)"
+    },
+    {
+      "check": "cliff.variantBorders",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 variants; 0 border pixels differ from the base"
+    },
+    {
+      "check": "cliff.orphans",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst isolated-pixel fraction 0.000 (limit 0.01)"
+    },
+    {
+      "check": "dirt.actorContrast",
+      "rule": "ART-7.3",
+      "pass": false,
+      "hard": false,
+      "detail": "lightness gap to actor body tones {'teal.mid': 0.004, 'foliage.mid': 0.042, 'basalt.mid': 0.176, 'skin-warm.mid': 0.1, 'timber.mid': 0.122}; below 0.12: ['foliage.mid', 'skin-warm.mid', 'teal.mid']"
+    },
+    {
+      "check": "grass.actorContrast",
+      "rule": "ART-7.3",
+      "pass": false,
+      "hard": false,
+      "detail": "lightness gap to actor body tones {'teal.mid': 0.152, 'foliage.mid': 0.114, 'basalt.mid': 0.02, 'skin-warm.mid': 0.257, 'timber.mid': 0.035}; below 0.12: ['basalt.mid', 'foliage.mid', 'timber.mid']"
+    },
+    {
+      "check": "mud.actorContrast",
+      "rule": "ART-7.3",
+      "pass": true,
+      "hard": false,
+      "detail": "lightness gap to actor body tones {'teal.mid': 0.301, 'foliage.mid': 0.263, 'basalt.mid': 0.129, 'skin-warm.mid': 0.405, 'timber.mid': 0.183}; below 0.12: none"
+    },
+    {
+      "check": "reedbed.actorContrast",
+      "rule": "ART-7.3",
+      "pass": false,
+      "hard": false,
+      "detail": "lightness gap to actor body tones {'teal.mid': 0.15, 'foliage.mid': 0.112, 'basalt.mid': 0.022, 'skin-warm.mid': 0.255, 'timber.mid': 0.033}; below 0.12: ['basalt.mid', 'foliage.mid', 'timber.mid']"
+    },
+    {
+      "check": "sand.actorContrast",
+      "rule": "ART-7.3",
+      "pass": false,
+      "hard": false,
+      "detail": "lightness gap to actor body tones {'teal.mid': 0.183, 'foliage.mid': 0.221, 'basalt.mid': 0.355, 'skin-warm.mid': 0.079, 'timber.mid': 0.301}; below 0.12: ['skin-warm.mid']"
+    },
+    {
+      "check": "stone.actorContrast",
+      "rule": "ART-7.3",
+      "pass": false,
+      "hard": false,
+      "detail": "lightness gap to actor body tones {'teal.mid': 0.123, 'foliage.mid': 0.085, 'basalt.mid': 0.049, 'skin-warm.mid': 0.227, 'timber.mid': 0.006}; below 0.12: ['basalt.mid', 'foliage.mid', 'timber.mid']"
+    },
+    {
+      "check": "pair.grass-freshwater",
+      "rule": "WLD-3.3",
+      "pass": true,
+      "hard": false,
+      "detail": "median lightness gap 0.214 (want >= 0.06)"
+    },
+    {
+      "check": "pair.grass-dirt",
+      "rule": "WLD-3.3",
+      "pass": true,
+      "hard": false,
+      "detail": "median lightness gap 0.156 (want >= 0.06)"
+    },
+    {
+      "check": "pair.grass-sand",
+      "rule": "WLD-3.3",
+      "pass": true,
+      "hard": false,
+      "detail": "median lightness gap 0.335 (want >= 0.06)"
+    },
+    {
+      "check": "pair.dirt-sand",
+      "rule": "WLD-3.3",
+      "pass": true,
+      "hard": false,
+      "detail": "median lightness gap 0.179 (want >= 0.06)"
+    },
+    {
+      "check": "freshwater_shore.palette",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 opaque pixels outside ['water.shadow', 'water.mid', 'water.light', 'water.highlight', 'timber.deep']"
+    },
+    {
+      "check": "freshwater_shore.hardAlpha",
+      "rule": "ART-1",
+      "pass": true,
+      "hard": true,
+      "detail": "0 semi-transparent pixels"
+    },
+    {
+      "check": "freshwater_shore.bodyMatch",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 body pixels differ from freshwater.png (the full tile must match the body)"
+    },
+    {
+      "check": "freshwater_shore.cornerBits",
+      "rule": "autotiler.ts",
+      "pass": true,
+      "hard": true,
+      "detail": "corners disagreeing with their mask bit: none"
+    },
+    {
+      "check": "freshwater_shore.edgeContinuity",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst shared-edge excess 0 px at 11/2 over the tiles' own neighbouring lines (limit 1; every legal neighbour pair, transparent/edge band/inside compared)"
+    },
+    {
+      "check": "dirt_path_edge.palette",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 opaque pixels outside ['timber.deep', 'timber.shadow', 'sand.shadow', 'sand.mid']"
+    },
+    {
+      "check": "dirt_path_edge.hardAlpha",
+      "rule": "ART-1",
+      "pass": true,
+      "hard": true,
+      "detail": "0 semi-transparent pixels"
+    },
+    {
+      "check": "dirt_path_edge.bodyMatch",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 body pixels differ from dirt.png (the full tile must match the body)"
+    },
+    {
+      "check": "dirt_path_edge.cornerBits",
+      "rule": "autotiler.ts",
+      "pass": true,
+      "hard": true,
+      "detail": "corners disagreeing with their mask bit: none"
+    },
+    {
+      "check": "dirt_path_edge.edgeContinuity",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst shared-edge excess 0 px at 11/2 over the tiles' own neighbouring lines (limit 1; every legal neighbour pair, transparent/edge band/inside compared)"
+    },
+    {
+      "check": "stone_path_edge.palette",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 opaque pixels outside ['stone.deep', 'stone.shadow', 'stone.mid', 'stone.light']"
+    },
+    {
+      "check": "stone_path_edge.hardAlpha",
+      "rule": "ART-1",
+      "pass": true,
+      "hard": true,
+      "detail": "0 semi-transparent pixels"
+    },
+    {
+      "check": "stone_path_edge.bodyMatch",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 body pixels differ from stone.png (the full tile must match the body)"
+    },
+    {
+      "check": "stone_path_edge.cornerBits",
+      "rule": "autotiler.ts",
+      "pass": true,
+      "hard": true,
+      "detail": "corners disagreeing with their mask bit: none"
+    },
+    {
+      "check": "stone_path_edge.edgeContinuity",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst shared-edge excess 0 px at 11/2 over the tiles' own neighbouring lines (limit 1; every legal neighbour pair, transparent/edge band/inside compared)"
+    }
+  ]
+}

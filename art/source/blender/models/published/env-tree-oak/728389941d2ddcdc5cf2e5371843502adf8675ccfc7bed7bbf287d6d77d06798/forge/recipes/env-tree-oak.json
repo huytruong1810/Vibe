@@ -1,0 +1,26 @@
+{
+  "asset": "env:tree-oak",
+  "kind": "environment",
+  "ramps": {
+    "trunk": "timber",
+    "canopy": "foliage",
+    "shadows": "foliage-deep"
+  },
+  "gen3d": { "seed": 1234, "steps": 50, "views": ["front", "left"] },
+  "environment": {
+    "footprint": [2, 2],
+    "split": { "layer": "canopy", "aboveFraction": 0.45 },
+    "contactShadow": true
+  },
+  "concept": {
+    "template": "building-v1",
+    "fields": {
+      "building": "large spreading oak tree with thick gnarled trunk and lush full canopy",
+      "region": "Aqualia Riverlands",
+      "description": "a majestic riverside oak with spreading boughs and dense green foliage",
+      "materials": "textured warm timber bark, dense foliage clusters in rich green and deep emerald tones"
+    },
+    "references": []
+  },
+  "notes": "Aqualia environment kit golden tree (B15 step 3 / B5). 2x2 tile footprint with depth stretch 2.0; canopy split at 0.45 height fraction."
+}

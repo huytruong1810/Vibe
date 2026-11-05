@@ -1,7 +1,7 @@
 {
   "asset": "npc:neris",
   "kind": "human",
-  "heightArtPx": 46,
+  "heightArtPx": 44,
   "ramps": {
     "skin": "skin-warm",
     "hair": "hair-silver",
@@ -10,6 +10,20 @@
     "boots": "leather"
   },
   "gen3d": { "seed": 1234, "steps": 50, "views": ["front", "back"] },
+  "rig": {
+    "landmarks": {
+      "shoulder_l": [0.1749, 0.0105, 1.2675],
+      "shoulder_r": [-0.1759, 0.0086, 1.2657],
+      "elbow_l": [0.2844, 0.0322, 1.0417],
+      "elbow_r": [-0.2849, 0.0351, 1.0383],
+      "wrist_l": [0.4295, -0.0461, 0.8315],
+      "wrist_r": [-0.4298, -0.044, 0.8319],
+      "palm_l": [0.4674, -0.038, 0.8008],
+      "palm_r": [-0.4695, -0.0351, 0.8004],
+      "hand_end_l": [0.5057, -0.0465, 0.7809],
+      "hand_end_r": [-0.5064, -0.0482, 0.7812]
+    }
+  },
   "concept": {
     "template": "human-apose-v1",
     "fields": {

@@ -2,12 +2,23 @@
   "asset": "marshstalker",
   "kind": "creature",
   "heightArtPx": 34,
+  "supersample": 4,
+  "features": {
+    "lure": {
+      "minSamples": 1,
+      "on": ["hide", "edge"],
+      "near": ["Socket_Head"],
+      "radiusPx": 8,
+      "maxPx": 4
+    }
+  },
   "ramps": {
     "hide": "moss",
     "scutes": "teal",
     "belly": "reed",
     "lure": "water"
   },
+  "faceOffsetPx": [-4, 5],
   "gen3d": {
     "seed": 1234,
     "steps": 50,

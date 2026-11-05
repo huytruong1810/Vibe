@@ -1,0 +1,30 @@
+{
+  "asset": "item:hoe",
+  "kind": "item",
+  "ramps": {
+    "blade": "iron",
+    "haft": "wood",
+    "grip": "leather",
+    "lashing": "reed"
+  },
+  "gen3d": { "seed": 1234, "steps": 50 },
+  "orient": { "lengthArtPx": 15, "gripFraction": 0.20, "minFeaturePx": 2.5 },
+  "item": {
+    "model": "auto",
+    "grip": "auto",
+    "socket": "Socket_Hand.R",
+    "iconPivot": "auto",
+    "iconScale": "auto"
+  },
+  "concept": {
+    "template": "prop-v1",
+    "fields": {
+      "object": "chunky farming hoe with a wide curved iron blade socketed onto a sturdy ash pole",
+      "owner": "an Aqualia grain farmer",
+      "materials": "forged dark iron hoe blade with thick neck, smooth ash wood haft, wrapped leather grip",
+      "scale": "two-handed farm tool, about 1.1 m long"
+    },
+    "references": []
+  },
+  "notes": "Aqualia held tool (B15 step 5 / B22). Length 20 px."
+}

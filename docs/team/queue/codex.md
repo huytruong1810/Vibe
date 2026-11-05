@@ -223,7 +223,7 @@ Forge work that needs Blender on machine A, in order: C9b `fit` → C9c → C3b 
 
 ### C3b · Creature faces and publish
 
-- status: partial (manifest integration done by claude at 0a5e5c6: 3 bodies approved and active in game). **Faces: changes requested 2026-11-01** (`docs/team/comms/director/approvals/rivallie--2026-11-01-rivallie-faces-d749a4350126.md`): register decals to a face point about 3 art px below `Socket_Head` (per-species offset or a `Socket_Face` bone); `faceAnchor` fails any decal pixel outside the silhouette or on its outline row; hurt and fearful need a distinct pixel in e/w. Re-packet the faces on the approved body 69b6c10d…
+- status: tool side done 2026-11-04 (see result); creature faces await blender's re-packet and a decision. Earlier: manifest integration done by claude at 0a5e5c6: 3 bodies approved and active in game. **Faces: changes requested 2026-11-01** (`docs/team/comms/director/approvals/rivallie--2026-11-01-rivallie-faces-d749a4350126.md`): register decals to a face point about 3 art px below `Socket_Head` (per-species offset or a `Socket_Face` bone); `faceAnchor` fails any decal pixel outside the silhouette or on its outline row; hurt and fearful need a distinct pixel in e/w. Re-packet the faces on the approved body 69b6c10d…
 - goal: finish the creature class. Then `doctor` lists nothing pending for creatures, and approved creature packets can be published.
 - inputs: the Rivallie packet `art/review/2026-10-31-rivallie/`, `bake/tracks.json` (Socket_Head per frame), ART-8, `render_spec.expressions`, `catalog.ts` `AuthoringProvenanceSchema`.
 - work:
@@ -240,6 +240,9 @@ Forge work that needs Blender on machine A, in order: C9b `fit` → C9c → C3b 
 - done when: Rivallie re-runs with faces in the packet; `publish` writes the staging record once a director approval record exists (test with a scratch record and delete it afterwards); `doctor` shows creatures with nothing pending
 - evidence: [C3b tool handoff](../comms/codex/archive/2026-10-31T2146--to-blender--c3b-publish-and-faces.md); [registered face candidate](../../../art/review/2026-10-31-rivallie-faces-145faf106c4e/faces.json); 16 finishing and two packet-export tests pass. Body approval excludes faces; no approved packet is rerun.
 
+- result 2026-11-04 (claude): tool side done. `faces` registers creature decals per frame (default 3 art px below `Socket_Head`, nearest offset where all ink is inside the silhouette and off the outline row; hidden on the few frames with none) and has hard checks `faceCoverage` and `faceDistinct` beside `faceAnchor`; `publish-faces` stages an approved faces packet (`art/source/exports/<asset>-faces/<digest>/`, `art/source/staging/blender/<asset>-faces.json`). Rivallie on body 2026-11-03: 16 of 408 forward frames hidden, none at rest, all five expressions distinct in every facing; board `docs/team/comms/claude/boards/2026-11-04-c3b-rivallie-faces.png`. Not approved: the faces read dark on teal at 1x, blender judges. Open: runtime face composition and manifest integration of the faces staging record (communicator, codex), `Socket_Face` bone not needed.
+- evidence (result 2026-11-04): selftests `faces_creature_selftest.py` 7, `publish_faces_selftest.py` 5, `finish_selftest.py` 21, `human_faces_selftest.py` 7, `review_selftest.py` 3; `forge.py approve-record` reports every verifiable director-approved record matching its packet, face packets included (6 world and doc records have no packet digest to check); doc `docs/engineering/imagegen.md` "Creature faces and face publish".
+
 - distribution: source-only branch `eng/c3b-c7-tools` at `f037e2e` / draft PR #3 avoids the protected runbook merge delta. [Guarded handoff](../comms/codex/archive/2026-10-31T2346--to-blender--c3b-source-only-handoff.md); [machine-A execution report](../comms/blender/archive/2026-10-31T2355--to-codex-communicator--c3b-b8-b9-results.md) is integrated, with 1,848 staged frame hashes verified locally. [Portable-source correction](../comms/codex/archive/2026-11-01T0145--to-all--c3b-portable-provenance.md) at engineering `9dd81ee`, consumer `01e9fbb` / PR #4: 21 publication and two review-export tests pass. B10 packaging is delivered; M19 source integration and separate face acceptance remain; no new artwork approval.
 
 ## Claude (machine A): art-quality and local-generation tooling (2026-11-02)
@@ -251,7 +254,7 @@ fit → C9c.
 
 ### C26 · Sprite readability: features survive the bake and pixelize step
 
-- status: direction approved (2026-11-02); open items: `heightArtPx` headroom and the concept clause
+- status: direction approved (2026-11-02); `heightArtPx` headroom tool and concept clause done (2026-11-04); creature face decals stay with C3b
 - owner: claude
 - goal: a creature reads as itself at game size: Bramblefang's fangs and fire mane, Rivallie's crest and bib, Mireling's face and moss, a human's face and hair.
 - evidence of the problem: [comparison boards](../comms/blender/2026-11-02T0500--to-director--sprite-comparison-boards.md): every shipped body loses its defining features; the pixel grid is clean, so shapes are lost in bake/pixelize, not outline or palette.
@@ -262,7 +265,8 @@ fit → C9c.
 - result: opt-in recipe fields `supersample` (extra 4× albedo pass in `blender/bake.py`) and `features` (`forgelib/pixelize.py` `_ss_labels`: a slot wins a pixel near a socket and on a host region; at least 2 px, never an orphan; hidden from behind), plus the existing `rampShift`. Without them every published creature re-pixelizes pixel-identical (2,464 frames). Eyes stay out: creature faces are runtime decals (ART-8.1), so that part belongs to C3b. A 2-px eye decal at the mouth/head anchor reads at 1× (tried and removed).
 - proof recipes (for blender in B20, after the director agrees): Bramblefang `"supersample": 4, "rampShift": {"pelt": -1, "mane": -1}, "features": {"fangs": {"minSamples": 1, "on": ["pelt", "edge"], "near": ["Socket_Mouth"], "radiusPx": 4, "maxPx": 2}}`; Rivallie `"supersample": 4, "rampShift": {"body": -1, "fins": 1}`.
 - evidence: boards `docs/team/comms/claude/boards/2026-11-02-c26-bramblefang.png`, `…-c26-bramblefang-run.png` (fang in every face-facing run frame), `…-c26-rivallie.png`; QA palette/colour/outline/orphan checks pass on the proof frames (9 and 12 colours of 20, 0 orphans); `pixelize_selftest.py` 6/6
-- open: `heightArtPx` headroom per canvas and the concept-template clause (oversized head and signature features) are not done; creature face decals are C3b.
+- result 2026-11-04: `forge.py headroom [--asset ID]` (`forgelib/headroom.py`, `headroom_selftest.py` 5/5) prints the room each canvas leaves above, below and beside the anchor, and for an asset the largest `heightArtPx` that keeps the 2 px margin. **Finding: nearly every creature and human sits at the margin on its tightest clip** (`downed`, a strike or a drink): Bramblefang 42 (max 42), Mireling 26 (26), Marshstalker 34 (34), Neris 44 (44), the player 46 (46); Cindermoth 22 (23), Ignicap 24 (25), Zephyrit 22 (23), Rivallie 25 (27); Steamshell 36 (42). A larger body on screen needs a larger canvas (spec change, DOC-5), not a higher heightArtPx. Concept clause: optional `concept.fields.signature` adds a readability clause (`concept.readability`; creatures: chunky silhouette, oversized head and eyes, exaggerated separated signature features; humans: bold signature shapes, 4.5-5 head proportions kept); no signature, no change, so digests hold. Bramblefang trial (seeds 700 and 701, boards `…-c26-clause-base.png` and `…-c26-clause-signature.png`): with the clause the saber fangs come out longer and bolder (c701 clearly), the head a little larger and the mane in cleaner flame shapes; the stance still sits in both, so the pose guide stays the fix for that. One seed pair; blender judges in B20.
+- open: creature face decals are C3b; whether to grow the creature canvases is a spec decision to take with the director.
 
 ### C27 · Pose guides for every template
 
@@ -276,12 +280,13 @@ fit → C9c.
 
 ### C28 · Reference views at 1024 px or more
 
-- status: open
+- status: done (2026-11-04, claude; tool, trialled on Mireling and Bramblefang)
 - owner: claude
 - goal: generated views meet PRD-3.1 (today about 620 px tall on a 2304 × 1344 sheet).
 - work: per-view upscale pass (the edit model re-rendering each cropped view at 1024+ with the sheet as reference) or larger sheets within VRAM; keep identity.
 - done when: `views` writes every view ≥ 1024 px tall without `prep` warnings, `gen3d` unchanged or better
-- evidence:
+- result: `forge.py upscale --asset ID [--n N] [--seed S] [--keep SEED]` (`forgelib/upscale.py`): per-view edit-model re-render at 1100+ px with a chroma match to the original. Mireling trial: 489-493 px views became 1267-1304 px, IoU 0.98-0.99. Colour still runs browner than the original. gen3d on Mireling's original against upscaled views: same shape, slightly crisper detail, no regression. Bramblefang (wide quadruped): 1291-1393 px, IoU 0.95-0.98. Not checked: the texture stage on upscaled views. `--keep` only on assets about to be re-forged, never on an approved one without a new packet.
+- evidence: `upscale_selftest.py` 5/5; trial `art/source/forge/work/upscale-mireling/`; boards `docs/team/comms/claude/boards/2026-11-04-c28-upscale-mireling.png`, `…-c28-gen3d-mireling.png`, `…-c28-upscale-bramblefang.png`
 
 ### C29 · Image model bake-off: klein 9B, klein 4B, Qwen-Image-2.1
 
@@ -297,19 +302,21 @@ fit → C9c.
 - owner: claude
 - goal: the static 2D classes generate locally too: portraits in all nine emotions kept on identity (contract-v2), seamless 1024² terrain swatches.
 - done when: Neris has nine emotion portraits at 96/128 px that pass the portrait contract; a grass swatch passes tileforge QA
-- progress: **C30a swatch done (2026-11-03)**: `forge.py swatch` (`forgelib/swatch.py`); a grass swatch passed tileforge QA (candidate; soft `actorContrast` only) on a scratch set at `swatchTilePx` 256, `flatten` 2. Look: no obvious grid, but the field shows faint diagonal streaks and busy clumps, so B17 should tune the prompt and values. C30b portrait is next.
+- progress: **C30a swatch done (2026-11-03)**: `forge.py swatch` (`forgelib/swatch.py`); a grass swatch passed tileforge QA (candidate; soft `actorContrast` only) on a scratch set at `swatchTilePx` 256, `flatten` 2. Look: no obvious grid, but the field shows faint diagonal streaks and busy clumps, so B17 should tune the prompt and values. C30b portrait landed (2026-11-04, below).
+- progress: **C30b portrait done (2026-11-04)**: `forge.py portrait` (`forgelib/portrait.py`, selftest `portrait_selftest.py`). Neris trial: 8 emotions x 2 seeds, identity held in all 16, 0 drift warnings; skin runs warmer than the neutral and thoughtful/concerned/sad are close, so blender picks by eye and re-seeds weak ones. Not approved; B25 judges.
 - also: GPU jobs (`concept`, `swatch`, gen3d) now pause the jepa_ipomdp queue through `core.gpu_window` (PAUSE and GPU_BUSY files).
-- evidence: board `docs/team/comms/claude/boards/2026-11-03-c30a-swatch.png`
+- evidence: boards `docs/team/comms/claude/boards/2026-11-03-c30a-swatch.png`, `2026-11-04-c30b-portrait-neris.png`; `docs/engineering/imagegen.md`; selftests `portrait_selftest.py`, `gpu_window_selftest.py`
 
 ### C33 · `forge.py icon` for inventory items without a held model
 
-- status: open
+- status: done (2026-11-04, claude)
 - owner: claude
 - goal: B23 can make 32 × 32 `icon.item` icons (render_spec) for the resources and crafted goods in `src/content/definitions.ts`, palette-locked, in the same light and outline rules as the held-item icons from `items`.
 - identifier: renamed from upstream C32 during 2026-11-03 integration; C32 remains the previous-revision worldforge packet ticket. Historical directive 014 uses the former icon ID.
 - work: from a `prop-v1` sheet, either gen3d a small model and render the item stage's icon view, or reduce the sheet's three-quarter view straight to 32 × 32 through `forgelib/pixelize`; pick one by trial on two items (berries, flint) and document it in `recipes/README.md` and the `sprite-forge` skill. Packet type for an icon set.
 - done when: berries and flint icons pass icon QA at 1× and 4× and the B23 instructions work as written
-- evidence:
+- result: `forge.py icon --item ID --prompt "..." --ramps a,b [--n N] [--pick ID]` (`forgelib/icon.py`). Route: klein draws the object, then 2D reduction to 32 x 32 with palette lock and selective outline; the 3D route was not built (see `docs/engineering/imagegen.md`). Berries (`ember,sage,timber`, i400/i401) read at 1x; flint (`basalt`, i303) reads as a plain stone and is low contrast. Candidate tool; B23 picks and the reviewer judges.
+- evidence: `icon_selftest.py` 6/6; trials `art/source/forge/work/icon-{berries,flint}/` (0 icon-check problems in all 16 candidates); boards `docs/team/comms/claude/boards/2026-11-04-c32-icon-berries.png`, `…-c32-icon-flint.png`
 
 ### C31 · gen3d backends: Hunyuan3D-2.1 shape and TRELLIS.2
 

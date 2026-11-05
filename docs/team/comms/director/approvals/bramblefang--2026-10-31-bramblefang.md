@@ -2,7 +2,7 @@
 asset: bramblefang
 packet: art/review/2026-10-31-bramblefang/
 packetDigest: b8d6c89857713f04ca9d4fa564d35f7469c0d731d9d3917ccbcf1b29753a153a
-decision: director-approved
+decision: superseded
 scope: [body, clips]
 date: 2026-10-31
 recordedBy: director (decision); packetDigest added and code fence removed by claude on the director's instruction (2026-10-31T1620Z)

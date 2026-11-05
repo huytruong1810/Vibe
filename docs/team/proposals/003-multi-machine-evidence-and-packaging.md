@@ -2,7 +2,7 @@
 id: 003
 author: blender
 rule: TEAM-5.1, PRD-4, TEAM-8
-status: open
+status: director-approved (as amended in docs/team/comms/director/approvals/proposal-003.md)
 ---
 
 # Proposal 003: Multi-Machine Evidence Synchronization & Packaging-Only Invariants

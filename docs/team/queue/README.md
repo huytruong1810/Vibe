@@ -5,9 +5,10 @@ tickets' `status:` and add a dated `evidence:` line. Codex maintains ticket cont
 and keeps each queue at least two open tickets ahead. The director may reorder or
 cancel anything.
 
-- [codex](codex.md): toolsmith, doctrine steward (DOC-5), engineering
-- [blender](blender.md): forge production and world layout (machine A)
-- [communicator](communicator.md): hub, reference sheets, 2D, music, digests (machine B)
+- [codex](codex.md): toolsmith, doctrine steward (DOC-5), engineering ([archive](archive/codex.md))
+- [blender](blender.md): forge production and world layout (machine A) ([archive](archive/blender.md))
+- [communicator](communicator.md): hub, reference sheets, 2D, music, digests (machine B) ([archive](archive/communicator.md))
+- [visitor](visitor.md): weekly auditor and acting director under TEAM-4.2 ([archive](archive/visitor.md))
 
 ## Keep the boards small (agents read them every session)
 

@@ -95,7 +95,7 @@ test('stop binds world map writes to their authoring receipt', () => {
 
 test('doctrine writes are denied for every role, absolute or relative, quoted or not', () => {
   const fx = fixtureRepo();
-  for (const role of ['blender', 'communicator']) {
+  for (const role of ['blender', 'communicator', 'visitor']) {
     assert.equal(
       run('guard.mjs', write('docs/doctrine/03-art-bible.md'), fx, role).decision,
       'deny',
@@ -137,6 +137,16 @@ test('own comms folder allowed, other comms and director approvals denied', () =
       fx,
       'communicator',
     ).decision,
+    'allow',
+  );
+  for (const p of [
+    'docs/team/comms/director/approvals/README.md',
+    'docs/team/comms/director/2026-11-05T0000--to-all--x.md',
+  ])
+    assert.equal(run('guard.mjs', write(p), fx, 'communicator').decision, 'deny', p);
+  assert.equal(
+    run('guard.mjs', write('docs/team/comms/director/approvals/npc-neris--p1.md'), fx, 'blender')
+      .decision,
     'deny',
   );
   assert.equal(
@@ -386,16 +396,21 @@ test('agents can never stage or commit protected files, even ones they did not w
   const fx = fixtureRepo();
   mkdirSync(path.join(fx.root, 'docs/team/comms/director/approvals'), { recursive: true });
   writeFileSync(path.join(fx.root, 'docs/team/comms/director/approvals/a--p.md'), 'decision: x\n');
-  for (const role of ['blender', 'communicator']) {
-    for (const c of [
-      'git add docs/team/comms/director/approvals/a--p.md',
-      'git add -A && git commit -m "records"',
-      'git commit -am "sync"',
-    ])
-      assert.equal(run('guard.mjs', cmd(c), fx, role).decision, 'deny', `${role}: ${c}`);
-  }
+  for (const c of [
+    'git add docs/team/comms/director/approvals/a--p.md',
+    'git add -A && git commit -m "records"',
+    'git commit -am "sync"',
+  ])
+    assert.equal(run('guard.mjs', cmd(c), fx, 'blender').decision, 'deny', `blender: ${c}`);
+  // Directive 016: the communicator may commit its delegated records, but not other protected files.
+  assert.equal(
+    run('guard.mjs', cmd('git add docs/team/comms/director/approvals/a--p.md'), fx, 'communicator')
+      .decision,
+    'allow',
+  );
   execFileSync('git', ['add', 'docs/team/comms/director/approvals/a--p.md'], { cwd: fx.root });
   assert.equal(run('guard.mjs', cmd('git commit -m "x"'), fx, 'blender').decision, 'deny');
+  assert.equal(run('guard.mjs', cmd('git commit -m "x"'), fx, 'communicator').decision, 'allow');
   execFileSync('git', ['reset', '-q'], { cwd: fx.root });
   writeFileSync(path.join(fx.root, 'notes.md'), 'x\n');
   assert.equal(run('guard.mjs', cmd('git add notes.md'), fx, 'blender').decision, 'allow');
@@ -454,4 +469,30 @@ test('art moved to blender (2026-11-02): blender writes every art source, commun
     assert.equal(decide(path, 'communicator'), 'allow', path);
   // forge exports stay publish-only for blender
   assert.equal(decide('art/source/exports/rivallie/x/frames/idle/s_0.png', 'blender'), 'deny');
+});
+
+test('visitor (directive 017): acting-director lane, records only in approvals, nothing else protected', () => {
+  const fx = fixtureRepo();
+  const decide = (p) => run('guard.mjs', write(p), fx, 'visitor').decision;
+  for (const p of [
+    'docs/team/comms/visitor/report.md',
+    'docs/team/proposals/008-x.md',
+    'docs/team/queue/blender.md',
+    'docs/team/status-board.md',
+    'docs/team/comms/director/approvals/a--p.md',
+  ])
+    assert.equal(decide(p), 'allow', p);
+  for (const p of [
+    'docs/team/comms/director/approvals/README.md',
+    'docs/team/comms/director/directive.md',
+    'docs/art/approvals.json',
+    '.agents/hooks/lib.mjs',
+    'docs/doctrine/10-team-charter.md',
+    'src/domain/creatures.ts',
+    'art/source/manifest.json',
+    'art/source/forge/forge.py',
+    'art/source/references/x/y.png',
+    'docs/team/comms/blender/x.md',
+  ])
+    assert.equal(decide(p), 'deny', p);
 });

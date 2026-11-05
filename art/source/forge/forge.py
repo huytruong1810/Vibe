@@ -14,6 +14,12 @@ Commands:
   Items run prep|gen3d|clean|texture|orient|items|packet|publish (all runs through items).
   all --asset ID         run every runnable stage in order (stops at the first block)
   pose-guide --template T [--try]   grey clay pose guide for a skeleton template (concept poseGuide); --try runs one concept trial
+  portrait --asset K:ID [--emotions a,b] [--n N] [--pick e=id,...]   eight expressions (96/128 px) from the neutral portrait by reference editing; --pick keeps candidates
+  headroom [--asset ID]   canvas room from the anchor (spec table), or how far an asset's frames reach and the largest heightArtPx that keeps the 2 px margin (C26)
+  approve-record --asset ID --packet DIR --decision D --scope a,b --recorded-by WHO --note "..." [--suffix -faces]   write an approval record with the digest taken from review.json (PRD-9); no --asset: check every record
+  publish-faces --asset ID   stage the approved faces sidecar (decals, registration table) in art/source/exports and staging; needs a faces approval record (C3b)
+  upscale --asset ID [--n N] [--seed S] [--keep SEED]   re-render reference views under 1024 px tall at 1100+ px with the edit model (C28); --keep writes them over the views
+  icon --item ID --prompt "..." --ramps a,b [--n N] [--pick ID]   32 px inventory icon candidates for items without a held model; --pick keeps one and logs it
   swatch --set S --material M --prompt "..." [--n N] [--pick ID]   seamless 1024 px terrain swatch candidates for tileforge; --pick keeps one and logs it
 """
 
@@ -468,6 +474,16 @@ def st_publish(asset: str) -> str:
     return f"staged {_rel(path)}; faces need separate approval; gameplay activation is not changed"
 
 
+def st_publish_faces(asset: str) -> str:
+    from forgelib.publish import faces_approval_for, publish_faces
+    found = faces_approval_for(REPO, core.APPROVALS, slug(asset))
+    if not found:
+        raise ForgeError(f"No director-approved faces record in {_rel(core.APPROVALS)} whose packetDigest matches a "
+                         f"faces.json of {asset} (PRD-9). Run `faces`, then wait for the decision.")
+    path = publish_faces(REPO, found[1], found[0], asset)
+    return f"staged {_rel(path)}; runtime face composition is not activated"
+
+
 def st_faces(asset: str) -> str:
     """Sidecar workflow: do not insert faces into the approved body's stage chain."""
     kind = asset_kind(asset)
@@ -487,7 +503,8 @@ def st_faces(asset: str) -> str:
     revision = core.digest(inputs)[:12]
     output = core.REVIEW / f"{time.strftime('%Y-%m-%d', time.gmtime())}-{slug(asset)}-faces-{revision}"
     report = build_faces(packet, output, asset, spec("render_spec"), spec("palette"),
-                         kind=kind, face=_recipe(asset).get("face") if kind == "human" else None)
+                         kind=kind, face=_recipe(asset).get("face") if kind == "human" else None,
+                         offset_px=tuple(_recipe(asset).get("faceOffsetPx", [0, 3])))
     outputs = [output / "faces.json", output / "contact.png"]
     if (output / "registered.png").is_file():
         outputs.append(output / "registered.png")
@@ -1220,7 +1237,7 @@ def pose_guide_try(template: str, n: int = 4, seed: int | None = None, model: st
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("command", choices=["doctor", "selftest", "status", "next", "all", "faces", "item-plan", "items", "orient", "layout",
-                                        "concept", "views", "pose-guide", "swatch", *STAGES])
+                                        "concept", "views", "pose-guide", "swatch", "portrait", "icon", "upscale", "headroom", "approve-record", "publish-faces", *STAGES])
     ap.add_argument("--asset")
     ap.add_argument("--n", type=int, default=4, help="concept: candidates to generate")
     ap.add_argument("--seed", type=int, help="concept: first seed (default: time-based)")
@@ -1235,6 +1252,16 @@ def main() -> int:
     ap.add_argument("--set", dest="tileset", help="swatch: tileforge set name")
     ap.add_argument("--material", help="swatch: material id in the set")
     ap.add_argument("--prompt", help="swatch: the feature clause (what the ground looks like)")
+    ap.add_argument("--keep", help="upscale: the candidate seed whose views replace the reference views")
+    ap.add_argument("--item", help="icon: item id (e.g. berries)")
+    ap.add_argument("--ramps", help="icon: comma list of palette ramps the icon may use (e.g. ember,sage)")
+    ap.add_argument("--emotions", help="portrait: comma list of emotions to generate (default all eight non-neutral)")
+    ap.add_argument("--packet", help="approve-record: packet dir, e.g. art/review/2026-11-04-neris/")
+    ap.add_argument("--decision", default="director-approved", help="approve-record: director-approved | changes-requested | rejected | superseded")
+    ap.add_argument("--scope", help="approve-record: comma list, e.g. body,clips")
+    ap.add_argument("--recorded-by", dest="recorded_by", help="approve-record: who decided and under what authority")
+    ap.add_argument("--note", default="", help="approve-record: the reason, in the record body")
+    ap.add_argument("--suffix", default="", help="approve-record: file name suffix, e.g. -faces")
     ap.add_argument("--try", dest="trial", action="store_true", help="pose-guide: run one concept trial with the committed guide")
     a = ap.parse_args()
     if a.command == "pose-guide":
@@ -1255,6 +1282,63 @@ def main() -> int:
             return 0
         except (ForgeError, OSError, ValueError, KeyError) as e:
             print(f"FORGE ERROR [swatch]: {e}", file=sys.stderr)
+            return 2
+    if a.command == "approve-record":
+        try:
+            from datetime import datetime, timezone
+            from forgelib import approval_record as rec_mod
+            if not a.asset:
+                bad, unverifiable = rec_mod.check(REPO, core.APPROVALS)
+                print("\n".join(bad) if bad else "[approve-record] every verifiable director-approved record matches its packet")
+                print(f"[approve-record] {len(unverifiable)} records have no review.json or faces.json here (world and doc records)")
+                return 1 if bad else 0
+            if not (a.packet and a.scope and a.recorded_by):
+                ap.error("approve-record needs --packet, --scope and --recorded-by")
+            out = rec_mod.write(REPO, core.APPROVALS, a.asset, a.packet, a.decision, a.scope.split(","), a.recorded_by, a.note,
+                                datetime.now(timezone.utc).strftime("%Y-%m-%d"), a.suffix)
+            print(f"[approve-record] wrote {_rel(out)}")
+            return 0
+        except (rec_mod.RecordError, ForgeError, OSError, ValueError, KeyError) as e:
+            print(f"FORGE ERROR [approve-record]: {e}", file=sys.stderr)
+            return 2
+    if a.command == "headroom":
+        try:
+            from forgelib import headroom as headroom_mod
+            print(headroom_mod.report(a.asset))
+            return 0
+        except (ForgeError, OSError, ValueError, KeyError) as e:
+            print(f"FORGE ERROR [headroom]: {e}", file=sys.stderr)
+            return 2
+    if a.command == "upscale":
+        if not a.asset:
+            ap.error("upscale needs --asset <id>")
+        try:
+            from forgelib import upscale as upscale_mod
+            print(f"[upscale] {upscale_mod.upscale(a.asset, a.n if a.n != 4 else 2, a.seed, a.keep, a.model)}")
+            return 0
+        except (ForgeError, OSError, ValueError, KeyError) as e:
+            print(f"FORGE ERROR [upscale]: {e}", file=sys.stderr)
+            return 2
+    if a.command == "icon":
+        if not a.item:
+            ap.error("icon needs --item <id> (e.g. berries)")
+        try:
+            from forgelib import icon as icon_mod
+            print(f"[icon] {icon_mod.icon(a.item, a.prompt, a.ramps, a.n, a.seed, a.pick, a.model)}")
+            return 0
+        except (ForgeError, OSError, ValueError, KeyError) as e:
+            print(f"FORGE ERROR [icon]: {e}", file=sys.stderr)
+            return 2
+    if a.command == "portrait":
+        if not a.asset:
+            ap.error("portrait needs --asset <kind:id> (e.g. npc:neris)")
+        try:
+            from forgelib import portrait as portrait_mod
+            emo = [e.strip() for e in a.emotions.split(",")] if a.emotions else None
+            print(f"[portrait] {portrait_mod.portrait(a.asset, emo, a.n if a.n != 4 else 2, a.seed, a.pick, a.model)}")
+            return 0
+        except (ForgeError, OSError, ValueError, KeyError) as e:
+            print(f"FORGE ERROR [portrait]: {e}", file=sys.stderr)
             return 2
     if a.command == "doctor":
         return doctor()
@@ -1291,6 +1375,8 @@ def main() -> int:
             print(next_step(a.asset))
         elif a.command == "status":
             print(status(a.asset))
+        elif a.command == "publish-faces":
+            print(st_publish_faces(a.asset))
         elif a.command == "faces":
             print(st_faces(a.asset))
         elif a.command == "item-plan":

@@ -7,8 +7,15 @@
     "grip": "leather",
     "lashing": "reed"
   },
-  "gen3d": { "seed": 1234, "steps": 50 },
-  "orient": { "lengthArtPx": 25, "gripFraction": 0.30 },
+  "gen3d": {
+    "seed": 1234,
+    "steps": 50
+  },
+  "orient": {
+    "lengthArtPx": 22,
+    "gripFraction": 0.44,
+    "minFeaturePx": 2.5
+  },
   "item": {
     "model": "auto",
     "grip": "auto",
