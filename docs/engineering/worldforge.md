@@ -202,3 +202,11 @@ services, schedules, habitats, scenes and presentation. It then requires version
 bumps, explicit rejection of old generated-world saves, browser journeys and an
 authored-world soak. The current bootstrap, saves and version constants are unchanged.
 See [ADR 021](decisions.md#adr-021--candidate-authored-world-compilation).
+
+## Comparing a packet with its previous revision (C32)
+
+`uv run --project art/source/forge python art/source/forge/tools/worldforge_compare.py <packet-dir>` finds the
+earlier revision of the same region and level under `art/review/`, writes its overview as `before-overview.png` in the
+current packet, and writes a side-by-side `comparison.png`. Its selftest is
+`art/source/forge/forgelib/worldforge_compare_selftest.py` (run with the other forge selftests:
+`uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p '*_selftest.py'`).

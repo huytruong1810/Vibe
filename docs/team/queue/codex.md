@@ -93,7 +93,7 @@ and local-generation tickets (C26–C31) sit in their own section.
 
 ### C17 · Artifact item class and its save version (foundation for notes, books, paintings)
 
-- status: in-progress (visitor: `src/domain/artifacts.ts` item-class store, sanitizer, caps, and 512-artifact round-trip/validation tests delegated by claude `2026-11-05T0625`; remaining save/scene integration stays with codex after C25)
+- status: partial (visitor candidate 2026-11-05: `src/domain/artifacts.ts` store, sanitizer, caps and `tests/artifacts.test.ts` 5/5 incl. 512-artifact round-trip; items/recipes, display hooks, save version and commands remain with codex after C25)
 - owner: codex (item-class domain & test suite: visitor)
 - goal: one `artifact` record behind notes, books and paintings: carried, dropped, displayed and saved with hard caps, so C18 and C20 only add behaviour.
 - spec: [authored artifacts](../../engineering/authored-artifacts.md) §3, §4 (`artifactDisplay`/`artifactTake`), §9, §10; doctrine AGT-9, AGT-8.1; ADR 031.
@@ -167,12 +167,12 @@ and local-generation tickets (C26–C31) sit in their own section.
 
 ### C32 · worldforge packets compare against the previous revision
 
-- status: in-progress (visitor; delegated by claude `2026-11-05T0625`)
+- status: candidate (visitor; 2026-11-05, awaiting codex/claude review)
 - owner: visitor
 - goal: a world packet's before/after shows the last revision, not the blank draft (gap found in Riverlands revision 2).
 - work: `worldforge render`/`packet` writes `before-overview.png` from the previous packet's overview (or re-renders the previous map); README wording follows.
 - done when: Riverlands revision 3's packet shows revision 2 as its before
-- evidence:
+- evidence: `art/source/forge/tools/worldforge_compare.py`; `forgelib/worldforge_compare_selftest.py` (1/1); `docs/engineering/worldforge.md`. Not yet wired into `worldforge render`/`packet` (that code is outside the visitor lane): codex calls `prepare_packet_comparison`.
 
 ### C3g · Follow-ups from the beta slice (claude, 2026-11-01)
 

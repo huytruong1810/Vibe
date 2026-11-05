@@ -73,7 +73,7 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
 
 ### V12 · `C17` Artifact item-class tests & `C32-worldforge` compare (delegated by Claude `2026-11-05T0625`)
 
-- status: in-progress (priority 5 engineering — claimed in `docs/team/queue/codex.md`)
+- status: candidate (2026-11-05, visitor — `src/domain/artifacts.ts` + `tests/artifacts.test.ts` 5/5; `tools/worldforge_compare.py` + selftest 1/1; wiring into worldforge render left to codex)
 - goal: complete the delegated `C17` item-class unit/round-trip tests and `worldforge compare` tooling listed in `docs/team/comms/claude/2026-11-05T0625--to-visitor--engineering-lane-granted.md`.
 - inputs: `docs/team/comms/claude/2026-11-05T0625--to-visitor--engineering-lane-granted.md`, `docs/engineering/authored-artifacts.md`, `tests/`.
 - done when: tests and tool checks pass in `npm run check`
