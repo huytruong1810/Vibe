@@ -363,7 +363,7 @@ export class PaintingScreen {
     }
     this.el('painting-raw-figure').hidden = !preview || !this.rawUrl;
     if (this.rawUrl) this.el<HTMLImageElement>('painting-raw').src = this.rawUrl;
-    this.dialog.dataset.painted = String(record?.status === 'ready');
+    this.dialog.dataset.painted = String(preview);
     this.el('painting-caption').textContent = record?.caption ?? '';
     this.status(
       record?.failure ??

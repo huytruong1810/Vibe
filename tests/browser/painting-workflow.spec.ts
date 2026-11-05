@@ -69,6 +69,17 @@ test('C20 paints, keeps, restores and hangs a palette painting on a hook', async
   await page.locator('#painting-generate').click();
   await expect(page.locator('#painting-keep')).toBeVisible();
   await expect(page.locator('#painting-raw')).toBeVisible();
+  await expect(page.locator('#painting-dialog')).toHaveAttribute('data-painted', 'true');
+  const previewScale = await page.locator('#painting-palette').evaluate((canvas) => {
+    const style = getComputedStyle(canvas),
+      bounds = canvas.getBoundingClientRect();
+    return {
+      width: bounds.width - parseFloat(style.borderLeftWidth) - parseFloat(style.borderRightWidth),
+      height:
+        bounds.height - parseFloat(style.borderTopWidth) - parseFloat(style.borderBottomWidth),
+    };
+  });
+  expect(previewScale).toEqual({ width: 48 * 4, height: 32 * 4 });
   expect(generations).toBe(1);
   await mkdir('artifacts', { recursive: true });
   await page.screenshot({ path: 'artifacts/c20-painting-preview-1080p.png' });

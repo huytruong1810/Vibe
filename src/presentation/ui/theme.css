@@ -794,6 +794,7 @@ body {
   image-rendering: pixelated;
 }
 #painting-palette {
+  box-sizing: content-box;
   border: 16px solid transparent;
   border-image: url('/assets/generated/ui/frame_painting_preview.png') 16 fill / 16px / 0 stretch;
 }

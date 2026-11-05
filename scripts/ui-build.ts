@@ -11,6 +11,21 @@ export const BAR_PARTS = {
   need: { width: 32, height: 12, segment: 2 },
 } as const;
 
+/** B18 v1 hashes its contact sheet, so also bind the frame list approved at76ef620c. */
+export function verifyArtifactUiApproval(review: Buffer, contact: Buffer, approval: string): void {
+  const hash = (bytes: Buffer) => createHash('sha256').update(bytes).digest('hex');
+  const contactDigest = hash(contact);
+  if (
+    hash(review) !== '1bb2d0d718ec0c32793f9381a44d02829a4786cfaf745a9b912f289a0138463c' ||
+    !/^asset: ui:authored-artifacts\s*$/m.test(approval) ||
+    !/^decision: director-approved\s*$/m.test(approval) ||
+    /^superseded-by:/m.test(approval) ||
+    !approval.includes(`packetDigest: ${contactDigest}`) ||
+    JSON.parse(review.toString('utf8')).sourceDigest !== contactDigest
+  )
+    throw new Error('Authored artifact UI approval does not match its packet');
+}
+
 /** Lossless compilation of authored pixels, not a repaint of the kit. */
 export async function compileBarStrip(
   bytes: Buffer,
@@ -74,7 +89,8 @@ export async function buildUi(): Promise<void> {
   for (const file of files) await copyFile(join(source, 'kit/export', file), join(output, file));
   // These icons accompany the approved B18 UI packet; gameplay atlas intake remains M25.
   const artifactPacket = join(root, 'art/review/2026-11-05-ui-authored-artifacts');
-  const artifactReview = JSON.parse(await readFile(join(artifactPacket, 'review.json'), 'utf8'));
+  const artifactReviewBytes = await readFile(join(artifactPacket, 'review.json'));
+  const artifactReview = JSON.parse(artifactReviewBytes.toString('utf8'));
   const approval = await readFile(
     join(
       root,
@@ -82,16 +98,11 @@ export async function buildUi(): Promise<void> {
     ),
     'utf8',
   );
-  const contactDigest = createHash('sha256')
-    .update(await readFile(join(artifactPacket, 'contact.png')))
-    .digest('hex');
-  if (
-    !/^decision: director-approved\s*$/m.test(approval) ||
-    /^superseded-by:/m.test(approval) ||
-    !approval.includes(`packetDigest: ${contactDigest}`) ||
-    artifactReview.sourceDigest !== contactDigest
-  )
-    throw new Error('Authored artifact UI approval does not match its packet');
+  verifyArtifactUiApproval(
+    artifactReviewBytes,
+    await readFile(join(artifactPacket, 'contact.png')),
+    approval,
+  );
   for (const name of [
     'frame_book_spread',
     'frame_note_page',
