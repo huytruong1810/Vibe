@@ -1,0 +1,37 @@
+{
+  "asset": "item:copper-sword",
+  "kind": "item",
+  "ramps": {
+    "blade": "copper",
+    "crossguard": "iron",
+    "grip": "leather",
+    "pommel": "gold"
+  },
+  "gen3d": {
+    "seed": 1234,
+    "steps": 50
+  },
+  "orient": {
+    "lengthArtPx": 14,
+    "gripFraction": 0.25,
+    "minFeaturePx": 2.4
+  },
+  "item": {
+    "model": "auto",
+    "grip": "auto",
+    "socket": "Socket_Hand.R",
+    "iconPivot": "auto",
+    "iconScale": "auto"
+  },
+  "concept": {
+    "template": "prop-v1",
+    "fields": {
+      "object": "short chunky copper shortsword with a leaf-shaped blade, sturdy iron crossguard and disc pommel",
+      "owner": "an Aqualia scout",
+      "materials": "polished hammered copper blade with thick central fuller, dark iron crossguard, brown leather grip wrap, brass gold pommel",
+      "scale": "one-handed shortsword, about 65 cm overall"
+    },
+    "references": []
+  },
+  "notes": "T0 combat weapon (B22). Length 16 px, single-handed leaf sword."
+}

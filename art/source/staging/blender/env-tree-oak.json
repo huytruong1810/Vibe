@@ -1,0 +1,141 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/env-tree-oak--2026-11-04-env-tree-oak.md",
+  "approvalSha256": "9d8fb6a6f42e67efab98a7d4cb1c73e421f506465d53dbdf9f584ae43d7111f1",
+  "asset": "env:tree-oak",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset env:tree-oak",
+    "id": "forge-env-tree-oak",
+    "inputs": [
+      {
+        "path": "blender/models/published/env-tree-oak/728389941d2ddcdc5cf2e5371843502adf8675ccfc7bed7bbf287d6d77d06798/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/env-tree-oak/728389941d2ddcdc5cf2e5371843502adf8675ccfc7bed7bbf287d6d77d06798/forge/blender/env_layout.py",
+        "role": "script",
+        "sha256": "b2fa291498b97eb55fc8450d37b55208b1d22550aa81a70b6c8c06d9cc08388b"
+      },
+      {
+        "path": "blender/models/published/env-tree-oak/728389941d2ddcdc5cf2e5371843502adf8675ccfc7bed7bbf287d6d77d06798/forge/forge.py",
+        "role": "script",
+        "sha256": "7ba07e846a522d199a522a011cfb1f87d35b47233bcb33aaeb9cb27e09644319"
+      },
+      {
+        "path": "blender/models/published/env-tree-oak/728389941d2ddcdc5cf2e5371843502adf8675ccfc7bed7bbf287d6d77d06798/forge/forgelib/environment.py",
+        "role": "script",
+        "sha256": "4b3443c051f8076ebdc9abd18152831dfbfe74c0053e7c4622ef3d7f483e397c"
+      },
+      {
+        "path": "blender/models/published/env-tree-oak/728389941d2ddcdc5cf2e5371843502adf8675ccfc7bed7bbf287d6d77d06798/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/env-tree-oak/728389941d2ddcdc5cf2e5371843502adf8675ccfc7bed7bbf287d6d77d06798/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "7c2e7b1994f6c5f8cb4c00bb8bf92f8078a8e7aa1ce405f18f5541e9aaf8452e"
+      },
+      {
+        "path": "blender/models/published/env-tree-oak/728389941d2ddcdc5cf2e5371843502adf8675ccfc7bed7bbf287d6d77d06798/forge/recipes/env-tree-oak.json",
+        "role": "pose-config",
+        "sha256": "10a9a8b8d7f78b20c0230ce77190b3a68805954bf173e5fcd483293c68075c01"
+      },
+      {
+        "path": "blender/models/published/env-tree-oak/728389941d2ddcdc5cf2e5371843502adf8675ccfc7bed7bbf287d6d77d06798/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/env-tree-oak/728389941d2ddcdc5cf2e5371843502adf8675ccfc7bed7bbf287d6d77d06798/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/env-tree-oak/728389941d2ddcdc5cf2e5371843502adf8675ccfc7bed7bbf287d6d77d06798/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/env-tree-oak/728389941d2ddcdc5cf2e5371843502adf8675ccfc7bed7bbf287d6d77d06798/forge/work/env-tree-oak/layout.json",
+        "role": "pose-config",
+        "sha256": "2df62108250892b58f4aa8d1aa1bf8242f57ab9d7e37aff15e5252de354d4ac0"
+      },
+      {
+        "path": "blender/models/published/env-tree-oak/728389941d2ddcdc5cf2e5371843502adf8675ccfc7bed7bbf287d6d77d06798/forge/work/env-tree-oak/layout/base.blend",
+        "role": "model",
+        "sha256": "a2472256417deb4bfe5d5f1f9b75aa533bd2842736a30a7f63505cd8960ebf8d"
+      },
+      {
+        "path": "blender/models/published/env-tree-oak/728389941d2ddcdc5cf2e5371843502adf8675ccfc7bed7bbf287d6d77d06798/forge/work/env-tree-oak/layout/canopy.blend",
+        "role": "model",
+        "sha256": "e143a52da9dae2b8a21aa5201e221238954c810e631a822f5e4c7945664da240"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "footprint": [
+    2,
+    2
+  ],
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 128,
+        "y": 276
+      },
+      "file": "exports/env-tree-oak/6ce3910e857497c5315f3d8d862f0ed01b39d1479947b89b8534d63daa8fc3c1/frames/shadow.png",
+      "id": "env-tree-oak-shadow",
+      "layer": "shadow",
+      "sha256": "f8164f8554f4e7a20589ee5020858d84e4191e8dc063a4ca0ae33eba8a8b1846",
+      "sourceSize": {
+        "h": 284,
+        "w": 256
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 128,
+        "y": 276
+      },
+      "file": "exports/env-tree-oak/6ce3910e857497c5315f3d8d862f0ed01b39d1479947b89b8534d63daa8fc3c1/frames/base.png",
+      "id": "env-tree-oak-base",
+      "layer": "base",
+      "sha256": "a6a717a46b15ccad69a84f9410eb55ba61aa1f73ec08d73e7811ffce8d89ce45",
+      "sourceSize": {
+        "h": 284,
+        "w": 256
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 128,
+        "y": 276
+      },
+      "file": "exports/env-tree-oak/6ce3910e857497c5315f3d8d862f0ed01b39d1479947b89b8534d63daa8fc3c1/frames/canopy.png",
+      "id": "env-tree-oak-canopy",
+      "layer": "canopy",
+      "sha256": "01874ee75c343b67829826da2bd931ddcaf2bdbd113f1c6636a2ac2b9fbd0abc",
+      "sourceSize": {
+        "h": 284,
+        "w": 256
+      }
+    }
+  ],
+  "lightPools": [],
+  "packet": "art/review/2026-11-03-env-tree-oak",
+  "packetDigest": "6ce3910e857497c5315f3d8d862f0ed01b39d1479947b89b8534d63daa8fc3c1",
+  "packetSha256": "6c9f8988de14a22d468a96fc9d8e0875a23af3728e494fc6c323e977e46c3803",
+  "schemaVersion": 1,
+  "scope": [
+    "shadow",
+    "base",
+    "canopy"
+  ]
+}

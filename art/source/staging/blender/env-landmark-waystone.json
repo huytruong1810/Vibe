@@ -1,0 +1,121 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/env-landmark-waystone--2026-11-04-env-landmark-waystone.md",
+  "approvalSha256": "cef008b2046464778917a62772fb54601d0094d2d0bbf369b24080197c7d2697",
+  "asset": "env:landmark-waystone",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset env:landmark-waystone",
+    "id": "forge-env-landmark-waystone",
+    "inputs": [
+      {
+        "path": "blender/models/published/env-landmark-waystone/d418de1f3c069fe7d34225daa6b0a0b6f683cef9c5da123ce31cbc7abf49bfa3/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/env-landmark-waystone/d418de1f3c069fe7d34225daa6b0a0b6f683cef9c5da123ce31cbc7abf49bfa3/forge/blender/env_layout.py",
+        "role": "script",
+        "sha256": "b2fa291498b97eb55fc8450d37b55208b1d22550aa81a70b6c8c06d9cc08388b"
+      },
+      {
+        "path": "blender/models/published/env-landmark-waystone/d418de1f3c069fe7d34225daa6b0a0b6f683cef9c5da123ce31cbc7abf49bfa3/forge/forge.py",
+        "role": "script",
+        "sha256": "7ba07e846a522d199a522a011cfb1f87d35b47233bcb33aaeb9cb27e09644319"
+      },
+      {
+        "path": "blender/models/published/env-landmark-waystone/d418de1f3c069fe7d34225daa6b0a0b6f683cef9c5da123ce31cbc7abf49bfa3/forge/forgelib/environment.py",
+        "role": "script",
+        "sha256": "4b3443c051f8076ebdc9abd18152831dfbfe74c0053e7c4622ef3d7f483e397c"
+      },
+      {
+        "path": "blender/models/published/env-landmark-waystone/d418de1f3c069fe7d34225daa6b0a0b6f683cef9c5da123ce31cbc7abf49bfa3/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/env-landmark-waystone/d418de1f3c069fe7d34225daa6b0a0b6f683cef9c5da123ce31cbc7abf49bfa3/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "7c2e7b1994f6c5f8cb4c00bb8bf92f8078a8e7aa1ce405f18f5541e9aaf8452e"
+      },
+      {
+        "path": "blender/models/published/env-landmark-waystone/d418de1f3c069fe7d34225daa6b0a0b6f683cef9c5da123ce31cbc7abf49bfa3/forge/recipes/env-landmark-waystone.json",
+        "role": "pose-config",
+        "sha256": "ead639fdcf0a78f4aba0014633582f71bb693bf5ee5b156d53f4e0aa07966d5f"
+      },
+      {
+        "path": "blender/models/published/env-landmark-waystone/d418de1f3c069fe7d34225daa6b0a0b6f683cef9c5da123ce31cbc7abf49bfa3/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/env-landmark-waystone/d418de1f3c069fe7d34225daa6b0a0b6f683cef9c5da123ce31cbc7abf49bfa3/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/env-landmark-waystone/d418de1f3c069fe7d34225daa6b0a0b6f683cef9c5da123ce31cbc7abf49bfa3/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/env-landmark-waystone/d418de1f3c069fe7d34225daa6b0a0b6f683cef9c5da123ce31cbc7abf49bfa3/forge/work/env-landmark-waystone/layout.json",
+        "role": "pose-config",
+        "sha256": "ba4f0a6b5f3692f1a668fa2448d3fd84d45c0221d00e416651944cb9bedf9d85"
+      },
+      {
+        "path": "blender/models/published/env-landmark-waystone/d418de1f3c069fe7d34225daa6b0a0b6f683cef9c5da123ce31cbc7abf49bfa3/forge/work/env-landmark-waystone/layout/base.blend",
+        "role": "model",
+        "sha256": "3b0583200b67dbf84f4fe4d39ede89cf371f0860f33257a83362b295ee7d144c"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "footprint": [
+    1,
+    1
+  ],
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 64,
+        "y": 120
+      },
+      "file": "exports/env-landmark-waystone/88df49240c33b4f4e328d18779edc2a8f029ea15ba1645b88964b1cebb5471e3/frames/shadow.png",
+      "id": "env-landmark-waystone-shadow",
+      "layer": "shadow",
+      "sha256": "7cf547c14696febd56bd9847b6598e23230ab55b7e28c8d8d33cf06a3adea4a7",
+      "sourceSize": {
+        "h": 128,
+        "w": 128
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 64,
+        "y": 120
+      },
+      "file": "exports/env-landmark-waystone/88df49240c33b4f4e328d18779edc2a8f029ea15ba1645b88964b1cebb5471e3/frames/base.png",
+      "id": "env-landmark-waystone-base",
+      "layer": "base",
+      "sha256": "921828af362f06b889c5f1e548e0145f843773383034bc00e7bdc5d3b30850d1",
+      "sourceSize": {
+        "h": 128,
+        "w": 128
+      }
+    }
+  ],
+  "lightPools": [],
+  "packet": "art/review/2026-11-03-env-landmark-waystone",
+  "packetDigest": "88df49240c33b4f4e328d18779edc2a8f029ea15ba1645b88964b1cebb5471e3",
+  "packetSha256": "4852ec23b949c89f07af2a2de09c6c696127aa8f0b09792838821243abbd64fe",
+  "schemaVersion": 1,
+  "scope": [
+    "shadow",
+    "base"
+  ]
+}

@@ -24,7 +24,7 @@ B0 is standing.
 
 ### B27 · Publish all approved bodies, items, environments, and human face sidecars
 
-- status: open (top priority; unblocked by `2026-11-04T2300--to-all--approvals-digest-fixed-publish-next.md` and `2026-11-04T2356--to-blender--go-c3b-faces-and-publish-faces.md`)
+- status: in-progress (22 staging JSONs published: all 11 human face sidecars, all 4 envs, all 6 held items, ignicap; 10 NPC bodies and 2 winged creatures blocked by publish.py tooling issues dispatched to claude/codex)
 - goal: emit `art/source/staging/blender/*.json` and immutable `art/source/exports/**` for every `director-approved` packet so `communicator` (`M25`) can merge them into `art/source/manifest.json` immediately.
 - inputs: repaired approval records in `docs/team/comms/director/approvals/*.md` (verified via `forge.py approve-record`).
 - work:
@@ -38,7 +38,7 @@ B0 is standing.
      - `player-aqualia`, `npc:neris`, `npc:caelum`, `npc:dara`, `npc:finn`, `npc:lark`, `npc:marina`, `npc:mira`, `npc:oren`, `npc:reed`, `npc:willa`.
   4. Commit `art/source/exports/**`, `art/source/blender/models/published/**`, and `art/source/staging/blender/*.json`, push, and message `--to-communicator-visitor--b27-published`.
 - done when: all 22 additional body/item/env staging JSONs and 11 human face sidecars are committed in `art/source/staging/blender/` and `art/source/exports/`
-- evidence:
+- evidence: art/source/staging/blender/{env-landmark-waystone,env-prop-hearth,env-tree-oak,env-well,ignicap,item-copper-sword,item-ferry-pole,item-fishing-rod,item-hoe,item-hunting-spear,item-shortbow,player-aqualia-faces,npc-neris-faces,npc-caelum-faces,npc-dara-faces,npc-finn-faces,npc-lark-faces,npc-marina-faces,npc-mira-faces,npc-oren-faces,npc-reed-faces,npc-willa-faces}.json; docs/team/comms/blender/2026-11-04T1840--to-communicator-visitor--b27-published.md.
 
 ### B28 · Fix `steamshell` 180° backward yaw and re-packet
 

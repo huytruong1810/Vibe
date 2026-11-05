@@ -1,0 +1,1660 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/item-ferry-pole--2026-11-04-item-ferry-pole.md",
+  "approvalSha256": "16ff221d74227ae9b0bde1c79e85ef3ed55a338f93289321f9035092b69c0edd",
+  "asset": "item:ferry-pole",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset item:ferry-pole",
+    "id": "forge-item-ferry-pole",
+    "inputs": [
+      {
+        "path": "blender/models/published/item-ferry-pole/545ccc4906b6daa37676b3c5d78ee5e8998bb80d763456f0f2b45f7246166b6c/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/item-ferry-pole/545ccc4906b6daa37676b3c5d78ee5e8998bb80d763456f0f2b45f7246166b6c/forge/blender/item_orient.py",
+        "role": "script",
+        "sha256": "a68d9fcfc9cae6f56c882c76e9e294d3c24bd02fb7826d9da3eaa086b7de362f"
+      },
+      {
+        "path": "blender/models/published/item-ferry-pole/545ccc4906b6daa37676b3c5d78ee5e8998bb80d763456f0f2b45f7246166b6c/forge/forge.py",
+        "role": "script",
+        "sha256": "7ba07e846a522d199a522a011cfb1f87d35b47233bcb33aaeb9cb27e09644319"
+      },
+      {
+        "path": "blender/models/published/item-ferry-pole/545ccc4906b6daa37676b3c5d78ee5e8998bb80d763456f0f2b45f7246166b6c/forge/forgelib/item_orient.py",
+        "role": "script",
+        "sha256": "03534083c34c47428d83b477a4e98678e6e547ef21b9a65b751d508a0e164600"
+      },
+      {
+        "path": "blender/models/published/item-ferry-pole/545ccc4906b6daa37676b3c5d78ee5e8998bb80d763456f0f2b45f7246166b6c/forge/forgelib/item_render.py",
+        "role": "script",
+        "sha256": "3290c864b563263170efcc626acce2a1dc88141d320d9cf186f5bc48b3e6f2d0"
+      },
+      {
+        "path": "blender/models/published/item-ferry-pole/545ccc4906b6daa37676b3c5d78ee5e8998bb80d763456f0f2b45f7246166b6c/forge/forgelib/items.py",
+        "role": "script",
+        "sha256": "22221017285c31c893c28260a13caf407e646913c63e32ad723c8671f1a9d84c"
+      },
+      {
+        "path": "blender/models/published/item-ferry-pole/545ccc4906b6daa37676b3c5d78ee5e8998bb80d763456f0f2b45f7246166b6c/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/item-ferry-pole/545ccc4906b6daa37676b3c5d78ee5e8998bb80d763456f0f2b45f7246166b6c/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "7c2e7b1994f6c5f8cb4c00bb8bf92f8078a8e7aa1ce405f18f5541e9aaf8452e"
+      },
+      {
+        "path": "blender/models/published/item-ferry-pole/545ccc4906b6daa37676b3c5d78ee5e8998bb80d763456f0f2b45f7246166b6c/forge/recipes/item-ferry-pole.json",
+        "role": "pose-config",
+        "sha256": "d822de828a0fcad881cd954c38cf56b43825327e5f5a9b32652bc706bbb17367"
+      },
+      {
+        "path": "blender/models/published/item-ferry-pole/545ccc4906b6daa37676b3c5d78ee5e8998bb80d763456f0f2b45f7246166b6c/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/item-ferry-pole/545ccc4906b6daa37676b3c5d78ee5e8998bb80d763456f0f2b45f7246166b6c/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/item-ferry-pole/545ccc4906b6daa37676b3c5d78ee5e8998bb80d763456f0f2b45f7246166b6c/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/item-ferry-pole/545ccc4906b6daa37676b3c5d78ee5e8998bb80d763456f0f2b45f7246166b6c/forge/work/item-ferry-pole/item_model.blend",
+        "role": "model",
+        "sha256": "e217738fd84d03288c57e5463b483a6bf8b9a4f6badc777ac967448abab32ab5"
+      },
+      {
+        "path": "blender/models/published/item-ferry-pole/545ccc4906b6daa37676b3c5d78ee5e8998bb80d763456f0f2b45f7246166b6c/forge/work/item-ferry-pole/orient.json",
+        "role": "pose-config",
+        "sha256": "69ef88e8460a83d93e37f6851205cc81bf090484bb3698ef4441ae432262701a"
+      },
+      {
+        "path": "blender/models/published/item-ferry-pole/545ccc4906b6daa37676b3c5d78ee5e8998bb80d763456f0f2b45f7246166b6c/forge/work/item-ferry-pole/orient_params.json",
+        "role": "pose-config",
+        "sha256": "15e863051c284714d998814533f8f587b462d8cd5be5f18e0cc5bae159900978"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_0/s_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-ferry-pole-held-s-0",
+      "sha256": "daba0b3a08b016eead3618d15e9ea7695da677134ac1bb5d8952c6011dd1bfb3",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_1/s_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-ferry-pole-held-s-1",
+      "sha256": "0f5f90d1f11f78c0d1d5026473d5a4e81700841551e8efff3e19dd9060bc02ca",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_2/s_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-ferry-pole-held-s-2",
+      "sha256": "f0c844f221073679bf81cc4bf719d670885d9c4c3424d975abe8822e92be97eb",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_3/s_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-ferry-pole-held-s-3",
+      "sha256": "9624c536c0129d0f46731a94fe313347380d64b74282ebddbe29fedf0e24e21b",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_4/s_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-ferry-pole-held-s-4",
+      "sha256": "11adcc21e0d950df1153dc130e58c5a07e7ce2877d383976d44a5f905d90b415",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_5/s_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-ferry-pole-held-s-5",
+      "sha256": "ac5133c9d4285aeff3ff14d10d9ebda2b67412612c9113a48555ad584ba5bc1c",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_6/s_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-ferry-pole-held-s-6",
+      "sha256": "5ddae73288c28260586ee880e05457c3050362a9cd721636dcb333d20672273b",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_7/s_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-ferry-pole-held-s-7",
+      "sha256": "17e303d8a74e8d39644cb2deacc307ab8cda2e60c2d8fcbdc72774882bc5d5f9",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_0/se_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-ferry-pole-held-se-0",
+      "sha256": "c46cbb004184218b7845237b2dded1a66582214f5c6f222c9a97fe425337221a",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_1/se_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-ferry-pole-held-se-1",
+      "sha256": "631e300781cf4c28e4690a213756395bcec1d9d26c9379c2972a7439855b5ca2",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_2/se_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-ferry-pole-held-se-2",
+      "sha256": "fdd4d054da69d969d8a8dca0bf886fecdab07096e3bf42bde921518b2c5fa7f4",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_3/se_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-ferry-pole-held-se-3",
+      "sha256": "aa4ee79a8d60d2d2be6a2930413a9e08c5e5d76074b821c3659fadd1f7ba8a09",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_4/se_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-ferry-pole-held-se-4",
+      "sha256": "eb11073af6bb59be90c09117d2c29c211ba8734ee7eb8fb88f9bbcdb666a60e9",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_5/se_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-ferry-pole-held-se-5",
+      "sha256": "baa43ae8dfdb25bd41e40c79e68eb7ba3bc7657ebf881de90aa035d860501c0a",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_6/se_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-ferry-pole-held-se-6",
+      "sha256": "741b7ab97550287602045b5ac2f954c2095cbaf336de003cf6ccd379f8891a5c",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_7/se_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-ferry-pole-held-se-7",
+      "sha256": "b0181c03ff8b04333ca69b5de456349f779ef4d68bf4349e1f92e31fda47fba2",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_0/e_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-ferry-pole-held-e-0",
+      "sha256": "08305664213633785489873b1f07b90aa1fb25bb0dcc4d80e43a86fa9a2a0601",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_1/e_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-ferry-pole-held-e-1",
+      "sha256": "75dab328982ea906eb0c7a1268d5b2139649b4b89d6ef59c6125172e8fdfacaf",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_2/e_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-ferry-pole-held-e-2",
+      "sha256": "98e01f6cc9c4b19cc17e1b7869083e88e0c60388b92db0884776b2468fcaefdf",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_3/e_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-ferry-pole-held-e-3",
+      "sha256": "bf69f91f4302d7ff9fcff22776ede9270206783202f7d31307c845d2be01b9ae",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_4/e_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-ferry-pole-held-e-4",
+      "sha256": "d76bedb57da7e7bab36aeeddf7fbe9a6a8de06a20c56f41b31bc4c957bcf9855",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_5/e_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-ferry-pole-held-e-5",
+      "sha256": "67d1327926c06e62f4085c4ec516cf6b64ece17e07c675ee65681c7a2b24b64e",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_6/e_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-ferry-pole-held-e-6",
+      "sha256": "24d70fc42bb4e13673f57d16514f6d9bc9f79838d0bf9e67ad50b76559a23559",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_7/e_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-ferry-pole-held-e-7",
+      "sha256": "e25eed69f990da16ae5fe359f9546305d41de4c022103a315d152ed15b38b847",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_0/ne_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-ferry-pole-held-ne-0",
+      "sha256": "52040150adb57705c63313b44a32fade2092be133b1b4a64c3627281a43bd024",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_1/ne_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-ferry-pole-held-ne-1",
+      "sha256": "93d2248406129068a2c48147707e4fa5db5a281443d54f0b54cdd4a9a7139a33",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_2/ne_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-ferry-pole-held-ne-2",
+      "sha256": "35ffe7811ca8928cfb7e0d3a3048863d6eb46b14b9aa9c03bce8c1550be30d85",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_3/ne_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-ferry-pole-held-ne-3",
+      "sha256": "5ce858538495c33fb47125c7caafc0f6ffdb2546de539455d92e12f2d000f083",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_4/ne_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-ferry-pole-held-ne-4",
+      "sha256": "5409284fa505ca4acf6d2b94e5514c14bc4451db4cb99e8584ebe324bdd419d2",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_5/ne_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-ferry-pole-held-ne-5",
+      "sha256": "535ca024045e7a2e8db755d1181d425bc129d0397a158340898f21f36d808b89",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_6/ne_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-ferry-pole-held-ne-6",
+      "sha256": "d3955ce8e861014ca785deffcc03eafdda4404fe6175f4f0661fe06bdbee4614",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_7/ne_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-ferry-pole-held-ne-7",
+      "sha256": "c35fa1024e4fca05f34b4bd0f0cd36177e46150b83e7a9a4cd8fdaae9082a024",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_0/n_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-ferry-pole-held-n-0",
+      "sha256": "090cbd8024898bae8963c07b3dd2e230b2968bbce3b06b36509b99bd89570e50",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_1/n_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-ferry-pole-held-n-1",
+      "sha256": "cee856c81413de860570bacb99b6a1694937756e22c4b5cf84989fda70d480b7",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_2/n_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-ferry-pole-held-n-2",
+      "sha256": "8a8af3986a4d71a5eb4c84ecadb4f7fe3b61fe7cd14a0003ce875dcf7757e562",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_3/n_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-ferry-pole-held-n-3",
+      "sha256": "de28645171d6a8cb7439742255df73819fc4b05a8f32895102f78658c5eb2d46",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_4/n_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-ferry-pole-held-n-4",
+      "sha256": "1fffb83349cf407c67fe345aa5a21aa365c3debacf95fba85984e6b7af5641e0",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_5/n_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-ferry-pole-held-n-5",
+      "sha256": "f85a1d8680a99f704421bf60af67129210da4ef4eecf16499157ba1a2b2c0e06",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_6/n_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-ferry-pole-held-n-6",
+      "sha256": "5bf64776fcf0457b48e95e1fc372696acb70091e3fd851cdbc7de4acdb1aabae",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_7/n_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-ferry-pole-held-n-7",
+      "sha256": "1db978da8988d314352faec9af6dbd061d479591afe0e8779e19a67bf7c2e250",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_0/nw_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-ferry-pole-held-nw-0",
+      "sha256": "7167675b762d33209dfd10537b691d7bcf7a982324b7e17ff9e61701af5ea791",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_1/nw_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-ferry-pole-held-nw-1",
+      "sha256": "25053e5cf1769fc8eeb1961c3d8e07f06ce9fc4096582b856f0364e00d7bee46",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_2/nw_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-ferry-pole-held-nw-2",
+      "sha256": "d49c832441a951922443f48cdef5ec2ee9e130df6094f81cd310d9028af8042a",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_3/nw_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-ferry-pole-held-nw-3",
+      "sha256": "dd12a1495fb103ea0b70d0248593e084deeb13abb39e851c867c834a3bb9c725",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_4/nw_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-ferry-pole-held-nw-4",
+      "sha256": "cbedeafcb9ab12a901b9b6a56fe6aa9734fafca453c75328c61ec1de4cb18649",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_5/nw_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-ferry-pole-held-nw-5",
+      "sha256": "0d9ccdb8c7351829a8f199d0112a54c740b2b71ca87bc491655162d2ba1f2848",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_6/nw_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-ferry-pole-held-nw-6",
+      "sha256": "dfe1f3f81065c4db73da8e0811eeddab6658855a85fa01644330551158dc915f",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_7/nw_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-ferry-pole-held-nw-7",
+      "sha256": "8533fb36b9cb4fe3eaa770bf6d51d7c3cde506459d1d823d5b332a1dff5d31a9",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_0/w_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-ferry-pole-held-w-0",
+      "sha256": "6769f434f5153125bbccf3697ed05b9dac23f2f2fc30d38d55b8be5f0eabe7e6",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_1/w_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-ferry-pole-held-w-1",
+      "sha256": "c32dc8df65fbf78169540cba63f010ba2cf54ddfb2ca067a2a73598a60b0c783",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_2/w_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-ferry-pole-held-w-2",
+      "sha256": "3bde80591c4b1358f5c6a94fac3d4d5ac01ccc9d3e428ad234791a2412d22631",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_3/w_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-ferry-pole-held-w-3",
+      "sha256": "2d8bcfe7088082e28ef3c3434d0dfcf63e0a46808ea087f05e657be546e068e2",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_4/w_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-ferry-pole-held-w-4",
+      "sha256": "b278d44318c78f7a885d926f484dd80ccdc55734825e6914c1ea8c1fae4a8ab7",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_5/w_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-ferry-pole-held-w-5",
+      "sha256": "a48a8d68ba4517dbd554d4948ce02d7010449ecb374563de8039c27e66a2d553",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_6/w_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-ferry-pole-held-w-6",
+      "sha256": "5b6e910ca72ecfbfe4a83735b009ba4e766c08a8c992b3a5c0fef4150537829f",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_7/w_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-ferry-pole-held-w-7",
+      "sha256": "293c5e3169d925ad4878148a1f7fc66aa7d8a6a379dbdfa27c952a09bff00c97",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_0/sw_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-ferry-pole-held-sw-0",
+      "sha256": "791392ba6e1f74a7f9db9aebf371ce030455f5a6f33ed6a211c4d079b7a07a49",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_1/sw_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-ferry-pole-held-sw-1",
+      "sha256": "0852a7c3a60030a2d40b9b78a7b883c206a3601a847d8290a70124b820dbb19b",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_2/sw_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-ferry-pole-held-sw-2",
+      "sha256": "1837dc6bfc30b9ff05e6b0d2cbb8071a4375d61b70b01dd027b6aff234f3c051",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_3/sw_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-ferry-pole-held-sw-3",
+      "sha256": "ab57cfcc2f0d485a2f4e83e17c62e7f7e265903d8468a06ffdf96b31137e5f25",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_4/sw_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-ferry-pole-held-sw-4",
+      "sha256": "8d6ddc32b13c7ea9c9cd16f4cb492b4fc93c721ee7cb58588839e47aa9cbf0e2",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_5/sw_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-ferry-pole-held-sw-5",
+      "sha256": "b2a23c2b0d504b21bd6d4234567cd3af6f2a6f1f0a55a3762d45b35176fdfe2b",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_6/sw_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-ferry-pole-held-sw-6",
+      "sha256": "8c5a64a591452ea2c62edd07dde91437f89f83c31153d5c0f5955bc1b9b16b10",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/held_7/sw_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-ferry-pole-held-sw-7",
+      "sha256": "b5c90b056fd00ba8aece5888ecf0202c7124d4ae2ddd3ca0807c7eb5eaaa61cd",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-ferry-pole/8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75/pix/export/icon/se_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-ferry-pole-icon",
+      "sha256": "e9fe0369e6a3e91e94fdd2370623c53f9ac0179c4b950b055b44f28948c886ca",
+      "socket": null,
+      "sockets": {},
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "icon"
+    }
+  ],
+  "gripConvention": "clockwise-screen-from-up-after-facing-yaw",
+  "packet": "art/review/2026-11-04-item-ferry-pole",
+  "packetDigest": "8c064b957d714a226e8331ef0c489fc9356463d043345fbc408070ee9e70bc75",
+  "packetSha256": "894034a7908f15e40a4f8eef4ad057cbacd4b130ba1c0484bc0755ec6304d490",
+  "schemaVersion": 1,
+  "scope": [
+    "held-item",
+    "icon"
+  ],
+  "socket": "Socket_Hand.R"
+}
