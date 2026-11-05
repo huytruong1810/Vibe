@@ -226,15 +226,15 @@ export class BookScreen {
     for (const el of this.dialog.querySelectorAll<
       HTMLInputElement | HTMLTextAreaElement | HTMLButtonElement
     >('input,textarea,button'))
-      el.disabled = this.busy;
-    if (!this.busy) {
-      this.el<HTMLButtonElement>('book-write').disabled = !this.writable;
-      this.el<HTMLButtonElement>('book-previous').disabled = this.page === 0;
-      this.el<HTMLButtonElement>('book-next').disabled =
-        this.page + (this.editing ? 1 : 2) >= this.length;
-      this.el<HTMLButtonElement>('book-add').disabled = this.kind !== 'book' || this.length >= 48;
-      this.el<HTMLButtonElement>('book-remove').disabled = this.kind !== 'book' || this.length <= 1;
-    }
+      // Actions already share the serial queue. Disabling a button when an
+      // autosave starts between pointer-down and pointer-up discards that click.
+      el.disabled = this.busy && !(el instanceof HTMLButtonElement);
+    this.el<HTMLButtonElement>('book-write').disabled = !this.writable;
+    this.el<HTMLButtonElement>('book-previous').disabled = this.page === 0;
+    this.el<HTMLButtonElement>('book-next').disabled =
+      this.page + (this.editing ? 1 : 2) >= this.length;
+    this.el<HTMLButtonElement>('book-add').disabled = this.kind !== 'book' || this.length >= 48;
+    this.el<HTMLButtonElement>('book-remove').disabled = this.kind !== 'book' || this.length <= 1;
   }
   private status(message: string): void {
     if (this.disposed) return;
