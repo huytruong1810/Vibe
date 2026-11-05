@@ -1,0 +1,45 @@
+{
+  "asset": "env:notice-board",
+  "stage": "layout",
+  "inputsDigest": "18d7c7b0cbe461a151cde767b22683b92274286c0c2f6a04f3ea38059f59f149",
+  "inputs": [
+    "art/source/forge/work/env-notice-board/texture.blend",
+    "art/source/forge/work/env-notice-board/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-notice-board/layout/base.blend": "ef82fb1cffca9f8753e19d96af8855686df0d9b3aad484d48455bf8574f470cd",
+    "art/source/forge/work/env-notice-board/layout_preview.png": "43c873622ac89e0ed65548db2cc77fed316f97bf672eaf023613fae7d63ed5fd"
+  },
+  "extra": {
+    "scale": 0.100072,
+    "heightUnits": 1.6623,
+    "contactDepthTiles": 0.833,
+    "footprint": [
+      1,
+      1
+    ],
+    "canvas": {
+      "size": [
+        64,
+        80
+      ],
+      "anchor": [
+        32,
+        75
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -0.5,
+      0.0
+    ],
+    "layers": [
+      "base"
+    ],
+    "faces": {
+      "base": 14000
+    }
+  },
+  "at": "2026-11-05T09:03:28Z"
+}

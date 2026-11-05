@@ -1,0 +1,90 @@
+{
+ "asset": "env:flora-wheat-healthy",
+ "footprint": [
+  1,
+  1
+ ],
+ "frames": [
+  {
+   "anchorPx": {
+    "x": 64,
+    "y": 122
+   },
+   "file": "frames/shadow.png",
+   "id": "env-flora-wheat-healthy-shadow",
+   "layer": "shadow",
+   "sha256": "48efba5ce5af0f9795c0c4a3a038cb055e6336735c96f10d1a6db43af11df757",
+   "sourceSize": {
+    "h": 132,
+    "w": 128
+   }
+  },
+  {
+   "anchorPx": {
+    "x": 64,
+    "y": 122
+   },
+   "file": "frames/base.png",
+   "id": "env-flora-wheat-healthy-base",
+   "layer": "base",
+   "sha256": "15da75db0254f9f8b3db74fdf8d26cdc7ebfaf87c19aa05016bdd910d6ca0ced",
+   "sourceSize": {
+    "h": 132,
+    "w": 128
+   }
+  }
+ ],
+ "kind": "environment-review",
+ "lightPools": [],
+ "qa": [
+  {
+   "check": "footprint",
+   "detail": "ground contact 1.15 tiles deep vs declared 1 (width is scaled to fit)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-11.4"
+  },
+  {
+   "check": "canvas",
+   "detail": "64x66, width multiple of 32",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec canvases.environment"
+  },
+  {
+   "check": "margins",
+   "detail": "smallest transparent margin 2px",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec marginsArtPixels"
+  },
+  {
+   "check": "paletteMembership",
+   "detail": "0 off-palette colours",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.1"
+  },
+  {
+   "check": "colorCount",
+   "detail": "14 colours (environment limit 32)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.4"
+  },
+  {
+   "check": "blocks",
+   "detail": "exports are exact 2x blocks",
+   "hard": true,
+   "pass": true,
+   "rule": "L1"
+  }
+ ],
+ "schemaVersion": 1,
+ "scope": [
+  "shadow",
+  "base"
+ ],
+ "sourceDigest": "a9a29bb2991d75d9f510eec63634eda6b538d1b778367cf0d96640f6173e8ba3",
+ "status": "candidate"
+}

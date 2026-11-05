@@ -1,9 +1,9 @@
 {
-  "approvalRecord": "docs/team/comms/director/approvals/mireling--2026-11-05-mireling-faces-dd867942c9f2.md",
-  "approvalSha256": "6eafc0b0ac546875d96068aa2fd89b217508ae1cc9af8f7f1926f3952b06d3c0",
+  "approvalRecord": "docs/team/comms/director/approvals/mireling--2026-11-05-mireling-faces-d86e98622329.md",
+  "approvalSha256": "e928b648c3aca92bb6a3f41ab04767fe4376bab5023d26a816ea01e6b7fd6dd1",
   "asset": "mireling",
-  "bodyManifestSha256": "e4412fe07d61566a9cf62e021097e2075826ce8e8da692d719e6cfd8c09dd966",
-  "bodyPacketDigest": "16a58b960293833e9345276a97f89ec9f4fd1766a8c1bac742f6ad97a2469a9d",
+  "bodyManifestSha256": "cfa4656e3745faaf467f82e1fdfe02d388fe6629ee9848ef2947724db8b220d1",
+  "bodyPacketDigest": "b4a930b71bd34ee41b43f17602f82c06d2c6b87bc56a64e234cb98d4f45b699a",
   "frames": [
     {
       "anchorPx": {
@@ -12,7 +12,7 @@
       },
       "expression": "neutral",
       "facing": "s",
-      "file": "exports/mireling-faces/aee8e9f019f86419867e144774dafa585a203c0e55485d6fd661e5de336950e8/neutral/s.png",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/neutral/s.png",
       "sha256": "560d804fc63684b599d62c9260571fdfac73adf76539263574b599129695f559",
       "socket": "Socket_Head",
       "sourceSize": {
@@ -27,7 +27,7 @@
       },
       "expression": "neutral",
       "facing": "se",
-      "file": "exports/mireling-faces/aee8e9f019f86419867e144774dafa585a203c0e55485d6fd661e5de336950e8/neutral/se.png",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/neutral/se.png",
       "sha256": "0d88f53fd7563b77735a3faa479c1b08d81e83802c3abcd9e47c412e1ea3adc6",
       "socket": "Socket_Head",
       "sourceSize": {
@@ -42,7 +42,7 @@
       },
       "expression": "neutral",
       "facing": "sw",
-      "file": "exports/mireling-faces/aee8e9f019f86419867e144774dafa585a203c0e55485d6fd661e5de336950e8/neutral/sw.png",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/neutral/sw.png",
       "sha256": "9b3709856a10d20ba3a229e61487552eb83df8e1f7190b79b9db24845fb7f64f",
       "socket": "Socket_Head",
       "sourceSize": {
@@ -57,7 +57,7 @@
       },
       "expression": "neutral",
       "facing": "e",
-      "file": "exports/mireling-faces/aee8e9f019f86419867e144774dafa585a203c0e55485d6fd661e5de336950e8/neutral/e.png",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/neutral/e.png",
       "sha256": "c7f2bcc83dcd8b665c3254d4b4b91735077c7869e67c5e3a850ba8f3cd27c776",
       "socket": "Socket_Head",
       "sourceSize": {
@@ -72,7 +72,7 @@
       },
       "expression": "neutral",
       "facing": "w",
-      "file": "exports/mireling-faces/aee8e9f019f86419867e144774dafa585a203c0e55485d6fd661e5de336950e8/neutral/w.png",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/neutral/w.png",
       "sha256": "9a9860408460555c6ddb218afe05cbc19c43e86938f82d58d9d0c58469329fe1",
       "socket": "Socket_Head",
       "sourceSize": {
@@ -87,7 +87,7 @@
       },
       "expression": "warm",
       "facing": "s",
-      "file": "exports/mireling-faces/aee8e9f019f86419867e144774dafa585a203c0e55485d6fd661e5de336950e8/warm/s.png",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/warm/s.png",
       "sha256": "9e55be0232387e28cd7b1377b1ba80489a3418f2ad6eed3551e0fbf008a9ad81",
       "socket": "Socket_Head",
       "sourceSize": {
@@ -102,7 +102,7 @@
       },
       "expression": "warm",
       "facing": "se",
-      "file": "exports/mireling-faces/aee8e9f019f86419867e144774dafa585a203c0e55485d6fd661e5de336950e8/warm/se.png",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/warm/se.png",
       "sha256": "438537b456ae9b0c8e0a776bdd1f963e452c459a8fef1aa69d8eda44b81c9603",
       "socket": "Socket_Head",
       "sourceSize": {
@@ -117,7 +117,7 @@
       },
       "expression": "warm",
       "facing": "sw",
-      "file": "exports/mireling-faces/aee8e9f019f86419867e144774dafa585a203c0e55485d6fd661e5de336950e8/warm/sw.png",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/warm/sw.png",
       "sha256": "085275716ed3073e52099f7422bb91a97205b13713a9d5275b3cebcc85ca9948",
       "socket": "Socket_Head",
       "sourceSize": {
@@ -132,7 +132,7 @@
       },
       "expression": "warm",
       "facing": "e",
-      "file": "exports/mireling-faces/aee8e9f019f86419867e144774dafa585a203c0e55485d6fd661e5de336950e8/warm/e.png",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/warm/e.png",
       "sha256": "1d0def96ce3dfa6e33ec0ab911ffb9eff8c477d096951e1f1a6fc34e24ddc6d6",
       "socket": "Socket_Head",
       "sourceSize": {
@@ -147,7 +147,7 @@
       },
       "expression": "warm",
       "facing": "w",
-      "file": "exports/mireling-faces/aee8e9f019f86419867e144774dafa585a203c0e55485d6fd661e5de336950e8/warm/w.png",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/warm/w.png",
       "sha256": "45dce88e09ca630bacebd61fe2c62b92387391a0bf4312bae205d988a5ec105d",
       "socket": "Socket_Head",
       "sourceSize": {
@@ -162,7 +162,7 @@
       },
       "expression": "fearful",
       "facing": "s",
-      "file": "exports/mireling-faces/aee8e9f019f86419867e144774dafa585a203c0e55485d6fd661e5de336950e8/fearful/s.png",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/fearful/s.png",
       "sha256": "bbddac7cb8bd7aaf7e73ed30dc26eeb05b09c881aa41f1680796d10a1d303cfa",
       "socket": "Socket_Head",
       "sourceSize": {
@@ -177,7 +177,7 @@
       },
       "expression": "fearful",
       "facing": "se",
-      "file": "exports/mireling-faces/aee8e9f019f86419867e144774dafa585a203c0e55485d6fd661e5de336950e8/fearful/se.png",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/fearful/se.png",
       "sha256": "33003e938992223c692b629913f64a36a27925e7fbdfd2726afd2c6bc960a2ff",
       "socket": "Socket_Head",
       "sourceSize": {
@@ -192,7 +192,7 @@
       },
       "expression": "fearful",
       "facing": "sw",
-      "file": "exports/mireling-faces/aee8e9f019f86419867e144774dafa585a203c0e55485d6fd661e5de336950e8/fearful/sw.png",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/fearful/sw.png",
       "sha256": "d6f71205f258937b77b624a38c4cc474860ebd0bc74437c0e641d3db8bf24462",
       "socket": "Socket_Head",
       "sourceSize": {
@@ -207,7 +207,7 @@
       },
       "expression": "fearful",
       "facing": "e",
-      "file": "exports/mireling-faces/aee8e9f019f86419867e144774dafa585a203c0e55485d6fd661e5de336950e8/fearful/e.png",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/fearful/e.png",
       "sha256": "657ee6a88fe6cf902f8ecf22647c1ba0195b440d8ad835fe071519ec9ab48555",
       "socket": "Socket_Head",
       "sourceSize": {
@@ -222,7 +222,7 @@
       },
       "expression": "fearful",
       "facing": "w",
-      "file": "exports/mireling-faces/aee8e9f019f86419867e144774dafa585a203c0e55485d6fd661e5de336950e8/fearful/w.png",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/fearful/w.png",
       "sha256": "083c0bf21e11120f26b967be6f9528bcfc7274cf56a2a86bbd9cd453f442b510",
       "socket": "Socket_Head",
       "sourceSize": {
@@ -237,7 +237,7 @@
       },
       "expression": "hurt",
       "facing": "s",
-      "file": "exports/mireling-faces/aee8e9f019f86419867e144774dafa585a203c0e55485d6fd661e5de336950e8/hurt/s.png",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/hurt/s.png",
       "sha256": "f0ad143c98ee7aa876bc78b8aa1b82fd9fe17d160d87ae7e4b970617f6c9a10d",
       "socket": "Socket_Head",
       "sourceSize": {
@@ -252,7 +252,7 @@
       },
       "expression": "hurt",
       "facing": "se",
-      "file": "exports/mireling-faces/aee8e9f019f86419867e144774dafa585a203c0e55485d6fd661e5de336950e8/hurt/se.png",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/hurt/se.png",
       "sha256": "d5251b97c30df82763f0076abe8854cd28311b20e2f62861b6df1bb09d630c34",
       "socket": "Socket_Head",
       "sourceSize": {
@@ -267,7 +267,7 @@
       },
       "expression": "hurt",
       "facing": "sw",
-      "file": "exports/mireling-faces/aee8e9f019f86419867e144774dafa585a203c0e55485d6fd661e5de336950e8/hurt/sw.png",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/hurt/sw.png",
       "sha256": "3e5db620325a5b0499d9b523b512c69fedf99d82ff83ad1387972e334a0b5052",
       "socket": "Socket_Head",
       "sourceSize": {
@@ -282,7 +282,7 @@
       },
       "expression": "hurt",
       "facing": "e",
-      "file": "exports/mireling-faces/aee8e9f019f86419867e144774dafa585a203c0e55485d6fd661e5de336950e8/hurt/e.png",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/hurt/e.png",
       "sha256": "fe38be4205ef96bbe98d552d6db4050fd376a2be42cf4a8e674caaf116ee8247",
       "socket": "Socket_Head",
       "sourceSize": {
@@ -297,7 +297,7 @@
       },
       "expression": "hurt",
       "facing": "w",
-      "file": "exports/mireling-faces/aee8e9f019f86419867e144774dafa585a203c0e55485d6fd661e5de336950e8/hurt/w.png",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/hurt/w.png",
       "sha256": "cec7ccda16e39aafa6c09b2d44a522150ed34759f279150d95ad607cbdd4d8ad",
       "socket": "Socket_Head",
       "sourceSize": {
@@ -312,7 +312,7 @@
       },
       "expression": "sleep",
       "facing": "s",
-      "file": "exports/mireling-faces/aee8e9f019f86419867e144774dafa585a203c0e55485d6fd661e5de336950e8/sleep/s.png",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/sleep/s.png",
       "sha256": "a0fc9f0157cd1a29e52655a18f7c3fa6ff472974c33f6d7ca83a56205e1a3de0",
       "socket": "Socket_Head",
       "sourceSize": {
@@ -327,7 +327,7 @@
       },
       "expression": "sleep",
       "facing": "se",
-      "file": "exports/mireling-faces/aee8e9f019f86419867e144774dafa585a203c0e55485d6fd661e5de336950e8/sleep/se.png",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/sleep/se.png",
       "sha256": "c86f256c2ff0969055a4bbc11dd5dbaffd0d9489d9a43834a328f999cc8ec386",
       "socket": "Socket_Head",
       "sourceSize": {
@@ -342,7 +342,7 @@
       },
       "expression": "sleep",
       "facing": "sw",
-      "file": "exports/mireling-faces/aee8e9f019f86419867e144774dafa585a203c0e55485d6fd661e5de336950e8/sleep/sw.png",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/sleep/sw.png",
       "sha256": "dc61f833d84bd445d727b68a50fdbf4761f07edbd50e42c2793e6135b9c08e02",
       "socket": "Socket_Head",
       "sourceSize": {
@@ -357,7 +357,7 @@
       },
       "expression": "sleep",
       "facing": "e",
-      "file": "exports/mireling-faces/aee8e9f019f86419867e144774dafa585a203c0e55485d6fd661e5de336950e8/sleep/e.png",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/sleep/e.png",
       "sha256": "84210f48847e9cf2fd56a1832a583bcff578236df381d0a8bb9f5f7dd45710fe",
       "socket": "Socket_Head",
       "sourceSize": {
@@ -372,24 +372,486 @@
       },
       "expression": "sleep",
       "facing": "w",
-      "file": "exports/mireling-faces/aee8e9f019f86419867e144774dafa585a203c0e55485d6fd661e5de336950e8/sleep/w.png",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/sleep/w.png",
       "sha256": "b8dfb7fd7a3a2f34c957965bcb1c3ea6e7d6423f68ffd917050323c69800c633",
       "socket": "Socket_Head",
       "sourceSize": {
         "h": 24,
         "w": 32
       }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "neutral",
+      "facing": "s",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/compact/neutral/s.png",
+      "sha256": "015dee83c11e0017ef88e9880c552a9ab28c5464231d5b52099645b12e634751",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "neutral",
+      "facing": "se",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/compact/neutral/se.png",
+      "sha256": "768ca24d3bb871807d32bf727a61952108d6aada7f90ebe2fc9bb266d1f09f77",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "neutral",
+      "facing": "sw",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/compact/neutral/sw.png",
+      "sha256": "a001863c349f5b0860b93a3384834e2e721db9b9eb0ca9c202bf5ae6d06a9bc8",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "neutral",
+      "facing": "e",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/compact/neutral/e.png",
+      "sha256": "b9c282d077d05df6a4065ca0f08da3651d45a7ab4a0e8531b22dde18b69762f8",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "neutral",
+      "facing": "w",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/compact/neutral/w.png",
+      "sha256": "a2408bf3161bce91dafeee633091fa8b2ca95da0f73c25e56e7fd562b6e17f1e",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "warm",
+      "facing": "s",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/compact/warm/s.png",
+      "sha256": "42951041891acdd1a8a2fd697e096a3cfe9f42a66a2aa6edff42df8b2bdd64cd",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "warm",
+      "facing": "se",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/compact/warm/se.png",
+      "sha256": "2cf9d926b12456042f16742d3c03a7f75fed813ec57b2b381221bf3c080b1f0f",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "warm",
+      "facing": "sw",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/compact/warm/sw.png",
+      "sha256": "6c3dfa7cf3a31400bf858323173723acbc7a747932dd86525d3ba75140e007e2",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "warm",
+      "facing": "e",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/compact/warm/e.png",
+      "sha256": "4cf7b785c2e908395ef01519daddf5ccac7ef0efbb454cbf3943783dc72e1d8e",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "warm",
+      "facing": "w",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/compact/warm/w.png",
+      "sha256": "626451bd3f7fced177497707a51bf3c28c8066a8425dbc93a658ac940e3ecf26",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "fearful",
+      "facing": "s",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/compact/fearful/s.png",
+      "sha256": "bc8eeef64d64baf0690797b11dbe6b364bdcec293982f3e93233f91daf71dd59",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "fearful",
+      "facing": "se",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/compact/fearful/se.png",
+      "sha256": "3b505b3bfd069b52d62d187478ce2c7b4ca2bfc829a56b2af4af61a02fd162e8",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "fearful",
+      "facing": "sw",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/compact/fearful/sw.png",
+      "sha256": "199745c4974010bc7df04c7d328e5130d0f8e7d807f8aee92c0e2f75c8d2d6d0",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "fearful",
+      "facing": "e",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/compact/fearful/e.png",
+      "sha256": "71f236193b6911ed8cdd80c6600e402ba2437fb66d9b1194ed1997008a80817b",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "fearful",
+      "facing": "w",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/compact/fearful/w.png",
+      "sha256": "e89838b9e6d523e1f5392b82ddaf2ac26fa6bcd227d8c32ef602d0c85c8abee4",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "hurt",
+      "facing": "s",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/compact/hurt/s.png",
+      "sha256": "18091c9c5942b9abe19be8ad09fd3b4b62d27907e685eabc67e20b21dba08239",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "hurt",
+      "facing": "se",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/compact/hurt/se.png",
+      "sha256": "d6382f01085c8bd0d4e06e3567db45145ce28b60ee1ebaea347a5e03ad7fca78",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "hurt",
+      "facing": "sw",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/compact/hurt/sw.png",
+      "sha256": "7c4f137a8ead2844ac84e63181d8cb786f396c8dd0a7f8ddc7f0fc567bf77890",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "hurt",
+      "facing": "e",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/compact/hurt/e.png",
+      "sha256": "7b7d60d9f4f1b9333275c5b31d9462579d9eea594025ce00c2ca434e9f84bed9",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "hurt",
+      "facing": "w",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/compact/hurt/w.png",
+      "sha256": "b95e5d70396c77e7a2684c0a73e26d4b403ca8f9426ba10b10677973b5453c01",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "sleep",
+      "facing": "s",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/compact/sleep/s.png",
+      "sha256": "87574f29eaa3d4a21c19231b7811960911585610181465f8ca9ae71a78fd1ba8",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "sleep",
+      "facing": "se",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/compact/sleep/se.png",
+      "sha256": "2edba84d93bfa9d0aea8c6fe78af8634ff0ffeb54f3c7952a62548c9ec26e5ed",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "sleep",
+      "facing": "sw",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/compact/sleep/sw.png",
+      "sha256": "89ed496d5c611b6f4931db36a441c359596650993fa77bc86d7b708bfe1f4f22",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "sleep",
+      "facing": "e",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/compact/sleep/e.png",
+      "sha256": "f001ff092282241f920158a42bbe61136e41fd6879f59ad5490bd0e33d0e65f6",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "sleep",
+      "facing": "w",
+      "file": "exports/mireling-faces/f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933/compact/sleep/w.png",
+      "sha256": "3f76ac39bcec4ef6be80a5d479b7ad8c57094438c0833f4e8dca371495aa9c0d",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
     }
   ],
   "generator": {
     "note": "script-drawn palette-indexed decals; no Blender or generative model",
     "path": "forge/forgelib/faces.py",
-    "sha256": "df795682b94c423db71e6bd686518c7f11cb30b05b879b68909294c1f416196b"
+    "sha256": "dd486fa1334838cea4475d34806438d3431ab4b2a94d513e24f7b22ec55f18a3"
   },
-  "packet": "art/review/2026-11-05-mireling-faces-dd867942c9f2",
-  "packetDigest": "aee8e9f019f86419867e144774dafa585a203c0e55485d6fd661e5de336950e8",
-  "packetSha256": "677fa2e6ab21f79faada9b63d50a0ab9cd84f6357fd1d37a798e6f2296058b6f",
+  "packet": "art/review/2026-11-05-mireling-faces-d86e98622329",
+  "packetDigest": "f40bbec67faf9f73de92494ee09c58788e3d3b7782ec89b66425525d5ad8e933",
+  "packetSha256": "14070e460da5aa39cb7f64eaeb40b5138894df9fadfb3bc3b968cf590944449b",
   "registration": {
+    "eyesOnly": {
+      "mireling:drink:w:0": [
+        4,
+        4
+      ],
+      "mireling:drink:w:1": [
+        4,
+        6
+      ],
+      "mireling:drink:w:2": [
+        4,
+        4
+      ],
+      "mireling:drink:w:3": [
+        4,
+        4
+      ],
+      "mireling:drink:w:4": [
+        4,
+        6
+      ],
+      "mireling:drink:w:5": [
+        4,
+        4
+      ],
+      "mireling:eat:e:0": [
+        -4,
+        14
+      ],
+      "mireling:eat:e:2": [
+        -4,
+        14
+      ],
+      "mireling:eat:e:4": [
+        -4,
+        14
+      ],
+      "mireling:eat:w:0": [
+        4,
+        6
+      ],
+      "mireling:eat:w:1": [
+        4,
+        6
+      ],
+      "mireling:eat:w:2": [
+        4,
+        6
+      ],
+      "mireling:eat:w:3": [
+        4,
+        6
+      ],
+      "mireling:eat:w:4": [
+        4,
+        6
+      ],
+      "mireling:eat:w:5": [
+        4,
+        6
+      ]
+    },
     "frames": {
       "mireling:bathe:e:0": [
         0,
@@ -1961,7 +2423,8 @@
         8
       ]
     },
-    "unit": "frame px from Socket_Head; null hides the face on that frame"
+    "rule": "a frame listed in eyesOnly uses the compact/ decals at that offset; otherwise frames[id] is the full-decal offset, null hides the face",
+    "unit": "frame px from Socket_Head, added to the decal anchor. Horizontal offsets are per facing, already mirrored."
   },
   "schemaVersion": 1,
   "scope": [

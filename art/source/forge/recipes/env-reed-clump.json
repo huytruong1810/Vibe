@@ -1,0 +1,37 @@
+{
+  "asset": "env:reed-clump",
+  "kind": "environment",
+  "ramps": {
+    "walls": "timber",
+    "roof": "teal",
+    "trim": "wood",
+    "metal": "copper"
+  },
+  "gen3d": {
+    "seed": 2010,
+    "steps": 50,
+    "views": [
+      "front",
+      "left"
+    ]
+  },
+  "environment": {
+    "footprint": [
+      1,
+      1
+    ],
+    "split": null,
+    "contactShadow": true
+  },
+  "concept": {
+    "template": "building-v1",
+    "fields": {
+      "building": "waterline dual-grid reed tuft",
+      "region": "Aqualia Village & Riverlands",
+      "description": "clump of slender green water reeds growing from mud",
+      "materials": "slender reed stalks, pale seed heads, dark mud base"
+    },
+    "references": []
+  },
+  "notes": "AQ-2 Landmark/Kit prop (B5). 1x1 footprint."
+}

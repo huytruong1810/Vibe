@@ -1,0 +1,219 @@
+{
+  "version": 1,
+  "id": "aqualia-village-dressing-007",
+  "region": "aqualia",
+  "level": "aqualia_village",
+  "baseDigest": "b55ad9de356fe9ef65276e7e282ac99fd43eaee797d3d88ec508ca5349a6d81b",
+  "operations": [
+    {
+      "op": "place",
+      "id": "decor/village-notice-board",
+      "entity": "Decor",
+      "at": [44, 44],
+      "fields": {
+        "asset": "env:notice_board",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/village-divers-pool",
+      "entity": "Decor",
+      "at": [44, 58],
+      "fields": {
+        "asset": "env:divers_pool",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/village-gauge-tower",
+      "entity": "Decor",
+      "at": [48, 9],
+      "fields": {
+        "asset": "env:gauge_tower",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/village-mill-waterwheel",
+      "entity": "Decor",
+      "at": [63, 6],
+      "fields": {
+        "asset": "env:mill_waterwheel",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/village-sluice-gate",
+      "entity": "Decor",
+      "at": [67, 13],
+      "fields": {
+        "asset": "env:sluice_gate",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/village-lantern-bridge",
+      "entity": "Decor",
+      "at": [44, 25],
+      "fields": {
+        "asset": "env:lantern_bridge",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/village-shrine-spring",
+      "entity": "Decor",
+      "at": [15, 9],
+      "fields": {
+        "asset": "env:shrine_spring",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/village-studio-lark",
+      "entity": "Decor",
+      "at": [63, 23],
+      "fields": {
+        "asset": "env:studio_lark",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/village-stilt-hut",
+      "entity": "Decor",
+      "at": [13, 58],
+      "fields": {
+        "asset": "env:stilt_hut",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/village-ferry-landing",
+      "entity": "Decor",
+      "at": [68, 59],
+      "fields": {
+        "asset": "env:ferry_landing",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/village-boardwalk-dock",
+      "entity": "Decor",
+      "at": [66, 56],
+      "fields": {
+        "asset": "env:boardwalk",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/village-crates-landing",
+      "entity": "Decor",
+      "at": [66, 58],
+      "fields": {
+        "asset": "env:crates_barrels",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/village-crates-mill",
+      "entity": "Decor",
+      "at": [61, 8],
+      "fields": {
+        "asset": "env:crates_barrels",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/village-lantern-square-n",
+      "entity": "Decor",
+      "at": [44, 35],
+      "fields": {
+        "asset": "env:lantern_post",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/village-lantern-square-s",
+      "entity": "Decor",
+      "at": [44, 47],
+      "fields": {
+        "asset": "env:lantern_post",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/village-lantern-waystone",
+      "entity": "Decor",
+      "at": [25, 42],
+      "fields": {
+        "asset": "env:lantern_post",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/village-lantern-studio",
+      "entity": "Decor",
+      "at": [63, 26],
+      "fields": {
+        "asset": "env:lantern_post",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/village-reed-wetland-1",
+      "entity": "Decor",
+      "at": [10, 60],
+      "fields": {
+        "asset": "env:reed_clump",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/village-reed-wetland-2",
+      "entity": "Decor",
+      "at": [18, 62],
+      "fields": {
+        "asset": "env:reed_clump",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/village-reed-wend-1",
+      "entity": "Decor",
+      "at": [72, 35],
+      "fields": {
+        "asset": "env:reed_clump",
+        "blocks": false
+      }
+    },
+    {
+      "op": "place",
+      "id": "decor/village-reed-wend-2",
+      "entity": "Decor",
+      "at": [72, 45],
+      "fields": {
+        "asset": "env:reed_clump",
+        "blocks": false
+      }
+    }
+  ]
+}

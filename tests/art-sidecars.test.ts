@@ -252,6 +252,11 @@ describe('approved sidecar intake', () => {
         body.packetSha256 !== faces.bodyManifestSha256
       )
         expect(() => mergeFaces(root, m, asset)).toThrow(/binding|Approval|changed/i);
+      else if (
+        new Set(faces.frames.map((f: Json) => `${f.expression}:${f.facing}`)).size !==
+        faces.frames.length
+      )
+        expect(() => mergeFaces(root, m, asset)).toThrow('Invalid or duplicate face pose');
       else expect(mergeFaces(root, m, asset).subjects).toHaveLength(6);
     }
     const icons = mergeIcons(

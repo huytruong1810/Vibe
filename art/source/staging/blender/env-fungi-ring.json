@@ -1,0 +1,121 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/env-fungi-ring--2026-11-05-env-fungi-ring.md",
+  "approvalSha256": "c1ad538f6643329eb0bdb78c2cd6814cc62a781ec3b9b062ab3983679bce078a",
+  "asset": "env:fungi-ring",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset env:fungi-ring",
+    "id": "forge-env-fungi-ring",
+    "inputs": [
+      {
+        "path": "blender/models/published/env-fungi-ring/21c05c8034f9d1e8be9b4e962c4c3d90c70c49d10c67fbd688e233393042f6c4/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/env-fungi-ring/21c05c8034f9d1e8be9b4e962c4c3d90c70c49d10c67fbd688e233393042f6c4/forge/blender/env_layout.py",
+        "role": "script",
+        "sha256": "b2fa291498b97eb55fc8450d37b55208b1d22550aa81a70b6c8c06d9cc08388b"
+      },
+      {
+        "path": "blender/models/published/env-fungi-ring/21c05c8034f9d1e8be9b4e962c4c3d90c70c49d10c67fbd688e233393042f6c4/forge/forge.py",
+        "role": "script",
+        "sha256": "72344e74be14dd4324bbc2a158d9c160ff2dfbdfc1325d5166dc5baa5fb6b531"
+      },
+      {
+        "path": "blender/models/published/env-fungi-ring/21c05c8034f9d1e8be9b4e962c4c3d90c70c49d10c67fbd688e233393042f6c4/forge/forgelib/environment.py",
+        "role": "script",
+        "sha256": "4b3443c051f8076ebdc9abd18152831dfbfe74c0053e7c4622ef3d7f483e397c"
+      },
+      {
+        "path": "blender/models/published/env-fungi-ring/21c05c8034f9d1e8be9b4e962c4c3d90c70c49d10c67fbd688e233393042f6c4/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/env-fungi-ring/21c05c8034f9d1e8be9b4e962c4c3d90c70c49d10c67fbd688e233393042f6c4/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "2963b6c95098f03aadf7fffe21507c8b3aa6b4fb4d13e657a9b7921e761ba629"
+      },
+      {
+        "path": "blender/models/published/env-fungi-ring/21c05c8034f9d1e8be9b4e962c4c3d90c70c49d10c67fbd688e233393042f6c4/forge/recipes/env-fungi-ring.json",
+        "role": "pose-config",
+        "sha256": "fe483e7ca7ac7435d907426f48245f554421a775020bb0129699cc3a4784db45"
+      },
+      {
+        "path": "blender/models/published/env-fungi-ring/21c05c8034f9d1e8be9b4e962c4c3d90c70c49d10c67fbd688e233393042f6c4/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/env-fungi-ring/21c05c8034f9d1e8be9b4e962c4c3d90c70c49d10c67fbd688e233393042f6c4/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/env-fungi-ring/21c05c8034f9d1e8be9b4e962c4c3d90c70c49d10c67fbd688e233393042f6c4/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/env-fungi-ring/21c05c8034f9d1e8be9b4e962c4c3d90c70c49d10c67fbd688e233393042f6c4/forge/work/env-fungi-ring/layout.json",
+        "role": "pose-config",
+        "sha256": "31ee7bf93bba6bc86495fa033b53db50bd0751cf7a63d34247e69f562ec39495"
+      },
+      {
+        "path": "blender/models/published/env-fungi-ring/21c05c8034f9d1e8be9b4e962c4c3d90c70c49d10c67fbd688e233393042f6c4/forge/work/env-fungi-ring/layout/base.blend",
+        "role": "model",
+        "sha256": "7a246516f8053b71ab10a0f271fb28621460cae066ab615e118596ef93da1ec0"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "footprint": [
+    2,
+    2
+  ],
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 96,
+        "y": 180
+      },
+      "file": "exports/env-fungi-ring/ec88ae941e4c0eb5d19f94d2034011d4f05f2ff31a12e60cdcafdc9a10b86ac5/frames/shadow.png",
+      "id": "env-fungi-ring-shadow",
+      "layer": "shadow",
+      "sha256": "785f35d46ce0bdc2b8a53bc8123dc29cfd737f58578d6793bfadf71233a285f5",
+      "sourceSize": {
+        "h": 188,
+        "w": 192
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 96,
+        "y": 180
+      },
+      "file": "exports/env-fungi-ring/ec88ae941e4c0eb5d19f94d2034011d4f05f2ff31a12e60cdcafdc9a10b86ac5/frames/base.png",
+      "id": "env-fungi-ring-base",
+      "layer": "base",
+      "sha256": "37c05aeabfd0f951d0fac7873563f45243f353963b0995aee231fc1bf57adfd2",
+      "sourceSize": {
+        "h": 188,
+        "w": 192
+      }
+    }
+  ],
+  "lightPools": [],
+  "packet": "art/review/2026-11-05-env-fungi-ring",
+  "packetDigest": "ec88ae941e4c0eb5d19f94d2034011d4f05f2ff31a12e60cdcafdc9a10b86ac5",
+  "packetSha256": "e414d8bf596e037e65fa52687e0d2fd1c9b6d7658fc8b3c07398157ed693b2c5",
+  "schemaVersion": 1,
+  "scope": [
+    "shadow",
+    "base"
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "asset": "env:bell-post",
+  "stage": "layout",
+  "inputsDigest": "a1fb419ebed5c7d183bb4e33d5b4dc76b9c89dee9dc419552f6f2bcb12d892e1",
+  "inputs": [
+    "art/source/forge/work/env-bell-post/texture.blend",
+    "art/source/forge/work/env-bell-post/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-bell-post/layout/base.blend": "d61bd7b736f52de346ae60149d3484b4d59c05f37cd70077e3a65dd33035a272",
+    "art/source/forge/work/env-bell-post/layout_preview.png": "bde312e3d5fd0d67ce9f9248d0cdf46b1640a71b8c3d1134b31116550eb96fd8"
+  },
+  "extra": {
+    "scale": 0.159539,
+    "heightUnits": 2.8344,
+    "contactDepthTiles": 0.971,
+    "footprint": [
+      1,
+      1
+    ],
+    "canvas": {
+      "size": [
+        64,
+        108
+      ],
+      "anchor": [
+        32,
+        104
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -0.5,
+      0.0
+    ],
+    "layers": [
+      "base"
+    ],
+    "faces": {
+      "base": 14000
+    }
+  },
+  "at": "2026-11-05T10:21:18Z"
+}

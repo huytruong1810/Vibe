@@ -1,0 +1,121 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/env-flora-fungi-healthy--2026-11-05-env-flora-fungi-healthy.md",
+  "approvalSha256": "a612152ae2e811503a1bb48f7b9fb04f8245863dd212105c4bda1d7871d609f8",
+  "asset": "env:flora-fungi-healthy",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset env:flora-fungi-healthy",
+    "id": "forge-env-flora-fungi-healthy",
+    "inputs": [
+      {
+        "path": "blender/models/published/env-flora-fungi-healthy/39aaee5b6855a6a21566f8e46e5069cf4b543689fa1bbbfd88643e7e4862e205/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/env-flora-fungi-healthy/39aaee5b6855a6a21566f8e46e5069cf4b543689fa1bbbfd88643e7e4862e205/forge/blender/env_layout.py",
+        "role": "script",
+        "sha256": "b2fa291498b97eb55fc8450d37b55208b1d22550aa81a70b6c8c06d9cc08388b"
+      },
+      {
+        "path": "blender/models/published/env-flora-fungi-healthy/39aaee5b6855a6a21566f8e46e5069cf4b543689fa1bbbfd88643e7e4862e205/forge/forge.py",
+        "role": "script",
+        "sha256": "72344e74be14dd4324bbc2a158d9c160ff2dfbdfc1325d5166dc5baa5fb6b531"
+      },
+      {
+        "path": "blender/models/published/env-flora-fungi-healthy/39aaee5b6855a6a21566f8e46e5069cf4b543689fa1bbbfd88643e7e4862e205/forge/forgelib/environment.py",
+        "role": "script",
+        "sha256": "4b3443c051f8076ebdc9abd18152831dfbfe74c0053e7c4622ef3d7f483e397c"
+      },
+      {
+        "path": "blender/models/published/env-flora-fungi-healthy/39aaee5b6855a6a21566f8e46e5069cf4b543689fa1bbbfd88643e7e4862e205/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/env-flora-fungi-healthy/39aaee5b6855a6a21566f8e46e5069cf4b543689fa1bbbfd88643e7e4862e205/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "2963b6c95098f03aadf7fffe21507c8b3aa6b4fb4d13e657a9b7921e761ba629"
+      },
+      {
+        "path": "blender/models/published/env-flora-fungi-healthy/39aaee5b6855a6a21566f8e46e5069cf4b543689fa1bbbfd88643e7e4862e205/forge/recipes/env-flora-fungi-healthy.json",
+        "role": "pose-config",
+        "sha256": "9bcd57c147488f48c99cce501046f68b4b00cdb45899b3b0caefd3329265ad71"
+      },
+      {
+        "path": "blender/models/published/env-flora-fungi-healthy/39aaee5b6855a6a21566f8e46e5069cf4b543689fa1bbbfd88643e7e4862e205/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/env-flora-fungi-healthy/39aaee5b6855a6a21566f8e46e5069cf4b543689fa1bbbfd88643e7e4862e205/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/env-flora-fungi-healthy/39aaee5b6855a6a21566f8e46e5069cf4b543689fa1bbbfd88643e7e4862e205/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/env-flora-fungi-healthy/39aaee5b6855a6a21566f8e46e5069cf4b543689fa1bbbfd88643e7e4862e205/forge/work/env-flora-fungi-healthy/layout.json",
+        "role": "pose-config",
+        "sha256": "5d01a5f89e36af34f5cc6039ebac056ccc36559a9cd67f34379008541206b742"
+      },
+      {
+        "path": "blender/models/published/env-flora-fungi-healthy/39aaee5b6855a6a21566f8e46e5069cf4b543689fa1bbbfd88643e7e4862e205/forge/work/env-flora-fungi-healthy/layout/base.blend",
+        "role": "model",
+        "sha256": "6e6f61c998e5ebe41d119ec88fc5c30120eb25e8ebcb2931ee835b7b78032f20"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "footprint": [
+    1,
+    1
+  ],
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 64,
+        "y": 122
+      },
+      "file": "exports/env-flora-fungi-healthy/e7ed560fccb5a30b56811dd7d54bb23c8c972b91912522e25f5332c6645b9a6b/frames/shadow.png",
+      "id": "env-flora-fungi-healthy-shadow",
+      "layer": "shadow",
+      "sha256": "ba96008b756ef72cda3db3cad32b251e3aebcaede816491f7ab8efdd26d62a6e",
+      "sourceSize": {
+        "h": 128,
+        "w": 128
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 64,
+        "y": 122
+      },
+      "file": "exports/env-flora-fungi-healthy/e7ed560fccb5a30b56811dd7d54bb23c8c972b91912522e25f5332c6645b9a6b/frames/base.png",
+      "id": "env-flora-fungi-healthy-base",
+      "layer": "base",
+      "sha256": "5e945d2a33c84842acfa3776abf34de156c995cf0a91d803988aaf3e15951c30",
+      "sourceSize": {
+        "h": 128,
+        "w": 128
+      }
+    }
+  ],
+  "lightPools": [],
+  "packet": "art/review/2026-11-05-env-flora-fungi-healthy",
+  "packetDigest": "e7ed560fccb5a30b56811dd7d54bb23c8c972b91912522e25f5332c6645b9a6b",
+  "packetSha256": "99472a31ad8c594b32ec22b41bab004c52720db38297397dc7340177a7360fab",
+  "schemaVersion": 1,
+  "scope": [
+    "shadow",
+    "base"
+  ]
+}

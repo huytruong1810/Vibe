@@ -1,0 +1,121 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/env-flora-ashgrass-burnt--2026-11-05-env-flora-ashgrass-burnt.md",
+  "approvalSha256": "e02a459c984e37180975c6d1d98bcb8628e466ebbda321f66b6153b68e33e995",
+  "asset": "env:flora-ashgrass-burnt",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset env:flora-ashgrass-burnt",
+    "id": "forge-env-flora-ashgrass-burnt",
+    "inputs": [
+      {
+        "path": "blender/models/published/env-flora-ashgrass-burnt/fe1427d6f0d65e18ec528e0e179ed22558da87f8d185cc96f5163f1f1b7cb1c2/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/env-flora-ashgrass-burnt/fe1427d6f0d65e18ec528e0e179ed22558da87f8d185cc96f5163f1f1b7cb1c2/forge/blender/env_layout.py",
+        "role": "script",
+        "sha256": "b2fa291498b97eb55fc8450d37b55208b1d22550aa81a70b6c8c06d9cc08388b"
+      },
+      {
+        "path": "blender/models/published/env-flora-ashgrass-burnt/fe1427d6f0d65e18ec528e0e179ed22558da87f8d185cc96f5163f1f1b7cb1c2/forge/forge.py",
+        "role": "script",
+        "sha256": "72344e74be14dd4324bbc2a158d9c160ff2dfbdfc1325d5166dc5baa5fb6b531"
+      },
+      {
+        "path": "blender/models/published/env-flora-ashgrass-burnt/fe1427d6f0d65e18ec528e0e179ed22558da87f8d185cc96f5163f1f1b7cb1c2/forge/forgelib/environment.py",
+        "role": "script",
+        "sha256": "4b3443c051f8076ebdc9abd18152831dfbfe74c0053e7c4622ef3d7f483e397c"
+      },
+      {
+        "path": "blender/models/published/env-flora-ashgrass-burnt/fe1427d6f0d65e18ec528e0e179ed22558da87f8d185cc96f5163f1f1b7cb1c2/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/env-flora-ashgrass-burnt/fe1427d6f0d65e18ec528e0e179ed22558da87f8d185cc96f5163f1f1b7cb1c2/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "2963b6c95098f03aadf7fffe21507c8b3aa6b4fb4d13e657a9b7921e761ba629"
+      },
+      {
+        "path": "blender/models/published/env-flora-ashgrass-burnt/fe1427d6f0d65e18ec528e0e179ed22558da87f8d185cc96f5163f1f1b7cb1c2/forge/recipes/env-flora-ashgrass-burnt.json",
+        "role": "pose-config",
+        "sha256": "024c40a0e3a54f89d1eb1666cd1a002f729e55b6fcaa591edbbaa1d3dbe3024d"
+      },
+      {
+        "path": "blender/models/published/env-flora-ashgrass-burnt/fe1427d6f0d65e18ec528e0e179ed22558da87f8d185cc96f5163f1f1b7cb1c2/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/env-flora-ashgrass-burnt/fe1427d6f0d65e18ec528e0e179ed22558da87f8d185cc96f5163f1f1b7cb1c2/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/env-flora-ashgrass-burnt/fe1427d6f0d65e18ec528e0e179ed22558da87f8d185cc96f5163f1f1b7cb1c2/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/env-flora-ashgrass-burnt/fe1427d6f0d65e18ec528e0e179ed22558da87f8d185cc96f5163f1f1b7cb1c2/forge/work/env-flora-ashgrass-burnt/layout.json",
+        "role": "pose-config",
+        "sha256": "705ec917c803906d2880757c45dd106cce06ddb32b26d1c5cb6f338884b49b3d"
+      },
+      {
+        "path": "blender/models/published/env-flora-ashgrass-burnt/fe1427d6f0d65e18ec528e0e179ed22558da87f8d185cc96f5163f1f1b7cb1c2/forge/work/env-flora-ashgrass-burnt/layout/base.blend",
+        "role": "model",
+        "sha256": "53be2a30569da9e3a6454759356b2b299488f7415a168d62829398aa60b1297f"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "footprint": [
+    1,
+    1
+  ],
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 64,
+        "y": 112
+      },
+      "file": "exports/env-flora-ashgrass-burnt/e431f479f5ac134fe955ec51c195c18770ffccbc62dbc346750994985c8c3c02/frames/shadow.png",
+      "id": "env-flora-ashgrass-burnt-shadow",
+      "layer": "shadow",
+      "sha256": "acbf124cc35164a3c5d40fc5be8411af205eca3445ef339b33e9a49fa9df041f",
+      "sourceSize": {
+        "h": 120,
+        "w": 128
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 64,
+        "y": 112
+      },
+      "file": "exports/env-flora-ashgrass-burnt/e431f479f5ac134fe955ec51c195c18770ffccbc62dbc346750994985c8c3c02/frames/base.png",
+      "id": "env-flora-ashgrass-burnt-base",
+      "layer": "base",
+      "sha256": "fc2a217cd0d204dfeb82daf744900fa6b9ecba54050b01d6a5c33ae8252c8daf",
+      "sourceSize": {
+        "h": 120,
+        "w": 128
+      }
+    }
+  ],
+  "lightPools": [],
+  "packet": "art/review/2026-11-05-env-flora-ashgrass-burnt",
+  "packetDigest": "e431f479f5ac134fe955ec51c195c18770ffccbc62dbc346750994985c8c3c02",
+  "packetSha256": "5f1c2ff1818b0749bebc6f224ce98045b3332b1df9c7abb7b4ce77f15337cbeb",
+  "schemaVersion": 1,
+  "scope": [
+    "shadow",
+    "base"
+  ]
+}

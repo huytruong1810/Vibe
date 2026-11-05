@@ -1,0 +1,45 @@
+{
+  "asset": "env:flora-wheat-healthy",
+  "stage": "layout",
+  "inputsDigest": "c431677e2f854706ee602e0a80d636e14bc558f0f7ecbd571e0a3914f6f5441e",
+  "inputs": [
+    "art/source/forge/work/env-flora-wheat-healthy/texture.blend",
+    "art/source/forge/work/env-flora-wheat-healthy/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-flora-wheat-healthy/layout/base.blend": "b07cf0f408bcf99eea781e784f3b323321b8257db8193956c60fca420f1872b6",
+    "art/source/forge/work/env-flora-wheat-healthy/layout_preview.png": "0357e88d5b5bbf086769d33b030b3594594be4abce30126d1cebec8ddf36d667"
+  },
+  "extra": {
+    "scale": 0.085896,
+    "heightUnits": 1.3513,
+    "contactDepthTiles": 1.145,
+    "footprint": [
+      1,
+      1
+    ],
+    "canvas": {
+      "size": [
+        64,
+        66
+      ],
+      "anchor": [
+        32,
+        61
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -0.5,
+      0.0
+    ],
+    "layers": [
+      "base"
+    ],
+    "faces": {
+      "base": 13999
+    }
+  },
+  "at": "2026-11-05T07:44:04Z"
+}

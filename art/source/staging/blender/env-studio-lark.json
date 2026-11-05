@@ -1,0 +1,141 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/env-studio-lark--2026-11-05-env-studio-lark.md",
+  "approvalSha256": "5e416766b388521dd4a9ab5700f2d608ed9e44518e2534eff94948725e8cd5ca",
+  "asset": "env:studio-lark",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset env:studio-lark",
+    "id": "forge-env-studio-lark",
+    "inputs": [
+      {
+        "path": "blender/models/published/env-studio-lark/3e1d8682ed7c1971af2a1bd64baa2394cdc6442b3a1460b25e9268cf29f9ca45/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/env-studio-lark/3e1d8682ed7c1971af2a1bd64baa2394cdc6442b3a1460b25e9268cf29f9ca45/forge/blender/env_layout.py",
+        "role": "script",
+        "sha256": "b2fa291498b97eb55fc8450d37b55208b1d22550aa81a70b6c8c06d9cc08388b"
+      },
+      {
+        "path": "blender/models/published/env-studio-lark/3e1d8682ed7c1971af2a1bd64baa2394cdc6442b3a1460b25e9268cf29f9ca45/forge/forge.py",
+        "role": "script",
+        "sha256": "72344e74be14dd4324bbc2a158d9c160ff2dfbdfc1325d5166dc5baa5fb6b531"
+      },
+      {
+        "path": "blender/models/published/env-studio-lark/3e1d8682ed7c1971af2a1bd64baa2394cdc6442b3a1460b25e9268cf29f9ca45/forge/forgelib/environment.py",
+        "role": "script",
+        "sha256": "4b3443c051f8076ebdc9abd18152831dfbfe74c0053e7c4622ef3d7f483e397c"
+      },
+      {
+        "path": "blender/models/published/env-studio-lark/3e1d8682ed7c1971af2a1bd64baa2394cdc6442b3a1460b25e9268cf29f9ca45/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/env-studio-lark/3e1d8682ed7c1971af2a1bd64baa2394cdc6442b3a1460b25e9268cf29f9ca45/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "2963b6c95098f03aadf7fffe21507c8b3aa6b4fb4d13e657a9b7921e761ba629"
+      },
+      {
+        "path": "blender/models/published/env-studio-lark/3e1d8682ed7c1971af2a1bd64baa2394cdc6442b3a1460b25e9268cf29f9ca45/forge/recipes/env-studio-lark.json",
+        "role": "pose-config",
+        "sha256": "182ff80dde81fa1915e4de4107638cacf39153830d6f1cb278e797863b96d3dc"
+      },
+      {
+        "path": "blender/models/published/env-studio-lark/3e1d8682ed7c1971af2a1bd64baa2394cdc6442b3a1460b25e9268cf29f9ca45/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/env-studio-lark/3e1d8682ed7c1971af2a1bd64baa2394cdc6442b3a1460b25e9268cf29f9ca45/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/env-studio-lark/3e1d8682ed7c1971af2a1bd64baa2394cdc6442b3a1460b25e9268cf29f9ca45/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/env-studio-lark/3e1d8682ed7c1971af2a1bd64baa2394cdc6442b3a1460b25e9268cf29f9ca45/forge/work/env-studio-lark/layout.json",
+        "role": "pose-config",
+        "sha256": "aee39cfeec755fab15f64d3ad389e4a53fbc4e7f92477a87c7fa302fc0e2801d"
+      },
+      {
+        "path": "blender/models/published/env-studio-lark/3e1d8682ed7c1971af2a1bd64baa2394cdc6442b3a1460b25e9268cf29f9ca45/forge/work/env-studio-lark/layout/base.blend",
+        "role": "model",
+        "sha256": "d46a847e59916b9b7425129acbc3be2b21109620869daa1596866a2df2e85c06"
+      },
+      {
+        "path": "blender/models/published/env-studio-lark/3e1d8682ed7c1971af2a1bd64baa2394cdc6442b3a1460b25e9268cf29f9ca45/forge/work/env-studio-lark/layout/roof.blend",
+        "role": "model",
+        "sha256": "1567671e4f62d9f91c4213870b2cfede248075fad865647675360c10d5bb6519"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "footprint": [
+    3,
+    3
+  ],
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 128,
+        "y": 290
+      },
+      "file": "exports/env-studio-lark/5170d53d035441c95bd79cdc5d66efdbdc5277f33c9c3a00aaec7213a32a1569/frames/shadow.png",
+      "id": "env-studio-lark-shadow",
+      "layer": "shadow",
+      "sha256": "3b981c4619952815a8f19232c17063e4ed6c6c191b8178bbb9f849807730d3cb",
+      "sourceSize": {
+        "h": 300,
+        "w": 256
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 128,
+        "y": 290
+      },
+      "file": "exports/env-studio-lark/5170d53d035441c95bd79cdc5d66efdbdc5277f33c9c3a00aaec7213a32a1569/frames/base.png",
+      "id": "env-studio-lark-base",
+      "layer": "base",
+      "sha256": "0e9bb460f970832220df058b023568d7f2a04a7b8f724cd95b096f68ce6f5612",
+      "sourceSize": {
+        "h": 300,
+        "w": 256
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 128,
+        "y": 290
+      },
+      "file": "exports/env-studio-lark/5170d53d035441c95bd79cdc5d66efdbdc5277f33c9c3a00aaec7213a32a1569/frames/roof.png",
+      "id": "env-studio-lark-roof",
+      "layer": "roof",
+      "sha256": "3fe81901cb90af9dc607c4f5828d7df83fd77fdb4a5225c13c2fa6c8fc6ef7dd",
+      "sourceSize": {
+        "h": 300,
+        "w": 256
+      }
+    }
+  ],
+  "lightPools": [],
+  "packet": "art/review/2026-11-05-env-studio-lark",
+  "packetDigest": "5170d53d035441c95bd79cdc5d66efdbdc5277f33c9c3a00aaec7213a32a1569",
+  "packetSha256": "94464c6bea6b6bce249e0f3f1f13165ef8a50ee6daba79748fe0d71e28dcaae6",
+  "schemaVersion": 1,
+  "scope": [
+    "shadow",
+    "base",
+    "roof"
+  ]
+}

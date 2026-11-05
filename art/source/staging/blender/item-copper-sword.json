@@ -7,79 +7,79 @@
     "id": "forge-item-copper-sword",
     "inputs": [
       {
-        "path": "blender/models/published/item-copper-sword/a3526bee242110b0ea4f131db9488e4d87925a0c4d7050302cfea7a98cbc84ea/forge/blender/bake.py",
+        "path": "blender/models/published/item-copper-sword/c9160c082e05cb6808d01021ffd9a7f47e6e9ab8071cc8b432f74c42ba69ddc0/forge/blender/bake.py",
         "role": "script",
         "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
       },
       {
-        "path": "blender/models/published/item-copper-sword/a3526bee242110b0ea4f131db9488e4d87925a0c4d7050302cfea7a98cbc84ea/forge/blender/item_orient.py",
+        "path": "blender/models/published/item-copper-sword/c9160c082e05cb6808d01021ffd9a7f47e6e9ab8071cc8b432f74c42ba69ddc0/forge/blender/item_orient.py",
         "role": "script",
-        "sha256": "a68d9fcfc9cae6f56c882c76e9e294d3c24bd02fb7826d9da3eaa086b7de362f"
+        "sha256": "8a27e1389c7bf96b9a6e47aa80a7e7d3af1caf5310cdad402bd81c17a1238599"
       },
       {
-        "path": "blender/models/published/item-copper-sword/a3526bee242110b0ea4f131db9488e4d87925a0c4d7050302cfea7a98cbc84ea/forge/forge.py",
+        "path": "blender/models/published/item-copper-sword/c9160c082e05cb6808d01021ffd9a7f47e6e9ab8071cc8b432f74c42ba69ddc0/forge/forge.py",
         "role": "script",
-        "sha256": "7ba07e846a522d199a522a011cfb1f87d35b47233bcb33aaeb9cb27e09644319"
+        "sha256": "72344e74be14dd4324bbc2a158d9c160ff2dfbdfc1325d5166dc5baa5fb6b531"
       },
       {
-        "path": "blender/models/published/item-copper-sword/a3526bee242110b0ea4f131db9488e4d87925a0c4d7050302cfea7a98cbc84ea/forge/forgelib/item_orient.py",
+        "path": "blender/models/published/item-copper-sword/c9160c082e05cb6808d01021ffd9a7f47e6e9ab8071cc8b432f74c42ba69ddc0/forge/forgelib/item_orient.py",
         "role": "script",
-        "sha256": "03534083c34c47428d83b477a4e98678e6e547ef21b9a65b751d508a0e164600"
+        "sha256": "ed949856992b519c0af5631cb748405adae566fee90bc5bb4e9f999f912e476d"
       },
       {
-        "path": "blender/models/published/item-copper-sword/a3526bee242110b0ea4f131db9488e4d87925a0c4d7050302cfea7a98cbc84ea/forge/forgelib/item_render.py",
+        "path": "blender/models/published/item-copper-sword/c9160c082e05cb6808d01021ffd9a7f47e6e9ab8071cc8b432f74c42ba69ddc0/forge/forgelib/item_render.py",
         "role": "script",
         "sha256": "3290c864b563263170efcc626acce2a1dc88141d320d9cf186f5bc48b3e6f2d0"
       },
       {
-        "path": "blender/models/published/item-copper-sword/a3526bee242110b0ea4f131db9488e4d87925a0c4d7050302cfea7a98cbc84ea/forge/forgelib/items.py",
+        "path": "blender/models/published/item-copper-sword/c9160c082e05cb6808d01021ffd9a7f47e6e9ab8071cc8b432f74c42ba69ddc0/forge/forgelib/items.py",
         "role": "script",
         "sha256": "22221017285c31c893c28260a13caf407e646913c63e32ad723c8671f1a9d84c"
       },
       {
-        "path": "blender/models/published/item-copper-sword/a3526bee242110b0ea4f131db9488e4d87925a0c4d7050302cfea7a98cbc84ea/forge/forgelib/pixelize.py",
+        "path": "blender/models/published/item-copper-sword/c9160c082e05cb6808d01021ffd9a7f47e6e9ab8071cc8b432f74c42ba69ddc0/forge/forgelib/pixelize.py",
         "role": "script",
         "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
       },
       {
-        "path": "blender/models/published/item-copper-sword/a3526bee242110b0ea4f131db9488e4d87925a0c4d7050302cfea7a98cbc84ea/forge/forgelib/publish.py",
+        "path": "blender/models/published/item-copper-sword/c9160c082e05cb6808d01021ffd9a7f47e6e9ab8071cc8b432f74c42ba69ddc0/forge/forgelib/publish.py",
         "role": "script",
-        "sha256": "7c2e7b1994f6c5f8cb4c00bb8bf92f8078a8e7aa1ce405f18f5541e9aaf8452e"
+        "sha256": "2963b6c95098f03aadf7fffe21507c8b3aa6b4fb4d13e657a9b7921e761ba629"
       },
       {
-        "path": "blender/models/published/item-copper-sword/a3526bee242110b0ea4f131db9488e4d87925a0c4d7050302cfea7a98cbc84ea/forge/recipes/item-copper-sword.json",
+        "path": "blender/models/published/item-copper-sword/c9160c082e05cb6808d01021ffd9a7f47e6e9ab8071cc8b432f74c42ba69ddc0/forge/recipes/item-copper-sword.json",
         "role": "pose-config",
-        "sha256": "71c1d7b2d0c12b847c9e717dd9e7a5d89ab411a70cb2541f6b62a1235b7b9810"
+        "sha256": "65fcf2aff6067233750aff80025616fa835c7f098606b73dceac7428cb695418"
       },
       {
-        "path": "blender/models/published/item-copper-sword/a3526bee242110b0ea4f131db9488e4d87925a0c4d7050302cfea7a98cbc84ea/forge/spec/palette.json",
+        "path": "blender/models/published/item-copper-sword/c9160c082e05cb6808d01021ffd9a7f47e6e9ab8071cc8b432f74c42ba69ddc0/forge/spec/palette.json",
         "role": "palette",
         "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
       },
       {
-        "path": "blender/models/published/item-copper-sword/a3526bee242110b0ea4f131db9488e4d87925a0c4d7050302cfea7a98cbc84ea/forge/spec/render_spec.json",
+        "path": "blender/models/published/item-copper-sword/c9160c082e05cb6808d01021ffd9a7f47e6e9ab8071cc8b432f74c42ba69ddc0/forge/spec/render_spec.json",
         "role": "pose-config",
         "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
       },
       {
-        "path": "blender/models/published/item-copper-sword/a3526bee242110b0ea4f131db9488e4d87925a0c4d7050302cfea7a98cbc84ea/forge/uv.lock",
+        "path": "blender/models/published/item-copper-sword/c9160c082e05cb6808d01021ffd9a7f47e6e9ab8071cc8b432f74c42ba69ddc0/forge/uv.lock",
         "role": "dependency-lock",
         "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
       },
       {
-        "path": "blender/models/published/item-copper-sword/a3526bee242110b0ea4f131db9488e4d87925a0c4d7050302cfea7a98cbc84ea/forge/work/item-copper-sword/item_model.blend",
+        "path": "blender/models/published/item-copper-sword/c9160c082e05cb6808d01021ffd9a7f47e6e9ab8071cc8b432f74c42ba69ddc0/forge/work/item-copper-sword/item_model.blend",
         "role": "model",
-        "sha256": "90802dcae514fe40263f43d9be8b2475b161d43e8fedd484b05f52ee3c93bbc0"
+        "sha256": "71ac23e71fab00ce32841a640dc415f6ec3ee53d1d5f3d20c187b481a1b852ab"
       },
       {
-        "path": "blender/models/published/item-copper-sword/a3526bee242110b0ea4f131db9488e4d87925a0c4d7050302cfea7a98cbc84ea/forge/work/item-copper-sword/orient.json",
+        "path": "blender/models/published/item-copper-sword/c9160c082e05cb6808d01021ffd9a7f47e6e9ab8071cc8b432f74c42ba69ddc0/forge/work/item-copper-sword/orient.json",
         "role": "pose-config",
-        "sha256": "6c9d08b2effdc7d37a88a139b82b90c8f07d7b58d8dfb1b73de669356ac89ed8"
+        "sha256": "899033bfaaa370cd3ed1252b3217928e47f091f7836ff7cb9c854baeeac17321"
       },
       {
-        "path": "blender/models/published/item-copper-sword/a3526bee242110b0ea4f131db9488e4d87925a0c4d7050302cfea7a98cbc84ea/forge/work/item-copper-sword/orient_params.json",
+        "path": "blender/models/published/item-copper-sword/c9160c082e05cb6808d01021ffd9a7f47e6e9ab8071cc8b432f74c42ba69ddc0/forge/work/item-copper-sword/orient_params.json",
         "role": "pose-config",
-        "sha256": "4e8b0f71cdfe2483711cb3e5cb9b1467c8cf76490c6db0cab633b2fa2075041f"
+        "sha256": "5b27861c4d11bb7c33eac0f89448f96e65dfcc0153985e3497057a0d6b403e64"
       }
     ],
     "method": "blender-bake",

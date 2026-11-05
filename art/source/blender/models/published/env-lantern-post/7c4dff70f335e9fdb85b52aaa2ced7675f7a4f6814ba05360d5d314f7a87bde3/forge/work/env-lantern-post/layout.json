@@ -1,0 +1,45 @@
+{
+  "asset": "env:lantern-post",
+  "stage": "layout",
+  "inputsDigest": "d577fff2637e63906a3d9ec48595b8cf66a3da315481d3eb63b7418d05453e08",
+  "inputs": [
+    "art/source/forge/work/env-lantern-post/texture.blend",
+    "art/source/forge/work/env-lantern-post/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-lantern-post/layout/base.blend": "f5e5f6e932603ef9170133caf669c82595f6bf228ba6a21623fe9833244c00cb",
+    "art/source/forge/work/env-lantern-post/layout_preview.png": "70974a81a444a15682f43ba858efea8869f588ff08f6384bb1fd18d9e4f39db2"
+  },
+  "extra": {
+    "scale": 0.289259,
+    "heightUnits": 5.2301,
+    "contactDepthTiles": 1.018,
+    "footprint": [
+      1,
+      1
+    ],
+    "canvas": {
+      "size": [
+        96,
+        182
+      ],
+      "anchor": [
+        48,
+        178
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -0.5,
+      0.0
+    ],
+    "layers": [
+      "base"
+    ],
+    "faces": {
+      "base": 14000
+    }
+  },
+  "at": "2026-11-05T10:39:01Z"
+}

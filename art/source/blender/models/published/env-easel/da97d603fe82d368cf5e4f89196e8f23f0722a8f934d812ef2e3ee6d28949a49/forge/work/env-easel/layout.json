@@ -1,0 +1,45 @@
+{
+  "asset": "env:easel",
+  "stage": "layout",
+  "inputsDigest": "9d349c46047455d9cb51c78556d5cc6c6aa4cb0b2b25136c8799833a8a45dd1f",
+  "inputs": [
+    "art/source/forge/work/env-easel/texture.blend",
+    "art/source/forge/work/env-easel/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-easel/layout/base.blend": "07cecb1eef6557ba121d75f1397d6a00c7b7e5def3669e65d385ce95be0965c9",
+    "art/source/forge/work/env-easel/layout_preview.png": "c178dd75f18d1cbb4e39b6cfb15e37cc058f881ad0611b48536206efb7fc9058"
+  },
+  "extra": {
+    "scale": 0.103968,
+    "heightUnits": 1.843,
+    "contactDepthTiles": 0.819,
+    "footprint": [
+      1,
+      1
+    ],
+    "canvas": {
+      "size": [
+        64,
+        76
+      ],
+      "anchor": [
+        32,
+        72
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -0.5,
+      0.0
+    ],
+    "layers": [
+      "base"
+    ],
+    "faces": {
+      "base": 14000
+    }
+  },
+  "at": "2026-11-05T11:15:42Z"
+}

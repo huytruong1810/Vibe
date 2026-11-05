@@ -1,0 +1,45 @@
+{
+  "asset": "env:ferry-landing",
+  "stage": "layout",
+  "inputsDigest": "13fb05a339d6f1236c960665a1a4c69ff887f4032cf592c4d8c8fc3a0a5f30e3",
+  "inputs": [
+    "art/source/forge/work/env-ferry-landing/texture.blend",
+    "art/source/forge/work/env-ferry-landing/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-ferry-landing/layout/base.blend": "4b2d0365bd21fb48c90bf9c415a12320c085df63df578249538f2f4b260e4180",
+    "art/source/forge/work/env-ferry-landing/layout_preview.png": "aea7106352e506e8e0c77601082d4079a143ee92f61fd481a827272eab021964"
+  },
+  "extra": {
+    "scale": 0.138703,
+    "heightUnits": 2.2036,
+    "contactDepthTiles": 2.052,
+    "footprint": [
+      2,
+      2
+    ],
+    "canvas": {
+      "size": [
+        96,
+        120
+      ],
+      "anchor": [
+        48,
+        116
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -1.0,
+      0.0
+    ],
+    "layers": [
+      "base"
+    ],
+    "faces": {
+      "base": 14000
+    }
+  },
+  "at": "2026-11-05T11:40:36Z"
+}

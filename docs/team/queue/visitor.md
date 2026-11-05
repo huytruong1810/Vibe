@@ -35,7 +35,7 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
 
 ### V9 · `C34` Fixed-domain hybrid retrieval & commitment pinning in `docs/engineering/memory-and-context.md` + `npm run test:villagers`
 
-- status: in-progress (priority 2 engineering — claimed in `docs/team/queue/codex.md` as `status: in-progress (visitor)`)
+- status: candidate (2026-11-05, visitor — updated `docs/engineering/memory-and-context.md` §3.2/§3.3/§4, implemented Stage-1 commitment/relationship pinning + Stage-2 fixed-domain `0.35/0.35/0.65` scoring + `cos >= 0.30` floor + `extractionCandidates` in `src/domain/agents.ts`, added M1–M5 evaluation harness in `scripts/verify-villagers.ts`, and verified 8/8 unit tests in `tests/agents.test.ts`)
 - goal: update `docs/engineering/memory-and-context.md` §3.3 for Proposal `005` (`C34`) and add the `npm run test:villagers` (M1–M5) evaluation harness and tests.
 - inputs: `docs/team/queue/codex.md` (`C34`), `docs/team/proposals/005-villager-model-tiers-and-eval-gate.md`, `docs/engineering/memory-and-context.md`, `src/domain/agents.ts`, `tests/agents.test.ts`.
 - work:
@@ -43,7 +43,7 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
   2. Update `docs/engineering/memory-and-context.md` §3.3 with two-stage deterministic commitment/relationship pinning (in both retrieval and session-end `ADD/UPDATE/INVALIDATE` extraction) and fixed-domain scoring (`0.35 * Recency + 0.35 * Importance + 0.65 * Relevance`, `cos >= 0.30` threshold, passive retrieval reads do not reset `createdAtTick`).
   3. Once Codex's branch merge lands on `studio/doctrine-v1`, write failing unit tests in `tests/agents.test.ts` and align `src/domain/agents.ts` retrieval/extraction + `scripts/` / `tests/` for `test:villagers` (M1–M5).
 - done when: `docs/engineering/memory-and-context.md` §3.3 is updated, unit tests and `npm run check` pass, and changes are pushed
-- evidence:
+- evidence: `docs/engineering/memory-and-context.md`; `src/domain/agents.ts`; `scripts/verify-villagers.ts`; `tests/agents.test.ts` (8/8 passing).
 
 ### V10 · `C35` Commercial status enforcement in `forge.py doctor` (`forgelib/core.py` & `forge.py`)
 
@@ -59,7 +59,7 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
 
 ### V11 · `C3g` Follow-ups: Alpha bounding-box sprite trimming, frame dedup, and review-clip exclusion (Proposal `007` Part 1)
 
-- status: open (priority 4 engineering — handoff from Claude `2026-11-05T0625`; coordinate with Codex's `M25/C3b` merge first)
+- status: partial (2026-11-05, visitor: gallery Atlas tab now lists every page with decoded-MiB total, budget written in `docs/engineering/hd-presentation.md`; still open: alpha-trim, frame dedup, review-clip exclusion in `scripts/assets-build.ts`/`renderer.ts`, which need failing tests and an `assets:build` run first)
 - goal: keep decoded RGBA atlas memory within the 128 MiB Low / 256 MiB Balanced GPU budgets as all 19 Aqualia actors integrate in `M25`.
 - inputs: `docs/team/proposals/007-atlas-trimming-and-visual-readability-gates.md` (Part 1), `scripts/assets-build.ts`, `src/presentation/renderer.ts`, `tests/assets-v2.test.ts`.
 - work:
@@ -73,7 +73,7 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
 
 ### V12 · `C17` Artifact item-class tests & `C32-worldforge` compare (delegated by Claude `2026-11-05T0625`)
 
-- status: open (priority 5 engineering)
+- status: candidate (2026-11-05, visitor — `src/domain/artifacts.ts` + `tests/artifacts.test.ts` 5/5; `tools/worldforge_compare.py` + selftest 1/1; wiring into worldforge render left to codex)
 - goal: complete the delegated `C17` item-class unit/round-trip tests and `worldforge compare` tooling listed in `docs/team/comms/claude/2026-11-05T0625--to-visitor--engineering-lane-granted.md`.
 - inputs: `docs/team/comms/claude/2026-11-05T0625--to-visitor--engineering-lane-granted.md`, `docs/engineering/authored-artifacts.md`, `tests/`.
 - done when: tests and tool checks pass in `npm run check`
@@ -90,7 +90,7 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
 
 ### V5 · Audit and decide `B29` (C3b creature face sidecars for 8 creatures + re-bound `npc:oren`/`npc:reed` faces)
 
-- status: in-progress (**initial 8 creature face packets decided (`rivallie`, `bramblefang`, `mireling` `director-approved`; 5 `changes-requested`)**; waiting on `blender` to re-run `forge.py faces` on the 5 creatures + re-bind `rivallie`, `bramblefang`, `mireling`, `npc:oren`, and `npc:reed` to their `2026-11-05` body digests)
+- status: done (2026-11-05: all 10 `B29` face packets `director-approved` after PRD-5 inspection of `registered.png` and hard QA in `faces.json`, on the director's instruction; records are `docs/team/comms/director/approvals/*faces-{530d9980cd71,0ebb7e1031f3,33befc31258d,772a2fb440e1,95948f6a2416,298b0b5ff39e,c2f18a05c6ca,d86e98622329,c81fe80f2503,439e13321a12}.md`; blender can run `publish --faces`)
 - goal: inspect `contact.png` and `registered.png` (`PRD-5`) for each updated face packet and record decisions via `forge.py approve-record`.
 - done when: all 8 T0 species and 11 humans have approved C3b face sidecars bound to their latest approved body digests and staged via `publish --faces`
 - evidence: docs/team/comms/director/approvals/{rivallie--2026-11-05-rivallie-faces-26d6823a60de,bramblefang--2026-11-05-bramblefang-faces-e4615567901f,mireling--2026-11-05-mireling-faces-dd867942c9f2,steamshell--2026-11-05-steamshell-faces-0dce8f2a1ee7,ignicap--2026-11-05-ignicap-faces-b697f6962d69,zephyrit--2026-11-05-zephyrit-faces-24bbc81717f6,cindermoth--2026-11-05-cindermoth-faces-676432066d2a,marshstalker--2026-11-05-marshstalker-faces-b6801512aa14}.md.
@@ -104,7 +104,7 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
 
 ### V7 · Audit and decide `B24` (18 flora state sprites) and `B26` (worldforge map dressing)
 
-- status: open (waits on `blender` `B24`, `B26`; note that `B25` portraits after `visitor` implements `C33` are decided by `communicator` or `claude` per `TEAM-4.2` rule 5)
+- status: open (NEXT, top of the visitor queue: blender's `B24` flora packets (`art/review/2026-11-05-env-flora-*`), `B5` (18 landmarks) and `B18` (4 display furniture) are `candidate` and waiting; `B26` still waits on blender; `B25` portraits are decided by `communicator` or `claude` per `TEAM-4.2` rule 5. Order and context: `docs/team/comms/visitor/2026-11-05T1330--to-all--handoff-beta-wiring-path.md`)
 - goal: inspect and decide the 3-state flora sprites (`B24`) and dressed Aqualia level packets (`B26`).
 - done when: `B24` and `B26` packets are audited and decided
 - evidence:

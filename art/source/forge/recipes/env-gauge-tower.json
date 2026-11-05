@@ -1,0 +1,40 @@
+{
+  "asset": "env:gauge-tower",
+  "kind": "environment",
+  "ramps": {
+    "walls": "timber",
+    "roof": "teal",
+    "trim": "wood",
+    "metal": "copper"
+  },
+  "gen3d": {
+    "seed": 2011,
+    "steps": 50,
+    "views": [
+      "front",
+      "left"
+    ]
+  },
+  "environment": {
+    "footprint": [
+      2,
+      2
+    ],
+    "split": {
+      "layer": "roof",
+      "aboveFraction": 0.6
+    },
+    "contactShadow": true
+  },
+  "concept": {
+    "template": "building-v1",
+    "fields": {
+      "building": "Caelum's water-height observation tower",
+      "region": "Aqualia Village & Riverlands",
+      "description": "tall slender stone and timber observation tower with calibrated depth gauge",
+      "materials": "stone base, timber tower, copper conical roof"
+    },
+    "references": []
+  },
+  "notes": "AQ-2 Landmark/Kit prop (B5). 2x2 footprint."
+}

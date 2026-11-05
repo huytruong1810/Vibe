@@ -1,0 +1,121 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/env-flora-wheat-healthy--2026-11-05-env-flora-wheat-healthy.md",
+  "approvalSha256": "516dc1085e022b342f3ed66b95147378b3351174b14fb2f86b463f8f7438239a",
+  "asset": "env:flora-wheat-healthy",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset env:flora-wheat-healthy",
+    "id": "forge-env-flora-wheat-healthy",
+    "inputs": [
+      {
+        "path": "blender/models/published/env-flora-wheat-healthy/dfa396bb1027f1180cd4ed30676319201a5206df8bba285648ebb781ede06202/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/env-flora-wheat-healthy/dfa396bb1027f1180cd4ed30676319201a5206df8bba285648ebb781ede06202/forge/blender/env_layout.py",
+        "role": "script",
+        "sha256": "b2fa291498b97eb55fc8450d37b55208b1d22550aa81a70b6c8c06d9cc08388b"
+      },
+      {
+        "path": "blender/models/published/env-flora-wheat-healthy/dfa396bb1027f1180cd4ed30676319201a5206df8bba285648ebb781ede06202/forge/forge.py",
+        "role": "script",
+        "sha256": "72344e74be14dd4324bbc2a158d9c160ff2dfbdfc1325d5166dc5baa5fb6b531"
+      },
+      {
+        "path": "blender/models/published/env-flora-wheat-healthy/dfa396bb1027f1180cd4ed30676319201a5206df8bba285648ebb781ede06202/forge/forgelib/environment.py",
+        "role": "script",
+        "sha256": "4b3443c051f8076ebdc9abd18152831dfbfe74c0053e7c4622ef3d7f483e397c"
+      },
+      {
+        "path": "blender/models/published/env-flora-wheat-healthy/dfa396bb1027f1180cd4ed30676319201a5206df8bba285648ebb781ede06202/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/env-flora-wheat-healthy/dfa396bb1027f1180cd4ed30676319201a5206df8bba285648ebb781ede06202/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "2963b6c95098f03aadf7fffe21507c8b3aa6b4fb4d13e657a9b7921e761ba629"
+      },
+      {
+        "path": "blender/models/published/env-flora-wheat-healthy/dfa396bb1027f1180cd4ed30676319201a5206df8bba285648ebb781ede06202/forge/recipes/env-flora-wheat-healthy.json",
+        "role": "pose-config",
+        "sha256": "4f555ca2e1f7d06569c5f08e7bedbf354da472ba97e6ffdd5309e1016095c6d6"
+      },
+      {
+        "path": "blender/models/published/env-flora-wheat-healthy/dfa396bb1027f1180cd4ed30676319201a5206df8bba285648ebb781ede06202/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/env-flora-wheat-healthy/dfa396bb1027f1180cd4ed30676319201a5206df8bba285648ebb781ede06202/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/env-flora-wheat-healthy/dfa396bb1027f1180cd4ed30676319201a5206df8bba285648ebb781ede06202/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/env-flora-wheat-healthy/dfa396bb1027f1180cd4ed30676319201a5206df8bba285648ebb781ede06202/forge/work/env-flora-wheat-healthy/layout.json",
+        "role": "pose-config",
+        "sha256": "12eb833c9b95491b410ab8b163de770df17b9baec974461a27c0608343a6298c"
+      },
+      {
+        "path": "blender/models/published/env-flora-wheat-healthy/dfa396bb1027f1180cd4ed30676319201a5206df8bba285648ebb781ede06202/forge/work/env-flora-wheat-healthy/layout/base.blend",
+        "role": "model",
+        "sha256": "b07cf0f408bcf99eea781e784f3b323321b8257db8193956c60fca420f1872b6"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "footprint": [
+    1,
+    1
+  ],
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 64,
+        "y": 122
+      },
+      "file": "exports/env-flora-wheat-healthy/a9a29bb2991d75d9f510eec63634eda6b538d1b778367cf0d96640f6173e8ba3/frames/shadow.png",
+      "id": "env-flora-wheat-healthy-shadow",
+      "layer": "shadow",
+      "sha256": "48efba5ce5af0f9795c0c4a3a038cb055e6336735c96f10d1a6db43af11df757",
+      "sourceSize": {
+        "h": 132,
+        "w": 128
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 64,
+        "y": 122
+      },
+      "file": "exports/env-flora-wheat-healthy/a9a29bb2991d75d9f510eec63634eda6b538d1b778367cf0d96640f6173e8ba3/frames/base.png",
+      "id": "env-flora-wheat-healthy-base",
+      "layer": "base",
+      "sha256": "15da75db0254f9f8b3db74fdf8d26cdc7ebfaf87c19aa05016bdd910d6ca0ced",
+      "sourceSize": {
+        "h": 132,
+        "w": 128
+      }
+    }
+  ],
+  "lightPools": [],
+  "packet": "art/review/2026-11-05-env-flora-wheat-healthy",
+  "packetDigest": "a9a29bb2991d75d9f510eec63634eda6b538d1b778367cf0d96640f6173e8ba3",
+  "packetSha256": "fcace9accd153ff21545b0dffc59be03354237d57268d1da38bd1a7120551f19",
+  "schemaVersion": 1,
+  "scope": [
+    "shadow",
+    "base"
+  ]
+}

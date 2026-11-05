@@ -1,0 +1,45 @@
+{
+  "asset": "env:fungi-ring",
+  "stage": "layout",
+  "inputsDigest": "7081fbe009bdaf7fa8f0852f86d48b9ebaf9a975ee288cdd096fda2911963546",
+  "inputs": [
+    "art/source/forge/work/env-fungi-ring/texture.blend",
+    "art/source/forge/work/env-fungi-ring/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-fungi-ring/layout/base.blend": "7a246516f8053b71ab10a0f271fb28621460cae066ab615e118596ef93da1ec0",
+    "art/source/forge/work/env-fungi-ring/layout_preview.png": "305abd1696f754ac42d8a2c80c548053c2a605a6ea76804438d5b7c00902b310"
+  },
+  "extra": {
+    "scale": 0.105479,
+    "heightUnits": 1.8826,
+    "contactDepthTiles": 2.025,
+    "footprint": [
+      2,
+      2
+    ],
+    "canvas": {
+      "size": [
+        96,
+        94
+      ],
+      "anchor": [
+        48,
+        90
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -1.0,
+      0.0
+    ],
+    "layers": [
+      "base"
+    ],
+    "faces": {
+      "base": 14000
+    }
+  },
+  "at": "2026-11-05T10:27:18Z"
+}

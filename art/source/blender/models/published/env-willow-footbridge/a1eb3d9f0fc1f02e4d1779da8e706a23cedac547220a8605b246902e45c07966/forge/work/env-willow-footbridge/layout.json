@@ -1,0 +1,45 @@
+{
+  "asset": "env:willow-footbridge",
+  "stage": "layout",
+  "inputsDigest": "5e840ee732d79e41b49b65b3147dd6d08e61951b75818801c8a2a8a60c99f1d0",
+  "inputs": [
+    "art/source/forge/work/env-willow-footbridge/texture.blend",
+    "art/source/forge/work/env-willow-footbridge/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-willow-footbridge/layout/base.blend": "07a773f9a2667168166b1cc612a0b5bcff30afcf9e3cfb6a9b23d520c8f38c7c",
+    "art/source/forge/work/env-willow-footbridge/layout_preview.png": "4e50f8fbb13c316ed55d890331418d040bc474951637867ad239fbfa26ff7c90"
+  },
+  "extra": {
+    "scale": 0.084475,
+    "heightUnits": 1.385,
+    "contactDepthTiles": 1.236,
+    "footprint": [
+      1,
+      1
+    ],
+    "canvas": {
+      "size": [
+        64,
+        66
+      ],
+      "anchor": [
+        32,
+        58
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -0.5,
+      0.0
+    ],
+    "layers": [
+      "base"
+    ],
+    "faces": {
+      "base": 13999
+    }
+  },
+  "at": "2026-11-05T11:42:33Z"
+}

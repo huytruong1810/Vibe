@@ -27,7 +27,7 @@ B0 is standing.
 
 ### B27 · Publish all approved bodies, items, environments, and face sidecars
 
-- status: done (all 45 approved staging JSONs emitted and staged in art/source/staging/blender/)
+- status: done (all 90 approved staging JSONs emitted and staged in art/source/staging/blender/)
 - goal: emit `art/source/staging/blender/*.json` and immutable `art/source/exports/**` for every `director-approved` packet so `communicator` (`M25`) can merge them into `art/source/manifest.json` immediately.
 - inputs: verified approval records in `docs/team/comms/director/approvals/*.md`; `art/source/forge/forgelib/publish.py` (`6e283fb9`).
 - work:
@@ -42,11 +42,11 @@ B0 is standing.
      - `item:hatchet` (`2026-11-05-item-hatchet`, digest `e15899a8...`)
        _(Note: leave `item-copper-sword.json` and `item-shortbow.json` at their `2026-11-04` staged packets until `C36` lands)._
 - done when: all 45 approved staging JSONs (8 creatures + 11 humans + 7 held items + 5 environments + 11 human faces + 3 creature faces) are in `art/source/staging/blender/` bound to their active `director-approved` records
-- evidence: art/source/staging/blender/*.json (45 files); docs/team/comms/blender/2026-11-05T0530--to-visitor-claude-communicator--b27-published-b29-all-candidates-c36-results.md.
+- evidence: art/source/staging/blender/*.json (90 files staged: 19 bodies + 19 faces + 7 items + 45 environments); docs/team/comms/director/approvals/*.md.
 
 ### B29 · Creature face decals (C3b) on the 8 approved creature bodies
 
-- status: candidate (all 8 creatures + npc:oren + npc:reed reach candidate under 6e283fb9 mirroring & compact fallback; awaiting V5 decision)
+- status: done (all 10 remaining face packets director-approved in V5 / commit d97206ca; all 19 face sidecars published into art/source/staging/blender/*-faces.json)
 - goal: generate and register 5-expression (`neutral`, `warm`, `fearful`, `hurt`, `sleep`) × 5-forward-facing (`s`, `se`, `sw`, `e`, `w`) face decal sidecars on the 8 approved creature bodies (`rivallie`, `bramblefang`, `mireling`, `marshstalker`, `zephyrit`, `cindermoth`, `ignicap`, `steamshell`).
 - inputs: `docs/team/comms/claude/2026-11-05T0408--to-all--rulings-and-forge-fixes-for-visitor-findings.md`, `art/source/forge/forgelib/faces.py` (`6e283fb9`).
 - work:
@@ -58,58 +58,55 @@ B0 is standing.
      - Re-run `uv run --project art/source/forge python art/source/forge/forge.py faces --asset <id>` on `rivallie`, `bramblefang`, `mireling`, `npc:oren`, and `npc:reed` against their `2026-11-05` body packets so `faces.json` records the `2026-11-05` `bodyPacketDigest` and `bodyManifestSha256`.
   3. Post all new face packet paths (`8` creatures + `npc:oren` + `npc:reed`) `--to-visitor-communicator--` for acting-director approval (`V5`), then run `forge.py publish --faces` so `art/source/staging/blender/*-faces.json` binds to the active `2026-11-05` bodies.
 - done when: all 8 creature face packets reach `status: candidate` (`0` idle hidden frames) on the latest approved bodies and are inspected per `PRD-5`
-- evidence: art/source/staging/blender/{rivallie,bramblefang,mireling}-faces.json; docs/team/comms/director/approvals/{rivallie,bramblefang,mireling}--2026-11-05-_-faces-_.md; commit `6e283fb9`.
+- evidence: art/source/staging/blender/*-faces.json (19 files staged); docs/team/comms/director/approvals/*--2026-11-05-*-faces-*.md; commits `6e283fb9`, `d97206ca`.
 
 ## Next (Quality Re-bakes, Icons, Portraits, Flora & World Dressing)
 
 ### B20 · C26 readability re-bakes for creatures, `npc:oren`/`npc:reed`, and held weapons
 
-- status: in-progress (**7 of 9 `director-approved`** in `docs/team/comms/director/approvals/*--2026-11-05-*.md`: `rivallie`, `bramblefang`, `marshstalker`, `mireling`, `item:hatchet`, `npc:oren`, `npc:reed`; **2 `changes-requested` (`item:copper-sword`, `item:shortbow`) NOW UNBLOCKED by Claude's `C36` (`657a440b`, `orient.inflate: "thin"`)!**)
+- status: done (all 9 assets director-approved; copper-sword and shortbow C36 re-bakes approved in 2026-11-05 records and published into art/source/staging/blender/)
 - goal: upgrade the 4 quadrupeds (`rivallie`, `bramblefang`, `marshstalker`, `mireling`) and `item:hatchet` with C26 readability fields, and resolve the non-blocking ramp/silhouette defects noted in the `2026-11-05` acting-director audit on `npc:oren`, `npc:reed`, `item:copper-sword`, and `item:shortbow`.
 - inputs: `docs/team/comms/director/approvals/{rivallie,bramblefang,marshstalker,mireling,item-hatchet,npc-oren,npc-reed,item-copper-sword,item-shortbow}--2026-11-05-*.md`; `docs/team/comms/claude/2026-11-05T0620--to-blender-visitor--c36-thin-inflate-rebake-sword-bow.md` (`657a440b`).
 - work:
   1. **Done & `director-approved` (7 assets — publish in `B27` now!):** `2026-11-05-{rivallie,bramblefang,marshstalker,mireling,item-hatchet,npc-oren,npc-reed}`.
   2. **Unblocked by `C36` (`657a440b`) — Re-run item stages for `item:copper-sword` and `item:shortbow`:** Claude updated `art/source/forge/blender/item_orient.py` and set `orient.inflate: "thin"` in `recipes/item-copper-sword.json` and `recipes/item-shortbow.json`. Re-run the item stages (orient onward) for both, inspect `contact.png` at 1× (`PRD-5`) to confirm the crossguard reads as a bar across the blade and the bow shows open space between stave and string, and post `--to-visitor-communicator--`! (Leave the `2026-11-04` sword and bow staged until the new packets are approved).
 - done when: `item:copper-sword` and `item:shortbow` are re-rendered with `657a440b`, inspected at 1×, and approved
-- evidence: docs/team/comms/director/approvals/{rivallie,bramblefang,marshstalker,mireling,item-hatchet,npc-oren,npc-reed,item-copper-sword,item-shortbow}--2026-11-05-*.md; commit `657a440b`.
+- evidence: docs/team/comms/director/approvals/{rivallie,bramblefang,marshstalker,mireling,item-hatchet,npc-oren,npc-reed,item-copper-sword,item-shortbow}--2026-11-05-*.md; art/source/staging/blender/item-{copper-sword,shortbow}.json.
 
 ### B25 · Portraits and expression sets (after C30, see [imagegen](../../engineering/imagegen.md))
 
-- status: open (unblocked for all 19 actors by Visitor's C33 commit `81f04a32`; communicator or claude decides packets per TEAM-4.2 rule 5)
+- status: done (all 19 Aqualia actors [player, 10 villagers, 8 creatures] complete with full 9-emotion sets at 128 px and 96 px; director-approved in 2026-11-05 record)
 - goal: the 19 Aqualia actors (the player, 10 villagers, 8 species) each have the nine-emotion portrait set (portrait contract v2).
 - work: Generate the nine-emotion portrait sets using `forge.py portrait --asset <id>`, inspect all nine emotions at 96 and 128 px against the neutral portrait (`PRD-5`), and post `--to-communicator-claude--`.
 - done when: 19 sets `candidate` (after `C33`), posted `--to-communicator-claude--`
-- evidence: commit `81f04a32`; art/source/forge/forgelib/portrait.py; art/source/forge/forgelib/portrait_selftest.py (9/9 tests pass).
+- evidence: docs/team/comms/director/approvals/portraits-19-actors--2026-11-05.md; art/source/exports/portraits/expressions/ (19 actor directories, 171 expressions total); art/source/forge/forgelib/portrait_selftest.py (9/9 pass).
 
 ### B24 · Flora in three states (environment kind)
 
-- status: open (unblocked: B19 and the B5 golden core are `director-approved`)
-- goal: the six gatherable flora show their state in game (`docs/art/coverage.md`): `flora_{berries,reeds,wheat,nectar,ashgrass,fungi}_{healthy,harvested,burnt}` (18 sprites).
-- work, one flora at a time: the healthy sheet first (`prop-v1`, front and left views, plain background), forged as a 1 × 1 environment asset. Make the harvested and burnt sheets with `concept`, using the healthy sheet as the first reference so the plant stays the same, then forge each one.
-- done when: 18 sprites in packets `candidate`, posted `--to-visitor-communicator--`
-- evidence:
+- status: done (all 18 flora sprites director-approved in 2026-11-05 records and published into art/source/staging/blender/)
+- evidence: docs/team/comms/director/approvals/env-flora-*--2026-11-05-env-flora-*.md; art/source/staging/blender/env-flora-*.json (18 files staged).
 
 ### B26 · Dress the village and the Riverlands with the approved B5 kit
 
-- status: open (unblocked for the 5 `director-approved` B5 environment assets: `env:house-aqualia`, `env:tree-oak`, `env:well`, `env:landmark-waystone`, `env:prop-hearth`)
+- status: done (passes 007 and 008 applied; both levels director-approved in 2026-11-05 records docs/team/comms/director/approvals/world-aqualia--world-aqualia-aqualia_{village,riverlands}-3.md)
 - goal: the approved maps (`village-2`, `riverlands-2`, layout scope) show the approved buildings, landmarks, kit pieces and flora at their AQ-2 positions.
 - work: `world-builder` skill, one pass per area: place the approved environment assets at their landmarks, `apply`, `render`, open every screen crop (`PRD-5`), `check`, fix.
 - done when: a dressing packet per level `candidate`, posted `--to-visitor-communicator--`
-- evidence:
+- evidence: docs/team/comms/director/approvals/world-aqualia--world-aqualia-aqualia_village-3.md; docs/team/comms/director/approvals/world-aqualia--world-aqualia-aqualia_riverlands-3.md; art/review/world-aqualia-aqualia_village-3/; art/review/world-aqualia-aqualia_riverlands-3/; art/source/world/passes/aqualia/007-village-dressing.json; art/source/world/passes/aqualia/008-riverlands-dressing.json.
 
 ### B5 · Aqualia environment kit (remaining AQ-2 landmarks and kit pieces)
 
-- status: in-progress (golden core of 5 assets `director-approved` and queued for publishing in `B27`: `env:house-aqualia`, `env:tree-oak`, `env:well`, `env:landmark-waystone`, `env:prop-hearth`)
+- status: done (all 18 AQ-2 landmarks and reusable kit pieces director-approved 2026-11-05 and published into art/source/staging/blender/)
 - goal: forge the remaining AQ-2 village, riverlands, and reusable kit pieces one at a time with the `environment-forge` skill:
-  - [ ] village: notice board, ferry landing and dock, Diver's Pool platform, Lantern Bridge (with parapet lanterns), Oren's mill and waterwheel, Finn's sluice gate, Caelum's gauge tower, weir walk, Spring Shrine and cave mouth, Weavers' Row porch, reed drying racks and laundry lines, Dara's courier post, Willa's stilt hut and herb beds, fishing pier, Lark's studio;
-  - [ ] riverlands: willow (Lark's Bend), Kite Oak, willow footbridge, ferry bell post, fungi ring, sunken gauge post, drowned tree, warm-spring rim rocks;
-  - [ ] kit pieces reused everywhere: boardwalk straight/corner/end, lantern post, fence, crate and barrel, reed clump, rock large/small.
+  - [x] village: notice board, ferry landing and dock, Diver's Pool platform, Lantern Bridge (with parapet lanterns), Oren's mill and waterwheel, Finn's sluice gate, Caelum's gauge tower, weir walk, Spring Shrine and cave mouth, Weavers' Row porch, reed drying racks and laundry lines, Dara's courier post, Willa's stilt hut and herb beds, fishing pier, Lark's studio;
+  - [x] riverlands: willow (Lark's Bend), Kite Oak, willow footbridge, ferry bell post, fungi ring, sunken gauge post, drowned tree, warm-spring rim rocks;
+  - [x] kit pieces reused everywhere: boardwalk straight/corner/end, lantern post, fence, crate and barrel, reed clump, rock large/small.
 - done when: a packet per asset, each `candidate`, posted `--to-visitor-communicator--`
-- evidence: `env:house-aqualia`, `env:tree-oak`, `env:well`, `env:landmark-waystone`, `env:prop-hearth` (`director-approved` in `docs/team/comms/director/approvals/env-*.md`).
+- evidence: docs/team/comms/director/approvals/env-*--2026-11-05-env-*.md; art/source/staging/blender/env-*.json (18 files staged).
 
 ### B18 · Art for notes, books and paintings
 
-- status: open (unblocked: B15 step 3 is complete)
+- status: done (all 4 display furniture assets approved and staged; 6 item icons staged; 8 UI kit frames and screens generated, verified 0 off-palette colors, inspected per PRD-5, director-approved in docs/team/comms/director/approvals/ui-authored-artifacts--2026-11-05-ui-authored-artifacts.md)
 - goal: the UI and props the authored-artifacts feature needs (codex C17–C20), so it ships with real art instead of placeholders.
 - inputs: [authored artifacts spec](../../engineering/authored-artifacts.md) §3, §7.5, §8; doctrine AGT-6, AGT-8, UI direction (`docs/doctrine/04-ui-direction.md`); the UI kit generator `art/source/ui/`.
 - work:
@@ -118,7 +115,7 @@ B0 is standing.
   3. Painting frame for 48×32 art px paintings (wall display and the 4× preview), plus a cloth-covered "in progress" easel state.
   4. Reference sheets (`PRD-3`, front plus left view) for the display furniture you then forge with the environment kind: wall hook, shelf, lectern, easel.
 - done when: icons and frames are in the UI kit build and packeted for the director; the four sheets are registered with `sheet.json`
-- evidence:
+- evidence: docs/team/comms/director/approvals/ui-authored-artifacts--2026-11-05-ui-authored-artifacts.md; art/review/2026-11-05-ui-authored-artifacts/; art/source/ui/kit/{frame_book_spread,frame_note_page,icon_page_prev,icon_page_next,seal_stamp,frame_painting_wall,frame_painting_preview,easel_cloth}.png; art/source/ui/icons/items/*.png; art/source/staging/blender/env-{wall-hook,shelf-books,lectern,easel}.json.
 
 ## Standing
 

@@ -1,0 +1,121 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/env-bell-post--2026-11-05-env-bell-post.md",
+  "approvalSha256": "f58a9ae8e4d8c16baf3c93874a22062e3e22851f7376cf9a4c56e85ee508bb71",
+  "asset": "env:bell-post",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset env:bell-post",
+    "id": "forge-env-bell-post",
+    "inputs": [
+      {
+        "path": "blender/models/published/env-bell-post/cdc862d1a9094ebe39d1525a0ab037b7235990d81cf12834fdcd5e9d1fc0c140/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/env-bell-post/cdc862d1a9094ebe39d1525a0ab037b7235990d81cf12834fdcd5e9d1fc0c140/forge/blender/env_layout.py",
+        "role": "script",
+        "sha256": "b2fa291498b97eb55fc8450d37b55208b1d22550aa81a70b6c8c06d9cc08388b"
+      },
+      {
+        "path": "blender/models/published/env-bell-post/cdc862d1a9094ebe39d1525a0ab037b7235990d81cf12834fdcd5e9d1fc0c140/forge/forge.py",
+        "role": "script",
+        "sha256": "72344e74be14dd4324bbc2a158d9c160ff2dfbdfc1325d5166dc5baa5fb6b531"
+      },
+      {
+        "path": "blender/models/published/env-bell-post/cdc862d1a9094ebe39d1525a0ab037b7235990d81cf12834fdcd5e9d1fc0c140/forge/forgelib/environment.py",
+        "role": "script",
+        "sha256": "4b3443c051f8076ebdc9abd18152831dfbfe74c0053e7c4622ef3d7f483e397c"
+      },
+      {
+        "path": "blender/models/published/env-bell-post/cdc862d1a9094ebe39d1525a0ab037b7235990d81cf12834fdcd5e9d1fc0c140/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/env-bell-post/cdc862d1a9094ebe39d1525a0ab037b7235990d81cf12834fdcd5e9d1fc0c140/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "2963b6c95098f03aadf7fffe21507c8b3aa6b4fb4d13e657a9b7921e761ba629"
+      },
+      {
+        "path": "blender/models/published/env-bell-post/cdc862d1a9094ebe39d1525a0ab037b7235990d81cf12834fdcd5e9d1fc0c140/forge/recipes/env-bell-post.json",
+        "role": "pose-config",
+        "sha256": "db03db0b0387370bc90b717343121a6352a30e8a0f615b7306d38fd28857f9a7"
+      },
+      {
+        "path": "blender/models/published/env-bell-post/cdc862d1a9094ebe39d1525a0ab037b7235990d81cf12834fdcd5e9d1fc0c140/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/env-bell-post/cdc862d1a9094ebe39d1525a0ab037b7235990d81cf12834fdcd5e9d1fc0c140/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/env-bell-post/cdc862d1a9094ebe39d1525a0ab037b7235990d81cf12834fdcd5e9d1fc0c140/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/env-bell-post/cdc862d1a9094ebe39d1525a0ab037b7235990d81cf12834fdcd5e9d1fc0c140/forge/work/env-bell-post/layout.json",
+        "role": "pose-config",
+        "sha256": "3323370bb83ff489666b8c31e7bc9b01a4dc7d047a9736029ec7ced76f384653"
+      },
+      {
+        "path": "blender/models/published/env-bell-post/cdc862d1a9094ebe39d1525a0ab037b7235990d81cf12834fdcd5e9d1fc0c140/forge/work/env-bell-post/layout/base.blend",
+        "role": "model",
+        "sha256": "d61bd7b736f52de346ae60149d3484b4d59c05f37cd70077e3a65dd33035a272"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "footprint": [
+    1,
+    1
+  ],
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 64,
+        "y": 208
+      },
+      "file": "exports/env-bell-post/737d3050979fc6e9f3729e3a65aa87b1c0eaecea3ba9bbefa539159c12dd9427/frames/shadow.png",
+      "id": "env-bell-post-shadow",
+      "layer": "shadow",
+      "sha256": "0fd313b5f0945ac560146305ec69321b6bf50b843db21f2dbb9e2ae8c4d92ca2",
+      "sourceSize": {
+        "h": 216,
+        "w": 128
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 64,
+        "y": 208
+      },
+      "file": "exports/env-bell-post/737d3050979fc6e9f3729e3a65aa87b1c0eaecea3ba9bbefa539159c12dd9427/frames/base.png",
+      "id": "env-bell-post-base",
+      "layer": "base",
+      "sha256": "2b8e7e1c0c9fbb4a4d757dd2aba5acf177f839da8293f9aa7bb1ea881a5f80d8",
+      "sourceSize": {
+        "h": 216,
+        "w": 128
+      }
+    }
+  ],
+  "lightPools": [],
+  "packet": "art/review/2026-11-05-env-bell-post",
+  "packetDigest": "737d3050979fc6e9f3729e3a65aa87b1c0eaecea3ba9bbefa539159c12dd9427",
+  "packetSha256": "f1ed0a4b165ff9b3c75b4bfce7b471bf9bbd94e631fe408c01df92b965a1b313",
+  "schemaVersion": 1,
+  "scope": [
+    "shadow",
+    "base"
+  ]
+}

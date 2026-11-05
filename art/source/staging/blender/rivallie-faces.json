@@ -384,7 +384,7 @@
   "generator": {
     "note": "script-drawn palette-indexed decals; no Blender or generative model",
     "path": "forge/forgelib/faces.py",
-    "sha256": "df795682b94c423db71e6bd686518c7f11cb30b05b879b68909294c1f416196b"
+    "sha256": "dd486fa1334838cea4475d34806438d3431ab4b2a94d513e24f7b22ec55f18a3"
   },
   "packet": "art/review/2026-11-05-rivallie-faces-26d6823a60de",
   "packetDigest": "71f97801b048bc068dc0c0539a944e15556e5f52d1d08b6b9630b93b38401018",

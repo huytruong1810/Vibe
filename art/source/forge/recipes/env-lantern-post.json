@@ -1,0 +1,37 @@
+{
+  "asset": "env:lantern-post",
+  "kind": "environment",
+  "ramps": {
+    "walls": "timber",
+    "roof": "teal",
+    "trim": "wood",
+    "metal": "copper"
+  },
+  "gen3d": {
+    "seed": 2012,
+    "steps": 50,
+    "views": [
+      "front",
+      "left"
+    ]
+  },
+  "environment": {
+    "footprint": [
+      1,
+      1
+    ],
+    "split": null,
+    "contactShadow": true
+  },
+  "concept": {
+    "template": "building-v1",
+    "fields": {
+      "building": "village streetlamp on timber post",
+      "region": "Aqualia Village & Riverlands",
+      "description": "slender wooden lamppost with hanging glass and brass lantern",
+      "materials": "dark wood post, brass lantern, yellow glass"
+    },
+    "references": []
+  },
+  "notes": "AQ-2 Landmark/Kit prop (B5). 1x1 footprint."
+}

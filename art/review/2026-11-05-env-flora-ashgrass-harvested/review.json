@@ -1,0 +1,90 @@
+{
+ "asset": "env:flora-ashgrass-harvested",
+ "footprint": [
+  1,
+  1
+ ],
+ "frames": [
+  {
+   "anchorPx": {
+    "x": 64,
+    "y": 126
+   },
+   "file": "frames/shadow.png",
+   "id": "env-flora-ashgrass-harvested-shadow",
+   "layer": "shadow",
+   "sha256": "55ee8fcef84d88b474e41d02a43276b3a7b0ebbd6ff065d974f1c5d696d3b974",
+   "sourceSize": {
+    "h": 132,
+    "w": 128
+   }
+  },
+  {
+   "anchorPx": {
+    "x": 64,
+    "y": 126
+   },
+   "file": "frames/base.png",
+   "id": "env-flora-ashgrass-harvested-base",
+   "layer": "base",
+   "sha256": "ba56631a23962c36ff29a9aedcc40ce3e10c6f70d2c7f3cdfe116d889f99879f",
+   "sourceSize": {
+    "h": 132,
+    "w": 128
+   }
+  }
+ ],
+ "kind": "environment-review",
+ "lightPools": [],
+ "qa": [
+  {
+   "check": "footprint",
+   "detail": "ground contact 1.05 tiles deep vs declared 1 (width is scaled to fit)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-11.4"
+  },
+  {
+   "check": "canvas",
+   "detail": "64x66, width multiple of 32",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec canvases.environment"
+  },
+  {
+   "check": "margins",
+   "detail": "smallest transparent margin 2px",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec marginsArtPixels"
+  },
+  {
+   "check": "paletteMembership",
+   "detail": "0 off-palette colours",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.1"
+  },
+  {
+   "check": "colorCount",
+   "detail": "16 colours (environment limit 32)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.4"
+  },
+  {
+   "check": "blocks",
+   "detail": "exports are exact 2x blocks",
+   "hard": true,
+   "pass": true,
+   "rule": "L1"
+  }
+ ],
+ "schemaVersion": 1,
+ "scope": [
+  "shadow",
+  "base"
+ ],
+ "sourceDigest": "69a6687ff09b3464fcc5a8a6e20fb646d3b1bf4d194fe256ce4aca27c3a75d92",
+ "status": "candidate"
+}

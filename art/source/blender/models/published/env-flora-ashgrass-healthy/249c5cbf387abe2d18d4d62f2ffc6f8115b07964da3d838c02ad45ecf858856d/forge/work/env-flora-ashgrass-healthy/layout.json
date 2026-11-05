@@ -1,0 +1,45 @@
+{
+  "asset": "env:flora-ashgrass-healthy",
+  "stage": "layout",
+  "inputsDigest": "130b736843d17b3149756a84a87e5d7500d0a581610d1e383ca96a9c7d726cdc",
+  "inputs": [
+    "art/source/forge/work/env-flora-ashgrass-healthy/texture.blend",
+    "art/source/forge/work/env-flora-ashgrass-healthy/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-flora-ashgrass-healthy/layout/base.blend": "d79da08c85663253676ab8c7dfdabc829f773e75db694dca7c3e2bc9004c152a",
+    "art/source/forge/work/env-flora-ashgrass-healthy/layout_preview.png": "bfaa9266c1943650f558149d364676dad7d998221882048a0cc3b4ecc0186329"
+  },
+  "extra": {
+    "scale": 0.067482,
+    "heightUnits": 1.1135,
+    "contactDepthTiles": 0.902,
+    "footprint": [
+      1,
+      1
+    ],
+    "canvas": {
+      "size": [
+        64,
+        58
+      ],
+      "anchor": [
+        32,
+        55
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -0.5,
+      0.0
+    ],
+    "layers": [
+      "base"
+    ],
+    "faces": {
+      "base": 14000
+    }
+  },
+  "at": "2026-11-05T08:22:41Z"
+}

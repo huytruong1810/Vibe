@@ -1,0 +1,39 @@
+{
+  "asset": "env:flora-berries-burnt",
+  "kind": "environment",
+  "ramps": {
+    "bush": "foliage",
+    "berries": "gold",
+    "stems": "wood",
+    "leaves": "foliage-deep",
+    "foliage": "basalt",
+    "stem": "outline-neutral"
+  },
+  "gen3d": {
+    "seed": 1007,
+    "steps": 50,
+    "views": [
+      "front",
+      "left"
+    ]
+  },
+  "environment": {
+    "footprint": [
+      1,
+      1
+    ],
+    "split": null,
+    "contactShadow": true
+  },
+  "concept": {
+    "template": "building-v1",
+    "fields": {
+      "building": "wild sunberry bush heavy with golden spherical berries and serrated green leaves (burnt state)",
+      "region": "Aqualia Riverlands",
+      "description": "a low rounded gathering bush with ripe glowing berries in burnt condition",
+      "materials": "gnarled wood stem, deep green foliage cluster, bright golden sunberries (burnt)"
+    },
+    "references": []
+  },
+  "notes": "Gatherable flora berries in burnt state (B24). 1x1 tile footprint."
+}

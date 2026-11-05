@@ -1,0 +1,45 @@
+{
+  "asset": "env:flora-wheat-burnt",
+  "stage": "layout",
+  "inputsDigest": "f124bdba1458a0d9f9d0ba67dd0e7737d59e115fe96f7219d647554ce5aa5f62",
+  "inputs": [
+    "art/source/forge/work/env-flora-wheat-burnt/texture.blend",
+    "art/source/forge/work/env-flora-wheat-burnt/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-flora-wheat-burnt/layout/base.blend": "28f94a517a9447d491cc7a2b5f85c01eb2e86099a137b83066976b3742709b44",
+    "art/source/forge/work/env-flora-wheat-burnt/layout_preview.png": "79c9ce44d319c7520734bab75c9d272ce44ab3ec47edc47eba2b1ebf0e4ef5d8"
+  },
+  "extra": {
+    "scale": 0.090118,
+    "heightUnits": 1.4751,
+    "contactDepthTiles": 0.925,
+    "footprint": [
+      1,
+      1
+    ],
+    "canvas": {
+      "size": [
+        64,
+        72
+      ],
+      "anchor": [
+        32,
+        68
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -0.5,
+      0.0
+    ],
+    "layers": [
+      "base"
+    ],
+    "faces": {
+      "base": 13999
+    }
+  },
+  "at": "2026-11-05T07:56:47Z"
+}

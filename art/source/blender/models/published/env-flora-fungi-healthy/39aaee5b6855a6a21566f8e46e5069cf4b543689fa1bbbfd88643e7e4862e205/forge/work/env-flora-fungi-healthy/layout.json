@@ -1,0 +1,45 @@
+{
+  "asset": "env:flora-fungi-healthy",
+  "stage": "layout",
+  "inputsDigest": "a994e90264c6c437c743990c439d2413a1516bea27f8dacd5594eed9a9ef6f6a",
+  "inputs": [
+    "art/source/forge/work/env-flora-fungi-healthy/texture.blend",
+    "art/source/forge/work/env-flora-fungi-healthy/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-flora-fungi-healthy/layout/base.blend": "6e6f61c998e5ebe41d119ec88fc5c30120eb25e8ebcb2931ee835b7b78032f20",
+    "art/source/forge/work/env-flora-fungi-healthy/layout_preview.png": "5e19bc843a7448f71080a94b0b8202589ccf87b62cca0a87c846f6a152740b3c"
+  },
+  "extra": {
+    "scale": 0.071797,
+    "heightUnits": 1.2617,
+    "contactDepthTiles": 0.942,
+    "footprint": [
+      1,
+      1
+    ],
+    "canvas": {
+      "size": [
+        64,
+        64
+      ],
+      "anchor": [
+        32,
+        61
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -0.5,
+      0.0
+    ],
+    "layers": [
+      "base"
+    ],
+    "faces": {
+      "base": 14000
+    }
+  },
+  "at": "2026-11-05T08:43:48Z"
+}

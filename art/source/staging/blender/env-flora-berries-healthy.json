@@ -1,0 +1,121 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/env-flora-berries-healthy--2026-11-05-env-flora-berries-healthy.md",
+  "approvalSha256": "5613c8698f0580a9aa72b40f7ada52066dd1a4ea797efbb74b3579266326927d",
+  "asset": "env:flora-berries-healthy",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset env:flora-berries-healthy",
+    "id": "forge-env-flora-berries-healthy",
+    "inputs": [
+      {
+        "path": "blender/models/published/env-flora-berries-healthy/47c1dba0aef027532bbcf256aeed4a859919e1a987c81a8bab131662879525d5/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/env-flora-berries-healthy/47c1dba0aef027532bbcf256aeed4a859919e1a987c81a8bab131662879525d5/forge/blender/env_layout.py",
+        "role": "script",
+        "sha256": "b2fa291498b97eb55fc8450d37b55208b1d22550aa81a70b6c8c06d9cc08388b"
+      },
+      {
+        "path": "blender/models/published/env-flora-berries-healthy/47c1dba0aef027532bbcf256aeed4a859919e1a987c81a8bab131662879525d5/forge/forge.py",
+        "role": "script",
+        "sha256": "72344e74be14dd4324bbc2a158d9c160ff2dfbdfc1325d5166dc5baa5fb6b531"
+      },
+      {
+        "path": "blender/models/published/env-flora-berries-healthy/47c1dba0aef027532bbcf256aeed4a859919e1a987c81a8bab131662879525d5/forge/forgelib/environment.py",
+        "role": "script",
+        "sha256": "4b3443c051f8076ebdc9abd18152831dfbfe74c0053e7c4622ef3d7f483e397c"
+      },
+      {
+        "path": "blender/models/published/env-flora-berries-healthy/47c1dba0aef027532bbcf256aeed4a859919e1a987c81a8bab131662879525d5/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/env-flora-berries-healthy/47c1dba0aef027532bbcf256aeed4a859919e1a987c81a8bab131662879525d5/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "2963b6c95098f03aadf7fffe21507c8b3aa6b4fb4d13e657a9b7921e761ba629"
+      },
+      {
+        "path": "blender/models/published/env-flora-berries-healthy/47c1dba0aef027532bbcf256aeed4a859919e1a987c81a8bab131662879525d5/forge/recipes/env-flora-berries-healthy.json",
+        "role": "pose-config",
+        "sha256": "db8437888b0e853cff2e1ad1833792bd150c32deef85149fbe50ad6d874d126e"
+      },
+      {
+        "path": "blender/models/published/env-flora-berries-healthy/47c1dba0aef027532bbcf256aeed4a859919e1a987c81a8bab131662879525d5/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/env-flora-berries-healthy/47c1dba0aef027532bbcf256aeed4a859919e1a987c81a8bab131662879525d5/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/env-flora-berries-healthy/47c1dba0aef027532bbcf256aeed4a859919e1a987c81a8bab131662879525d5/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/env-flora-berries-healthy/47c1dba0aef027532bbcf256aeed4a859919e1a987c81a8bab131662879525d5/forge/work/env-flora-berries-healthy/layout.json",
+        "role": "pose-config",
+        "sha256": "2ffad321336f966acc6d30cbed6bcb320ba4c507d7c9333873e8aa3b158d6f07"
+      },
+      {
+        "path": "blender/models/published/env-flora-berries-healthy/47c1dba0aef027532bbcf256aeed4a859919e1a987c81a8bab131662879525d5/forge/work/env-flora-berries-healthy/layout/base.blend",
+        "role": "model",
+        "sha256": "40510cefcffb76be7f4b6bbd11708f801f657194500b84532bb55e3ec2c1cd99"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "footprint": [
+    1,
+    1
+  ],
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 64,
+        "y": 126
+      },
+      "file": "exports/env-flora-berries-healthy/21910898b9266d507e488fc93a409c5743d0537b2ed78282ef34b5d46eff2d84/frames/shadow.png",
+      "id": "env-flora-berries-healthy-shadow",
+      "layer": "shadow",
+      "sha256": "7d182aa7471ea378b37fb6a7fa62fcca0a01381dca07c1a11ff372b88761e6fb",
+      "sourceSize": {
+        "h": 136,
+        "w": 128
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 64,
+        "y": 126
+      },
+      "file": "exports/env-flora-berries-healthy/21910898b9266d507e488fc93a409c5743d0537b2ed78282ef34b5d46eff2d84/frames/base.png",
+      "id": "env-flora-berries-healthy-base",
+      "layer": "base",
+      "sha256": "98c8c59bb22327536420163aa403d64a1c5bd1a5b4d28f57aaf0625221f5dea6",
+      "sourceSize": {
+        "h": 136,
+        "w": 128
+      }
+    }
+  ],
+  "lightPools": [],
+  "packet": "art/review/2026-11-05-env-flora-berries-healthy",
+  "packetDigest": "21910898b9266d507e488fc93a409c5743d0537b2ed78282ef34b5d46eff2d84",
+  "packetSha256": "0dcb2d4167e6f80c1eaadbdb54eed4203e807434d97fc29cd29d6aa90e128ed0",
+  "schemaVersion": 1,
+  "scope": [
+    "shadow",
+    "base"
+  ]
+}

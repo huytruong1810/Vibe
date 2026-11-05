@@ -1,0 +1,45 @@
+{
+  "asset": "env:flora-ashgrass-harvested",
+  "stage": "layout",
+  "inputsDigest": "212289faf35b1afd7ec9f02aa0d89ac0429d59bfbd520f87feaeffcefdc749e8",
+  "inputs": [
+    "art/source/forge/work/env-flora-ashgrass-harvested/texture.blend",
+    "art/source/forge/work/env-flora-ashgrass-harvested/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-flora-ashgrass-harvested/layout/base.blend": "a75c9845741ff82ae87dcef53bdae01a43b6d3c5b993bd2438612d6578c1ff19",
+    "art/source/forge/work/env-flora-ashgrass-harvested/layout_preview.png": "e22bd60baa680e3aface9db784a45a88dcd64f5bd55efc2ef0524cac18846fae"
+  },
+  "extra": {
+    "scale": 0.076018,
+    "heightUnits": 1.3593,
+    "contactDepthTiles": 1.052,
+    "footprint": [
+      1,
+      1
+    ],
+    "canvas": {
+      "size": [
+        64,
+        66
+      ],
+      "anchor": [
+        32,
+        63
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -0.5,
+      0.0
+    ],
+    "layers": [
+      "base"
+    ],
+    "faces": {
+      "base": 14000
+    }
+  },
+  "at": "2026-11-05T08:29:25Z"
+}

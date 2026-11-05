@@ -187,6 +187,8 @@ and local-generation tickets (C26–C31) sit in their own section.
 
 ### C7 · Authored world in the engine (WLD-M1…M4)
 
+- owner: visitor (WLD-M2/M3 claim at56b29afa; implementation SHA and evidence requested in Codex reconciliation comms). Codex reviews/supports without duplicating settlement, spawn or save-provenance changes. The opt-in/procedural-default wording in the claim is a proposal; L8 remains binding.
+
 - evidence: 2026-11-05 director-requested refresh: studio76ef620c records layout+dressing approval for village/Riverlands R3 (source ae34ae141d48512ab02607d274973751db79a0853fdebb74eaa3c6d982b66d5b). Not yet merged into engineering; pass008 flora are Decor, so gameplay ResourceNode and C7 activation dependencies remain. Communicator M28 tracks the integration relay and Blender forage-node request.
 
 - status: partial (candidate compiler/loader slice). Claude scoped activation on 2026-11-01 and handed it back: `Simulation` builds only from `WorldGenerator().generate(seed)` (`simulation.ts:187`), saves regenerate from seed (`save-schema.ts:447`), 40 sites read fixed `VILLAGES` coordinates, and the authored map is one 90×68 level, so 20 villagers of the other two villages would be in void. Next: map-driven settlements and player spawn (WLD-M2), save `worldSource` versioning (WLD-M3), then a beta toggle. Village layout approved (village-1/-2 records); Riverlands layout approved 2026-11-02 (`world-aqualia--world-aqualia-aqualia_riverlands-2.md`)

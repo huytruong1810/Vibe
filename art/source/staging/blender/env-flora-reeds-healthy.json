@@ -1,0 +1,121 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/env-flora-reeds-healthy--2026-11-05-env-flora-reeds-healthy.md",
+  "approvalSha256": "d4ee52d1d24141fa57a125f01a73fa428eca31cd7282c1f2135c846a53fad151",
+  "asset": "env:flora-reeds-healthy",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset env:flora-reeds-healthy",
+    "id": "forge-env-flora-reeds-healthy",
+    "inputs": [
+      {
+        "path": "blender/models/published/env-flora-reeds-healthy/6d23f8c5877adcc970e881065cdd5ee898ce907664c5088c5a516e8b0eae1197/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/env-flora-reeds-healthy/6d23f8c5877adcc970e881065cdd5ee898ce907664c5088c5a516e8b0eae1197/forge/blender/env_layout.py",
+        "role": "script",
+        "sha256": "b2fa291498b97eb55fc8450d37b55208b1d22550aa81a70b6c8c06d9cc08388b"
+      },
+      {
+        "path": "blender/models/published/env-flora-reeds-healthy/6d23f8c5877adcc970e881065cdd5ee898ce907664c5088c5a516e8b0eae1197/forge/forge.py",
+        "role": "script",
+        "sha256": "72344e74be14dd4324bbc2a158d9c160ff2dfbdfc1325d5166dc5baa5fb6b531"
+      },
+      {
+        "path": "blender/models/published/env-flora-reeds-healthy/6d23f8c5877adcc970e881065cdd5ee898ce907664c5088c5a516e8b0eae1197/forge/forgelib/environment.py",
+        "role": "script",
+        "sha256": "4b3443c051f8076ebdc9abd18152831dfbfe74c0053e7c4622ef3d7f483e397c"
+      },
+      {
+        "path": "blender/models/published/env-flora-reeds-healthy/6d23f8c5877adcc970e881065cdd5ee898ce907664c5088c5a516e8b0eae1197/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/env-flora-reeds-healthy/6d23f8c5877adcc970e881065cdd5ee898ce907664c5088c5a516e8b0eae1197/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "2963b6c95098f03aadf7fffe21507c8b3aa6b4fb4d13e657a9b7921e761ba629"
+      },
+      {
+        "path": "blender/models/published/env-flora-reeds-healthy/6d23f8c5877adcc970e881065cdd5ee898ce907664c5088c5a516e8b0eae1197/forge/recipes/env-flora-reeds-healthy.json",
+        "role": "pose-config",
+        "sha256": "6b3529dbfe13e56afa8b6ea5e96d2dcb27b0a6c2c7bd60a630c2bdd922034f6b"
+      },
+      {
+        "path": "blender/models/published/env-flora-reeds-healthy/6d23f8c5877adcc970e881065cdd5ee898ce907664c5088c5a516e8b0eae1197/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/env-flora-reeds-healthy/6d23f8c5877adcc970e881065cdd5ee898ce907664c5088c5a516e8b0eae1197/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/env-flora-reeds-healthy/6d23f8c5877adcc970e881065cdd5ee898ce907664c5088c5a516e8b0eae1197/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/env-flora-reeds-healthy/6d23f8c5877adcc970e881065cdd5ee898ce907664c5088c5a516e8b0eae1197/forge/work/env-flora-reeds-healthy/layout.json",
+        "role": "pose-config",
+        "sha256": "5bc7c0baaf27d605f57c70550aecf0e11adaa6f4ec379543beae33cfd3a3df80"
+      },
+      {
+        "path": "blender/models/published/env-flora-reeds-healthy/6d23f8c5877adcc970e881065cdd5ee898ce907664c5088c5a516e8b0eae1197/forge/work/env-flora-reeds-healthy/layout/base.blend",
+        "role": "model",
+        "sha256": "828be0d404636c263244207be8beb6071af3ac0cb9c90903addacad223352ee0"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "footprint": [
+    1,
+    1
+  ],
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 64,
+        "y": 130
+      },
+      "file": "exports/env-flora-reeds-healthy/42c7f82be364f08e3d46264f2000ad6d93898a9154b65f1633ffbde36cfce747/frames/shadow.png",
+      "id": "env-flora-reeds-healthy-shadow",
+      "layer": "shadow",
+      "sha256": "cb288b0b28f4500ab40e9f415b01b1eb33a5b3982b75f2274d53ebf5df4a202b",
+      "sourceSize": {
+        "h": 140,
+        "w": 128
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 64,
+        "y": 130
+      },
+      "file": "exports/env-flora-reeds-healthy/42c7f82be364f08e3d46264f2000ad6d93898a9154b65f1633ffbde36cfce747/frames/base.png",
+      "id": "env-flora-reeds-healthy-base",
+      "layer": "base",
+      "sha256": "dd9f1a9a116a14b0330bcbf801493da7164527f985e03c6b34f1cb773030d203",
+      "sourceSize": {
+        "h": 140,
+        "w": 128
+      }
+    }
+  ],
+  "lightPools": [],
+  "packet": "art/review/2026-11-05-env-flora-reeds-healthy",
+  "packetDigest": "42c7f82be364f08e3d46264f2000ad6d93898a9154b65f1633ffbde36cfce747",
+  "packetSha256": "52378247741da268158c7155f00672cb95535d3d6a20430d34781175ff87a215",
+  "schemaVersion": 1,
+  "scope": [
+    "shadow",
+    "base"
+  ]
+}

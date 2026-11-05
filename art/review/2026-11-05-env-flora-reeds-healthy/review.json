@@ -1,0 +1,90 @@
+{
+ "asset": "env:flora-reeds-healthy",
+ "footprint": [
+  1,
+  1
+ ],
+ "frames": [
+  {
+   "anchorPx": {
+    "x": 64,
+    "y": 130
+   },
+   "file": "frames/shadow.png",
+   "id": "env-flora-reeds-healthy-shadow",
+   "layer": "shadow",
+   "sha256": "cb288b0b28f4500ab40e9f415b01b1eb33a5b3982b75f2274d53ebf5df4a202b",
+   "sourceSize": {
+    "h": 140,
+    "w": 128
+   }
+  },
+  {
+   "anchorPx": {
+    "x": 64,
+    "y": 130
+   },
+   "file": "frames/base.png",
+   "id": "env-flora-reeds-healthy-base",
+   "layer": "base",
+   "sha256": "dd9f1a9a116a14b0330bcbf801493da7164527f985e03c6b34f1cb773030d203",
+   "sourceSize": {
+    "h": 140,
+    "w": 128
+   }
+  }
+ ],
+ "kind": "environment-review",
+ "lightPools": [],
+ "qa": [
+  {
+   "check": "footprint",
+   "detail": "ground contact 1.08 tiles deep vs declared 1 (width is scaled to fit)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-11.4"
+  },
+  {
+   "check": "canvas",
+   "detail": "64x70, width multiple of 32",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec canvases.environment"
+  },
+  {
+   "check": "margins",
+   "detail": "smallest transparent margin 2px",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec marginsArtPixels"
+  },
+  {
+   "check": "paletteMembership",
+   "detail": "0 off-palette colours",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.1"
+  },
+  {
+   "check": "colorCount",
+   "detail": "9 colours (environment limit 32)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.4"
+  },
+  {
+   "check": "blocks",
+   "detail": "exports are exact 2x blocks",
+   "hard": true,
+   "pass": true,
+   "rule": "L1"
+  }
+ ],
+ "schemaVersion": 1,
+ "scope": [
+  "shadow",
+  "base"
+ ],
+ "sourceDigest": "42c7f82be364f08e3d46264f2000ad6d93898a9154b65f1633ffbde36cfce747",
+ "status": "candidate"
+}

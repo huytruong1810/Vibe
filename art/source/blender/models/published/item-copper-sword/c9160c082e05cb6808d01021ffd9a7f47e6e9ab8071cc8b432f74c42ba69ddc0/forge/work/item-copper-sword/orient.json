@@ -1,0 +1,66 @@
+{
+  "asset": "item:copper-sword",
+  "stage": "orient",
+  "inputsDigest": "3d0bfeea00213ddf3f056cb5e53c46d9c14c62cfc73923bbb81b7367db1dbd0b",
+  "inputs": [
+    "art/source/forge/work/item-copper-sword/texture.blend",
+    "art/source/forge/work/item-copper-sword/orient_params.json",
+    "art/source/forge/blender/item_orient.py",
+    "art/source/forge/forgelib/item_orient.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/item-copper-sword/item_model.blend": "71ac23e71fab00ce32841a640dc415f6ec3ee53d1d5f3d20c187b481a1b852ab",
+    "art/source/forge/work/item-copper-sword/orient_preview.png": "447484ec0e18b46dce3f58f467c69b0f5198a440dd8b8aa5ea4a3064243a160f"
+  },
+  "extra": {
+    "matrix": [
+      [
+        0.000983,
+        0.938269,
+        -0.00017,
+        -0.000264
+      ],
+      [
+        -0.938231,
+        0.000985,
+        0.008478,
+        -0.000209
+      ],
+      [
+        0.008478,
+        0.000161,
+        0.938232,
+        -0.109359
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "grip": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "iconPivot": [
+      -0.00029,
+      -0.002197,
+      0.109375
+    ],
+    "reachArtPx": 10.5,
+    "lengthArtPx": 14,
+    "haftWidthArtPx": 1.367,
+    "headFlipped": false,
+    "forwardFlipped": false,
+    "dimensions": [
+      0.032584,
+      0.146749,
+      0.4375
+    ],
+    "inflateArtPx": 0.979,
+    "iconScale": 1.96
+  },
+  "at": "2026-11-05T11:45:29Z"
+}

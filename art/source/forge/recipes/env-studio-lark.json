@@ -1,0 +1,40 @@
+{
+  "asset": "env:studio-lark",
+  "kind": "environment",
+  "ramps": {
+    "walls": "timber",
+    "roof": "teal",
+    "trim": "wood",
+    "metal": "copper"
+  },
+  "gen3d": {
+    "seed": 2011,
+    "steps": 50,
+    "views": [
+      "front",
+      "left"
+    ]
+  },
+  "environment": {
+    "footprint": [
+      3,
+      3
+    ],
+    "split": {
+      "layer": "roof",
+      "aboveFraction": 0.55
+    },
+    "contactShadow": true
+  },
+  "concept": {
+    "template": "building-v1",
+    "fields": {
+      "building": "Lark's timber artisan atelier and dye vats",
+      "region": "Aqualia Village & Riverlands",
+      "description": "artisan atelier building with wide windows and outdoor colorful dye vats",
+      "materials": "timber framing, teal slate roof, cedar dye vats"
+    },
+    "references": []
+  },
+  "notes": "AQ-2 Landmark/Kit prop (B5). 3x2 footprint."
+}
