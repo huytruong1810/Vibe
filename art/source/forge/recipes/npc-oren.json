@@ -2,6 +2,9 @@
   "asset": "npc:oren",
   "kind": "human",
   "heightArtPx": 38,
+  "rampShift": {
+    "hair": 1
+  },
   "ramps": {
     "skin": "skin-warm",
     "hair": "hair-silver",

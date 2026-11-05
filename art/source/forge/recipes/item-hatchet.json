@@ -1,6 +1,7 @@
 {
   "asset": "item:hatchet",
   "kind": "item",
+  "supersample": 4,
   "ramps": { "blade": "iron", "haft": "wood", "grip": "leather", "lashing": "reed" },
   "gen3d": { "seed": 1234, "steps": 50 },
   "orient": { "lengthArtPx": 13, "gripFraction": 0.15 },

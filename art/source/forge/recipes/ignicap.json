@@ -8,6 +8,7 @@
     "gills": "ochre",
     "boots": "basalt"
   },
+  "faceOffsetPx": [0, 5],
   "gen3d": {
     "seed": 1234,
     "steps": 50,

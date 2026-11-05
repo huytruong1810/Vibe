@@ -2,6 +2,9 @@
   "asset": "npc:reed",
   "kind": "human",
   "heightArtPx": 40,
+  "rampShift": {
+    "shirt": 1
+  },
   "ramps": {
     "skin": "skin-warm",
     "hair": "hair-blonde",

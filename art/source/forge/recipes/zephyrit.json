@@ -8,6 +8,7 @@
     "belly": "sage",
     "eyes": "gold"
   },
+  "faceOffsetPx": [-1, 4],
   "gen3d": {
     "seed": 1234,
     "steps": 50,

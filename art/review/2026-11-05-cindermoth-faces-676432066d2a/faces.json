@@ -390,14 +390,14 @@
       "rule": "ART-8.1/ART-8.2",
       "hard": true,
       "pass": true,
-      "detail": "1370 registrations; "
+      "detail": "1435 registrations; "
     },
     {
       "check": "faceCoverage",
       "rule": "ART-8.2",
       "hard": true,
       "pass": false,
-      "detail": "134 of 408 forward frames hide the face (limit 10%); idle hidden: 12"
+      "detail": "121 of 408 forward frames hide the face (limit 10%); idle hidden: 6"
     },
     {
       "check": "faceDistinct",
@@ -411,105 +411,90 @@
     "unit": "frame px from Socket_Head; null hides the face on that frame",
     "frames": {
       "cindermoth:bathe:e:0": [
-        -4,
-        12
+        -6,
+        8
       ],
       "cindermoth:bathe:e:1": [
         -4,
         10
       ],
       "cindermoth:bathe:e:2": [
-        -4,
-        12
+        -6,
+        8
       ],
       "cindermoth:bathe:e:3": [
         -4,
         10
       ],
       "cindermoth:bathe:e:4": [
-        -4,
-        12
+        -6,
+        8
       ],
       "cindermoth:bathe:e:5": [
         -4,
         10
       ],
       "cindermoth:bathe:s:0": [
-        0,
+        -2,
         10
       ],
       "cindermoth:bathe:s:1": [
-        0,
+        -2,
         10
       ],
       "cindermoth:bathe:s:2": [
-        0,
+        -2,
         10
       ],
       "cindermoth:bathe:s:3": [
-        0,
+        -2,
         10
       ],
       "cindermoth:bathe:s:4": [
-        0,
+        -2,
         10
       ],
       "cindermoth:bathe:s:5": [
-        0,
+        -2,
         10
       ],
-      "cindermoth:bathe:w:0": [
-        4,
-        10
+      "cindermoth:bathe:w:0": null,
+      "cindermoth:bathe:w:1": null,
+      "cindermoth:bathe:w:2": null,
+      "cindermoth:bathe:w:3": null,
+      "cindermoth:bathe:w:4": null,
+      "cindermoth:bathe:w:5": null,
+      "cindermoth:downed:e:0": [
+        -6,
+        8
       ],
-      "cindermoth:bathe:w:1": [
-        4,
-        10
-      ],
-      "cindermoth:bathe:w:2": [
-        4,
-        10
-      ],
-      "cindermoth:bathe:w:3": [
-        4,
-        10
-      ],
-      "cindermoth:bathe:w:4": [
-        4,
-        10
-      ],
-      "cindermoth:bathe:w:5": [
-        4,
-        10
-      ],
-      "cindermoth:downed:e:0": null,
       "cindermoth:downed:e:1": null,
       "cindermoth:downed:e:2": null,
       "cindermoth:downed:e:3": null,
       "cindermoth:downed:e:4": null,
       "cindermoth:downed:e:5": null,
       "cindermoth:downed:s:0": [
-        0,
+        -2,
         10
       ],
       "cindermoth:downed:s:1": [
-        0,
+        -2,
         8
       ],
       "cindermoth:downed:s:2": [
-        0,
+        -2,
         8
       ],
       "cindermoth:downed:s:3": [
-        0,
+        -2,
         8
       ],
       "cindermoth:downed:s:4": [
-        0,
+        -2,
         8
       ],
       "cindermoth:downed:s:5": [
-        0,
+        -2,
         8
       ],
       "cindermoth:downed:w:0": null,
@@ -525,28 +510,28 @@
       "cindermoth:drink:e:4": null,
       "cindermoth:drink:e:5": null,
       "cindermoth:drink:s:0": [
-        0,
-        6
+        -2,
+        8
       ],
       "cindermoth:drink:s:1": [
-        0,
+        -2,
         8
       ],
       "cindermoth:drink:s:2": [
-        0,
-        6
+        -2,
+        8
       ],
       "cindermoth:drink:s:3": [
-        0,
-        6
+        -2,
+        8
       ],
       "cindermoth:drink:s:4": [
-        0,
+        -2,
         8
       ],
       "cindermoth:drink:s:5": [
-        0,
-        6
+        -2,
+        8
       ],
       "cindermoth:drink:w:0": null,
       "cindermoth:drink:w:1": null,
@@ -561,27 +546,27 @@
       "cindermoth:eat:e:4": null,
       "cindermoth:eat:e:5": null,
       "cindermoth:eat:s:0": [
-        0,
-        6
+        -2,
+        8
       ],
       "cindermoth:eat:s:1": [
-        0,
+        -2,
         8
       ],
       "cindermoth:eat:s:2": [
-        0,
-        6
+        -2,
+        8
       ],
       "cindermoth:eat:s:3": [
-        0,
+        -2,
         8
       ],
       "cindermoth:eat:s:4": [
-        0,
-        6
+        -2,
+        8
       ],
       "cindermoth:eat:s:5": [
-        0,
+        -2,
         8
       ],
       "cindermoth:eat:w:0": null,
@@ -590,74 +575,95 @@
       "cindermoth:eat:w:3": null,
       "cindermoth:eat:w:4": null,
       "cindermoth:eat:w:5": null,
-      "cindermoth:element:e:0": null,
-      "cindermoth:element:e:1": null,
+      "cindermoth:element:e:0": [
+        -6,
+        8
+      ],
+      "cindermoth:element:e:1": [
+        -6,
+        8
+      ],
       "cindermoth:element:e:2": null,
-      "cindermoth:element:e:3": null,
-      "cindermoth:element:e:4": null,
+      "cindermoth:element:e:3": [
+        -6,
+        10
+      ],
+      "cindermoth:element:e:4": [
+        -6,
+        10
+      ],
       "cindermoth:element:e:5": null,
       "cindermoth:element:e:6": null,
       "cindermoth:element:e:7": null,
       "cindermoth:element:e:8": null,
-      "cindermoth:element:e:9": null,
+      "cindermoth:element:e:9": [
+        -6,
+        8
+      ],
       "cindermoth:element:e:10": [
         -4,
         10
       ],
-      "cindermoth:element:e:11": null,
+      "cindermoth:element:e:11": [
+        -6,
+        8
+      ],
       "cindermoth:element:s:0": [
-        0,
+        -2,
         10
       ],
       "cindermoth:element:s:1": [
-        0,
+        -2,
         10
       ],
       "cindermoth:element:s:2": [
-        0,
+        -2,
         8
       ],
       "cindermoth:element:s:3": [
-        0,
+        -2,
         10
       ],
       "cindermoth:element:s:4": [
-        0,
+        -2,
         10
       ],
       "cindermoth:element:s:5": [
-        0,
+        -2,
         8
       ],
       "cindermoth:element:s:6": [
-        0,
-        8
+        -2,
+        10
       ],
       "cindermoth:element:s:7": [
-        0,
+        -2,
         8
       ],
       "cindermoth:element:s:8": [
-        0,
+        -2,
         10
       ],
       "cindermoth:element:s:9": [
-        0,
+        -2,
         10
       ],
       "cindermoth:element:s:10": [
-        0,
+        -2,
         10
       ],
       "cindermoth:element:s:11": [
-        0,
+        -2,
         10
       ],
       "cindermoth:element:se:0": [
         -2,
         10
       ],
-      "cindermoth:element:se:1": null,
+      "cindermoth:element:se:1": [
+        -6,
+        10
+      ],
       "cindermoth:element:se:2": [
         -4,
         10
@@ -670,16 +676,25 @@
         -4,
         12
       ],
-      "cindermoth:element:se:5": null,
-      "cindermoth:element:se:6": null,
-      "cindermoth:element:se:7": null,
+      "cindermoth:element:se:5": [
+        -6,
+        10
+      ],
+      "cindermoth:element:se:6": [
+        -6,
+        10
+      ],
+      "cindermoth:element:se:7": [
+        -6,
+        10
+      ],
       "cindermoth:element:se:8": [
         -2,
         10
       ],
       "cindermoth:element:se:9": [
-        -4,
-        14
+        -6,
+        10
       ],
       "cindermoth:element:se:10": [
         -2,
@@ -693,10 +708,7 @@
         2,
         10
       ],
-      "cindermoth:element:sw:1": [
-        4,
-        10
-      ],
+      "cindermoth:element:sw:1": null,
       "cindermoth:element:sw:2": [
         2,
         10
@@ -709,26 +721,14 @@
         2,
         12
       ],
-      "cindermoth:element:sw:5": [
-        4,
-        10
-      ],
-      "cindermoth:element:sw:6": [
-        4,
-        10
-      ],
-      "cindermoth:element:sw:7": [
-        4,
-        10
-      ],
+      "cindermoth:element:sw:5": null,
+      "cindermoth:element:sw:6": null,
+      "cindermoth:element:sw:7": null,
       "cindermoth:element:sw:8": [
         2,
         10
       ],
-      "cindermoth:element:sw:9": [
-        4,
-        10
-      ],
+      "cindermoth:element:sw:9": null,
       "cindermoth:element:sw:10": [
         2,
         10
@@ -747,29 +747,26 @@
       "cindermoth:element:w:7": null,
       "cindermoth:element:w:8": null,
       "cindermoth:element:w:9": null,
-      "cindermoth:element:w:10": [
-        4,
-        8
-      ],
+      "cindermoth:element:w:10": null,
       "cindermoth:element:w:11": null,
       "cindermoth:guard:e:0": null,
       "cindermoth:guard:e:1": null,
       "cindermoth:guard:e:2": null,
       "cindermoth:guard:e:3": null,
       "cindermoth:guard:s:0": [
-        0,
+        -2,
         8
       ],
       "cindermoth:guard:s:1": [
-        0,
+        -2,
         8
       ],
       "cindermoth:guard:s:2": [
-        0,
+        -2,
         8
       ],
       "cindermoth:guard:s:3": [
-        0,
+        -2,
         8
       ],
       "cindermoth:guard:se:0": [
@@ -788,44 +785,44 @@
         -4,
         8
       ],
-      "cindermoth:guard:sw:0": [
-        4,
-        8
-      ],
-      "cindermoth:guard:sw:1": [
-        4,
-        8
-      ],
-      "cindermoth:guard:sw:2": [
-        4,
-        8
-      ],
-      "cindermoth:guard:sw:3": [
-        4,
-        8
-      ],
+      "cindermoth:guard:sw:0": null,
+      "cindermoth:guard:sw:1": null,
+      "cindermoth:guard:sw:2": null,
+      "cindermoth:guard:sw:3": null,
       "cindermoth:guard:w:0": null,
       "cindermoth:guard:w:1": null,
       "cindermoth:guard:w:2": null,
       "cindermoth:guard:w:3": null,
-      "cindermoth:hit:e:0": null,
-      "cindermoth:hit:e:1": null,
-      "cindermoth:hit:e:2": null,
-      "cindermoth:hit:e:3": null,
+      "cindermoth:hit:e:0": [
+        -6,
+        8
+      ],
+      "cindermoth:hit:e:1": [
+        -6,
+        8
+      ],
+      "cindermoth:hit:e:2": [
+        -6,
+        8
+      ],
+      "cindermoth:hit:e:3": [
+        -6,
+        8
+      ],
       "cindermoth:hit:s:0": [
-        0,
+        -2,
         10
       ],
       "cindermoth:hit:s:1": [
-        0,
+        -2,
         10
       ],
       "cindermoth:hit:s:2": [
-        0,
+        -2,
         10
       ],
       "cindermoth:hit:s:3": [
-        0,
+        -2,
         10
       ],
       "cindermoth:hit:se:0": [
@@ -864,34 +861,52 @@
       "cindermoth:hit:w:1": null,
       "cindermoth:hit:w:2": null,
       "cindermoth:hit:w:3": null,
-      "cindermoth:idle:e:0": null,
-      "cindermoth:idle:e:1": null,
-      "cindermoth:idle:e:2": null,
-      "cindermoth:idle:e:3": null,
-      "cindermoth:idle:e:4": null,
-      "cindermoth:idle:e:5": null,
+      "cindermoth:idle:e:0": [
+        -6,
+        8
+      ],
+      "cindermoth:idle:e:1": [
+        -6,
+        8
+      ],
+      "cindermoth:idle:e:2": [
+        -6,
+        8
+      ],
+      "cindermoth:idle:e:3": [
+        -6,
+        8
+      ],
+      "cindermoth:idle:e:4": [
+        -6,
+        8
+      ],
+      "cindermoth:idle:e:5": [
+        -6,
+        8
+      ],
       "cindermoth:idle:s:0": [
-        0,
+        -2,
         10
       ],
       "cindermoth:idle:s:1": [
-        0,
+        -2,
         10
       ],
       "cindermoth:idle:s:2": [
-        0,
+        -2,
         10
       ],
       "cindermoth:idle:s:3": [
-        0,
+        -2,
         10
       ],
       "cindermoth:idle:s:4": [
-        0,
+        -2,
         10
       ],
       "cindermoth:idle:s:5": [
-        0,
+        -2,
         10
       ],
       "cindermoth:idle:se:0": [
@@ -907,11 +922,11 @@
         10
       ],
       "cindermoth:idle:se:3": [
-        0,
+        -2,
         10
       ],
       "cindermoth:idle:se:4": [
-        0,
+        -2,
         10
       ],
       "cindermoth:idle:se:5": [
@@ -951,173 +966,179 @@
       "cindermoth:recovery:e:0": null,
       "cindermoth:recovery:e:1": null,
       "cindermoth:recovery:e:2": null,
-      "cindermoth:recovery:e:3": null,
-      "cindermoth:recovery:e:4": null,
-      "cindermoth:recovery:e:5": null,
+      "cindermoth:recovery:e:3": [
+        -6,
+        8
+      ],
+      "cindermoth:recovery:e:4": [
+        -6,
+        8
+      ],
+      "cindermoth:recovery:e:5": [
+        -6,
+        8
+      ],
       "cindermoth:recovery:s:0": [
-        0,
+        -2,
         8
       ],
       "cindermoth:recovery:s:1": [
-        0,
+        -2,
         8
       ],
       "cindermoth:recovery:s:2": [
-        0,
+        -2,
         10
       ],
       "cindermoth:recovery:s:3": [
-        0,
+        -2,
         10
       ],
       "cindermoth:recovery:s:4": [
-        0,
+        -2,
         10
       ],
       "cindermoth:recovery:s:5": [
-        0,
+        -2,
         10
       ],
       "cindermoth:recovery:w:0": null,
       "cindermoth:recovery:w:1": null,
       "cindermoth:recovery:w:2": null,
-      "cindermoth:recovery:w:3": [
-        4,
-        10
-      ],
+      "cindermoth:recovery:w:3": null,
       "cindermoth:recovery:w:4": null,
       "cindermoth:recovery:w:5": null,
       "cindermoth:run:e:0": [
-        -4,
-        6
+        -2,
+        10
       ],
       "cindermoth:run:e:1": [
-        0,
-        12
+        -2,
+        10
       ],
       "cindermoth:run:e:2": [
-        0,
-        12
+        -2,
+        10
       ],
       "cindermoth:run:e:3": [
-        0,
-        12
+        -2,
+        10
       ],
       "cindermoth:run:e:4": [
-        -4,
-        6
+        -2,
+        10
       ],
       "cindermoth:run:e:5": [
-        0,
-        12
+        -2,
+        10
       ],
       "cindermoth:run:e:6": [
-        0,
-        12
+        -2,
+        10
       ],
       "cindermoth:run:e:7": [
-        0,
-        12
+        -2,
+        10
       ],
       "cindermoth:run:s:0": [
-        0,
-        6
+        -2,
+        8
       ],
       "cindermoth:run:s:1": [
-        0,
+        -2,
         10
       ],
       "cindermoth:run:s:2": [
-        4,
-        14
+        -2,
+        16
       ],
       "cindermoth:run:s:3": [
-        0,
+        -2,
         10
       ],
       "cindermoth:run:s:4": [
-        0,
-        6
+        -2,
+        8
       ],
       "cindermoth:run:s:5": [
-        0,
+        -2,
         10
       ],
       "cindermoth:run:s:6": [
-        4,
-        14
+        -2,
+        16
       ],
       "cindermoth:run:s:7": [
-        0,
+        -2,
         10
       ],
       "cindermoth:run:se:0": [
-        0,
-        6
+        -2,
+        8
       ],
       "cindermoth:run:se:1": [
-        0,
-        12
+        -2,
+        10
       ],
       "cindermoth:run:se:2": [
-        0,
-        12
+        -2,
+        10
       ],
       "cindermoth:run:se:3": [
-        0,
-        12
+        -2,
+        10
       ],
       "cindermoth:run:se:4": [
-        0,
-        6
+        -2,
+        8
       ],
       "cindermoth:run:se:5": [
-        0,
-        12
+        -2,
+        10
       ],
       "cindermoth:run:se:6": [
-        0,
-        12
+        -2,
+        10
       ],
       "cindermoth:run:se:7": [
-        0,
-        12
+        -2,
+        10
       ],
       "cindermoth:run:sw:0": [
         0,
-        6
+        8
       ],
       "cindermoth:run:sw:1": [
-        0,
-        10
+        -2,
+        12
       ],
       "cindermoth:run:sw:2": [
-        0,
+        -2,
         12
       ],
       "cindermoth:run:sw:3": [
-        0,
-        10
+        -2,
+        12
       ],
       "cindermoth:run:sw:4": [
         0,
-        6
+        8
       ],
       "cindermoth:run:sw:5": [
-        0,
-        10
+        -2,
+        12
       ],
       "cindermoth:run:sw:6": [
-        0,
+        -2,
         12
       ],
       "cindermoth:run:sw:7": [
-        0,
-        10
+        -2,
+        12
       ],
       "cindermoth:run:w:0": [
         2,
-        6
+        8
       ],
       "cindermoth:run:w:1": [
         2,
@@ -1133,7 +1154,7 @@
       ],
       "cindermoth:run:w:4": [
         2,
-        6
+        8
       ],
       "cindermoth:run:w:5": [
         2,
@@ -1152,20 +1173,20 @@
       "cindermoth:sleep:e:2": null,
       "cindermoth:sleep:e:3": null,
       "cindermoth:sleep:s:0": [
-        0,
-        6
+        -2,
+        8
       ],
       "cindermoth:sleep:s:1": [
-        0,
-        6
+        -2,
+        8
       ],
       "cindermoth:sleep:s:2": [
-        0,
-        6
+        -2,
+        8
       ],
       "cindermoth:sleep:s:3": [
-        0,
-        6
+        -2,
+        8
       ],
       "cindermoth:sleep:w:0": null,
       "cindermoth:sleep:w:1": null,
@@ -1183,35 +1204,41 @@
         -4,
         8
       ],
-      "cindermoth:social:e:3": null,
-      "cindermoth:social:e:4": null,
+      "cindermoth:social:e:3": [
+        -6,
+        8
+      ],
+      "cindermoth:social:e:4": [
+        -6,
+        8
+      ],
       "cindermoth:social:e:5": [
         -2,
         8
       ],
       "cindermoth:social:s:0": [
-        0,
-        10
+        -2,
+        8
       ],
       "cindermoth:social:s:1": [
-        0,
-        8
+        -2,
+        10
       ],
       "cindermoth:social:s:2": [
-        0,
-        8
+        -2,
+        10
       ],
       "cindermoth:social:s:3": [
-        0,
+        -2,
         10
       ],
       "cindermoth:social:s:4": [
-        0,
+        -2,
         10
       ],
       "cindermoth:social:s:5": [
-        0,
-        10
+        -2,
+        8
       ],
       "cindermoth:social:w:0": [
         2,
@@ -1219,100 +1246,103 @@
       ],
       "cindermoth:social:w:1": null,
       "cindermoth:social:w:2": null,
-      "cindermoth:social:w:3": [
-        4,
-        8
-      ],
-      "cindermoth:social:w:4": [
-        4,
-        8
-      ],
+      "cindermoth:social:w:3": null,
+      "cindermoth:social:w:4": null,
       "cindermoth:social:w:5": [
         2,
         8
       ],
-      "cindermoth:strike:e:0": null,
-      "cindermoth:strike:e:1": null,
+      "cindermoth:strike:e:0": [
+        -6,
+        8
+      ],
+      "cindermoth:strike:e:1": [
+        -6,
+        8
+      ],
       "cindermoth:strike:e:2": null,
       "cindermoth:strike:e:3": [
-        0,
+        -2,
         14
       ],
       "cindermoth:strike:e:4": [
-        0,
+        -2,
         14
       ],
       "cindermoth:strike:e:5": [
-        0,
-        12
+        -2,
+        10
       ],
       "cindermoth:strike:e:6": [
-        0,
-        12
+        -2,
+        10
       ],
       "cindermoth:strike:e:7": [
-        0,
-        14
+        -2,
+        12
       ],
       "cindermoth:strike:e:8": [
         -2,
         12
       ],
       "cindermoth:strike:e:9": [
-        -4,
-        12
+        -6,
+        8
       ],
       "cindermoth:strike:e:10": [
-        -4,
-        12
+        -6,
+        8
       ],
-      "cindermoth:strike:e:11": null,
+      "cindermoth:strike:e:11": [
+        -6,
+        8
+      ],
       "cindermoth:strike:s:0": [
-        0,
+        -2,
         10
       ],
       "cindermoth:strike:s:1": [
-        0,
+        -2,
         10
       ],
       "cindermoth:strike:s:2": [
-        0,
+        -2,
         10
       ],
       "cindermoth:strike:s:3": [
-        0,
+        -2,
         10
       ],
       "cindermoth:strike:s:4": [
-        0,
+        -2,
         10
       ],
       "cindermoth:strike:s:5": [
-        0,
+        -2,
         10
       ],
       "cindermoth:strike:s:6": [
-        0,
+        -2,
         10
       ],
       "cindermoth:strike:s:7": [
-        0,
+        -2,
         10
       ],
       "cindermoth:strike:s:8": [
-        0,
+        -2,
         10
       ],
       "cindermoth:strike:s:9": [
-        0,
+        -2,
         10
       ],
       "cindermoth:strike:s:10": [
-        0,
+        -2,
         10
       ],
       "cindermoth:strike:s:11": [
-        0,
+        -2,
         10
       ],
       "cindermoth:strike:se:0": [
@@ -1339,21 +1369,24 @@
         -2,
         14
       ],
-      "cindermoth:strike:se:6": null,
+      "cindermoth:strike:se:6": [
+        -2,
+        16
+      ],
       "cindermoth:strike:se:7": [
         -2,
         10
       ],
       "cindermoth:strike:se:8": [
-        0,
-        12
+        -2,
+        10
       ],
       "cindermoth:strike:se:9": [
         -4,
         10
       ],
       "cindermoth:strike:se:10": [
-        0,
+        -2,
         10
       ],
       "cindermoth:strike:se:11": [
@@ -1373,16 +1406,16 @@
         10
       ],
       "cindermoth:strike:sw:3": [
-        0,
-        14
+        -2,
+        16
       ],
       "cindermoth:strike:sw:4": [
-        0,
-        14
+        -2,
+        16
       ],
       "cindermoth:strike:sw:5": [
-        0,
-        14
+        -2,
+        16
       ],
       "cindermoth:strike:sw:6": [
         2,
@@ -1393,7 +1426,7 @@
         10
       ],
       "cindermoth:strike:sw:8": [
-        0,
+        -2,
         12
       ],
       "cindermoth:strike:sw:9": [
@@ -1420,12 +1453,12 @@
         14
       ],
       "cindermoth:strike:w:5": [
-        0,
-        10
+        -2,
+        12
       ],
       "cindermoth:strike:w:6": [
-        0,
-        10
+        -2,
+        12
       ],
       "cindermoth:strike:w:7": [
         2,
@@ -1435,77 +1468,71 @@
         2,
         10
       ],
-      "cindermoth:strike:w:9": [
-        4,
-        8
-      ],
-      "cindermoth:strike:w:10": [
-        4,
-        8
-      ],
+      "cindermoth:strike:w:9": null,
+      "cindermoth:strike:w:10": null,
       "cindermoth:strike:w:11": null,
       "cindermoth:walk:e:0": [
-        -2,
-        14
+        -6,
+        8
       ],
       "cindermoth:walk:e:1": [
-        -2,
-        14
+        -6,
+        8
       ],
       "cindermoth:walk:e:2": [
-        -2,
-        14
+        -6,
+        8
       ],
       "cindermoth:walk:e:3": [
-        -2,
-        14
+        -6,
+        8
       ],
       "cindermoth:walk:e:4": [
-        -2,
-        14
+        -6,
+        8
       ],
       "cindermoth:walk:e:5": [
-        -2,
-        14
+        -6,
+        8
       ],
       "cindermoth:walk:e:6": [
-        -2,
-        14
+        -6,
+        8
       ],
       "cindermoth:walk:e:7": [
-        -2,
-        14
+        -6,
+        8
       ],
       "cindermoth:walk:s:0": [
-        0,
+        -2,
         10
       ],
       "cindermoth:walk:s:1": [
-        0,
+        -2,
         10
       ],
       "cindermoth:walk:s:2": [
-        4,
-        14
+        -2,
+        16
       ],
       "cindermoth:walk:s:3": [
-        0,
+        -2,
         10
       ],
       "cindermoth:walk:s:4": [
-        0,
+        -2,
         10
       ],
       "cindermoth:walk:s:5": [
-        0,
+        -2,
         10
       ],
       "cindermoth:walk:s:6": [
-        4,
-        14
+        -2,
+        16
       ],
       "cindermoth:walk:s:7": [
-        0,
+        -2,
         10
       ],
       "cindermoth:walk:se:0": [
@@ -1513,15 +1540,15 @@
         8
       ],
       "cindermoth:walk:se:1": [
-        0,
+        -2,
         10
       ],
       "cindermoth:walk:se:2": [
-        0,
+        -2,
         10
       ],
       "cindermoth:walk:se:3": [
-        0,
+        -2,
         10
       ],
       "cindermoth:walk:se:4": [
@@ -1529,15 +1556,15 @@
         8
       ],
       "cindermoth:walk:se:5": [
-        0,
+        -2,
         10
       ],
       "cindermoth:walk:se:6": [
-        0,
+        -2,
         10
       ],
       "cindermoth:walk:se:7": [
-        0,
+        -2,
         10
       ],
       "cindermoth:walk:sw:0": [
@@ -1549,7 +1576,7 @@
         10
       ],
       "cindermoth:walk:sw:2": [
-        0,
+        -2,
         10
       ],
       "cindermoth:walk:sw:3": [
@@ -1565,7 +1592,7 @@
         10
       ],
       "cindermoth:walk:sw:6": [
-        0,
+        -2,
         10
       ],
       "cindermoth:walk:sw:7": [
@@ -1573,65 +1600,77 @@
         10
       ],
       "cindermoth:walk:w:0": [
-        4,
-        8
+        2,
+        14
       ],
       "cindermoth:walk:w:1": [
-        4,
-        8
+        2,
+        14
       ],
       "cindermoth:walk:w:2": [
-        4,
-        8
+        2,
+        14
       ],
       "cindermoth:walk:w:3": [
-        4,
-        8
+        2,
+        14
       ],
       "cindermoth:walk:w:4": [
-        4,
-        8
+        2,
+        14
       ],
       "cindermoth:walk:w:5": [
-        4,
-        8
+        2,
+        14
       ],
       "cindermoth:walk:w:6": [
-        4,
-        8
+        2,
+        14
       ],
       "cindermoth:walk:w:7": [
-        4,
-        8
+        2,
+        14
       ],
-      "cindermoth:work:e:0": null,
-      "cindermoth:work:e:1": null,
+      "cindermoth:work:e:0": [
+        -6,
+        12
+      ],
+      "cindermoth:work:e:1": [
+        -6,
+        12
+      ],
       "cindermoth:work:e:2": null,
-      "cindermoth:work:e:3": null,
-      "cindermoth:work:e:4": null,
+      "cindermoth:work:e:3": [
+        -6,
+        12
+      ],
+      "cindermoth:work:e:4": [
+        -6,
+        12
+      ],
       "cindermoth:work:e:5": null,
       "cindermoth:work:s:0": [
-        0,
+        -2,
         10
       ],
       "cindermoth:work:s:1": [
-        0,
+        -2,
         10
       ],
       "cindermoth:work:s:2": [
-        0,
+        -2,
         8
       ],
       "cindermoth:work:s:3": [
-        0,
+        -2,
         10
       ],
       "cindermoth:work:s:4": [
-        0,
+        -2,
         10
       ],
       "cindermoth:work:s:5": [
-        0,
+        -2,
         8
       ],
       "cindermoth:work:w:0": null,
@@ -1642,5 +1681,5 @@
       "cindermoth:work:w:5": null
     }
   },
-  "sourceDigest": "e035af82fa92cca4d350c35f2d29ebdca8287ef772401398ae6ab1369dd61c94"
+  "sourceDigest": "6d206fcabf0a9a8157200f7670b288e1320267ec2337bb35d819648b38ef6699"
 }

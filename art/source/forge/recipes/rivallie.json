@@ -2,6 +2,16 @@
   "asset": "rivallie",
   "kind": "creature",
   "heightArtPx": 25,
+  "supersample": 4,
+  "features": {
+    "fins": {
+      "minSamples": 1,
+      "on": ["body", "edge"],
+      "near": ["Socket_Back"],
+      "radiusPx": 8,
+      "maxPx": 4
+    }
+  },
   "ramps": {
     "body": "teal",
     "belly": "cream",

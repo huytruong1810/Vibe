@@ -2,6 +2,16 @@
   "asset": "mireling",
   "kind": "creature",
   "heightArtPx": 26,
+  "supersample": 4,
+  "features": {
+    "flowers": {
+      "minSamples": 1,
+      "on": ["moss", "shell", "edge"],
+      "near": ["Socket_Back"],
+      "radiusPx": 8,
+      "maxPx": 4
+    }
+  },
   "ramps": {
     "shell": "basalt",
     "moss": "moss",

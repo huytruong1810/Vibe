@@ -390,14 +390,14 @@
       "rule": "ART-8.1/ART-8.2",
       "hard": true,
       "pass": true,
-      "detail": "1795 registrations; "
+      "detail": "1805 registrations; "
     },
     {
       "check": "faceCoverage",
       "rule": "ART-8.2",
       "hard": true,
       "pass": false,
-      "detail": "49 of 408 forward frames hide the face (limit 10%); idle hidden: 6"
+      "detail": "47 of 408 forward frames hide the face (limit 10%); idle hidden: 6"
     },
     {
       "check": "faceDistinct",
@@ -416,7 +416,7 @@
       ],
       "steamshell:bathe:e:1": [
         -4,
-        8
+        10
       ],
       "steamshell:bathe:e:2": null,
       "steamshell:bathe:e:3": [
@@ -430,27 +430,27 @@
       ],
       "steamshell:bathe:s:0": [
         0,
-        6
+        10
       ],
       "steamshell:bathe:s:1": [
         0,
-        6
+        10
       ],
       "steamshell:bathe:s:2": [
         0,
-        6
+        10
       ],
       "steamshell:bathe:s:3": [
         0,
-        6
+        10
       ],
       "steamshell:bathe:s:4": [
         0,
-        6
+        10
       ],
       "steamshell:bathe:s:5": [
         0,
-        6
+        10
       ],
       "steamshell:bathe:w:0": [
         2,
@@ -462,7 +462,7 @@
       ],
       "steamshell:bathe:w:2": [
         4,
-        6
+        10
       ],
       "steamshell:bathe:w:3": null,
       "steamshell:bathe:w:4": [
@@ -474,60 +474,60 @@
         6
       ],
       "steamshell:downed:e:0": [
-        -4,
-        6
+        0,
+        12
       ],
       "steamshell:downed:e:1": [
         0,
-        8
+        10
       ],
       "steamshell:downed:e:2": [
         0,
-        6
+        10
       ],
       "steamshell:downed:e:3": [
         0,
-        6
+        10
       ],
       "steamshell:downed:e:4": [
         0,
-        6
+        10
       ],
       "steamshell:downed:e:5": [
         0,
-        6
+        10
       ],
       "steamshell:downed:s:0": [
         0,
-        6
+        10
       ],
       "steamshell:downed:s:1": [
         0,
-        6
+        10
       ],
       "steamshell:downed:s:2": [
         0,
-        6
+        8
       ],
       "steamshell:downed:s:3": [
         0,
-        6
+        8
       ],
       "steamshell:downed:s:4": [
         0,
-        6
+        10
       ],
       "steamshell:downed:s:5": [
         0,
-        6
+        8
       ],
       "steamshell:downed:w:0": [
-        2,
-        6
+        0,
+        10
       ],
       "steamshell:downed:w:1": [
-        0,
-        6
+        2,
+        10
       ],
       "steamshell:downed:w:2": [
         0,
@@ -538,84 +538,84 @@
         6
       ],
       "steamshell:downed:w:4": [
-        0,
-        4
+        2,
+        8
       ],
       "steamshell:downed:w:5": [
         0,
         6
       ],
       "steamshell:drink:e:0": [
-        -4,
-        14
+        -2,
+        16
       ],
       "steamshell:drink:e:1": [
         -2,
         14
       ],
       "steamshell:drink:e:2": [
-        -4,
-        14
+        -2,
+        16
       ],
       "steamshell:drink:e:3": [
-        -4,
-        14
+        -2,
+        16
       ],
       "steamshell:drink:e:4": [
         -2,
         14
       ],
       "steamshell:drink:e:5": [
-        -4,
-        14
+        -2,
+        16
       ],
       "steamshell:drink:s:0": [
         0,
-        6
+        10
       ],
       "steamshell:drink:s:1": [
         0,
-        6
+        10
       ],
       "steamshell:drink:s:2": [
         0,
-        6
+        10
       ],
       "steamshell:drink:s:3": [
         0,
-        6
+        10
       ],
       "steamshell:drink:s:4": [
         0,
-        6
+        10
       ],
       "steamshell:drink:s:5": [
         0,
-        6
+        10
       ],
       "steamshell:drink:w:0": [
         4,
-        8
+        10
       ],
       "steamshell:drink:w:1": [
         4,
-        8
+        10
       ],
       "steamshell:drink:w:2": [
         4,
-        8
+        10
       ],
       "steamshell:drink:w:3": [
         4,
-        8
+        10
       ],
       "steamshell:drink:w:4": [
         4,
-        8
+        10
       ],
       "steamshell:drink:w:5": [
         4,
-        8
+        10
       ],
       "steamshell:eat:e:0": null,
       "steamshell:eat:e:1": null,
@@ -625,27 +625,27 @@
       "steamshell:eat:e:5": null,
       "steamshell:eat:s:0": [
         0,
-        6
+        10
       ],
       "steamshell:eat:s:1": [
         0,
-        6
+        10
       ],
       "steamshell:eat:s:2": [
         0,
-        6
+        10
       ],
       "steamshell:eat:s:3": [
         0,
-        6
+        10
       ],
       "steamshell:eat:s:4": [
         0,
-        6
+        10
       ],
       "steamshell:eat:s:5": [
         0,
-        6
+        10
       ],
       "steamshell:eat:w:0": [
         4,
@@ -664,8 +664,8 @@
       "steamshell:eat:w:5": null,
       "steamshell:element:e:0": null,
       "steamshell:element:e:1": [
-        -4,
-        6
+        -2,
+        16
       ],
       "steamshell:element:e:2": [
         0,
@@ -694,71 +694,71 @@
       "steamshell:element:e:11": null,
       "steamshell:element:s:0": [
         0,
-        6
+        10
       ],
       "steamshell:element:s:1": [
         0,
-        6
+        10
       ],
       "steamshell:element:s:2": [
         0,
-        6
+        10
       ],
       "steamshell:element:s:3": [
         0,
-        6
+        10
       ],
       "steamshell:element:s:4": [
         0,
-        6
+        10
       ],
       "steamshell:element:s:5": [
         0,
-        6
+        10
       ],
       "steamshell:element:s:6": [
         0,
-        6
+        10
       ],
       "steamshell:element:s:7": [
         0,
-        6
+        10
       ],
       "steamshell:element:s:8": [
         0,
-        6
+        10
       ],
       "steamshell:element:s:9": [
         0,
-        6
+        10
       ],
       "steamshell:element:s:10": [
         0,
-        6
+        10
       ],
       "steamshell:element:s:11": [
         0,
-        6
+        10
       ],
       "steamshell:element:se:0": [
-        -2,
-        6
+        0,
+        12
       ],
       "steamshell:element:se:1": [
-        -2,
-        8
+        0,
+        12
       ],
       "steamshell:element:se:2": [
         -2,
-        6
+        8
       ],
       "steamshell:element:se:3": [
         0,
-        6
+        10
       ],
       "steamshell:element:se:4": [
         0,
-        6
+        10
       ],
       "steamshell:element:se:5": [
         0,
@@ -773,80 +773,80 @@
         10
       ],
       "steamshell:element:se:8": [
-        -4,
-        6
+        0,
+        12
       ],
       "steamshell:element:se:9": [
-        -4,
-        6
+        0,
+        12
       ],
       "steamshell:element:se:10": [
-        -2,
-        6
+        0,
+        12
       ],
       "steamshell:element:se:11": [
-        -2,
-        6
+        0,
+        12
       ],
       "steamshell:element:sw:0": [
         0,
-        6
+        10
       ],
       "steamshell:element:sw:1": [
         0,
-        8
+        10
       ],
       "steamshell:element:sw:2": [
         0,
-        6
+        8
       ],
       "steamshell:element:sw:3": [
         0,
-        6
+        10
       ],
       "steamshell:element:sw:4": [
         0,
-        6
+        10
       ],
       "steamshell:element:sw:5": [
         0,
-        8
+        10
       ],
       "steamshell:element:sw:6": [
         0,
-        8
+        10
       ],
       "steamshell:element:sw:7": [
         0,
-        8
+        10
       ],
       "steamshell:element:sw:8": [
-        2,
-        6
+        0,
+        10
       ],
       "steamshell:element:sw:9": [
-        2,
-        6
+        0,
+        10
       ],
       "steamshell:element:sw:10": [
         0,
-        6
+        10
       ],
       "steamshell:element:sw:11": [
         0,
-        6
+        10
       ],
       "steamshell:element:w:0": [
         4,
         6
       ],
       "steamshell:element:w:1": [
-        2,
-        6
+        4,
+        10
       ],
       "steamshell:element:w:2": [
         0,
-        6
+        8
       ],
       "steamshell:element:w:3": [
         0,
@@ -871,7 +871,7 @@
       ],
       "steamshell:element:w:9": [
         4,
-        6
+        8
       ],
       "steamshell:element:w:10": null,
       "steamshell:element:w:11": [
@@ -959,12 +959,12 @@
         4
       ],
       "steamshell:hit:e:0": [
-        -4,
-        6
+        0,
+        14
       ],
       "steamshell:hit:e:1": [
         -4,
-        8
+        10
       ],
       "steamshell:hit:e:2": [
         -4,
@@ -973,59 +973,59 @@
       "steamshell:hit:e:3": null,
       "steamshell:hit:s:0": [
         0,
-        6
+        10
       ],
       "steamshell:hit:s:1": [
         0,
-        6
+        10
       ],
       "steamshell:hit:s:2": [
         0,
-        6
+        10
       ],
       "steamshell:hit:s:3": [
         0,
-        6
+        10
       ],
       "steamshell:hit:se:0": [
-        -2,
-        6
+        0,
+        10
       ],
       "steamshell:hit:se:1": [
-        -2,
-        6
+        0,
+        10
       ],
       "steamshell:hit:se:2": [
-        -2,
-        6
+        0,
+        12
       ],
       "steamshell:hit:se:3": [
-        -2,
-        6
+        0,
+        12
       ],
       "steamshell:hit:sw:0": [
         0,
-        6
+        10
       ],
       "steamshell:hit:sw:1": [
         0,
-        6
+        10
       ],
       "steamshell:hit:sw:2": [
         0,
-        6
+        10
       ],
       "steamshell:hit:sw:3": [
         0,
-        6
+        10
       ],
       "steamshell:hit:w:0": [
-        2,
-        8
+        0,
+        12
       ],
       "steamshell:hit:w:1": [
         2,
-        6
+        10
       ],
       "steamshell:hit:w:2": [
         2,
@@ -1043,75 +1043,75 @@
       "steamshell:idle:e:5": null,
       "steamshell:idle:s:0": [
         0,
-        6
+        10
       ],
       "steamshell:idle:s:1": [
         0,
-        6
+        10
       ],
       "steamshell:idle:s:2": [
         0,
-        6
+        10
       ],
       "steamshell:idle:s:3": [
         0,
-        6
+        10
       ],
       "steamshell:idle:s:4": [
         0,
-        6
+        10
       ],
       "steamshell:idle:s:5": [
         0,
-        6
+        10
       ],
       "steamshell:idle:se:0": [
-        -2,
-        6
+        0,
+        12
       ],
       "steamshell:idle:se:1": [
-        -2,
-        6
+        0,
+        12
       ],
       "steamshell:idle:se:2": [
-        -2,
-        6
+        0,
+        12
       ],
       "steamshell:idle:se:3": [
-        -2,
-        6
+        0,
+        12
       ],
       "steamshell:idle:se:4": [
-        -2,
-        6
+        0,
+        12
       ],
       "steamshell:idle:se:5": [
-        -2,
-        6
+        0,
+        12
       ],
       "steamshell:idle:sw:0": [
         0,
-        6
+        10
       ],
       "steamshell:idle:sw:1": [
         0,
-        6
+        10
       ],
       "steamshell:idle:sw:2": [
         0,
-        6
+        10
       ],
       "steamshell:idle:sw:3": [
         0,
-        6
+        10
       ],
       "steamshell:idle:sw:4": [
         0,
-        6
+        10
       ],
       "steamshell:idle:sw:5": [
         0,
-        6
+        10
       ],
       "steamshell:idle:w:0": [
         4,
@@ -1139,58 +1139,61 @@
       ],
       "steamshell:recovery:e:0": [
         0,
-        6
+        10
       ],
       "steamshell:recovery:e:1": [
         0,
-        6
+        10
       ],
       "steamshell:recovery:e:2": [
         0,
-        6
+        10
       ],
-      "steamshell:recovery:e:3": null,
+      "steamshell:recovery:e:3": [
+        -4,
+        18
+      ],
       "steamshell:recovery:e:4": null,
       "steamshell:recovery:e:5": null,
       "steamshell:recovery:s:0": [
         0,
-        6
+        10
       ],
       "steamshell:recovery:s:1": [
         0,
-        6
+        10
       ],
       "steamshell:recovery:s:2": [
         0,
-        6
+        10
       ],
       "steamshell:recovery:s:3": [
         0,
-        6
+        10
       ],
       "steamshell:recovery:s:4": [
         0,
-        6
+        10
       ],
       "steamshell:recovery:s:5": [
         0,
-        6
+        10
       ],
       "steamshell:recovery:w:0": [
         0,
-        6
+        10
       ],
       "steamshell:recovery:w:1": [
         0,
-        6
+        10
       ],
       "steamshell:recovery:w:2": [
         0,
-        6
+        10
       ],
       "steamshell:recovery:w:3": [
         4,
-        6
+        8
       ],
       "steamshell:recovery:w:4": [
         4,
@@ -1209,12 +1212,12 @@
       "steamshell:run:e:3": null,
       "steamshell:run:e:4": null,
       "steamshell:run:e:5": [
-        -4,
-        14
+        0,
+        18
       ],
       "steamshell:run:e:6": [
         -4,
-        6
+        10
       ],
       "steamshell:run:e:7": [
         -4,
@@ -1222,99 +1225,99 @@
       ],
       "steamshell:run:s:0": [
         0,
-        6
+        10
       ],
       "steamshell:run:s:1": [
         0,
-        6
+        10
       ],
       "steamshell:run:s:2": [
         0,
-        6
+        10
       ],
       "steamshell:run:s:3": [
         0,
-        6
+        10
       ],
       "steamshell:run:s:4": [
         0,
-        6
+        10
       ],
       "steamshell:run:s:5": [
         0,
-        6
+        10
       ],
       "steamshell:run:s:6": [
         0,
-        6
+        10
       ],
       "steamshell:run:s:7": [
         0,
-        6
+        10
       ],
       "steamshell:run:se:0": [
         0,
-        6
+        10
       ],
       "steamshell:run:se:1": [
         0,
-        8
+        10
       ],
       "steamshell:run:se:2": [
         -2,
-        6
+        10
       ],
       "steamshell:run:se:3": [
         -2,
-        6
+        10
       ],
       "steamshell:run:se:4": [
         -2,
-        6
+        8
       ],
       "steamshell:run:se:5": [
-        -4,
-        6
+        0,
+        12
       ],
       "steamshell:run:se:6": [
         0,
-        6
+        10
       ],
       "steamshell:run:se:7": [
         0,
-        6
+        10
       ],
       "steamshell:run:sw:0": [
         2,
-        6
+        8
       ],
       "steamshell:run:sw:1": [
         0,
-        6
+        10
       ],
       "steamshell:run:sw:2": [
         0,
-        6
+        10
       ],
       "steamshell:run:sw:3": [
         0,
-        6
+        10
       ],
       "steamshell:run:sw:4": [
         0,
-        6
+        10
       ],
       "steamshell:run:sw:5": [
         0,
-        6
+        10
       ],
       "steamshell:run:sw:6": [
         0,
-        6
+        10
       ],
       "steamshell:run:sw:7": [
         2,
-        6
+        8
       ],
       "steamshell:run:w:0": [
         4,
@@ -1326,7 +1329,7 @@
       ],
       "steamshell:run:w:2": [
         2,
-        6
+        8
       ],
       "steamshell:run:w:3": [
         2,
@@ -1416,27 +1419,27 @@
       ],
       "steamshell:social:s:0": [
         0,
-        6
+        10
       ],
       "steamshell:social:s:1": [
         0,
-        6
+        10
       ],
       "steamshell:social:s:2": [
         0,
-        6
+        10
       ],
       "steamshell:social:s:3": [
         0,
-        6
+        10
       ],
       "steamshell:social:s:4": [
         0,
-        6
+        10
       ],
       "steamshell:social:s:5": [
         0,
-        6
+        10
       ],
       "steamshell:social:w:0": [
         4,
@@ -1462,28 +1465,28 @@
         6
       ],
       "steamshell:strike:e:2": [
-        -4,
-        6
+        0,
+        18
       ],
       "steamshell:strike:e:3": [
         -2,
-        6
+        8
       ],
       "steamshell:strike:e:4": [
         -2,
-        6
+        8
       ],
       "steamshell:strike:e:5": [
         -2,
-        6
+        8
       ],
       "steamshell:strike:e:6": [
         -4,
-        6
+        8
       ],
       "steamshell:strike:e:7": [
         -4,
-        6
+        8
       ],
       "steamshell:strike:e:8": [
         -4,
@@ -1497,147 +1500,147 @@
       "steamshell:strike:e:11": null,
       "steamshell:strike:s:0": [
         0,
-        6
+        10
       ],
       "steamshell:strike:s:1": [
         0,
-        6
+        10
       ],
       "steamshell:strike:s:2": [
         0,
-        6
+        10
       ],
       "steamshell:strike:s:3": [
         0,
-        6
+        10
       ],
       "steamshell:strike:s:4": [
         0,
-        6
+        10
       ],
       "steamshell:strike:s:5": [
         0,
-        6
+        10
       ],
       "steamshell:strike:s:6": [
         0,
-        6
+        10
       ],
       "steamshell:strike:s:7": [
         0,
-        6
+        10
       ],
       "steamshell:strike:s:8": [
         0,
-        6
+        10
       ],
       "steamshell:strike:s:9": [
         0,
-        6
+        10
       ],
       "steamshell:strike:s:10": [
         0,
-        6
+        10
       ],
       "steamshell:strike:s:11": [
         0,
-        6
+        10
       ],
       "steamshell:strike:se:0": [
-        -2,
-        6
+        0,
+        12
       ],
       "steamshell:strike:se:1": [
         -2,
-        6
+        10
       ],
       "steamshell:strike:se:2": [
         0,
-        6
+        10
       ],
       "steamshell:strike:se:3": [
         0,
-        6
+        10
       ],
       "steamshell:strike:se:4": [
         0,
-        6
+        10
       ],
       "steamshell:strike:se:5": [
         0,
-        6
+        10
       ],
       "steamshell:strike:se:6": [
         0,
-        6
+        10
       ],
       "steamshell:strike:se:7": [
         0,
-        6
+        10
       ],
       "steamshell:strike:se:8": [
         0,
-        6
+        10
       ],
       "steamshell:strike:se:9": [
         0,
-        8
+        10
       ],
       "steamshell:strike:se:10": [
-        -2,
-        6
+        0,
+        12
       ],
       "steamshell:strike:se:11": [
-        -2,
-        6
+        0,
+        12
       ],
       "steamshell:strike:sw:0": [
         0,
-        6
+        10
       ],
       "steamshell:strike:sw:1": [
         0,
-        6
+        10
       ],
       "steamshell:strike:sw:2": [
         0,
-        6
+        10
       ],
       "steamshell:strike:sw:3": [
         0,
-        6
+        10
       ],
       "steamshell:strike:sw:4": [
         0,
-        6
+        10
       ],
       "steamshell:strike:sw:5": [
         0,
-        6
+        10
       ],
       "steamshell:strike:sw:6": [
         0,
-        6
+        10
       ],
       "steamshell:strike:sw:7": [
         0,
-        6
+        10
       ],
       "steamshell:strike:sw:8": [
         0,
-        6
+        10
       ],
       "steamshell:strike:sw:9": [
         0,
-        6
+        10
       ],
       "steamshell:strike:sw:10": [
         0,
-        6
+        10
       ],
       "steamshell:strike:sw:11": [
         0,
-        6
+        10
       ],
       "steamshell:strike:w:0": [
         4,
@@ -1648,8 +1651,8 @@
         6
       ],
       "steamshell:strike:w:2": [
-        2,
-        6
+        4,
+        10
       ],
       "steamshell:strike:w:3": [
         0,
@@ -1687,7 +1690,10 @@
         4,
         6
       ],
-      "steamshell:walk:e:0": null,
+      "steamshell:walk:e:0": [
+        -2,
+        18
+      ],
       "steamshell:walk:e:1": null,
       "steamshell:walk:e:2": [
         -4,
@@ -1700,8 +1706,8 @@
       "steamshell:walk:e:4": null,
       "steamshell:walk:e:5": null,
       "steamshell:walk:e:6": [
-        -2,
-        6
+        -4,
+        10
       ],
       "steamshell:walk:e:7": [
         -4,
@@ -1709,99 +1715,99 @@
       ],
       "steamshell:walk:s:0": [
         0,
-        6
+        10
       ],
       "steamshell:walk:s:1": [
         0,
-        6
+        10
       ],
       "steamshell:walk:s:2": [
         0,
-        6
+        10
       ],
       "steamshell:walk:s:3": [
         0,
-        6
+        10
       ],
       "steamshell:walk:s:4": [
         0,
-        6
+        10
       ],
       "steamshell:walk:s:5": [
         0,
-        6
+        10
       ],
       "steamshell:walk:s:6": [
         0,
-        6
+        10
       ],
       "steamshell:walk:s:7": [
         0,
-        6
+        10
       ],
       "steamshell:walk:se:0": [
-        -2,
-        8
+        0,
+        12
       ],
       "steamshell:walk:se:1": [
-        -2,
-        6
+        0,
+        12
       ],
       "steamshell:walk:se:2": [
-        -2,
-        8
+        0,
+        12
       ],
       "steamshell:walk:se:3": [
         -2,
-        8
+        10
       ],
       "steamshell:walk:se:4": [
-        -4,
-        8
+        -2,
+        12
       ],
       "steamshell:walk:se:5": [
         -4,
-        6
+        10
       ],
       "steamshell:walk:se:6": [
         0,
-        6
+        10
       ],
       "steamshell:walk:se:7": [
         0,
-        6
+        10
       ],
       "steamshell:walk:sw:0": [
         2,
-        8
+        10
       ],
       "steamshell:walk:sw:1": [
-        2,
-        8
+        0,
+        12
       ],
       "steamshell:walk:sw:2": [
         0,
-        6
+        10
       ],
       "steamshell:walk:sw:3": [
         0,
-        6
+        10
       ],
       "steamshell:walk:sw:4": [
-        2,
-        6
+        0,
+        10
       ],
       "steamshell:walk:sw:5": [
         0,
-        6
+        10
       ],
       "steamshell:walk:sw:6": [
-        2,
-        6
+        0,
+        10
       ],
       "steamshell:walk:sw:7": [
-        2,
-        6
+        0,
+        10
       ],
       "steamshell:walk:w:0": null,
       "steamshell:walk:w:1": [
@@ -1809,8 +1815,8 @@
         4
       ],
       "steamshell:walk:w:2": [
-        2,
-        6
+        4,
+        10
       ],
       "steamshell:walk:w:3": [
         2,
@@ -1834,42 +1840,42 @@
       ],
       "steamshell:work:e:0": [
         -4,
-        8
+        10
       ],
       "steamshell:work:e:1": null,
       "steamshell:work:e:2": [
         -4,
-        8
+        10
       ],
       "steamshell:work:e:3": null,
       "steamshell:work:e:4": [
         -4,
-        8
+        10
       ],
       "steamshell:work:e:5": null,
       "steamshell:work:s:0": [
         0,
-        6
+        10
       ],
       "steamshell:work:s:1": [
         0,
-        6
+        10
       ],
       "steamshell:work:s:2": [
         0,
-        6
+        10
       ],
       "steamshell:work:s:3": [
         0,
-        6
+        10
       ],
       "steamshell:work:s:4": [
         0,
-        6
+        10
       ],
       "steamshell:work:s:5": [
         0,
-        6
+        10
       ],
       "steamshell:work:w:0": [
         4,
@@ -1897,5 +1903,5 @@
       ]
     }
   },
-  "sourceDigest": "02cf3a49452b1b3ec8cc61ec22ddb2fa604db00b3de5e458ba3a4cb9fba8ff93"
+  "sourceDigest": "51449d2008e5c64798a4e1fc5d32cc44a72216cdfd98e3795be7ca5892921567"
 }

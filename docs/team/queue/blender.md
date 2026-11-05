@@ -59,7 +59,7 @@ B0 is standing.
 
 ### B20 · C26 readability re-bakes for creatures, `npc:oren`/`npc:reed`, and held weapons
 
-- status: open (unblocked: B19 and C26 are approved; **run only after `B27` finishes publishing the current approved digests**)
+- status: candidate (all 9 assets re-baked/rendered and packeted: rivallie, bramblefang, marshstalker, mireling, item:hatchet, npc:oren, npc:reed, item:copper-sword, item:shortbow)
 - goal: upgrade the 4 quadrupeds (`rivallie`, `bramblefang`, `marshstalker`, `mireling`) and `item:hatchet` with C26 readability fields, and resolve the non-blocking ramp/silhouette defects noted in the `2026-11-05` acting-director audit on `npc:oren`, `npc:reed`, `item:copper-sword`, and `item:shortbow`.
 - inputs: `art/source/forge/recipes/README.md` (C26 fields: `supersample`, `features`, `rampShift`, `outline.mode: "dark-ramp"`, `minFeaturePx`); audit notes in `docs/team/comms/visitor/2026-11-05T0030--to-claude--acting-director-audit-and-tool-findings.md`.
 - work, one asset at a time (only after `B27` is committed!):
@@ -67,7 +67,7 @@ B0 is standing.
   2. **`npc:oren` & `npc:reed` white-ramp separation:** Add `features` / positive `rampShift` toward `ivory`/`cream` in `recipes/npc-oren.json` (white beard and hair) and `recipes/npc-reed.json` (white shirt sleeves) so warm directional lighting no longer collapses them into the brown/tan ramp. Re-run `pixelize -> qa -> packet`.
   3. **`item:copper-sword` & `item:shortbow` silhouette refinement:** Reduce or tune `minFeaturePx` (and/or re-run after Claude/Codex's `item_orient.py` webbing/anisotropic fix) so the sword crossguard/blade taper and bow interior arc read clearly across all 65 poses.
 - done when: updated packets are in `art/review/` (`candidate`), inspected via `read_file` (`PRD-5`), and submitted for approval (`V6`)
-- evidence:
+- evidence: art/review/2026-11-05-{rivallie,bramblefang,marshstalker,mireling,item-hatchet,npc-oren,npc-reed,item-copper-sword,item-shortbow}/; docs/team/comms/blender/2026-11-05T0145--to-visitor-communicator--b20-readability-rebakes-candidate.md.
 
 ### B25 · Portraits and expression sets (after C30, see [imagegen](../../engineering/imagegen.md))
 

@@ -1,0 +1,587 @@
+{
+ "held_0/e_0": {
+  "labels": {
+   "blade": 10,
+   "crossguard": 18,
+   "grip": 21,
+   "pommel": 4
+  },
+  "interiorLinePx": 0
+ },
+ "held_0/n_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 6,
+   "grip": 22,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_0/ne_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 6,
+   "grip": 37,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_0/nw_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 6,
+   "grip": 39,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_0/s_0": {
+  "labels": {
+   "blade": 6,
+   "crossguard": 6,
+   "grip": 16,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_0/se_0": {
+  "labels": {
+   "blade": 16,
+   "crossguard": 10,
+   "grip": 17,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_0/sw_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 9,
+   "grip": 37,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_0/w_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 13,
+   "grip": 41,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/e_0": {
+  "labels": {
+   "blade": 9,
+   "crossguard": 13,
+   "grip": 31,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/n_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 5,
+   "grip": 23,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/ne_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 12,
+   "grip": 32,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/nw_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 9,
+   "grip": 34,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/s_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 6,
+   "grip": 22,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/se_0": {
+  "labels": {
+   "blade": 7,
+   "crossguard": 11,
+   "grip": 26,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/sw_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 5,
+   "grip": 39,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/w_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 7,
+   "grip": 48,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/e_0": {
+  "labels": {
+   "blade": 10,
+   "crossguard": 18,
+   "grip": 21,
+   "pommel": 4
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/n_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 6,
+   "grip": 22,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/ne_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 6,
+   "grip": 37,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/nw_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 6,
+   "grip": 39,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/s_0": {
+  "labels": {
+   "blade": 6,
+   "crossguard": 6,
+   "grip": 16,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/se_0": {
+  "labels": {
+   "blade": 16,
+   "crossguard": 10,
+   "grip": 17,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/sw_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 9,
+   "grip": 37,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/w_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 13,
+   "grip": 41,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/e_0": {
+  "labels": {
+   "blade": 9,
+   "crossguard": 13,
+   "grip": 31,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/n_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 5,
+   "grip": 23,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/ne_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 12,
+   "grip": 32,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/nw_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 9,
+   "grip": 34,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/s_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 6,
+   "grip": 22,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/se_0": {
+  "labels": {
+   "blade": 7,
+   "crossguard": 11,
+   "grip": 26,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/sw_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 5,
+   "grip": 39,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/w_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 7,
+   "grip": 48,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/e_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 18,
+   "grip": 31,
+   "pommel": 4
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/n_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 6,
+   "grip": 22,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/ne_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 6,
+   "grip": 37,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/nw_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 6,
+   "grip": 39,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/s_0": {
+  "labels": {
+   "blade": 6,
+   "crossguard": 6,
+   "grip": 16,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/se_0": {
+  "labels": {
+   "blade": 16,
+   "crossguard": 10,
+   "grip": 17,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/sw_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 9,
+   "grip": 37,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/w_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 13,
+   "grip": 41,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/e_0": {
+  "labels": {
+   "blade": 9,
+   "crossguard": 13,
+   "grip": 31,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/n_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 5,
+   "grip": 23,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/ne_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 12,
+   "grip": 32,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/nw_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 9,
+   "grip": 34,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/s_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 6,
+   "grip": 22,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/se_0": {
+  "labels": {
+   "blade": 7,
+   "crossguard": 11,
+   "grip": 26,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/sw_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 5,
+   "grip": 39,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/w_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 7,
+   "grip": 48,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/e_0": {
+  "labels": {
+   "blade": 10,
+   "crossguard": 18,
+   "grip": 21,
+   "pommel": 4
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/n_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 6,
+   "grip": 22,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/ne_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 6,
+   "grip": 37,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/nw_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 6,
+   "grip": 39,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/s_0": {
+  "labels": {
+   "blade": 6,
+   "crossguard": 6,
+   "grip": 16,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/se_0": {
+  "labels": {
+   "blade": 16,
+   "crossguard": 10,
+   "grip": 17,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/sw_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 9,
+   "grip": 37,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/w_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 13,
+   "grip": 41,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/e_0": {
+  "labels": {
+   "blade": 9,
+   "crossguard": 13,
+   "grip": 27,
+   "pommel": 4
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/n_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 5,
+   "grip": 23,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/ne_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 12,
+   "grip": 32,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/nw_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 9,
+   "grip": 34,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/s_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 6,
+   "grip": 22,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/se_0": {
+  "labels": {
+   "blade": 7,
+   "crossguard": 11,
+   "grip": 26,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/sw_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 5,
+   "grip": 39,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/w_0": {
+  "labels": {
+   "blade": 0,
+   "crossguard": 7,
+   "grip": 48,
+   "pommel": 0
+  },
+  "interiorLinePx": 0
+ },
+ "icon/se_0": {
+  "labels": {
+   "blade": 20,
+   "crossguard": 25,
+   "grip": 70,
+   "pommel": 6
+  },
+  "interiorLinePx": 1
+ }
+}

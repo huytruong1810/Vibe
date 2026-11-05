@@ -390,14 +390,14 @@
       "rule": "ART-8.1/ART-8.2",
       "hard": true,
       "pass": true,
-      "detail": "680 registrations; "
+      "detail": "1065 registrations; "
     },
     {
       "check": "faceCoverage",
       "rule": "ART-8.2",
       "hard": true,
       "pass": false,
-      "detail": "272 of 408 forward frames hide the face (limit 10%); idle hidden: 18"
+      "detail": "195 of 408 forward frames hide the face (limit 10%); idle hidden: 12"
     },
     {
       "check": "faceDistinct",
@@ -410,35 +410,53 @@
   "registration": {
     "unit": "frame px from Socket_Head; null hides the face on that frame",
     "frames": {
-      "marshstalker:bathe:e:0": null,
-      "marshstalker:bathe:e:1": null,
-      "marshstalker:bathe:e:2": null,
-      "marshstalker:bathe:e:3": null,
-      "marshstalker:bathe:e:4": null,
-      "marshstalker:bathe:e:5": null,
+      "marshstalker:bathe:e:0": [
+        -12,
+        16
+      ],
+      "marshstalker:bathe:e:1": [
+        -10,
+        16
+      ],
+      "marshstalker:bathe:e:2": [
+        -12,
+        18
+      ],
+      "marshstalker:bathe:e:3": [
+        -10,
+        16
+      ],
+      "marshstalker:bathe:e:4": [
+        -10,
+        16
+      ],
+      "marshstalker:bathe:e:5": [
+        -12,
+        16
+      ],
       "marshstalker:bathe:s:0": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:bathe:s:1": [
-        0,
-        8
+        -8,
+        10
       ],
       "marshstalker:bathe:s:2": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:bathe:s:3": [
-        -2,
-        6
+        -8,
+        10
       ],
       "marshstalker:bathe:s:4": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:bathe:s:5": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:bathe:w:0": null,
       "marshstalker:bathe:w:1": null,
@@ -453,28 +471,28 @@
       "marshstalker:downed:e:4": null,
       "marshstalker:downed:e:5": null,
       "marshstalker:downed:s:0": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:downed:s:1": [
-        -2,
-        2
+        -8,
+        4
       ],
       "marshstalker:downed:s:2": [
-        0,
-        -2
+        -8,
+        2
       ],
       "marshstalker:downed:s:3": [
-        0,
-        -2
+        -8,
+        2
       ],
       "marshstalker:downed:s:4": [
-        0,
-        -2
+        -8,
+        2
       ],
       "marshstalker:downed:s:5": [
-        0,
-        -2
+        -8,
+        2
       ],
       "marshstalker:downed:w:0": null,
       "marshstalker:downed:w:1": null,
@@ -506,58 +524,112 @@
       "marshstalker:eat:e:3": null,
       "marshstalker:eat:e:4": null,
       "marshstalker:eat:e:5": null,
-      "marshstalker:eat:s:0": null,
-      "marshstalker:eat:s:1": null,
-      "marshstalker:eat:s:2": null,
-      "marshstalker:eat:s:3": null,
-      "marshstalker:eat:s:4": null,
-      "marshstalker:eat:s:5": null,
+      "marshstalker:eat:s:0": [
+        -10,
+        2
+      ],
+      "marshstalker:eat:s:1": [
+        -10,
+        2
+      ],
+      "marshstalker:eat:s:2": [
+        -10,
+        2
+      ],
+      "marshstalker:eat:s:3": [
+        -10,
+        2
+      ],
+      "marshstalker:eat:s:4": [
+        -10,
+        2
+      ],
+      "marshstalker:eat:s:5": [
+        -10,
+        2
+      ],
       "marshstalker:eat:w:0": null,
       "marshstalker:eat:w:1": null,
       "marshstalker:eat:w:2": null,
       "marshstalker:eat:w:3": null,
       "marshstalker:eat:w:4": null,
       "marshstalker:eat:w:5": null,
-      "marshstalker:element:e:0": null,
-      "marshstalker:element:e:1": null,
+      "marshstalker:element:e:0": [
+        -12,
+        16
+      ],
+      "marshstalker:element:e:1": [
+        -8,
+        16
+      ],
       "marshstalker:element:e:2": null,
       "marshstalker:element:e:3": null,
       "marshstalker:element:e:4": null,
-      "marshstalker:element:e:5": null,
-      "marshstalker:element:e:6": null,
-      "marshstalker:element:e:7": null,
-      "marshstalker:element:e:8": null,
-      "marshstalker:element:e:9": null,
-      "marshstalker:element:e:10": null,
-      "marshstalker:element:e:11": null,
-      "marshstalker:element:s:0": [
-        0,
-        6
+      "marshstalker:element:e:5": [
+        -6,
+        18
       ],
-      "marshstalker:element:s:1": null,
+      "marshstalker:element:e:6": [
+        -8,
+        16
+      ],
+      "marshstalker:element:e:7": [
+        -8,
+        14
+      ],
+      "marshstalker:element:e:8": [
+        -12,
+        16
+      ],
+      "marshstalker:element:e:9": [
+        -12,
+        16
+      ],
+      "marshstalker:element:e:10": [
+        -12,
+        16
+      ],
+      "marshstalker:element:e:11": [
+        -12,
+        16
+      ],
+      "marshstalker:element:s:0": [
+        -8,
+        10
+      ],
+      "marshstalker:element:s:1": [
+        -10,
+        18
+      ],
       "marshstalker:element:s:2": null,
       "marshstalker:element:s:3": null,
       "marshstalker:element:s:4": null,
       "marshstalker:element:s:5": null,
       "marshstalker:element:s:6": null,
-      "marshstalker:element:s:7": null,
+      "marshstalker:element:s:7": [
+        -8,
+        18
+      ],
       "marshstalker:element:s:8": [
-        0,
+        -8,
         10
       ],
       "marshstalker:element:s:9": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:element:s:10": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:element:s:11": [
-        0,
-        6
+        -8,
+        10
       ],
-      "marshstalker:element:se:0": null,
+      "marshstalker:element:se:0": [
+        -8,
+        14
+      ],
       "marshstalker:element:se:1": null,
       "marshstalker:element:se:2": null,
       "marshstalker:element:se:3": null,
@@ -565,65 +637,68 @@
       "marshstalker:element:se:5": null,
       "marshstalker:element:se:6": null,
       "marshstalker:element:se:7": null,
-      "marshstalker:element:se:8": null,
-      "marshstalker:element:se:9": null,
-      "marshstalker:element:se:10": null,
-      "marshstalker:element:se:11": null,
-      "marshstalker:element:sw:0": [
-        2,
-        6
+      "marshstalker:element:se:8": [
+        -8,
+        16
       ],
+      "marshstalker:element:se:9": [
+        -8,
+        14
+      ],
+      "marshstalker:element:se:10": [
+        -8,
+        14
+      ],
+      "marshstalker:element:se:11": [
+        -8,
+        14
+      ],
+      "marshstalker:element:sw:0": null,
       "marshstalker:element:sw:1": [
-        -2,
-        14
+        -6,
+        10
       ],
-      "marshstalker:element:sw:2": null,
-      "marshstalker:element:sw:3": null,
-      "marshstalker:element:sw:4": null,
-      "marshstalker:element:sw:5": null,
-      "marshstalker:element:sw:6": null,
+      "marshstalker:element:sw:2": [
+        -8,
+        16
+      ],
+      "marshstalker:element:sw:3": [
+        -12,
+        18
+      ],
+      "marshstalker:element:sw:4": [
+        -12,
+        18
+      ],
+      "marshstalker:element:sw:5": [
+        -8,
+        18
+      ],
+      "marshstalker:element:sw:6": [
+        -8,
+        18
+      ],
       "marshstalker:element:sw:7": [
-        -2,
-        14
+        -8,
+        16
       ],
-      "marshstalker:element:sw:8": [
-        0,
-        12
-      ],
-      "marshstalker:element:sw:9": [
-        2,
-        6
-      ],
-      "marshstalker:element:sw:10": [
-        2,
-        6
-      ],
-      "marshstalker:element:sw:11": [
-        2,
-        6
-      ],
+      "marshstalker:element:sw:8": null,
+      "marshstalker:element:sw:9": null,
+      "marshstalker:element:sw:10": null,
+      "marshstalker:element:sw:11": null,
       "marshstalker:element:w:0": null,
       "marshstalker:element:w:1": null,
-      "marshstalker:element:w:2": [
-        0,
-        14
-      ],
+      "marshstalker:element:w:2": null,
       "marshstalker:element:w:3": [
-        -4,
-        12
+        -8,
+        10
       ],
       "marshstalker:element:w:4": [
-        -4,
-        12
+        -8,
+        10
       ],
-      "marshstalker:element:w:5": [
-        0,
-        12
-      ],
-      "marshstalker:element:w:6": [
-        0,
-        12
-      ],
+      "marshstalker:element:w:5": null,
+      "marshstalker:element:w:6": null,
       "marshstalker:element:w:7": null,
       "marshstalker:element:w:8": null,
       "marshstalker:element:w:9": null,
@@ -634,40 +709,40 @@
       "marshstalker:guard:e:2": null,
       "marshstalker:guard:e:3": null,
       "marshstalker:guard:s:0": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:guard:s:1": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:guard:s:2": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:guard:s:3": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:guard:se:0": null,
       "marshstalker:guard:se:1": null,
       "marshstalker:guard:se:2": null,
       "marshstalker:guard:se:3": null,
       "marshstalker:guard:sw:0": [
-        0,
-        6
+        -4,
+        10
       ],
       "marshstalker:guard:sw:1": [
-        0,
-        6
+        -4,
+        10
       ],
       "marshstalker:guard:sw:2": [
-        0,
-        6
+        -4,
+        10
       ],
       "marshstalker:guard:sw:3": [
-        0,
-        6
+        -4,
+        10
       ],
       "marshstalker:guard:w:0": null,
       "marshstalker:guard:w:1": null,
@@ -676,110 +751,131 @@
       "marshstalker:hit:e:0": null,
       "marshstalker:hit:e:1": null,
       "marshstalker:hit:e:2": null,
-      "marshstalker:hit:e:3": null,
-      "marshstalker:hit:s:0": null,
+      "marshstalker:hit:e:3": [
+        -12,
+        16
+      ],
+      "marshstalker:hit:s:0": [
+        -8,
+        16
+      ],
       "marshstalker:hit:s:1": [
-        -2,
-        14
+        -8,
+        12
       ],
       "marshstalker:hit:s:2": [
-        0,
-        8
+        -8,
+        10
       ],
       "marshstalker:hit:s:3": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:hit:se:0": null,
       "marshstalker:hit:se:1": null,
-      "marshstalker:hit:se:2": null,
-      "marshstalker:hit:se:3": null,
-      "marshstalker:hit:sw:0": [
-        -4,
+      "marshstalker:hit:se:2": [
+        -8,
+        18
+      ],
+      "marshstalker:hit:se:3": [
+        -8,
         14
       ],
+      "marshstalker:hit:sw:0": [
+        -6,
+        16
+      ],
       "marshstalker:hit:sw:1": [
-        -2,
+        -4,
         12
       ],
       "marshstalker:hit:sw:2": [
-        0,
+        -6,
         10
       ],
-      "marshstalker:hit:sw:3": [
-        2,
-        6
-      ],
-      "marshstalker:hit:w:0": [
-        0,
-        12
-      ],
-      "marshstalker:hit:w:1": [
-        4,
-        12
-      ],
+      "marshstalker:hit:sw:3": null,
+      "marshstalker:hit:w:0": null,
+      "marshstalker:hit:w:1": null,
       "marshstalker:hit:w:2": null,
       "marshstalker:hit:w:3": null,
-      "marshstalker:idle:e:0": null,
-      "marshstalker:idle:e:1": null,
-      "marshstalker:idle:e:2": null,
-      "marshstalker:idle:e:3": null,
-      "marshstalker:idle:e:4": null,
-      "marshstalker:idle:e:5": null,
+      "marshstalker:idle:e:0": [
+        -12,
+        16
+      ],
+      "marshstalker:idle:e:1": [
+        -12,
+        16
+      ],
+      "marshstalker:idle:e:2": [
+        -12,
+        16
+      ],
+      "marshstalker:idle:e:3": [
+        -12,
+        16
+      ],
+      "marshstalker:idle:e:4": [
+        -12,
+        16
+      ],
+      "marshstalker:idle:e:5": [
+        -12,
+        16
+      ],
       "marshstalker:idle:s:0": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:idle:s:1": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:idle:s:2": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:idle:s:3": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:idle:s:4": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:idle:s:5": [
-        0,
-        6
+        -8,
+        10
       ],
-      "marshstalker:idle:se:0": null,
-      "marshstalker:idle:se:1": null,
-      "marshstalker:idle:se:2": null,
-      "marshstalker:idle:se:3": null,
-      "marshstalker:idle:se:4": null,
-      "marshstalker:idle:se:5": null,
-      "marshstalker:idle:sw:0": [
-        2,
-        6
+      "marshstalker:idle:se:0": [
+        -8,
+        14
       ],
-      "marshstalker:idle:sw:1": [
-        2,
-        6
+      "marshstalker:idle:se:1": [
+        -8,
+        14
       ],
-      "marshstalker:idle:sw:2": [
-        2,
-        6
+      "marshstalker:idle:se:2": [
+        -8,
+        14
       ],
-      "marshstalker:idle:sw:3": [
-        2,
-        6
+      "marshstalker:idle:se:3": [
+        -8,
+        14
       ],
-      "marshstalker:idle:sw:4": [
-        2,
-        6
+      "marshstalker:idle:se:4": [
+        -8,
+        14
       ],
-      "marshstalker:idle:sw:5": [
-        2,
-        6
+      "marshstalker:idle:se:5": [
+        -8,
+        14
       ],
+      "marshstalker:idle:sw:0": null,
+      "marshstalker:idle:sw:1": null,
+      "marshstalker:idle:sw:2": null,
+      "marshstalker:idle:sw:3": null,
+      "marshstalker:idle:sw:4": null,
+      "marshstalker:idle:sw:5": null,
       "marshstalker:idle:w:0": null,
       "marshstalker:idle:w:1": null,
       "marshstalker:idle:w:2": null,
@@ -789,32 +885,38 @@
       "marshstalker:recovery:e:0": null,
       "marshstalker:recovery:e:1": null,
       "marshstalker:recovery:e:2": null,
-      "marshstalker:recovery:e:3": null,
+      "marshstalker:recovery:e:3": [
+        -12,
+        16
+      ],
       "marshstalker:recovery:e:4": null,
-      "marshstalker:recovery:e:5": null,
+      "marshstalker:recovery:e:5": [
+        -12,
+        16
+      ],
       "marshstalker:recovery:s:0": [
-        0,
-        -2
+        -8,
+        2
       ],
       "marshstalker:recovery:s:1": [
-        -2,
+        -8,
         2
       ],
       "marshstalker:recovery:s:2": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:recovery:s:3": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:recovery:s:4": [
-        0,
-        14
+        -8,
+        10
       ],
       "marshstalker:recovery:s:5": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:recovery:w:0": null,
       "marshstalker:recovery:w:1": null,
@@ -822,86 +924,128 @@
       "marshstalker:recovery:w:3": null,
       "marshstalker:recovery:w:4": null,
       "marshstalker:recovery:w:5": null,
-      "marshstalker:run:e:0": null,
-      "marshstalker:run:e:1": null,
-      "marshstalker:run:e:2": null,
-      "marshstalker:run:e:3": null,
-      "marshstalker:run:e:4": null,
-      "marshstalker:run:e:5": null,
-      "marshstalker:run:e:6": null,
-      "marshstalker:run:e:7": null,
+      "marshstalker:run:e:0": [
+        -10,
+        16
+      ],
+      "marshstalker:run:e:1": [
+        -10,
+        16
+      ],
+      "marshstalker:run:e:2": [
+        -12,
+        16
+      ],
+      "marshstalker:run:e:3": [
+        -10,
+        16
+      ],
+      "marshstalker:run:e:4": [
+        -10,
+        16
+      ],
+      "marshstalker:run:e:5": [
+        -12,
+        16
+      ],
+      "marshstalker:run:e:6": [
+        -12,
+        16
+      ],
+      "marshstalker:run:e:7": [
+        -12,
+        16
+      ],
       "marshstalker:run:s:0": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:run:s:1": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:run:s:2": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:run:s:3": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:run:s:4": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:run:s:5": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:run:s:6": [
-        0,
-        4
+        -8,
+        10
       ],
       "marshstalker:run:s:7": [
-        0,
-        6
+        -8,
+        10
       ],
-      "marshstalker:run:se:0": null,
-      "marshstalker:run:se:1": null,
-      "marshstalker:run:se:2": null,
-      "marshstalker:run:se:3": null,
-      "marshstalker:run:se:4": null,
-      "marshstalker:run:se:5": null,
-      "marshstalker:run:se:6": null,
-      "marshstalker:run:se:7": null,
-      "marshstalker:run:sw:0": [
-        0,
-        12
+      "marshstalker:run:se:0": [
+        -10,
+        14
       ],
-      "marshstalker:run:sw:1": [
-        0,
+      "marshstalker:run:se:1": [
+        -8,
+        16
+      ],
+      "marshstalker:run:se:2": [
+        -8,
+        16
+      ],
+      "marshstalker:run:se:3": [
+        -8,
+        16
+      ],
+      "marshstalker:run:se:4": [
+        -8,
+        18
+      ],
+      "marshstalker:run:se:5": [
+        -8,
+        14
+      ],
+      "marshstalker:run:se:6": [
+        -10,
+        10
+      ],
+      "marshstalker:run:se:7": [
+        -8,
         8
       ],
+      "marshstalker:run:sw:0": [
+        -4,
+        10
+      ],
+      "marshstalker:run:sw:1": [
+        -4,
+        10
+      ],
       "marshstalker:run:sw:2": [
-        0,
-        12
+        -4,
+        10
       ],
       "marshstalker:run:sw:3": [
-        0,
-        6
+        -4,
+        10
       ],
       "marshstalker:run:sw:4": [
-        0,
-        12
+        -4,
+        10
       ],
       "marshstalker:run:sw:5": [
-        2,
-        6
+        -4,
+        12
       ],
-      "marshstalker:run:sw:6": [
-        0,
-        6
-      ],
-      "marshstalker:run:sw:7": [
-        2,
-        6
-      ],
+      "marshstalker:run:sw:6": null,
+      "marshstalker:run:sw:7": null,
       "marshstalker:run:w:0": null,
       "marshstalker:run:w:1": null,
       "marshstalker:run:w:2": null,
@@ -911,185 +1055,239 @@
       "marshstalker:run:w:6": null,
       "marshstalker:run:w:7": null,
       "marshstalker:sleep:e:0": [
-        -4,
-        6
+        -8,
+        10
       ],
       "marshstalker:sleep:e:1": [
-        -4,
-        8
+        -8,
+        10
       ],
       "marshstalker:sleep:e:2": [
-        -4,
-        8
+        -8,
+        10
       ],
       "marshstalker:sleep:e:3": [
-        -4,
-        6
+        -8,
+        10
       ],
-      "marshstalker:sleep:s:0": null,
-      "marshstalker:sleep:s:1": null,
-      "marshstalker:sleep:s:2": null,
-      "marshstalker:sleep:s:3": null,
+      "marshstalker:sleep:s:0": [
+        -10,
+        4
+      ],
+      "marshstalker:sleep:s:1": [
+        -10,
+        4
+      ],
+      "marshstalker:sleep:s:2": [
+        -10,
+        4
+      ],
+      "marshstalker:sleep:s:3": [
+        -10,
+        4
+      ],
       "marshstalker:sleep:w:0": null,
       "marshstalker:sleep:w:1": null,
       "marshstalker:sleep:w:2": null,
       "marshstalker:sleep:w:3": null,
-      "marshstalker:social:e:0": null,
-      "marshstalker:social:e:1": null,
-      "marshstalker:social:e:2": null,
-      "marshstalker:social:e:3": null,
-      "marshstalker:social:e:4": null,
-      "marshstalker:social:e:5": null,
+      "marshstalker:social:e:0": [
+        -6,
+        14
+      ],
+      "marshstalker:social:e:1": [
+        -6,
+        18
+      ],
+      "marshstalker:social:e:2": [
+        -6,
+        18
+      ],
+      "marshstalker:social:e:3": [
+        -6,
+        14
+      ],
+      "marshstalker:social:e:4": [
+        -6,
+        18
+      ],
+      "marshstalker:social:e:5": [
+        -6,
+        14
+      ],
       "marshstalker:social:s:0": null,
       "marshstalker:social:s:1": null,
       "marshstalker:social:s:2": null,
       "marshstalker:social:s:3": null,
       "marshstalker:social:s:4": null,
       "marshstalker:social:s:5": null,
-      "marshstalker:social:w:0": [
-        0,
-        12
+      "marshstalker:social:w:0": null,
+      "marshstalker:social:w:1": null,
+      "marshstalker:social:w:2": null,
+      "marshstalker:social:w:3": null,
+      "marshstalker:social:w:4": null,
+      "marshstalker:social:w:5": null,
+      "marshstalker:strike:e:0": [
+        -12,
+        16
       ],
-      "marshstalker:social:w:1": [
-        0,
-        14
+      "marshstalker:strike:e:1": [
+        -12,
+        16
       ],
-      "marshstalker:social:w:2": [
-        0,
-        14
-      ],
-      "marshstalker:social:w:3": [
-        0,
-        12
-      ],
-      "marshstalker:social:w:4": [
-        0,
-        12
-      ],
-      "marshstalker:social:w:5": [
-        0,
-        12
-      ],
-      "marshstalker:strike:e:0": null,
-      "marshstalker:strike:e:1": null,
       "marshstalker:strike:e:2": null,
-      "marshstalker:strike:e:3": null,
-      "marshstalker:strike:e:4": null,
-      "marshstalker:strike:e:5": null,
-      "marshstalker:strike:e:6": null,
-      "marshstalker:strike:e:7": null,
-      "marshstalker:strike:e:8": null,
-      "marshstalker:strike:e:9": null,
-      "marshstalker:strike:e:10": null,
-      "marshstalker:strike:e:11": null,
+      "marshstalker:strike:e:3": [
+        -8,
+        18
+      ],
+      "marshstalker:strike:e:4": [
+        -8,
+        18
+      ],
+      "marshstalker:strike:e:5": [
+        -8,
+        18
+      ],
+      "marshstalker:strike:e:6": [
+        -8,
+        14
+      ],
+      "marshstalker:strike:e:7": [
+        -8,
+        14
+      ],
+      "marshstalker:strike:e:8": [
+        -10,
+        16
+      ],
+      "marshstalker:strike:e:9": [
+        -10,
+        16
+      ],
+      "marshstalker:strike:e:10": [
+        -12,
+        16
+      ],
+      "marshstalker:strike:e:11": [
+        -12,
+        16
+      ],
       "marshstalker:strike:s:0": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:strike:s:1": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:strike:s:2": [
-        0,
-        4
+        -8,
+        10
       ],
       "marshstalker:strike:s:3": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:strike:s:4": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:strike:s:5": [
-        0,
-        8
+        -8,
+        10
       ],
       "marshstalker:strike:s:6": [
-        0,
-        8
+        -8,
+        10
       ],
       "marshstalker:strike:s:7": [
-        0,
-        8
+        -8,
+        10
       ],
       "marshstalker:strike:s:8": [
-        0,
-        8
+        -8,
+        10
       ],
       "marshstalker:strike:s:9": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:strike:s:10": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:strike:s:11": [
-        0,
-        6
-      ],
-      "marshstalker:strike:se:0": null,
-      "marshstalker:strike:se:1": null,
-      "marshstalker:strike:se:2": null,
-      "marshstalker:strike:se:3": null,
-      "marshstalker:strike:se:4": null,
-      "marshstalker:strike:se:5": null,
-      "marshstalker:strike:se:6": null,
-      "marshstalker:strike:se:7": null,
-      "marshstalker:strike:se:8": null,
-      "marshstalker:strike:se:9": null,
-      "marshstalker:strike:se:10": null,
-      "marshstalker:strike:se:11": null,
-      "marshstalker:strike:sw:0": [
-        2,
-        6
-      ],
-      "marshstalker:strike:sw:1": [
-        4,
-        6
-      ],
-      "marshstalker:strike:sw:2": [
-        0,
-        6
-      ],
-      "marshstalker:strike:sw:3": [
-        0,
+        -8,
         10
       ],
-      "marshstalker:strike:sw:4": [
-        0,
+      "marshstalker:strike:se:0": [
+        -8,
+        14
+      ],
+      "marshstalker:strike:se:1": [
+        -12,
+        12
+      ],
+      "marshstalker:strike:se:2": [
+        -10,
         10
       ],
-      "marshstalker:strike:sw:5": [
-        0,
-        10
+      "marshstalker:strike:se:3": [
+        -12,
+        18
       ],
+      "marshstalker:strike:se:4": [
+        -12,
+        18
+      ],
+      "marshstalker:strike:se:5": [
+        -12,
+        18
+      ],
+      "marshstalker:strike:se:6": [
+        -12,
+        18
+      ],
+      "marshstalker:strike:se:7": [
+        -8,
+        16
+      ],
+      "marshstalker:strike:se:8": [
+        -8,
+        16
+      ],
+      "marshstalker:strike:se:9": [
+        -8,
+        16
+      ],
+      "marshstalker:strike:se:10": [
+        -8,
+        16
+      ],
+      "marshstalker:strike:se:11": [
+        -8,
+        14
+      ],
+      "marshstalker:strike:sw:0": null,
+      "marshstalker:strike:sw:1": null,
+      "marshstalker:strike:sw:2": null,
+      "marshstalker:strike:sw:3": null,
+      "marshstalker:strike:sw:4": null,
+      "marshstalker:strike:sw:5": null,
       "marshstalker:strike:sw:6": [
-        0,
+        -6,
         10
       ],
       "marshstalker:strike:sw:7": [
-        0,
-        10
+        -4,
+        12
       ],
-      "marshstalker:strike:sw:8": [
-        2,
-        10
-      ],
+      "marshstalker:strike:sw:8": null,
       "marshstalker:strike:sw:9": [
-        2,
+        -4,
         10
       ],
-      "marshstalker:strike:sw:10": [
-        2,
-        6
-      ],
-      "marshstalker:strike:sw:11": [
-        2,
-        6
-      ],
+      "marshstalker:strike:sw:10": null,
+      "marshstalker:strike:sw:11": null,
       "marshstalker:strike:w:0": null,
       "marshstalker:strike:w:1": null,
       "marshstalker:strike:w:2": null,
@@ -1102,86 +1300,119 @@
       "marshstalker:strike:w:9": null,
       "marshstalker:strike:w:10": null,
       "marshstalker:strike:w:11": null,
-      "marshstalker:walk:e:0": null,
-      "marshstalker:walk:e:1": null,
-      "marshstalker:walk:e:2": null,
-      "marshstalker:walk:e:3": null,
-      "marshstalker:walk:e:4": null,
-      "marshstalker:walk:e:5": null,
-      "marshstalker:walk:e:6": null,
-      "marshstalker:walk:e:7": null,
+      "marshstalker:walk:e:0": [
+        -10,
+        14
+      ],
+      "marshstalker:walk:e:1": [
+        -12,
+        16
+      ],
+      "marshstalker:walk:e:2": [
+        -12,
+        16
+      ],
+      "marshstalker:walk:e:3": [
+        -12,
+        16
+      ],
+      "marshstalker:walk:e:4": [
+        -10,
+        14
+      ],
+      "marshstalker:walk:e:5": [
+        -12,
+        16
+      ],
+      "marshstalker:walk:e:6": [
+        -12,
+        16
+      ],
+      "marshstalker:walk:e:7": [
+        -12,
+        16
+      ],
       "marshstalker:walk:s:0": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:walk:s:1": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:walk:s:2": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:walk:s:3": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:walk:s:4": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:walk:s:5": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:walk:s:6": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:walk:s:7": [
-        0,
-        6
+        -8,
+        10
       ],
-      "marshstalker:walk:se:0": null,
-      "marshstalker:walk:se:1": null,
-      "marshstalker:walk:se:2": null,
-      "marshstalker:walk:se:3": null,
-      "marshstalker:walk:se:4": null,
-      "marshstalker:walk:se:5": null,
-      "marshstalker:walk:se:6": null,
-      "marshstalker:walk:se:7": null,
-      "marshstalker:walk:sw:0": [
-        0,
+      "marshstalker:walk:se:0": [
+        -8,
+        16
+      ],
+      "marshstalker:walk:se:1": [
+        -8,
+        16
+      ],
+      "marshstalker:walk:se:2": [
+        -10,
+        14
+      ],
+      "marshstalker:walk:se:3": [
+        -10,
+        14
+      ],
+      "marshstalker:walk:se:4": [
+        -8,
+        16
+      ],
+      "marshstalker:walk:se:5": [
+        -10,
         12
       ],
+      "marshstalker:walk:se:6": [
+        -8,
+        16
+      ],
+      "marshstalker:walk:se:7": [
+        -8,
+        14
+      ],
+      "marshstalker:walk:sw:0": null,
       "marshstalker:walk:sw:1": [
-        0,
-        12
+        -4,
+        14
       ],
       "marshstalker:walk:sw:2": [
-        4,
-        6
+        -4,
+        14
       ],
-      "marshstalker:walk:sw:3": [
-        0,
-        12
-      ],
-      "marshstalker:walk:sw:4": [
-        0,
-        12
-      ],
-      "marshstalker:walk:sw:5": [
-        4,
-        6
-      ],
+      "marshstalker:walk:sw:3": null,
+      "marshstalker:walk:sw:4": null,
+      "marshstalker:walk:sw:5": null,
       "marshstalker:walk:sw:6": [
-        0,
-        6
+        -4,
+        10
       ],
-      "marshstalker:walk:sw:7": [
-        4,
-        6
-      ],
+      "marshstalker:walk:sw:7": null,
       "marshstalker:walk:w:0": null,
       "marshstalker:walk:w:1": null,
       "marshstalker:walk:w:2": null,
@@ -1197,28 +1428,28 @@
       "marshstalker:work:e:4": null,
       "marshstalker:work:e:5": null,
       "marshstalker:work:s:0": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:work:s:1": [
-        -4,
-        4
+        -8,
+        8
       ],
       "marshstalker:work:s:2": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:work:s:3": [
-        -4,
-        4
+        -8,
+        8
       ],
       "marshstalker:work:s:4": [
-        0,
-        6
+        -8,
+        10
       ],
       "marshstalker:work:s:5": [
-        -4,
-        4
+        -8,
+        8
       ],
       "marshstalker:work:w:0": null,
       "marshstalker:work:w:1": null,
@@ -1228,5 +1459,5 @@
       "marshstalker:work:w:5": null
     }
   },
-  "sourceDigest": "2c2be12617b0700a5debae8336c7dbdc0e187aa68ac87b172f3e465c12e7c1ba"
+  "sourceDigest": "7e197b2668627e0afc1508adc53f6b2f8028a84a6f57f61f179793cba2e84c6d"
 }

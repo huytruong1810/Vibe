@@ -390,14 +390,14 @@
       "rule": "ART-8.1/ART-8.2",
       "hard": true,
       "pass": true,
-      "detail": "1500 registrations; "
+      "detail": "1680 registrations; "
     },
     {
       "check": "faceCoverage",
       "rule": "ART-8.2",
       "hard": true,
       "pass": false,
-      "detail": "108 of 408 forward frames hide the face (limit 10%); idle hidden: 15"
+      "detail": "72 of 408 forward frames hide the face (limit 10%); idle hidden: 6"
     },
     {
       "check": "faceDistinct",
@@ -410,34 +410,52 @@
   "registration": {
     "unit": "frame px from Socket_Head; null hides the face on that frame",
     "frames": {
-      "zephyrit:bathe:e:0": null,
-      "zephyrit:bathe:e:1": null,
-      "zephyrit:bathe:e:2": null,
-      "zephyrit:bathe:e:3": null,
-      "zephyrit:bathe:e:4": null,
-      "zephyrit:bathe:e:5": null,
+      "zephyrit:bathe:e:0": [
+        -6,
+        8
+      ],
+      "zephyrit:bathe:e:1": [
+        -6,
+        8
+      ],
+      "zephyrit:bathe:e:2": [
+        -6,
+        8
+      ],
+      "zephyrit:bathe:e:3": [
+        -6,
+        8
+      ],
+      "zephyrit:bathe:e:4": [
+        -6,
+        8
+      ],
+      "zephyrit:bathe:e:5": [
+        -6,
+        8
+      ],
       "zephyrit:bathe:s:0": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:bathe:s:1": [
-        0,
+        -2,
         8
       ],
       "zephyrit:bathe:s:2": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:bathe:s:3": [
-        0,
+        -2,
         8
       ],
       "zephyrit:bathe:s:4": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:bathe:s:5": [
-        0,
+        -2,
         8
       ],
       "zephyrit:bathe:w:0": null,
@@ -448,99 +466,96 @@
       "zephyrit:bathe:w:5": null,
       "zephyrit:downed:e:0": [
         -4,
-        6
+        8
       ],
       "zephyrit:downed:e:1": [
         -2,
-        6
+        8
       ],
       "zephyrit:downed:e:2": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:downed:e:3": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:downed:e:4": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:downed:e:5": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:downed:s:0": [
-        0,
-        12
+        -2,
+        14
       ],
       "zephyrit:downed:s:1": [
-        0,
+        -2,
         14
       ],
       "zephyrit:downed:s:2": [
-        0,
+        -2,
         12
       ],
       "zephyrit:downed:s:3": [
-        0,
+        -2,
         12
       ],
       "zephyrit:downed:s:4": [
-        0,
+        -2,
         12
       ],
       "zephyrit:downed:s:5": [
-        0,
+        -2,
         12
       ],
-      "zephyrit:downed:w:0": [
-        4,
-        8
-      ],
+      "zephyrit:downed:w:0": null,
       "zephyrit:downed:w:1": [
         2,
-        6
+        8
       ],
       "zephyrit:downed:w:2": [
         2,
-        6
+        8
       ],
       "zephyrit:downed:w:3": [
         2,
-        6
+        8
       ],
       "zephyrit:downed:w:4": [
         2,
-        6
+        8
       ],
       "zephyrit:downed:w:5": [
         2,
-        6
+        8
       ],
       "zephyrit:drink:e:0": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:drink:e:1": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:drink:e:2": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:drink:e:3": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:drink:e:4": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:drink:e:5": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:drink:s:0": [
         0,
@@ -567,156 +582,177 @@
         6
       ],
       "zephyrit:drink:w:0": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:drink:w:1": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:drink:w:2": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:drink:w:3": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:drink:w:4": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:drink:w:5": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:eat:e:0": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:eat:e:1": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:eat:e:2": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:eat:e:3": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:eat:e:4": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:eat:e:5": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:eat:s:0": [
-        0,
-        6
+        -2,
+        10
       ],
       "zephyrit:eat:s:1": [
-        0,
-        6
+        -2,
+        10
       ],
       "zephyrit:eat:s:2": [
-        0,
-        6
+        -2,
+        10
       ],
       "zephyrit:eat:s:3": [
-        0,
-        6
+        -2,
+        10
       ],
       "zephyrit:eat:s:4": [
-        0,
-        6
+        -2,
+        10
       ],
       "zephyrit:eat:s:5": [
-        0,
-        6
+        -2,
+        10
       ],
       "zephyrit:eat:w:0": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:eat:w:1": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:eat:w:2": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:eat:w:3": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:eat:w:4": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:eat:w:5": [
-        0,
+        -2,
+        8
+      ],
+      "zephyrit:element:e:0": [
+        -6,
+        8
+      ],
+      "zephyrit:element:e:1": [
+        -6,
         6
       ],
-      "zephyrit:element:e:0": null,
-      "zephyrit:element:e:1": null,
-      "zephyrit:element:e:2": null,
+      "zephyrit:element:e:2": [
+        -6,
+        8
+      ],
       "zephyrit:element:e:3": null,
       "zephyrit:element:e:4": null,
       "zephyrit:element:e:5": null,
       "zephyrit:element:e:6": null,
-      "zephyrit:element:e:7": null,
+      "zephyrit:element:e:7": [
+        -6,
+        6
+      ],
       "zephyrit:element:e:8": null,
       "zephyrit:element:e:9": null,
-      "zephyrit:element:e:10": null,
-      "zephyrit:element:e:11": null,
+      "zephyrit:element:e:10": [
+        -6,
+        8
+      ],
+      "zephyrit:element:e:11": [
+        -6,
+        8
+      ],
       "zephyrit:element:s:0": [
-        0,
+        -2,
         12
       ],
       "zephyrit:element:s:1": [
-        0,
+        -2,
         12
       ],
       "zephyrit:element:s:2": [
-        0,
+        -2,
         14
       ],
       "zephyrit:element:s:3": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:element:s:4": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:element:s:5": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:element:s:6": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:element:s:7": [
-        0,
+        -2,
         10
       ],
       "zephyrit:element:s:8": [
-        0,
+        -2,
         10
       ],
-      "zephyrit:element:s:9": null,
-      "zephyrit:element:s:10": [
+      "zephyrit:element:s:9": [
         0,
-        10
+        16
+      ],
+      "zephyrit:element:s:10": [
+        -2,
+        12
       ],
       "zephyrit:element:s:11": [
-        0,
+        -2,
         12
       ],
       "zephyrit:element:se:0": [
@@ -741,7 +777,10 @@
         -4,
         10
       ],
-      "zephyrit:element:se:7": null,
+      "zephyrit:element:se:7": [
+        -6,
+        12
+      ],
       "zephyrit:element:se:8": [
         -4,
         12
@@ -758,7 +797,10 @@
         -2,
         8
       ],
-      "zephyrit:element:sw:0": null,
+      "zephyrit:element:sw:0": [
+        2,
+        16
+      ],
       "zephyrit:element:sw:1": [
         2,
         8
@@ -770,21 +812,18 @@
       "zephyrit:element:sw:6": null,
       "zephyrit:element:sw:7": null,
       "zephyrit:element:sw:8": null,
-      "zephyrit:element:sw:9": [
-        4,
-        14
-      ],
+      "zephyrit:element:sw:9": null,
       "zephyrit:element:sw:10": [
         2,
         14
       ],
-      "zephyrit:element:sw:11": null,
+      "zephyrit:element:sw:11": [
+        2,
+        16
+      ],
       "zephyrit:element:w:0": null,
       "zephyrit:element:w:1": null,
-      "zephyrit:element:w:2": [
-        4,
-        8
-      ],
+      "zephyrit:element:w:2": null,
       "zephyrit:element:w:3": null,
       "zephyrit:element:w:4": null,
       "zephyrit:element:w:5": null,
@@ -796,106 +835,103 @@
       "zephyrit:element:w:11": null,
       "zephyrit:guard:e:0": [
         -4,
-        6
+        8
       ],
       "zephyrit:guard:e:1": [
         -4,
-        6
+        8
       ],
       "zephyrit:guard:e:2": [
         -4,
-        6
+        8
       ],
       "zephyrit:guard:e:3": [
         -4,
-        6
+        8
       ],
       "zephyrit:guard:s:0": [
-        0,
+        -2,
         14
       ],
       "zephyrit:guard:s:1": [
-        0,
+        -2,
         14
       ],
       "zephyrit:guard:s:2": [
-        0,
+        -2,
         14
       ],
       "zephyrit:guard:s:3": [
-        0,
+        -2,
         14
       ],
       "zephyrit:guard:se:0": [
         0,
-        6
+        8
       ],
       "zephyrit:guard:se:1": [
         0,
-        6
+        8
       ],
       "zephyrit:guard:se:2": [
         0,
-        6
+        8
       ],
       "zephyrit:guard:se:3": [
         0,
-        6
+        8
       ],
       "zephyrit:guard:sw:0": [
         -2,
-        6
+        8
       ],
       "zephyrit:guard:sw:1": [
         -2,
-        6
+        8
       ],
       "zephyrit:guard:sw:2": [
         -2,
-        6
+        8
       ],
       "zephyrit:guard:sw:3": [
         -2,
-        6
+        8
       ],
-      "zephyrit:guard:w:0": [
-        4,
-        6
-      ],
-      "zephyrit:guard:w:1": [
-        4,
-        6
-      ],
-      "zephyrit:guard:w:2": [
-        4,
-        6
-      ],
-      "zephyrit:guard:w:3": [
-        4,
-        6
-      ],
+      "zephyrit:guard:w:0": null,
+      "zephyrit:guard:w:1": null,
+      "zephyrit:guard:w:2": null,
+      "zephyrit:guard:w:3": null,
       "zephyrit:hit:e:0": null,
       "zephyrit:hit:e:1": null,
       "zephyrit:hit:e:2": null,
-      "zephyrit:hit:e:3": null,
+      "zephyrit:hit:e:3": [
+        -6,
+        8
+      ],
       "zephyrit:hit:s:0": [
         0,
-        6
+        8
       ],
       "zephyrit:hit:s:1": [
         0,
-        6
+        8
       ],
       "zephyrit:hit:s:2": [
-        0,
-        12
+        -2,
+        10
       ],
       "zephyrit:hit:s:3": [
-        0,
+        -2,
         12
       ],
-      "zephyrit:hit:se:0": null,
-      "zephyrit:hit:se:1": null,
+      "zephyrit:hit:se:0": [
+        -6,
+        8
+      ],
+      "zephyrit:hit:se:1": [
+        -6,
+        10
+      ],
       "zephyrit:hit:se:2": [
         -4,
         10
@@ -907,39 +943,60 @@
       "zephyrit:hit:sw:0": null,
       "zephyrit:hit:sw:1": null,
       "zephyrit:hit:sw:2": null,
-      "zephyrit:hit:sw:3": null,
+      "zephyrit:hit:sw:3": [
+        2,
+        16
+      ],
       "zephyrit:hit:w:0": null,
       "zephyrit:hit:w:1": null,
       "zephyrit:hit:w:2": null,
       "zephyrit:hit:w:3": null,
-      "zephyrit:idle:e:0": null,
-      "zephyrit:idle:e:1": null,
-      "zephyrit:idle:e:2": null,
-      "zephyrit:idle:e:3": null,
-      "zephyrit:idle:e:4": null,
-      "zephyrit:idle:e:5": null,
+      "zephyrit:idle:e:0": [
+        -6,
+        8
+      ],
+      "zephyrit:idle:e:1": [
+        -6,
+        8
+      ],
+      "zephyrit:idle:e:2": [
+        -6,
+        8
+      ],
+      "zephyrit:idle:e:3": [
+        -6,
+        8
+      ],
+      "zephyrit:idle:e:4": [
+        -6,
+        8
+      ],
+      "zephyrit:idle:e:5": [
+        -6,
+        8
+      ],
       "zephyrit:idle:s:0": [
-        0,
+        -2,
         12
       ],
       "zephyrit:idle:s:1": [
-        0,
+        -2,
         12
       ],
       "zephyrit:idle:s:2": [
-        0,
+        -2,
         12
       ],
       "zephyrit:idle:s:3": [
-        0,
-        10
+        -2,
+        12
       ],
       "zephyrit:idle:s:4": [
-        0,
+        -2,
         10
       ],
       "zephyrit:idle:s:5": [
-        0,
+        -2,
         12
       ],
       "zephyrit:idle:se:0": [
@@ -966,9 +1023,18 @@
         -2,
         12
       ],
-      "zephyrit:idle:sw:0": null,
-      "zephyrit:idle:sw:1": null,
-      "zephyrit:idle:sw:2": null,
+      "zephyrit:idle:sw:0": [
+        2,
+        16
+      ],
+      "zephyrit:idle:sw:1": [
+        2,
+        16
+      ],
+      "zephyrit:idle:sw:2": [
+        2,
+        16
+      ],
       "zephyrit:idle:sw:3": [
         2,
         14
@@ -977,73 +1043,82 @@
         2,
         14
       ],
-      "zephyrit:idle:sw:5": null,
-      "zephyrit:idle:w:0": [
-        4,
-        6
+      "zephyrit:idle:sw:5": [
+        2,
+        16
       ],
+      "zephyrit:idle:w:0": null,
       "zephyrit:idle:w:1": null,
       "zephyrit:idle:w:2": null,
       "zephyrit:idle:w:3": null,
       "zephyrit:idle:w:4": null,
       "zephyrit:idle:w:5": null,
       "zephyrit:recovery:e:0": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:recovery:e:1": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:recovery:e:2": [
         -4,
-        6
+        8
       ],
-      "zephyrit:recovery:e:3": null,
-      "zephyrit:recovery:e:4": null,
-      "zephyrit:recovery:e:5": null,
+      "zephyrit:recovery:e:3": [
+        -6,
+        8
+      ],
+      "zephyrit:recovery:e:4": [
+        -6,
+        8
+      ],
+      "zephyrit:recovery:e:5": [
+        -6,
+        8
+      ],
       "zephyrit:recovery:s:0": [
-        0,
+        -2,
         12
       ],
       "zephyrit:recovery:s:1": [
-        0,
+        -2,
         14
       ],
       "zephyrit:recovery:s:2": [
-        0,
+        -2,
         12
       ],
       "zephyrit:recovery:s:3": [
-        0,
+        -2,
         14
       ],
       "zephyrit:recovery:s:4": [
-        0,
+        -2,
         12
       ],
       "zephyrit:recovery:s:5": [
-        0,
+        -2,
         12
       ],
       "zephyrit:recovery:w:0": [
         2,
-        6
+        8
       ],
       "zephyrit:recovery:w:1": [
         0,
         8
       ],
       "zephyrit:recovery:w:2": [
-        4,
-        6
+        2,
+        12
       ],
       "zephyrit:recovery:w:3": null,
       "zephyrit:recovery:w:4": null,
       "zephyrit:recovery:w:5": null,
       "zephyrit:run:e:0": [
         -4,
-        6
+        8
       ],
       "zephyrit:run:e:1": [
         -4,
@@ -1059,7 +1134,7 @@
       ],
       "zephyrit:run:e:4": [
         -4,
-        6
+        8
       ],
       "zephyrit:run:e:5": [
         -4,
@@ -1074,36 +1149,36 @@
         8
       ],
       "zephyrit:run:s:0": [
-        0,
+        -2,
         14
       ],
       "zephyrit:run:s:1": [
-        0,
+        -2,
         14
       ],
       "zephyrit:run:s:2": [
-        0,
+        -2,
         12
       ],
       "zephyrit:run:s:3": [
-        0,
-        12
+        -2,
+        14
       ],
       "zephyrit:run:s:4": [
-        0,
+        -2,
         14
       ],
       "zephyrit:run:s:5": [
-        0,
+        -2,
         14
       ],
       "zephyrit:run:s:6": [
-        0,
+        -2,
         12
       ],
       "zephyrit:run:s:7": [
-        0,
-        12
+        -2,
+        14
       ],
       "zephyrit:run:se:0": [
         -2,
@@ -1111,7 +1186,7 @@
       ],
       "zephyrit:run:se:1": [
         -2,
-        6
+        8
       ],
       "zephyrit:run:se:2": [
         -2,
@@ -1119,7 +1194,7 @@
       ],
       "zephyrit:run:se:3": [
         -2,
-        6
+        8
       ],
       "zephyrit:run:se:4": [
         -2,
@@ -1127,7 +1202,7 @@
       ],
       "zephyrit:run:se:5": [
         -2,
-        6
+        8
       ],
       "zephyrit:run:se:6": [
         -2,
@@ -1135,7 +1210,7 @@
       ],
       "zephyrit:run:se:7": [
         -2,
-        6
+        8
       ],
       "zephyrit:run:sw:0": [
         0,
@@ -1143,7 +1218,7 @@
       ],
       "zephyrit:run:sw:1": [
         0,
-        6
+        8
       ],
       "zephyrit:run:sw:2": [
         0,
@@ -1151,7 +1226,7 @@
       ],
       "zephyrit:run:sw:3": [
         0,
-        6
+        8
       ],
       "zephyrit:run:sw:4": [
         0,
@@ -1159,7 +1234,7 @@
       ],
       "zephyrit:run:sw:5": [
         0,
-        6
+        8
       ],
       "zephyrit:run:sw:6": [
         0,
@@ -1167,55 +1242,55 @@
       ],
       "zephyrit:run:sw:7": [
         0,
-        6
+        8
       ],
       "zephyrit:run:w:0": [
-        4,
-        8
+        2,
+        12
       ],
       "zephyrit:run:w:1": [
-        4,
-        8
+        2,
+        12
       ],
       "zephyrit:run:w:2": [
-        4,
-        8
+        2,
+        12
       ],
       "zephyrit:run:w:3": [
-        4,
-        8
+        2,
+        12
       ],
       "zephyrit:run:w:4": [
-        4,
-        8
+        2,
+        12
       ],
       "zephyrit:run:w:5": [
-        4,
-        8
+        2,
+        12
       ],
       "zephyrit:run:w:6": [
-        4,
-        8
+        2,
+        12
       ],
       "zephyrit:run:w:7": [
-        4,
-        8
+        2,
+        12
       ],
       "zephyrit:sleep:e:0": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:sleep:e:1": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:sleep:e:2": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:sleep:e:3": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:sleep:s:0": [
         2,
@@ -1223,11 +1298,11 @@
       ],
       "zephyrit:sleep:s:1": [
         2,
-        6
+        8
       ],
       "zephyrit:sleep:s:2": [
         2,
-        6
+        8
       ],
       "zephyrit:sleep:s:3": [
         2,
@@ -1235,29 +1310,47 @@
       ],
       "zephyrit:sleep:w:0": [
         0,
-        6
+        8
       ],
       "zephyrit:sleep:w:1": [
         0,
-        6
+        8
       ],
       "zephyrit:sleep:w:2": [
         0,
-        6
+        8
       ],
       "zephyrit:sleep:w:3": [
         0,
+        8
+      ],
+      "zephyrit:social:e:0": [
+        -6,
+        8
+      ],
+      "zephyrit:social:e:1": [
+        -6,
         6
       ],
-      "zephyrit:social:e:0": null,
-      "zephyrit:social:e:1": null,
-      "zephyrit:social:e:2": null,
-      "zephyrit:social:e:3": null,
-      "zephyrit:social:e:4": null,
-      "zephyrit:social:e:5": null,
+      "zephyrit:social:e:2": [
+        -6,
+        6
+      ],
+      "zephyrit:social:e:3": [
+        -6,
+        10
+      ],
+      "zephyrit:social:e:4": [
+        -6,
+        10
+      ],
+      "zephyrit:social:e:5": [
+        -6,
+        8
+      ],
       "zephyrit:social:s:0": [
-        0,
-        14
+        -2,
+        12
       ],
       "zephyrit:social:s:1": [
         2,
@@ -1276,8 +1369,8 @@
         12
       ],
       "zephyrit:social:s:5": [
-        0,
-        14
+        -2,
+        12
       ],
       "zephyrit:social:w:0": null,
       "zephyrit:social:w:1": null,
@@ -1285,28 +1378,34 @@
       "zephyrit:social:w:3": null,
       "zephyrit:social:w:4": null,
       "zephyrit:social:w:5": null,
-      "zephyrit:strike:e:0": null,
+      "zephyrit:strike:e:0": [
+        -6,
+        8
+      ],
       "zephyrit:strike:e:1": null,
-      "zephyrit:strike:e:2": null,
+      "zephyrit:strike:e:2": [
+        -6,
+        8
+      ],
       "zephyrit:strike:e:3": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:strike:e:4": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:strike:e:5": [
-        0,
-        10
+        -2,
+        8
       ],
       "zephyrit:strike:e:6": [
-        0,
-        10
+        -2,
+        8
       ],
       "zephyrit:strike:e:7": [
-        0,
-        10
+        -2,
+        8
       ],
       "zephyrit:strike:e:8": [
         -4,
@@ -1316,55 +1415,61 @@
         -4,
         8
       ],
-      "zephyrit:strike:e:10": null,
-      "zephyrit:strike:e:11": null,
+      "zephyrit:strike:e:10": [
+        -6,
+        8
+      ],
+      "zephyrit:strike:e:11": [
+        -6,
+        8
+      ],
       "zephyrit:strike:s:0": [
-        0,
+        -2,
         12
       ],
       "zephyrit:strike:s:1": [
-        0,
+        -2,
         12
       ],
       "zephyrit:strike:s:2": [
-        0,
+        -2,
         12
       ],
       "zephyrit:strike:s:3": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:strike:s:4": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:strike:s:5": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:strike:s:6": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:strike:s:7": [
-        0,
+        -2,
         8
       ],
       "zephyrit:strike:s:8": [
-        0,
+        -2,
         8
       ],
       "zephyrit:strike:s:9": [
-        0,
+        -2,
         12
       ],
       "zephyrit:strike:s:10": [
-        0,
+        -2,
         10
       ],
       "zephyrit:strike:s:11": [
-        0,
-        14
+        -2,
+        12
       ],
       "zephyrit:strike:se:0": [
         -2,
@@ -1379,16 +1484,16 @@
         8
       ],
       "zephyrit:strike:se:3": [
-        0,
-        10
+        -2,
+        8
       ],
       "zephyrit:strike:se:4": [
-        0,
-        10
+        -2,
+        8
       ],
       "zephyrit:strike:se:5": [
-        0,
-        12
+        -2,
+        10
       ],
       "zephyrit:strike:se:6": [
         -2,
@@ -1404,7 +1509,7 @@
       ],
       "zephyrit:strike:se:9": [
         -2,
-        6
+        8
       ],
       "zephyrit:strike:se:10": [
         -2,
@@ -1414,7 +1519,10 @@
         -2,
         8
       ],
-      "zephyrit:strike:sw:0": null,
+      "zephyrit:strike:sw:0": [
+        2,
+        16
+      ],
       "zephyrit:strike:sw:1": [
         2,
         10
@@ -1424,16 +1532,16 @@
         8
       ],
       "zephyrit:strike:sw:3": [
-        0,
-        8
+        -2,
+        10
       ],
       "zephyrit:strike:sw:4": [
-        0,
-        8
+        -2,
+        10
       ],
       "zephyrit:strike:sw:5": [
-        0,
-        10
+        -2,
+        12
       ],
       "zephyrit:strike:sw:6": [
         0,
@@ -1449,27 +1557,30 @@
       ],
       "zephyrit:strike:sw:9": [
         0,
-        6
+        8
       ],
       "zephyrit:strike:sw:10": [
         0,
         12
       ],
-      "zephyrit:strike:sw:11": null,
+      "zephyrit:strike:sw:11": [
+        2,
+        16
+      ],
       "zephyrit:strike:w:0": null,
       "zephyrit:strike:w:1": null,
       "zephyrit:strike:w:2": null,
       "zephyrit:strike:w:3": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:strike:w:4": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:strike:w:5": [
-        0,
-        10
+        -2,
+        12
       ],
       "zephyrit:strike:w:6": [
         0,
@@ -1479,22 +1590,13 @@
         0,
         10
       ],
-      "zephyrit:strike:w:8": [
-        4,
-        8
-      ],
-      "zephyrit:strike:w:9": [
-        4,
-        8
-      ],
+      "zephyrit:strike:w:8": null,
+      "zephyrit:strike:w:9": null,
       "zephyrit:strike:w:10": null,
-      "zephyrit:strike:w:11": [
-        4,
-        6
-      ],
+      "zephyrit:strike:w:11": null,
       "zephyrit:walk:e:0": [
         -4,
-        6
+        8
       ],
       "zephyrit:walk:e:1": [
         -4,
@@ -1510,7 +1612,7 @@
       ],
       "zephyrit:walk:e:4": [
         -4,
-        6
+        8
       ],
       "zephyrit:walk:e:5": [
         -4,
@@ -1525,35 +1627,35 @@
         8
       ],
       "zephyrit:walk:s:0": [
-        0,
+        -2,
         14
       ],
       "zephyrit:walk:s:1": [
-        0,
+        -2,
         14
       ],
       "zephyrit:walk:s:2": [
-        0,
+        -2,
         14
       ],
       "zephyrit:walk:s:3": [
-        0,
+        -2,
         14
       ],
       "zephyrit:walk:s:4": [
-        0,
+        -2,
         14
       ],
       "zephyrit:walk:s:5": [
-        0,
+        -2,
         14
       ],
       "zephyrit:walk:s:6": [
-        0,
+        -2,
         14
       ],
       "zephyrit:walk:s:7": [
-        0,
+        -2,
         14
       ],
       "zephyrit:walk:se:0": [
@@ -1562,7 +1664,7 @@
       ],
       "zephyrit:walk:se:1": [
         -2,
-        6
+        8
       ],
       "zephyrit:walk:se:2": [
         -2,
@@ -1570,7 +1672,7 @@
       ],
       "zephyrit:walk:se:3": [
         -2,
-        6
+        8
       ],
       "zephyrit:walk:se:4": [
         -2,
@@ -1578,7 +1680,7 @@
       ],
       "zephyrit:walk:se:5": [
         -2,
-        6
+        8
       ],
       "zephyrit:walk:se:6": [
         -2,
@@ -1586,7 +1688,7 @@
       ],
       "zephyrit:walk:se:7": [
         -2,
-        6
+        8
       ],
       "zephyrit:walk:sw:0": [
         0,
@@ -1594,7 +1696,7 @@
       ],
       "zephyrit:walk:sw:1": [
         0,
-        6
+        8
       ],
       "zephyrit:walk:sw:2": [
         0,
@@ -1602,7 +1704,7 @@
       ],
       "zephyrit:walk:sw:3": [
         0,
-        6
+        8
       ],
       "zephyrit:walk:sw:4": [
         0,
@@ -1610,7 +1712,7 @@
       ],
       "zephyrit:walk:sw:5": [
         0,
-        6
+        8
       ],
       "zephyrit:walk:sw:6": [
         0,
@@ -1618,107 +1720,113 @@
       ],
       "zephyrit:walk:sw:7": [
         0,
-        6
+        8
       ],
       "zephyrit:walk:w:0": [
-        4,
-        6
+        2,
+        12
       ],
       "zephyrit:walk:w:1": [
-        4,
-        6
+        2,
+        12
       ],
       "zephyrit:walk:w:2": [
-        4,
-        6
+        2,
+        12
       ],
       "zephyrit:walk:w:3": [
-        4,
-        6
+        2,
+        12
       ],
       "zephyrit:walk:w:4": [
-        4,
-        6
+        2,
+        12
       ],
       "zephyrit:walk:w:5": [
-        4,
-        6
+        2,
+        12
       ],
       "zephyrit:walk:w:6": [
-        4,
-        6
+        2,
+        12
       ],
       "zephyrit:walk:w:7": [
-        4,
-        6
+        2,
+        12
       ],
       "zephyrit:work:e:0": [
         -2,
-        6
+        8
       ],
       "zephyrit:work:e:1": [
         -2,
-        6
+        8
       ],
       "zephyrit:work:e:2": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:work:e:3": [
         -2,
-        6
+        8
       ],
       "zephyrit:work:e:4": [
         -2,
-        6
+        8
       ],
       "zephyrit:work:e:5": [
-        0,
-        6
+        -2,
+        8
       ],
-      "zephyrit:work:s:0": null,
+      "zephyrit:work:s:0": [
+        -2,
+        16
+      ],
       "zephyrit:work:s:1": [
-        4,
-        14
+        -2,
+        16
       ],
       "zephyrit:work:s:2": [
-        4,
-        14
+        -2,
+        16
       ],
       "zephyrit:work:s:3": [
-        4,
-        14
+        -2,
+        16
       ],
-      "zephyrit:work:s:4": null,
+      "zephyrit:work:s:4": [
+        -2,
+        16
+      ],
       "zephyrit:work:s:5": [
-        4,
-        14
+        -2,
+        16
       ],
       "zephyrit:work:w:0": [
-        2,
-        6
+        0,
+        10
       ],
       "zephyrit:work:w:1": [
-        2,
-        6
+        0,
+        10
       ],
       "zephyrit:work:w:2": [
-        0,
-        6
+        -2,
+        8
       ],
       "zephyrit:work:w:3": [
-        2,
-        6
+        0,
+        10
       ],
       "zephyrit:work:w:4": [
-        2,
-        6
+        0,
+        10
       ],
       "zephyrit:work:w:5": [
-        0,
-        6
+        -2,
+        8
       ]
     }
   },
-  "sourceDigest": "f755c3c8dab7432d496a500f8678f29bbf57bb9b84f4683ff5ef3c8239d91de9"
+  "sourceDigest": "2371ce060e3a4015cab7123e8879d92a82ed646d66302083e772ad408c282d92"
 }
