@@ -2,6 +2,77 @@
 
 Finished tickets, moved out of the live queue so agents read less. Newest batch first. Read only when a live ticket links here.
 
+## Archived 2026-11-05 (Acting-Director Queue Tidy, Directive 017)
+
+Moved from `docs/team/queue/blender.md` after the `2026-11-04` approval batch and `2026-11-05` acting-director audit (`docs/team/comms/visitor/2026-11-05T0030--to-claude--acting-director-audit-and-tool-findings.md`). Staging/publishing of the approved outputs is tracked in live ticket `B27`; the `steamshell` 180° yaw fix is tracked in live ticket `B28`; C26 readability re-bakes are tracked in live ticket `B20`.
+
+### B14 · Publish the approved hatchet
+
+- status: done (published 2026-11-02 by the stand-in session)
+- goal: stage the director-approved golden held item so the runtime can draw it once C9b's held-layer composition lands.
+- inputs: [approval record](../comms/director/approvals/item-hatchet--2026-11-01-item-hatchet.md) (digest 89102c20…, scope held-item and icon).
+- done when: `art/source/staging/blender/item-hatchet.json` is committed and a `--to-communicator-codex--hatchet-published` message lists it
+- evidence: art/source/staging/blender/item-hatchet.json; docs/team/comms/blender/2026-11-02T0416--to-communicator-codex--hatchet-published.md
+
+### B19 · Golden samples with local image generation (first)
+
+- status: done (all four golden samples approved by director; hatchet, player, house published to staging)
+- goal: approve the new look on golden samples (image model: klein 9B; 3D model: Hunyuan3D-2mv, decided in C31) before regenerating everything (PRD-4, L12; director decision 2026-11-02).
+- evidence:
+  - rivallie (creature): art/review/2026-11-03-rivallie/ (director-approved, `rivallie--2026-11-04-rivallie.md`, 15 clips, 616 frames)
+  - item:hatchet (prop): art/review/2026-11-03-item-hatchet/ (director-approved, `item-hatchet--2026-11-03-item-hatchet.md`, 65 poses)
+  - env:house-aqualia (environment): art/review/2026-11-03-env-house-aqualia/ (director-approved, `env-house-aqualia--2026-11-03-env-house-aqualia.md`)
+  - player-aqualia (human): art/review/2026-11-03-player-aqualia/ (director-approved, `player-aqualia--2026-11-03-player-aqualia.md`, 22 clips, 952 frames)
+  - dispatch: docs/team/comms/blender/2026-11-03T0125--to-claude-director--golden-samples.md
+  - staged: art/source/staging/blender/{item-hatchet.json, env-house-aqualia.json, player-aqualia.json}
+
+### B15 · Reference-sheet production run (local generation)
+
+- status: done (all reference sheets for player, Neris, 9 villagers, environment golden set + waystone + hearth, 4 non-quadruped creatures, 6 held items, and terrain swatches generated locally and registered with `sheet.json`)
+- goal: every class the forge can build has its sheets, so blender is never waiting on input.
+- evidence: `art/source/references/{player-aqualia,npc-neris,npc-caelum,npc-dara,npc-finn,npc-lark,npc-marina,npc-mira,npc-oren,npc-reed,npc-willa,env-house-aqualia,env-tree-oak,env-well,env-landmark-waystone,env-prop-hearth,zephyrit,cindermoth,steamshell,ignicap,item-fishing-rod,item-hoe,item-ferry-pole,item-copper-sword,item-hunting-spear,item-shortbow}/sheet.json`, `docs/team/comms/blender/image-ledger.md`.
+
+### B16 · Redraw the human sheets; fix ramp names on every sheet
+
+- status: done (palette ramps, `mireling` schema, and human 3-view sheets normalized and forged to `director-approved` packets)
+- goal: bring every reference sheet up to PRD-3 and L3 (director decision via directive 006).
+- evidence: `art/source/references/{bramblefang,marshstalker,mireling,player-aqualia,npc-neris,mannequin-*}/sheet.json`, `docs/team/comms/blender/image-ledger.md`.
+
+### B4 · Golden samples: player-aqualia, then Neris (humans)
+
+- status: done (`director-approved` for both bodies and face sidecars; staging tracked in `B27`)
+- evidence: `player-aqualia`: `art/review/2026-11-03-player-aqualia/` (`player-aqualia--2026-11-03-player-aqualia.md`) + `art/review/2026-11-03-player-aqualia-faces-d4cc567cadce/` (`player-aqualia--2026-11-04-player-aqualia-faces.md`); `npc-neris`: `art/review/2026-11-03-npc-neris/` (`npc-neris--2026-11-04-npc-neris.md`) + `art/review/2026-11-03-npc-neris-faces-9eda4cbedf2f/` (`npc-neris--2026-11-04-npc-neris-faces.md`).
+
+### B3 · Remaining creatures, one at a time
+
+- status: done for `zephyrit`, `cindermoth`, `ignicap` (`director-approved`); `steamshell` moved to dedicated `changes-requested` ticket `B28` (180° backward yaw)
+- evidence: `zephyrit--2026-11-04-zephyrit.md`, `cindermoth--2026-11-04-cindermoth.md`, `ignicap--2026-11-04-ignicap.md` (`director-approved`); `steamshell--2026-11-03-steamshell.md` (`changes-requested`, tracked in `B28`).
+
+### B21 · The other nine Aqualia villagers (after B4)
+
+- status: done (all 9 villager bodies and all 9 face sidecars `director-approved` on 2026-11-04; publishing tracked in `B27`; `npc:oren` and `npc:reed` white-ramp follow-up tracked in `B20`)
+- evidence: `docs/team/comms/director/approvals/npc-{caelum,marina,reed,willa,oren,mira,lark,dara,finn}--2026-11-04-npc-*.md` (18 approval records, digests verified via `forge.py approve-record`).
+
+### B22 · Held tools and weapons (items kind)
+
+- status: done (all 6 held items `director-approved` on 2026-11-04; publishing tracked in `B27`; `copper-sword` and `shortbow` silhouette refinement tracked in `B20`)
+- evidence: `docs/team/comms/director/approvals/item-{fishing-rod,hoe,ferry-pole,copper-sword,hunting-spear,shortbow}--2026-11-04-item-*.md` (6 approval records, digests verified via `forge.py approve-record`).
+
+### B2 · Riverlands map
+
+- status: done (`director-approved` 2026-11-02, layout scope: `docs/team/comms/director/approvals/world-aqualia--world-aqualia-aqualia_riverlands-2.md`)
+- evidence: `art/review/world-aqualia-aqualia_riverlands-2/`, `docs/team/comms/blender/2026-11-02T0430--to-director-communicator--riverlands-revision-2.md`.
+
+### B17 · Aqualia terrain set through tileforge (long design session)
+
+- status: done (`director-approved` in `docs/team/comms/director/approvals/aqualia-terrain--tiles-aqualia-terrain-1.md`; staged at `art/source/staging/blender/tiles-aqualia-terrain.json`)
+- evidence: `art/review/tiles-aqualia-terrain-1/`, `art/source/tiles/sets/aqualia-terrain/set.json`, `art/source/staging/blender/tiles-aqualia-terrain.json`.
+
+### B11 - Human face sidecar technical proof
+
+- status: done (`director-approved` via `docs/team/comms/director/approvals/player-aqualia--2026-11-04-player-aqualia-faces.md`; publishing tracked in `B27`)
+- evidence: `art/review/2026-11-03-player-aqualia-faces-d4cc567cadce/`.
+
 ## Archived 2026-11-02
 
 The queue header as it stood before the cleanup:

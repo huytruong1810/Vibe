@@ -2,6 +2,15 @@
 
 Finished tickets, moved out of the live queue so agents read less. Newest batch first. Read only when a live ticket links here.
 
+## Archived 2026-11-05 (Acting-Director Queue Tidy, Directive 017)
+
+### M26 · Hand the art work to blender (one time, first)
+
+- status: done (handover message pushed in docs/team/comms/communicator/2026-11-02T2355--to-blender--art-handover.md)
+- goal: blender continues your sheets, terrain and art tickets without losing anything (director decision 2026-11-02: all art is blender's, TEAM-1).
+- done when: the handover message is pushed and blender has replied that it has what it needs
+- evidence: docs/team/comms/communicator/2026-11-02T2355--to-blender--art-handover.md, docs/team/comms/communicator/m23-prompt-batch.md, docs/team/comms/communicator/image-ledger.md
+
 ## Archived 2026-11-02
 
 The queue header as it stood before the cleanup:
