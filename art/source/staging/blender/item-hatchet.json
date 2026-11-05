@@ -1,83 +1,83 @@
 {
-  "approvalRecord": "docs/team/comms/director/approvals/item-hatchet--2026-11-01-item-hatchet.md",
-  "approvalSha256": "714e354a85b53ccaf0fed67927ca1351521d8c7b88b2ccaa6f9d06c5b45b6b1f",
+  "approvalRecord": "docs/team/comms/director/approvals/item-hatchet--2026-11-03-item-hatchet.md",
+  "approvalSha256": "4df12853c50992b85f97d6ba8553090685e7f5be955315ad3d802a5607b409bb",
   "asset": "item:hatchet",
   "authoringProvenance": {
     "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset item:hatchet",
     "id": "forge-item-hatchet",
     "inputs": [
       {
-        "path": "blender/models/published/item-hatchet/da6bce925052bec8078362bae16bd20d8c9e766fdba6e5d6f83ef6bbf8e91264/forge/blender/bake.py",
+        "path": "blender/models/published/item-hatchet/625762d46807468f6aeff781ffb5c4ffa935aa64e468ce7fbe4b1efb36cde75f/forge/blender/bake.py",
         "role": "script",
         "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
       },
       {
-        "path": "blender/models/published/item-hatchet/da6bce925052bec8078362bae16bd20d8c9e766fdba6e5d6f83ef6bbf8e91264/forge/blender/item_orient.py",
+        "path": "blender/models/published/item-hatchet/625762d46807468f6aeff781ffb5c4ffa935aa64e468ce7fbe4b1efb36cde75f/forge/blender/item_orient.py",
         "role": "script",
         "sha256": "a68d9fcfc9cae6f56c882c76e9e294d3c24bd02fb7826d9da3eaa086b7de362f"
       },
       {
-        "path": "blender/models/published/item-hatchet/da6bce925052bec8078362bae16bd20d8c9e766fdba6e5d6f83ef6bbf8e91264/forge/forge.py",
+        "path": "blender/models/published/item-hatchet/625762d46807468f6aeff781ffb5c4ffa935aa64e468ce7fbe4b1efb36cde75f/forge/forge.py",
         "role": "script",
-        "sha256": "97f60ac788e5e174ee8413a9eb7324b2f1cfe040de4c9578bddcaf9ca81a36b9"
+        "sha256": "7ba07e846a522d199a522a011cfb1f87d35b47233bcb33aaeb9cb27e09644319"
       },
       {
-        "path": "blender/models/published/item-hatchet/da6bce925052bec8078362bae16bd20d8c9e766fdba6e5d6f83ef6bbf8e91264/forge/forgelib/item_orient.py",
+        "path": "blender/models/published/item-hatchet/625762d46807468f6aeff781ffb5c4ffa935aa64e468ce7fbe4b1efb36cde75f/forge/forgelib/item_orient.py",
         "role": "script",
         "sha256": "03534083c34c47428d83b477a4e98678e6e547ef21b9a65b751d508a0e164600"
       },
       {
-        "path": "blender/models/published/item-hatchet/da6bce925052bec8078362bae16bd20d8c9e766fdba6e5d6f83ef6bbf8e91264/forge/forgelib/item_render.py",
+        "path": "blender/models/published/item-hatchet/625762d46807468f6aeff781ffb5c4ffa935aa64e468ce7fbe4b1efb36cde75f/forge/forgelib/item_render.py",
         "role": "script",
         "sha256": "3290c864b563263170efcc626acce2a1dc88141d320d9cf186f5bc48b3e6f2d0"
       },
       {
-        "path": "blender/models/published/item-hatchet/da6bce925052bec8078362bae16bd20d8c9e766fdba6e5d6f83ef6bbf8e91264/forge/forgelib/items.py",
+        "path": "blender/models/published/item-hatchet/625762d46807468f6aeff781ffb5c4ffa935aa64e468ce7fbe4b1efb36cde75f/forge/forgelib/items.py",
         "role": "script",
         "sha256": "22221017285c31c893c28260a13caf407e646913c63e32ad723c8671f1a9d84c"
       },
       {
-        "path": "blender/models/published/item-hatchet/da6bce925052bec8078362bae16bd20d8c9e766fdba6e5d6f83ef6bbf8e91264/forge/forgelib/pixelize.py",
+        "path": "blender/models/published/item-hatchet/625762d46807468f6aeff781ffb5c4ffa935aa64e468ce7fbe4b1efb36cde75f/forge/forgelib/pixelize.py",
         "role": "script",
         "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
       },
       {
-        "path": "blender/models/published/item-hatchet/da6bce925052bec8078362bae16bd20d8c9e766fdba6e5d6f83ef6bbf8e91264/forge/forgelib/publish.py",
+        "path": "blender/models/published/item-hatchet/625762d46807468f6aeff781ffb5c4ffa935aa64e468ce7fbe4b1efb36cde75f/forge/forgelib/publish.py",
         "role": "script",
-        "sha256": "05d8748985702d31f58141fa58ceb852acfc69a8d21de6ecb0ad11aaf013b77d"
+        "sha256": "7c2e7b1994f6c5f8cb4c00bb8bf92f8078a8e7aa1ce405f18f5541e9aaf8452e"
       },
       {
-        "path": "blender/models/published/item-hatchet/da6bce925052bec8078362bae16bd20d8c9e766fdba6e5d6f83ef6bbf8e91264/forge/recipes/item-hatchet.json",
+        "path": "blender/models/published/item-hatchet/625762d46807468f6aeff781ffb5c4ffa935aa64e468ce7fbe4b1efb36cde75f/forge/recipes/item-hatchet.json",
         "role": "pose-config",
         "sha256": "07d0a101c5df435f427dfd44b8c4a3cdbcfbfa9e506ab7fde60e81008c84be97"
       },
       {
-        "path": "blender/models/published/item-hatchet/da6bce925052bec8078362bae16bd20d8c9e766fdba6e5d6f83ef6bbf8e91264/forge/spec/palette.json",
+        "path": "blender/models/published/item-hatchet/625762d46807468f6aeff781ffb5c4ffa935aa64e468ce7fbe4b1efb36cde75f/forge/spec/palette.json",
         "role": "palette",
         "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
       },
       {
-        "path": "blender/models/published/item-hatchet/da6bce925052bec8078362bae16bd20d8c9e766fdba6e5d6f83ef6bbf8e91264/forge/spec/render_spec.json",
+        "path": "blender/models/published/item-hatchet/625762d46807468f6aeff781ffb5c4ffa935aa64e468ce7fbe4b1efb36cde75f/forge/spec/render_spec.json",
         "role": "pose-config",
         "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
       },
       {
-        "path": "blender/models/published/item-hatchet/da6bce925052bec8078362bae16bd20d8c9e766fdba6e5d6f83ef6bbf8e91264/forge/uv.lock",
+        "path": "blender/models/published/item-hatchet/625762d46807468f6aeff781ffb5c4ffa935aa64e468ce7fbe4b1efb36cde75f/forge/uv.lock",
         "role": "dependency-lock",
         "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
       },
       {
-        "path": "blender/models/published/item-hatchet/da6bce925052bec8078362bae16bd20d8c9e766fdba6e5d6f83ef6bbf8e91264/forge/work/item-hatchet/item_model.blend",
+        "path": "blender/models/published/item-hatchet/625762d46807468f6aeff781ffb5c4ffa935aa64e468ce7fbe4b1efb36cde75f/forge/work/item-hatchet/item_model.blend",
         "role": "model",
         "sha256": "5b6a2021709616ecfd710bd8a0470a0a27ba93ca1fff0c142215abf4c068e5b5"
       },
       {
-        "path": "blender/models/published/item-hatchet/da6bce925052bec8078362bae16bd20d8c9e766fdba6e5d6f83ef6bbf8e91264/forge/work/item-hatchet/orient.json",
+        "path": "blender/models/published/item-hatchet/625762d46807468f6aeff781ffb5c4ffa935aa64e468ce7fbe4b1efb36cde75f/forge/work/item-hatchet/orient.json",
         "role": "pose-config",
         "sha256": "aeef265bc21b5e77e1e6d384f303a23882d41a5f63230d19d090b409c8a10e49"
       },
       {
-        "path": "blender/models/published/item-hatchet/da6bce925052bec8078362bae16bd20d8c9e766fdba6e5d6f83ef6bbf8e91264/forge/work/item-hatchet/orient_params.json",
+        "path": "blender/models/published/item-hatchet/625762d46807468f6aeff781ffb5c4ffa935aa64e468ce7fbe4b1efb36cde75f/forge/work/item-hatchet/orient_params.json",
         "role": "pose-config",
         "sha256": "29a864cca686edc2ab9fc36acf74e526bc9bbbab09ac4c231092c381ea52e62f"
       }
@@ -97,11 +97,11 @@
         "y": 32
       },
       "facing": "s",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_0/s_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_0/s_0.png",
       "gripBucket": 0,
       "gripDegrees": 0.0,
       "id": "item-hatchet-held-s-0",
-      "sha256": "22152f458c2209ade768d03ac9bc01af89858ef87aa98bb415bef77e4f579504",
+      "sha256": "dcaac02b235cc1edf34e8c3c878cd4b7803d89050b12894d719a7d6e5d207d58",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -121,11 +121,11 @@
         "y": 32
       },
       "facing": "s",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_1/s_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_1/s_0.png",
       "gripBucket": 1,
       "gripDegrees": 45.0,
       "id": "item-hatchet-held-s-1",
-      "sha256": "a18520abf304ada3e684a162130b6443ca5522dd0816d3c1caf03bd2a46cc1e0",
+      "sha256": "8f827cfa94541824a3b9883adf246c23ed601402d545c02a562087d361cae03f",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -145,11 +145,11 @@
         "y": 32
       },
       "facing": "s",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_2/s_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_2/s_0.png",
       "gripBucket": 2,
       "gripDegrees": 90.0,
       "id": "item-hatchet-held-s-2",
-      "sha256": "d8ba3fcb62bef1ae3480f6097158c8a51f479c8104edc35499b4b8475cf5c8c3",
+      "sha256": "47b9146d1380df77b93c9d6500b3eb77958e28db5c8868e8deadd9da818320ae",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -169,11 +169,11 @@
         "y": 32
       },
       "facing": "s",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_3/s_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_3/s_0.png",
       "gripBucket": 3,
       "gripDegrees": 135.0,
       "id": "item-hatchet-held-s-3",
-      "sha256": "99e5ccb3db089e03a57e81fe4628087d20da9003043c016fed9c5fe734ca20e3",
+      "sha256": "e0561cc2fdcfa469b980024eae49719d218ebdfe8992b1b212805d40b119baae",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -193,11 +193,11 @@
         "y": 32
       },
       "facing": "s",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_4/s_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_4/s_0.png",
       "gripBucket": 4,
       "gripDegrees": 180.0,
       "id": "item-hatchet-held-s-4",
-      "sha256": "a40b28fd3e2f003ee3af393a8c16b1185d697333ce03ea41095eff1c24f7c0a8",
+      "sha256": "a169202bd4599da579f3a297d9c5785d0be1d98c675c529d29edf59e891396c8",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -217,11 +217,11 @@
         "y": 32
       },
       "facing": "s",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_5/s_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_5/s_0.png",
       "gripBucket": 5,
       "gripDegrees": 225.0,
       "id": "item-hatchet-held-s-5",
-      "sha256": "38f0017945302242eca6b05d103243bd7b8c4b3b9d3c53c30b30921313b9dfd7",
+      "sha256": "1e16e3da2037d62e0206794df32d8340099ca18a4fc22119e1a9a11e1580b2aa",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -241,11 +241,11 @@
         "y": 32
       },
       "facing": "s",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_6/s_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_6/s_0.png",
       "gripBucket": 6,
       "gripDegrees": 270.0,
       "id": "item-hatchet-held-s-6",
-      "sha256": "717b1ba17c1a62b34d29b5c26c594d0931bfc938f08e0de19a640177c7b86f37",
+      "sha256": "18639c1a5125c853f38fc7667227eff3fe56bc671065854d46d2d9ba65c9e98f",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -265,11 +265,11 @@
         "y": 32
       },
       "facing": "s",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_7/s_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_7/s_0.png",
       "gripBucket": 7,
       "gripDegrees": 315.0,
       "id": "item-hatchet-held-s-7",
-      "sha256": "2d6cff4cc174b4a5f9b0bcbec705b0ac3d290ab182a3c2cb372b4f8db205b734",
+      "sha256": "d1992b781d2994fb4157b2db48a351faf431179b14c92891875a241b99c9ed9d",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -289,11 +289,11 @@
         "y": 32
       },
       "facing": "se",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_0/se_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_0/se_0.png",
       "gripBucket": 0,
       "gripDegrees": 0.0,
       "id": "item-hatchet-held-se-0",
-      "sha256": "094e6095dc6ad9f953cc983cda3254472e02552d310f0cf9b3cb6a349dfe31fa",
+      "sha256": "ea535317a24bd9a50cfd17a6eca4a70eb767973a46cdb63f38c70f07a25a700b",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -313,11 +313,11 @@
         "y": 32
       },
       "facing": "se",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_1/se_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_1/se_0.png",
       "gripBucket": 1,
       "gripDegrees": 45.0,
       "id": "item-hatchet-held-se-1",
-      "sha256": "a6d35624f5d6c1b0d7d9997e778f4b5a13a8bcbea798aa6019a97e72941839da",
+      "sha256": "f3f3ab59f48f4ff7521bb4e5bae829dbfea03a436f580a6c0fb85ae7770976b2",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -337,11 +337,11 @@
         "y": 32
       },
       "facing": "se",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_2/se_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_2/se_0.png",
       "gripBucket": 2,
       "gripDegrees": 90.0,
       "id": "item-hatchet-held-se-2",
-      "sha256": "e8658fca657a745dd3388214b231abb28b2dd5aa22fa73b11280e07f763400a1",
+      "sha256": "f56c122d2c5b341f795efb437f1d4d6c8299a789399bd06087f58b2f9d07fe28",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -361,11 +361,11 @@
         "y": 32
       },
       "facing": "se",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_3/se_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_3/se_0.png",
       "gripBucket": 3,
       "gripDegrees": 135.0,
       "id": "item-hatchet-held-se-3",
-      "sha256": "17fb732421de5e0e58c14f36c1a871069f5c1336ec682ba132b7c11f74f3f4e1",
+      "sha256": "1bdcf5690e75eaeec7c1bfdb431ec5810db120ace4df0ef7a1b0dea19de58fa4",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -385,11 +385,11 @@
         "y": 32
       },
       "facing": "se",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_4/se_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_4/se_0.png",
       "gripBucket": 4,
       "gripDegrees": 180.0,
       "id": "item-hatchet-held-se-4",
-      "sha256": "115d9f1ae97a82eeceda8a9bc7483463c8f7c6635a21f702dbd66ea904011332",
+      "sha256": "7c344127eb730c02b745ac714b1117a335b11a6771be9e62b48d89f800d7efae",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -409,11 +409,11 @@
         "y": 32
       },
       "facing": "se",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_5/se_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_5/se_0.png",
       "gripBucket": 5,
       "gripDegrees": 225.0,
       "id": "item-hatchet-held-se-5",
-      "sha256": "c2ce4db24bcac8e4f2b585249d4dc104ddae61a6c253678f3c8fa15cc4a42889",
+      "sha256": "0d1bc49f38b3cb428c99c784d0f75294e619260a2eabfd8bac5ea14cde57e6fd",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -433,11 +433,11 @@
         "y": 32
       },
       "facing": "se",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_6/se_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_6/se_0.png",
       "gripBucket": 6,
       "gripDegrees": 270.0,
       "id": "item-hatchet-held-se-6",
-      "sha256": "21c76f056b8edbaf80988a6dd9992f23cab66501691449d3f428e2f2c5c9d97b",
+      "sha256": "66aeb8eb57ecb747f67142f687ee46354b4841adebd2d56d28547d66291c86f4",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -457,11 +457,11 @@
         "y": 32
       },
       "facing": "se",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_7/se_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_7/se_0.png",
       "gripBucket": 7,
       "gripDegrees": 315.0,
       "id": "item-hatchet-held-se-7",
-      "sha256": "b23bd5f1df573208007fe0d90b07d1e2e1dc8bdaaca1d632e0f20155ad85068c",
+      "sha256": "b3a908ac990664f1fd228b18afaab2fe31d048268244c2c7026dddfa0120e57b",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -481,11 +481,11 @@
         "y": 32
       },
       "facing": "e",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_0/e_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_0/e_0.png",
       "gripBucket": 0,
       "gripDegrees": 0.0,
       "id": "item-hatchet-held-e-0",
-      "sha256": "c8b36e719f3f809f89a788d6038bef6d95d51cfec518ce8eebde52a3b9c3a1a2",
+      "sha256": "6ddac4bd53b36dc27d7540948645ddf81473e59988015a567fa4d11ec0365e99",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -505,11 +505,11 @@
         "y": 32
       },
       "facing": "e",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_1/e_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_1/e_0.png",
       "gripBucket": 1,
       "gripDegrees": 45.0,
       "id": "item-hatchet-held-e-1",
-      "sha256": "486bf1122e3b60418aee2c9b3a586182691037d028c97c120798966c17e87b8f",
+      "sha256": "ad7c371f13aec1428fb37478a571402fc71574e2d643ec84eab82ac91beff74d",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -529,11 +529,11 @@
         "y": 32
       },
       "facing": "e",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_2/e_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_2/e_0.png",
       "gripBucket": 2,
       "gripDegrees": 90.0,
       "id": "item-hatchet-held-e-2",
-      "sha256": "27cf6b4ea4aada1936c5932c2c41eb2a55cf44a77908e938c8b5c704f7490eb3",
+      "sha256": "33de7978f3c2b3d70e4cce5d9a63e0d7aad8ddb96e7b4639df02af8a533e5abd",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -553,11 +553,11 @@
         "y": 32
       },
       "facing": "e",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_3/e_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_3/e_0.png",
       "gripBucket": 3,
       "gripDegrees": 135.0,
       "id": "item-hatchet-held-e-3",
-      "sha256": "dae8733ccd20eeb7c27f63dedd3d6cc16d7e62e57f40e779ecd2a41a5083e205",
+      "sha256": "0355620c593e74999b461344d695b7f32691c3d1821c9c85809654b0723fc694",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -577,11 +577,11 @@
         "y": 32
       },
       "facing": "e",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_4/e_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_4/e_0.png",
       "gripBucket": 4,
       "gripDegrees": 180.0,
       "id": "item-hatchet-held-e-4",
-      "sha256": "37b9048323d4fb7809bf9c5724cc070d875642772f47a0912a82c01b5fbfd2e0",
+      "sha256": "0dec488f8921a23139ce2007e99cc0dd80056dc57c04304095ad09f436dc1f4c",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -601,11 +601,11 @@
         "y": 32
       },
       "facing": "e",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_5/e_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_5/e_0.png",
       "gripBucket": 5,
       "gripDegrees": 225.0,
       "id": "item-hatchet-held-e-5",
-      "sha256": "b8d4513eb92c614654445465ca148213013a0a8be01537b00545097f736ac531",
+      "sha256": "e84ff199251d155261f76acb93aa663da70d3ca14014dd5230014c15bce74b20",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -625,11 +625,11 @@
         "y": 32
       },
       "facing": "e",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_6/e_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_6/e_0.png",
       "gripBucket": 6,
       "gripDegrees": 270.0,
       "id": "item-hatchet-held-e-6",
-      "sha256": "06ec88b06211c58fbfca290604cfc65c324da50abe740d06b92f55e5faef106b",
+      "sha256": "eef5733383894cc1696410da472eb0ed383cb840450421ea72fce1bb734a9e97",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -649,11 +649,11 @@
         "y": 32
       },
       "facing": "e",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_7/e_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_7/e_0.png",
       "gripBucket": 7,
       "gripDegrees": 315.0,
       "id": "item-hatchet-held-e-7",
-      "sha256": "895e50a57eca2c71f110092b9de22b33e1b888acce021dccaf7ba33528f750ac",
+      "sha256": "e3b82b8493758a571991cd0cf525078c9ff8f23a31950c741124804880a20e64",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -673,11 +673,11 @@
         "y": 32
       },
       "facing": "ne",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_0/ne_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_0/ne_0.png",
       "gripBucket": 0,
       "gripDegrees": 0.0,
       "id": "item-hatchet-held-ne-0",
-      "sha256": "9875a4c41f6564b24be88eab451d1272ea4b3a79a02bb081daa44e04a1ff156e",
+      "sha256": "007ab7259616d1e65a14adccf1335400db4437de8adcbb9a1669ac0bf87a1c54",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -697,11 +697,11 @@
         "y": 32
       },
       "facing": "ne",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_1/ne_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_1/ne_0.png",
       "gripBucket": 1,
       "gripDegrees": 45.0,
       "id": "item-hatchet-held-ne-1",
-      "sha256": "195467a257544e5c25b933b65b7af9ddecdb8dcdb813d88a51c027991f9d830c",
+      "sha256": "9e5812d62bb17885a5a79dab41dcde8a94fa6f16889cb6754934021ba51812c4",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -721,11 +721,11 @@
         "y": 32
       },
       "facing": "ne",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_2/ne_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_2/ne_0.png",
       "gripBucket": 2,
       "gripDegrees": 90.0,
       "id": "item-hatchet-held-ne-2",
-      "sha256": "5f1b4e25c2ac98f84b6a33770872a5de6e4a3ad1452b4eda97e625d2932c835f",
+      "sha256": "e420fd1f7433f0bbe55a7adf4366af67e3623bb22343ac1a7e912d3713383a7f",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -745,11 +745,11 @@
         "y": 32
       },
       "facing": "ne",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_3/ne_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_3/ne_0.png",
       "gripBucket": 3,
       "gripDegrees": 135.0,
       "id": "item-hatchet-held-ne-3",
-      "sha256": "e43619de22f951b795fec7d84ec45d9cfe8a29e60257c01179d8d0d17ad0a684",
+      "sha256": "f9dced2893350c9ae6e9b76123412977214019b52fcf6bf2aceddd1aaa38222c",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -769,11 +769,11 @@
         "y": 32
       },
       "facing": "ne",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_4/ne_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_4/ne_0.png",
       "gripBucket": 4,
       "gripDegrees": 180.0,
       "id": "item-hatchet-held-ne-4",
-      "sha256": "e14cb84793e79297a6b3b949a0fe232eb13a347f575ba19ed3ca41116657f335",
+      "sha256": "c74c7599fa1290012ff90d6635da4e25b7e9ef4b454a86ab9259202fd29c9b3c",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -793,11 +793,11 @@
         "y": 32
       },
       "facing": "ne",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_5/ne_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_5/ne_0.png",
       "gripBucket": 5,
       "gripDegrees": 225.0,
       "id": "item-hatchet-held-ne-5",
-      "sha256": "505d49dc2010958f1c87881790953b203b119198e40d8d5d9e1d6bf462e04252",
+      "sha256": "c4b7208aee4b43678f767260f5d4f25c2b4c00e8341ed398331f5c23701e5431",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -817,11 +817,11 @@
         "y": 32
       },
       "facing": "ne",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_6/ne_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_6/ne_0.png",
       "gripBucket": 6,
       "gripDegrees": 270.0,
       "id": "item-hatchet-held-ne-6",
-      "sha256": "a9eb8c30040b7cf9aa9492d7d0159f434af6ab3662b03d062cd69ac3557be7b5",
+      "sha256": "74af882aba7389467e5cb8136af2785f819786da16f729549c1d77f90d4b39dc",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -841,11 +841,11 @@
         "y": 32
       },
       "facing": "ne",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_7/ne_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_7/ne_0.png",
       "gripBucket": 7,
       "gripDegrees": 315.0,
       "id": "item-hatchet-held-ne-7",
-      "sha256": "229ff37273b47b748c72d8c615ba5547ee2d58e4914a8bc4fd8dfc7006911214",
+      "sha256": "824f2a953e732c6c0ebfb1c0702bdab33dd2f0b3390d2d4179d2b3d4cb5168e6",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -865,11 +865,11 @@
         "y": 32
       },
       "facing": "n",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_0/n_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_0/n_0.png",
       "gripBucket": 0,
       "gripDegrees": 0.0,
       "id": "item-hatchet-held-n-0",
-      "sha256": "2ab6ad18ac7eb2aebc25b93777bdfcd2bb2a5ba8997d33556632b1f8f241ad62",
+      "sha256": "92266e9a78706eafc23c7569a9a3b3248b36cc384f576349a105b89d71d948a5",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -889,11 +889,11 @@
         "y": 32
       },
       "facing": "n",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_1/n_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_1/n_0.png",
       "gripBucket": 1,
       "gripDegrees": 45.0,
       "id": "item-hatchet-held-n-1",
-      "sha256": "14024e625892eeac54a282a14b04a31f7b4fd1ae7e489a3cb876fb8a5400c403",
+      "sha256": "3d3dbe241d3063ad7aed9b37de63e1c96a6d6cc4b78da2679f395a9bcedd5a7f",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -913,11 +913,11 @@
         "y": 32
       },
       "facing": "n",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_2/n_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_2/n_0.png",
       "gripBucket": 2,
       "gripDegrees": 90.0,
       "id": "item-hatchet-held-n-2",
-      "sha256": "d3ea20e282063aba2f5345ddcf00790284799aec06c4825ea9eb34d16cb56963",
+      "sha256": "3ab233e675dbb0c9608b56ea6eea588afe0aa9d92f40dafb39a7b8cfa48d4228",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -937,11 +937,11 @@
         "y": 32
       },
       "facing": "n",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_3/n_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_3/n_0.png",
       "gripBucket": 3,
       "gripDegrees": 135.0,
       "id": "item-hatchet-held-n-3",
-      "sha256": "def4706918288cdf40b8702da04632c6836a73da45c8ab893f6243dbe0b5108e",
+      "sha256": "e8ccffc249d5987de984028d698f8745c195d768585ecb6f56ac731ce4dc9929",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -961,11 +961,11 @@
         "y": 32
       },
       "facing": "n",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_4/n_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_4/n_0.png",
       "gripBucket": 4,
       "gripDegrees": 180.0,
       "id": "item-hatchet-held-n-4",
-      "sha256": "cc3ce66d4c2eebfcb4c490f5189ccd73b18a72f8815d8d9f70c506e7a0df8738",
+      "sha256": "63b7347d41996d948bc581070626993bce2995a8bf73e3cc026bd6b57a4d36b8",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -985,11 +985,11 @@
         "y": 32
       },
       "facing": "n",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_5/n_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_5/n_0.png",
       "gripBucket": 5,
       "gripDegrees": 225.0,
       "id": "item-hatchet-held-n-5",
-      "sha256": "2de64e3529cb5c3f1ae53f06cd906df98ddb452476a47e83bd11ab92c1e171fb",
+      "sha256": "8a2ccb6d956e1d4da5a134a1c1587d94209b5631ac1eb4364589a2091de84c34",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -1009,11 +1009,11 @@
         "y": 32
       },
       "facing": "n",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_6/n_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_6/n_0.png",
       "gripBucket": 6,
       "gripDegrees": 270.0,
       "id": "item-hatchet-held-n-6",
-      "sha256": "1d934c636af7892346a931f4e9853683b4f0066a11ae254ced61045a945c85da",
+      "sha256": "f0f2bc335385e5b8b28d6409dcb30ebf7ce0b751a1cc7e8368cef111712d564b",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -1033,11 +1033,11 @@
         "y": 32
       },
       "facing": "n",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_7/n_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_7/n_0.png",
       "gripBucket": 7,
       "gripDegrees": 315.0,
       "id": "item-hatchet-held-n-7",
-      "sha256": "154d26d3d76202211d08af2ea065ccb3c3ea7ff00f45e7b6fa03c23faf665af1",
+      "sha256": "87a7959b0d0f719ce4713026b5fd1ac890143ed4d3a6c4591dcd89346512178c",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -1057,11 +1057,11 @@
         "y": 32
       },
       "facing": "nw",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_0/nw_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_0/nw_0.png",
       "gripBucket": 0,
       "gripDegrees": 0.0,
       "id": "item-hatchet-held-nw-0",
-      "sha256": "c681dd81105bb1d1c1fe3a1790c441a8f1ec39bf2f72ae445b2e9e03cc203f6b",
+      "sha256": "79f13b663298adabde247576f4363e6f3825c0e40b5b55bc9ba549f26e5e5440",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -1081,11 +1081,11 @@
         "y": 32
       },
       "facing": "nw",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_1/nw_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_1/nw_0.png",
       "gripBucket": 1,
       "gripDegrees": 45.0,
       "id": "item-hatchet-held-nw-1",
-      "sha256": "5758b011a4204854ba6836b01eb8cb2729d9ce6d3698ea78e4442a9eb6647df4",
+      "sha256": "b6db56daf9ee1e73280b60f6d1df9b20eb2106ae9ce9dd18d79c5df987c27da5",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -1105,11 +1105,11 @@
         "y": 32
       },
       "facing": "nw",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_2/nw_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_2/nw_0.png",
       "gripBucket": 2,
       "gripDegrees": 90.0,
       "id": "item-hatchet-held-nw-2",
-      "sha256": "bf8379e93605e3c070fd38da03f7e4c5aaa6f53803a10b1343364ef5255ddaa7",
+      "sha256": "4f524369524531838b738f4b13b69eb840c487d0a6d6cb1befdee1febb4fdfc2",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -1129,11 +1129,11 @@
         "y": 32
       },
       "facing": "nw",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_3/nw_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_3/nw_0.png",
       "gripBucket": 3,
       "gripDegrees": 135.0,
       "id": "item-hatchet-held-nw-3",
-      "sha256": "9ed930b43f06744f449266276182d3f84f27097c8495323b813f5b43b038cef7",
+      "sha256": "81b37cdca4f73f787a421b89ba64018fdab06760804212f6dda724965e99f4b1",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -1153,11 +1153,11 @@
         "y": 32
       },
       "facing": "nw",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_4/nw_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_4/nw_0.png",
       "gripBucket": 4,
       "gripDegrees": 180.0,
       "id": "item-hatchet-held-nw-4",
-      "sha256": "292d69bad144b1e8ef424274bc79f04ab0e5e2f5f4d40456de47940777a04561",
+      "sha256": "db1e7420cce8c222519f9251e1506b95bc0bc00491bb83b6015ce3dc74a320b4",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -1177,11 +1177,11 @@
         "y": 32
       },
       "facing": "nw",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_5/nw_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_5/nw_0.png",
       "gripBucket": 5,
       "gripDegrees": 225.0,
       "id": "item-hatchet-held-nw-5",
-      "sha256": "16b838a8926b6f56a8fdca81aba609651bcec3d375c5ea9ae2e9db8925ac4dd8",
+      "sha256": "206b2624255cd58b061f489d5736b0a7d26808af0f77cb47804d7507e6188c52",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -1201,11 +1201,11 @@
         "y": 32
       },
       "facing": "nw",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_6/nw_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_6/nw_0.png",
       "gripBucket": 6,
       "gripDegrees": 270.0,
       "id": "item-hatchet-held-nw-6",
-      "sha256": "36d6fb986bbc5409c0166cf1f7acd647f39bfc4cb710c98f874d16a453c7ad94",
+      "sha256": "9d55312892cbd88a021db679e4613914d7688c50f38b4ff339701e9424b05f71",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -1225,11 +1225,11 @@
         "y": 32
       },
       "facing": "nw",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_7/nw_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_7/nw_0.png",
       "gripBucket": 7,
       "gripDegrees": 315.0,
       "id": "item-hatchet-held-nw-7",
-      "sha256": "bba9ee5b3fb05f382a2b212c0b2cdefd7b9b942ca3dc1ae8d7e8b9248fa75b76",
+      "sha256": "e8fe5f0cdfb61b45e8f09b2aead9a7b6c0c4390932f73e7dc533b27b07e20023",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -1249,11 +1249,11 @@
         "y": 32
       },
       "facing": "w",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_0/w_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_0/w_0.png",
       "gripBucket": 0,
       "gripDegrees": 0.0,
       "id": "item-hatchet-held-w-0",
-      "sha256": "4bfb594ae8627473bd8b709164f87ab0822595e1d0ad32a51cce5fdb3527af38",
+      "sha256": "57deb8491b172c71f54cf7f7486e08bf4e0c02472ed04e69ea5cea655b232f99",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -1273,11 +1273,11 @@
         "y": 32
       },
       "facing": "w",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_1/w_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_1/w_0.png",
       "gripBucket": 1,
       "gripDegrees": 45.0,
       "id": "item-hatchet-held-w-1",
-      "sha256": "145fc3448ccbf3fb166909d97824488d75a33afa966c1cca2ee42402024acb9e",
+      "sha256": "16217f18870fa110d2a935f42215a0bc416bc198e7b16b4e9c0f90bc3bc67c3d",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -1297,11 +1297,11 @@
         "y": 32
       },
       "facing": "w",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_2/w_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_2/w_0.png",
       "gripBucket": 2,
       "gripDegrees": 90.0,
       "id": "item-hatchet-held-w-2",
-      "sha256": "94d2ae0dc1b55eaa2f8f7399357b1afb18c5d21936d46f81423d31c51b0fa1d7",
+      "sha256": "91b135faa3fc9f5b887b16720c704b3afbadaec918545f900549ebb886c602eb",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -1321,11 +1321,11 @@
         "y": 32
       },
       "facing": "w",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_3/w_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_3/w_0.png",
       "gripBucket": 3,
       "gripDegrees": 135.0,
       "id": "item-hatchet-held-w-3",
-      "sha256": "cb634febd549be282b93a5c307bf21a526186a150e939a2da0817e8c0ca84313",
+      "sha256": "c974183c2eb9a2ac158b3a8fff5f4d940d783bef5e8ddbc46cf6d7aadcefe640",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -1345,11 +1345,11 @@
         "y": 32
       },
       "facing": "w",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_4/w_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_4/w_0.png",
       "gripBucket": 4,
       "gripDegrees": 180.0,
       "id": "item-hatchet-held-w-4",
-      "sha256": "73465940b1952bb30a2ecb7628b91f0e594b4ac15b7b138a65b931dc61df6005",
+      "sha256": "a23fa9636098637a5cba5409cce2258e0bf78f934afb64dc8c674a66ed4ffcd6",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -1369,11 +1369,11 @@
         "y": 32
       },
       "facing": "w",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_5/w_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_5/w_0.png",
       "gripBucket": 5,
       "gripDegrees": 225.0,
       "id": "item-hatchet-held-w-5",
-      "sha256": "d5116d1b8976db192453983afbf3555760a1a9a17660172b1a5900cf6f043f74",
+      "sha256": "f29810dfecc953f5c3543f023bffc48611730697333cf9057409d173128ae87b",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -1393,11 +1393,11 @@
         "y": 32
       },
       "facing": "w",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_6/w_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_6/w_0.png",
       "gripBucket": 6,
       "gripDegrees": 270.0,
       "id": "item-hatchet-held-w-6",
-      "sha256": "f16d3800728c86f87982d2ea9362830e7e04ba276848c2be33498944c3cadbff",
+      "sha256": "dc9a1f350d4e92fc4a7f4d405541eeed8fa9727e9c32e9a10188af003bf80226",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -1417,11 +1417,11 @@
         "y": 32
       },
       "facing": "w",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_7/w_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_7/w_0.png",
       "gripBucket": 7,
       "gripDegrees": 315.0,
       "id": "item-hatchet-held-w-7",
-      "sha256": "10ca3a25f1b58bab9fe5c64ecc862490e03285116c6733e2937a2780eaa24b51",
+      "sha256": "2493d868eb174d94281b437492c19dccada70e90e7b18566be4f191f2443f8f2",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -1441,11 +1441,11 @@
         "y": 32
       },
       "facing": "sw",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_0/sw_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_0/sw_0.png",
       "gripBucket": 0,
       "gripDegrees": 0.0,
       "id": "item-hatchet-held-sw-0",
-      "sha256": "4ce9c09396522fdfc2ef692c9240aa5bf3a2304c6a53f1113973bacea9e5dd69",
+      "sha256": "6695b13d4fc949c4444cd6a2c7b7797f3274ff266ef010fec3a573cabde6a198",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -1465,11 +1465,11 @@
         "y": 32
       },
       "facing": "sw",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_1/sw_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_1/sw_0.png",
       "gripBucket": 1,
       "gripDegrees": 45.0,
       "id": "item-hatchet-held-sw-1",
-      "sha256": "2e8347855ef4850cb955ea66436508de91561988f9be651bae08de897fce4b14",
+      "sha256": "d7fdf9af63b20b2d79b3744ed9e5fadf5039373befd70049658f45ecdf100333",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -1489,11 +1489,11 @@
         "y": 32
       },
       "facing": "sw",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_2/sw_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_2/sw_0.png",
       "gripBucket": 2,
       "gripDegrees": 90.0,
       "id": "item-hatchet-held-sw-2",
-      "sha256": "16ad72f419e9e5f4f8ce0ce0d24b900b3615061355ddd3c8da8ce6120ad73046",
+      "sha256": "84823e74aa47ccf72bbd665593481c5faf2fb8db769b74dc0d1599da02288f6e",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -1513,11 +1513,11 @@
         "y": 32
       },
       "facing": "sw",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_3/sw_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_3/sw_0.png",
       "gripBucket": 3,
       "gripDegrees": 135.0,
       "id": "item-hatchet-held-sw-3",
-      "sha256": "2341b110c253adffd8d9b8aed66f628b716d6fcbb14434740cfc7b024a1ade21",
+      "sha256": "0b4ee26c915a31e93f938a43ee0dec0789eca152f01491f4da8a40c6c8d05dee",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -1537,11 +1537,11 @@
         "y": 32
       },
       "facing": "sw",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_4/sw_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_4/sw_0.png",
       "gripBucket": 4,
       "gripDegrees": 180.0,
       "id": "item-hatchet-held-sw-4",
-      "sha256": "86505692aa1e8dc2635bd0200232823a86b51846587ba0f6d86ad2299c08c789",
+      "sha256": "48c05cf687177fabb086189fb708f9a40f09d5b7cc0843f796be9068a2e153ad",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -1561,11 +1561,11 @@
         "y": 32
       },
       "facing": "sw",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_5/sw_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_5/sw_0.png",
       "gripBucket": 5,
       "gripDegrees": 225.0,
       "id": "item-hatchet-held-sw-5",
-      "sha256": "8b013be4c3e96ec1c5144bfbb359ded4d9011b756d4abe2afe90f9abc4732db4",
+      "sha256": "e531bf433b4efa0e3829dfe7ed93d4760ac7f9de756a0ace5f218a727b8bd0d4",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -1585,11 +1585,11 @@
         "y": 32
       },
       "facing": "sw",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_6/sw_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_6/sw_0.png",
       "gripBucket": 6,
       "gripDegrees": 270.0,
       "id": "item-hatchet-held-sw-6",
-      "sha256": "5a7ef92779cab642e11bca8d5ff2691b493e362fdcbfd88ad4503260f3bd4c5d",
+      "sha256": "e79875cf7290710f3fef438f7d3d57676e4a1d9dcfcd360899377318a14f81b6",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -1609,11 +1609,11 @@
         "y": 32
       },
       "facing": "sw",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/held_7/sw_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/held_7/sw_0.png",
       "gripBucket": 7,
       "gripDegrees": 315.0,
       "id": "item-hatchet-held-sw-7",
-      "sha256": "b718666f1b93fb6065a531a5c5d07560c3b5beb0ac24fb903f23674abc710513",
+      "sha256": "4c68f907b80150151449c55b90eb77724c5e9a0cfef019da0e204941d684fafa",
       "socket": "Socket_Hand.R",
       "sockets": {
         "Socket_Hand.R": {
@@ -1633,11 +1633,11 @@
         "y": 32
       },
       "facing": "se",
-      "file": "exports/item-hatchet/89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89/pix/export/icon/se_0.png",
+      "file": "exports/item-hatchet/e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0/pix/export/icon/se_0.png",
       "gripBucket": 1,
       "gripDegrees": 45.0,
       "id": "item-hatchet-icon",
-      "sha256": "73c35f8e405f1df402961dd445fc55eab44488d845bd7a0ad814eb34d1195fa7",
+      "sha256": "94769338330a55a606506d622a01d9376fdd93d3e3136256e1216a023c42dbc7",
       "socket": null,
       "sockets": {},
       "sourceSize": {
@@ -1648,9 +1648,9 @@
     }
   ],
   "gripConvention": "clockwise-screen-from-up-after-facing-yaw",
-  "packet": "art/review/2026-11-01-item-hatchet",
-  "packetDigest": "89102c20178e14a3fb1263a5a3ffcc07a80c9b5ee6c70901b5f915dc59db4e89",
-  "packetSha256": "0e25caeac21331c631c9ddeef06ac40c7778aeecda1c5b03c6f9c2fc7fa1e55b",
+  "packet": "art/review/2026-11-03-item-hatchet",
+  "packetDigest": "e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0",
+  "packetSha256": "6652fb300009e0cab4e91c67a87df107f744cc8d6ff4f2ad80d623d8a83abe89",
   "schemaVersion": 1,
   "scope": [
     "held-item",
