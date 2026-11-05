@@ -2229,7 +2229,7 @@
         "passed": true,
         "log": "artifacts/resume-final-format-recheck.log"
       },
-      "browser": "pending",
+      "browser": "native3pass, forced software C18 running, remote full journeys running",
       "assets": {
         "build": "passed",
         "check": "passed",
@@ -2243,6 +2243,24 @@
         "checkLog": "artifacts/resume-assets-final-check.log",
         "hd": "unchanged expected failure:1519 coverage gaps",
         "hdLog": "artifacts/resume-hd-final.log"
+      },
+      "native": {
+        "sourceSha": "281f4b3196c46a7afe0825109bd55055acbc1abc",
+        "passed": 3,
+        "seconds": 108,
+        "openingMs": 41.3,
+        "phaseTimingsMs": {
+          "pause": 10.8,
+          "content": 24.2,
+          "render": 0.9,
+          "showModal": 5.4
+        },
+        "mountedPages": 2,
+        "pageErrors": 0,
+        "imagesInspected": 11,
+        "receipt": "artifacts/native-281f4b31/receipt.json",
+        "receiptSha256": "f327afc63ab282bcc1c29f06b176ca54867e850c294658e63e8a02954c28c4eb",
+        "log": "artifacts/resume-native-281f4b31.log"
       }
     },
     "newStudio": {
@@ -2253,5 +2271,65 @@
         "visitor duplicates already delivered C34 and C3g work; route ownership before another merge"
       ]
     }
+  },
+  "pauseCheckpoint": {
+    "at": "2026-11-05T18:22:37.065846+00:00",
+    "requestedBy": "Huy direct chat",
+    "codeCommit": "33788a034901b333ab12d38cdfc211ab15d1e680",
+    "status": "paused until explicit resume in a new session",
+    "ownedProcesses": "stopped; final process audit found no node.exe validation/server processes",
+    "wakeTaskCreated": false,
+    "latestWholeCheck": {
+      "source": "33788a03",
+      "status": "interrupted at user pause after hygiene/types/architecture/standard assets passed and tests started",
+      "log": "artifacts/resume-book-fix-check.log",
+      "buildAndFullFormat": "not reached after this final code commit"
+    },
+    "native": {
+      "sourceSha": "281f4b3196c46a7afe0825109bd55055acbc1abc",
+      "passed": 3,
+      "seconds": 108,
+      "openingMs": 41.3,
+      "phaseTimingsMs": {
+        "pause": 10.8,
+        "content": 24.2,
+        "render": 0.9,
+        "showModal": 5.4
+      },
+      "mountedPages": 2,
+      "pageErrors": 0,
+      "imagesInspected": 11,
+      "receipt": "artifacts/native-281f4b31/receipt.json",
+      "receiptSha256": "f327afc63ab282bcc1c29f06b176ca54867e850c294658e63e8a02954c28c4eb",
+      "log": "artifacts/resume-native-281f4b31.log"
+    },
+    "software": {
+      "receipt": "artifacts/software-book-fix-33788a03/receipt.json",
+      "sha256": "14b0c2286f5687d13b0310623c8cb23682cb44eddc554c28c8df573f81b13c1a",
+      "committedCodeSha": "33788a034901b333ab12d38cdfc211ab15d1e680",
+      "executionBaseSha": "281f4b3196c46a7afe0825109bd55055acbc1abc",
+      "measuredBeforeCommit": true,
+      "runtimeSourceMatchesCommittedBytes": true,
+      "softwarePassed": 1,
+      "openingMs": 40.6,
+      "mountedPages": 2,
+      "pageErrors": 0,
+      "regressions": {
+        "originalFailed": 2,
+        "fixedPassed": 2,
+        "note": "Before-fix wrapper had a console encoding error after the browser completed; original failure log and restored fixed bytes retained"
+      },
+      "runtimeSourceMatchesAfterLineEndingNormalization": true
+    },
+    "CI": "current-ci-receipt.json records281f4b31 only; latest code33788a03 needs fresh exact-source CI after publication",
+    "gaps": [
+      "Latest exact-source whole check/build/format and native/software browser confirmation",
+      "Current-source aggregate verify; ecology separately",
+      "Communicator manifest intake and25frame current-body face packets/fresh approvals",
+      "Machine-A model M1-M5/GGUF/private mirror and paintings acceptance",
+      "C33 hair/fringe and mean/std evidence",
+      "Unchanged HD1519 gaps and full19actor scale acceptance",
+      "Studio d97206ca duplicate C34/gallery reconciliation"
+    ]
   }
 }

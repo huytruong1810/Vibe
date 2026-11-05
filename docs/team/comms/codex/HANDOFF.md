@@ -1,4 +1,132 @@
-# Codex handoff: remaining tickets and execution plan
+# Codex handoff: paused 2026-11-05
+
+**PAUSED by Huy at 2026-11-05T18:20Z for continuation in a new session.**
+Do not resume automatically or create another wake task. Resume only on Huy's instruction.
+Workspace: `C:/Users/htruong/source/repos/Vibe`; branch: `eng/hd-presentation`.
+Latest engineering code: **33788a034901b333ab12d38cdfc211ab15d1e680**.
+The final handoff commit is documentation only; use `git log -3 --oneline` for its SHA.
+Do not work in the separate `Vibe-art` checkout.
+
+## Changed at this pause
+
+- Requested studio4d175582 was normally merged at **aace9882**, preserving5655aa23
+  faces.py and studio approvals/queues/status. Later047ee6b9 came through112ca67e.
+  Retained faces.py blob: `b24e1e9620c7e567d58d00230a0df40707b232a8`.
+- Delivered forge5655aa23; face/icon intake9c6ac457; C34 **522d85ae**;
+  C3g trim/dedup/exclusion **3f2cb346**, generated **8051a212**; C35 review repair
+  **89d2bbb9**; gallery shared-half accounting **c482b30b**; watcher **9469018a**.
+- C18 authorized production repairs: **4bbabb7b** direct worker-to-worker checkpoint
+  storage through existing validation/checksum/two-slot commits; **001c7cf8** periodic
+  frame backpressure requiring recycled transport, preserving ticks and command frames.
+- **33788a03** fixes a separate real editor race found under software rendering:
+  an older asynchronous save cleared a newer draft's dirty flag, letting Add page
+  bypass the visible96-character validation and losing newer valid edits. Input
+  revisions now keep newer drafts dirty and flush/revalidate before navigation.
+  Two deterministic real-DOM regressions fail against original code and pass fixed.
+  Files: `src/presentation/ui/book.ts`, `tests/browser/book-drafts.spec.ts`,
+  `tests/browser/fixtures/book-screen.html`. No assertions/limits/schema changed.
+- Code through281f4b31 was pushed before the pause.33788a03 and this handoff are
+  being published as the final pause checkpoint. Confirm remote HEAD before work.
+- No scheduled resume task was created. The running33788a03 check was interrupted
+  on Huy's pause; the process audit afterward found no owned Node/Vite processes.
+  Other-repository Python services were left alone.
+
+## Evidence / exact limits
+
+- [Structured receipt](resume-validation.json), especially `pauseCheckpoint`;
+  [public CI receipt](current-ci-receipt.json);
+  [detailed director relay](acting-director-relay.md);
+  [session log](session-2026-11-02.md). Historical receipts remain intact below/in git.
+- Focused forge **55/55** pass: creature faces11, finish26, face publishing5,
+  portrait9, registry4. Use `python -m uv run --project art/source/forge python -B
+  -m unittest discover -s art/source/forge/forgelib -p <name>_selftest.py`.
+  Direct execution of finish_selftest.py does not run its tests. Broad Windows
+  discovery was interrupted around GPU-window subprocess tests; no broad pass claimed.
+- Source001c7cf8 full check: **568pass/2 timing failures** in two runs. Fresh-process
+  budget tests2/2 pass, artifact45.57ms. Thresholds and runner unchanged. Hosted
+  source281f4b31 CPU checks pass in push and PR. Do not erase local failures.
+- Latest33788a03 whole check was **interrupted**, after hygiene/types/architecture/
+  standard assets passed and unit tests started. Build/full-format were not reached.
+  Log: `artifacts/resume-book-fix-check.log`. Last completed production build41.56s
+  and full formatting pass precede this last book fix; changed files were formatted.
+- Final asset rebuild and standard check pass, all generated files reproduce with
+  **no diff**:4024frames/3fullpages,47.67MiB full/12.21MiB half. All four atlas PNGs
+  inspected; unchanged HD gate still fails1519 coverage requirements. Zero approved
+  actors until current valid manifest/ledger integration. This is not19actor proof.
+- **Native281f4b31:** C13 pack, C13 Zephyrit, C18 pass3/3 in1.8min. Opening41.3ms,
+  two mounted pages/no page errors. All11 screenshots inspected. Preserved under
+  `artifacts/native-281f4b31/receipt.json` with file hashes and raw CPU receipt.
+- **Forced SwiftShader with final book fix:** unchanged C18 passes1/1 in1min,
+  opening40.6ms (pause8.3/content22.3/render0.6/modal9.4), two pages/no errors.
+  It ran immediately before33788a03 against matching runtime source; receipt states
+  this explicitly. Preserve `artifacts/software-book-fix-33788a03/receipt.json`.
+  Exact committed-source native/software confirmation remains the next action.
+- Original281f4b31 forced software run failed during overlong-line rejection,
+  before the final measured48-page reopening. Trace retained at
+  `test-results/software-281f4b31-20261105T181051/`; do not count its80.3ms blank-book
+  opening as acceptance. Earlier source688eab26 full native27pass/2fail/1skip,
+  C18 opening323.5ms, and source4bbabb7b native61.3ms remain preserved controls.
+- Current CI snapshot is **281f4b31 only**: push42081278254 and PR42081296878.
+  Both CPU and both beta bases pass; push browser shard2 passes. Remaining browser,
+  aggregate verify and ecology were still running at pause. Refresh exact-source
+  jobs, not just workflow conclusion. Soak only counts if its actual step ran.
+
+## First actions after explicit resume
+
+1. Check workspace/process ownership, `git status --short`, branch, then
+   `git pull --ff-only`. Read brief/charter and team-comms/doctrine-lookup skills,
+   new top-level addressed messages; update `.last-read`. Continue this session log.
+2. Refresh public unauthenticated GitHub Actions for the actual HEAD/code source,
+   including annotations on failures. No stored-credential access. The final push
+   may have started new runs including33788a03; the retained281 receipt is historical.
+3. Finish `npm run check` with `VITEST_MAX_WORKERS=4`, production build if check
+   stops before build, and `npm run format:check`. Run CPU budgets/browser timing
+   sequentially without other validation work. Do not alter limits to get green.
+4. Run native C13/C18 plus the two new draft regressions against the exact source:
+   `npx playwright test tests/browser/book-drafts.spec.ts tests/browser/creature-minds.spec.ts tests/browser/literacy.spec.ts --project=journeys --output=test-results/<unique-name>`.
+   For forced software, retained scratch config is
+   `docs/team/comms/codex/tmp/c18-swiftshader.config.ts` (untracked, not lost work).
+   It inherits base config and uses bundled Chromium, flags `--enable-gpu`,
+   `--use-gl=angle`, `--use-angle=swiftshader`, `--enable-unsafe-swiftshader`.
+   Use `CI=1`, inherited file-scoped tracing and a UNIQUE `--output` each run.
+5. Preserve timing/CPU/failed traces before another run overwrites shared artifact
+   filenames. Inspect every produced PNG. Do not reuse an output directory:
+   Playwright deletes it. Require all five measurements, two-page mounting,
+   full functional assertions,100ms opening and unchanged traces/timeouts/CI gates.
+6. Require all remote browser shards and aggregate verify green for that actual
+   source. Report ecology separately. Update Changed/Evidence/Gaps, run hygiene,
+   stop owned processes, inspect intended diff, commit and push normally.
+   Only then advance acceptance; do not rebuild already shipped queue features.
+
+## External gaps / branch reconciliation
+
+- Studio **d97206ca** is fetched/read but NOT merged. It adds ten face approvals and
+  overlapping visitor C34/gallery work5a1d3686/51eadd03 after Codex's own deliveries.
+  Coordinate ownership before another merge. Keep the live-model evaluator; synthetic
+  fallbackDialogue scores do not establish M1-M5. Message1752 below is pushed.
+- Recognize new face approvals, but current creature packets have50frames/alternative
+  eyesOnly grammars, incompatible with the explicitly retained25frame single-grammar
+  generator/intake. Earlier25frame packets bind superseded bodies. Blender must
+  synchronize retained faces.py, regenerate current-body candidates, inspect and
+  obtain matching fresh review. Human60frame packets are different. Never weaken
+  body binding/coverage/idle visibility/format checks. Proposal007 Part2 stays excluded.
+- Communicator alone merges manifest using validated intake; Codex transcribes valid
+  approvals and rebuilds afterward.17 icon images map34 existing item identities.
+  Seven Nov5 B20 bodies/items supersede older records; copper-sword/shortbow retain
+  Nov4 approvals pending C36. No manifest/recipe/art packet/approval edits by Codex.
+- C34 official/development e4b live M1-M5, actual GGUF/projector manifests/private
+  mirror and C19/C20 GPU/latency/quality evidence remain on A. Third-party aliases
+  stay unverified; base licence does not prove derivative clearance. C33 still
+  needs real-output hair/fringe and mean/std skin QA evidence.
+- C17 is already archived. C13/C14/C18 retain outstanding acceptance gaps;
+  C22 awaits current-source verify and director Pages activation; C24/C25 and
+  C19/C20 retain A acceptance. C21 and learned-brain work remain gated. No new wake.
+
+## Earlier handoff notes (historical; the pause checkpoint above governs)
+
+The following material retains prior receipts, rejected experiments, C7 planning and
+external requests. Its statements of current source/running work are superseded above.
+
 
 ## Start here
 
@@ -91,7 +219,10 @@ Use [team-comms](../../../../.agents/skills/team-comms/SKILL.md) and
   Whole-source check568pass/2timing failures in two runs; both budget tests pass
   alone in a fresh process (artifact45.57ms). Thresholds/runner unchanged; no full
   check pass claimed. Build/format pass. Final assets rebuild/check pass and reproduce generated files
-  with no diff; unchanged HD gate1519 gaps. Latest browser/CI checks remain. Native control/raw evidence: artifacts/c18-control-688eab26; passing
+  with no diff; unchanged HD gate1519 gaps. Latest pushed source281f4b31 native C13/C18 passes3/3, opening41.3ms,
+  two pages/no errors; all11 produced screenshots inspected and hashed receipt
+  retained at artifacts/native-281f4b31/receipt.json. Forced software and current
+  remote journeys/CPU remain under validation; both beta bases pass in push/PR. Native control/raw evidence: artifacts/c18-control-688eab26; passing
   native4bb evidence: artifacts/c18-native-4bbabb7b. Use unique Playwright output
   directories for every new comparison. See ADR043.
 
