@@ -132,6 +132,10 @@ The director delegates art approval, as a standing grant, to **claude** and the
 - The communicator writes only its own approval records in `docs/team/comms/director/approvals/`;
   the guard allows nothing else under `docs/team/comms/director/`. Other agents still reach `candidate`
   at most.
+- **Engineering and simulation tickets are outside this delegation** (`src/**`, `scripts/**`, `tests/**`,
+  `docs/engineering/**`, forge code): they reach `candidate` when `npm run check` and the selftests pass, and
+  only the director, or claude on the director's instruction, records `director-approved` for them (proposal 004,
+  ruled 2026-11-05). Records already written for C13, C14 and C18 stand until the director reviews them.
 - The director's own approval, and any direct instruction, always wins.
 
 ### TEAM-4.2 Acting director: the visitor (directive 017, director decision 2026-11-04, temporary)
@@ -194,7 +198,8 @@ director decides. Codex applies approved proposals as steward (DOC-5).
   read them anyway.
 - **TEAM-8.2** Keep a running session log in your comms folder
   (`session-YYYY-MM-DD.md`): goals, decisions with rule IDs, open questions.
-  It survives compaction; your memory does not.
+  It survives compaction; your memory does not. A poll or wakeup that finds no new message and no newly
+  unblocked ticket changes nothing and makes no commit (proposal 004, ruled 2026-11-05).
 - **TEAM-8.3** When unsure, the doctrine decides. When the doctrine is silent,
   ask the director in comms and continue only with work that does not depend on
   the answer.

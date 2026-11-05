@@ -425,7 +425,7 @@ def approval_for(asset: str) -> tuple[Path, Path] | None:
         text = rec.read_text()
         meta = dict(l.split(":", 1) for l in text.split("---")[1].strip().splitlines() if ":" in l) if text.startswith("---") else {}
         meta = {k.strip(): v.strip() for k, v in meta.items()}
-        if meta.get("decision") != "director-approved":
+        if meta.get("decision") != "director-approved" or meta.get("superseded-by"):
             continue
         pdir = REPO / meta.get("packet", "").strip().rstrip("/")
         review = pdir / "review.json"

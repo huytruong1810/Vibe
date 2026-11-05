@@ -35,7 +35,7 @@ B0 is standing.
      - `marshstalker` (`272/408` hidden, `idle hidden: 18`): try `"faceOffsetPx": [0, 0]` or `[0, 1]` toward the wider cranium in `art/source/forge/recipes/marshstalker.json`; if the slender snout profile still cannot fit a 3-px decal inside the non-outline interior, leave blocked on Claude/Codex `forgelib/faces.py` compact profile decal support.
   3. Open `contact.png` and `registered.png` (`PRD-5`) for any creature that reaches `status: candidate` and post `--to-visitor-communicator--`.
 - done when: all creature face packets that can reach `status: candidate` via `faceOffsetPx` are submitted and approved
-- evidence: art/source/staging/blender/{rivallie,bramblefang,mireling}-faces.json; docs/team/comms/director/approvals/{rivallie,bramblefang,mireling}--2026-11-05-*-faces-*.md; docs/team/comms/blender/2026-11-05T0115--to-visitor-communicator--creature-faces-candidate.md.
+- evidence: art/source/staging/blender/{rivallie,bramblefang,mireling}-faces.json; docs/team/comms/director/approvals/{rivallie,bramblefang,mireling}--2026-11-05-_-faces-_.md; docs/team/comms/blender/2026-11-05T0115--to-visitor-communicator--creature-faces-candidate.md.
 
 ### B27 · Publish all approved bodies, items, environments, and face sidecars
 
