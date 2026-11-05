@@ -154,9 +154,52 @@ it('keeps paused commands and checkpoints current without repeatedly rebuilding 
   await vi.advanceTimersByTimeAsync(500);
   expect(messages).toHaveLength(stillPaused);
   command('resume', 'hidden');
+  send({ type: 'recycle', buffer: initial.frame.packed.buffer as ArrayBuffer });
   await vi.advanceTimersByTimeAsync(250);
   const resumed = messages.filter((m) => m.type === 'frame').at(-1)!;
   expect(resumed.frame.paused).toEqual([]);
   expect(resumed.frame.tick).toBeGreaterThan(initial.frame.tick);
+  send({ type: 'dispose' });
+});
+
+it('coalesces periodic presentation while the main thread is busy without stopping simulation or commands', async () => {
+  vi.resetModules();
+  vi.useFakeTimers();
+  const messages: FromWorker[] = [];
+  const scope = {
+    onmessage: null as ((event: MessageEvent<ToWorker>) => void) | null,
+    postMessage: (message: FromWorker) => messages.push(structuredClone(message)),
+    close: vi.fn(),
+  };
+  vi.stubGlobal('self', scope);
+  await import('../src/worker/simulation.worker');
+  const send = (data: ToWorker) => scope.onmessage!({ data } as MessageEvent<ToWorker>);
+  send({ type: 'initialize', seed: 42, origin: 1, population: 0 });
+  const initial = messages[0]!;
+  if (initial.type !== 'ready') throw Error('Expected ready');
+  await vi.advanceTimersByTimeAsync(1000);
+  expect(messages).toHaveLength(1); // No recycled transport: no queued periodic frames.
+  send({ type: 'checkpoint', requestId: 'busy' });
+  const checkpoint = messages.at(-1)!;
+  if (checkpoint.type !== 'checkpoint') throw Error('Expected checkpoint');
+  expect(migrateSave(checkpoint.snapshot).tick).toBeGreaterThan(initial.frame.tick);
+  send({ type: 'recycle', buffer: initial.frame.packed.buffer as ArrayBuffer });
+  await vi.advanceTimersByTimeAsync(150);
+  const frames = messages.filter((m) => m.type === 'frame');
+  expect(frames).toHaveLength(1);
+  expect(frames[0]!.frame.tick).toBeGreaterThan(initial.frame.tick);
+  const count = messages.length;
+  await vi.advanceTimersByTimeAsync(1000);
+  expect(messages).toHaveLength(count);
+  send({
+    type: 'command',
+    envelope: {
+      id: 'pause:busy',
+      session: initial.frame.session,
+      issuer: 'player',
+      command: { type: 'pause', token: 'menu' },
+    },
+  });
+  expect(messages.slice(-2).map((m) => m.type)).toEqual(['result', 'frame']);
   send({ type: 'dispose' });
 });

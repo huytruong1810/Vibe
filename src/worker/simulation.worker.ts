@@ -197,8 +197,11 @@ const timer = setInterval(() => {
     previous = now;
     // Commands still publish immediately. An unchanged paused world has no new
     // snapshot to construct/clone/apply; repeated copies compete with menu I/O.
+    // Recycled transport also acknowledges main-thread progress. Keep stepping
+    // above while it is busy instead of allocating an unbounded frame backlog.
     if (
       now - lastFrame >= 100 &&
+      buffers.length > 0 &&
       (host.tick !== publishedTick || JSON.stringify(host.pauses.reasons) !== publishedPauses)
     ) {
       publish('frame');
