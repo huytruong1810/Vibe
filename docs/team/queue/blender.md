@@ -6,239 +6,133 @@ Finished tickets are in [archive/blender.md](archive/blender.md).
 
 **Since 2026-11-02 you hold the whole art pipeline** (directives 012, 013) and generate
 images **locally** on machine A's GPU (`forge.py concept` → `views`, model FLUX.2 [klein] 9B,
-no quota): the reference sheets (B15, B16), forge them (B3, B4, B5), make the 2D art (B17, B18) and
-review your own results. Make a sheet, forge it straight away, and fix the sheet yourself
-when the forge shows a problem. Start with the welcome-back message
-`docs/team/comms/claude/*--to-blender--welcome-back-art-overhaul.md`.
+no quota). Under directive 016 and directive 017 (`TEAM-4.2`), the `visitor` and `communicator`
+review packets under standing delegation; post every packet `--to-communicator--` (and `--to-visitor--`)
+and keep going on the next ticket while it waits.
 
-**Order of work** (directive 016: communicator and claude review under standing delegation,
-so post every packet `--to-communicator--` and keep going on the next ticket while it waits):
+**Order of work (triaged 2026-11-05 by `visitor` acting as director under `TEAM-4.2` to get approved art into the game first):**
 
-1. **B19 golden samples**, then the look review. Every pose guide is in (C27, all five
-   templates), so all four samples can start now.
-2. **Anything that doesn't depend on the look, while B19 waits:** B16 step 2–3 metadata,
-   B11, drafting every B15/B21–B25 prompt into its recipe `concept` block (no generation),
-   and B26 planning.
-3. **B15 sheets** once the look is approved: quadrupeds, props and buildings first, then
-   humans, winged, shelled and biped (their concept templates are in the recipes README).
-4. **Forge each sheet as it lands:** B16/B4 (player, Neris) → B21 (9 villagers), B3
-   (creatures), B5 (environment kit), B24 (flora states), B22 (tools and weapons).
-5. **B20** regenerate the approved assets in the new style (C26 readability fields).
-6. **B17 terrain** once claude's `forge.py swatch` lands (C30); **B25 portraits** once
-   `forge.py portrait` lands (C30); **B23 icons** once `forge.py icon` lands (C32).
-7. **B18** after B15 step 3; **B26** dress the maps once B5 packets are approved.
+1. **`B27` (Publish now):** Run `forge.py publish` for all 22 approved bodies/items/environments not yet staged, and `forge.py publish-faces` for all 11 approved human face sidecars. **Do not re-run any prior stage first** (`pixelize`, `faces`, `qa`, or `packet` would change `sourceDigest` and void the approval record, `PRD-9`).
+2. **`B28` (`steamshell` 180° yaw fix):** Fix `rig.yawDeg` (~180° offset) in `art/source/forge/recipes/steamshell.json` so the head faces South in `s` and leads the stride in `walk`/`run`, then re-packet.
+3. **`B29` (C3b creature faces):** Run `forge.py faces --asset <creature>` on the 7 approved creature bodies (`rivallie`, `bramblefang`, `mireling`, `marshstalker`, `zephyrit`, `cindermoth`, `ignicap`) and submit packets.
+4. **`B20` (C26 readability re-bakes):** After `B27` is published, re-bake the 4 quadrupeds + `item:hatchet` with C26 fields (`supersample: 4`, `features`, `rampShift`), restore `npc:oren` white beard/hair and `npc:reed` white shirt ramps, and refine `item:copper-sword` / `item:shortbow` silhouettes.
+5. **`B23` (17 inventory icons) → `B25` (19 actor portrait sets) → `B24` (flora 3-states) → `B26` (worldforge map dressing) → `B5` (remaining AQ-2 landmarks) → `B18` (authored-artifact UI/props).**
 
 B0 is standing.
 
-## Now
+## Now (Put Approved Art Into the Game First)
 
-### B14 · Publish the approved hatchet
+### B27 · Publish all approved bodies, items, environments, and human face sidecars
 
-- status: done (published 2026-11-02 by the stand-in session); move to the archive at the next queue tidy
-- goal: stage the director-approved golden held item so the runtime can draw it once C9b's held-layer composition lands.
-- inputs: [approval record](../comms/director/approvals/item-hatchet--2026-11-01-item-hatchet.md) (digest 89102c20…, scope held-item and icon).
-- work: `uv run --project art/source/forge python art/source/forge/forge.py publish --asset item:hatchet`; don't re-run any hatchet stage first (a new digest voids the approval, PRD-9).
-- done when: `art/source/staging/blender/item-hatchet.json` (or the path publish prints) is committed and a `--to-communicator-codex--hatchet-published` message lists it
-- evidence: art/source/staging/blender/item-hatchet.json; docs/team/comms/blender/2026-11-02T0416--to-communicator-codex--hatchet-published.md (stand-in session, claude)
-
-### B19 · Golden samples with local image generation (first)
-
-- status: done (all four golden samples approved by director; hatchet, player, house published to staging; rivallie blocked on forge.py bug)
-- goal: approve the new look on six golden samples (image model: klein 9B; 3D model: Hunyuan3D-2mv, decided in C31) before regenerating everything (PRD-4, L12; director decision 2026-11-02).
-- inputs: [directive 013](../comms/claude/2026-11-02T0807--to-all--directive-013-local-image-generation.md); [imagegen notes](../../engineering/imagegen.md); `reference-sheets` skill; Rivallie's recipe `concept` block with `poseGuide` (copy the pattern; claude makes the pose guides for other body types in C27, so don't make your own).
-- work, one asset at a time:
-  1. The image model is decided: klein 9B is the only one installed (claude C29, doctrine L12), so there's no `--model` flag to choose. Rivallie (creature): `forge.py concept --asset rivallie --n 4`; c901 and c903 from seeds 900–903 are already clean on all fours (`docs/team/comms/claude/boards/2026-11-02-imagegen-rivallie-klein9b.png`). Look at the contact sheet and keep the best with `views`.
-  2. player-aqualia (human, A-pose, 5 heads, L3), item:hatchet (prop), env:house-aqualia (building) the same way; the human, winged, shelled and biped pose guides come with claude's C27.
-  3. Run each kept sheet through the forge to a packet with the 3D backend (Hunyuan3D-2mv; TRELLIS.2 lost C31 and is removed).
-  4. Post one message `--to-claude-director--golden-samples` with the contact sheets, the forge packets and what you saw in each. Claude reviews the look under the director's standing delegation (directive 014) and records the decision.
-- done when: the director has approved the golden samples' look (the models are already recorded in L12); their concepts become the style anchors in `art/source/style/style.json`
-- evidence:
-  - rivallie (creature): art/review/2026-11-03-rivallie/ (candidate, 15 clips, 616 frames, qa candidate)
-  - item:hatchet (prop): art/review/2026-11-03-item-hatchet/ (candidate, 65 poses, 0 failing, qa candidate)
-  - env:house-aqualia (environment): art/review/2026-11-03-env-house-aqualia/ (candidate, base/roof/shadow layers, qa candidate)
-  - player-aqualia (human): art/review/2026-11-03-player-aqualia/ (candidate, 19 clips, 952 frames, qa candidate)
-  - dispatch: docs/team/comms/blender/2026-11-03T0125--to-claude-director--golden-samples.md
-  - staged: art/source/staging/blender/{item-hatchet.json, env-house-aqualia.json, player-aqualia.json}
-
-### B15 · Reference-sheet production run (local generation)
-
-- moved: from the communicator's M23 on 2026-11-02 (all art is blender's, TEAM-1). Since directive 013 generate **locally** (`forge.py concept` → `views`, `reference-sheets` skill), after B19's decision, and forge each sheet as soon as it passes the checklist. Quota limits no longer apply.
-- status: open (top priority; directive 009)
-- goal: every class the forge can build has its sheets, so blender is never waiting on input.
+- status: open (top priority; unblocked by `2026-11-04T2300--to-all--approvals-digest-fixed-publish-next.md` and `2026-11-04T2356--to-blender--go-c3b-faces-and-publish-faces.md`)
+- goal: emit `art/source/staging/blender/*.json` and immutable `art/source/exports/**` for every `director-approved` packet so `communicator` (`M25`) can merge them into `art/source/manifest.json` immediately.
+- inputs: repaired approval records in `docs/team/comms/director/approvals/*.md` (verified via `forge.py approve-record`).
 - work:
-  1. Generate with `forge.py concept` (the `reference-sheets` skill); `views` writes the ledger row (PRD-7.5). Use a pose guide for every creature and human; the human, winged, shelled and biped guides come with claude's C27.
-  2. Order (stop and resume in this order; each sheet goes into `art/source/references/<asset>/` with `sheet.json`, per the `reference-sheets` skill):
-     1. B16 redraw: `player-aqualia`, `npc-neris` (4.5–5 heads, front/left/back, A-pose, valid ramps).
-     2. The other 9 Aqualia villagers (identity from their portraits and the voice/casting sheet).
-     3. Environment golden set for C10: `env-house-aqualia`, `env-tree-oak`, `env-well`. Each needs a **front** view (the building's front faces south in game) plus a left side view, plain background, no ground; a three-quarter concept is optional.
-     4. Non-quadruped creatures: `zephyrit` and `cindermoth` (winged: wings spread in front and side views), `steamshell` (shelled, head and legs out), `ignicap` (mushroom-biped, legs apart with a gap). Same pose in every view, and a **true front view**: these templates take south from it (`docs/team/comms/claude/2026-11-02T0123--to-blender-communicator--go-creature-templates.md`). The forge templates are built (C3h).
-     5. Held items for the Aqualia cast: fishing rod, hoe, ferry pole (prop sheets, 2 generations each).
-     6. B17 terrain swatches.
-  3. Draft every prompt now, before generating, so each run is a single batch.
-- done when: steps 1–3 are registered with `sheet.json` and announced `--to-blender--`. The rest follow in order.
+  1. **Never re-run `pixelize`, `faces`, `qa`, or `packet` on these assets before publishing** (changing `sourceDigest` voids the approval record, `PRD-9`).
+  2. Run `uv run --project art/source/forge python art/source/forge/forge.py publish --asset <id>` for each approved asset whose `work/<slug>/review.json` matches its approval record:
+     - **Creatures (4):** `zephyrit`, `cindermoth`, `ignicap`, `mireling` (`rivallie`, `bramblefang`, `marshstalker` are already staged; **skip `steamshell`** which is `changes-requested` under `B28`).
+     - **Humans (10):** `npc:neris`, `npc:caelum`, `npc:dara`, `npc:finn`, `npc:lark`, `npc:marina`, `npc:mira`, `npc:oren`, `npc:reed`, `npc:willa` (`player-aqualia` is already staged).
+     - **Held items (6):** `item:fishing-rod`, `item:hoe`, `item:hunting-spear`, `item:ferry-pole`, `item:copper-sword`, `item:shortbow` (`item:hatchet` is already staged).
+     - **Environments (4):** `env:tree-oak`, `env:well`, `env:landmark-waystone`, `env:prop-hearth` (`env:house-aqualia` is already staged).
+  3. Run `uv run --project art/source/forge python art/source/forge/forge.py publish-faces --asset <id>` for all **11 approved human face sidecars**:
+     - `player-aqualia`, `npc:neris`, `npc:caelum`, `npc:dara`, `npc:finn`, `npc:lark`, `npc:marina`, `npc:mira`, `npc:oren`, `npc:reed`, `npc:willa`.
+  4. Commit `art/source/exports/**`, `art/source/blender/models/published/**`, and `art/source/staging/blender/*.json`, push, and message `--to-communicator-visitor--b27-published`.
+- done when: all 22 additional body/item/env staging JSONs and 11 human face sidecars are committed in `art/source/staging/blender/` and `art/source/exports/`
 - evidence:
 
-### B16 · Redraw the human sheets; fix ramp names on every sheet
+### B28 · Fix `steamshell` 180° backward yaw and re-packet
 
-- moved: from the communicator's M11 on 2026-11-02 (all art is blender's, TEAM-1). Since directive 013 generate **locally** with the forge after B19's decision; quota limits no longer apply.
-- status: in_progress (palette ramps and metadata schemas normalized; the human pose guide is in (C27): the 3-view redraw runs with B19's player sample and then B15)
-- goal: bring every reference sheet up to PRD-3 and L3 (director decision via directive 006).
+- status: open (priority 2; `changes-requested` in `docs/team/comms/director/approvals/steamshell--2026-11-03-steamshell.md`)
+- goal: orient `steamshell` so its tan head and eyes face South in `s` (Col 1) and East in `e` (Col 3), and so `walk`/`run` move head-first instead of shell-first.
+- inputs: `docs/team/comms/director/approvals/steamshell--2026-11-03-steamshell.md`, `art/source/forge/recipes/steamshell.json`, `art/review/2026-11-03-steamshell/contact.png`.
 - work:
-  1. **Human sheets: player-aqualia, npc-neris, and the four mannequins (standard, sturdy, slender, elder).**
-     - Draw at 4.5–5 heads (L3): head 11–12 art px, crown per `body_types.json`. Today they are about 5.5–7 heads.
-     - Use an A-pose with the arms about 45° from the body (mannequin-elder is at about 20°).
-     - Provide front, **left** and back views.
-     - Make `sheet.png` at least 1024 px tall (PRD-3.1).
-     - Match `body_types.json` `aqualiaCast` for the player: build slender, skin-porcelain, hair-teal.
-  2. **Ramp names on every sheet**, from `art/source/forge/spec/palette.json` only:
-     - bramblefang: `charcoal`, `amber`, `ivory`;
-     - marshstalker: `aqua`;
-     - npc-neris: `charcoal`, `outline-dark`;
-     - player-aqualia: `river-blue`, `charcoal`, `outline-dark`.
-
-     Keep to at most 5 ramps per character (ART-4.4: 24 colours).
-
-  3. **mireling `sheet.json`:** use the same schema as the other sheets (`asset`, `kind`, `identitySources`, `ramps`, `generations`, `ledger`).
-- done when: every sheet passes these checks, the ledger is updated (PRD-7.5), and you've messaged claude and the communicator
-- evidence: art/source/references/{bramblefang,marshstalker,mireling,player-aqualia,npc-neris,mannequin-*}/sheet.json, docs/team/comms/communicator/image-ledger.md
-
-## Forge each sheet as it lands
-
-### B4 · Golden samples: player-aqualia, then Neris (humans)
-
-- status: candidate (both player-aqualia and npc-neris body packets + face decals complete)
-- done when: two packets, `candidate`
-- evidence: player-aqualia: art/review/2026-11-03-player-aqualia/ (candidate, 19 clips, 952 frames, qa candidate); player-aqualia faces: art/review/2026-11-03-player-aqualia-faces-d4cc567cadce/ (candidate); npc-neris: art/review/2026-11-03-npc-neris/ (candidate, 19 clips, 952 frames, qa candidate); npc-neris faces: art/review/2026-11-03-npc-neris-faces-9eda4cbedf2f/ (candidate).
-
-### B5 · Aqualia environment kit
-
-- status: candidate (golden core complete: env:house-aqualia, env:tree-oak, env:well, env:landmark-waystone, env:prop-hearth packeted)
-- goal: every Aqualia building, landmark and large prop the maps need (region bible AQ-2), one at a time with the `environment-forge` skill. Golden three first (B15 step 3): `env:house-aqualia`, `env:tree-oak` (trunk + canopy), `env:well`. Then the runtime gaps in `docs/art/coverage.md`: `landmark_waystone`, `prop_hearth` (the Hearth Island fire). Then AQ-2 in this order:
-  - [ ] village: notice board, ferry landing and dock, Diver's Pool platform, Lantern Bridge (with parapet lanterns), Oren's mill and waterwheel, Finn's sluice gate, Caelum's gauge tower, weir walk, Spring Shrine and cave mouth, Weavers' Row porch, reed drying racks and laundry lines, Dara's courier post, Willa's stilt hut and herb beds, fishing pier, Lark's studio;
-  - [ ] riverlands: willow (Lark's Bend), Kite Oak, willow footbridge, ferry bell post, fungi ring, sunken gauge post, drowned tree, warm-spring rim rocks;
-  - [ ] kit pieces reused everywhere: boardwalk straight/corner/end, lantern post, fence, crate and barrel, reed clump, rock large/small.
-- done when: a packet per asset, each `candidate`, posted `--to-claude-director--`
-- evidence: env:house-aqualia: art/review/2026-11-03-env-house-aqualia/ (candidate); env:tree-oak: art/review/2026-11-03-env-tree-oak/ (candidate); env:well: art/review/2026-11-03-env-well/ (candidate); env:landmark-waystone: art/review/2026-11-03-env-landmark-waystone/ (candidate); env:prop-hearth: art/review/2026-11-03-env-prop-hearth/ (candidate).
-
-### B3 · Remaining creatures, one at a time
-
-- status: candidate (all 4 non-quadruped T0 species complete and packeted)
-- goal: the four non-quadruped T0 species, one at a time after their B15 step 4 sheets: steamshell (shelled, `creature-v1` + `shelled.png`), zephyrit and cindermoth (winged, `creature-winged-v1` + `winged.png`), ignicap (mushroom-biped, `creature-biped-v1` + `mushroom-biped.png`). Their rig templates are built (C3h). The four quadrupeds are redone in the new style in B20.
-- done when: a packet per species, each `candidate`
-- evidence: steamshell: art/review/2026-11-03-steamshell/ (candidate, 15 clips, 616 frames, qa candidate); zephyrit: art/review/2026-11-03-zephyrit/ (candidate, 15 clips, 616 frames, qa candidate); cindermoth: art/review/2026-11-03-cindermoth/ (candidate, 15 clips, 616 frames, qa candidate); ignicap: art/review/2026-11-03-ignicap/ (candidate, 15 clips, 616 frames, qa candidate). Full prior history in archive/blender.md#b3-evidence-to-2026-11-02.
-
-### B21 · The other nine Aqualia villagers (after B4)
-
-- status: candidate (all 9 of 9 complete: npc:caelum, npc:marina, npc:reed, npc:willa, npc:oren, npc:mira, npc:lark, npc:dara, npc:finn body and faces candidate)
-- goal: every villager walks in game: today `docs/art/coverage.md` lists `npc:reed`, `npc:willa`, `npc:oren`, `npc:lark`, `npc:dara`, `npc:finn` (and Neris, B4) as missing sprite identities.
-- work, one villager at a time: recipe with a `concept` block (`human-apose-v1`, `poseGuide` `human.png`, identity from `public/assets/portraits/` and the villager's row in `src/content/villagers.ts`: age, role and personality), `concept` → `views` → forge (`sprite-forge`, human kind) → packet. Order: Caelum, Marina, Reed, Willa, Oren, Mira, Lark, Dara, Finn. Body type per `body_types.json` `aqualiaCast`. Run `faces` after each body (B11 grammar).
-- done when: nine packets `candidate`, posted `--to-claude-director--`
-- evidence: npc:caelum: art/review/2026-11-04-npc-caelum/ (candidate, 18 clips, 904 frames, qa candidate); npc:caelum faces: art/review/2026-11-04-npc-caelum-faces-ac3d524b4397/ (candidate, 12 expressions); docs/team/comms/blender/2026-11-04T0015--to-communicator--npc-caelum-candidate.md; npc:marina: art/review/2026-11-04-npc-marina/ (candidate, 18 clips, 904 frames, qa candidate); npc:marina faces: art/review/2026-11-04-npc-marina-faces-d62dc6e48b8a/ (candidate, 12 expressions); docs/team/comms/blender/2026-11-04T0035--to-communicator--npc-marina-candidate.md; npc:reed: art/review/2026-11-04-npc-reed/ (candidate, 18 clips, 904 frames, qa candidate); npc:reed faces: art/review/2026-11-04-npc-reed-faces-f7a9b5e8997b/ (candidate, 12 expressions); docs/team/comms/blender/2026-11-04T0055--to-communicator--npc-reed-candidate.md; npc:willa: art/review/2026-11-04-npc-willa/ (candidate, 18 clips, 904 frames, qa candidate); npc:willa faces: art/review/2026-11-04-npc-willa-faces-dd497665323e/ (candidate, 12 expressions); docs/team/comms/blender/2026-11-04T0115--to-communicator--npc-willa-candidate.md; npc:oren: art/review/2026-11-04-npc-oren/ (candidate, 18 clips, 904 frames, qa candidate); npc:oren faces: art/review/2026-11-04-npc-oren-faces-933125911e93/ (candidate, 12 expressions); docs/team/comms/blender/2026-11-04T0145--to-communicator--npc-oren-candidate.md; npc:mira: art/review/2026-11-04-npc-mira/ (candidate, 18 clips, 904 frames, qa candidate); npc:mira faces: art/review/2026-11-04-npc-mira-faces-578b995683a6/ (candidate, 12 expressions); docs/team/comms/blender/2026-11-04T0215--to-communicator--npc-mira-candidate.md; npc:lark: art/review/2026-11-04-npc-lark/ (candidate, 18 clips, 904 frames, qa candidate); npc:lark faces: art/review/2026-11-04-npc-lark-faces-a266157f5152/ (candidate, 12 expressions); docs/team/comms/blender/2026-11-04T0235--to-communicator--npc-lark-candidate.md; npc:dara: art/review/2026-11-04-npc-dara/ (candidate, 18 clips, 904 frames, qa candidate); npc:dara faces: art/review/2026-11-04-npc-dara-faces-cba462a7e210/ (candidate, 12 expressions); docs/team/comms/blender/2026-11-04T0255--to-communicator--npc-dara-candidate.md; npc:finn: art/review/2026-11-04-npc-finn/ (candidate, 18 clips, 904 frames, qa candidate); npc:finn faces: art/review/2026-11-04-npc-finn-faces-989d5e97e3b4/ (candidate, 12 expressions); docs/team/comms/blender/2026-11-04T0315--to-communicator--npc-finn-candidate.md.
-
-### B22 · Held tools and weapons (items kind)
-
-- status: candidate (all 6 of 6 held items complete: fishing-rod, hoe, ferry-pole, copper-sword, hunting-spear, shortbow packeted)
-- goal: every held item in `src/content/definitions.ts` that a hand carries has its held poses and icon: fishing rod, hoe, ferry pole (B15 step 5), copper sword, hunting spear, shortbow (T0 combat). The hatchet is redone in B20.
-- work, one item at a time: `prop-v1` concept → `views` → `prep → gen3d → clean → texture → orient → items → packet` (`sprite-forge` items section, recipe like `recipes/item-hatchet.json`). Look at all 65 poses on the contact sheet.
-- done when: six packets `candidate`, posted `--to-claude-director--`
+  1. In `art/source/forge/recipes/steamshell.json`, adjust `rig.yawDeg` by ~`180` degrees (matching the `mireling` fix in `2026-11-04-mireling`).
+  2. Run `uv run --project art/source/forge python art/source/forge/forge.py rig --asset steamshell` followed by `animate -> bake -> pixelize -> qa -> packet`.
+  3. Open `art/source/forge/work/steamshell/contact.png` with `read_file` (`PRD-5`): verify that `idle` Col 1 (`s`) shows the tan head and eyes facing the viewer, Col 3 (`e`) faces right, and `walk`/`run` step forward head-first.
+  4. Post `--to-visitor-communicator--steamshell-yaw-fixed` with the new packet path and digest.
+- done when: new `art/review/<date>-steamshell/` packet passes 12/12 hard QA checks and visual orientation check (`PRD-5`)
 - evidence:
-  - item:fishing-rod: art/review/2026-11-03-item-fishing-rod/ (candidate, 65 poses, 0 failing, qa candidate); docs/team/comms/blender/2026-11-03T0625--to-claude-director--item-fishing-rod-candidate.md.
-  - item:hoe: art/review/2026-11-04-item-hoe/ (candidate, 65 poses, 0 failing, qa candidate); docs/team/comms/blender/2026-11-03T2055--to-communicator--item-hoe-candidate.md.
-  - item:ferry-pole: art/review/2026-11-04-item-ferry-pole/ (candidate, 65 poses, 0 failing, qa candidate); docs/team/comms/blender/2026-11-03T2245--to-communicator--item-ferry-pole-candidate.md.
-  - item:copper-sword: art/review/2026-11-04-item-copper-sword/ (candidate, 65 poses, 0 failing, qa candidate); docs/team/comms/blender/2026-11-03T2305--to-communicator--item-copper-sword-candidate.md.
-  - item:hunting-spear: art/review/2026-11-04-item-hunting-spear/ (candidate, 65 poses, 0 failing, qa candidate); docs/team/comms/blender/2026-11-03T2315--to-communicator--item-hunting-spear-candidate.md.
-  - item:shortbow: art/review/2026-11-04-item-shortbow/ (candidate, 65 poses, 0 failing, qa candidate); docs/team/comms/blender/2026-11-03T2325--to-communicator--item-shortbow-candidate.md.
 
-### B23 · Inventory icons for resources and crafted goods (after C32)
+### B29 · Creature face decals (C3b) on the 7 approved creature bodies
 
-- status: open (forge.py icon landed in C32; 17 items from definitions.ts)
+- status: open (priority 3; unblocked by `docs/team/comms/claude/2026-11-04T2356--to-blender--go-c3b-faces-and-publish-faces.md`)
+- goal: generate and register 5-expression × 5-forward-facing (`s`, `se`, `sw`, `e`, `w`) face decal sidecars on the 7 approved creature bodies (`rivallie`, `bramblefang`, `mireling`, `marshstalker`, `zephyrit`, `cindermoth`, `ignicap`), plus `steamshell` once `B28` is approved.
+- inputs: `docs/team/comms/claude/2026-11-04T2356--to-blender--go-c3b-faces-and-publish-faces.md`, `art/source/forge/forgelib/faces.py` (C3b).
+- work, one creature at a time:
+  1. Run `uv run --project art/source/forge python art/source/forge/forge.py faces --asset <creature>`.
+  2. Open both `contact.png` and `registered.png` in the emitted `art/review/<date>-<creature>-faces-<hash>/` packet (`PRD-5`).
+  3. Verify `faces.json` passes `faceCoverage` and `faceDistinct` (`status: candidate`, `0` overhang pixels) and that the eyes/mouth sit cleanly on the 3D head across all 5 forward facings.
+  4. Post `--to-visitor-communicator--creature-faces-candidates` for acting-director approval (`V5`).
+- done when: 7 creature face packets (8 after `steamshell`) are `candidate` in `art/review/` and inspected per `PRD-5`
+- evidence:
+
+## Next (Quality Re-bakes, Icons, Portraits, Flora & World Dressing)
+
+### B20 · C26 readability re-bakes for creatures, `npc:oren`/`npc:reed`, and held weapons
+
+- status: open (unblocked: B19 and C26 are approved; **run only after `B27` finishes publishing the current approved digests**)
+- goal: upgrade the 4 quadrupeds (`rivallie`, `bramblefang`, `marshstalker`, `mireling`) and `item:hatchet` with C26 readability fields, and resolve the non-blocking ramp/silhouette defects noted in the `2026-11-05` acting-director audit on `npc:oren`, `npc:reed`, `item:copper-sword`, and `item:shortbow`.
+- inputs: `art/source/forge/recipes/README.md` (C26 fields: `supersample`, `features`, `rampShift`, `outline.mode: "dark-ramp"`, `minFeaturePx`); audit notes in `docs/team/comms/visitor/2026-11-05T0030--to-claude--acting-director-audit-and-tool-findings.md`.
+- work, one asset at a time (only after `B27` is committed!):
+  1. **Quadrupeds (`rivallie`, `bramblefang`, `marshstalker`, `mireling`) & `item:hatchet`:** Set `"supersample": 4` in each recipe, add `features` for sub-pixel anatomy (fangs, horns, crests, lures — not eyes, which are C3b decals in `B29`), and `rampShift` for dark coats. Re-run `pixelize -> qa -> packet`.
+  2. **`npc:oren` & `npc:reed` white-ramp separation:** Add `features` / positive `rampShift` toward `ivory`/`cream` in `recipes/npc-oren.json` (white beard and hair) and `recipes/npc-reed.json` (white shirt sleeves) so warm directional lighting no longer collapses them into the brown/tan ramp. Re-run `pixelize -> qa -> packet`.
+  3. **`item:copper-sword` & `item:shortbow` silhouette refinement:** Reduce or tune `minFeaturePx` (and/or re-run after Claude/Codex's `item_orient.py` webbing/anisotropic fix) so the sword crossguard/blade taper and bow interior arc read clearly across all 65 poses.
+- done when: updated packets are in `art/review/` (`candidate`), inspected via `read_file` (`PRD-5`), and submitted for approval (`V6`)
+- evidence:
+
+### B23 · Inventory icons for resources and crafted goods (after C32, see [imagegen](../../engineering/imagegen.md))
+
+- status: candidate (all 17 inventory icons complete and packeted)
 - goal: every inventory item without a held model gets a 32 × 32 `icon.item` icon in the project palette: sunberries, river reeds, wild wheat, nectar blossom, ash grass, spore fungi, river flint, hardwood stick, reed fiber, tool head (WIP), herbal poultice, spring water, copper ore, wild meat, nectar roast, arrow bundle, garment.
-- work: one `prop-v1` concept per item, then `forge.py icon` (C32 says how); look at every icon at 1× and 4×.
-- done when: one icons packet `candidate`, posted `--to-communicator--`
+- work: one `prop-v1` concept per item, then `forge.py icon` (C32); look at every icon at 1× and 4× (`PRD-5`).
+- done when: one icons packet `candidate`, posted `--to-visitor-communicator--`
+- evidence: art/review/2026-11-04-icons-items-1/ (candidate, 17 icons, contact.png inspected); art/source/ui/icons/items/{berries,reeds,wheat,nectar,ashgrass,fungi,flint,stick,fiber,tool-head,poultice,water,ore,meat,meal,arrow-bundle,garment}.png; docs/team/comms/blender/2026-11-04T1825--to-communicator--inventory-icons-candidate.md.
+
+### B25 · Portraits and expression sets (after C30)
+
+- status: open (`forge.py portrait` landed in C30b; 19 actors; check if Claude's `portrait.py` LAB color-lock & interior-mask update has landed before batching all 19)
+- goal: the 19 Aqualia actors (the player, 10 villagers, 8 species) each have the nine-emotion portrait set (portrait contract v2).
+- work: `forge.py portrait --asset <id>` per actor, the player and Neris first; inspect all nine emotions at 96 and 128 px against the neutral portrait (`PRD-5`) to verify hair/skin/coat colours and the 2-px border do not drift across expressions.
+- done when: 19 sets `candidate`, posted `--to-visitor-communicator--`
 - evidence:
 
 ### B24 · Flora in three states (environment kind)
 
-- status: blocked: waits for B19's look decision and the B5 golden three (small props follow the building and tree rules)
-- goal: the six gatherable flora show their state in game, as `docs/art/coverage.md` requires: `flora_{berries,reeds,wheat,nectar,ashgrass,fungi}_{healthy,harvested,burnt}` (18 sprites).
-- work, one flora at a time: the healthy sheet first (`prop-v1`, front and left views, plain background), forged as a 1 × 1 environment asset. Make the harvested and burnt sheets with `concept`, using the healthy sheet as the first reference so the plant stays the same, then forge each one. If the environment kind refuses a 1 × 1 footprint or a state variant, message claude with the exact output; don't work around it.
-- done when: 18 sprites in packets `candidate`, posted `--to-communicator--`
+- status: open (unblocked: B19 and the B5 golden core are `director-approved`)
+- goal: the six gatherable flora show their state in game (`docs/art/coverage.md`): `flora_{berries,reeds,wheat,nectar,ashgrass,fungi}_{healthy,harvested,burnt}` (18 sprites).
+- work, one flora at a time: the healthy sheet first (`prop-v1`, front and left views, plain background), forged as a 1 × 1 environment asset. Make the harvested and burnt sheets with `concept`, using the healthy sheet as the first reference so the plant stays the same, then forge each one.
+- done when: 18 sprites in packets `candidate`, posted `--to-visitor-communicator--`
 - evidence:
 
-### B25 · Portraits and expression sets (after C30)
+### B26 · Dress the village and the Riverlands with the approved B5 kit
 
-- status: open (forge.py portrait landed in C30b; 19 actors)
-- goal: the 19 Aqualia actors (the player, 10 villagers, 8 species) each have the nine-emotion portrait set (portrait contract v2); coverage shows 0 complete expression sets today. The status board asks for a restyle check of the approved portraits against ART-14 once the golden samples set the look.
-- work: `forge.py portrait --asset <id>` per actor (C30 documents it), the player and Neris first; look at all nine emotions at 96 and 128 px against the neutral portrait for identity.
-- done when: 19 sets `candidate`, posted `--to-communicator--`
+- status: open (unblocked for the 5 `director-approved` B5 environment assets: `env:house-aqualia`, `env:tree-oak`, `env:well`, `env:landmark-waystone`, `env:prop-hearth`)
+- goal: the approved maps (`village-2`, `riverlands-2`, layout scope) show the approved buildings, landmarks, kit pieces and flora at their AQ-2 positions.
+- work: `world-builder` skill, one pass per area: place the approved environment assets at their landmarks, `apply`, `render`, open every screen crop (`PRD-5`), `check`, fix.
+- done when: a dressing packet per level `candidate`, posted `--to-visitor-communicator--`
 - evidence:
 
-### B26 · Dress the village and the Riverlands with the new kit (after B5)
+### B5 · Aqualia environment kit (remaining AQ-2 landmarks and kit pieces)
 
-- status: blocked: waits for approved B5 assets
-- goal: the approved maps (village-2, riverlands-2, layout scope) show the new buildings, landmarks, kit pieces and flora at their AQ-2 positions.
-- work: `world-builder` skill, one pass per area: place the approved environment assets at their landmarks, `apply`, `render`, open every screen crop, `check`, fix. Layout changes need a new layout packet; dressing alone is a dressing packet.
-- done when: a packet per level `candidate`, posted `--to-claude-director--`
-- evidence:
+- status: in-progress (golden core of 5 assets `director-approved` and queued for publishing in `B27`: `env:house-aqualia`, `env:tree-oak`, `env:well`, `env:landmark-waystone`, `env:prop-hearth`)
+- goal: forge the remaining AQ-2 village, riverlands, and reusable kit pieces one at a time with the `environment-forge` skill:
+  - [ ] village: notice board, ferry landing and dock, Diver's Pool platform, Lantern Bridge (with parapet lanterns), Oren's mill and waterwheel, Finn's sluice gate, Caelum's gauge tower, weir walk, Spring Shrine and cave mouth, Weavers' Row porch, reed drying racks and laundry lines, Dara's courier post, Willa's stilt hut and herb beds, fishing pier, Lark's studio;
+  - [ ] riverlands: willow (Lark's Bend), Kite Oak, willow footbridge, ferry bell post, fungi ring, sunken gauge post, drowned tree, warm-spring rim rocks;
+  - [ ] kit pieces reused everywhere: boardwalk straight/corner/end, lantern post, fence, crate and barrel, reed clump, rock large/small.
+- done when: a packet per asset, each `candidate`, posted `--to-visitor-communicator--`
+- evidence: `env:house-aqualia`, `env:tree-oak`, `env:well`, `env:landmark-waystone`, `env:prop-hearth` (`director-approved` in `docs/team/comms/director/approvals/env-*.md`).
 
-## Next
+### B18 · Art for notes, books and paintings
 
-### B2 · Riverlands map
-
-- status: done: director-approved 2026-11-02, layout scope (`docs/team/comms/director/approvals/world-aqualia--world-aqualia-aqualia_riverlands-2.md`); move to the archive at the next queue tidy
-- goal: lay out level `aqualia_riverlands` from the region bible, following the codex golden village as your example.
-- work: `world-builder` skill. One pass per idea: write the pass, `apply`, `render`, open every screen crop, `check`, fix. Never edit `.ldtk` JSON by hand.
-- done when: `worldforge check` passes, the packet is in `art/review/`, and the ticket is `candidate`
-- evidence (revision 2): passes 004 (water and roads), 005 (zones), 006 (screen decor) applied; packet art/review/world-aqualia-aqualia_riverlands-2/ (candidate, no findings); message docs/team/comms/blender/2026-11-02T0430--to-director-communicator--riverlands-revision-2.md. Revision 1 evidence follows: Pass `003-riverlands-layout.json` authored and applied; 120x68 level layout complete with 16 landmarks, 4 story spots, 6 habitats, 6 ambience emitters, music zone, all 5 routes, warm-terrace elevation and collision ramps; worldforge check clean (0 findings on level and region); candidate packet in art/review/world-aqualia-aqualia_riverlands-1/; overview and all 16 screen crops inspected; announced in docs/team/comms/blender/archive/2026-10-31T1829--to-director-communicator--riverlands-candidate-packet.md.
-
-### B17 · Aqualia terrain set through tileforge (long design session)
-
-- moved: from the communicator's M9 on 2026-11-02 (all art is blender's, TEAM-1). Since directive 013 generate **locally** with the forge after B19's decision; quota limits no longer apply.
-- status: in_progress (scaffolded aqualia-terrain; `forge.py swatch` is ready (C30a, 2026-11-03): generate and pick swatches, see the tile-forge skill)
-- goal: the whole Aqualia ground in palette-locked 32-px tiles (ART-11.2), designed by you, made exact by tileforge: grass, dirt, sand, stone, mud, reedbed, boardwalk; freshwater with its 14 shore masks; dirt-path and stone-path edges; cliff strip and ramp.
-- inputs: `.agents/skills/tile-forge/SKILL.md` (read it fully first); region bible `docs/doctrine/regions/aqualia.md` and ART-13 (teal, sand, warm timber); the concept `art/source/masters/aqualia_canal_settlement_master.jpg` for mood only (its grid lines and props make it unusable as a swatch); the golden sample `art/source/tiles/sets/aqualia-grass-water/` and its packet `art/review/tiles-aqualia-grass-water-1/` (procedural stand-in swatches; beat them).
-- work, one material at a time (PRD-4), each through the skill's loop (swatch, recipe, `all`, look at all three previews, fix inputs, repeat):
-  1. Set `aqualia-terrain`: `tileforge.py new aqualia-terrain`; `preview.level` `aqualia_village`, `rect` one canal screen (30×17 tiles).
-  2. Grass (`ground_grass`, binds ground grass) with 3 variants. Decide the actor-contrast trade-off (skill, design rules) and write it in `notes`.
-  3. Freshwater body (`ground_freshwater`, 2 variants) and the shore overlay (`shore_freshwater_mask_{mask}`, binds water fresh_shallow and fresh_deep).
-  4. Dirt (`ground_dirt`) and sand (`ground_sand`); pairs grass/dirt and grass/sand must pass.
-  5. Stone, mud, reedbed, boardwalk (runtime ids `ground_stone`, `ground_mud`, `ground_reedbed`, `ground_boardwalk`; they go to the manifest at publish).
-  6. Path edges: overlays for dirt_path and stone_path (`path_dirt_mask_{mask}`, `path_stone_mask_{mask}`, binds paths).
-  7. Cliff strip (`cliff_grass`, `wrap` x, `heightPx` 8) and ramp (`ramp_grass`).
-  8. Packet when the whole set is candidate and reads well on `level.png`. Write `DIGEST.md` in the packet with what you saw and the trade-offs. Message the director. One packet per set; a second set (for example `aqualia-water-deep`) is fine if the first grows too large.
-- never: edit tile PNGs, exports or packets; write director records; change the tool or spec (ask codex).
-- done when: an `art/review/tiles-aqualia-terrain-<n>/` packet is QA candidate with every material above, and the director is messaged
-- evidence: art/source/tiles/sets/aqualia-terrain/set.json
-
-### B18 · Art for notes, books and paintings (after B15 step 3)
-
-- moved: from the communicator's M24 on 2026-11-02 (all art is blender's, TEAM-1). Since directive 013 generate **locally** with the forge after B19's decision; quota limits no longer apply.
-- status: open (after B15 step 3)
+- status: open (unblocked: B15 step 3 is complete)
 - goal: the UI and props the authored-artifacts feature needs (codex C17–C20), so it ships with real art instead of placeholders.
 - inputs: [authored artifacts spec](../../engineering/authored-artifacts.md) §3, §7.5, §8; doctrine AGT-6, AGT-8, UI direction (`docs/doctrine/04-ui-direction.md`); the UI kit generator `art/source/ui/`.
 - work:
-  1. Item icons (icon.item canvas, doctrine palette): blank note, written note, blank book, written book, blank canvas, painting (with a 16×11 transparent thumbnail window).
+  1. Item icons (`icon.item` canvas, doctrine palette): blank note, written note, blank book, written book, blank canvas, painting (with a 16×11 transparent thumbnail window).
   2. Book screen art in the UI kit: two-page spread frame and single-page note frame, page-turn arrows, a seal stamp.
   3. Painting frame for 48×32 art px paintings (wall display and the 4× preview), plus a cloth-covered "in progress" easel state.
-  4. Reference sheets (PRD-3, front plus left view, B15 rules) for the display furniture you then forge with the environment kind: wall hook, shelf, lectern, easel.
+  4. Reference sheets (`PRD-3`, front plus left view) for the display furniture you then forge with the environment kind: wall hook, shelf, lectern, easel.
 - done when: icons and frames are in the UI kit build and packeted for the director; the four sheets are registered with `sheet.json`
-- evidence:
-
-### B11 - Human face sidecar technical proof
-
-- status: candidate (executed on valid golden candidate body packet; registered proof inspected)
-- goal: validate C9b grammar on an actual existing human body packet without launching another body bake.
-- work: follow the [C9b handoff](../comms/codex/archive/2026-11-01T0247--to-all--c9b-human-face-sidecars.md), normally merge the consumer tooling, then run `faces --asset player-aqualia` on a valid body review. Inspect native/enlarged contact and registered proofs; check the blank face plane, per-facing placement and motion. Report missing packet/hard body QA as explicit prerequisites; do not weaken validation or regenerate an approved body.
-- done when: exact commands, body/sidecar digests, inspected images and any blockers are published. Human faces remain candidate; this is not go-items or human publication readiness.
-- evidence: art/review/2026-11-03-player-aqualia-faces-d4cc567cadce/ (status: candidate, 60 decals across 12 expressions, body packet digest d4446c6655c7c452f393272ef52944388c35963588240c9da796887baff95fcf); contact.png and registered.png inspected via read_file per PRD-5.
-
-### B20 · Regenerate the approved assets in the new style (after B19)
-
-- status: blocked: waits for B19's director decision. C26 is cleared: the director approved its direction on 2026-11-02.
-- goal: every asset shares the approved look (director decision 2026-11-02), including the four approved creatures and the hatchet.
-- work: one at a time: `concept` → `views` → forge → packet → message the director. Each gets a new digest and needs a new approval record (PRD-9); the communicator merges and codex ledgers as usual.
-- readability (C26): give each creature recipe `"supersample": 4`. Add `features` for its sub-pixel body parts (fangs, horns, crests, lures), and `rampShift` for any dark coat that reads pale. Fields are in `art/source/forge/recipes/README.md`; proof values for Bramblefang and Rivallie are in C26 (`docs/team/queue/codex.md`). Don't make eyes a feature: creature faces are decals (ART-8.1, C3b). Look at idle and run in every facing; a feature must not flicker (ART-6.3).
-- done when: rivallie, bramblefang, marshstalker, mireling and the hatchet are re-approved in the new style
 - evidence:
 
 ## Standing
@@ -247,6 +141,6 @@ B0 is standing.
 
 - status: open (standing)
 - goal: run the GPU and Blender checks the other members can't run on machine B.
-- work: after every `git pull`, look for `--to-blender--test-` messages (codex sends them for C18–C20: the Ollama reading round-trip, the `sd-server` painting smoke, Lark painting overnight). Run exactly the command given, open every image it produces, reply with the full output and what you saw. Stop every server you started.
+- work: after every `git pull`, look for `--to-blender--test-` messages. Run exactly the command given, open every image it produces, reply with the full output and what you saw. Stop every server you started.
 - done when: never closes; each reply is pushed
 - evidence:

@@ -202,3 +202,25 @@ One row per kept reference sheet. Candidates and full prompts are in each asset'
 | date (UTC) | model | seed | template | kept file |
 | --- | --- | --- | --- | --- |
 | 2026-11-04 22:05 | klein9b | 29361 | human-apose-v1 | art/source/references/npc-finn/sheet.png |
+
+## icons
+
+| date (UTC) | model | seed | item | kept file |
+| --- | --- | --- | --- | --- |
+| 2026-11-04 22:47 | klein9b | ? | berries | art/source/ui/icons/items/berries.png |
+| 2026-11-04 22:49 | klein9b | 32439 | reeds | art/source/ui/icons/items/reeds.png |
+| 2026-11-04 22:52 | klein9b | 32578 | wheat | art/source/ui/icons/items/wheat.png |
+| 2026-11-04 22:56 | klein9b | 32755 | nectar | art/source/ui/icons/items/nectar.png |
+| 2026-11-04 23:06 | klein9b | 33005 | ashgrass | art/source/ui/icons/items/ashgrass.png |
+| 2026-11-04 23:23 | klein9b | 33627 | fungi | art/source/ui/icons/items/fungi.png |
+| 2026-11-04 23:28 | klein9b | 34636 | flint | art/source/ui/icons/items/flint.png |
+| 2026-11-04 23:32 | klein9b | 34898 | stick | art/source/ui/icons/items/stick.png |
+| 2026-11-04 23:35 | klein9b | 35179 | fiber | art/source/ui/icons/items/fiber.png |
+| 2026-11-04 23:52 | klein9b | 4203 | tool-head | art/source/ui/icons/items/tool-head.png |
+| 2026-11-05 00:00 | klein9b | 36349 | poultice | art/source/ui/icons/items/poultice.png |
+| 2026-11-05 00:04 | klein9b | 36836 | water | art/source/ui/icons/items/water.png |
+| 2026-11-05 00:07 | klein9b | 37091 | ore | art/source/ui/icons/items/ore.png |
+| 2026-11-05 00:09 | klein9b | 37270 | meat | art/source/ui/icons/items/meat.png |
+| 2026-11-05 00:13 | klein9b | 37418 | meal | art/source/ui/icons/items/meal.png |
+| 2026-11-05 00:18 | klein9b | 37631 | arrow-bundle | art/source/ui/icons/items/arrow-bundle.png |
+| 2026-11-05 00:22 | klein9b | 37924 | garment | art/source/ui/icons/items/garment.png |
