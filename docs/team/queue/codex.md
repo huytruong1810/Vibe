@@ -4,12 +4,14 @@ Read your brief `docs/team/briefs/codex.md` and [the queue rules](README.md) fir
 Finished tickets are in [archive/codex.md](archive/codex.md); open it only when a live ticket links there.
 
 **Who does what (directive 012, 2026-11-02, claude away until about 2026-11-09).** Codex
-owns this queue: **C22 → C24 → C25 → C14 → C13 → C18 → C19 → C20**, then C3g and C7, with C17 already shipped (save v5; see archive/codex.md), and C23 and C12
+owns this queue: **C22 → C24 → C25 → C13 → C18 → C19 → C20**, then C3g and C7, with C14 and C17 already archived (see archive/codex.md), and C23 and C12
 standing (C19 can run beside C18; C21 only on the director's go). Machine B has no
 Blender or GPU: build against mocks and send live GPU smokes to blender as
 `--to-blender--test-` requests. The forge tickets under "Waiting for claude" need
 Blender on machine A; leave them unless the director says otherwise. Claude's art-quality
 and local-generation tickets (C26–C31) sit in their own section.
+
+**Resume order (director, 2026-11-05 UTC):** B27/B29 pure-Python fixes, then M25/C3b integration support, then this queue. C14 is now in [the archive](archive/codex.md) with its actual director approval; C17 was already archived. C13 and C18 retain their current regression/external gates despite feature approvals. Do not rebuild C22/C24/C25/C19/C20 implementations from their ticket descriptions.
 
 ## Now: codex
 
@@ -61,24 +63,10 @@ and local-generation tickets (C26–C31) sit in their own section.
 - done when: §4 rows "extraction", "retrieval", "migration" pass; the C24 live smoke repeated across two conversations: the villager recalls a fact from the first in the second; soak (`npm run benchmark` or ecology soak) shows retrieval ≤ 5 ms per prompt.
 - evidence: 2026-11-02: code **68af413**, full check **388 tests / 30 files**, four relevant browser checks; retrieval **1.242 ms p95 / 2.177 ms max** at 400 records. [Candidate report](../comms/codex/2026-11-02T2155--to-all--c25-memory-candidate.md); [B0 request](../comms/codex/2026-11-02T2155--to-blender--test-c25-memory.md); [benchmark receipt](../comms/codex/c25-benchmark.json). Live recall/timing acceptance remains pending.
 
-### C14 · Combat director and telegraphs: fair fights first (CRM-4, CMB-4)
-
-- status: candidate (2026-11-02; director review pending)
-- owner: codex
-- goal: no matter how many hostiles, the player faces one or two clear threats at a time, every heavy attack is telegraphed, and nothing attacks from off screen.
-- spec: [creature minds](../../engineering/creature-minds.md) §1, §2, §7, §10 (partner icon), §11 rows "director" and "telegraphs"; doctrine CRM-4, CRM-10.3, CMB-4; ADR 033.
-- work:
-  1. Token pools per target (player 2 melee / 1 ranged-element, partner 2/1, villager 1/1; wild targets 2/1 in independent pools per director decision 2026-11-02), held windup→recovery, priority grants with ≥ 8 ticks between grants on a target, no player tokens outside the 30 × 17 tile view rectangle.
-  2. Gate today's `CombatSystem.advance` attack start on a token; creatures without one hold at their readiness ring (`max(range + 1.5, kiteRange)`) and circle (a minimal orbit is enough until C13).
-  3. Telegraphs for every creature attack over 15% of the target's max HP from windup tick 0 (`ground` arc or `glint`), drawn in the effect layer under VFX, plus the predator crouch-and-shiver on windup frames.
-  4. Difficulty knobs (token counts, grant spacing, aggression bias) in settings.
-  5. Partner intent icon slot in the HUD (shows `attack`/`guard`/`follow` from today's state until C13 provides intents).
-- done when: unit and browser tests from §11 "director" and "telegraphs" pass; a Playwright journey with 20 hostile Bramblefang shows at most the token count in windup or active at any tick; a 1080p capture of that fight is looked at (PRD-5) and attached; `npm run benchmark` unchanged within 5%.
-- evidence: [C14 candidate digest](../comms/codex/2026-11-02T2300--to-all--c14-combat-candidate.md), [validation](../comms/codex/c14-validation.json), [benchmark](../comms/codex/c14-benchmark.json), [browser proof](../comms/codex/c14-browser.json); implementation **17672f7** plus final lifecycle fixes.
-
 ### C13 · Creature minds v1: engagement, perception, intents, scripted brain, flight (CRM-1…3, CRM-10)
 
-- status: candidate (scripted implementation; director playtest and authored clips remain)
+- status: candidate (simulation/playtest approved; current CI capture and authored runtime integration remain)
+- evidence (2026-11-05): [director approval](../comms/director/approvals/simulation--c13-c14.md) accepts the simulation/playtest scope. [Public source45a10ccf CI](../comms/codex/resume-ci-receipt.json) still fails the Zephyrit notice capture; keep that regression and authored runtime integration open.
 - owner: codex
 - goal: creatures notice, stalk, commit and break like animals, each species recognisably itself, within budget and deterministic.
 - spec: [creature minds](../../engineering/creature-minds.md) §2–§6, §8–§11; doctrine CRM-1.4, CRM-2 (incl. flight), CRM-3, CRM-6.1, CRM-6.4, CRM-8, CRM-9, CRM-10; ADR 033.
@@ -95,7 +83,8 @@ and local-generation tickets (C26–C31) sit in their own section.
 
 ### C18 · The written word: book screen, villager reading and writing
 
-- status: candidate (functional implementation; machine-A GPU latency and director review remain)
+- status: candidate (feature approved; current CI startup and machine-A GPU latency remain)
+- evidence (2026-11-05): [director approval](../comms/director/approvals/artifacts--c18.md) accepts the feature scope. [Public source45a10ccf CI](../comms/codex/resume-ci-receipt.json) still waits for setup to close during the initial save. Current CI repair and machine-A latency remain open.
 - owner: codex
 - goal: the player reads and writes notes and books on a book screen; villagers read bounded ranges, write notes and diary pages, and no prompt grows with what was written.
 - spec: [authored artifacts](../../engineering/authored-artifacts.md) §4 (`artifactWrite`, page add/remove, seal), §5 (actions, validation, grounding, the two-step reading job, `readables` world facts), §8.1, §11; doctrine AGT-8, AGT-7 budgets.
@@ -223,6 +212,7 @@ Forge work that needs Blender on machine A, in order: C9b `fit` → C9c → C3b 
 
 ### C3b · Creature faces and publish
 
+- resume evidence (2026-11-05): Python unblocks **5655aa23**; finishing24, creature-face11 and face-publication5 tests pass. New M25 intake validates actual approved Rivallie/Bramblefang/Mireling sidecars and17 inventory images; runtime registration and icon support are implemented. Communicator manifest merge, digest-bound ledger transcription, five revised face packets and machine-A B27 publishing remain external. See [intake guide](../../engineering/hd-presentation.md#approved-creature-faces-and-inventory-icons).
 - status: tool side done 2026-11-04 (see result); creature faces await blender's re-packet and a decision. Earlier: manifest integration done by claude at 0a5e5c6: 3 bodies approved and active in game. **Faces: changes requested 2026-11-01** (`docs/team/comms/director/approvals/rivallie--2026-11-01-rivallie-faces-d749a4350126.md`): register decals to a face point about 3 art px below `Socket_Head` (per-species offset or a `Socket_Face` bone); `faceAnchor` fails any decal pixel outside the silhouette or on its outline row; hurt and fearful need a distinct pixel in e/w. Re-packet the faces on the approved body 69b6c10d…
 - goal: finish the creature class. Then `doctor` lists nothing pending for creatures, and approved creature packets can be published.
 - inputs: the Rivallie packet `art/review/2026-10-31-rivallie/`, `bake/tracks.json` (Socket_Head per frame), ART-8, `render_spec.expressions`, `catalog.ts` `AuthoringProvenanceSchema`.

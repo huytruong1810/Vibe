@@ -3,18 +3,23 @@
 ## Start here
 
 Workspace: `C:/Users/htruong/source/repos/Vibe`; branch: `eng/hd-presentation`.
-Last published checkpoint before this planning update: **f25fd8fb**. All completed
-engineering work is pushed; experimental literacy changes were reverted. The
-workspace was clean at pause. Do not work in the separate `Vibe-art` checkout.
+The pre-resume checkpoint was **45a10ccf**. Studio was normally merged at
+**296a7598** and the tested B27/B29 Python unblocks committed at **5655aa23**.
+Current validation and outstanding acceptance live in
+[resume validation](resume-validation.json) and [public CI receipt](resume-ci-receipt.json).
+Do not work in the separate `Vibe-art` checkout.
 
-The director requested a pause, a one-time resume after3h30, and this plan for a
-fresh Codex session. **This document is a plan, not evidence that remaining tickets
-are done.** C18 CI repair comes first; then continue unblocked Codex engineering.
+The director resumed this work and reordered it: Python forge unblocks first,
+M25/C3b integration support second, then engineering acceptance. The original
+pause is no longer active. **Remaining external acceptance is not completion.**
+Keep the C18 CI repair ahead of rebuilding already implemented queue slices.
 
-A Windows task is registered for **2026-11-04 21:40:19 America/Chicago**
+A historical Windows task was registered for **2026-11-04 21:40:19 America/Chicago**
 (2026-11-05 03:40:19 UTC):
 `Hearthwild-Codex-Resume-01a1a4df-20261105`.
-It removes its schedule before resuming the previous session. See
+It removes its schedule before resuming the previous session. At this resume's
+process check no Codex CLI resume process or matching scheduled task was present;
+the three Codex processes were existing IDE app servers. See the historical
 [schedule receipt](resume-schedule.json). It retains workspace-write sandboxing and
 on-request approvals; automatic approval was rejected and is not enabled. Windows
 must remain logged in/available. A fresh session must check whether that scheduled
@@ -32,6 +37,33 @@ Use [team-comms](../../../../.agents/skills/team-comms/SKILL.md) and
    implementation from scratch. Refresh public CI receipts for the actual latest
    source SHA before choosing a repair. Queue evidence contains some older
    "pending CI" lines; the receipts below record later failures.
+
+## Resume checkpoint: forge and integration support
+
+- Python: canonical NPC IDs retain colons in metadata and use slugs in paths;
+  missing animate stride keys fall back to approved review strides; superseded
+  body approvals are skipped. Facing-aware horizontal offsets and compact profile
+  grammars preserve coverage/idle/containment gates. Finishing24, creature-face11,
+  face-publication5 tests pass. Blender retries publishing from unchanged approved
+  workspaces and regenerates the five changes-requested faces for new review.
+- M25/C3b: explicit face/icon intake and ledger commands, immutable reviewed-export
+  receipts, per-frame runtime registration, expression selection and approved atlas
+  inventory markup. Read-only tests accept the three actual approved sidecars and
+  17 icon images (34 canonical item bindings, including18 garments). See the
+  [intake guide](../../../engineering/hd-presentation.md#approved-creature-faces-and-inventory-icons).
+  Communicator still owns manifest merges; staging does not activate these assets.
+- Local baseline: sequential check553 tests/46 files passes; browser30/30 passes
+  in7.9minutes, with C18 opening25.3ms/two mounted pages. The earlier concurrent
+  CPU run missed the painting5ms limit at7.1638ms; preserve that failure. Later
+  body-binding, ledger and C13 test changes require their recorded final checks.
+- Public source45a10ccf run41965203820: CPU and both beta bases pass; Zephyrit
+  notice capture and C18 initial-save startup fail. Unlike earlier receipts, its
+  ecology `Run npm run soak` step actually ran and passed. This proves historical
+  source soak only. No current-source remote green-CI claim.
+- Queue: C14 archived with its real director simulation/playtest approval. C13 and
+  C18 feature approvals are recognized while their current regression/external
+  gaps stay open. C17 was already archived. C24/C25 and C19/C20 live-A acceptance,
+  C21 and learned-brain gates remain unchanged.
 
 ## Changed: already implemented and pushed
 

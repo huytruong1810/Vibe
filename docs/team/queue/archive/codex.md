@@ -2,6 +2,24 @@
 
 Finished tickets, moved out of the live queue so agents read less. Newest batch first. Read only when a live ticket links here.
 
+## Archived 2026-11-05
+
+### C14 · Combat director and telegraphs: fair fights first (CRM-4, CMB-4)
+
+- status: done (director-approved simulation and playtest; record 2026-11-03)
+- owner: codex
+- goal: no matter how many hostiles, the player faces one or two clear threats at a time, every heavy attack is telegraphed, and nothing attacks from off screen.
+- spec: [creature minds](../../../engineering/creature-minds.md) §1, §2, §7, §10 (partner icon), §11 rows "director" and "telegraphs"; doctrine CRM-4, CRM-10.3, CMB-4; ADR 033.
+- work:
+  1. Token pools per target (player 2 melee / 1 ranged-element, partner 2/1, villager 1/1; wild targets 2/1 in independent pools per director decision 2026-11-02), held windup→recovery, priority grants with ≥ 8 ticks between grants on a target, no player tokens outside the 30 × 17 tile view rectangle.
+  2. Gate today's `CombatSystem.advance` attack start on a token; creatures without one hold at their readiness ring (`max(range + 1.5, kiteRange)`) and circle (a minimal orbit is enough until C13).
+  3. Telegraphs for every creature attack over 15% of the target's max HP from windup tick 0 (`ground` arc or `glint`), drawn in the effect layer under VFX, plus the predator crouch-and-shiver on windup frames.
+  4. Difficulty knobs (token counts, grant spacing, aggression bias) in settings.
+  5. Partner intent icon slot in the HUD (shows `attack`/`guard`/`follow` from today's state until C13 provides intents).
+- done when: unit and browser tests from §11 "director" and "telegraphs" pass; a Playwright journey with 20 hostile Bramblefang shows at most the token count in windup or active at any tick; a 1080p capture of that fight is looked at (PRD-5) and attached; `npm run benchmark` unchanged within 5%.
+- evidence: [C14 candidate digest](../../comms/codex/2026-11-02T2300--to-all--c14-combat-candidate.md), [validation](../../comms/codex/c14-validation.json), [benchmark](../../comms/codex/c14-benchmark.json), [browser proof](../../comms/codex/c14-browser.json); implementation **17672f7** plus final lifecycle fixes.
+- acceptance reconciliation (2026-11-05): [director record](../../comms/director/approvals/simulation--c13-c14.md) explicitly approves the combat director after hands-on playtesting. Historical validation remains linked; current C13 capture and C18 startup CI failures remain in the live queue, not counted as green regression evidence.
+
 ## Archived 2026-11-02
 
 The queue header as it stood before the cleanup:
