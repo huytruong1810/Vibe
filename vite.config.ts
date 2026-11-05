@@ -15,6 +15,19 @@ const git = (...args: string[]): string => {
 
 export default defineConfig({
   base: process.env.VITE_BASE_PATH ?? '/',
+  // Published forge trees and build/test receipts can contain tens of thousands
+  // of files. They are fetched explicitly, not hot-reloaded source modules.
+  server: {
+    watch: {
+      ignored: [
+        '**/art/**',
+        '**/.cache/**',
+        '**/artifacts/**',
+        '**/test-results/**',
+        '**/docs/team/comms/**',
+      ],
+    },
+  },
   define: {
     __HEARTHWILD_BUILD__: JSON.stringify({
       sha: process.env.BUILD_SHA ?? git('rev-parse', 'HEAD'),
