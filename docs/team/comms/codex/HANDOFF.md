@@ -1,4 +1,88 @@
-# Codex handoff: resumed 2026-11-05
+# Codex handoff: next session, 2026-11-05
+
+## Director's latest instruction: next ticket set in the next session
+
+Huy requested this handoff after the validation checkpoint: continue the next
+set of tickets in a new session. Stop engineering work for this session; do not
+create a wake task or resume automatically. This instruction supersedes the
+"Next: resolve" ordering in the validation checkpoint below. Those failures stay
+open; deferring them does not grant acceptance or permit weaker gates.
+
+Workspace: `C:/Users/htruong/source/repos/Vibe` only, branch `eng/hd-presentation`.
+Published checkpoint: **4336443110f21f6d0356c8ddc06a13a444fd0818**.
+Latest runtime code remains **33788a034901b333ab12d38cdfc211ab15d1e680**.
+This handoff update is documentation only; find its final SHA with `git log -3`.
+Preserve the pre-existing untracked `docs/team/comms/codex/tmp/`, including the
+SwiftShader config. No owned validation/server processes remained at the final
+audit (`artifacts/resume-20261105-process-audit.json`); no runtime edits remain.
+
+### Startup and ownership before coding
+
+1. Confirm branch, status and process ownership; preserve unfamiliar work.
+   `git pull --ff-only`, then read the Codex brief, charter, team-comms and
+   doctrine-lookup skills and newly addressed top-level messages. Update
+   `.last-read` and continue `session-2026-11-02.md`.
+2. Refresh studio history and public source-bound CI without stored credentials.
+   At this handoff, fetched studio HEAD is **74714197**; it is NOT merged.
+   Sourcef46fb6dc has green hosted checks/browser/beta/verify. The later43364431
+   documentation push has not been checked here; do not label its CI green.
+3. **Visitor claimed C7 WLD-M2/M3 at56b29afa**, behind an opt-in beta toggle.
+   Coordinate in Codex's own comms folder before writing overlapping settlement,
+   spawn or save-provenance code. Treat the toggle/procedural-default wording as
+   an upstream proposal/claim to review against WLD/L8, not a doctrine override.
+   The older local C7 queue status does not reflect this unmerged claim.
+
+### Next ticket set, in order
+
+1. **Studio reconciliation and M25/M28 integration support.** Coordinate the C7
+   owner and overlapping C22/C34/C3g changes first. Preserve delivered BASE_URL,
+   live-model evaluation, trim/dedup/gallery work and retained creature-face
+   generator; do not blindly merge stale duplicate implementations. Use a normal
+   reviewed merge once ownership is settled. Do not work in `Vibe-art`.
+2. **Approved asset intake and C23 ledger/rebuild.** Communicator owns manifest
+   intake; M28 and the [LDtk relay](2026-11-05T2036--to-communicator--ldtk-r3-intake-and-c7-unblock.md)
+   track R3 map dependencies. Obtain the integration SHA and exact refusals.
+   Codex transcribes only valid digest-bound approvals, then rebuilds generated
+   assets, checks standard/HD coverage, inspects every new atlas and measures
+   real19-actor memory/scale for C3g. Keep format/body-binding gates unchanged.
+3. **C7 engineering review/support, then C11b authored terrain proof.** Review
+   visitor's actual diff and evidence rather than duplicate WLD-M2/M3. R3 layout
+   and dressing are approved upstream at76ef620c, source digest
+   ae34ae141d48512ab02607d274973751db79a0853fdebb74eaa3c6d982b66d5b.
+   Pass008's flora are Decor, not gameplay ResourceNode; Blender authors missing
+   nodes through worldforge passes. Audit canonical asset IDs and all authored
+   consumers, population scope, void/seams and save/world provenance. No direct
+   LDtk edits or unreviewed activation. After valid terrain/world integration,
+   capture and inspect the real village for C11b and require authored-world
+   tests/soak before claiming authored gameplay acceptance.
+4. **Approved B18 UI wiring and C22 beta follow-through.** Upstream76ef620c also
+   records authored-artifacts UI approval. Audit current UI bindings after merge,
+   wire missing approved frames/icons within Codex's lane and test book/painting
+   behavior. Preserve the existing book-draft fix and performance limits. C22's
+   implementation already exists: refresh exact-source CI and deployment
+   evidence; director Pages activation remains external. Do not rebuild it.
+
+### Carry-forward gaps and stop conditions
+
+- Local original-source full check569pass/1painting-budget failure7.853ms
+  against5ms; isolated7.609ms. All quantizer experiments were reverted.
+- Native5/5 passes, opening30.7ms. Software drafts/C13 pass, but C18 opening
+  fails1433.2ms combined and149.9ms isolated against100ms. Preserve both unique
+  traces and CPU receipts; no software or local full-check acceptance.
+- Hosted sourcef46fb6dc checks/benchmark, browser shards, beta bases and verify
+  pass; push soak was skipped and PR soak cancelled. No current soak pass claim.
+- A live-model M1-M5/GGUF/private-mirror and C19/C20 GPU/latency acceptance,
+  C33 real-output QA, face-format/body binding, and unchanged1519HD gaps remain.
+  Refresh after integration; don't reuse stale approvals or older timing passes.
+- C17 is already archived; C32 was delivered atc998d532 despite stale open
+  queue wording. Verify retained implementations before choosing any "open" row.
+  C21 and learned brains remain gated. Do not expand into them from this handoff.
+- Run checks appropriate to actual changes, keep timing runs sequential and
+  outputs unique, inspect every new image, run hygiene before pushing and stop
+  owned processes. Final reports remain Changed / Evidence / Gaps.
+
+The detailed validation and historical checkpoints below remain evidence;
+their old work ordering and pause timestamps do not supersede this section.
 
 ## Current resume checkpoint (supersedes pause state below)
 
