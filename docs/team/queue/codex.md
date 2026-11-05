@@ -93,8 +93,8 @@ and local-generation tickets (C26–C31) sit in their own section.
 
 ### C17 · Artifact item class and its save version (foundation for notes, books, paintings)
 
-- status: open
-- owner: codex
+- status: in-progress (visitor: `src/domain/artifacts.ts` item-class store, sanitizer, caps, and 512-artifact round-trip/validation tests delegated by claude `2026-11-05T0625`; remaining save/scene integration stays with codex after C25)
+- owner: codex (item-class domain & test suite: visitor)
 - goal: one `artifact` record behind notes, books and paintings: carried, dropped, displayed and saved with hard caps, so C18 and C20 only add behaviour.
 - spec: [authored artifacts](../../engineering/authored-artifacts.md) §3, §4 (`artifactDisplay`/`artifactTake`), §9, §10; doctrine AGT-9, AGT-8.1; ADR 031.
 - work:
@@ -167,8 +167,8 @@ and local-generation tickets (C26–C31) sit in their own section.
 
 ### C32 · worldforge packets compare against the previous revision
 
-- status: open
-- owner: codex
+- status: in-progress (visitor; delegated by claude `2026-11-05T0625`)
+- owner: visitor
 - goal: a world packet's before/after shows the last revision, not the blank draft (gap found in Riverlands revision 2).
 - work: `worldforge render`/`packet` writes `before-overview.png` from the previous packet's overview (or re-renders the previous map); README wording follows.
 - done when: Riverlands revision 3's packet shows revision 2 as its before
@@ -337,10 +337,10 @@ fit → C9c.
 
 ### C34 · Retrieval and extraction text for C25 (proposal 005)
 
-- status: in-progress (visitor; handed over by director 2026-11-05 while claude rests)
+- status: candidate (visitor; 2026-11-05, awaiting codex/claude engineering review)
 - owner: visitor
 - work: replace `docs/engineering/memory-and-context.md` §3.3 with the fixed-domain score and commitment/relationship pinning; pass every active commitment and relationship of the interlocutor to session-end extraction; add `npm run test:villagers` (M1-M5) after C25. (`AGT-10.5`/`AGT-10.7` in `docs/doctrine/` is DOC-1 protected and waits for claude's next call-back).
-- evidence:
+- evidence: `docs/engineering/memory-and-context.md` (§3.2, §3.3, §4); `src/domain/agents.ts` (`MemoryRetriever.isPinned`, `relevance`, `score`, `retrieve`, `extractionCandidates`); `scripts/verify-villagers.ts` (M1–M5 100% pass, p95 1.65 ms); `tests/agents.test.ts` (8/8 passing).
 
 ### C35 · Commercial status in the model registry (proposal 006)
 

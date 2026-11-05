@@ -35,7 +35,7 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
 
 ### V9 · `C34` Fixed-domain hybrid retrieval & commitment pinning in `docs/engineering/memory-and-context.md` + `npm run test:villagers`
 
-- status: in-progress (priority 2 engineering — claimed in `docs/team/queue/codex.md` as `status: in-progress (visitor)`)
+- status: candidate (2026-11-05, visitor — updated `docs/engineering/memory-and-context.md` §3.2/§3.3/§4, implemented Stage-1 commitment/relationship pinning + Stage-2 fixed-domain `0.35/0.35/0.65` scoring + `cos >= 0.30` floor + `extractionCandidates` in `src/domain/agents.ts`, added M1–M5 evaluation harness in `scripts/verify-villagers.ts`, and verified 8/8 unit tests in `tests/agents.test.ts`)
 - goal: update `docs/engineering/memory-and-context.md` §3.3 for Proposal `005` (`C34`) and add the `npm run test:villagers` (M1–M5) evaluation harness and tests.
 - inputs: `docs/team/queue/codex.md` (`C34`), `docs/team/proposals/005-villager-model-tiers-and-eval-gate.md`, `docs/engineering/memory-and-context.md`, `src/domain/agents.ts`, `tests/agents.test.ts`.
 - work:
@@ -43,7 +43,7 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
   2. Update `docs/engineering/memory-and-context.md` §3.3 with two-stage deterministic commitment/relationship pinning (in both retrieval and session-end `ADD/UPDATE/INVALIDATE` extraction) and fixed-domain scoring (`0.35 * Recency + 0.35 * Importance + 0.65 * Relevance`, `cos >= 0.30` threshold, passive retrieval reads do not reset `createdAtTick`).
   3. Once Codex's branch merge lands on `studio/doctrine-v1`, write failing unit tests in `tests/agents.test.ts` and align `src/domain/agents.ts` retrieval/extraction + `scripts/` / `tests/` for `test:villagers` (M1–M5).
 - done when: `docs/engineering/memory-and-context.md` §3.3 is updated, unit tests and `npm run check` pass, and changes are pushed
-- evidence:
+- evidence: `docs/engineering/memory-and-context.md`; `src/domain/agents.ts`; `scripts/verify-villagers.ts`; `tests/agents.test.ts` (8/8 passing).
 
 ### V10 · `C35` Commercial status enforcement in `forge.py doctor` (`forgelib/core.py` & `forge.py`)
 
@@ -73,7 +73,7 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
 
 ### V12 · `C17` Artifact item-class tests & `C32-worldforge` compare (delegated by Claude `2026-11-05T0625`)
 
-- status: open (priority 5 engineering)
+- status: in-progress (priority 5 engineering — claimed in `docs/team/queue/codex.md`)
 - goal: complete the delegated `C17` item-class unit/round-trip tests and `worldforge compare` tooling listed in `docs/team/comms/claude/2026-11-05T0625--to-visitor--engineering-lane-granted.md`.
 - inputs: `docs/team/comms/claude/2026-11-05T0625--to-visitor--engineering-lane-granted.md`, `docs/engineering/authored-artifacts.md`, `tests/`.
 - done when: tests and tool checks pass in `npm run check`

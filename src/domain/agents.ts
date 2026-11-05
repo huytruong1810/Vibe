@@ -104,6 +104,9 @@ export interface MemoryRecord {
   readonly tick: number;
   readonly day: number;
   readonly kind: 'fact' | 'hearsay' | 'reflection' | 'conversation';
+  readonly subkind?: 'commitment' | 'relationship' | 'fact' | 'event' | 'reflection';
+  readonly supersededById?: string | null;
+  readonly embedding?: readonly number[];
   readonly text: string;
   readonly subjects: readonly string[];
   readonly importance: number;
@@ -239,25 +242,131 @@ export class MemoryRepository {
   }
 }
 export class MemoryRetriever {
-  retrieve(npc: NpcState, query: string, tick: number, count = 12): MemoryRecord[] {
+  isPinned(record: MemoryRecord, npc: NpcState, interlocutor = 'player'): boolean {
+    if (record.supersededById) return false;
+    const involvesInterlocutor =
+      record.subjects.length === 0 || record.subjects.includes(interlocutor);
+    if (
+      involvesInterlocutor &&
+      (record.subkind === 'commitment' || record.subkind === 'relationship')
+    ) {
+      return true;
+    }
+    if (npc.commitments.some((c) => c.status === 'planned' && c.sourceIds.includes(record.id))) {
+      return true;
+    }
+    return false;
+  }
+
+  relevance(
+    record: MemoryRecord,
+    queryWords: ReadonlySet<string>,
+    queryEmbedding?: readonly number[],
+  ): number {
+    if (
+      queryEmbedding &&
+      queryEmbedding.length > 0 &&
+      record.embedding &&
+      record.embedding.length === queryEmbedding.length
+    ) {
+      let dot = 0;
+      let normQ = 0;
+      let normR = 0;
+      for (let i = 0; i < queryEmbedding.length; i++) {
+        const q = queryEmbedding[i]!;
+        const r = record.embedding[i]!;
+        dot += q * r;
+        normQ += q * q;
+        normR += r * r;
+      }
+      const denom = Math.sqrt(normQ) * Math.sqrt(normR);
+      const cos = denom > 0 ? dot / denom : 0;
+      return cos < 0.3 ? 0 : Math.max(0, Math.min(1, cos));
+    }
+    if (queryWords.size === 0) return 0;
+    const terms = new Set(record.text.toLowerCase().match(/[\p{L}\p{N}]+/gu) ?? []);
+    if (terms.size === 0) return 0;
+    let overlap = 0;
+    for (const word of queryWords) if (terms.has(word)) overlap++;
+    const raw = overlap / Math.max(1, queryWords.size);
+    return raw < 0.3 ? 0 : Math.max(0, Math.min(1, raw));
+  }
+
+  score(
+    record: MemoryRecord,
+    queryWords: ReadonlySet<string>,
+    tick: number,
+    queryEmbedding?: readonly number[],
+  ): number {
+    const hoursSinceCreated = Math.max(0, tick - record.tick) / 60;
+    const recency = Math.exp(-0.005 * hoursSinceCreated);
+    const importance = Math.max(0, Math.min(1, (record.importance - 1) / 9));
+    const relevance = this.relevance(record, queryWords, queryEmbedding);
+    return 0.35 * recency + 0.35 * importance + 0.65 * relevance;
+  }
+
+  retrieve(
+    npc: NpcState,
+    query: string,
+    tick: number,
+    count = 12,
+    interlocutor = 'player',
+    queryEmbedding?: readonly number[],
+  ): MemoryRecord[] {
     const words = new Set(query.toLowerCase().match(/[\p{L}\p{N}]+/gu) ?? []);
-    return npc.memory.records
-      .map((record) => {
-        const terms = new Set(record.text.toLowerCase().match(/[\p{L}\p{N}]+/gu) ?? []);
-        let overlap = 0;
-        for (const word of words) if (terms.has(word)) overlap++;
-        const relevance = overlap / Math.max(1, words.size);
-        return {
-          record,
-          score:
-            relevance * 3 +
-            record.importance / 10 +
-            Math.exp(-Math.max(0, tick - record.tick) / (30 * 1440)),
-        };
-      })
+    const active = npc.memory.records.filter((r) => !r.supersededById);
+
+    // Stage 1 — Deterministic Pinning (up to min(4, count) slots for active commitments & relationships)
+    const maxPinned = Math.min(4, count);
+    const pinned = active
+      .filter((r) => this.isPinned(r, npc, interlocutor))
+      .map((record) => ({
+        record,
+        score: this.score(record, words, tick, queryEmbedding),
+      }))
       .sort((a, b) => b.score - a.score || b.record.tick - a.record.tick)
-      .slice(0, count)
+      .slice(0, maxPinned)
       .map((r) => r.record);
+
+    const pinnedIds = new Set(pinned.map((r) => r.id));
+
+    // Stage 2 — Fixed-Domain Hybrid Scoring on remaining slots
+    const remainingSlots = Math.max(0, count - pinned.length);
+    const dynamic = active
+      .filter((r) => !pinnedIds.has(r.id))
+      .map((record) => ({
+        record,
+        score: this.score(record, words, tick, queryEmbedding),
+      }))
+      .sort((a, b) => b.score - a.score || b.record.tick - a.record.tick)
+      .slice(0, remainingSlots)
+      .map((r) => r.record);
+
+    return [...pinned, ...dynamic];
+  }
+
+  extractionCandidates(
+    npc: NpcState,
+    query: string,
+    tick: number,
+    interlocutor = 'player',
+    topK = 8,
+    queryEmbedding?: readonly number[],
+  ): MemoryRecord[] {
+    const words = new Set(query.toLowerCase().match(/[\p{L}\p{N}]+/gu) ?? []);
+    const active = npc.memory.records.filter((r) => !r.supersededById);
+    const allPinned = active.filter((r) => this.isPinned(r, npc, interlocutor));
+    const pinnedIds = new Set(allPinned.map((r) => r.id));
+    const topStage2 = active
+      .filter((r) => !pinnedIds.has(r.id))
+      .map((record) => ({
+        record,
+        score: this.score(record, words, tick, queryEmbedding),
+      }))
+      .sort((a, b) => b.score - a.score || b.record.tick - a.record.tick)
+      .slice(0, topK)
+      .map((r) => r.record);
+    return [...allPinned, ...topStage2];
   }
 }
 

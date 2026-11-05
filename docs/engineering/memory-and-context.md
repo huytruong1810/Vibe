@@ -130,17 +130,21 @@ interface CoreBlocks {
 - **Deterministic writes** (no LLM): perception, gifts, battles, care, commitments: the
   existing `PerceptionSystem`/action paths write typed records directly.
 - **Extraction at session end** (`gemma4-abliterated:e4b`, background): input = final
-  `CompactionSummary` + last K turns + the top-10 most similar existing memories (ids) +
-  core blocks. Output: `operations: ({op:'ADD', type, text, subjects, importance} | {op:
-'UPDATE', id, text, importance?} | {op:'INVALIDATE', id, reason} | {op:'NOOP'})[] ≤ 8`
-  and `blocks: {block, value}[] ≤ 2`. Validation: ids only from the supplied set; the
-  grounding filter (entities must exist; player claims stay `told`); caps; ≤ 1 extraction
-  per session. Applied by the simulation with provenance `{kind:'session', ids:[sessionId]}`.
-- **Retrieval**: score = recency + importance + relevance, each min-max normalized over
-  the candidates, weights 1. Recency = 0.995^(game hours since `lastAccessTick`);
-  relevance = cosine similarity of `embeddinggemma` vectors (256-d Matryoshka) of the
-  query and the record, keyword overlap when no embedding model is installed. Exclude
-  invalidated records. Update `lastAccessTick` for records that make it into a prompt.
+  `CompactionSummary` + last K turns + **every active (non-superseded) `commitment` and
+  `relationship` memory involving the interlocutor** + the top-8 most similar remaining
+  memories (`MemoryRetriever.extractionCandidates`) + core blocks. Output: `operations:
+({op:'ADD', type, text, subjects, importance} | {op:'UPDATE', id, text, importance?} |
+{op:'INVALIDATE', id, reason} | {op:'NOOP'})[] ≤ 8` and `blocks: {block, value}[] ≤ 2`.
+  Passing all active commitments and relationships to extraction guarantees that when an old
+  promise is fulfilled or revised days later, its existing record ID is present in the
+  candidate set and can be updated or invalidated instead of duplicated. Validation: ids
+  only from the supplied set; the grounding filter (entities must exist; player claims stay
+  `told`); caps; ≤ 1 extraction per session. Applied by the simulation with provenance
+  `{kind:'session', ids:[sessionId]}`.
+- **Retrieval**: two-stage deterministic commitment/relationship pinning followed by
+  fixed-domain hybrid scoring (see §3.3 below). Passive retrieval reads do **not** reset
+  `createdTick` (`tick`), preventing positive-feedback loops where an old trivial memory
+  stays perpetually "recent".
 - **Embeddings** are a cache, not save data: IndexedDB keyed by (model, dimensions, record
   id, text hash), recomputed on demand in the background. Saves stay small.
 - **Reflection**: when the importance sum since the last reflection reaches a threshold
@@ -156,7 +160,21 @@ interface CoreBlocks {
   core blocks seed from the profile. C18's `reading` memories and AGT-3 `sight` notes use
   the new types.
 
-### 3.3 Safety
+### 3.3 Two-stage hybrid retrieval and commitment pinning (C34 / Proposal 005)
+
+Per-candidate min-max normalization is replaced with fixed-domain scoring (`[0, 1]` per term) and a two-stage selection pipeline (`MemoryRetriever` in `src/domain/agents.ts`):
+
+1. **Stage 1 — Deterministic Pinning (Up to 4 Slots)**:
+   - Any active (`!supersededById`) memory record with `subkind === 'commitment'` or `subkind === 'relationship'` involving the current interlocutor, or referenced by a `planned` commitment in `npc.commitments`, is deterministically pinned into the first `min(4, count)` slots (ordered by hybrid score descending).
+   - The same active commitment and relationship records are always included in `MemoryRetriever.extractionCandidates()` at session end so `ADD / UPDATE / INVALIDATE` consolidation never misses an older promise when the player fulfills or breaks it.
+2. **Stage 2 — Fixed-Domain Hybrid Scoring (Remaining Slots)**:
+   - Each remaining active memory record is scored on its intrinsic fixed domain `[0, 1]` without batch-dependent min-max stretching:
+     - `Recency = exp(-0.005 * hoursSinceCreated)` where `hoursSinceCreated = max(0, tick - record.tick) / 60` (passive retrieval never resets `record.tick`).
+     - `Importance = clamp((record.importance - 1) / 9, 0, 1)`.
+     - `Relevance = cosine < 0.30 ? 0 : clamp(cosine, 0, 1)` using `embeddinggemma` 256-d Matryoshka vectors when available, or lexical overlap ratio with the same `< 0.30` noise floor when embeddings are absent.
+     - `Score = 0.35 * Recency + 0.35 * Importance + 0.65 * Relevance`.
+
+### 3.4 Safety
 
 Memory text and transcripts are data, never instructions (existing identity line). A
 model can propose memory operations but only the simulation applies them after
@@ -164,11 +182,12 @@ validation (ADR 005/006). Player claims stay `told` until the simulation witness
 
 ## 4. Tests and evidence
 
-| Area                               | Test                                                                                                                                                                                                                                                 |
-| ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Budget and trigger                 | Unit: a session crosses 75% → exactly one compaction job; recent K turns verbatim; summary applied only on unchanged revision; ≥ 95% overflow drops oldest turns deterministically                                                                   |
-| No memory loss                     | Unit: compaction never changes `npc.memory`; property test: any session length keeps the prompt ≤ B                                                                                                                                                  |
-| Extraction                         | Unit per op: ADD/UPDATE/INVALIDATE/NOOP validation, foreign ids rejected, hearsay stays `told`, caps; injection text in a turn cannot create an action or a witnessed fact                                                                           |
-| Retrieval                          | Golden ranking on a fixture with fixed vectors; keyword fallback; invalidated records excluded                                                                                                                                                       |
-| Migration                          | v-current → next save: counts, types, ids, summary record                                                                                                                                                                                            |
-| Live smoke (machine A, blender B0) | `npm run test:ollama` extended: a 30-turn conversation with `gemma4-abliterated:26b` + `gemma4-abliterated:e4b` (CPU) stays coherent (the villager recalls a turn-3 promise at turn 28), compaction latency and reply latency recorded against AGT-7 |
+| Area                               | Test                                                                                                                                                                                                                                                            |
+| ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Budget and trigger                 | Unit: a session crosses 75% → exactly one compaction job; recent K turns verbatim; summary applied only on unchanged revision; ≥ 95% overflow drops oldest turns deterministically                                                                              |
+| No memory loss                     | Unit: compaction never changes `npc.memory`; property test: any session length keeps the prompt ≤ B                                                                                                                                                             |
+| Extraction                         | Unit per op: ADD/UPDATE/INVALIDATE/NOOP validation, foreign ids rejected, hearsay stays `told`, caps; injection text in a turn cannot create an action or a witnessed fact; active commitments/relationships always supplied via `extractionCandidates`         |
+| Retrieval                          | Golden ranking on a fixture with fixed vectors; Stage-1 commitment/relationship pinning across 15+ game days; `cos < 0.30` relevance floor; passive reads do not mutate `tick`; invalidated/superseded records excluded                                         |
+| Villager eval gate (`M1–M5`)       | `npx tsx scripts/verify-villagers.ts` (and `tests/agents.test.ts`): M1 JSON validity `100%`, M2 character/lore consistency `>= 95%`, M3 action grounding `100%`, M4 15-day promise recall & non-contradiction `>= 90%`, M5 preparation latency `p95 <= 2500 ms` |
+| Migration                          | v-current → next save: counts, types, ids, summary record                                                                                                                                                                                                       |
+| Live smoke (machine A, blender B0) | `npm run test:ollama` extended: a 30-turn conversation with `gemma4-abliterated:26b` + `gemma4-abliterated:e4b` (CPU) stays coherent (the villager recalls a turn-3 promise at turn 28), compaction latency and reply latency recorded against AGT-7            |
