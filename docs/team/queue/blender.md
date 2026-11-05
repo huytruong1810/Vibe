@@ -88,11 +88,11 @@ B0 is standing.
 
 ### B26 · Dress the village and the Riverlands with the approved B5 kit
 
-- status: candidate (passes 007 and 008 applied; both levels candidate, all screen crops inspected per PRD-5, revision 3 packets assembled in art/review/)
+- status: done (passes 007 and 008 applied; both levels director-approved in 2026-11-05 records docs/team/comms/director/approvals/world-aqualia--world-aqualia-aqualia_{village,riverlands}-3.md)
 - goal: the approved maps (`village-2`, `riverlands-2`, layout scope) show the approved buildings, landmarks, kit pieces and flora at their AQ-2 positions.
 - work: `world-builder` skill, one pass per area: place the approved environment assets at their landmarks, `apply`, `render`, open every screen crop (`PRD-5`), `check`, fix.
 - done when: a dressing packet per level `candidate`, posted `--to-visitor-communicator--`
-- evidence: art/review/world-aqualia-aqualia_village-3/; art/review/world-aqualia-aqualia_riverlands-3/; art/source/world/passes/aqualia/007-village-dressing.json; art/source/world/passes/aqualia/008-riverlands-dressing.json.
+- evidence: docs/team/comms/director/approvals/world-aqualia--world-aqualia-aqualia_village-3.md; docs/team/comms/director/approvals/world-aqualia--world-aqualia-aqualia_riverlands-3.md; art/review/world-aqualia-aqualia_village-3/; art/review/world-aqualia-aqualia_riverlands-3/; art/source/world/passes/aqualia/007-village-dressing.json; art/source/world/passes/aqualia/008-riverlands-dressing.json.
 
 ### B5 · Aqualia environment kit (remaining AQ-2 landmarks and kit pieces)
 
@@ -106,7 +106,7 @@ B0 is standing.
 
 ### B18 · Art for notes, books and paintings
 
-- status: candidate (all 4 display furniture assets approved and staged; 6 item icons staged; 8 UI kit frames and screens generated, verified 0 off-palette colors, inspected per PRD-5, and packeted in art/review/2026-11-05-ui-authored-artifacts/)
+- status: done (all 4 display furniture assets approved and staged; 6 item icons staged; 8 UI kit frames and screens generated, verified 0 off-palette colors, inspected per PRD-5, director-approved in docs/team/comms/director/approvals/ui-authored-artifacts--2026-11-05-ui-authored-artifacts.md)
 - goal: the UI and props the authored-artifacts feature needs (codex C17–C20), so it ships with real art instead of placeholders.
 - inputs: [authored artifacts spec](../../engineering/authored-artifacts.md) §3, §7.5, §8; doctrine AGT-6, AGT-8, UI direction (`docs/doctrine/04-ui-direction.md`); the UI kit generator `art/source/ui/`.
 - work:
@@ -115,7 +115,7 @@ B0 is standing.
   3. Painting frame for 48×32 art px paintings (wall display and the 4× preview), plus a cloth-covered "in progress" easel state.
   4. Reference sheets (`PRD-3`, front plus left view) for the display furniture you then forge with the environment kind: wall hook, shelf, lectern, easel.
 - done when: icons and frames are in the UI kit build and packeted for the director; the four sheets are registered with `sheet.json`
-- evidence: art/review/2026-11-05-ui-authored-artifacts/; art/source/ui/kit/{frame_book_spread,frame_note_page,icon_page_prev,icon_page_next,seal_stamp,frame_painting_wall,frame_painting_preview,easel_cloth}.png; art/source/ui/icons/items/*.png; art/source/staging/blender/env-{wall-hook,shelf-books,lectern,easel}.json.
+- evidence: docs/team/comms/director/approvals/ui-authored-artifacts--2026-11-05-ui-authored-artifacts.md; art/review/2026-11-05-ui-authored-artifacts/; art/source/ui/kit/{frame_book_spread,frame_note_page,icon_page_prev,icon_page_next,seal_stamp,frame_painting_wall,frame_painting_preview,easel_cloth}.png; art/source/ui/icons/items/*.png; art/source/staging/blender/env-{wall-hook,shelf-books,lectern,easel}.json.
 
 ## Standing
 
