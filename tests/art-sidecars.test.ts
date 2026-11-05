@@ -192,6 +192,9 @@ describe('approved sidecar intake', () => {
     const root = process.cwd();
     for (const asset of ['rivallie', 'bramblefang', 'mireling']) {
       const body = JSON.parse(readFileSync(`art/source/staging/blender/${asset}.json`, 'utf8'));
+      const faces = JSON.parse(
+        readFileSync(`art/source/staging/blender/${asset}-faces.json`, 'utf8'),
+      );
       const appearanceId = `species:${asset}`;
       const clips = body.clips.map((c: Json) => ({
         ...c,
@@ -242,7 +245,12 @@ describe('approved sidecar intake', () => {
       };
       if (!m.rigs[0]!.registrations.length) delete (m.rigs[0] as Json).registrations;
       const approval = readFileSync(body.approvalRecord, 'utf8');
-      if (/^decision: superseded\s*$/m.test(approval) || /^superseded-by:/m.test(approval))
+      if (
+        /^decision: superseded\s*$/m.test(approval) ||
+        /^superseded-by:/m.test(approval) ||
+        body.packetDigest !== faces.bodyPacketDigest ||
+        body.packetSha256 !== faces.bodyManifestSha256
+      )
         expect(() => mergeFaces(root, m, asset)).toThrow(/binding|Approval|changed/i);
       else expect(mergeFaces(root, m, asset).subjects).toHaveLength(6);
     }
