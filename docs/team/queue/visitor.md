@@ -35,7 +35,7 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
 
 ### V9 · `C34` Fixed-domain hybrid retrieval & commitment pinning in `docs/engineering/memory-and-context.md` + `npm run test:villagers`
 
-- status: open (priority 2 engineering — assigned to `visitor` in `docs/team/queue/codex.md`; set `status: in-progress (visitor)` and push first)
+- status: in-progress (priority 2 engineering — claimed in `docs/team/queue/codex.md` as `status: in-progress (visitor)`)
 - goal: update `docs/engineering/memory-and-context.md` §3.3 for Proposal `005` (`C34`) and add the `npm run test:villagers` (M1–M5) evaluation harness and tests.
 - inputs: `docs/team/queue/codex.md` (`C34`), `docs/team/proposals/005-villager-model-tiers-and-eval-gate.md`, `docs/engineering/memory-and-context.md`, `src/domain/agents.ts`, `tests/agents.test.ts`.
 - work:
@@ -47,7 +47,7 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
 
 ### V10 · `C35` Commercial status enforcement in `forge.py doctor` (`forgelib/core.py` & `forge.py`)
 
-- status: open (priority 3 engineering — assigned to `visitor` in `docs/team/queue/codex.md`; set `status: in-progress (visitor)` and push first)
+- status: candidate (2026-11-05, visitor — implemented `load_model_registry()`, `COMMERCIAL_STATUSES`, and `MODEL_COMMERCIAL_METADATA` in `forgelib/core.py`, enforced and printed commercial status + territory restrictions + licence URL in `forge.py doctor` (`17/17` ok), added `registry_selftest.py` (`3/3` ok), and documented pinned GGUF/projector SHA256 digests in `docs/operations/operations.md`)
 - goal: enforce and print `commercialStatus` (`apache-2.0`, `mit`, `commercial-licensed`, `dev-only-noncommercial`, `unverified`) and `territoryRestrictions` (with licence name and URL) for every registered model in `forge.py doctor`, plus record GGUF SHA256 digests in `docs/operations/operations.md` (Proposal `006`).
 - inputs: `docs/team/queue/codex.md` (`C35`), `docs/team/proposals/006-commercial-licence-and-provenance-gate.md`, `art/source/forge/forge.py`, `art/source/forge/forgelib/core.py`, `docs/operations/operations.md`.
 - work:
@@ -55,7 +55,7 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
   2. Write a failing selftest in `art/source/forge/forgelib/` verifying that `doctor` reports `commercialStatus`, `territoryRestrictions`, `licenseName`, and `licenseUrl` for every model in `models.json` (via `forgelib/core.py` metadata table if `art/source/forge/models.json` is outside `LANES.visitor`).
   3. Implement in `art/source/forge/forgelib/core.py` and `art/source/forge/forge.py`, and document the GGUF SHA256 digests in `docs/operations/operations.md`.
 - done when: selftests, `forge.py doctor`, `npm run check:hygiene`, and `npm run format:check` pass and are pushed
-- evidence:
+- evidence: `art/source/forge/forgelib/core.py`; `art/source/forge/forge.py`; `art/source/forge/forgelib/registry_selftest.py` (3/3 passing); `docs/operations/operations.md`.
 
 ### V11 · `C3g` Follow-ups: Alpha bounding-box sprite trimming, frame dedup, and review-clip exclusion (Proposal `007` Part 1)
 

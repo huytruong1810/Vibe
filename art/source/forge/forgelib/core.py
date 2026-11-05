@@ -251,3 +251,85 @@ class gpu_window:
         if self.made:
             GPU_PAUSE.unlink(missing_ok=True)
             self.made = False
+
+
+COMMERCIAL_STATUSES = {
+    "apache-2.0",
+    "mit",
+    "commercial-licensed",
+    "dev-only-noncommercial",
+    "unverified",
+}
+
+MODEL_COMMERCIAL_METADATA: dict[str, dict[str, str]] = {
+    "klein9b": {
+        "commercialStatus": "dev-only-noncommercial",
+        "territoryRestrictions": "non-commercial under default FLUX Non-Commercial v2.1; commercial output distribution requires commercial agreement or Apache-2.0 FLUX.2-klein-4B",
+        "licenseName": "FLUX Non-Commercial License v2.1",
+        "licenseUrl": "https://huggingface.co/black-forest-labs/FLUX.2-klein-9B/blob/main/LICENSE.md",
+    },
+    "flux2-klein-4b": {
+        "commercialStatus": "apache-2.0",
+        "territoryRestrictions": "none",
+        "licenseName": "Apache License 2.0",
+        "licenseUrl": "https://huggingface.co/black-forest-labs/FLUX.2-klein-4B/blob/main/LICENSE.md",
+    },
+    "hunyuan-2mv": {
+        "commercialStatus": "commercial-licensed",
+        "territoryRestrictions": "excludes EU/UK/South Korea in standard Tencent Hunyuan 3D 2.0 Community License",
+        "licenseName": "Tencent Hunyuan 3D 2.0 Community License Agreement",
+        "licenseUrl": "https://huggingface.co/tencent/Hunyuan3D-2mv/blob/main/LICENSE",
+    },
+    "gemma4-abliterated:26b": {
+        "commercialStatus": "commercial-licensed",
+        "territoryRestrictions": "none (subject to Gemma Terms of Use Acceptable Use Policy)",
+        "licenseName": "Gemma Terms of Use",
+        "licenseUrl": "https://ai.google.dev/gemma/terms",
+        "ggufSha256": "3c13133469e431312fffb8b1d9c85ae42199e6bb5746ea1da84e8ddf2097d73c",
+        "projectorSha256": "b5346e5bfd906f5e16878c2d0b8243e948ca7410fa28ea35be9b0c54a0ac10b7",
+    },
+    "gemma4-abliterated:e4b": {
+        "commercialStatus": "commercial-licensed",
+        "territoryRestrictions": "none (subject to Gemma Terms of Use Acceptable Use Policy)",
+        "licenseName": "Gemma Terms of Use",
+        "licenseUrl": "https://ai.google.dev/gemma/terms",
+        "ggufSha256": "2079c8215603d58ce7e493f6bb03cdd760abe69ca78a5d2224415b08705d27a6",
+        "projectorSha256": "ffa64aebf7144bbadd5a1e143b77794d88e76a81cc0168d91de0770eb49e88e0",
+    },
+    "quaternius-ual": {
+        "commercialStatus": "commercial-licensed",
+        "territoryRestrictions": "none (CC0 1.0 Public Domain)",
+        "licenseName": "CC0 1.0 Universal",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    },
+}
+
+
+def load_model_registry() -> dict:
+    """Load art/source/forge/models.json and enrich each model entry with verified commercial-status metadata (C35)."""
+    reg = json.loads((FORGE / "models.json").read_text())
+    flat: list[dict] = []
+    seen: set[str] = set()
+    for tool_name, tool_cfg in reg.get("tools", {}).items():
+        models = tool_cfg.get("models", {})
+        for mid, mdata in models.items():
+            meta = MODEL_COMMERCIAL_METADATA.get(
+                mid,
+                {
+                    "commercialStatus": mdata.get("commercialStatus", "unverified"),
+                    "territoryRestrictions": mdata.get("territoryRestrictions", "unverified"),
+                    "licenseName": mdata.get("licenseName", mdata.get("licence", "unverified")),
+                    "licenseUrl": mdata.get("licenseUrl", ""),
+                },
+            )
+            enriched = {**meta, **mdata, "id": mid, "tool": tool_name}
+            for k, v in meta.items():
+                enriched.setdefault(k, v)
+            models[mid] = enriched
+            flat.append(enriched)
+            seen.add(mid)
+    for mid, meta in MODEL_COMMERCIAL_METADATA.items():
+        if mid not in seen:
+            flat.append({"id": mid, "tool": "reference", **meta})
+    reg["models"] = flat
+    return reg

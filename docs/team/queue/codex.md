@@ -337,17 +337,17 @@ fit → C9c.
 
 ### C34 · Retrieval and extraction text for C25 (proposal 005)
 
-- status: open (visitor; handed over by director 2026-11-05 while claude rests)
+- status: in-progress (visitor; handed over by director 2026-11-05 while claude rests)
 - owner: visitor
 - work: replace `docs/engineering/memory-and-context.md` §3.3 with the fixed-domain score and commitment/relationship pinning; pass every active commitment and relationship of the interlocutor to session-end extraction; add `npm run test:villagers` (M1-M5) after C25. (`AGT-10.5`/`AGT-10.7` in `docs/doctrine/` is DOC-1 protected and waits for claude's next call-back).
 - evidence:
 
 ### C35 · Commercial status in the model registry (proposal 006)
 
-- status: in-progress (visitor; handed over by director 2026-11-05 while claude rests)
+- status: candidate (visitor; 2026-11-05, awaiting codex/claude engineering review)
 - owner: visitor
 - work: `commercialStatus` (`apache-2.0`, `mit`, `commercial-licensed`, `dev-only-noncommercial`) and `territoryRestrictions` per entry in `art/source/forge/models.json` (or `forgelib/core.py` fallback table if `models.json` is lane-guarded), enforced and printed by `forge.py doctor`, with the licence name and the URL it was read from. Verify each licence text before filling a value; unknown stays `unverified`.
-- evidence:
+- evidence: `art/source/forge/forgelib/core.py` (`COMMERCIAL_STATUSES`, `MODEL_COMMERCIAL_METADATA`, `load_model_registry`); `art/source/forge/forge.py` (`registry_checks`); `art/source/forge/forgelib/registry_selftest.py` (3/3 passing); `forge.py doctor` (17/17 passing); `docs/operations/operations.md` (pinned GGUF & projector SHA256 digests).
 
 ### C36 · Held-item orientation on elongated weapons (visitor finding 3)
 
