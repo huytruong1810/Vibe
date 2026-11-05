@@ -73,6 +73,10 @@ On macOS/Linux, configure the environment of the service that actually runs Olla
 
 The adapter accepts loopback hosts only, with no embedded credentials or URL query. Browser code never handles a hosted-provider secret. Model downloads are not triggered by the page or tests.
 
+### Beta site (GitHub Pages) notes
+
+The beta is served from a sub-path (`https://huytruong1810.github.io/Vibe/`), built with `vite build --base /Vibe/`. Catalog and atlas URLs are root-absolute (`/assets/...`); `resolveAssetUrl` (`src/presentation/assets/url.ts`) prefixes them with `import.meta.env.BASE_URL` at fetch time, and `tests/asset-url.test.ts` covers `/` and `/Vibe/`. CSS `url()` references are rewritten by Vite. For the Ollama allowlist use the Pages origin: `OLLAMA_ORIGINS = 'https://huytruong1810.github.io'`. If the browser blocks the loopback call, accept Chrome's local-network prompt. The game stays playable with fallback dialogue without Ollama.
+
 ### Practical model qualification
 
 Run the smoke script against the exact installed model and record cold readiness, warm dialogue latency, output tokens, schema success, and action choice. The interactive deadline is 45 seconds; a model that routinely approaches it is unsuitable even if it eventually emits valid JSON. Test rendering while inference is active because CPU, memory bandwidth, and integrated-GPU resources can contend.

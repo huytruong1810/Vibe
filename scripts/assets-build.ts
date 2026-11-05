@@ -1,3 +1,4 @@
+import { FrameDeduper } from './lib/frame-dedup';
 import { writeCoverageReport } from './lib/coverage-report';
 import { writeAssetSchemas } from './lib/asset-schemas';
 import { AssetPack } from '@assetpack/core';
@@ -329,6 +330,7 @@ async function exactPath(path: string): Promise<void> {
   checkedPaths.add(absolute);
 }
 const sizeById = new Map<string, { w: number; h: number }>();
+const deduper = new FrameDeduper();
 for (const [id, frame] of [...frameSources].sort(([a], [b]) => a.localeCompare(b))) {
   const input = frame.legacy
     ? resolve(root, 'public', frame.legacy.image.slice(1))
@@ -361,7 +363,8 @@ for (const [id, frame] of [...frameSources].sort(([a], [b]) => a.localeCompare(b
   const stats = await sharp(data).stats();
   if ((stats.channels[3]?.max ?? 0) === 0) throw new Error(`Empty transparent frame: ${id}`);
   sizeById.set(id, { w: info.width, h: info.height });
-  await writeFile(join(cache, 'input/bundle{tps}', `${id}.png`), data);
+  if (deduper.add(id, data) === id)
+    await writeFile(join(cache, 'input/bundle{tps}', `${id}.png`), data);
 }
 await new AssetPack({
   entry: join(cache, 'input'),
@@ -471,23 +474,30 @@ for (const atlas of atlases.filter((a) => a.resolution === 1)) {
     const low = lowByFrame.get(id);
     if (!low) throw new Error(`Missing half-resolution frame: ${id}`);
     addVariant(low);
-    catalog.frames.push({
-      id,
-      pageId,
-      textureKey: id,
-      rect: f.frame,
-      sourceSize: sizeById.get(id)!,
-      trim: f.spriteSourceSize,
-      anchor: source.anchor,
-      ...(source.source && 'anchorPx' in source.source
-        ? {
-            anchorPx: source.source.anchorPx,
-            rigId: source.source.rigId,
-            sockets: source.source.sockets,
-            ...('held' in source.source && source.source.held ? { held: source.source.held } : {}),
-          }
-        : {}),
-    });
+    const entry = (frameId: string) => {
+      const src = frameSources.get(frameId)!;
+      return {
+        id: frameId,
+        pageId,
+        textureKey: id,
+        rect: f.frame,
+        sourceSize: sizeById.get(frameId)!,
+        trim: f.spriteSourceSize,
+        anchor: src.anchor,
+        ...(src.source && 'anchorPx' in src.source
+          ? {
+              anchorPx: src.source.anchorPx,
+              rigId: src.source.rigId,
+              sockets: src.source.sockets,
+              ...('held' in src.source && src.source.held ? { held: src.source.held } : {}),
+            }
+          : {}),
+      };
+    };
+    catalog.frames.push(entry(id));
+    // Byte-identical frames share one packed image but keep their own metadata.
+    for (const [alias, canonical] of deduper.aliases())
+      if (canonical === id) catalog.frames.push(entry(alias));
   }
   catalog.pages.push({
     id: pageId,
