@@ -91,7 +91,8 @@ def human_decal(expression: str, facing: str, palette: dict, canvas: dict,
     return image.convert("RGBA").resize((32, 24), Image.Resampling.NEAREST)
 
 
-def decal(expression: str, facing: str, palette: dict, canvas: dict) -> Image.Image:
+def decal(expression: str, facing: str, palette: dict, canvas: dict,
+          profile_width: int | None = None) -> Image.Image:
     if expression not in EXPRESSIONS or facing not in FACINGS:
         raise ForgeError("Unknown creature expression/facing; back facings have no decal")
     # Palette indices, never interpolated RGB or independently rotating anatomy.
@@ -104,6 +105,25 @@ def decal(expression: str, facing: str, palette: dict, canvas: dict) -> Image.Im
     image.putpalette(values + [0] * (768 - len(values)))
     image.info["transparency"] = 0
     draw = ImageDraw.Draw(image)
+    if profile_width is not None:
+        if facing not in ("e", "w", "se", "sw") or profile_width not in (1, 2):
+            raise ForgeError("Compact faces require a one- or two-pixel profile")
+        # Keep the canvas/anchor unchanged; author a narrower grammar, not a scaled bitmap.
+        x = canvas["anchor"][0]
+        end = x + profile_width - 1
+        if expression == "sleep":
+            draw.line((x, 5, end, 5), fill=1)
+        else:
+            draw.rectangle((x, 4, end, 5), fill=1)
+            if expression != "hurt":
+                draw.point((x if facing in ("e", "se") else end, 4), fill=2)
+        if expression == "fearful":
+            draw.line((x, 2, end, 2), fill=1)
+        elif expression == "hurt":
+            draw.point((x, 3), fill=1)
+        draw.line((x, 7 if expression == "warm" else 8, end,
+                   7 if expression == "warm" else 8), fill=3)
+        return image.convert("RGBA").resize((width * 2, height * 2), Image.Resampling.NEAREST)
     # Explicit facing pose tables. All coordinates are native art pixels.
     eyes, nose, mouth = FACE_POSES[facing]
     for x in eyes:
@@ -154,12 +174,35 @@ def register_frames(manifest: dict, images: dict, anchor: dict, expressions: tup
             continue
         body = Image.open(packet / frame["file"]).convert("RGBA").getchannel("A")
         table[frame["id"]] = None
-        for off in candidates:
+        # East is the recipe's reference direction. Mirror the search and its tie order
+        # together so an inward adjustment remains inward on the opposite profile.
+        for dx, dy in candidates:
+            off = (-dx if facing in ("w", "sw") else dx, dy)
             x, y = head["x"] + off[0] - anchor["x"], head["y"] + off[1] - anchor["y"]
             if all(_interior(body, x + px, y + py) for px, py in ink[facing]):
                 table[frame["id"]] = list(off)
                 break
     return table, failures
+
+
+def register_profiles(manifest: dict, images: dict, anchor: dict, expressions: tuple,
+                      packet: Path, default: tuple, palette: dict, canvas: dict) -> dict:
+    """Use a single grammar per facing; prefer full faces, then the widest useful fallback."""
+    registration, _ = register_frames(manifest, images, anchor, expressions, packet, default)
+    def score(table, facing):
+        hidden = [fid for fid, off in table.items() if off is None and fid.rsplit(":", 2)[-2] == facing]
+        return sum(":idle:" in fid for fid in hidden), len(hidden)
+    for facing in ("e", "w", "se", "sw"):
+        for width in (2, 1):
+            if score(registration, facing) == (0, 0):
+                break
+            candidate = dict(images)
+            candidate.update({(e, facing): decal(e, facing, palette, canvas, width) for e in expressions})
+            table, _ = register_frames(manifest, candidate, anchor, expressions, packet, default)
+            if score(table, facing) < score(registration, facing):
+                images.update(candidate)
+                registration = table
+    return registration
 
 
 def registration_checks(manifest: dict, images: dict, anchor: dict,
@@ -234,10 +277,10 @@ def build_faces(packet: Path, output: Path, asset: str, render_spec: dict, palet
     registration = None
     if kind == "creature":
         # Default decal origin: offset_px art px from Socket_Head (3 below, C3b review 2026-11-01), refined per frame.
-        if len(offset_px) != 2 or any(abs(v) > 8 for v in offset_px):
+        if len(offset_px) != 2 or any(type(v) is not int or abs(v) > 8 for v in offset_px):
             raise ForgeError("faceOffsetPx must stay within 8 art px of Socket_Head")
-        registration, socket_failures = register_frames(manifest, images, anchor, expressions, packet,
-                                                       (offset_px[0] * 2, offset_px[1] * 2))
+        registration = register_profiles(manifest, images, anchor, expressions, packet,
+                                         (offset_px[0] * 2, offset_px[1] * 2), palette, canvas)
     checks = registration_checks(manifest, images, anchor, expressions, registration=registration)
     if kind == "creature":
         checks += [coverage_check(registration), distinctness_check(images, expressions)]
