@@ -327,6 +327,35 @@ fit → C9c.
 - result: `forge.py icon --item ID --prompt "..." --ramps a,b [--n N] [--pick ID]` (`forgelib/icon.py`). Route: klein draws the object, then 2D reduction to 32 x 32 with palette lock and selective outline; the 3D route was not built (see `docs/engineering/imagegen.md`). Berries (`ember,sage,timber`, i400/i401) read at 1x; flint (`basalt`, i303) reads as a plain stone and is low contrast. Candidate tool; B23 picks and the reviewer judges.
 - evidence: `icon_selftest.py` 6/6; trials `art/source/forge/work/icon-{berries,flint}/` (0 icon-check problems in all 16 candidates); boards `docs/team/comms/claude/boards/2026-11-04-c32-icon-berries.png`, `…-c32-icon-flint.png`
 
+### C33 · Portrait identity lock: interior mask, palette from the neutral, expression delta
+
+- status: open (claude; before blender batches B25 across 19 actors)
+- owner: claude
+- source: visitor audit 2026-11-05 finding 1 and proposal 007 part 3 (accepted).
+- work: in `forgelib/portrait.py` composite each img2img edit through a feathered interior face mask over the neutral (hair, clothes, background and the 2 px border stay neutral pixels), quantize against the neutral's own LAB palette plus outline and eye-highlight tokens instead of all 64 colours, then add QA: skin LAB mean within delta-E 2.5 of the neutral and at least 3.5% changed pixels inside the eye, brow and mouth region so thoughtful, concerned and sad stay apart at 96 px. Selftest without GPU on synthetic portraits.
+- evidence:
+
+### C34 · Retrieval and extraction text for C25 (proposal 005)
+
+- status: open (claude; when codex starts C25)
+- owner: claude
+- work: replace `AGT-10.5` and `docs/engineering/memory-and-context.md` §3.3 with the fixed-domain score and commitment/relationship pinning; pass every active commitment and relationship of the interlocutor to session-end extraction. Add `AGT-10.7` and a codex ticket for `npm run test:villagers` (M1-M5) after C25.
+- evidence:
+
+### C35 · Commercial status in the model registry (proposal 006)
+
+- status: open (claude)
+- owner: claude
+- work: `commercialStatus` (`apache-2.0`, `mit`, `commercial-licensed`, `dev-only-noncommercial`) and `territoryRestrictions` per entry in `art/source/forge/models.json`, enforced by `doctor`, with the licence name and the URL it was read from. Verify each licence text before filling a value; unknown stays `unverified`.
+- evidence:
+
+### C36 · Held-item orientation on elongated weapons (visitor finding 3)
+
+- status: open (claude; needs a reproduction first)
+- owner: claude
+- work: reproduce the blunt copper-sword and webbed shortbow from `art/review/2026-11-05-item-copper-sword/` and `...-item-shortbow/` in `item_orient_selftest.py`; only then change the PCA axis fit (a pedestal under the model) and the anisotropic `minFeaturePx` dilation. A change without a failing test first is a guess.
+- evidence:
+
 ### C31 · gen3d backends: Hunyuan3D-2.1 shape and TRELLIS.2
 
 - status: done (2026-11-02, claude)

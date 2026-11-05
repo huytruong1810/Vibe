@@ -19,6 +19,7 @@ CV = forge.spec("render_spec")["canvases"]["layer.face"]
 PAL = forge.spec("palette")
 ANCHOR = {"x": CV["anchor"][0] * 2, "y": CV["anchor"][1] * 2}
 IMAGES = {(e, f): F.decal(e, f, PAL, CV) for e in F.EXPRESSIONS for f in F.FACINGS}
+COMPACT = {(e, f): F.compact_decal(e, f, PAL, CV) for e in F.EXPRESSIONS for f in F.FACINGS}
 
 
 def packet(tmp: Path, boxes: dict) -> dict:
@@ -39,6 +40,11 @@ class CreatureFaces(unittest.TestCase):
             m = packet(Path(d), boxes)
             return F.register_frames(m, IMAGES, ANCHOR, F.EXPRESSIONS, Path(d), default)[0], m
 
+    def reg3(self, boxes, default=(0, 6), facing_pos=None):
+        with tempfile.TemporaryDirectory() as d:
+            m = packet(Path(d), boxes)
+            return F.register_frames(m, IMAGES, ANCHOR, F.EXPRESSIONS, Path(d), default, compact=COMPACT)[:2]
+
     def test_a_head_under_the_socket_registers_at_the_default_offset(self):
         table, _ = self.reg({"c:idle:s:0": (30, 30, 82, 80)})
         self.assertEqual(table["c:idle:s:0"], [0, 6])
@@ -52,6 +58,28 @@ class CreatureFaces(unittest.TestCase):
     def test_a_sliver_body_hides_the_face(self):
         table, _ = self.reg({"c:strike:s:0": (50, 36, 60, 44)})
         self.assertIsNone(table["c:strike:s:0"])
+
+    def test_horizontal_offset_mirrors_for_west_facings(self):
+        # a head box hugging the east side of the socket: only a positive dx fits facing e, only a negative one facing w
+        box = (56 - 8, 30, 56 + 30, 80)
+        e, _ = self.reg3({"c:idle:e:0": box}, default=(4, 6))
+        w, _ = self.reg3({"c:idle:w:0": (56 - 30, 30, 56 + 8, 80)}, default=(4, 6))
+        self.assertGreater(e["c:idle:e:0"][0], 0)
+        self.assertLess(w["c:idle:w:0"][0], 0)
+
+    def test_a_head_too_small_for_the_full_decal_falls_back_to_eyes_only(self):
+        # the full decal is 16 px tall; this head is a 15 px band, enough for the eyes and brows only
+        table, eyes = self.reg3({"c:idle:s:0": (40, 30, 76, 46)})
+        self.assertIsNone(table["c:idle:s:0"])
+        self.assertIn("c:idle:s:0", eyes)
+
+    def test_compact_expressions_stay_distinct_in_every_facing(self):
+        self.assertTrue(F.distinctness_check(COMPACT, F.EXPRESSIONS)["pass"])
+
+    def test_eyes_only_frames_count_as_shown_for_coverage(self):
+        table = {f"c:idle:s:{i}": None for i in range(3)}
+        self.assertFalse(F.coverage_check(table)["pass"])
+        self.assertTrue(F.coverage_check(table, {k: [0, 6] for k in table})["pass"])
 
     def test_back_facings_are_not_registered(self):
         table, _ = self.reg({"c:idle:n:0": (30, 30, 82, 80)})

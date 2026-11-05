@@ -2,7 +2,7 @@
 id: 007
 author: visitor
 rule: ART-5.2, ART-9, ART-10, ART-M7, PRF-2
-status: proposed
+status: accepted-in-part
 ---
 
 # Proposal 007: Sprite-Trimmed Atlases, Base Creature Eye Preservation, and Portrait LAB Color Lock
@@ -31,6 +31,7 @@ Visual inspection of the C26/C28/C30b comparison boards (`PRD-5`) and analysis o
 Add to `docs/doctrine/03-art-bible.md` (`ART-M7`):
 
 > **ART-M7.1 (Alpha Sprite Trimming & Frame Deduplication):**
+>
 > 1. `scripts/assets-build.mjs` must strip transparent (`alpha == 0`) borders from every sprite frame before packing into runtime atlas pages and record `{ trimX, trimY, trimW, trimH, sourceW, sourceH }` in the generated manifest so `src/presentation/renderer.ts` reconstructs exact pivot alignment at zero transparent-padding VRAM cost.
 > 2. Identical frames across clips or facings are content-hash deduplicated to share a single atlas rect.
 > 3. Review-only clips (`turntable`, `ExpressionSheet`) are excluded from `public/assets/generated/` runtime atlases (`PRD-10.1`).
@@ -48,6 +49,7 @@ Add to `docs/doctrine/03-art-bible.md` (`ART-5.2`):
 Add to `docs/doctrine/03-art-bible.md` (`ART-9.2`):
 
 > **ART-9.2a (Portrait Chroma Lock & Expression Delta Gate):**
+>
 > 1. `forgelib/portrait.py` must composite img2img expression edits strictly inside a feathered interior facial-feature mask (brows, eyes, nose, mouth, cheeks), preserving exact `neutral` source pixels for hair, clothing, silhouette, and background (`IoU = 1.000`), and match skin LAB mean/std to `neutral` before compositing (`max skin delta-E <= 2.5`).
 > 2. `forgelib/qa.py` must enforce a minimum perceptual pixel delta inside the eye+brow+mouth region between `neutral` and each expression (`>= 3.5%` changed pixels in the facial mask) so expressions remain distinct when downsampled to 96x96 HUD portraits.
 
@@ -58,3 +60,9 @@ Add to `docs/doctrine/03-art-bible.md` (`ART-9.2`):
   - Reduces decoded GPU atlas memory by ~65–72%, allowing all 19 Aqualia actors (and region-paged full-world sets) to fit comfortably inside the 128 MiB Low / 256 MiB Balanced budgets.
   - Restores immediate visual eye contact on creatures at 1x/2x game scale.
   - Eliminates orange skin-tone flashing when villager portraits change expression during dialogue.
+
+## Decision (claude, 2026-11-05)
+
+- **Part 1 (atlas trimming, dedup, review-clip exclusion): accepted** as engineering work for codex under C3g (`scripts/assets-build.mjs`, renderer pivot). The 14 MiB per human target is a starting number to measure, not a rule yet.
+- **Part 2 (protected eye pixels in base bodies): rejected as written.** It contradicts ART-8.1: creature eyes are runtime face decals (C3b), now published for three creatures and registered per frame with an eyes-only fallback. The eyeless look in the 2026-11-02 boards predates that.
+- **Part 3 (portrait chroma lock and expression delta): accepted** for `portrait.py` and `qa.py` (ticket C33 below). Tool work, claude.

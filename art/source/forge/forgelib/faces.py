@@ -10,6 +10,7 @@ from .core import ForgeError
 from .publish import validate_packet
 
 FACINGS = ("s", "se", "sw", "e", "w")
+WEST = ("sw", "w")  # facings that look left: horizontal offsets mirror there
 EXPRESSIONS = ("neutral", "warm", "fearful", "hurt", "sleep")
 HUMAN_EXPRESSIONS = ("neutral", "warm", "thoughtful", "curious", "concerned", "amused",
                      "angry", "sad", "fearful", "blink", "sleep", "hurt")
@@ -127,23 +128,75 @@ def decal(expression: str, facing: str, palette: dict, canvas: dict) -> Image.Im
     return image.convert("RGBA").resize((width * 2, height * 2), Image.Resampling.NEAREST)
 
 
+def compact_decal(expression: str, facing: str, palette: dict, canvas: dict) -> Image.Image:
+    """Eyes-only fallback for frames whose head leaves no room for the full decal (a narrow profile,
+    a lunge): at most two 2x1/2x2 eyes with a brow, no nose or mouth. Each expression still differs."""
+    if expression not in EXPRESSIONS or facing not in FACINGS:
+        raise ForgeError("Unknown creature expression/facing; back facings have no decal")
+    width, height = canvas["size"]
+    image = Image.new("P", (width, height), 0)
+    image.putpalette(_palette_values(palette))
+    image.info["transparency"] = 0
+    draw = ImageDraw.Draw(image)
+    for x in FACE_POSES[facing][0]:
+        y = 4
+        if expression == "sleep":
+            draw.line((x, y + 1, x + 1, y + 1), fill=1)
+        elif expression == "hurt":
+            draw.line((x, y + 1, x + 1, y + 1), fill=1)
+            draw.line((x, y - 1, x + 1, y - 2), fill=1)
+        elif expression == "warm":
+            draw.line((x, y + 1, x + 1, y + 1), fill=1)
+            draw.point((x + 1, y), fill=1)  # a closed, smiling eye
+        else:
+            draw.rectangle((x, y, x + 1, y + 1), fill=1)
+            draw.point((x, y), fill=2)
+            if expression == "fearful":
+                draw.line((x, y - 2, x + 1, y - 2), fill=1)
+    return image.convert("RGBA").resize((width * 2, height * 2), Image.Resampling.NEAREST)
+
+
+def _palette_values(palette: dict) -> list:
+    colors = ["#000000", palette["ramps"]["hair-ink"]["steps"]["deep"],
+              palette["ramps"]["hair-ink"]["steps"]["highlight"],
+              palette["ramps"]["outline-neutral"]["steps"]["deep"]]
+    values = [int(color[i:i + 2], 16) for color in colors for i in (1, 3, 5)]
+    return values + [0] * (768 - len(values))
+
+
 def register_frames(manifest: dict, images: dict, anchor: dict, expressions: tuple, packet: Path,
-                    default: tuple, search: int = 4) -> tuple[dict, list]:
+                    default: tuple, search: int = 4, compact: dict | None = None) -> tuple[dict, dict, list]:
     """Per-frame decal registration for creatures (ART-8.1/8.2).
 
     A head deforms in motion, so one fixed offset from Socket_Head cannot sit on the head in every
-    clip. For each forward frame this picks, among offsets within `search` art px vertically and 2
-    horizontally of `default` (frame px, even), the nearest one at which every ink pixel of every
-    expression lands on the body interior (opaque, four neighbours opaque: inside the silhouette and
-    off its outline row). A frame with none gets None: the runtime hides the face there.
-    Returns ({frame id: [dx, dy] or None}, failures on missing or off-grid sockets).
+    clip. `default` is (dx, dy) in frame px for east-leaning facings (e, se); west-leaning facings
+    (w, sw) mirror dx, so a positive dx always moves toward the snout. For each forward frame this
+    picks, among offsets within `search` art px vertically and 2 horizontally of the default, the
+    nearest one at which every ink pixel of every expression lands on the body interior (opaque, four
+    neighbours opaque: inside the silhouette and off the outline row). With `compact` images (eyes only)
+    a frame the full decal does not fit is tried again with them. A frame with neither gets None: the
+    runtime hides the face there.
+    Returns (full: {frame id: [dx, dy] or None}, eyes_only: {frame id: [dx, dy]}, socket failures).
     """
-    ink = {f: sorted({(x, y) for e in expressions
-                      for y in range(images[(e, f)].height) for x in range(images[(e, f)].width)
-                      if images[(e, f)].getchannel("A").getpixel((x, y))}) for f in FACINGS}
-    candidates = sorted(((default[0] + 2 * i, default[1] + 2 * j) for i in range(-2, 3) for j in range(-search, search + 1)),
-                        key=lambda o: (abs(o[0] - default[0]) + abs(o[1] - default[1]), abs(o[0] - default[0]), o))
-    table, failures = {}, []
+    def ink_of(imgs):
+        return {f: sorted({(x, y) for e in expressions
+                           for y in range(imgs[(e, f)].height) for x in range(imgs[(e, f)].width)
+                           if imgs[(e, f)].getchannel("A").getpixel((x, y))}) for f in FACINGS}
+    ink, ink_small = ink_of(images), ink_of(compact) if compact else None
+
+    def candidates(facing):
+        dx = -default[0] if facing in WEST else default[0]
+        return sorted(((dx + 2 * i, default[1] + 2 * j) for i in range(-2, 3) for j in range(-search, search + 1)),
+                      key=lambda o: (abs(o[0] - dx) + abs(o[1] - default[1]), abs(o[0] - dx), o))
+
+    def fit(body, head, pixels, facing):
+        for off in candidates(facing):
+            x, y = head["x"] + off[0] - anchor["x"], head["y"] + off[1] - anchor["y"]
+            if all(_interior(body, x + px, y + py) for px, py in pixels):
+                return list(off)
+        return None
+
+    table, eyes_only, failures = {}, {}, []
     for frame in manifest["frames"]:
         facing = frame["id"].rsplit(":", 2)[-2]
         if facing not in FACINGS:
@@ -153,18 +206,18 @@ def register_frames(manifest: dict, images: dict, anchor: dict, expressions: tup
             failures.append(frame["id"] + ": missing/off-grid Socket_Head")
             continue
         body = Image.open(packet / frame["file"]).convert("RGBA").getchannel("A")
-        table[frame["id"]] = None
-        for off in candidates:
-            x, y = head["x"] + off[0] - anchor["x"], head["y"] + off[1] - anchor["y"]
-            if all(_interior(body, x + px, y + py) for px, py in ink[facing]):
-                table[frame["id"]] = list(off)
-                break
-    return table, failures
+        table[frame["id"]] = fit(body, head, ink[facing], facing)
+        if table[frame["id"]] is None and ink_small is not None:
+            small = fit(body, head, ink_small[facing], facing)
+            if small is not None:
+                eyes_only[frame["id"]] = small
+    return table, eyes_only, failures
 
 
 def registration_checks(manifest: dict, images: dict, anchor: dict,
                         expressions: tuple = EXPRESSIONS, offset: tuple = (0, 0),
-                        registration: dict | None = None) -> list:
+                        registration: dict | None = None, eyes_only: dict | None = None,
+                        compact: dict | None = None) -> list:
     """faceAnchor: Socket_Head integer registration and canvas bounds (ART-8.1/8.2).
 
     With a registration table (creatures) the offset is per frame and a hidden frame (None) is skipped
@@ -179,12 +232,14 @@ def registration_checks(manifest: dict, images: dict, anchor: dict,
         if not head or any(type(head.get(k)) is not int or head[k] % 2 for k in ("x", "y")):
             failures.append(frame["id"] + ": missing/off-grid Socket_Head")
             continue
-        off = offset if registration is None else registration.get(frame["id"])
+        off, source = (offset if registration is None else registration.get(frame["id"])), images
+        if off is None and eyes_only and frame["id"] in eyes_only:
+            off, source = eyes_only[frame["id"]], compact
         if off is None:
             continue
         for expression in expressions:
             count += 1
-            bounds = images[(expression, facing)].getbbox()
+            bounds = source[(expression, facing)].getbbox()
             x, y = head["x"] + off[0] - anchor["x"], head["y"] + off[1] - anchor["y"]
             if not bounds or x + bounds[0] < 0 or y + bounds[1] < 0 or x + bounds[2] > frame["sourceSize"]["w"] or y + bounds[3] > frame["sourceSize"]["h"]:
                 failures.append(frame["id"] + ": decal ink leaves body canvas")
@@ -192,15 +247,17 @@ def registration_checks(manifest: dict, images: dict, anchor: dict,
              "pass": not failures and count > 0, "detail": f"{count} registrations; " + "; ".join(failures[:12])}]
 
 
-def coverage_check(registration: dict, max_hidden: float = 0.10) -> dict:
+def coverage_check(registration: dict, eyes_only: dict | None = None, max_hidden: float = 0.10) -> dict:
     """The face may be hidden on a few extreme frames (a lunge, a downed head) but never at rest:
-    every idle frame is registered and at most max_hidden of all forward frames are hidden."""
-    hidden = [k for k, v in registration.items() if v is None]
+    every idle frame shows at least the eyes-only decal and at most max_hidden of all forward frames
+    show nothing."""
+    eyes_only = eyes_only or {}
+    hidden = [k for k, v in registration.items() if v is None and k not in eyes_only]
     idle_hidden = [k for k in hidden if ":idle:" in k]
     ok = not idle_hidden and len(hidden) <= max_hidden * max(len(registration), 1)
     return {"check": "faceCoverage", "rule": "ART-8.2", "hard": True, "pass": ok,
-            "detail": f"{len(hidden)} of {len(registration)} forward frames hide the face (limit {max_hidden:.0%}); "
-                      f"idle hidden: {len(idle_hidden)}"}
+            "detail": f"{len(hidden)} of {len(registration)} forward frames hide the face (limit {max_hidden:.0%}), "
+                      f"{len(eyes_only)} show eyes only; idle hidden: {len(idle_hidden)}"}
 
 
 def _interior(alpha: Image.Image, x: int, y: int) -> bool:
@@ -231,16 +288,19 @@ def build_faces(packet: Path, output: Path, asset: str, render_spec: dict, palet
     images = {(e, f): human_decal(e, f, palette, canvas, face) if kind == "human"
               else decal(e, f, palette, canvas) for e in expressions for f in FACINGS}
     anchor = dict(zip(("x", "y"), [v * 2 for v in canvas["anchor"]]))
-    registration = None
+    registration, eyes_only, compact = None, None, None
     if kind == "creature":
         # Default decal origin: offset_px art px from Socket_Head (3 below, C3b review 2026-11-01), refined per frame.
         if len(offset_px) != 2 or any(abs(v) > 8 for v in offset_px):
             raise ForgeError("faceOffsetPx must stay within 8 art px of Socket_Head")
-        registration, socket_failures = register_frames(manifest, images, anchor, expressions, packet,
-                                                       (offset_px[0] * 2, offset_px[1] * 2))
-    checks = registration_checks(manifest, images, anchor, expressions, registration=registration)
+        compact = {(e, f): compact_decal(e, f, palette, canvas) for e in expressions for f in FACINGS}
+        registration, eyes_only, _ = register_frames(manifest, images, anchor, expressions, packet,
+                                                     (offset_px[0] * 2, offset_px[1] * 2), compact=compact)
+    checks = registration_checks(manifest, images, anchor, expressions, registration=registration,
+                                 eyes_only=eyes_only, compact=compact)
     if kind == "creature":
-        checks += [coverage_check(registration), distinctness_check(images, expressions)]
+        checks += [coverage_check(registration, eyes_only), distinctness_check(images, expressions),
+                   {**distinctness_check(compact, expressions), "check": "faceDistinctCompact"}]
     output.mkdir(parents=True, exist_ok=True)
     frames = []
     for (expression, facing), image in images.items():
@@ -249,6 +309,15 @@ def build_faces(packet: Path, output: Path, asset: str, render_spec: dict, palet
         path.parent.mkdir(exist_ok=True)
         image.save(path)
         frames.append({"expression": expression, "facing": facing, "file": name,
+                       "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+                       "sourceSize": {"w": image.width, "h": image.height}, "anchorPx": anchor,
+                       "socket": "Socket_Head"})
+    for (expression, facing), image in (compact or {}).items():
+        name = f"compact/{expression}/{facing}.png"
+        path = output / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        image.save(path)
+        frames.append({"expression": expression, "facing": facing, "file": name, "variant": "compact",
                        "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
                        "sourceSize": {"w": image.width, "h": image.height}, "anchorPx": anchor,
                        "socket": "Socket_Head"})
@@ -279,9 +348,11 @@ def build_faces(packet: Path, output: Path, asset: str, render_spec: dict, palet
                 body = Image.open(packet / frame["file"]).convert("RGBA")
                 preview.alpha_composite(body, (col * cell_w, row * cell_h))
                 head = frame.get("sockets", {}).get("Socket_Head")
-                off = (0, 0) if registration is None else registration.get(frame["id"])
+                off, source = (0, 0) if registration is None else registration.get(frame["id"]), images
+                if off is None and eyes_only and frame["id"] in eyes_only:
+                    off, source = eyes_only[frame["id"]], compact
                 if head and off is not None:
-                    preview.alpha_composite(images[(expression, facing)],
+                    preview.alpha_composite(source[(expression, facing)],
                         (col * cell_w + head["x"] + off[0] - anchor["x"], row * cell_h + head["y"] + off[1] - anchor["y"]))
         preview.save(output / "registered.png")
     result = {"schemaVersion": 1, "asset": asset, "scope": ["faces"],
@@ -290,7 +361,10 @@ def build_faces(packet: Path, output: Path, asset: str, render_spec: dict, palet
               "bodyManifestSha256": hashlib.sha256((packet / "review.json").read_bytes()).hexdigest(),
               "frames": frames, "qa": checks}
     if registration is not None:
-        result["registration"] = {"unit": "frame px from Socket_Head; null hides the face on that frame", "frames": registration}
+        result["registration"] = {
+            "unit": "frame px from Socket_Head, added to the decal anchor. Horizontal offsets are per facing, already mirrored.",
+            "rule": "a frame listed in eyesOnly uses the compact/ decals at that offset; otherwise frames[id] is the full-decal offset, null hides the face",
+            "frames": registration, "eyesOnly": eyes_only}
     result["sourceDigest"] = hashlib.sha256(json.dumps(result, sort_keys=True).encode()).hexdigest()
     (output / "faces.json").write_text(json.dumps(result, indent=2) + "\n")
     return result

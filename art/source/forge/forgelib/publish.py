@@ -124,8 +124,9 @@ def publish_body(repo: Path, wd: Path, packet: Path, approval: Path, asset: str,
     Machine-A source artifacts must be available: an approval is not a source substitute.
     """
     repo = repo.resolve()
-    if not re.fullmatch(r"[a-z][a-z0-9-]*", asset):
-        raise ForgeError("Creature asset must use its canonical filesystem ID")
+    if not re.fullmatch(r"(npc:)?[a-z][a-z0-9-]*", asset):
+        raise ForgeError("Body asset must be <slug> or npc:<slug>")
+    slug = asset.replace(":", "-")  # files and directories; the record keeps the asset id
     packet, approval = packet.resolve(), approval.resolve()
     if not approval.is_relative_to(repo / "docs/team/comms/director/approvals"):
         raise ForgeError("Approval must come from the director records directory")
@@ -150,7 +151,7 @@ def publish_body(repo: Path, wd: Path, packet: Path, approval: Path, asset: str,
     strides = animate["extra"]["strideTiles"]
     for clip in clips:
         if clip["playback"] == "distance":
-            stride = strides.get(clip["state"])
+            stride = strides.get(clip["state"], clip.get("stride"))  # clips keyed by runtime state or by their own stride
             if type(stride) not in (int, float) or not math.isfinite(stride) or stride <= 0:
                 raise ForgeError("Distance clip needs its actual animate-record stride")
             clip["stride"] = stride
@@ -166,10 +167,10 @@ def publish_body(repo: Path, wd: Path, packet: Path, approval: Path, asset: str,
     inputs.extend((repo / "art/source/forge" / name, "script") for name in
                   ("blender/bake.py", "blender/animate.py", "blender/gaits.py", "forgelib/pixelize.py"))
     inputs.extend([(repo / "art/source/forge/spec/palette.json", "palette"),
-                   (repo / f"art/source/forge/recipes/{asset}.json", "pose-config"),
+                   (repo / f"art/source/forge/recipes/{slug}.json", "pose-config"),
                    (repo / "art/source/forge/uv.lock", "dependency-lock")])
-    bundle, provenance_inputs, bundle_rows = source_bundle(repo, wd, asset, inputs)
-    provenance = {"id": f"forge-{asset}", "method": "blender-bake",
+    bundle, provenance_inputs, bundle_rows = source_bundle(repo, wd, slug, inputs)
+    provenance = {"id": f"forge-{slug}", "method": "blender-bake",
                   "inputs": provenance_inputs,
                   "toolchain": [{"name": "blender", "version": blender_version}],
                   "command": f"uv run --project art/source/forge python art/source/forge/forge.py publish --asset {asset}"}
@@ -178,7 +179,7 @@ def publish_body(repo: Path, wd: Path, packet: Path, approval: Path, asset: str,
     schema = json.loads((repo / "docs/art/source-manifest.schema.json").read_text())
     definition = schema["oneOf"][1]["properties"]["authoringProvenance"]["items"]
     Draft202012Validator(definition).validate(provenance)
-    export = repo / "art/source/exports" / asset / manifest["sourceDigest"]
+    export = repo / "art/source/exports" / slug / manifest["sourceDigest"]
     frames = json.loads(json.dumps(manifest["frames"]))
     for frame in frames:
         frame["file"] = (export / frame["file"]).relative_to(repo / "art/source").as_posix()
@@ -188,7 +189,7 @@ def publish_body(repo: Path, wd: Path, packet: Path, approval: Path, asset: str,
               "packetSha256": sha(packet / "review.json"), "approvalRecord": approval.relative_to(repo).as_posix(),
               "approvalSha256": sha(approval), "rigId": rig, "frames": frames, "clips": clips,
               "authoringProvenance": provenance}
-    staging = repo / "art/source/staging/blender" / f"{asset}.json"
+    staging = repo / "art/source/staging/blender" / f"{slug}.json"
     payload = json.dumps(record, sort_keys=True, indent=2) + "\n"
     install_sources(bundle, bundle_rows)
     # A content-addressed destination must never silently overwrite earlier exports.
