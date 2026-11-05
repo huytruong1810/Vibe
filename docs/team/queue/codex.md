@@ -61,6 +61,8 @@ and local-generation tickets (C26–C31) sit in their own section.
 
 ### C14 · Combat director and telegraphs: fair fights first (CRM-4, CMB-4)
 
+- validation follow-up (2026-11-05): hosted89a9 PR42117869814 browser shard1 fails `combat-director.spec.ts:127` waiting15000ms for a predator windup, after its token-spacing assertions. [Exact annotation/job evidence](../comms/codex/reconciliation-validation.json) is retained; no C14 acceptance is advanced and no limit was changed.
+
 - status: candidate regression follow-up (director-approved baseline retained in archive)
 - owner: codex
 - goal: no matter how many hostiles, the player faces one or two clear threats at a time, every heavy attack is telegraphed, and nothing attacks from off screen.

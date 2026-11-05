@@ -44,6 +44,8 @@ directive 017 (`TEAM-4.2`), `visitor` acts as standing director until `2026-11-1
 
 ### M28 - Relay approved LDtk R3 levels and C7 map dependencies
 
+- unblock evidence (2026-11-05): hosted89a9 checks and local worldforge selftests fail `test_repeatable_native_schema_and_roundtrip`: replay001-008 produces approved ae34ae14…, but tracked canonical LDtk is still b55ad9de…. Local26/27pass. Blender must publish the matching canonical project through worldforge; do not weaken the equality assertion. See [structured source/CI receipt](../comms/codex/reconciliation-validation.json).
+
 - status: open (director request, 2026-11-05)
 - goal: unblock intake of approved village/Riverlands R3 and relay remaining gameplay map inputs to their owners.
 - work: relay exact R3 world approval/source and M25 environment/terrain integration SHAs to Codex; coordinate studio overlap before engineering merge; ask Blender for gameplay ResourceNode placements through worldforge passes and verify Decor asset bindings against staging.

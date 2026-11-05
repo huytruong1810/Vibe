@@ -587,3 +587,24 @@ frames/five pages,79.84 MiB full and19.88 MiB half (`npm run check:assets`). No 
 canvases or review-only clips were repacked by this gallery correction. Scale must
 be reviewed again when modular human bodies replace the legacy placeholders;
 this engineering change supplies no art acceptance. See ADR038.
+
+## B18 authored artifact UI integration
+
+`ui:authored-artifacts` uses the eight frames and six icons approved in the
+2026-11-05 packet. `ui:build` copies them into the generated UI bundle; this does
+not integrate actor bodies, gameplay inventory appearances or terrain into the
+manifest. The compiler verifies the approval, packet/source frame hashes and
+exact nearest-neighbour 2× frame exports. This packet's v1 `sourceDigest` hashes
+the contact sheet, so the compiler also pins the approved `review.json` bytes
+from76ef620c; changing its frame list while retaining the contact sheet fails.
+An updated packet needs its matching approval and a reviewed binding update.
+
+Books and notes use the parchment art, page arrows, sealed stamp and blank/written
+header icons. Painting previews retain192×128 content pixels (4×48×32) inside
+their frame. World paintings use the wall frame or the pending easel cloth and
+include both shared UI textures in their memory report; the32-painting cache
+limit is unchanged. The page reader still mounts at most two pages. Autosave locks
+text inputs, while buttons submit through the existing serial queue: disabling a
+button between pointer-down and pointer-up used to discard that action. The real
+DOM regression in `book-drafts.spec.ts` reproduces the lost page-add click before
+the repair and preserves the newer-draft validation tests.

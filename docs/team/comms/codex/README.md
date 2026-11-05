@@ -9,6 +9,11 @@ Only **codex** writes in this folder (doctrine TEAM-3). Everyone reads it.
   C7 review and approved B18 UI wiring. C19/C20 implementations are delivered;
   reference-machine acceptance and recorded performance failures remain open.
   [CI diagnostics](c18-ci-diagnostics.json) preserve the earlier investigations.
+- Resume implementation: [validation and remaining dependencies](reconciliation-validation.json).
+  Inspected UI proofs: [book](reconciliation-book.png),
+  [painting preview](reconciliation-painting-preview.png),
+  [note fixture](reconciliation-note-fixture.png). The note proof uses mock handlers;
+  the book and painting proofs come from native gameplay journeys.
 - C18 implementation: [plan](c18-plan.md), prepared before runtime edits;
   [delivery](2026-11-03T1732--to-all--c18-written-word-candidate.md),
   [validation](c18-validation.json),

@@ -1,5 +1,68 @@
 # Codex handoff: next session, 2026-11-05
 
+## Current implementation checkpoint (supersedes the saved ordering below)
+
+Huy requested implementation of the resume plan. Studio74714197 was normally
+reconciled at **1525883e**, preserving delivered URL transport, live-model
+evaluation, alpha trim/dedup, gallery accounting, faces.py and book draft revisions.
+Current runtime source is **6b20ebb42d810e9cc8dc8b4b3bb9f77832c8f549**;
+**89a9cef6** publishes it with owner follow-ups. Later receipt commits are docs only.
+See [current structured receipt](reconciliation-validation.json) and its source hashes.
+
+- B18 UI is wired at **a4e7d17a** and **4afd2877**: eight approved frames, six
+  blank/written header icons, painting wall frame/pending cloth, and exact192×128
+  palette content inside the preview frame. UI compilation binds the approved
+  frame-list SHA as well as this v1 packet's contact-sheet digest. No manifest or
+  approval-ledger entry was added; both remain unchanged.
+- A software run exposed another real book race: autosave disabled a button
+  between pointer-down and pointer-up, discarding Add page. The deterministic
+  regression fails before the repair and passes at **6b20ebb4**. Actions retain
+  the serial queue, text fields still lock, and existing draft/line/page limits stay.
+  Focused6/6 pass; final full check **571/48 pass**, including build. Earlier full
+  and isolated CPU-budget failures are preserved, not erased or claimed fixed.
+- Exact6b20 native C18 passes **31.5ms**, five measurements/two mounted pages/no
+  errors. Software now completes editing/sealing/navigation and reaches48pages,
+  but fails **578.1ms/100ms**, five measurements/two pages/no errors. Preserve the
+  unique failed trace and fresh CPU receipt named in the structured receipt.
+  Its earlier4afd failure stopped before max-book timing and is not acceptance.
+- Root and `/Vibe/` production builds each pass **2/2 beta tests** at89a9cef6
+  (runtime6b20). Native painting recovery/keep/hang and gallery checks pass;
+  screenshots were inspected. Standard assets pass; all four atlas PNGs reproduce
+  byte-identically:4024frames/3pages,47.67MiB full/12.21MiB half. HD still fails1519
+  requirements; approved actors remain0. This is not the full19actor scale proof.
+- Full formatting found inherited Blender queue/status-board issues. Codex fixed
+  the queue formatting in its lane; **M29** requests communicator's board-only
+  repair. The board remains the formatting gap. Public89a9 CI was still running
+  at the first receipt refresh; later89a9 checks fail the worldforge source equality
+  guard (local26/27pass), and PR browser shard1 fails C14 predator-windup polling.
+  Push soak was skipped and PR soak running, neither a soak pass. Exact annotations
+  and failed steps are retained in the structured receipt; no hosted verify pass.
+
+### Next work and external dependencies
+
+1. Communicator **M25**: return the manifest integration SHA and exact refusals.
+   Read-only publication verification accepts all19staged bodies. Current creature
+   faces still refuse actual intake: missing/different integrated bodies, seven
+   50frame duplicate-pose packets, and Rivallie's stale25frame body binding.
+   Transcribe only valid integrated approvals, then rebuild and measure real scale.
+2. Blender/communicator **M28**: R3 packets/approvals bind **ae34ae14…**, but the
+   tracked canonical LDtk source remains **b55ad9de…**, pass007's base. Publish the
+   matching map through worldforge and resolve ResourceNode/canonical asset inputs.
+   `test_repeatable_native_schema_and_roundtrip` reproduces this exact source
+   mismatch locally and in hosted checks. Keep the assertion; repair the publication.
+   Read-only world QA currently passes the earlier map:2levels/331placements,
+   zero ResourceNodes. No C11b authored-village or authored-soak acceptance.
+3. Visitor retains **C7 WLD-M2/M3** ownership. Its observed upstream claim56b29afa
+   changes only the queue; implementation/evidence requested. Codex has not edited
+   overlapping settlement/spawn/save provenance. WLD/L8 still govern activation.
+4. Pull the owner **M29** formatting repair; refresh exact-source CI/actual soak
+   execution. Director Pages activation, A/live-model/GPU acceptance and other
+   carry-forward gates remain external. C21/learned brains remain excluded.
+
+Preserve the pre-existing untracked Codex scratch, including the SwiftShader
+config. No wake was created. The saved stop-session instructions below are
+historical; this implementation request resumed the authorized work.
+
 ## Director's latest instruction: next ticket set in the next session
 
 Huy requested this handoff after the validation checkpoint: continue the next
