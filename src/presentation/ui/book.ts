@@ -22,6 +22,7 @@ export class BookScreen {
   private page = 0;
   private editing = false;
   private dirty = false;
+  private draftRevision = 0;
   private busy = false;
   private opening = false;
   private disposed = false;
@@ -111,6 +112,7 @@ export class BookScreen {
     });
     for (const id of ['book-title', 'book-text'])
       this.el(id).addEventListener('input', () => {
+        this.draftRevision++;
         this.dirty = true;
         this.counter();
         if (this.timer) clearTimeout(this.timer);
@@ -255,20 +257,26 @@ export class BookScreen {
       clearTimeout(this.timer);
       this.timer = null;
     }
-    if (!this.editing || (!this.dirty && this.record)) return true;
-    if (!this.counter()) {
-      this.status('Use at most 24 lines of 96 characters and a title.');
-      return false;
+    if (!this.editing) return true;
+    while (this.dirty || !this.record) {
+      if (!this.counter()) {
+        this.status('Use at most 24 lines of 96 characters and a title.');
+        return false;
+      }
+      const revision = this.draftRevision;
+      const ok = await this.mutate({
+        type: 'artifactWrite',
+        slot: this.slot!,
+        title: this.el<HTMLInputElement>('book-title').value.trim(),
+        page: this.page + 1,
+        lines: this.el<HTMLTextAreaElement>('book-text').value.split('\n'),
+      });
+      if (!ok) return false;
+      // An input event already queued when controls were locked can arrive while
+      // this write is awaiting its reply. Only the captured draft was persisted.
+      if (revision === this.draftRevision) this.dirty = false;
     }
-    const ok = await this.mutate({
-      type: 'artifactWrite',
-      slot: this.slot!,
-      title: this.el<HTMLInputElement>('book-title').value.trim(),
-      page: this.page + 1,
-      lines: this.el<HTMLTextAreaElement>('book-text').value.split('\n'),
-    });
-    if (ok) this.dirty = false;
-    return ok;
+    return true;
   }
   private async mutate(command: CommandPayload): Promise<boolean> {
     if (this.handlers.frame()?.session !== this.session) return false;
