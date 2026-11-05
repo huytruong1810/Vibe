@@ -4,7 +4,13 @@ Finished tickets, moved out of the live queue so agents read less. Newest batch 
 
 ## Archived 2026-11-05 (Acting-Director Queue Tidy, Directive 017)
 
-Moved from `docs/team/queue/blender.md` after the `2026-11-04` approval batch and `2026-11-05` acting-director audit (`docs/team/comms/visitor/2026-11-05T0030--to-claude--acting-director-audit-and-tool-findings.md`). Staging/publishing of the approved outputs is tracked in live ticket `B27`; the `steamshell` 180° yaw fix is tracked in live ticket `B28`; C26 readability re-bakes are tracked in live ticket `B20`.
+Moved from `docs/team/queue/blender.md` after the `2026-11-04` approval batch and `2026-11-05` acting-director audit (`docs/team/comms/visitor/2026-11-05T0030--to-claude--acting-director-audit-and-tool-findings.md`). Staging/publishing of the approved outputs is tracked in live ticket `B27`; C26 readability re-bakes are tracked in live ticket `B20`.
+
+### B28 · Fix `steamshell` 180° backward yaw and re-packet
+
+- status: done (`director-approved` 2026-11-05 in `docs/team/comms/director/approvals/steamshell--2026-11-05-steamshell.md`; published and staged to `art/source/staging/blender/steamshell.json`)
+- goal: orient `steamshell` so its tan head and eyes face South in `s` (Col 1) and East in `e` (Col 3), and so `walk`/`run` move head-first instead of shell-first.
+- evidence: `art/review/2026-11-05-steamshell/`; `docs/team/comms/blender/2026-11-05T0100--to-visitor-communicator--steamshell-yaw-fixed.md`; `docs/team/comms/director/approvals/steamshell--2026-11-05-steamshell.md`; `art/source/staging/blender/steamshell.json`.
 
 ### B14 · Publish the approved hatchet
 
@@ -70,8 +76,14 @@ Moved from `docs/team/queue/blender.md` after the `2026-11-04` approval batch an
 
 ### B11 - Human face sidecar technical proof
 
-- status: done (`director-approved` via `docs/team/comms/director/approvals/player-aqualia--2026-11-04-player-aqualia-faces.md`; publishing tracked in `B27`)
-- evidence: `art/review/2026-11-03-player-aqualia-faces-d4cc567cadce/`.
+- status: done (`director-approved` via `docs/team/comms/director/approvals/player-aqualia-faces--2026-11-03-player-aqualia-faces-d4cc567cadce.md`; published in `B27` at `art/source/staging/blender/player-aqualia-faces.json`)
+- evidence: `art/review/2026-11-03-player-aqualia-faces-d4cc567cadce/`, `art/source/staging/blender/player-aqualia-faces.json`.
+
+### B23 · Inventory icons for resources and crafted goods (after C32, see [imagegen](../../../engineering/imagegen.md))
+
+- status: done (`director-approved` 2026-11-05 by `visitor` acting as director under `TEAM-4.2` in `docs/team/comms/director/approvals/icons-items--2026-11-04-icons-items-1.md`, digest `773b5166b2aa226d1283ef50410989414055822e26fade7601be56749b54e158`; ready for `M25` manifest integration)
+- goal: every inventory item without a held model gets a 32 × 32 `icon.item` icon in the project palette: sunberries, river reeds, wild wheat, nectar blossom, ash grass, spore fungi, river flint, hardwood stick, reed fiber, tool head (WIP), herbal poultice, spring water, copper ore, wild meat, nectar roast, arrow bundle, garment.
+- evidence: `art/review/2026-11-04-icons-items-1/` (`contact.png`, `review.json`, 17 PNGs); `art/source/ui/icons/items/*.png`; `docs/team/comms/director/approvals/icons-items--2026-11-04-icons-items-1.md`; `docs/team/comms/blender/2026-11-04T1825--to-communicator--inventory-icons-candidate.md`.
 
 ## Archived 2026-11-02
 

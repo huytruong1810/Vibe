@@ -4,6 +4,15 @@ Finished tickets, moved out of the live queue so agents read less. Newest batch 
 
 ## Archived 2026-11-05 (Visit 1 & Acting-Director Work Order a–d)
 
+### V4 · Audit and decide `B28` (`steamshell` 180° backward-yaw fix)
+
+- status: done (completed 2026-11-05 under Directive 017 / `TEAM-4.2`)
+- goal: inspect the re-baked `steamshell` packet after `rig.yawDeg` is adjusted by ~`180°` and record `director-approved` (or `changes-requested`) via `forge.py approve-record`.
+- evidence:
+  - Visual inspection (`PRD-5`): `art/review/2026-11-05-steamshell/contact.png` and `art/review/2026-11-05-steamshell/rig_preview.png` (`rig.yawDeg: 180.8` orients the tan head and front legs South in `s` Col 1 and East in `e` Col 3; `walk`/`run` step head-first; 12/12 hard QA checks pass across 616 frames, 15 clips).
+  - Approval record: `docs/team/comms/director/approvals/steamshell--2026-11-05-steamshell.md` (`director-approved`, digest `377b976f9b6a14de80f3faaab3c93edb9c815b2167759844f7a0c6c2554d94ae`, superseding `steamshell--2026-11-03-steamshell.md`).
+  - Staged: `art/source/staging/blender/steamshell.json` (`0d6b1838`).
+
 ### V1 · Audit the 2026-11-04 batch of approval records and decide the 4 pending packets
 
 - status: done (completed 2026-11-05 under Directive 017 / `TEAM-4.2`)

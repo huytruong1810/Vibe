@@ -2,10 +2,11 @@
 asset: mireling
 packet: art/review/2026-11-01-mireling/
 packetDigest: e214bab72b42667a64c5a63cf15ef0ad04370a465aa34b3305dd1c1990120f89
-decision: director-approved
+decision: superseded
 scope: [body, clips]
 date: 2026-11-02
-recordedBy: claude under the director's standing delegation of 2026-11-01
+recordedBy: claude under the director's standing delegation of 2026-11-01; marked superseded 2026-11-05 by visitor acting as director under TEAM-4.2 (directive 017) per mireling--2026-11-04-mireling.md (backward-walk fix)
+superseded-by: mireling--2026-11-04-mireling.md
 ---
 
 Reviewed `contact.png` (idle on grey and grass in 8 facings, every clip row) against the

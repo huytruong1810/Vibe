@@ -2,11 +2,12 @@
 asset: rivallie
 packet: art/review/2026-10-31-rivallie/
 packetDigest: 69b6c10d650efacf33c0681f635d1098cfaff666b21bbc03f187f30a7c5b3744
-decision: director-approved
+decision: superseded
 scope: [body, clips]
 date: 2026-10-31
-recordedBy: claude on the director's instruction (2026-10-31T1806Z; the director delegated full director permissions)
+recordedBy: claude on the director's instruction (2026-10-31T1806Z; the director delegated full director permissions); marked superseded 2026-11-05 by visitor acting as director under TEAM-4.2 (directive 017) per rivallie--2026-11-03-rivallie.md
 supersedes: rivallie--2026-10-31-rivallie-m2.md
+superseded-by: rivallie--2026-11-03-rivallie.md
 ---
 
 Approved for the body frames behind this digest: 15 clips, 616 frames, QA candidate (12/12 hard

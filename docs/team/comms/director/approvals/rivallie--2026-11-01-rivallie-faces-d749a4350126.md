@@ -6,6 +6,7 @@ decision: changes-requested
 scope: [faces]
 date: 2026-11-01
 recordedBy: claude on the director's instruction (2026-11-01T2230Z, beta-slice review delegation)
+superseded-by: rivallie--2026-11-05-rivallie-faces-26d6823a60de.md
 ---
 
 Reviewed `registered.png` at 4× (all five expressions in s, se, sw, e and w on the
