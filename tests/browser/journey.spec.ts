@@ -66,6 +66,7 @@ async function mockOllama(
             ),
           },
           eval_count: 32,
+          done: true,
         };
     await route.fulfill({
       status: 200,
@@ -89,6 +90,10 @@ async function inventory(page: Page): Promise<void> {
 
 async function enter(page: Page): Promise<void> {
   await page.goto('/?test=1');
+  await expect(page.locator('#model')).toHaveValue('gemma4-abliterated:e4b');
+  // This fixture deliberately exercises the selectable larger model and missing-background fallback.
+  await page.getByRole('button', { name: 'Find models' }).click();
+  await expect(page.locator('#model')).toHaveValue('gemma4-abliterated:26b');
   await page.getByRole('button', { name: 'Connect & begin journey' }).click();
   await expect(page.locator('#setup-dialog')).not.toBeVisible({ timeout: 30_000 });
   await expect(page.locator('#location-title')).toContainText('Aqualia');
@@ -329,6 +334,8 @@ test('full world, movement, grounded dialogue, save and resume', async ({ page }
 test('required AI handshake prevents entry when model validation fails', async ({ page }) => {
   await mockOllama(page, false);
   await page.goto('/');
+  await page.getByRole('button', { name: 'Find models' }).click();
+  await expect(page.locator('#model')).toHaveValue('gemma4-abliterated:26b');
   await page.getByRole('button', { name: 'Connect & begin journey' }).click();
   await expect(page.locator('#setup-status')).toContainText('did not pass');
   await expect(page.locator('#setup-dialog')).toBeVisible();

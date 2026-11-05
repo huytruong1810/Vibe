@@ -54,7 +54,7 @@ test('an interior preserves identity, physique, local map and an accessible exit
       contentType: 'application/json',
       body: JSON.stringify(
         route.request().url().endsWith('/api/tags')
-          ? { models: [{ name: 'gemma4-abliterated:26b', size: 1 }] }
+          ? { models: [{ name: 'gemma4-abliterated:e4b', size: 1 }] }
           : { message: { content: JSON.stringify({ ready: true }) }, eval_count: 1 },
       ),
     }),

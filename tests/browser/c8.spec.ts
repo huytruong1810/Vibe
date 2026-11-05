@@ -11,7 +11,7 @@ test('Silver kit HUD keeps corners, focus and smaller desktop access', async ({ 
       contentType: 'application/json',
       body: JSON.stringify(
         route.request().url().endsWith('/api/tags')
-          ? { models: [{ name: 'gemma4-abliterated:26b', size: 1 }] }
+          ? { models: [{ name: 'gemma4-abliterated:e4b', size: 1 }] }
           : { message: { content: JSON.stringify({ ready: true }) } },
       ),
     }),
