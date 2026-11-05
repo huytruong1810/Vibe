@@ -471,7 +471,7 @@ test('art moved to blender (2026-11-02): blender writes every art source, commun
   assert.equal(decide('art/source/exports/rivallie/x/frames/idle/s_0.png', 'blender'), 'deny');
 });
 
-test('visitor (directive 017): acting-director lane, records only in approvals, nothing else protected', () => {
+test('visitor (directive 017): acting-director lane plus engineering lane, records only in approvals', () => {
   const fx = fixtureRepo();
   const decide = (p) => run('guard.mjs', write(p), fx, 'visitor').decision;
   for (const p of [
@@ -480,6 +480,12 @@ test('visitor (directive 017): acting-director lane, records only in approvals, 
     'docs/team/queue/blender.md',
     'docs/team/status-board.md',
     'docs/team/comms/director/approvals/a--p.md',
+    'src/domain/creatures.ts',
+    'scripts/assets-build.ts',
+    'tests/unit/x.test.ts',
+    'docs/engineering/imagegen.md',
+    'art/source/forge/forge.py',
+    'art/source/forge/forgelib/portrait.py',
   ])
     assert.equal(decide(p), 'allow', p);
   for (const p of [
@@ -488,9 +494,9 @@ test('visitor (directive 017): acting-director lane, records only in approvals, 
     'docs/art/approvals.json',
     '.agents/hooks/lib.mjs',
     'docs/doctrine/10-team-charter.md',
-    'src/domain/creatures.ts',
+    '.github/workflows/ci.yml',
+    'art/source/forge/spec/look.json',
     'art/source/manifest.json',
-    'art/source/forge/forge.py',
     'art/source/references/x/y.png',
     'docs/team/comms/blender/x.md',
   ])

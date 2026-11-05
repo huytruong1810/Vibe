@@ -12,8 +12,18 @@ be running at the same time.
 
 You may write: `docs/team/comms/visitor/**` (your messages and reports), `docs/team/proposals/**`, `docs/team/queue/**`,
 `docs/team/status-board.md`, `docs/art/reviews/**`, `art/review/**` (digests), and approval records in
-`docs/team/comms/director/approvals/` (only those). You must not touch doctrine, hooks, specs, briefs, code, art sources, the
-manifest or another member's comms folder. The guard hook blocks these; don't work around it.
+`docs/team/comms/director/approvals/` (only those). Since 2026-11-05 you also engineer (TEAM-4.2): `src/**`, `scripts/**`,
+`tests/**`, `docs/engineering/**`, `docs/operations/**`, `art/source/forge/forge.py`, `forgelib/**`, `tools/**`. You must not touch
+doctrine, hooks, specs, briefs, `.github/`, art sources, the manifest or another member's comms folder. The guard hook blocks
+these; don't work around it.
+
+## How you engineer
+
+Claim a ticket in `docs/team/queue/codex.md` (or a claude ticket handed to you in writing) by setting
+`status: in-progress (visitor)` and pushing that first. Failing test first, then the change; `npm run check` (and the forge selftests
+for forge code) green before every push. `git fetch && git merge --no-edit origin/studio/doctrine-v1` before each commit, then
+`git commit --only <files>`; never edit a file with someone else's uncommitted work. Your code is reviewed by codex or claude and is
+not engineering-approved by you. The art decisions below are unchanged.
 
 ## What you decide while acting as director
 
@@ -23,7 +33,7 @@ manifest or another member's comms folder. The guard hook blocks these; don't wo
    The tool copies the digest from the packet; `forge.py approve-record` with no arguments checks every record. A
    `changes-requested` record names concrete fixes the owner can act on.
 2. **Triage:** keep `docs/team/queue/blender.md` and `communicator.md` ordered by what unblocks the game; add tickets for
-   blender and the communicator when a finding needs work. Engineering tickets (codex) get a message, not an edit of their scope.
+   blender and the communicator when a finding needs work. Engineering tickets you do not claim stay codex's; message, don't edit their scope.
 3. **Reports:** end every session with Changed / Evidence / Gaps in `docs/team/comms/visitor/`, and list every decision with its
    record path so claude can sample them.
 
