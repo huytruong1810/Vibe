@@ -1,0 +1,2022 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/rivallie--2026-11-05-rivallie-faces-26d6823a60de.md",
+  "approvalSha256": "7c83a2ee5ddcf9c29b3db24c59b6b7f8d67b8c470f0041e4b53646b3fb93f0a1",
+  "asset": "rivallie",
+  "bodyManifestSha256": "b40fb0401cf7a8dff2f404f65fa0fa93ecaedba5d4ee8cfc71efcabbeb9c32f9",
+  "bodyPacketDigest": "00ef463a2f665c357d09c0c2b81654a8c34cfa829f1f5b3380499a850aaf3b45",
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "neutral",
+      "facing": "s",
+      "file": "exports/rivallie-faces/71f97801b048bc068dc0c0539a944e15556e5f52d1d08b6b9630b93b38401018/neutral/s.png",
+      "sha256": "560d804fc63684b599d62c9260571fdfac73adf76539263574b599129695f559",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "neutral",
+      "facing": "se",
+      "file": "exports/rivallie-faces/71f97801b048bc068dc0c0539a944e15556e5f52d1d08b6b9630b93b38401018/neutral/se.png",
+      "sha256": "0d88f53fd7563b77735a3faa479c1b08d81e83802c3abcd9e47c412e1ea3adc6",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "neutral",
+      "facing": "sw",
+      "file": "exports/rivallie-faces/71f97801b048bc068dc0c0539a944e15556e5f52d1d08b6b9630b93b38401018/neutral/sw.png",
+      "sha256": "9b3709856a10d20ba3a229e61487552eb83df8e1f7190b79b9db24845fb7f64f",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "neutral",
+      "facing": "e",
+      "file": "exports/rivallie-faces/71f97801b048bc068dc0c0539a944e15556e5f52d1d08b6b9630b93b38401018/neutral/e.png",
+      "sha256": "c7f2bcc83dcd8b665c3254d4b4b91735077c7869e67c5e3a850ba8f3cd27c776",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "neutral",
+      "facing": "w",
+      "file": "exports/rivallie-faces/71f97801b048bc068dc0c0539a944e15556e5f52d1d08b6b9630b93b38401018/neutral/w.png",
+      "sha256": "9a9860408460555c6ddb218afe05cbc19c43e86938f82d58d9d0c58469329fe1",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "warm",
+      "facing": "s",
+      "file": "exports/rivallie-faces/71f97801b048bc068dc0c0539a944e15556e5f52d1d08b6b9630b93b38401018/warm/s.png",
+      "sha256": "9e55be0232387e28cd7b1377b1ba80489a3418f2ad6eed3551e0fbf008a9ad81",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "warm",
+      "facing": "se",
+      "file": "exports/rivallie-faces/71f97801b048bc068dc0c0539a944e15556e5f52d1d08b6b9630b93b38401018/warm/se.png",
+      "sha256": "438537b456ae9b0c8e0a776bdd1f963e452c459a8fef1aa69d8eda44b81c9603",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "warm",
+      "facing": "sw",
+      "file": "exports/rivallie-faces/71f97801b048bc068dc0c0539a944e15556e5f52d1d08b6b9630b93b38401018/warm/sw.png",
+      "sha256": "085275716ed3073e52099f7422bb91a97205b13713a9d5275b3cebcc85ca9948",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "warm",
+      "facing": "e",
+      "file": "exports/rivallie-faces/71f97801b048bc068dc0c0539a944e15556e5f52d1d08b6b9630b93b38401018/warm/e.png",
+      "sha256": "1d0def96ce3dfa6e33ec0ab911ffb9eff8c477d096951e1f1a6fc34e24ddc6d6",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "warm",
+      "facing": "w",
+      "file": "exports/rivallie-faces/71f97801b048bc068dc0c0539a944e15556e5f52d1d08b6b9630b93b38401018/warm/w.png",
+      "sha256": "45dce88e09ca630bacebd61fe2c62b92387391a0bf4312bae205d988a5ec105d",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "fearful",
+      "facing": "s",
+      "file": "exports/rivallie-faces/71f97801b048bc068dc0c0539a944e15556e5f52d1d08b6b9630b93b38401018/fearful/s.png",
+      "sha256": "bbddac7cb8bd7aaf7e73ed30dc26eeb05b09c881aa41f1680796d10a1d303cfa",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "fearful",
+      "facing": "se",
+      "file": "exports/rivallie-faces/71f97801b048bc068dc0c0539a944e15556e5f52d1d08b6b9630b93b38401018/fearful/se.png",
+      "sha256": "33003e938992223c692b629913f64a36a27925e7fbdfd2726afd2c6bc960a2ff",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "fearful",
+      "facing": "sw",
+      "file": "exports/rivallie-faces/71f97801b048bc068dc0c0539a944e15556e5f52d1d08b6b9630b93b38401018/fearful/sw.png",
+      "sha256": "d6f71205f258937b77b624a38c4cc474860ebd0bc74437c0e641d3db8bf24462",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "fearful",
+      "facing": "e",
+      "file": "exports/rivallie-faces/71f97801b048bc068dc0c0539a944e15556e5f52d1d08b6b9630b93b38401018/fearful/e.png",
+      "sha256": "657ee6a88fe6cf902f8ecf22647c1ba0195b440d8ad835fe071519ec9ab48555",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "fearful",
+      "facing": "w",
+      "file": "exports/rivallie-faces/71f97801b048bc068dc0c0539a944e15556e5f52d1d08b6b9630b93b38401018/fearful/w.png",
+      "sha256": "083c0bf21e11120f26b967be6f9528bcfc7274cf56a2a86bbd9cd453f442b510",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "hurt",
+      "facing": "s",
+      "file": "exports/rivallie-faces/71f97801b048bc068dc0c0539a944e15556e5f52d1d08b6b9630b93b38401018/hurt/s.png",
+      "sha256": "f0ad143c98ee7aa876bc78b8aa1b82fd9fe17d160d87ae7e4b970617f6c9a10d",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "hurt",
+      "facing": "se",
+      "file": "exports/rivallie-faces/71f97801b048bc068dc0c0539a944e15556e5f52d1d08b6b9630b93b38401018/hurt/se.png",
+      "sha256": "d5251b97c30df82763f0076abe8854cd28311b20e2f62861b6df1bb09d630c34",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "hurt",
+      "facing": "sw",
+      "file": "exports/rivallie-faces/71f97801b048bc068dc0c0539a944e15556e5f52d1d08b6b9630b93b38401018/hurt/sw.png",
+      "sha256": "3e5db620325a5b0499d9b523b512c69fedf99d82ff83ad1387972e334a0b5052",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "hurt",
+      "facing": "e",
+      "file": "exports/rivallie-faces/71f97801b048bc068dc0c0539a944e15556e5f52d1d08b6b9630b93b38401018/hurt/e.png",
+      "sha256": "fe38be4205ef96bbe98d552d6db4050fd376a2be42cf4a8e674caaf116ee8247",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "hurt",
+      "facing": "w",
+      "file": "exports/rivallie-faces/71f97801b048bc068dc0c0539a944e15556e5f52d1d08b6b9630b93b38401018/hurt/w.png",
+      "sha256": "cec7ccda16e39aafa6c09b2d44a522150ed34759f279150d95ad607cbdd4d8ad",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "sleep",
+      "facing": "s",
+      "file": "exports/rivallie-faces/71f97801b048bc068dc0c0539a944e15556e5f52d1d08b6b9630b93b38401018/sleep/s.png",
+      "sha256": "a0fc9f0157cd1a29e52655a18f7c3fa6ff472974c33f6d7ca83a56205e1a3de0",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "sleep",
+      "facing": "se",
+      "file": "exports/rivallie-faces/71f97801b048bc068dc0c0539a944e15556e5f52d1d08b6b9630b93b38401018/sleep/se.png",
+      "sha256": "c86f256c2ff0969055a4bbc11dd5dbaffd0d9489d9a43834a328f999cc8ec386",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "sleep",
+      "facing": "sw",
+      "file": "exports/rivallie-faces/71f97801b048bc068dc0c0539a944e15556e5f52d1d08b6b9630b93b38401018/sleep/sw.png",
+      "sha256": "dc61f833d84bd445d727b68a50fdbf4761f07edbd50e42c2793e6135b9c08e02",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "sleep",
+      "facing": "e",
+      "file": "exports/rivallie-faces/71f97801b048bc068dc0c0539a944e15556e5f52d1d08b6b9630b93b38401018/sleep/e.png",
+      "sha256": "84210f48847e9cf2fd56a1832a583bcff578236df381d0a8bb9f5f7dd45710fe",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "sleep",
+      "facing": "w",
+      "file": "exports/rivallie-faces/71f97801b048bc068dc0c0539a944e15556e5f52d1d08b6b9630b93b38401018/sleep/w.png",
+      "sha256": "b8dfb7fd7a3a2f34c957965bcb1c3ea6e7d6423f68ffd917050323c69800c633",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    }
+  ],
+  "generator": {
+    "note": "script-drawn palette-indexed decals; no Blender or generative model",
+    "path": "forge/forgelib/faces.py",
+    "sha256": "df795682b94c423db71e6bd686518c7f11cb30b05b879b68909294c1f416196b"
+  },
+  "packet": "art/review/2026-11-05-rivallie-faces-26d6823a60de",
+  "packetDigest": "71f97801b048bc068dc0c0539a944e15556e5f52d1d08b6b9630b93b38401018",
+  "packetSha256": "6dbdf42fcb4bd645d4714b9d68c238a57cce77585d8e5420cee1368baed27310",
+  "registration": {
+    "frames": {
+      "rivallie:bathe:e:0": [
+        0,
+        8
+      ],
+      "rivallie:bathe:e:1": [
+        0,
+        6
+      ],
+      "rivallie:bathe:e:2": [
+        0,
+        8
+      ],
+      "rivallie:bathe:e:3": [
+        0,
+        6
+      ],
+      "rivallie:bathe:e:4": [
+        0,
+        8
+      ],
+      "rivallie:bathe:e:5": [
+        0,
+        8
+      ],
+      "rivallie:bathe:s:0": [
+        0,
+        12
+      ],
+      "rivallie:bathe:s:1": [
+        0,
+        10
+      ],
+      "rivallie:bathe:s:2": [
+        0,
+        12
+      ],
+      "rivallie:bathe:s:3": [
+        0,
+        10
+      ],
+      "rivallie:bathe:s:4": [
+        0,
+        12
+      ],
+      "rivallie:bathe:s:5": [
+        0,
+        12
+      ],
+      "rivallie:bathe:w:0": [
+        0,
+        8
+      ],
+      "rivallie:bathe:w:1": [
+        0,
+        6
+      ],
+      "rivallie:bathe:w:2": [
+        0,
+        6
+      ],
+      "rivallie:bathe:w:3": [
+        0,
+        6
+      ],
+      "rivallie:bathe:w:4": [
+        0,
+        8
+      ],
+      "rivallie:bathe:w:5": [
+        0,
+        8
+      ],
+      "rivallie:downed:e:0": [
+        0,
+        6
+      ],
+      "rivallie:downed:e:1": [
+        0,
+        6
+      ],
+      "rivallie:downed:e:2": [
+        0,
+        6
+      ],
+      "rivallie:downed:e:3": [
+        0,
+        6
+      ],
+      "rivallie:downed:e:4": [
+        0,
+        8
+      ],
+      "rivallie:downed:e:5": [
+        0,
+        6
+      ],
+      "rivallie:downed:s:0": [
+        0,
+        12
+      ],
+      "rivallie:downed:s:1": [
+        0,
+        12
+      ],
+      "rivallie:downed:s:2": [
+        0,
+        10
+      ],
+      "rivallie:downed:s:3": [
+        0,
+        10
+      ],
+      "rivallie:downed:s:4": [
+        0,
+        10
+      ],
+      "rivallie:downed:s:5": [
+        0,
+        10
+      ],
+      "rivallie:downed:w:0": [
+        0,
+        8
+      ],
+      "rivallie:downed:w:1": [
+        0,
+        6
+      ],
+      "rivallie:downed:w:2": [
+        0,
+        6
+      ],
+      "rivallie:downed:w:3": [
+        0,
+        6
+      ],
+      "rivallie:downed:w:4": [
+        0,
+        8
+      ],
+      "rivallie:downed:w:5": [
+        0,
+        6
+      ],
+      "rivallie:drink:e:0": [
+        0,
+        6
+      ],
+      "rivallie:drink:e:1": [
+        0,
+        6
+      ],
+      "rivallie:drink:e:2": [
+        0,
+        6
+      ],
+      "rivallie:drink:e:3": [
+        0,
+        6
+      ],
+      "rivallie:drink:e:4": [
+        0,
+        6
+      ],
+      "rivallie:drink:e:5": [
+        0,
+        6
+      ],
+      "rivallie:drink:s:0": [
+        0,
+        6
+      ],
+      "rivallie:drink:s:1": [
+        0,
+        6
+      ],
+      "rivallie:drink:s:2": [
+        0,
+        6
+      ],
+      "rivallie:drink:s:3": [
+        0,
+        6
+      ],
+      "rivallie:drink:s:4": [
+        0,
+        6
+      ],
+      "rivallie:drink:s:5": [
+        0,
+        6
+      ],
+      "rivallie:drink:w:0": [
+        0,
+        6
+      ],
+      "rivallie:drink:w:1": [
+        0,
+        6
+      ],
+      "rivallie:drink:w:2": [
+        0,
+        6
+      ],
+      "rivallie:drink:w:3": [
+        0,
+        6
+      ],
+      "rivallie:drink:w:4": [
+        0,
+        6
+      ],
+      "rivallie:drink:w:5": [
+        0,
+        6
+      ],
+      "rivallie:eat:e:0": [
+        0,
+        6
+      ],
+      "rivallie:eat:e:1": [
+        0,
+        6
+      ],
+      "rivallie:eat:e:2": [
+        0,
+        6
+      ],
+      "rivallie:eat:e:3": [
+        0,
+        6
+      ],
+      "rivallie:eat:e:4": [
+        0,
+        6
+      ],
+      "rivallie:eat:e:5": [
+        0,
+        6
+      ],
+      "rivallie:eat:s:0": [
+        0,
+        8
+      ],
+      "rivallie:eat:s:1": [
+        0,
+        8
+      ],
+      "rivallie:eat:s:2": [
+        0,
+        8
+      ],
+      "rivallie:eat:s:3": [
+        0,
+        8
+      ],
+      "rivallie:eat:s:4": [
+        0,
+        8
+      ],
+      "rivallie:eat:s:5": [
+        0,
+        8
+      ],
+      "rivallie:eat:w:0": [
+        0,
+        6
+      ],
+      "rivallie:eat:w:1": [
+        0,
+        6
+      ],
+      "rivallie:eat:w:2": [
+        0,
+        6
+      ],
+      "rivallie:eat:w:3": [
+        0,
+        6
+      ],
+      "rivallie:eat:w:4": [
+        0,
+        6
+      ],
+      "rivallie:eat:w:5": [
+        0,
+        6
+      ],
+      "rivallie:element:e:0": [
+        0,
+        8
+      ],
+      "rivallie:element:e:1": [
+        0,
+        6
+      ],
+      "rivallie:element:e:10": [
+        0,
+        8
+      ],
+      "rivallie:element:e:11": [
+        0,
+        8
+      ],
+      "rivallie:element:e:2": [
+        0,
+        8
+      ],
+      "rivallie:element:e:3": [
+        0,
+        8
+      ],
+      "rivallie:element:e:4": [
+        0,
+        8
+      ],
+      "rivallie:element:e:5": [
+        0,
+        8
+      ],
+      "rivallie:element:e:6": [
+        0,
+        8
+      ],
+      "rivallie:element:e:7": [
+        0,
+        6
+      ],
+      "rivallie:element:e:8": [
+        0,
+        8
+      ],
+      "rivallie:element:e:9": [
+        0,
+        8
+      ],
+      "rivallie:element:s:0": [
+        0,
+        12
+      ],
+      "rivallie:element:s:1": [
+        0,
+        14
+      ],
+      "rivallie:element:s:10": [
+        0,
+        12
+      ],
+      "rivallie:element:s:11": [
+        0,
+        12
+      ],
+      "rivallie:element:s:2": [
+        0,
+        14
+      ],
+      "rivallie:element:s:3": [
+        0,
+        14
+      ],
+      "rivallie:element:s:4": [
+        0,
+        14
+      ],
+      "rivallie:element:s:5": [
+        0,
+        14
+      ],
+      "rivallie:element:s:6": [
+        0,
+        14
+      ],
+      "rivallie:element:s:7": [
+        -2,
+        14
+      ],
+      "rivallie:element:s:8": [
+        0,
+        12
+      ],
+      "rivallie:element:s:9": [
+        0,
+        12
+      ],
+      "rivallie:element:se:0": [
+        0,
+        8
+      ],
+      "rivallie:element:se:1": [
+        2,
+        10
+      ],
+      "rivallie:element:se:10": [
+        0,
+        8
+      ],
+      "rivallie:element:se:11": [
+        0,
+        8
+      ],
+      "rivallie:element:se:2": [
+        4,
+        10
+      ],
+      "rivallie:element:se:3": [
+        4,
+        8
+      ],
+      "rivallie:element:se:4": [
+        4,
+        8
+      ],
+      "rivallie:element:se:5": [
+        4,
+        8
+      ],
+      "rivallie:element:se:6": [
+        2,
+        8
+      ],
+      "rivallie:element:se:7": [
+        2,
+        10
+      ],
+      "rivallie:element:se:8": [
+        0,
+        12
+      ],
+      "rivallie:element:se:9": [
+        0,
+        10
+      ],
+      "rivallie:element:sw:0": [
+        0,
+        10
+      ],
+      "rivallie:element:sw:1": [
+        -4,
+        10
+      ],
+      "rivallie:element:sw:10": [
+        0,
+        10
+      ],
+      "rivallie:element:sw:11": [
+        0,
+        10
+      ],
+      "rivallie:element:sw:2": null,
+      "rivallie:element:sw:3": null,
+      "rivallie:element:sw:4": null,
+      "rivallie:element:sw:5": null,
+      "rivallie:element:sw:6": [
+        -4,
+        8
+      ],
+      "rivallie:element:sw:7": [
+        -4,
+        10
+      ],
+      "rivallie:element:sw:8": [
+        -2,
+        12
+      ],
+      "rivallie:element:sw:9": [
+        0,
+        12
+      ],
+      "rivallie:element:w:0": [
+        0,
+        6
+      ],
+      "rivallie:element:w:1": [
+        0,
+        8
+      ],
+      "rivallie:element:w:10": [
+        0,
+        6
+      ],
+      "rivallie:element:w:11": [
+        0,
+        6
+      ],
+      "rivallie:element:w:2": [
+        -2,
+        8
+      ],
+      "rivallie:element:w:3": [
+        -2,
+        8
+      ],
+      "rivallie:element:w:4": [
+        -2,
+        8
+      ],
+      "rivallie:element:w:5": [
+        -2,
+        8
+      ],
+      "rivallie:element:w:6": [
+        -2,
+        8
+      ],
+      "rivallie:element:w:7": [
+        0,
+        8
+      ],
+      "rivallie:element:w:8": [
+        0,
+        8
+      ],
+      "rivallie:element:w:9": [
+        0,
+        8
+      ],
+      "rivallie:guard:e:0": [
+        0,
+        6
+      ],
+      "rivallie:guard:e:1": [
+        0,
+        6
+      ],
+      "rivallie:guard:e:2": [
+        0,
+        6
+      ],
+      "rivallie:guard:e:3": [
+        0,
+        6
+      ],
+      "rivallie:guard:s:0": [
+        0,
+        6
+      ],
+      "rivallie:guard:s:1": [
+        0,
+        6
+      ],
+      "rivallie:guard:s:2": [
+        0,
+        6
+      ],
+      "rivallie:guard:s:3": [
+        0,
+        6
+      ],
+      "rivallie:guard:se:0": [
+        0,
+        12
+      ],
+      "rivallie:guard:se:1": [
+        0,
+        12
+      ],
+      "rivallie:guard:se:2": [
+        0,
+        12
+      ],
+      "rivallie:guard:se:3": [
+        0,
+        12
+      ],
+      "rivallie:guard:sw:0": [
+        0,
+        14
+      ],
+      "rivallie:guard:sw:1": [
+        0,
+        14
+      ],
+      "rivallie:guard:sw:2": [
+        0,
+        14
+      ],
+      "rivallie:guard:sw:3": [
+        0,
+        14
+      ],
+      "rivallie:guard:w:0": [
+        0,
+        6
+      ],
+      "rivallie:guard:w:1": [
+        0,
+        6
+      ],
+      "rivallie:guard:w:2": [
+        0,
+        6
+      ],
+      "rivallie:guard:w:3": [
+        0,
+        6
+      ],
+      "rivallie:hit:e:0": [
+        0,
+        8
+      ],
+      "rivallie:hit:e:1": [
+        0,
+        8
+      ],
+      "rivallie:hit:e:2": [
+        0,
+        8
+      ],
+      "rivallie:hit:e:3": [
+        0,
+        8
+      ],
+      "rivallie:hit:s:0": [
+        0,
+        8
+      ],
+      "rivallie:hit:s:1": [
+        0,
+        10
+      ],
+      "rivallie:hit:s:2": [
+        0,
+        10
+      ],
+      "rivallie:hit:s:3": [
+        0,
+        12
+      ],
+      "rivallie:hit:se:0": [
+        0,
+        10
+      ],
+      "rivallie:hit:se:1": [
+        0,
+        10
+      ],
+      "rivallie:hit:se:2": [
+        0,
+        10
+      ],
+      "rivallie:hit:se:3": [
+        0,
+        8
+      ],
+      "rivallie:hit:sw:0": [
+        0,
+        10
+      ],
+      "rivallie:hit:sw:1": [
+        0,
+        10
+      ],
+      "rivallie:hit:sw:2": [
+        0,
+        10
+      ],
+      "rivallie:hit:sw:3": [
+        0,
+        10
+      ],
+      "rivallie:hit:w:0": [
+        0,
+        6
+      ],
+      "rivallie:hit:w:1": [
+        0,
+        8
+      ],
+      "rivallie:hit:w:2": [
+        0,
+        6
+      ],
+      "rivallie:hit:w:3": [
+        0,
+        6
+      ],
+      "rivallie:idle:e:0": [
+        0,
+        8
+      ],
+      "rivallie:idle:e:1": [
+        0,
+        8
+      ],
+      "rivallie:idle:e:2": [
+        0,
+        8
+      ],
+      "rivallie:idle:e:3": [
+        0,
+        8
+      ],
+      "rivallie:idle:e:4": [
+        0,
+        8
+      ],
+      "rivallie:idle:e:5": [
+        0,
+        8
+      ],
+      "rivallie:idle:s:0": [
+        0,
+        10
+      ],
+      "rivallie:idle:s:1": [
+        0,
+        12
+      ],
+      "rivallie:idle:s:2": [
+        0,
+        10
+      ],
+      "rivallie:idle:s:3": [
+        0,
+        10
+      ],
+      "rivallie:idle:s:4": [
+        0,
+        12
+      ],
+      "rivallie:idle:s:5": [
+        0,
+        10
+      ],
+      "rivallie:idle:se:0": [
+        0,
+        8
+      ],
+      "rivallie:idle:se:1": [
+        0,
+        8
+      ],
+      "rivallie:idle:se:2": [
+        0,
+        8
+      ],
+      "rivallie:idle:se:3": [
+        0,
+        8
+      ],
+      "rivallie:idle:se:4": [
+        0,
+        8
+      ],
+      "rivallie:idle:se:5": [
+        0,
+        8
+      ],
+      "rivallie:idle:sw:0": [
+        0,
+        10
+      ],
+      "rivallie:idle:sw:1": [
+        0,
+        10
+      ],
+      "rivallie:idle:sw:2": [
+        0,
+        10
+      ],
+      "rivallie:idle:sw:3": [
+        0,
+        10
+      ],
+      "rivallie:idle:sw:4": [
+        0,
+        10
+      ],
+      "rivallie:idle:sw:5": [
+        0,
+        10
+      ],
+      "rivallie:idle:w:0": [
+        0,
+        6
+      ],
+      "rivallie:idle:w:1": [
+        0,
+        6
+      ],
+      "rivallie:idle:w:2": [
+        0,
+        6
+      ],
+      "rivallie:idle:w:3": [
+        0,
+        6
+      ],
+      "rivallie:idle:w:4": [
+        0,
+        6
+      ],
+      "rivallie:idle:w:5": [
+        0,
+        6
+      ],
+      "rivallie:recovery:e:0": [
+        0,
+        6
+      ],
+      "rivallie:recovery:e:1": [
+        0,
+        6
+      ],
+      "rivallie:recovery:e:2": [
+        0,
+        6
+      ],
+      "rivallie:recovery:e:3": [
+        0,
+        6
+      ],
+      "rivallie:recovery:e:4": [
+        0,
+        8
+      ],
+      "rivallie:recovery:e:5": [
+        0,
+        8
+      ],
+      "rivallie:recovery:s:0": [
+        0,
+        10
+      ],
+      "rivallie:recovery:s:1": [
+        0,
+        12
+      ],
+      "rivallie:recovery:s:2": [
+        0,
+        12
+      ],
+      "rivallie:recovery:s:3": [
+        0,
+        10
+      ],
+      "rivallie:recovery:s:4": [
+        0,
+        12
+      ],
+      "rivallie:recovery:s:5": [
+        0,
+        12
+      ],
+      "rivallie:recovery:w:0": [
+        0,
+        6
+      ],
+      "rivallie:recovery:w:1": [
+        0,
+        8
+      ],
+      "rivallie:recovery:w:2": [
+        0,
+        6
+      ],
+      "rivallie:recovery:w:3": [
+        0,
+        6
+      ],
+      "rivallie:recovery:w:4": [
+        0,
+        8
+      ],
+      "rivallie:recovery:w:5": [
+        0,
+        6
+      ],
+      "rivallie:run:e:0": [
+        0,
+        10
+      ],
+      "rivallie:run:e:1": [
+        0,
+        10
+      ],
+      "rivallie:run:e:2": [
+        0,
+        10
+      ],
+      "rivallie:run:e:3": [
+        0,
+        10
+      ],
+      "rivallie:run:e:4": [
+        0,
+        10
+      ],
+      "rivallie:run:e:5": [
+        0,
+        10
+      ],
+      "rivallie:run:e:6": [
+        0,
+        8
+      ],
+      "rivallie:run:e:7": [
+        0,
+        10
+      ],
+      "rivallie:run:s:0": [
+        0,
+        6
+      ],
+      "rivallie:run:s:1": [
+        0,
+        6
+      ],
+      "rivallie:run:s:2": [
+        0,
+        6
+      ],
+      "rivallie:run:s:3": [
+        0,
+        6
+      ],
+      "rivallie:run:s:4": [
+        0,
+        6
+      ],
+      "rivallie:run:s:5": [
+        0,
+        6
+      ],
+      "rivallie:run:s:6": [
+        0,
+        6
+      ],
+      "rivallie:run:s:7": [
+        0,
+        6
+      ],
+      "rivallie:run:se:0": [
+        0,
+        10
+      ],
+      "rivallie:run:se:1": [
+        0,
+        10
+      ],
+      "rivallie:run:se:2": [
+        0,
+        10
+      ],
+      "rivallie:run:se:3": [
+        -2,
+        10
+      ],
+      "rivallie:run:se:4": [
+        0,
+        12
+      ],
+      "rivallie:run:se:5": [
+        -2,
+        10
+      ],
+      "rivallie:run:se:6": [
+        0,
+        10
+      ],
+      "rivallie:run:se:7": [
+        0,
+        14
+      ],
+      "rivallie:run:sw:0": [
+        0,
+        12
+      ],
+      "rivallie:run:sw:1": [
+        0,
+        10
+      ],
+      "rivallie:run:sw:2": [
+        0,
+        12
+      ],
+      "rivallie:run:sw:3": [
+        0,
+        10
+      ],
+      "rivallie:run:sw:4": [
+        0,
+        10
+      ],
+      "rivallie:run:sw:5": [
+        0,
+        12
+      ],
+      "rivallie:run:sw:6": [
+        -2,
+        10
+      ],
+      "rivallie:run:sw:7": [
+        0,
+        12
+      ],
+      "rivallie:run:w:0": [
+        0,
+        8
+      ],
+      "rivallie:run:w:1": [
+        0,
+        8
+      ],
+      "rivallie:run:w:2": [
+        0,
+        8
+      ],
+      "rivallie:run:w:3": [
+        0,
+        8
+      ],
+      "rivallie:run:w:4": [
+        0,
+        8
+      ],
+      "rivallie:run:w:5": [
+        0,
+        8
+      ],
+      "rivallie:run:w:6": [
+        0,
+        6
+      ],
+      "rivallie:run:w:7": [
+        0,
+        8
+      ],
+      "rivallie:sleep:e:0": [
+        0,
+        6
+      ],
+      "rivallie:sleep:e:1": [
+        0,
+        6
+      ],
+      "rivallie:sleep:e:2": [
+        0,
+        6
+      ],
+      "rivallie:sleep:e:3": [
+        0,
+        6
+      ],
+      "rivallie:sleep:s:0": [
+        2,
+        12
+      ],
+      "rivallie:sleep:s:1": [
+        4,
+        14
+      ],
+      "rivallie:sleep:s:2": [
+        4,
+        14
+      ],
+      "rivallie:sleep:s:3": [
+        2,
+        12
+      ],
+      "rivallie:sleep:w:0": [
+        0,
+        8
+      ],
+      "rivallie:sleep:w:1": [
+        0,
+        8
+      ],
+      "rivallie:sleep:w:2": [
+        0,
+        8
+      ],
+      "rivallie:sleep:w:3": [
+        0,
+        8
+      ],
+      "rivallie:social:e:0": [
+        0,
+        6
+      ],
+      "rivallie:social:e:1": [
+        0,
+        8
+      ],
+      "rivallie:social:e:2": [
+        0,
+        6
+      ],
+      "rivallie:social:e:3": [
+        0,
+        6
+      ],
+      "rivallie:social:e:4": [
+        0,
+        6
+      ],
+      "rivallie:social:e:5": [
+        0,
+        6
+      ],
+      "rivallie:social:s:0": [
+        0,
+        10
+      ],
+      "rivallie:social:s:1": [
+        0,
+        10
+      ],
+      "rivallie:social:s:2": [
+        0,
+        10
+      ],
+      "rivallie:social:s:3": [
+        0,
+        12
+      ],
+      "rivallie:social:s:4": [
+        0,
+        10
+      ],
+      "rivallie:social:s:5": [
+        0,
+        10
+      ],
+      "rivallie:social:w:0": [
+        -2,
+        6
+      ],
+      "rivallie:social:w:1": [
+        -2,
+        8
+      ],
+      "rivallie:social:w:2": [
+        -2,
+        8
+      ],
+      "rivallie:social:w:3": [
+        -4,
+        6
+      ],
+      "rivallie:social:w:4": [
+        -2,
+        6
+      ],
+      "rivallie:social:w:5": [
+        -2,
+        6
+      ],
+      "rivallie:strike:e:0": [
+        0,
+        8
+      ],
+      "rivallie:strike:e:1": [
+        0,
+        6
+      ],
+      "rivallie:strike:e:10": [
+        0,
+        8
+      ],
+      "rivallie:strike:e:11": [
+        0,
+        8
+      ],
+      "rivallie:strike:e:2": [
+        0,
+        8
+      ],
+      "rivallie:strike:e:3": [
+        0,
+        8
+      ],
+      "rivallie:strike:e:4": [
+        0,
+        8
+      ],
+      "rivallie:strike:e:5": [
+        0,
+        8
+      ],
+      "rivallie:strike:e:6": [
+        0,
+        8
+      ],
+      "rivallie:strike:e:7": [
+        0,
+        8
+      ],
+      "rivallie:strike:e:8": [
+        0,
+        8
+      ],
+      "rivallie:strike:e:9": [
+        0,
+        8
+      ],
+      "rivallie:strike:s:0": [
+        0,
+        12
+      ],
+      "rivallie:strike:s:1": [
+        0,
+        6
+      ],
+      "rivallie:strike:s:10": [
+        0,
+        12
+      ],
+      "rivallie:strike:s:11": [
+        0,
+        12
+      ],
+      "rivallie:strike:s:2": [
+        0,
+        6
+      ],
+      "rivallie:strike:s:3": [
+        0,
+        12
+      ],
+      "rivallie:strike:s:4": [
+        0,
+        12
+      ],
+      "rivallie:strike:s:5": [
+        0,
+        8
+      ],
+      "rivallie:strike:s:6": [
+        0,
+        8
+      ],
+      "rivallie:strike:s:7": [
+        0,
+        8
+      ],
+      "rivallie:strike:s:8": [
+        0,
+        10
+      ],
+      "rivallie:strike:s:9": [
+        0,
+        10
+      ],
+      "rivallie:strike:se:0": [
+        0,
+        8
+      ],
+      "rivallie:strike:se:1": [
+        0,
+        12
+      ],
+      "rivallie:strike:se:10": [
+        0,
+        10
+      ],
+      "rivallie:strike:se:11": [
+        0,
+        8
+      ],
+      "rivallie:strike:se:2": [
+        0,
+        12
+      ],
+      "rivallie:strike:se:3": [
+        0,
+        12
+      ],
+      "rivallie:strike:se:4": [
+        0,
+        12
+      ],
+      "rivallie:strike:se:5": [
+        0,
+        12
+      ],
+      "rivallie:strike:se:6": [
+        0,
+        12
+      ],
+      "rivallie:strike:se:7": [
+        0,
+        10
+      ],
+      "rivallie:strike:se:8": [
+        0,
+        12
+      ],
+      "rivallie:strike:se:9": [
+        0,
+        10
+      ],
+      "rivallie:strike:sw:0": [
+        0,
+        10
+      ],
+      "rivallie:strike:sw:1": [
+        0,
+        14
+      ],
+      "rivallie:strike:sw:10": [
+        -2,
+        10
+      ],
+      "rivallie:strike:sw:11": [
+        0,
+        10
+      ],
+      "rivallie:strike:sw:2": [
+        0,
+        14
+      ],
+      "rivallie:strike:sw:3": [
+        0,
+        14
+      ],
+      "rivallie:strike:sw:4": [
+        0,
+        14
+      ],
+      "rivallie:strike:sw:5": [
+        0,
+        14
+      ],
+      "rivallie:strike:sw:6": [
+        0,
+        14
+      ],
+      "rivallie:strike:sw:7": [
+        0,
+        14
+      ],
+      "rivallie:strike:sw:8": [
+        0,
+        14
+      ],
+      "rivallie:strike:sw:9": [
+        0,
+        14
+      ],
+      "rivallie:strike:w:0": [
+        0,
+        6
+      ],
+      "rivallie:strike:w:1": [
+        0,
+        6
+      ],
+      "rivallie:strike:w:10": [
+        0,
+        6
+      ],
+      "rivallie:strike:w:11": [
+        0,
+        6
+      ],
+      "rivallie:strike:w:2": [
+        0,
+        8
+      ],
+      "rivallie:strike:w:3": [
+        0,
+        6
+      ],
+      "rivallie:strike:w:4": [
+        0,
+        6
+      ],
+      "rivallie:strike:w:5": [
+        0,
+        6
+      ],
+      "rivallie:strike:w:6": [
+        0,
+        8
+      ],
+      "rivallie:strike:w:7": [
+        0,
+        8
+      ],
+      "rivallie:strike:w:8": [
+        0,
+        8
+      ],
+      "rivallie:strike:w:9": [
+        0,
+        6
+      ],
+      "rivallie:walk:e:0": [
+        0,
+        8
+      ],
+      "rivallie:walk:e:1": [
+        0,
+        8
+      ],
+      "rivallie:walk:e:2": [
+        0,
+        8
+      ],
+      "rivallie:walk:e:3": [
+        0,
+        8
+      ],
+      "rivallie:walk:e:4": [
+        0,
+        6
+      ],
+      "rivallie:walk:e:5": [
+        0,
+        6
+      ],
+      "rivallie:walk:e:6": [
+        0,
+        8
+      ],
+      "rivallie:walk:e:7": [
+        0,
+        8
+      ],
+      "rivallie:walk:s:0": [
+        0,
+        10
+      ],
+      "rivallie:walk:s:1": [
+        0,
+        10
+      ],
+      "rivallie:walk:s:2": [
+        0,
+        8
+      ],
+      "rivallie:walk:s:3": [
+        0,
+        12
+      ],
+      "rivallie:walk:s:4": [
+        0,
+        10
+      ],
+      "rivallie:walk:s:5": [
+        0,
+        10
+      ],
+      "rivallie:walk:s:6": [
+        0,
+        8
+      ],
+      "rivallie:walk:s:7": [
+        0,
+        12
+      ],
+      "rivallie:walk:se:0": [
+        0,
+        10
+      ],
+      "rivallie:walk:se:1": [
+        0,
+        12
+      ],
+      "rivallie:walk:se:2": [
+        0,
+        10
+      ],
+      "rivallie:walk:se:3": [
+        0,
+        10
+      ],
+      "rivallie:walk:se:4": [
+        0,
+        10
+      ],
+      "rivallie:walk:se:5": [
+        0,
+        10
+      ],
+      "rivallie:walk:se:6": [
+        0,
+        14
+      ],
+      "rivallie:walk:se:7": [
+        0,
+        10
+      ],
+      "rivallie:walk:sw:0": [
+        0,
+        12
+      ],
+      "rivallie:walk:sw:1": [
+        0,
+        12
+      ],
+      "rivallie:walk:sw:2": [
+        0,
+        12
+      ],
+      "rivallie:walk:sw:3": [
+        0,
+        12
+      ],
+      "rivallie:walk:sw:4": [
+        0,
+        12
+      ],
+      "rivallie:walk:sw:5": [
+        0,
+        14
+      ],
+      "rivallie:walk:sw:6": [
+        0,
+        10
+      ],
+      "rivallie:walk:sw:7": [
+        0,
+        10
+      ],
+      "rivallie:walk:w:0": [
+        0,
+        6
+      ],
+      "rivallie:walk:w:1": [
+        0,
+        6
+      ],
+      "rivallie:walk:w:2": [
+        0,
+        8
+      ],
+      "rivallie:walk:w:3": [
+        0,
+        8
+      ],
+      "rivallie:walk:w:4": [
+        0,
+        6
+      ],
+      "rivallie:walk:w:5": [
+        0,
+        6
+      ],
+      "rivallie:walk:w:6": [
+        0,
+        6
+      ],
+      "rivallie:walk:w:7": [
+        0,
+        6
+      ],
+      "rivallie:work:e:0": [
+        0,
+        8
+      ],
+      "rivallie:work:e:1": [
+        0,
+        8
+      ],
+      "rivallie:work:e:2": [
+        0,
+        8
+      ],
+      "rivallie:work:e:3": [
+        0,
+        8
+      ],
+      "rivallie:work:e:4": [
+        0,
+        8
+      ],
+      "rivallie:work:e:5": [
+        0,
+        8
+      ],
+      "rivallie:work:s:0": [
+        0,
+        6
+      ],
+      "rivallie:work:s:1": [
+        0,
+        6
+      ],
+      "rivallie:work:s:2": [
+        0,
+        6
+      ],
+      "rivallie:work:s:3": [
+        0,
+        6
+      ],
+      "rivallie:work:s:4": [
+        0,
+        6
+      ],
+      "rivallie:work:s:5": [
+        0,
+        6
+      ],
+      "rivallie:work:w:0": [
+        0,
+        8
+      ],
+      "rivallie:work:w:1": [
+        0,
+        8
+      ],
+      "rivallie:work:w:2": [
+        0,
+        8
+      ],
+      "rivallie:work:w:3": [
+        0,
+        8
+      ],
+      "rivallie:work:w:4": [
+        0,
+        8
+      ],
+      "rivallie:work:w:5": [
+        0,
+        8
+      ]
+    },
+    "unit": "frame px from Socket_Head; null hides the face on that frame"
+  },
+  "schemaVersion": 1,
+  "scope": [
+    "faces"
+  ],
+  "socket": "Socket_Head"
+}
