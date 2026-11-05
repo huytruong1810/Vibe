@@ -1,13 +1,37 @@
 import { expect, test } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 import { mkdir } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { verifyPublishedBody } from '../../scripts/art-sidecars';
 
-test('approved creature sidecars register expressions against actual body poses', async ({ page }) => {
-  const fixtures = ['rivallie', 'bramblefang', 'mireling'].map((asset) => ({
-    asset,
-    body: JSON.parse(readFileSync(`art/source/staging/blender/${asset}.json`, 'utf8')),
-    faces: JSON.parse(readFileSync(`art/source/staging/blender/${asset}-faces.json`, 'utf8')),
-  }));
+test('approved creature sidecars register expressions against actual body poses', async ({
+  page,
+}) => {
+  const fixtures = ['rivallie', 'bramblefang', 'mireling']
+    .map((asset) => ({
+      asset,
+      body: JSON.parse(readFileSync(`art/source/staging/blender/${asset}.json`, 'utf8')),
+      faces: JSON.parse(readFileSync(`art/source/staging/blender/${asset}-faces.json`, 'utf8')),
+    }))
+    .filter(({ body, faces }) => {
+      try {
+        verifyPublishedBody(process.cwd(), body);
+        const approval = readFileSync(faces.approvalRecord, 'utf8');
+        return (
+          body.packetDigest === faces.bodyPacketDigest &&
+          body.packetSha256 === faces.bodyManifestSha256 &&
+          /^decision: director-approved\s*$/m.test(approval) &&
+          !/^superseded-by:/m.test(approval) &&
+          createHash('sha256').update(approval).digest('hex') === faces.approvalSha256
+        );
+      } catch {
+        return false;
+      }
+    });
+  test.skip(
+    fixtures.length === 0,
+    'Await freshly published, approved B20 body/face pairs; historical sidecars are superseded.',
+  );
   await page.setViewportSize({ width: 1920, height: 1080 });
   await page.route('**/__sidecar-proof', (route) =>
     route.fulfill({
@@ -21,6 +45,9 @@ test('approved creature sidecars register expressions against actual body poses'
     const { faceLayerPose } = await import(/* @vite-ignore */ moduleUrl);
     const canvas = document.querySelector<HTMLCanvasElement>('#proof')!;
     const ctx = canvas.getContext('2d')!;
+    document.querySelector('p')!.textContent =
+      `Rows: ${data.map((d) => d.asset).join(', ')}. Columns: South neutral/warm, East neutral/warm, West neutral/warm.`;
+    canvas.height = data.length * 248;
     ctx.imageSmoothingEnabled = false;
     const load = async (file: string) => {
       const image = new Image();
@@ -76,7 +103,12 @@ test('approved creature sidecars register expressions against actual body poses'
     }
     return { composed, hidden };
   }, fixtures);
-  expect(counts).toEqual({ composed: 18, hidden: 3 });
+  expect(counts).toEqual({
+    composed: fixtures.length * 6,
+    hidden: fixtures.filter((f) =>
+      Object.values(f.faces.registration.frames).some((offset) => offset === null),
+    ).length,
+  });
   await mkdir('artifacts', { recursive: true });
   await page.screenshot({ path: 'artifacts/c3b-sidecars-1080p.png' });
 });

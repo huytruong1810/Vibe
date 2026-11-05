@@ -188,7 +188,7 @@ describe('approved sidecar intake', () => {
     expect(result.ledger.records).toEqual([ledger.records[1]]);
     expect(reconcileLedger(repo, result.ledger).withdrawn).toEqual([]);
   });
-  it('accepts the three actual approved C3b sidecars and all 17 inventory icons without writing the manifest', () => {
+  it('accepts current published sidecars, rejects superseded body bindings, and verifies all 17 icon images', () => {
     const root = process.cwd();
     for (const asset of ['rivallie', 'bramblefang', 'mireling']) {
       const body = JSON.parse(readFileSync(`art/source/staging/blender/${asset}.json`, 'utf8'));
@@ -241,7 +241,10 @@ describe('approved sidecar intake', () => {
         authoringProvenance: [body.authoringProvenance],
       };
       if (!m.rigs[0]!.registrations.length) delete (m.rigs[0] as Json).registrations;
-      expect(mergeFaces(root, m, asset).subjects).toHaveLength(6);
+      const approval = readFileSync(body.approvalRecord, 'utf8');
+      if (/^decision: superseded\s*$/m.test(approval) || /^superseded-by:/m.test(approval))
+        expect(() => mergeFaces(root, m, asset)).toThrow(/binding|Approval|changed/i);
+      else expect(mergeFaces(root, m, asset).subjects).toHaveLength(6);
     }
     const icons = mergeIcons(
       root,

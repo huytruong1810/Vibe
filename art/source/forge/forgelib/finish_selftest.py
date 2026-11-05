@@ -76,6 +76,18 @@ class FinishingTest(unittest.TestCase):
             self.assertEqual(sha(self.repo / "art/source" / frame["file"]), frame["sha256"])
             self.assertEqual(frame["rigId"], "quadruped-v1")
 
+    def test_stride_falls_back_to_the_clip_when_the_animate_record_lacks_the_state(self):
+        self.write(self.wd / "animate.json", {"extra": {"strideTiles": {}, "rigId": "quadruped-v1"},
+                    "outputs": {self.model.relative_to(self.repo).as_posix(): sha(self.model)}})
+        record = json.loads(self.publish().read_text())
+        self.assertEqual(record["clips"][2]["stride"], 1.5)
+
+    def test_npc_asset_ids_pass_the_format_gate_and_others_do_not(self):
+        with self.assertRaisesRegex(core.ForgeError, "Body asset"):
+            publish_body(self.repo, self.wd, self.packet, self.approval, "NPC:x", self.rs, self.cv, "4.2.3")
+        with self.assertRaisesRegex(core.ForgeError, "Wrong packet asset"):  # past the format gate, the packet names rivallie
+            publish_body(self.repo, self.wd, self.packet, self.approval, "npc:rivallie", self.rs, self.cv, "4.2.3")
+
     def test_provenance_closure_survives_missing_machine_a_workspace(self):
         record = json.loads(self.publish().read_text())
         provenance = record["authoringProvenance"]
@@ -221,7 +233,7 @@ class FinishingTest(unittest.TestCase):
         before = (self.packet / "review.json").read_bytes()
         report = build_faces(self.packet, self.wd / "faces", "rivallie", rs, core.spec("palette"))
         self.assertEqual(report["status"], "candidate")
-        self.assertEqual(len(report["frames"]), 25)
+        self.assertEqual(len(report["frames"]), 25)  # One selected grammar per expression/facing, no variant sidecars.
         self.assertEqual(before, (self.packet / "review.json").read_bytes())
         for f in report["frames"]:
             with Image.open(self.wd / "faces" / f["file"]) as image:

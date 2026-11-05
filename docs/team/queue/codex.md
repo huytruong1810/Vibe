@@ -3,21 +3,19 @@
 Read your brief `docs/team/briefs/codex.md` and [the queue rules](README.md) first.
 Finished tickets are in [archive/codex.md](archive/codex.md); open it only when a live ticket links there.
 
-**Who does what (directive 012, 2026-11-02, claude away until about 2026-11-09).** Codex
-owns this queue: **C22 → C24 → C25 → C13 → C18 → C19 → C20**, then C3g and C7, with C14 and C17 already archived (see archive/codex.md), and C23 and C12
+**Who does what (directive 011, 2026-11-02, claude away until about 2026-11-09).** Codex
+owns this queue: **C22 → C24 → C25 → C14 → C13 → C17 → C18 → C19 → C20**, then C3g and C7, with C23 and C12
 standing (C19 can run beside C18; C21 only on the director's go). Machine B has no
 Blender or GPU: build against mocks and send live GPU smokes to blender as
 `--to-blender--test-` requests. The forge tickets under "Waiting for claude" need
 Blender on machine A; leave them unless the director says otherwise. Claude's art-quality
 and local-generation tickets (C26–C31) sit in their own section.
 
-**Resume order (director, 2026-11-05 UTC):** B27/B29 pure-Python fixes, then M25/C3b integration support, then this queue. C14 is now in [the archive](archive/codex.md) with its actual director approval; C17 was already archived. C13 and C18 retain their current regression/external gates despite feature approvals. Do not rebuild C22/C24/C25/C19/C20 implementations from their ticket descriptions.
-
 ## Now: codex
 
 ### C22 · Beta channel: green CI, a deploy on every green push, a playtest loop
 
-- status: candidate (implementation; director Pages activation and live SHA/timing remain)
+- status: open (first)
 - owner: codex
 - goal: the director plays the latest green build from a URL on any day, files playtest notes in one place, and they become tickets, without anyone on machine A.
 - context: CI was red for 100+ runs (`format:check` failed on machine-written sources, so browser tests and the benchmark never ran) until claude's `88b11ba`. The repo is public, so GitHub Pages is free.
@@ -31,13 +29,11 @@ and local-generation tickets (C26–C31) sit in their own section.
 - out of scope: hosting Ollama or an image server anywhere but the player's machine.
 - note: editing `.github/workflows/` needs a token with the `workflow` scope on machine B.
 - done when: a green push to `studio/doctrine-v1` is live on the Pages URL with its sha within 15 minutes; the playtest template exists; the operations doc lists the jobs and the green-CI rule; claude's local check of `/Vibe/` asset loading is replaced by a CI browser test
-- evidence: 2026-11-02: implementation b2afda6 and deterministic atlas fix c33981f; [candidate report](../comms/codex/2026-11-02T0716--to-all--c22-beta-candidate.md). Final local check: 355 tests / 28 files; [Final code CI](https://github.com/huytruong1810/Vibe/actions/runs/41404667063) is green, including Linux reproducibility, both production browser bases, existing journeys and benchmark. Live Pages acceptance awaits director setup.
-
-- evidence (2026-11-04): sourceec22a07 PR browser/verify pass; push browser times out before a C18 notice. Two-shard capacity follow-up preserves all23 tests, one worker and20 minutes per shard, with verify requiring every shard. [CI evidence](../comms/codex/c18-ci-diagnostics.json); remote shard validation pending.
+- evidence:
 
 ### C24 · Conversation context and compaction on gemma4-abliterated:e4b at 75%
 
-- status: candidate (2026-11-02; local checks pass, machine-A B0 and director review pending)
+- status: open (after C22)
 - owner: codex
 - goal: a villager keeps the thread of a long conversation, and no prompt ever passes its budget, without compaction touching long-term memory.
 - spec: [memory and context](../../engineering/memory-and-context.md) §1, §2, §3.1, §4; doctrine AGT-1.3, AGT-10.1–10.2, AGT-7; ADR 032.
@@ -47,11 +43,11 @@ and local-generation tickets (C26–C31) sit in their own section.
   3. Settings: background model, "run on CPU", context size; model check in the setup dialog (`gemma4-abliterated:e4b` missing → clear install line, fallback to the dialogue model with a warning).
   4. Remove the count-based `needsCompaction` path and the deleting `MemoryRepository.compact`; until C25 lands, keep memory records as they are (no deletion).
 - done when: §4 rows "budget and trigger" and "no memory loss" pass in `npm run check`; the debug overlay shows prompt tokens, budget and compactions; blender's live smoke (B0) runs a 30-turn conversation where the villager recalls a turn-3 promise at turn 28, with compaction and reply latencies recorded in `docs/operations/`.
-- evidence: 2026-11-02: `npm run check` 365 tests / 29 files; 19 browser journeys plus final long-conversation rerun; production beta 2/2 at both bases. [Candidate report](../comms/codex/2026-11-02T2056--to-all--c24-context-candidate.md); [B0 request](../comms/codex/2026-11-02T2056--to-blender--test-c24-conversation.md). Compaction preserves persistent memory; no live latency/recall result yet.
+- evidence:
 
 ### C25 · Long-term memory v2: typed records, extraction operations, core blocks, embedding retrieval
 
-- status: candidate (2026-11-02; local checks pass; machine-A B0 and director review pending)
+- status: open (after C24; before C18, whose `reading` memories use these types)
 - owner: codex
 - goal: villagers remember structured, sourced facts across conversations, update them when they change, and retrieve the right ones, the way current agent-memory systems do.
 - spec: [memory and context](../../engineering/memory-and-context.md) §2, §3.2, §3.3, §4; doctrine AGT-10.3–10.6; ADR 032.
@@ -61,12 +57,26 @@ and local-generation tickets (C26–C31) sit in their own section.
   3. Retrieval: recency (0.995 per game hour) + importance + relevance, min-max normalized, equal weights; `embeddinggemma` 256-d via `/api/embed`, cached in IndexedDB (not in saves), keyword fallback; invalidated records excluded; `lastAccessTick` updated.
   4. Reflection at an importance-sum threshold (start 150) on the dialogue model when idle; capacity cap 400 with episodic folding (never semantic facts or commitments).
 - done when: §4 rows "extraction", "retrieval", "migration" pass; the C24 live smoke repeated across two conversations: the villager recalls a fact from the first in the second; soak (`npm run benchmark` or ecology soak) shows retrieval ≤ 5 ms per prompt.
-- evidence: 2026-11-02: code **68af413**, full check **388 tests / 30 files**, four relevant browser checks; retrieval **1.242 ms p95 / 2.177 ms max** at 400 records. [Candidate report](../comms/codex/2026-11-02T2155--to-all--c25-memory-candidate.md); [B0 request](../comms/codex/2026-11-02T2155--to-blender--test-c25-memory.md); [benchmark receipt](../comms/codex/c25-benchmark.json). Live recall/timing acceptance remains pending.
+- evidence:
+
+### C14 · Combat director and telegraphs: fair fights first (CRM-4, CMB-4)
+
+- status: open (after C25)
+- owner: codex
+- goal: no matter how many hostiles, the player faces one or two clear threats at a time, every heavy attack is telegraphed, and nothing attacks from off screen.
+- spec: [creature minds](../../engineering/creature-minds.md) §1, §2, §7, §10 (partner icon), §11 rows "director" and "telegraphs"; doctrine CRM-4, CRM-10.3, CMB-4; ADR 033.
+- work:
+  1. Token pools per target (player 2 melee / 1 ranged-element, partner 2/1, villager 1/1; none wild-vs-wild), held windup→recovery, priority grants with ≥ 8 ticks between grants on a target, no player tokens outside the 30 × 17 tile view rectangle.
+  2. Gate today's `CombatSystem.advance` attack start on a token; creatures without one hold at their readiness ring (`max(range + 1.5, kiteRange)`) and circle (a minimal orbit is enough until C13).
+  3. Telegraphs for every creature attack over 15% of the target's max HP from windup tick 0 (`ground` arc or `glint`), drawn in the effect layer under VFX, plus the predator crouch-and-shiver on windup frames.
+  4. Difficulty knobs (token counts, grant spacing, aggression bias) in settings.
+  5. Partner intent icon slot in the HUD (shows `attack`/`guard`/`follow` from today's state until C13 provides intents).
+- done when: unit and browser tests from §11 "director" and "telegraphs" pass; a Playwright journey with 20 hostile Bramblefang shows at most the token count in windup or active at any tick; a 1080p capture of that fight is looked at (PRD-5) and attached; `npm run benchmark` unchanged within 5%.
+- evidence:
 
 ### C13 · Creature minds v1: engagement, perception, intents, scripted brain, flight (CRM-1…3, CRM-10)
 
-- status: candidate (simulation/playtest approved; current CI capture and authored runtime integration remain)
-- evidence (2026-11-05): [director approval](../comms/director/approvals/simulation--c13-c14.md) accepts the simulation/playtest scope. [Public source45a10ccf CI](../comms/codex/resume-ci-receipt.json) still fails the Zephyrit notice capture; keep that regression and authored runtime integration open.
+- status: open (after C14)
 - owner: codex
 - goal: creatures notice, stalk, commit and break like animals, each species recognisably itself, within budget and deterministic.
 - spec: [creature minds](../../engineering/creature-minds.md) §2–§6, §8–§11; doctrine CRM-1.4, CRM-2 (incl. flight), CRM-3, CRM-6.1, CRM-6.4, CRM-8, CRM-9, CRM-10; ADR 033.
@@ -79,12 +89,27 @@ and local-generation tickets (C26–C31) sit in their own section.
   6. Engaged tier (cap 48) and the 2 Hz scripted fallback; save the brain state; debug overlay, observation inspector.
   7. Partner: `focus`/`regroup` commands with bond-scaled weight; real intents on the HUD icon.
 - done when: §11 rows "determinism", "masking and reaction", "species identity" (all 8 species) and "budget" (`engagedCombat150` in the benchmark, asserted on CI) pass; a mid-fight save replays to identical intents; 1080p captures of a 6-Bramblefang pack fight and a Zephyrit skirmish for the director show notice, stalk, staggered strikes and break.
-- evidence: [C13 candidate](../comms/codex/2026-11-03T1420--to-all--c13-creature-minds-candidate.md), [validation](../comms/codex/c13-validation.json), [benchmark](../comms/codex/c13-benchmark.json); save v8, 444 tests/32 files, 3,000-tick intent/motion replay, all eight species, inspected 1080p journeys. No reference-machine or art approval claim.
+- evidence:
+
+### C17 · Artifact item class and its save version (foundation for notes, books, paintings)
+
+- status: open
+- owner: codex
+- goal: one `artifact` record behind notes, books and paintings: carried, dropped, displayed and saved with hard caps, so C18 and C20 only add behaviour.
+- spec: [authored artifacts](../../engineering/authored-artifacts.md) §3, §4 (`artifactDisplay`/`artifactTake`), §9, §10; doctrine AGT-9, AGT-8.1; ADR 031.
+- work:
+  1. `src/domain/artifacts.ts`: types, `ArtifactStore` (create, get, update with revision bump, seal, remove), caps and the text sanitizer as pure functions.
+  2. Items `note`, `book`, `canvas`, `painting` with icons from the UI kit placeholders; recipes `fiber+fiber→note`, `note+fiber→book`, `fiber+stick→canvas`; `ItemInstance.artifact?` and `GroundDrop.artifact?` carried through drop, pick-up, swap and give.
+  3. Display furniture: `display` on scene props; one wall hook per home interior, three plus an easel (`interaction: 'paint'`) in Lark's home; `ArtifactPlacement`; commands `artifactDisplay`, `artifactTake`.
+  4. The next save version (after C25's) with its migration, zod caps, referential validation (§9); export/import round-trip.
+  5. Frame snapshot `ArtifactView` (metadata only) plus an on-demand content query.
+- out of scope: screens (C18, C20), villager actions, image generation.
+- done when: `npm run check` passes; unit tests for every cap, sanitizer case, command receipt, migration and referential rule; a 512-artifact save round-trips under 3 MB and validates in < 50 ms (test asserts both); existing saves load unchanged.
+- evidence:
 
 ### C18 · The written word: book screen, villager reading and writing
 
-- status: candidate (feature approved; current CI startup and machine-A GPU latency remain)
-- evidence (2026-11-05): [director approval](../comms/director/approvals/artifacts--c18.md) accepts the feature scope. [Public source45a10ccf CI](../comms/codex/resume-ci-receipt.json) still waits for setup to close during the initial save. Current CI repair and machine-A latency remain open.
+- status: open (after C17)
 - owner: codex
 - goal: the player reads and writes notes and books on a book screen; villagers read bounded ranges, write notes and diary pages, and no prompt grows with what was written.
 - spec: [authored artifacts](../../engineering/authored-artifacts.md) §4 (`artifactWrite`, page add/remove, seal), §5 (actions, validation, grounding, the two-step reading job, `readables` world facts), §8.1, §11; doctrine AGT-8, AGT-7 budgets.
@@ -95,12 +120,11 @@ and local-generation tickets (C26–C31) sit in their own section.
   4. Give two villagers a reason to use it in content: Lark keeps a sketch diary (one `WRITE_PAGE` per day at home); the dock master posts a tide notice note on a shelf. Profile text only, no scripted calls.
 - out of scope: rich text, villagers editing others' text, sharing outside the save.
 - done when: unit tests in spec §11 rows "caps/commands", "`READ_TEXT` bounds" (property test: any content → reading prompt ≤ 2000 estimated tokens), "prompt injection" (a page ordering a gift changes no state), "writing grounding"; Playwright writes a 3-page book, seals it, reopens it read-only and captures the spread at 1080p (look at it, PRD-5); `npm run test:ollama` gains a reading round-trip that blender runs on machine A (`--to-blender--test-`), AGT-7 reading budget recorded in `docs/operations/`.
-- evidence: [C18 candidate](../comms/codex/2026-11-03T1732--to-all--c18-written-word-candidate.md), [validation](../comms/codex/c18-validation.json), [live functional reading](../comms/codex/c18-live-reading.json); commit8619e25, save v9, 464 unit tests,23 browser journeys, root/subpath beta2/2 each. CI CPU checks pass; local timing misses and external acceptance remain recorded.
-- evidence (2026-11-03): [CI repair evidence](../comms/codex/c18-ci-diagnostics.json), `traceScreenshotRepair`: screenshot-only5e9c3e4 still fails remote latency; follow-upec22a07 adds fresh48-page waits and Linux-CI compositor driver. Local normal/CI38.8/49ms; headless-shell compositor61.2ms;470 tests/37 files pass. Follow-up PR browser/verify pass at11.3ms; push browser20-minute and PR ecology25-minute timeouts remain. External acceptance unchanged.
+- evidence:
 
 ### C19 · Image provider adapter, GPU arbiter, palette quantizer, operations guide
 
-- status: candidate (2026-11-04; implementation and mocked checks pass; machine-A VRAM/latency and director review remain)
+- status: open (parallel with C18; needs C17 only for the painting record in step 4)
 - owner: codex
 - goal: the game can turn a brief into a 48×32 palette painting through a local loopback server on Linux, Windows and macOS, without fighting the villager model for the GPU.
 - spec: [authored artifacts](../../engineering/authored-artifacts.md) §6, §6.1, §7.4, §10, §12; doctrine AGT-6.4; ADR 031. Research behind the provider choice is in the spec and in claude's message `2026-11-02T0139--to-codex--artifacts-and-image-generation.md`.
@@ -112,12 +136,11 @@ and local-generation tickets (C26–C31) sit in their own section.
   5. `docs/operations/image-generation.md`: install and launch `sd-server` on Windows (CUDA build) and Linux; pinned release; model files (Z-Image Turbo GGUF + its Qwen3-4B text encoder + VAE, Apache-2.0; FLUX.2 klein 4B as the alternative; never klein 9B, non-commercial); the exact command line verified against the project's docs; VRAM and timing measured on machine A; CORS check; troubleshooting.
 - out of scope: ComfyUI provider; any model other than Apache-2.0 weights; Ollama image generation beyond the stub.
 - done when: unit tests for adapters (mock fetch: ok, HTTP error, oversize, timeout, abort, non-loopback URL), arbiter (dialogue preempts and requeues a villager job; a player job is not preempted; unload is called when enabled), quantizer (golden hash, ≤ 16 colours, all palette members, deterministic); the ops guide exists; blender's live smoke on machine A generates one painting through `sd-server` and records the player-painting timing against the 30 s budget.
-- evidence (2026-11-04): golden slice8f1c399 and follow-up1c14403 include native cancellation, arbiter, settings and pinned guide; [validation](../comms/codex/c19-validation.json),513 tests/42 files and25 browser journeys pass. C20 regression preserves golden bytes but worker6ms misses5ms target; machine-A latency/VRAM acceptance remains external.
 - evidence:
 
 ### C20 · Paintings: villagers paint, the player paints, everyone sees them
 
-- status: candidate (2026-11-04; local workflow/persistence checks pass; machine-A overnight/VRAM/latency, pending cloth art and director review remain)
+- status: open (after C17 and C19)
 - owner: codex
 - goal: villagers paint from their memories and hang paintings at home; the player paints at an easel from a prompt and keeps or retries; villagers perceive paintings by caption.
 - spec: [authored artifacts](../../engineering/authored-artifacts.md) §4 (`paintingRequest`, `paintingKeep`, `paintingDiscard`), §7.1–7.3, §7.5, §8.2, §11; doctrine AGT-6 (all of it), AGT-3.2/3.3 for captions.
@@ -129,7 +152,7 @@ and local-generation tickets (C26–C31) sit in their own section.
   5. Rendering: LRU texture cache (32), framed display on hooks, inventory thumbnail, pending easel.
 - out of scope: pixel editing (C21); painting sizes other than 48×32.
 - done when: unit tests for brief validation, rates, allowlist rejections (lettering, URL, brand list), pending-survives-reload; Playwright with a mocked provider paints, keeps, hangs the painting on a hook and captures it at 1080p (look at it, PRD-5); blender's live smoke on machine A: Lark paints overnight during sleep acceleration with `gemma4-abliterated:26b` and `sd-server`, the painting hangs, a villager's next dialogue can mention it from the caption; contact capture attached to the reply.
-- evidence (2026-11-04): [validation](../comms/codex/c20-validation.json),544 tests/45 files, full27 journeys, root/subpath beta2/2 each;48 retained PNGs inspected. Native pending reload cancels prior job before replacement. [Machine-A request](../comms/codex/2026-11-04T2252--to-blender--test-c20-painting-workflow.md); source CI pending; no real model/GPU run on B.
+- evidence:
 
 ### C21 · Player pixel touch-up for paintings (optional)
 
@@ -144,24 +167,22 @@ and local-generation tickets (C26–C31) sit in their own section.
 
 ### C32 · worldforge packets compare against the previous revision
 
-- status: candidate (tooling validated; machine-A Riverlands revision3 proof outstanding)
+- status: open
 - owner: codex
 - goal: a world packet's before/after shows the last revision, not the blank draft (gap found in Riverlands revision 2).
 - work: `worldforge render`/`packet` writes `before-overview.png` from the previous packet's overview (or re-renders the previous map); README wording follows.
 - done when: Riverlands revision 3's packet shows revision 2 as its before
-- evidence (2026-11-04): [validation](../comms/codex/c32-validation.json),27 worldforge +5 terrain tests and read-only village check pass. Exact predecessor lineage and before-image inspection gate implemented; machine-A proof requested.
+- evidence:
 
 ### C3g · Follow-ups from the beta slice (claude, 2026-11-01)
 
-- status: candidate (engineering checks pass; legacy scale comparison awaits M11)
+- status: open
 - goal: tidy what the beta slice exposed.
 - work:
   1. Packet gallery atlas tab (`src/presentation/gallery.ts:332`, `renderAtlas`) shows only page 0 under a hard-coded "Single page: bundle.png" label. The build now emits four pages.
   2. Decoded atlas memory went from 14.97 to 63.88 MiB full-res (four 2048 pages, mostly 160×144 quadruped canvases). Decide on a budget, then trim per-clip canvases or move review-only frames out of the runtime atlas.
   3. Scale: forge creatures render at doctrine scale and look small beside the oversized legacy humans and creatures. Expected while legacy art remains; check it again when M11 humans land.
 - done when: the gallery shows every page and the atlas budget is written into `docs/engineering/`
-
-- evidence (2026-11-04): every-page selector and catalog/resident budgets; [validation](../comms/codex/c3g-validation.json),7 gallery tests pass, final2 atlas checks pass,5 captures inspected; ADR038 records128MiB review page cache. Art/runtime gates unchanged.
 
 ### C7 · Authored world in the engine (WLD-M1…M4)
 
@@ -212,7 +233,6 @@ Forge work that needs Blender on machine A, in order: C9b `fit` → C9c → C3b 
 
 ### C3b · Creature faces and publish
 
-- resume evidence (2026-11-05): Python unblocks **5655aa23**; finishing24, creature-face11 and face-publication5 tests pass. New M25 intake validates actual approved Rivallie/Bramblefang/Mireling sidecars and17 inventory images; runtime registration and icon support are implemented. Communicator manifest merge, digest-bound ledger transcription, five revised face packets and machine-A B27 publishing remain external. See [intake guide](../../engineering/hd-presentation.md#approved-creature-faces-and-inventory-icons).
 - status: tool side done 2026-11-04 (see result); creature faces await blender's re-packet and a decision. Earlier: manifest integration done by claude at 0a5e5c6: 3 bodies approved and active in game. **Faces: changes requested 2026-11-01** (`docs/team/comms/director/approvals/rivallie--2026-11-01-rivallie-faces-d749a4350126.md`): register decals to a face point about 3 art px below `Socket_Head` (per-species offset or a `Socket_Face` bone); `faceAnchor` fails any decal pixel outside the silhouette or on its outline row; hurt and fearful need a distinct pixel in e/w. Re-packet the faces on the approved body 69b6c10d…
 - goal: finish the creature class. Then `doctor` lists nothing pending for creatures, and approved creature packets can be published.
 - inputs: the Rivallie packet `art/review/2026-10-31-rivallie/`, `bake/tracks.json` (Socket_Head per frame), ART-8, `render_spec.expressions`, `catalog.ts` `AuthoringProvenanceSchema`.
@@ -239,7 +259,7 @@ Forge work that needs Blender on machine A, in order: C9b `fit` → C9c → C3b 
 
 Filed from the local-generation build (directive 013) and the stand-in blender session.
 Order since 2026-11-02T2330 (directive 014, ordered by what unblocks blender): C30 swatch
-(B17) → C30 portrait (B25) → C33 icon (B23) → C28 (sheet resolution) → C3b faces → C9b
+(B17) → C30 portrait (B25) → C32 icon (B23) → C28 (sheet resolution) → C3b faces → C9b
 fit → C9c.
 
 ### C26 · Sprite readability: features survive the bake and pixelize step
@@ -297,16 +317,44 @@ fit → C9c.
 - also: GPU jobs (`concept`, `swatch`, gen3d) now pause the jepa_ipomdp queue through `core.gpu_window` (PAUSE and GPU_BUSY files).
 - evidence: boards `docs/team/comms/claude/boards/2026-11-03-c30a-swatch.png`, `2026-11-04-c30b-portrait-neris.png`; `docs/engineering/imagegen.md`; selftests `portrait_selftest.py`, `gpu_window_selftest.py`
 
-### C33 · `forge.py icon` for inventory items without a held model
+### C32 · `forge.py icon` for inventory items without a held model
 
 - status: done (2026-11-04, claude)
 - owner: claude
 - goal: B23 can make 32 × 32 `icon.item` icons (render_spec) for the resources and crafted goods in `src/content/definitions.ts`, palette-locked, in the same light and outline rules as the held-item icons from `items`.
-- identifier: renamed from upstream C32 during 2026-11-03 integration; C32 remains the previous-revision worldforge packet ticket. Historical directive 014 uses the former icon ID.
 - work: from a `prop-v1` sheet, either gen3d a small model and render the item stage's icon view, or reduce the sheet's three-quarter view straight to 32 × 32 through `forgelib/pixelize`; pick one by trial on two items (berries, flint) and document it in `recipes/README.md` and the `sprite-forge` skill. Packet type for an icon set.
 - done when: berries and flint icons pass icon QA at 1× and 4× and the B23 instructions work as written
 - result: `forge.py icon --item ID --prompt "..." --ramps a,b [--n N] [--pick ID]` (`forgelib/icon.py`). Route: klein draws the object, then 2D reduction to 32 x 32 with palette lock and selective outline; the 3D route was not built (see `docs/engineering/imagegen.md`). Berries (`ember,sage,timber`, i400/i401) read at 1x; flint (`basalt`, i303) reads as a plain stone and is low contrast. Candidate tool; B23 picks and the reviewer judges.
 - evidence: `icon_selftest.py` 6/6; trials `art/source/forge/work/icon-{berries,flint}/` (0 icon-check problems in all 16 candidates); boards `docs/team/comms/claude/boards/2026-11-04-c32-icon-berries.png`, `…-c32-icon-flint.png`
+
+### C33 · Portrait identity lock: interior mask, palette from the neutral, expression delta
+
+- status: open (claude; before blender batches B25 across 19 actors)
+- owner: claude
+- source: visitor audit 2026-11-05 finding 1 and proposal 007 part 3 (accepted).
+- work: in `forgelib/portrait.py` composite each img2img edit through a feathered interior face mask over the neutral (hair, clothes, background and the 2 px border stay neutral pixels), quantize against the neutral's own LAB palette plus outline and eye-highlight tokens instead of all 64 colours, then add QA: skin LAB mean within delta-E 2.5 of the neutral and at least 3.5% changed pixels inside the eye, brow and mouth region so thoughtful, concerned and sad stay apart at 96 px. Selftest without GPU on synthetic portraits.
+- evidence:
+
+### C34 · Retrieval and extraction text for C25 (proposal 005)
+
+- status: open (claude; when codex starts C25)
+- owner: claude
+- work: replace `AGT-10.5` and `docs/engineering/memory-and-context.md` §3.3 with the fixed-domain score and commitment/relationship pinning; pass every active commitment and relationship of the interlocutor to session-end extraction. Add `AGT-10.7` and a codex ticket for `npm run test:villagers` (M1-M5) after C25.
+- evidence:
+
+### C35 · Commercial status in the model registry (proposal 006)
+
+- status: open (claude)
+- owner: claude
+- work: `commercialStatus` (`apache-2.0`, `mit`, `commercial-licensed`, `dev-only-noncommercial`) and `territoryRestrictions` per entry in `art/source/forge/models.json`, enforced by `doctor`, with the licence name and the URL it was read from. Verify each licence text before filling a value; unknown stays `unverified`.
+- evidence:
+
+### C36 · Held-item orientation on elongated weapons (visitor finding 3)
+
+- status: open (claude; needs a reproduction first)
+- owner: claude
+- work: reproduce the blunt copper-sword and webbed shortbow from `art/review/2026-11-05-item-copper-sword/` and `...-item-shortbow/` in `item_orient_selftest.py`; only then change the PCA axis fit (a pedestal under the model) and the anisotropic `minFeaturePx` dilation. A change without a failing test first is a guess.
+- evidence:
 
 ### C31 · gen3d backends: Hunyuan3D-2.1 shape and TRELLIS.2
 
@@ -391,6 +439,5 @@ C8 holds the remaining brief P0 rows; the learned creature brain (C15, C16) is g
 - status: open (recurring)
 - goal: every queue has two or more open tickets; split big tickets; turn the brief's backlog (P1–P3) into tickets as each milestone lands; keep skills and docs truthful to the code (a skill must never describe a feature that doesn't exist).
 - done when: never closes; add a dated evidence line each week
-- update 2026-11-02: integrated studio 8085a9e with C17 still archived. C32 already tracks Riverlands previous-revision overview; no duplicate ticket. Hatchet remains staged: `art:integrate` currently maps species/npc appearances, so item sidecars need tool support before M25/C23; no NPC override or ledger bypass. C26-C32 retain their upstream statuses.
 - evidence: 2026-10-31: B2 is opened by [go-world](../comms/codex/archive/2026-10-31T1640--to-blender--go-world.md); B6/B7 remain actionable. Communicator has M12/M13 review/kit work and M14–M16 follow-ups; [ack correction](../comms/codex/archive/2026-10-31T1640--to-communicator--c6-ack-link.md) is relayed to its owner. No duplicate tickets added.
 - update 2026-11-01: B13 offers technical item calibration while real source prep stays gated. M19 requests the actual native candidate JSON as a review artifact; M22's audit is received and C3f is the whole-source compatibility prerequisite. Existing B2/B3/B4 and M9/M11 remain available subject to their explicit input gates. No invented approvals or protected-file workarounds.

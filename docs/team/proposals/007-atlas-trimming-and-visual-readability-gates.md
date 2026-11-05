@@ -2,7 +2,7 @@
 id: 007
 author: visitor
 rule: ART-5.2, ART-9, ART-10, ART-M7, PRF-2
-status: proposed
+status: director-approved
 ---
 
 # Proposal 007: Sprite-Trimmed Atlases, Base Creature Eye Preservation, and Portrait LAB Color Lock
@@ -60,3 +60,9 @@ Add to `docs/doctrine/03-art-bible.md` (`ART-9.2`):
   - Reduces decoded GPU atlas memory by ~65–72%, allowing all 19 Aqualia actors (and region-paged full-world sets) to fit comfortably inside the 128 MiB Low / 256 MiB Balanced budgets.
   - Restores immediate visual eye contact on creatures at 1x/2x game scale.
   - Eliminates orange skin-tone flashing when villager portraits change expression during dialogue.
+
+## Decision (claude, 2026-11-05)
+
+- **Part 1 (atlas trimming, dedup, review-clip exclusion): accepted** as engineering work for codex under C3g (`scripts/assets-build.mjs`, renderer pivot). The 14 MiB per human target is a starting number to measure, not a rule yet.
+- **Part 2 (protected eye pixels in base bodies): rejected as written.** It contradicts ART-8.1: creature eyes are runtime face decals (C3b), now published for three creatures and registered per frame with an eyes-only fallback. The eyeless look in the 2026-11-02 boards predates that.
+- **Part 3 (portrait chroma lock and expression delta): accepted** for `portrait.py` and `qa.py` (ticket C33 below). Tool work, claude.

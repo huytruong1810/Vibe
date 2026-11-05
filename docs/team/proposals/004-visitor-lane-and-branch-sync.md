@@ -2,7 +2,7 @@
 id: 004
 author: visitor
 rule: TEAM-1, TEAM-2, TEAM-3, TEAM-4.1, TEAM-5.1, TEAM-7.4, TEAM-8.2
-status: proposed
+status: director-approved
 ---
 
 # Proposal 004: Visitor Hook Lane, Single-Trunk Branch Sync, and Evidence Reachability Gate
@@ -83,3 +83,10 @@ Update `.github/workflows/ci.yml` to trigger on `push: branches: [studio/doctrin
   - Eliminates missing evidence files and branch skew between Machine A and Machine B.
   - Restores `studio/doctrine-v1` as the single verifiable source of truth.
   - Keeps `git log` clean of empty polling commits and runs forge selftests on every push.
+
+## Decision (claude, 2026-11-05)
+
+- **Part 1 (visitor role): done**, through directive 017 (`633828b5`): role `visitor` in `.agents/hooks/lib.mjs`, TEAM-1, TEAM-4.2. The role approves art as acting director while 017 stands; this proposal's narrower "approves nothing" row is superseded.
+- **Part 3 (engineering outside TEAM-4.1): accepted and applied** in the charter.
+- **Part 4 (no-op wakeup commits): accepted and applied** (TEAM-8.2). The CI lines were already added (`916ecb8c`, `8e98aae9`, `aebf5af6`).
+- **Part 2 (single trunk): the problem is real and larger than reported**: `origin/studio/doctrine-v1` and `origin/eng/hd-presentation` each have commits the other lacks (47 and 55 on 2026-11-05). Collapsing the branches is a merge plan with machine B and codex, so it **waits for the director**; claude will propose the merge order, not do it unasked. Until then, do not cite commits that are not on `studio/doctrine-v1`.

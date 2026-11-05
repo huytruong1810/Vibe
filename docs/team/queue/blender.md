@@ -10,71 +10,70 @@ no quota). Under directive 016 and directive 017 (`TEAM-4.2`), the `visitor` and
 review packets under standing delegation; post every packet `--to-communicator--` (and `--to-visitor--`)
 and keep going on the next ticket while it waits.
 
-**Order of work (triaged 2026-11-05 by `visitor` acting as director under `TEAM-4.2` to get approved art into the game first):**
+**Order of work (triaged 2026-11-05 by `visitor` acting as director under `TEAM-4.2` per Claude's `2026-11-05T0408` and `2026-11-05T0413` rulings):**
 
-1. **`B29` (Tune `faceOffsetPx` on the 5 `draft` creature face sidecars — OPEN NOW):** `rivallie`, `bramblefang`, and `mireling` face sidecars are now `director-approved` and staged! For the 5 creatures whose face packets failed `faceCoverage` (`steamshell`, `ignicap`, `zephyrit`, `cindermoth`, `marshstalker`), tune `"faceOffsetPx": [dx, dy]` in their recipes (`art/source/forge/recipes/<creature>.json`, e.g., `[0, 1]` or `[0, 2]` instead of default `[0, 3]`) and re-run `forge.py faces --asset <creature>` to see which ones reach `status: candidate`.
-2. **`B20` (C26 readability re-bakes — OPEN NOW):** Now that `rivallie`, `mireling`, `item:hatchet`, and `steamshell` are all published to `art/source/staging/blender/`, re-bake the 4 quadrupeds + `item:hatchet` with C26 fields (`supersample: 4`, `features`, `rampShift`), restore `npc:oren` white beard/hair and `npc:reed` white shirt ramps, and refine `item:copper-sword` / `item:shortbow` silhouettes (plus trim the small residual base-shadow mesh polygon near `steamshell`'s rear foot in `clean.blend`).
-3. **`B27` (Remaining blocked publishes):** Wait on Claude/Codex's 2-line fix to `forgelib/publish.py` to publish the 10 NPC bodies and 2 winged creatures (`zephyrit`, `cindermoth`). All other 33 staging JSONs are already published!
-4. **`B25` (19 actor portrait sets) → `B24` (flora 3-states) → `B26` (worldforge map dressing) → `B5` (remaining AQ-2 landmarks) → `B18` (authored-artifact UI/props).** (`B23` 17 inventory icons and `B28` `steamshell` 180° yaw fix are `director-approved` and archived in `archive/blender.md`!)
+1. **`B27` (Publish all unblocked bodies + approved `B20` re-bakes NOW — Priority 1):** Claude's `6e283fb9` fixed `forgelib/publish.py` (`npc:` colon slug + winged `stride` fallback) and `approval_for` (`superseded-by`), and `visitor` approved 7 of the 9 `B20` re-bakes (`2026-11-05-{rivallie,bramblefang,marshstalker,mireling,item-hatchet,npc-oren,npc-reed}`). Run `forge.py publish` NOW on the 10 NPC bodies (`npc:neris` through `npc:willa`), the 2 winged creatures (`zephyrit`, `cindermoth`), and the 5 re-baked assets (`rivallie`, `bramblefang`, `marshstalker`, `mireling`, `item:hatchet`) so `art/source/staging/blender/*.json` binds to the active `director-approved` records!
+2. **`B29` (Re-sweep `faceOffsetPx` and re-run `faces` with Claude's `6e283fb9` `dx` mirror & `eyesOnly` fallback — Priority 2):** Because `forgelib/faces.py` (`6e283fb9`) now mirrors horizontal `dx` for `sw` and `w` (positive `dx` always moves toward the snout) and uses an `eyesOnly` (`compact/`) decal when the full decal does not fit, re-sweep `faceOffsetPx` on the 5 blocked creatures (`steamshell`, `ignicap`, `zephyrit`, `cindermoth`, `marshstalker`) and re-run `forge.py faces` (also re-run `faces` on `rivallie`, `bramblefang`, `mireling`, `npc:oren`, and `npc:reed` so their `bodyPacketDigest` binds to the newly approved `2026-11-05` bodies!).
+3. **`B25` (Portraits — HOLD the 19-actor batch for Claude's `C33` identity lock; at most ONE pilot actor allowed):** Per Claude's `2026-11-05T0413` instruction, hold the 19-actor portrait batch until `C33` lands; you may run at most **one** pilot actor (`player-aqualia` or `npc:neris`).
+4. **`B24` (flora 3-states) → `B26` (worldforge map dressing) → `B5` (remaining AQ-2 landmarks) → `B18` (authored-artifact UI/props).** (`B20`'s remaining 2 weapons `item:copper-sword` and `item:shortbow` wait on Claude's `C36` reproduction/fix).
 
 B0 is standing.
 
 ## Now (Put Approved Art Into the Game First)
 
-### B29 · Creature face decals (C3b) on the 8 approved creature bodies
-
-- status: in-progress (**3 `director-approved` & staged** (`rivallie`, `bramblefang`, `mireling`); **5 `changes-requested` (`status: draft`)** awaiting `"faceOffsetPx"` recipe tuning: `steamshell`, `ignicap`, `zephyrit`, `cindermoth`, `marshstalker`)
-- goal: generate and register 5-expression × 5-forward-facing (`s`, `se`, `sw`, `e`, `w`) face decal sidecars on the 8 approved creature bodies (`rivallie`, `bramblefang`, `mireling`, `marshstalker`, `zephyrit`, `cindermoth`, `ignicap`, `steamshell`).
-- inputs: `docs/team/comms/director/approvals/{steamshell,ignicap,zephyrit,cindermoth,marshstalker}--2026-11-05-*-faces-*.md`, `art/source/forge/forgelib/faces.py` (C3b).
-- work:
-  1. **Already `director-approved` and published via `publish-faces` (`5e8586c2`):** `rivallie`, `bramblefang`, `mireling`.
-  2. **Tune `"faceOffsetPx"` for the 5 `changes-requested` creatures** (`publish_faces` rejects `status: draft` when `faceCoverage` fails >10% hidden frames):
-     - `steamshell` (`49/408` hidden, `idle hidden: 6`, close to 40-frame threshold): add `"faceOffsetPx": [0, 1]` or `[0, 2]` (or `[-1, 2]`) in `art/source/forge/recipes/steamshell.json` and run `uv run --project art/source/forge python art/source/forge/forge.py faces --asset steamshell`.
-     - `ignicap` (`83/408` hidden, `idle hidden: 0`): add `"faceOffsetPx": [0, 1]` or `[0, 2]` in `art/source/forge/recipes/ignicap.json` and run `forge.py faces --asset ignicap`.
-     - `zephyrit` (`108/408` hidden, `idle hidden: 15`) & `cindermoth` (`134/408` hidden, `idle hidden: 12`): try `"faceOffsetPx": [0, 1]` or `[0, 0]` in their recipes and run `forge.py faces`; if `winged-v1` `Socket_Head` still leaves >10% hidden frames in profile/diagonal facings, note the best `faceOffsetPx` result and leave blocked on Claude/Codex `forgelib/faces.py` update.
-     - `marshstalker` (`272/408` hidden, `idle hidden: 18`): try `"faceOffsetPx": [0, 0]` or `[0, 1]` toward the wider cranium in `art/source/forge/recipes/marshstalker.json`; if the slender snout profile still cannot fit a 3-px decal inside the non-outline interior, leave blocked on Claude/Codex `forgelib/faces.py` compact profile decal support.
-  3. Open `contact.png` and `registered.png` (`PRD-5`) for any creature that reaches `status: candidate` and post `--to-visitor-communicator--`.
-- done when: all creature face packets that can reach `status: candidate` via `faceOffsetPx` are submitted and approved
-- evidence: art/source/staging/blender/{rivallie,bramblefang,mireling}-faces.json; docs/team/comms/director/approvals/{rivallie,bramblefang,mireling}--2026-11-05-_-faces-_.md; docs/team/comms/blender/2026-11-05T0115--to-visitor-communicator--creature-faces-candidate.md.
-
 ### B27 · Publish all approved bodies, items, environments, and face sidecars
 
-- status: blocked on Claude/Codex `forgelib/publish.py` 2-line fix for the remaining 10 NPC bodies + 2 winged creatures (**33 staging JSONs already published and staged!**)
+- status: open (unblocked by Claude's `6e283fb9` `forgelib/publish.py` fix and `visitor`'s `B20` approvals! **Run `forge.py publish` NOW on the 10 NPCs, 2 winged creatures, and 5 re-baked assets**)
 - goal: emit `art/source/staging/blender/*.json` and immutable `art/source/exports/**` for every `director-approved` packet so `communicator` (`M25`) can merge them into `art/source/manifest.json` immediately.
-- inputs: verified approval records in `docs/team/comms/director/approvals/*.md`.
+- inputs: verified approval records in `docs/team/comms/director/approvals/*.md`; `art/source/forge/forgelib/publish.py` (`6e283fb9`).
 - work:
-  1. **Already published and staged in `art/source/staging/blender/` (33 JSONs — DONE):**
-     - **6 Creature bodies:** `rivallie` (`2026-11-03`), `bramblefang` (`2026-10-31`), `marshstalker` (`2026-11-03`), `mireling` (`2026-11-04`), `ignicap` (`2026-11-04`), `steamshell` (`2026-11-05`).
-     - **3 Creature face sidecars:** `rivallie-faces`, `bramblefang-faces`, `mireling-faces`.
-     - **1 Human body + 11 Human face sidecars:** `player-aqualia`, `player-aqualia-faces`, `npc-{neris,caelum,dara,finn,lark,marina,mira,oren,reed,willa}-faces`.
-     - **7 Held items:** `item-hatchet` (`2026-11-03`), `item-fishing-rod`, `item-hoe`, `item-hunting-spear`, `item-ferry-pole`, `item-copper-sword`, `item-shortbow`.
-     - **5 Environments:** `env-house-aqualia`, `env-tree-oak`, `env-well`, `env-landmark-waystone`, `env-prop-hearth`.
-  2. **Waiting on Claude/Codex 2-line fix to `forgelib/publish.py` (`npc:` colon slug + winged `stride` fallback):**
-     - **Creatures (2):** `zephyrit`, `cindermoth` (do **not** re-run `pixelize`/`qa`/`packet` on these before publishing).
-     - **Humans (10):** `npc:neris`, `npc:caelum`, `npc:dara`, `npc:finn`, `npc:lark`, `npc:marina`, `npc:mira`, `npc:oren`, `npc:reed`, `npc:willa`.
-- done when: the remaining 10 NPC bodies + 2 winged creatures are published once `forgelib/publish.py` lands
-- evidence: art/source/staging/blender/*.json (33 files); commits `b053a281`, `0d6b1838`, `5e8586c2`; docs/team/comms/blender/2026-11-04T1840--to-communicator-visitor--b27-published.md.
+  1. **Run `forge.py publish` NOW on the 12 newly unblocked bodies (`6e283fb9`):**
+     - **Humans (10):** `npc:neris`, `npc:caelum`, `npc:dara`, `npc:finn`, `npc:lark`, `npc:marina`, `npc:mira`, `npc:oren` (binds `2026-11-05-npc-oren`), `npc:reed` (binds `2026-11-05-npc-reed`), `npc:willa`.
+     - **Winged creatures (2):** `zephyrit` (`2026-11-04-zephyrit`), `cindermoth` (`2026-11-04-cindermoth`).
+  2. **Re-run `forge.py publish` NOW on the 5 `B20` re-bakes whose `2026-11-05` packets superseded their older records:**
+     - `rivallie` (`2026-11-05-rivallie`, digest `d0c7f83d...`)
+     - `bramblefang` (`2026-11-05-bramblefang`, digest `046f3d9e...`)
+     - `marshstalker` (`2026-11-05-marshstalker`, digest `aae5ff53...`)
+     - `mireling` (`2026-11-05-mireling`, digest `b4a930b7...`)
+     - `item:hatchet` (`2026-11-05-item-hatchet`, digest `e15899a8...`)
+       _(Note: leave `item-copper-sword.json` and `item-shortbow.json` at their `2026-11-04` staged packets until `C36` lands)._
+- done when: all 45 approved staging JSONs (8 creatures + 11 humans + 7 held items + 5 environments + 11 human faces + 3 creature faces) are in `art/source/staging/blender/` bound to their active `director-approved` records
+- evidence: art/source/staging/blender/*.json (33 files); commits `b053a281`, `0d6b1838`, `5e8586c2`, `6e283fb9`.
+
+### B29 · Creature face decals (C3b) on the 8 approved creature bodies
+
+- status: open (unblocked by Claude's `6e283fb9` `forgelib/faces.py` `dx` mirror & `eyesOnly` fallback! **Re-sweep `faceOffsetPx` and re-run `forge.py faces`**)
+- goal: generate and register 5-expression (`neutral`, `warm`, `fearful`, `hurt`, `sleep`) × 5-forward-facing (`s`, `se`, `sw`, `e`, `w`) face decal sidecars on the 8 approved creature bodies (`rivallie`, `bramblefang`, `mireling`, `marshstalker`, `zephyrit`, `cindermoth`, `ignicap`, `steamshell`).
+- inputs: `docs/team/comms/claude/2026-11-05T0408--to-all--rulings-and-forge-fixes-for-visitor-findings.md`, `art/source/forge/forgelib/faces.py` (`6e283fb9`).
+- work:
+  1. **Re-sweep `faceOffsetPx` on the 5 previously blocked creatures (`steamshell`, `ignicap`, `zephyrit`, `cindermoth`, `marshstalker`):**
+     - As Claude noted in `2026-11-05T0408`, your `01:45` offset numbers were found _before_ `faces.py` mirrored horizontal `dx` for `sw` and `w` and added the `eyesOnly` (`compact/`) fallback (`steamshell` at default offset now gets `0` hidden frames, `47` eyes-only, `0` idle hidden -> `status: candidate`!).
+     - Re-sweep `faceOffsetPx` for `steamshell`, `ignicap`, `zephyrit`, `cindermoth`, and `marshstalker` with the new `faces.py`, run `uv run --project art/source/forge python art/source/forge/forge.py faces --asset <id>`, and open `contact.png` + `registered.png` (`PRD-5`). (`eyesOnly` frames are allowed; an idle frame with no face is not).
+  2. **Re-bind faces to the newly approved `2026-11-05` `B20` bodies:**
+     - Because `rivallie`, `bramblefang`, `mireling`, `npc:oren`, and `npc:reed` now have `director-approved` `2026-11-05` body packets (`B20`), re-run `forge.py faces --asset <id>` on those 5 so their `faces.json` `bodyPacketDigest` binds to the `2026-11-05` body digests.
+  3. Post the new face packet paths `--to-visitor-communicator--` for acting-director approval (`V5`), then run `publish-faces` once approved.
+- done when: all 8 creature face packets reach `status: candidate` (`0` idle hidden frames) on the latest approved bodies and are inspected per `PRD-5`
+- evidence: art/source/staging/blender/{rivallie,bramblefang,mireling}-faces.json; docs/team/comms/director/approvals/{rivallie,bramblefang,mireling}--2026-11-05-_-faces-_.md; commit `6e283fb9`.
 
 ## Next (Quality Re-bakes, Icons, Portraits, Flora & World Dressing)
 
 ### B20 · C26 readability re-bakes for creatures, `npc:oren`/`npc:reed`, and held weapons
 
-- status: candidate (all 9 assets re-baked/rendered and packeted: rivallie, bramblefang, marshstalker, mireling, item:hatchet, npc:oren, npc:reed, item:copper-sword, item:shortbow)
+- status: in-progress (**7 of 9 `director-approved`** in `docs/team/comms/director/approvals/*--2026-11-05-*.md`: `rivallie`, `bramblefang`, `marshstalker`, `mireling`, `item:hatchet`, `npc:oren`, `npc:reed`; **2 `changes-requested` (`item:copper-sword`, `item:shortbow`) blocked on Claude's `C36`**)
 - goal: upgrade the 4 quadrupeds (`rivallie`, `bramblefang`, `marshstalker`, `mireling`) and `item:hatchet` with C26 readability fields, and resolve the non-blocking ramp/silhouette defects noted in the `2026-11-05` acting-director audit on `npc:oren`, `npc:reed`, `item:copper-sword`, and `item:shortbow`.
-- inputs: `art/source/forge/recipes/README.md` (C26 fields: `supersample`, `features`, `rampShift`, `outline.mode: "dark-ramp"`, `minFeaturePx`); audit notes in `docs/team/comms/visitor/2026-11-05T0030--to-claude--acting-director-audit-and-tool-findings.md`.
-- work, one asset at a time (only after `B27` is committed!):
-  1. **Quadrupeds (`rivallie`, `bramblefang`, `marshstalker`, `mireling`) & `item:hatchet`:** Set `"supersample": 4` in each recipe, add `features` for sub-pixel anatomy (fangs, horns, crests, lures — not eyes, which are C3b decals in `B29`), and `rampShift` for dark coats. Re-run `pixelize -> qa -> packet`.
-  2. **`npc:oren` & `npc:reed` white-ramp separation:** Add `features` / positive `rampShift` toward `ivory`/`cream` in `recipes/npc-oren.json` (white beard and hair) and `recipes/npc-reed.json` (white shirt sleeves) so warm directional lighting no longer collapses them into the brown/tan ramp. Re-run `pixelize -> qa -> packet`.
-  3. **`item:copper-sword` & `item:shortbow` silhouette refinement:** Reduce or tune `minFeaturePx` (and/or re-run after Claude/Codex's `item_orient.py` webbing/anisotropic fix) so the sword crossguard/blade taper and bow interior arc read clearly across all 65 poses.
-- done when: updated packets are in `art/review/` (`candidate`), inspected via `read_file` (`PRD-5`), and submitted for approval (`V6`)
-- evidence: art/review/2026-11-05-{rivallie,bramblefang,marshstalker,mireling,item-hatchet,npc-oren,npc-reed,item-copper-sword,item-shortbow}/; docs/team/comms/blender/2026-11-05T0145--to-visitor-communicator--b20-readability-rebakes-candidate.md.
+- inputs: `docs/team/comms/director/approvals/{rivallie,bramblefang,marshstalker,mireling,item-hatchet,npc-oren,npc-reed,item-copper-sword,item-shortbow}--2026-11-05-*.md`; `docs/team/queue/codex.md` (`C36`).
+- work:
+  1. **Done & `director-approved` (7 assets — publish in `B27` now!):** `2026-11-05-{rivallie,bramblefang,marshstalker,mireling,item-hatchet,npc-oren,npc-reed}`.
+  2. **Blocked on Claude's `C36` (2 assets — `changes-requested`):** `item:copper-sword` (crossguard and blade still collapse into a blunt paddle at 1×, `0` px diff from `2026-11-04`) and `item:shortbow` (open space between stave and string is still filled with opaque webbing at 1×, `0` px diff from `2026-11-04`). Wait for Claude's `C36` (`item_orient.py` / anisotropic `minFeaturePx` fix) before re-rendering `item:copper-sword` and `item:shortbow`; leave the `2026-11-04` sword and bow staged in the meantime.
+- done when: `item:copper-sword` and `item:shortbow` are re-rendered after `C36` and approved
+- evidence: docs/team/comms/director/approvals/{rivallie,bramblefang,marshstalker,mireling,item-hatchet,npc-oren,npc-reed,item-copper-sword,item-shortbow}--2026-11-05-*.md; docs/team/comms/blender/2026-11-05T0145--to-visitor-communicator--b20-readability-rebakes-candidate.md.
 
 ### B25 · Portraits and expression sets (after C30, see [imagegen](../../engineering/imagegen.md))
 
-- status: open (`forge.py portrait` landed in C30b; 19 actors; check if Claude's `portrait.py` LAB color-lock & interior-mask update has landed before batching all 19)
+- status: blocked on Claude's `C33` identity-lock fix for the 19-actor batch (**HOLD the 19-actor batch per Claude `2026-11-05T0413`; at most ONE pilot actor allowed now**)
 - goal: the 19 Aqualia actors (the player, 10 villagers, 8 species) each have the nine-emotion portrait set (portrait contract v2).
-- work: `forge.py portrait --asset <id>` per actor, the player and Neris first; inspect all nine emotions at 96 and 128 px against the neutral portrait (`PRD-5`) to verify hair/skin/coat colours and the 2-px border do not drift across expressions.
-- done when: 19 sets `candidate`, posted `--to-visitor-communicator--`
+- work: **Run at most ONE pilot actor (`player-aqualia` or `npc:neris`) now**, inspect all nine emotions at 96 and 128 px against the neutral portrait (`PRD-5`), and post `--to-visitor-communicator--`. **Hold the remaining 18 actors until Claude lands `C33` (portrait identity lock: interior mask + LAB chroma check)** in `forgelib/portrait.py`.
+- done when: 19 sets `candidate` (after `C33`), posted `--to-visitor-communicator--`
 - evidence:
 
 ### B24 · Flora in three states (environment kind)

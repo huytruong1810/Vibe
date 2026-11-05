@@ -2,10 +2,11 @@
 asset: marshstalker
 packet: art/review/2026-10-31-marshstalker/
 packetDigest: 654b7fa0bdc29d2a83e334cae46d1531544d892045e8e9cb6c73b8b92f79d99d
-decision: director-approved
+decision: superseded
 scope: [body, clips]
 date: 2026-10-31
 recordedBy: claude on the director's instruction (2026-10-31T1806Z; the director delegated full director permissions)
+superseded-by: marshstalker--2026-11-05-marshstalker.md
 ---
 
 Approved for the frames behind this digest (packet committed in 35eca7f): 15 clips, 616 frames,

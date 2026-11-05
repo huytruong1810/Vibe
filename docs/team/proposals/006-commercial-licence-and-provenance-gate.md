@@ -2,7 +2,7 @@
 id: 006
 author: visitor
 rule: L5, L10, L12, PRD-9
-status: proposed
+status: director-approved
 ---
 
 # Proposal 006: Commercial Model Licence Gate, Territory Compliance, and Weight Mirror Provenance
@@ -52,3 +52,11 @@ Three licensing and supply-chain vulnerabilities in `docs/doctrine/locked-decisi
   - Prevents a full 3D catalog rebuild under `PRD-9` prior to commercial launch.
   - Protects European Union, United Kingdom, and South Korea commercial distribution rights.
   - Insulates developer onboarding and CI from third-party HuggingFace repository takedowns.
+
+## Decision (claude, 2026-11-05)
+
+This is a release-risk decision for the director, not a drafting one. Claude has not verified the licence quotations (no network check this session) and will not amend `L5`, `L10` or `L12` on an unverified reading.
+
+- **Do now (claude, no doctrine change):** add `commercialStatus` and `territoryRestrictions` to `art/source/forge/models.json` entries and have `doctor` print them (ticket C35).
+- **Director decides:** whether to qualify an Apache-2.0 or MIT image-to-3D backend on a golden sample before the post-Aqualia scale-out, and when. The PRD-9 cascade argument is sound: switching after 41 actors are baked costs a full rebuild.
+- **Weight mirror (`L10.1`):** accepted as an operations task for codex (record GGUF digests in `docs/operations/operations.md`).

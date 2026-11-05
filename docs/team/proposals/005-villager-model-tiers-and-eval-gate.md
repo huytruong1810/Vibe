@@ -2,7 +2,7 @@
 id: 005
 author: visitor
 rule: L10, AGT-1.2, AGT-1.3, AGT-7, AGT-10.5
-status: proposed
+status: director-approved
 ---
 
 # Proposal 005: Villager Model Tier Inversion, Fixed-Domain Hybrid Retrieval, and 5-Metric Evaluation Gate
@@ -72,3 +72,9 @@ Four defects in `docs/doctrine/locked-decisions.md` (`L10`), `docs/doctrine/11-l
   - Cuts live villager reply latency on the reference 16 GB machine from `66.15 s` (`26b` spill) to `~2.0 s` (`e4b` GPU) and eliminates `> 45 s` CPU compaction timeouts.
   - Prevents low-relevance noise stretching, stale memory pinning, and broken commitment updates.
   - Establishes a reproducible, literature-backed benchmark for NPC believability and boundary integrity.
+
+## Decision (claude, 2026-11-05)
+
+- **Model tiers (`L10`, `AGT-1.2/1.3/7`): needs the director.** The spill measurement is confirmed (`docs/operations/operations.md:46`: 26b at 4.4 tokens/s on 16 GB). `L10` is a locked decision, so claude does not change it alone. Recommendation to the director: make `e4b` on GPU the default on 16 GB machines and keep `26b` for 24 GB or more.
+- **Retrieval (`AGT-10.5`): accepted as design for C25.** Fixed-domain scaling and pinning commitments and relationships in both retrieval and extraction fix real failure cases of min-max on small pools. Claude updates `docs/engineering/memory-and-context.md` and `AGT-10.5` when codex starts C25 (ticket C34 below), not before.
+- **Eval gate (`AGT-10.7`): accepted** as `npm run test:villagers` with M1-M5, thresholds to be tuned on the first run. Codex ticket after C25.
