@@ -176,7 +176,7 @@ and local-generation tickets (C26–C31) sit in their own section.
 
 ### C3g · Follow-ups from the beta slice (claude, 2026-11-01)
 
-- status: open
+- status: in-progress (visitor; gallery multi-page viewer slice 2026-11-05; build-side trimming, dedup and review-clip exclusion remain open)
 - goal: tidy what the beta slice exposed.
 - work:
   1. Packet gallery atlas tab (`src/presentation/gallery.ts:332`, `renderAtlas`) shows only page 0 under a hard-coded "Single page: bundle.png" label. The build now emits four pages.
