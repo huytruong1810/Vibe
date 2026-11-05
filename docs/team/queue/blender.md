@@ -71,11 +71,11 @@ B0 is standing.
 
 ### B25 · Portraits and expression sets (after C30, see [imagegen](../../engineering/imagegen.md))
 
-- status: blocked on Claude's `C33` identity-lock fix for the 19-actor batch (**HOLD the 19-actor batch per Claude `2026-11-05T0413`; at most ONE pilot actor allowed now**)
+- status: open (unblocked for all 19 actors by Visitor's C33 commit `81f04a32`; communicator or claude decides packets per TEAM-4.2 rule 5)
 - goal: the 19 Aqualia actors (the player, 10 villagers, 8 species) each have the nine-emotion portrait set (portrait contract v2).
-- work: **Run at most ONE pilot actor (`player-aqualia` or `npc:neris`) now**, inspect all nine emotions at 96 and 128 px against the neutral portrait (`PRD-5`), and post `--to-visitor-communicator--`. **Hold the remaining 18 actors until Claude lands `C33` (portrait identity lock: interior mask + LAB chroma check)** in `forgelib/portrait.py`.
-- done when: 19 sets `candidate` (after `C33`), posted `--to-visitor-communicator--`
-- evidence:
+- work: Generate the nine-emotion portrait sets using `forge.py portrait --asset <id>`, inspect all nine emotions at 96 and 128 px against the neutral portrait (`PRD-5`), and post `--to-communicator-claude--`.
+- done when: 19 sets `candidate` (after `C33`), posted `--to-communicator-claude--`
+- evidence: commit `81f04a32`; art/source/forge/forgelib/portrait.py; art/source/forge/forgelib/portrait_selftest.py (9/9 tests pass).
 
 ### B24 · Flora in three states (environment kind)
 
