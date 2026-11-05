@@ -1,0 +1,28 @@
+{
+  "asset": "env-flora-fungi-healthy",
+  "views": {
+    "front": "front.png",
+    "left": "left.png"
+  },
+  "generations": 1,
+  "ledger": "docs/team/comms/blender/image-ledger.md#env-flora-fungi-healthy",
+  "generator": {
+    "model": "klein9b",
+    "repo": "black-forest-labs/FLUX.2-klein-9B",
+    "revision": "92196c8e11f7b6cf2b7493e037d8c5345c559216",
+    "licence": "FLUX Non-Commercial v2.1",
+    "seed": 67798,
+    "template": "building-v1",
+    "prompt": "Building reference sheet: cluster of bioluminescent wetland mushrooms with dome caps and glowing gills (healthy state) in Aqualia damp hollows: a small troop of shelf and cap fungi glowing with pale light in healthy condition. Materials and colours: dusty plum-purple mushroom caps, pale linen fibrous stems, bioluminescent teal spore gills (healthy). TWO VIEWS SIDE BY SIDE AT THE SAME SCALE, WIDELY SPACED: FRONT VIEW ON THE LEFT, LEFT SIDE VIEW ON THE RIGHT. WHOLE STRUCTURE VISIBLE FROM GROUND TO ROOF RIDGE, STANDING ON NOTHING. ORTHOGRAPHIC ELEVATIONS, NO PERSPECTIVE, EVEN SOFT LIGHTING FROM THE UPPER LEFT, NO CAST SHADOWS. CHUNKY READABLE SHAPES. PLAIN FLAT LIGHT GREY BACKGROUND, NO PEOPLE, NO TEXT. Clean painterly 3D-friendly concept art for a cosy fantasy adventure game: smooth soft shading, clear flat colour regions, rounded friendly shapes with chunky readable silhouettes, warm storybook palette, gentle rim of light on edges, no outlines, no pixel art, no texture noise.",
+    "references": [
+      "art/source/references/player-aqualia/front.png",
+      "art/source/references/rivallie/front.png"
+    ],
+    "styleSha256": "7ac91029b6c9324768a8722ea37eb10fbda0a3ca69fcf1b76b7d734dc0c80417",
+    "at": "2026-11-05T08:38:25Z"
+  },
+  "identitySources": [
+    "art/source/references/player-aqualia/front.png",
+    "art/source/references/rivallie/front.png"
+  ]
+}

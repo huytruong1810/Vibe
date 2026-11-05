@@ -1,0 +1,40 @@
+{
+  "asset": "env:mill-waterwheel",
+  "kind": "environment",
+  "ramps": {
+    "walls": "timber",
+    "roof": "teal",
+    "trim": "wood",
+    "metal": "copper"
+  },
+  "gen3d": {
+    "seed": 2015,
+    "steps": 50,
+    "views": [
+      "front",
+      "left"
+    ]
+  },
+  "environment": {
+    "footprint": [
+      3,
+      3
+    ],
+    "split": {
+      "layer": "roof",
+      "aboveFraction": 0.55
+    },
+    "contactShadow": true
+  },
+  "concept": {
+    "template": "building-v1",
+    "fields": {
+      "building": "Oren's timber grain mill and rotating waterwheel",
+      "region": "Aqualia Village & Riverlands",
+      "description": "timber-framed grain mill with tall mossy wooden waterwheel splashing in canal",
+      "materials": "timber siding, teal tile roof, iron hub wheel"
+    },
+    "references": []
+  },
+  "notes": "AQ-2 Landmark/Kit prop (B5). 3x2 footprint."
+}

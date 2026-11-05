@@ -1,0 +1,90 @@
+{
+ "asset": "env:flora-berries-healthy",
+ "footprint": [
+  1,
+  1
+ ],
+ "frames": [
+  {
+   "anchorPx": {
+    "x": 64,
+    "y": 126
+   },
+   "file": "frames/shadow.png",
+   "id": "env-flora-berries-healthy-shadow",
+   "layer": "shadow",
+   "sha256": "7d182aa7471ea378b37fb6a7fa62fcca0a01381dca07c1a11ff372b88761e6fb",
+   "sourceSize": {
+    "h": 136,
+    "w": 128
+   }
+  },
+  {
+   "anchorPx": {
+    "x": 64,
+    "y": 126
+   },
+   "file": "frames/base.png",
+   "id": "env-flora-berries-healthy-base",
+   "layer": "base",
+   "sha256": "98c8c59bb22327536420163aa403d64a1c5bd1a5b4d28f57aaf0625221f5dea6",
+   "sourceSize": {
+    "h": 136,
+    "w": 128
+   }
+  }
+ ],
+ "kind": "environment-review",
+ "lightPools": [],
+ "qa": [
+  {
+   "check": "footprint",
+   "detail": "ground contact 1.06 tiles deep vs declared 1 (width is scaled to fit)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-11.4"
+  },
+  {
+   "check": "canvas",
+   "detail": "64x68, width multiple of 32",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec canvases.environment"
+  },
+  {
+   "check": "margins",
+   "detail": "smallest transparent margin 3px",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec marginsArtPixels"
+  },
+  {
+   "check": "paletteMembership",
+   "detail": "0 off-palette colours",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.1"
+  },
+  {
+   "check": "colorCount",
+   "detail": "17 colours (environment limit 32)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.4"
+  },
+  {
+   "check": "blocks",
+   "detail": "exports are exact 2x blocks",
+   "hard": true,
+   "pass": true,
+   "rule": "L1"
+  }
+ ],
+ "schemaVersion": 1,
+ "scope": [
+  "shadow",
+  "base"
+ ],
+ "sourceDigest": "21910898b9266d507e488fc93a409c5743d0537b2ed78282ef34b5d46eff2d84",
+ "status": "candidate"
+}

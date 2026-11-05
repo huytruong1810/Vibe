@@ -1,0 +1,90 @@
+{
+ "asset": "env:fungi-ring",
+ "footprint": [
+  2,
+  2
+ ],
+ "frames": [
+  {
+   "anchorPx": {
+    "x": 96,
+    "y": 180
+   },
+   "file": "frames/shadow.png",
+   "id": "env-fungi-ring-shadow",
+   "layer": "shadow",
+   "sha256": "785f35d46ce0bdc2b8a53bc8123dc29cfd737f58578d6793bfadf71233a285f5",
+   "sourceSize": {
+    "h": 188,
+    "w": 192
+   }
+  },
+  {
+   "anchorPx": {
+    "x": 96,
+    "y": 180
+   },
+   "file": "frames/base.png",
+   "id": "env-fungi-ring-base",
+   "layer": "base",
+   "sha256": "37c05aeabfd0f951d0fac7873563f45243f353963b0995aee231fc1bf57adfd2",
+   "sourceSize": {
+    "h": 188,
+    "w": 192
+   }
+  }
+ ],
+ "kind": "environment-review",
+ "lightPools": [],
+ "qa": [
+  {
+   "check": "footprint",
+   "detail": "ground contact 2.02 tiles deep vs declared 2 (width is scaled to fit)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-11.4"
+  },
+  {
+   "check": "canvas",
+   "detail": "96x94, width multiple of 32",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec canvases.environment"
+  },
+  {
+   "check": "margins",
+   "detail": "smallest transparent margin 2px",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec marginsArtPixels"
+  },
+  {
+   "check": "paletteMembership",
+   "detail": "0 off-palette colours",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.1"
+  },
+  {
+   "check": "colorCount",
+   "detail": "9 colours (environment limit 32)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.4"
+  },
+  {
+   "check": "blocks",
+   "detail": "exports are exact 2x blocks",
+   "hard": true,
+   "pass": true,
+   "rule": "L1"
+  }
+ ],
+ "schemaVersion": 1,
+ "scope": [
+  "shadow",
+  "base"
+ ],
+ "sourceDigest": "ec88ae941e4c0eb5d19f94d2034011d4f05f2ff31a12e60cdcafdc9a10b86ac5",
+ "status": "candidate"
+}

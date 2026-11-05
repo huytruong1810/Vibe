@@ -1,0 +1,90 @@
+{
+ "asset": "env:flora-nectar-burnt",
+ "footprint": [
+  1,
+  1
+ ],
+ "frames": [
+  {
+   "anchorPx": {
+    "x": 64,
+    "y": 124
+   },
+   "file": "frames/shadow.png",
+   "id": "env-flora-nectar-burnt-shadow",
+   "layer": "shadow",
+   "sha256": "ce1ef38d656e6af86125a0b051fed45df1eb23011e23f3e1140fc87aadf4e2f2",
+   "sourceSize": {
+    "h": 132,
+    "w": 128
+   }
+  },
+  {
+   "anchorPx": {
+    "x": 64,
+    "y": 124
+   },
+   "file": "frames/base.png",
+   "id": "env-flora-nectar-burnt-base",
+   "layer": "base",
+   "sha256": "f82a379fbd0cbf76c3c8bc48c331692c1b1cd8a459e46c8e59c26eee6b787f0d",
+   "sourceSize": {
+    "h": 132,
+    "w": 128
+   }
+  }
+ ],
+ "kind": "environment-review",
+ "lightPools": [],
+ "qa": [
+  {
+   "check": "footprint",
+   "detail": "ground contact 0.95 tiles deep vs declared 1 (width is scaled to fit)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-11.4"
+  },
+  {
+   "check": "canvas",
+   "detail": "64x66, width multiple of 32",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec canvases.environment"
+  },
+  {
+   "check": "margins",
+   "detail": "smallest transparent margin 2px",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec marginsArtPixels"
+  },
+  {
+   "check": "paletteMembership",
+   "detail": "0 off-palette colours",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.1"
+  },
+  {
+   "check": "colorCount",
+   "detail": "13 colours (environment limit 32)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.4"
+  },
+  {
+   "check": "blocks",
+   "detail": "exports are exact 2x blocks",
+   "hard": true,
+   "pass": true,
+   "rule": "L1"
+  }
+ ],
+ "schemaVersion": 1,
+ "scope": [
+  "shadow",
+  "base"
+ ],
+ "sourceDigest": "17b031f37396857c736a696b046fd90f8ae91d26eeb11a2179135de9d5cfeab2",
+ "status": "candidate"
+}

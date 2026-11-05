@@ -1,0 +1,105 @@
+{
+ "asset": "env:stilt-hut",
+ "footprint": [
+  2,
+  2
+ ],
+ "frames": [
+  {
+   "anchorPx": {
+    "x": 128,
+    "y": 246
+   },
+   "file": "frames/shadow.png",
+   "id": "env-stilt-hut-shadow",
+   "layer": "shadow",
+   "sha256": "b123d11bb96e98270668a50c5e1a2e761b763a7d941200d2eb8badf039b88d28",
+   "sourceSize": {
+    "h": 256,
+    "w": 256
+   }
+  },
+  {
+   "anchorPx": {
+    "x": 128,
+    "y": 246
+   },
+   "file": "frames/base.png",
+   "id": "env-stilt-hut-base",
+   "layer": "base",
+   "sha256": "d4c5fee8037aebc3544ae91f3aab0455e98f2a9348674329ee301627153e36e0",
+   "sourceSize": {
+    "h": 256,
+    "w": 256
+   }
+  },
+  {
+   "anchorPx": {
+    "x": 128,
+    "y": 246
+   },
+   "file": "frames/roof.png",
+   "id": "env-stilt-hut-roof",
+   "layer": "roof",
+   "sha256": "f1c8a61108122254ed57ccf4d62375e764d16929733fd232e3ca4f70999c5ac4",
+   "sourceSize": {
+    "h": 256,
+    "w": 256
+   }
+  }
+ ],
+ "kind": "environment-review",
+ "lightPools": [],
+ "qa": [
+  {
+   "check": "footprint",
+   "detail": "ground contact 1.94 tiles deep vs declared 2 (width is scaled to fit)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-11.4"
+  },
+  {
+   "check": "canvas",
+   "detail": "128x128, width multiple of 32",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec canvases.environment"
+  },
+  {
+   "check": "margins",
+   "detail": "smallest transparent margin 2px",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec marginsArtPixels"
+  },
+  {
+   "check": "paletteMembership",
+   "detail": "0 off-palette colours",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.1"
+  },
+  {
+   "check": "colorCount",
+   "detail": "14 colours (environment limit 32)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.4"
+  },
+  {
+   "check": "blocks",
+   "detail": "exports are exact 2x blocks",
+   "hard": true,
+   "pass": true,
+   "rule": "L1"
+  }
+ ],
+ "schemaVersion": 1,
+ "scope": [
+  "shadow",
+  "base",
+  "roof"
+ ],
+ "sourceDigest": "e2c90f488e79d76ce5b75914b132641781e4d8a61ac0ae2b1017d3bcb5fc5806",
+ "status": "candidate"
+}

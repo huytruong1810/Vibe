@@ -1,0 +1,90 @@
+{
+ "asset": "env:crates-barrels",
+ "footprint": [
+  1,
+  1
+ ],
+ "frames": [
+  {
+   "anchorPx": {
+    "x": 64,
+    "y": 104
+   },
+   "file": "frames/shadow.png",
+   "id": "env-crates-barrels-shadow",
+   "layer": "shadow",
+   "sha256": "7c2661fba3109be73336ae4afa842fbd59113e557b0e149944d32a63dfc34504",
+   "sourceSize": {
+    "h": 112,
+    "w": 128
+   }
+  },
+  {
+   "anchorPx": {
+    "x": 64,
+    "y": 104
+   },
+   "file": "frames/base.png",
+   "id": "env-crates-barrels-base",
+   "layer": "base",
+   "sha256": "bb90fe4550f3f494c69a07fe36860a08b2ed21791a282d229dd58c6e26521814",
+   "sourceSize": {
+    "h": 112,
+    "w": 128
+   }
+  }
+ ],
+ "kind": "environment-review",
+ "lightPools": [],
+ "qa": [
+  {
+   "check": "footprint",
+   "detail": "ground contact 0.92 tiles deep vs declared 1 (width is scaled to fit)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-11.4"
+  },
+  {
+   "check": "canvas",
+   "detail": "64x56, width multiple of 32",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec canvases.environment"
+  },
+  {
+   "check": "margins",
+   "detail": "smallest transparent margin 2px",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec marginsArtPixels"
+  },
+  {
+   "check": "paletteMembership",
+   "detail": "0 off-palette colours",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.1"
+  },
+  {
+   "check": "colorCount",
+   "detail": "11 colours (environment limit 32)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.4"
+  },
+  {
+   "check": "blocks",
+   "detail": "exports are exact 2x blocks",
+   "hard": true,
+   "pass": true,
+   "rule": "L1"
+  }
+ ],
+ "schemaVersion": 1,
+ "scope": [
+  "shadow",
+  "base"
+ ],
+ "sourceDigest": "c9450bebe79e26ccd04d46d379cef8c42a1588b840f60785d996837aedb706d6",
+ "status": "candidate"
+}

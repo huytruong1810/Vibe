@@ -1,0 +1,90 @@
+{
+ "asset": "env:ferry-landing",
+ "footprint": [
+  2,
+  2
+ ],
+ "frames": [
+  {
+   "anchorPx": {
+    "x": 96,
+    "y": 232
+   },
+   "file": "frames/shadow.png",
+   "id": "env-ferry-landing-shadow",
+   "layer": "shadow",
+   "sha256": "0d006e88bc21e19ac1011801db90a1a957b3211560b7c6a47704b58796eb849e",
+   "sourceSize": {
+    "h": 240,
+    "w": 192
+   }
+  },
+  {
+   "anchorPx": {
+    "x": 96,
+    "y": 232
+   },
+   "file": "frames/base.png",
+   "id": "env-ferry-landing-base",
+   "layer": "base",
+   "sha256": "58a8bb069f6a62c21cf2655b4627f7d94af44b98aac3b7209575bc35f1dc6275",
+   "sourceSize": {
+    "h": 240,
+    "w": 192
+   }
+  }
+ ],
+ "kind": "environment-review",
+ "lightPools": [],
+ "qa": [
+  {
+   "check": "footprint",
+   "detail": "ground contact 2.05 tiles deep vs declared 2 (width is scaled to fit)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-11.4"
+  },
+  {
+   "check": "canvas",
+   "detail": "96x120, width multiple of 32",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec canvases.environment"
+  },
+  {
+   "check": "margins",
+   "detail": "smallest transparent margin 2px",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec marginsArtPixels"
+  },
+  {
+   "check": "paletteMembership",
+   "detail": "0 off-palette colours",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.1"
+  },
+  {
+   "check": "colorCount",
+   "detail": "14 colours (environment limit 32)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.4"
+  },
+  {
+   "check": "blocks",
+   "detail": "exports are exact 2x blocks",
+   "hard": true,
+   "pass": true,
+   "rule": "L1"
+  }
+ ],
+ "schemaVersion": 1,
+ "scope": [
+  "shadow",
+  "base"
+ ],
+ "sourceDigest": "81c3a3c28c90ab05629b82d694b668d090b391aad2b260d6612c395b992a3952",
+ "status": "candidate"
+}

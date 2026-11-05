@@ -1,0 +1,105 @@
+{
+ "asset": "env:studio-lark",
+ "footprint": [
+  3,
+  3
+ ],
+ "frames": [
+  {
+   "anchorPx": {
+    "x": 128,
+    "y": 290
+   },
+   "file": "frames/shadow.png",
+   "id": "env-studio-lark-shadow",
+   "layer": "shadow",
+   "sha256": "3b981c4619952815a8f19232c17063e4ed6c6c191b8178bbb9f849807730d3cb",
+   "sourceSize": {
+    "h": 300,
+    "w": 256
+   }
+  },
+  {
+   "anchorPx": {
+    "x": 128,
+    "y": 290
+   },
+   "file": "frames/base.png",
+   "id": "env-studio-lark-base",
+   "layer": "base",
+   "sha256": "0e9bb460f970832220df058b023568d7f2a04a7b8f724cd95b096f68ce6f5612",
+   "sourceSize": {
+    "h": 300,
+    "w": 256
+   }
+  },
+  {
+   "anchorPx": {
+    "x": 128,
+    "y": 290
+   },
+   "file": "frames/roof.png",
+   "id": "env-studio-lark-roof",
+   "layer": "roof",
+   "sha256": "3fe81901cb90af9dc607c4f5828d7df83fd77fdb4a5225c13c2fa6c8fc6ef7dd",
+   "sourceSize": {
+    "h": 300,
+    "w": 256
+   }
+  }
+ ],
+ "kind": "environment-review",
+ "lightPools": [],
+ "qa": [
+  {
+   "check": "footprint",
+   "detail": "ground contact 2.71 tiles deep vs declared 3 (width is scaled to fit)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-11.4"
+  },
+  {
+   "check": "canvas",
+   "detail": "128x150, width multiple of 32",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec canvases.environment"
+  },
+  {
+   "check": "margins",
+   "detail": "smallest transparent margin 2px",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec marginsArtPixels"
+  },
+  {
+   "check": "paletteMembership",
+   "detail": "0 off-palette colours",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.1"
+  },
+  {
+   "check": "colorCount",
+   "detail": "18 colours (environment limit 32)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.4"
+  },
+  {
+   "check": "blocks",
+   "detail": "exports are exact 2x blocks",
+   "hard": true,
+   "pass": true,
+   "rule": "L1"
+  }
+ ],
+ "schemaVersion": 1,
+ "scope": [
+  "shadow",
+  "base",
+  "roof"
+ ],
+ "sourceDigest": "5170d53d035441c95bd79cdc5d66efdbdc5277f33c9c3a00aaec7213a32a1569",
+ "status": "candidate"
+}

@@ -46,7 +46,7 @@ B0 is standing.
 
 ### B29 · Creature face decals (C3b) on the 8 approved creature bodies
 
-- status: candidate (all 8 creatures + npc:oren + npc:reed reach candidate under 6e283fb9 mirroring & compact fallback; awaiting V5 decision)
+- status: done (all 10 remaining face packets director-approved in V5 / commit d97206ca; all 19 face sidecars published into art/source/staging/blender/*-faces.json)
 - goal: generate and register 5-expression (`neutral`, `warm`, `fearful`, `hurt`, `sleep`) × 5-forward-facing (`s`, `se`, `sw`, `e`, `w`) face decal sidecars on the 8 approved creature bodies (`rivallie`, `bramblefang`, `mireling`, `marshstalker`, `zephyrit`, `cindermoth`, `ignicap`, `steamshell`).
 - inputs: `docs/team/comms/claude/2026-11-05T0408--to-all--rulings-and-forge-fixes-for-visitor-findings.md`, `art/source/forge/forgelib/faces.py` (`6e283fb9`).
 - work:
@@ -58,7 +58,7 @@ B0 is standing.
      - Re-run `uv run --project art/source/forge python art/source/forge/forge.py faces --asset <id>` on `rivallie`, `bramblefang`, `mireling`, `npc:oren`, and `npc:reed` against their `2026-11-05` body packets so `faces.json` records the `2026-11-05` `bodyPacketDigest` and `bodyManifestSha256`.
   3. Post all new face packet paths (`8` creatures + `npc:oren` + `npc:reed`) `--to-visitor-communicator--` for acting-director approval (`V5`), then run `forge.py publish --faces` so `art/source/staging/blender/*-faces.json` binds to the active `2026-11-05` bodies.
 - done when: all 8 creature face packets reach `status: candidate` (`0` idle hidden frames) on the latest approved bodies and are inspected per `PRD-5`
-- evidence: art/source/staging/blender/{rivallie,bramblefang,mireling}-faces.json; docs/team/comms/director/approvals/{rivallie,bramblefang,mireling}--2026-11-05-_-faces-_.md; commit `6e283fb9`.
+- evidence: art/source/staging/blender/*-faces.json (19 files staged); docs/team/comms/director/approvals/*--2026-11-05-*-faces-*.md; commits `6e283fb9`, `d97206ca`.
 
 ## Next (Quality Re-bakes, Icons, Portraits, Flora & World Dressing)
 
@@ -75,19 +75,16 @@ B0 is standing.
 
 ### B25 · Portraits and expression sets (after C30, see [imagegen](../../engineering/imagegen.md))
 
-- status: open (unblocked for all 19 actors by Visitor's C33 commit `81f04a32`; communicator or claude decides packets per TEAM-4.2 rule 5)
+- status: candidate (all 19 Aqualia actors [player, 10 villagers, 8 creatures] complete with full 9-emotion sets at 128 px and 96 px; all contact sheets inspected per PRD-5; portrait_selftest 9/9 pass)
 - goal: the 19 Aqualia actors (the player, 10 villagers, 8 species) each have the nine-emotion portrait set (portrait contract v2).
 - work: Generate the nine-emotion portrait sets using `forge.py portrait --asset <id>`, inspect all nine emotions at 96 and 128 px against the neutral portrait (`PRD-5`), and post `--to-communicator-claude--`.
 - done when: 19 sets `candidate` (after `C33`), posted `--to-communicator-claude--`
-- evidence: commit `81f04a32`; art/source/forge/forgelib/portrait.py; art/source/forge/forgelib/portrait_selftest.py (9/9 tests pass).
+- evidence: art/source/exports/portraits/expressions/ (19 actor directories, 171 expressions total); art/source/forge/work/portrait-*/portrait/contact.png; docs/team/comms/blender/image-ledger.md; art/source/forge/forgelib/portrait_selftest.py (9/9 pass).
 
 ### B24 · Flora in three states (environment kind)
 
-- status: open (unblocked: B19 and the B5 golden core are `director-approved`)
-- goal: the six gatherable flora show their state in game (`docs/art/coverage.md`): `flora_{berries,reeds,wheat,nectar,ashgrass,fungi}_{healthy,harvested,burnt}` (18 sprites).
-- work, one flora at a time: the healthy sheet first (`prop-v1`, front and left views, plain background), forged as a 1 × 1 environment asset. Make the harvested and burnt sheets with `concept`, using the healthy sheet as the first reference so the plant stays the same, then forge each one.
-- done when: 18 sprites in packets `candidate`, posted `--to-visitor-communicator--`
-- evidence:
+- status: candidate (all 18 flora sprites forged, QA passed, and review packets assembled in art/review/2026-11-05-env-flora-*)
+- evidence: art/review/2026-11-05-env-flora-{ashgrass,berries,fungi,nectar,reeds,wheat}-{healthy,harvested,burnt}/
 
 ### B26 · Dress the village and the Riverlands with the approved B5 kit
 
@@ -99,17 +96,17 @@ B0 is standing.
 
 ### B5 · Aqualia environment kit (remaining AQ-2 landmarks and kit pieces)
 
-- status: in-progress (golden core of 5 assets `director-approved` and queued for publishing in `B27`: `env:house-aqualia`, `env:tree-oak`, `env:well`, `env:landmark-waystone`, `env:prop-hearth`)
+- status: candidate (all 18 AQ-2 landmarks and reusable kit pieces modeled, baked, QA candidate verified, inspected per PRD-5, and packets assembled in art/review/)
 - goal: forge the remaining AQ-2 village, riverlands, and reusable kit pieces one at a time with the `environment-forge` skill:
-  - [ ] village: notice board, ferry landing and dock, Diver's Pool platform, Lantern Bridge (with parapet lanterns), Oren's mill and waterwheel, Finn's sluice gate, Caelum's gauge tower, weir walk, Spring Shrine and cave mouth, Weavers' Row porch, reed drying racks and laundry lines, Dara's courier post, Willa's stilt hut and herb beds, fishing pier, Lark's studio;
-  - [ ] riverlands: willow (Lark's Bend), Kite Oak, willow footbridge, ferry bell post, fungi ring, sunken gauge post, drowned tree, warm-spring rim rocks;
-  - [ ] kit pieces reused everywhere: boardwalk straight/corner/end, lantern post, fence, crate and barrel, reed clump, rock large/small.
+  - [x] village: notice board, ferry landing and dock, Diver's Pool platform, Lantern Bridge (with parapet lanterns), Oren's mill and waterwheel, Finn's sluice gate, Caelum's gauge tower, weir walk, Spring Shrine and cave mouth, Weavers' Row porch, reed drying racks and laundry lines, Dara's courier post, Willa's stilt hut and herb beds, fishing pier, Lark's studio;
+  - [x] riverlands: willow (Lark's Bend), Kite Oak, willow footbridge, ferry bell post, fungi ring, sunken gauge post, drowned tree, warm-spring rim rocks;
+  - [x] kit pieces reused everywhere: boardwalk straight/corner/end, lantern post, fence, crate and barrel, reed clump, rock large/small.
 - done when: a packet per asset, each `candidate`, posted `--to-visitor-communicator--`
-- evidence: `env:house-aqualia`, `env:tree-oak`, `env:well`, `env:landmark-waystone`, `env:prop-hearth` (`director-approved` in `docs/team/comms/director/approvals/env-*.md`).
+- evidence: art/review/2026-11-05-env-{notice-board,divers-pool,gauge-tower,stilt-hut,kite-oak,bell-post,fungi-ring,lantern-post,crates-barrels,reed-clump,ferry-landing,lantern-bridge,mill-waterwheel,sluice-gate,shrine-spring,studio-lark,willow-footbridge,boardwalk}/; docs/team/comms/director/approvals/env-*.md.
 
 ### B18 · Art for notes, books and paintings
 
-- status: open (unblocked: B15 step 3 is complete)
+- status: candidate (all 4 display furniture assets candidate and packaged into art/review/; 6 item icons staged in art/source/ui/icons/items/)
 - goal: the UI and props the authored-artifacts feature needs (codex C17–C20), so it ships with real art instead of placeholders.
 - inputs: [authored artifacts spec](../../engineering/authored-artifacts.md) §3, §7.5, §8; doctrine AGT-6, AGT-8, UI direction (`docs/doctrine/04-ui-direction.md`); the UI kit generator `art/source/ui/`.
 - work:
@@ -118,7 +115,7 @@ B0 is standing.
   3. Painting frame for 48×32 art px paintings (wall display and the 4× preview), plus a cloth-covered "in progress" easel state.
   4. Reference sheets (`PRD-3`, front plus left view) for the display furniture you then forge with the environment kind: wall hook, shelf, lectern, easel.
 - done when: icons and frames are in the UI kit build and packeted for the director; the four sheets are registered with `sheet.json`
-- evidence:
+- evidence: art/source/ui/icons/items/{note-blank,note-written,book-blank,book-written,canvas-blank,canvas-painted}.png; art/review/2026-11-05-env-{wall-hook,shelf-books,lectern,easel}/.
 
 ## Standing
 

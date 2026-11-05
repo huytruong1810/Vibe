@@ -1,0 +1,37 @@
+{
+  "asset": "env:divers-pool",
+  "kind": "environment",
+  "ramps": {
+    "walls": "timber",
+    "roof": "teal",
+    "trim": "wood",
+    "metal": "copper"
+  },
+  "gen3d": {
+    "seed": 2011,
+    "steps": 50,
+    "views": [
+      "front",
+      "left"
+    ]
+  },
+  "environment": {
+    "footprint": [
+      2,
+      2
+    ],
+    "split": null,
+    "contactShadow": true
+  },
+  "concept": {
+    "template": "building-v1",
+    "fields": {
+      "building": "diving platform and stone steps",
+      "region": "Aqualia Village & Riverlands",
+      "description": "cut stone steps descending into deep crystal water pool with timber dive platform",
+      "materials": "river basalt steps, cedar diving board, iron railings"
+    },
+    "references": []
+  },
+  "notes": "AQ-2 Landmark/Kit prop (B5). 2x2 footprint."
+}
