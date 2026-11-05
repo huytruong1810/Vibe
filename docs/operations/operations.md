@@ -189,6 +189,25 @@ pending until machine A returns evidence.
 vectors and full prompt construction. It reports p95 and maximum timing and fails when
 p95 exceeds the 5 ms retrieval budget. Run it without competing timing work.
 
+#### Registry verification follow-up (2026-11-05)
+
+C35's schema uses `territoryRestrictions` arrays: empty means no geographic
+exclusion reported; `unverified` blocks the check. Doctor checks every flattened
+entry, including reference aliases. Its metadata check is not commercial release
+clearance, and does not waive006's pre-scale approval gate.
+
+Primary-source inspection confirmed the [FLUX4B Apache2 licence](https://huggingface.co/black-forest-labs/FLUX.2-klein-4B/blob/main/LICENSE.md),
+[FLUX9B non-commercial licence](https://huggingface.co/black-forest-labs/FLUX.2-klein-9B/blob/main/LICENSE.md),
+and [Hunyuan2mv territory exclusions](https://huggingface.co/tencent/Hunyuan3D-2mv/blob/main/LICENSE).
+The [Google terms page](https://ai.google.dev/gemma/terms) explicitly directs Gemma4
+to its separate [Apache2 licence](https://ai.google.dev/gemma/apache_2).
+The older Gemma terms must not be asserted as the licence of Gemma4. The two
+third-party abliterated GGUF aliases remain `unverified` until their exact
+upstream derivative terms and installed bytes are checked; the base licence alone
+does not verify those aliases. This makes doctor report those unresolved entries
+instead of presenting them as verified. The following incoming layer digests are
+reported machine-A values, not a machine-B rehash or a private mirror receipt.
+
 #### Pinned GGUF & Projector SHA256 Digests (`L10.1` / `C35` Provenance)
 
 Because community Hugging Face GGUF repositories (`HauhauCS/...`, `llmfan46/...`) can be renamed or DMCA-removed, every workstation and mirror must verify the exact Ollama layer digests in `~/.ollama/models/manifests-v2/ollama.com/library/gemma4-abliterated/<tag>`:

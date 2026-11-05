@@ -1084,19 +1084,22 @@ def registry_checks() -> list[tuple[str, bool, str]]:
     Also enforces and prints commercialStatus, territoryRestrictions, licenseName, and licenseUrl (C35)."""
     reg = core.load_model_registry()
     out = []
+    # Check the flattened registry too: reference aliases must not escape verification.
+    for entry in reg["models"]:
+        mid, tool = entry["id"], entry["tool"]
+        cs = entry.get("commercialStatus", "unverified")
+        tr = entry.get("territoryRestrictions")
+        ln, lu = entry.get("licenseName", ""), entry.get("licenseUrl", "")
+        valid = bool(cs in core.COMMERCIAL_STATUSES and cs != "unverified" and
+                     isinstance(tr, list) and all(isinstance(t, str) and t and t != "unverified" for t in tr) and
+                     isinstance(ln, str) and ln and isinstance(lu, str) and lu.startswith("https://"))
+        label = f"{tool}/{mid}: commercialStatus={cs}; territoryRestrictions={tr}; licenseName={ln}; licenseUrl={lu}"
+        out.append((label, valid, f"verify commercialStatus, territoryRestrictions array, licenseName, and https licenseUrl for {tool}/{mid} (C35)"))
     for tool, t in reg["tools"].items():
         models = t["models"]
         trials = sorted(m for m, s in models.items() if s["status"] == "trial")
         if trials:
             out.append((f"{tool}: bake-off open ({', '.join(trials)} on trial vs {t['default']})", True, ""))
-        for mid, s in models.items():
-            cs = s.get("commercialStatus", "unverified")
-            tr = s.get("territoryRestrictions", "")
-            ln = s.get("licenseName", "")
-            lu = s.get("licenseUrl", "")
-            valid = bool(cs in core.COMMERCIAL_STATUSES and cs != "unverified" and tr and ln and lu.startswith("https://"))
-            label = f"{tool}/{mid}: commercialStatus={cs}; territoryRestrictions={tr}; licenseName={ln}; licenseUrl={lu}"
-            out.append((label, valid, f"verify commercialStatus, territoryRestrictions, licenseName, and https licenseUrl for {tool}/{mid} (C35)"))
         if "cache" not in t:
             continue
         listed = {"models--" + s["repo"].replace("/", "--") for s in models.values() if "repo" in s}
