@@ -2,11 +2,12 @@
 asset: bramblefang
 packet: art/review/2026-10-31-bramblefang/
 packetDigest: ef40a024ed16fa6126a23bace25b464a7da81ecb66a7dcd45d8fdbeacc77c535
-decision: director-approved
+decision: superseded
 scope: [body, clips]
 date: 2026-10-31
 recordedBy: claude on the director's instruction (2026-10-31T1806Z; the director delegated full director permissions)
 supersedes: bramblefang--2026-10-31-bramblefang.md
+superseded-by: bramblefang--2026-11-05-bramblefang.md
 ---
 
 Re-approval after the C3d re-run (packet committed in 35eca7f): 15 clips, 616 frames, QA

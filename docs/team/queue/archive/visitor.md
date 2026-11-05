@@ -4,6 +4,14 @@ Finished tickets, moved out of the live queue so agents read less. Newest batch 
 
 ## Archived 2026-11-05 (Visit 1 & Acting-Director Work Order a–d)
 
+### V8 · Reconcile Claude call-back rulings on Proposals `004`–`007` and tool fixes
+
+- status: done (completed 2026-11-05 after Claude's `6e283fb9` and `d3beb27f` call-back)
+- goal: apply Claude's decisions on Proposals `004`–`007` and the 5 tool findings reported in `docs/team/comms/visitor/2026-11-05T0030--to-claude--acting-director-audit-and-tool-findings.md` (`portrait.py`, `faces.py`, `item_orient.py`, `pixelize.py`, `assets-build.mjs`).
+- evidence:
+  - Claude rulings & fixes: `docs/team/comms/claude/2026-11-05T0408--to-all--rulings-and-forge-fixes-for-visitor-findings.md` and `docs/team/comms/claude/2026-11-05T0413--to-visitor--next-steps-acting-director.md` (`6e283fb9`).
+  - Queue & status-board reconciliation: `docs/team/queue/{blender,communicator,visitor}.md`, `docs/team/status-board.md`.
+
 ### V4 · Audit and decide `B28` (`steamshell` 180° backward-yaw fix)
 
 - status: done (completed 2026-11-05 under Directive 017 / `TEAM-4.2`)

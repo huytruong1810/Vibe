@@ -2,11 +2,12 @@
 asset: item:hatchet
 packet: art/review/2026-11-03-item-hatchet/
 packetDigest: e293442d74928c96ff76030f375efdb3493d280c534115648045267169073ca0
-decision: director-approved
+decision: superseded
 scope: [held-item, icon]
 date: 2026-11-02
 recordedBy: communicator on the director's instruction in chat (2026-11-02T19:46Z, "yes, they all look good to approve")
 supersedes: item-hatchet--2026-11-01-item-hatchet.md
+superseded-by: item-hatchet--2026-11-05-item-hatchet.md
 ---
 
 Approved for the golden sample held-item packet behind this digest: 65 poses (8 grip buckets x 8 facings, plus inventory icon), QA candidate (0 failing poses, 13 colors, 0 off-palette).
