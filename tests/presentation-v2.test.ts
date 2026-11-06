@@ -14,11 +14,13 @@ import {
   layerRegistration,
   layerSockets,
   heldLayerFrame,
+  faceLayerPose,
   selectModularLayers,
   socketWorld,
 } from '../src/presentation/compositor';
 import { EffectDirector, effectSeed, visibleProjectiles } from '../src/presentation/effects';
 import { actorInScene, sceneCamera } from '../src/presentation/scene-view';
+import { inventoryIcon } from '../src/presentation/ui/inventory-icon';
 
 const actor = (changes: Partial<ActorPresentation> = {}): ActorPresentation => ({
   id: 1,
@@ -57,7 +59,93 @@ const frame: AssetFrame = {
   sockets: { hand: { x: 40, y: 30 } },
 };
 
+it('registers expression decals on moving head sockets and hides missing/back poses', () => {
+  const layer = {
+    id: 'faces',
+    rigId: 'rig',
+    buildProfileIds: ['adult'],
+    slot: 'face' as const,
+    appearanceId: 'layer:faces',
+    face: {
+      bodyAppearanceId: 'layer:body',
+      bodyPacketDigest: 'a'.repeat(64),
+      frames: {
+        neutral: { e: 'neutral' },
+        warm: { e: 'warm' },
+        sleep: { e: 'sleep' },
+        hurt: { e: 'hurt' },
+      },
+      registration: { body_0: [-4, 6] as [number, number], body_1: null },
+    },
+  };
+  const body = { id: 'body_0', sockets: { Socket_Head: { x: 40, y: 20 } } };
+  expect(faceLayerPose(layer, actor({ faceExpression: 'warm' }), body, 'e')).toEqual({
+    frameId: 'warm',
+    target: { x: 36, y: 26 },
+  });
+  expect(faceLayerPose(layer, actor({ faceExpression: 'sad' }), body, 'e')?.frameId).toBe(
+    'neutral',
+  );
+  expect(faceLayerPose(layer, actor({ pose: 'sleep' }), body, 'e')?.frameId).toBe('sleep');
+  expect(faceLayerPose(layer, actor({ pose: 'hit' }), body, 'e')?.frameId).toBe('hurt');
+  expect(
+    faceLayerPose(layer, actor(), { ...body, sockets: { Socket_Head: { x: 44, y: 22 } } }, 'e')
+      ?.target,
+  ).toEqual({ x: 40, y: 28 });
+  expect(faceLayerPose(layer, actor(), { ...body, id: 'body_1' }, 'e')).toBeUndefined();
+  expect(faceLayerPose(layer, actor(), body, 'n')).toBeUndefined();
+  expect(faceLayerPose(layer, actor(), { id: 'missing' }, 'e')).toBeUndefined();
+});
+
 describe('modular presentation invariants', () => {
+  it('renders approved inventory rectangles at the root and beta base, retaining trim margins', () => {
+    const catalog: AssetCatalog = {
+      schemaVersion: 2,
+      contentVersion: 'test',
+      clips: [],
+      portraits: [],
+      appearances: [
+        {
+          id: 'item:berries',
+          kind: 'item',
+          contentId: 'berries',
+          quality: 'hd',
+          stage: 'approved',
+          clipIds: [],
+          frameId: 'icon',
+        },
+      ],
+      frames: [
+        {
+          ...frame,
+          id: 'icon',
+          pageId: 'icons',
+          sourceSize: { w: 32, h: 32 },
+          rect: { x: 10, y: 20, w: 24, h: 24 },
+          trim: { x: 4, y: 4, w: 24, h: 24 },
+        },
+      ],
+      pages: [
+        {
+          id: 'icons',
+          url: '/assets/generated/icons.json',
+          imageUrl: '/assets/generated/icons.png',
+          width: 128,
+          height: 128,
+          variants: [],
+        },
+      ],
+    };
+    const resolver = new AppearanceResolver(catalog);
+    expect(inventoryIcon(resolver, 'berries', '/')).toContain('url(/assets/generated/icons.png)');
+    expect(inventoryIcon(resolver, 'berries', '/Vibe/')).toContain(
+      'url(/Vibe/assets/generated/icons.png)',
+    );
+    expect(inventoryIcon(resolver, 'berries', '/')).toContain('left:4px;top:4px');
+    expect(inventoryIcon(resolver, 'berries', '/')).toContain('background-position:-10px -20px');
+    expect(inventoryIcon(resolver, 'missing')).toBe('');
+    expect(inventoryIcon(undefined, 'berries')).toBe('');
+  });
   it('preserves foot cadence across authored facings and samples only committed odometers', () => {
     const c = new AnimationController(),
       a = actor({ locomotion: { gait: 'walk', distance: 0, discontinuity: 0 } });

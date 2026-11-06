@@ -1,0 +1,62 @@
+{
+  "recordedAt": "2026-11-04T23:47:00.293Z",
+  "baseCommit": "98416654072a3e4a1bfe142804f6e0c2356b29ef",
+  "changed": [
+    "render/packet share revision selection; exact N-1 packet, overview and map provenance",
+    "First revision renders selected level initial draft; new no longer caches village-only baseline",
+    "Before image participates in render manifest and viewed gate; packaging rechecks predecessor and target",
+    "README and ADR039 describe comparison source; existing maps, passes, packets and approvals untouched"
+  ],
+  "evidence": {
+    "worldforge": {
+      "command": "python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/world/tools/worldlib -p worldforge_selftest.py",
+      "passed": 27,
+      "seconds": 48.973,
+      "log": {
+        "path": "artifacts/c32-worldforge-tests.log",
+        "sha256": "e9891217c422c52a6b14e30c603619956c2e553e7814735f33aed16e9e757111"
+      }
+    },
+    "terrain": {
+      "passed": 5,
+      "seconds": 0.198,
+      "log": {
+        "path": "artifacts/c32-terrain-tests.log",
+        "sha256": "a4e3014c7d62efca551aa9f441aa793486328f1fb8b6f174eb526d68b1d30e23"
+      }
+    },
+    "worldCheck": {
+      "command": "npm run check:world -- --region aqualia --level aqualia_village",
+      "result": "candidate;152 placements; Riverlands excluded",
+      "log": {
+        "path": "artifacts/c32-world-check.log",
+        "sha256": "5c2422d3a68fed1e9d5e60599c91ba09461b96791c8a9c7dbcee5a421eb85abd"
+      }
+    },
+    "historicalParent": {
+      "path": "art/review/world-aqualia-aqualia_riverlands-2/packet.json",
+      "sha256": "f83a90ae734f82494d79f2d53ea0ced3910f375c4f74ce1c02eaba841b4872d8"
+    },
+    "historicalOverview": {
+      "path": "art/review/world-aqualia-aqualia_riverlands-2/overview.png",
+      "sha256": "6dc24989b15fa96c20f47949e9014c13427d2031131882118701bae040596ef0"
+    },
+    "realRiverlandsLineage": {
+      "path": "artifacts/c32-riverlands-lineage.json",
+      "sha256": "436181e06ed944c97df66c5fa1edfc460905081f8da03b930c0c1287726a58d5"
+    },
+    "format": {
+      "path": "artifacts/c32-format.log",
+      "sha256": "d4131f633fb8c4fb0fc6b4d858663c406522b33771b6fc8ae8793f9bce9a7b40"
+    },
+    "hygiene": {
+      "path": "artifacts/c32-hygiene.log",
+      "sha256": "1272532a4e668c1a91ef2c831d5dac2dfad27b3a95bb4b0defc59211d4ac9914"
+    }
+  },
+  "gaps": [
+    "Real Riverlands revision3 export and every-image inspection require machine A/blender; not yet claimed",
+    "Synthetic PNG/receipt fixtures test tooling; they are not visual acceptance",
+    "No layout, dressing, gameplay activation or art approval"
+  ]
+}

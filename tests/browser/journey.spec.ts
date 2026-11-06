@@ -5,27 +5,68 @@ import { NavigationService } from '../../src/domain/navigation';
 
 const body = (save: GameSave, id = 0) => save.entities.records.find((e) => e.id === id)!;
 
-async function mockOllama(page: Page, valid = true): Promise<void> {
+async function mockOllama(
+  page: Page,
+  valid = true,
+  onRecall?: (grounded: boolean) => void,
+): Promise<void> {
   await page.route('http://127.0.0.1:11434/**', async (route) => {
     const data = route.request().postDataJSON() as {
-      format?: { properties?: { ready?: object } };
+      format?: { properties?: { ready?: object; gist?: object; operations?: object } };
+      messages?: { content: string }[];
     } | null;
+    const recall = data?.messages?.at(-1)?.content === 'What plant do I like?';
+    if (recall)
+      onRecall?.(
+        data!.messages!.some(
+          (m) => m.content.startsWith('core:') && m.content.includes('marsh lavender'),
+        ),
+      );
     const body = route.request().url().endsWith('/api/tags')
-      ? { models: [{ name: 'qwen2.5:3b', size: 1900000000 }] }
+      ? { models: [{ name: 'gemma4-abliterated:26b', size: 1900000000 }] }
       : {
           message: {
             content: JSON.stringify(
               data?.format?.properties?.ready
                 ? { ready: valid }
-                : {
-                    dialogue:
-                      'I can offer a few sunberries. I will leave them nearby when we finish talking.',
-                    emotion: 'warm',
-                    action: { type: 'DROP_GIFT', itemId: 'berries' },
-                  },
+                : data?.format?.properties?.operations
+                  ? {
+                      operations: [
+                        {
+                          op: 'ADD',
+                          type: 'semantic',
+                          text: 'Player says they like marsh lavender.',
+                          subjects: ['player'],
+                          importance: 7,
+                        },
+                      ],
+                      blocks: [{ block: 'player', value: 'Player likes marsh lavender.' }],
+                    }
+                  : recall
+                    ? {
+                        dialogue: 'You like marsh lavender.',
+                        emotion: 'warm',
+                        action: { type: 'NONE' },
+                      }
+                    : data?.format?.properties?.gist
+                      ? {
+                          gist: 'We discussed the river and a gift.',
+                          playerAsked: ['A gift'],
+                          villagerPromised: ['Berries after conversation'],
+                          decided: [],
+                          open: [],
+                          mood: 'warm',
+                        }
+                      : {
+                          dialogue:
+                            'I can offer a few sunberries. I will leave them nearby when we finish talking.',
+                          emotion: 'warm',
+                          action: { type: 'DROP_GIFT', itemId: 'berries' },
+                        },
             ),
           },
           eval_count: 32,
+          done: true,
         };
     await route.fulfill({
       status: 200,
@@ -49,9 +90,16 @@ async function inventory(page: Page): Promise<void> {
 
 async function enter(page: Page): Promise<void> {
   await page.goto('/?test=1');
+  await expect(page.locator('#model')).toHaveValue('gemma4-abliterated:e4b');
+  // This fixture deliberately exercises the selectable larger model and missing-background fallback.
+  await page.getByRole('button', { name: 'Find models' }).click();
+  await expect(page.locator('#model')).toHaveValue('gemma4-abliterated:26b');
   await page.getByRole('button', { name: 'Connect & begin journey' }).click();
   await expect(page.locator('#setup-dialog')).not.toBeVisible({ timeout: 30_000 });
   await expect(page.locator('#location-title')).toContainText('Aqualia');
+  await expect(page.locator('#toast')).toContainText(
+    'Background model gemma4-abliterated:e4b is missing. Using gemma4-abliterated:26b.',
+  );
 }
 async function worldSession(page: Page): Promise<string> {
   return page.evaluate(
@@ -87,7 +135,10 @@ async function checkpoint(page: Page): Promise<GameSave> {
 test('full world, movement, grounded dialogue, save and resume', async ({ page }) => {
   const errors: string[] = [];
   page.on('pageerror', (error) => errors.push(error.message));
-  await mockOllama(page);
+  let recalledFromCore = false;
+  await mockOllama(page, true, (grounded) => {
+    recalledFromCore = grounded;
+  });
   await enter(page);
   const initial = await checkpoint(page);
   expect(initial.npcs).toHaveLength(30);
@@ -145,10 +196,86 @@ test('full world, movement, grounded dialogue, save and resume', async ({ page }
   await page.getByLabel('Your message').fill('Could you offer a gift?');
   await page.getByRole('button', { name: 'Send ↗' }).click();
   await expect(page.locator('#staged-note')).toBeVisible();
+  // C24: keep the worker transcript while bounding frame traffic through a long conversation.
+  for (let turn = 0; turn < 30; turn++) {
+    await page.evaluate(async (n) => {
+      const api = (
+        window as unknown as { __hearthwild: { command(c: object): Promise<{ ok: boolean }> } }
+      ).__hearthwild;
+      const result = await api.command({
+        type: 'dialogue',
+        text: `Turn ${n}: ${'We spoke about the river and the village. '.repeat(18)}`,
+      });
+      if (!result.ok) throw Error('Long conversation refused');
+    }, turn);
+    await expect
+      .poll(() =>
+        page.evaluate((n) => {
+          const api = (
+            window as unknown as {
+              __hearthwild: {
+                frame(): {
+                  dialogue: {
+                    pendingJob: string | null;
+                    lines: { speaker: string; text: string }[];
+                  };
+                };
+              };
+            }
+          ).__hearthwild;
+          const dialogue = api.frame().dialogue;
+          return (
+            dialogue.pendingJob === null &&
+            dialogue.lines.some(
+              (line) => line.speaker === 'player' && line.text.startsWith(`Turn ${n}:`),
+            ) &&
+            dialogue.lines.at(-1)?.speaker === 'npc'
+          );
+        }, turn),
+      )
+      .toBe(true);
+  }
+  const contextProof = await page.evaluate(() => {
+    const f = (
+      window as unknown as {
+        __hearthwild: {
+          frame(): {
+            dialogue: { lines: unknown[] };
+            performance: { context: { tokens: number; budget: number; compactions: number } };
+          };
+        };
+      }
+    ).__hearthwild.frame();
+    return { lines: f.dialogue.lines.length, ...f.performance.context };
+  });
+  expect(contextProof.lines).toBeLessThanOrEqual(32);
+  expect(contextProof.tokens).toBeLessThanOrEqual(contextProof.budget);
+  expect(contextProof.compactions).toBeGreaterThan(0);
+
   expect((await checkpoint(page)).drops).toHaveLength(0);
   await page.getByRole('button', { name: 'Finish conversation' }).click();
   await expect(page.locator('#conversation-dialog')).not.toBeVisible();
   await expect.poll(async () => (await checkpoint(page)).drops.length).toBe(1);
+  await expect
+    .poll(async () =>
+      (await checkpoint(page)).npcs.some((n) => n.memory.core.player.includes('marsh lavender')),
+    )
+    .toBe(true);
+  const rememberedNpc = (await checkpoint(page)).npcs.find((n) =>
+    n.memory.core.player.includes('marsh lavender'),
+  )!;
+  await page.evaluate(async (npcId) => {
+    const api = (
+      window as unknown as { __hearthwild: { command(c: object): Promise<{ ok: boolean }> } }
+    ).__hearthwild;
+    if (!(await api.command({ type: 'interact', npcId })).ok)
+      throw Error('Second conversation did not open');
+    await api.command({ type: 'dialogue', text: 'What plant do I like?' });
+  }, rememberedNpc.profileId);
+  await expect(page.locator('#conversation-dialog')).toContainText('You like marsh lavender.');
+  expect(recalledFromCore).toBe(true);
+  await page.getByRole('button', { name: 'Finish conversation' }).click();
+
   await page.getByRole('button', { name: 'Save journey' }).click();
   await expect(page.locator('#toast')).toContainText('saved');
   const beforeMove = body(await checkpoint(page));
@@ -207,6 +334,8 @@ test('full world, movement, grounded dialogue, save and resume', async ({ page }
 test('required AI handshake prevents entry when model validation fails', async ({ page }) => {
   await mockOllama(page, false);
   await page.goto('/');
+  await page.getByRole('button', { name: 'Find models' }).click();
+  await expect(page.locator('#model')).toHaveValue('gemma4-abliterated:26b');
   await page.getByRole('button', { name: 'Connect & begin journey' }).click();
   await expect(page.locator('#setup-status')).toContainText('did not pass');
   await expect(page.locator('#setup-dialog')).toBeVisible();
@@ -461,6 +590,12 @@ test('human food, accelerated sleep, emergency waking, retaliation and predation
     voluntaryRest: 1,
     commitUntil: hunt.elapsedSeconds + 100,
   });
+  // The C13 brain wakes and evades threats. This hunt deliberately uses exhausted,
+  // injured prey, and relocates both home fallbacks with the synthetic scenario.
+  Object.assign(prey, { food: 0.1, water: 0.1, rest: 0.1, cleanliness: 0.1, recreation: 0.1 });
+  hunt.combat.minds.records = hunt.combat.minds.records.filter(
+    (r) => r.id !== hunter.id && r.id !== prey.id,
+  );
   await importScenario(page, hunt);
   await expect
     .poll(async () => (await checkpoint(page)).carrion.some((c) => c.sourceId === prey.id))

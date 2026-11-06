@@ -142,7 +142,7 @@ const authored: readonly (readonly Persona[])[] = [
       'ferry keeper',
       'Dry humor, careful listener, reliable in storms.',
       'A safe crossing is worth waiting for.',
-      'Neris has ferried three generations across the river. She notices migration changes early and keeps an eye on young travelers.',
+      'Neris has ferried three generations across the river. She notices migration changes early and keeps an eye on young travelers. At home she likes to write a short tide notice for her table, using WRITE_NOTE when she has something grounded to share.',
       'steamshell',
     ],
     [
@@ -192,7 +192,7 @@ const authored: readonly (readonly Persona[])[] = [
       'wetland painter',
       'Dreamy, perceptive, surprisingly concise.',
       'Attention is a gift anyone can give.',
-      'Lark paints the same river bend every season. They host quiet sketching evenings and hope to paint the mountains without losing the feeling of home.',
+      'Lark paints the same river bend every season. They host quiet sketching evenings and hope to paint the mountains without losing the feeling of home. At home they keep a sketch diary and like to append a short WRITE_PAGE about what they noticed, at most once a day.',
       null,
     ],
     [

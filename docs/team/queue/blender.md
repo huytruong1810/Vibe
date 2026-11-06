@@ -42,7 +42,7 @@ B0 is standing.
      - `item:hatchet` (`2026-11-05-item-hatchet`, digest `e15899a8...`)
        _(Note: leave `item-copper-sword.json` and `item-shortbow.json` at their `2026-11-04` staged packets until `C36` lands)._
 - done when: all 45 approved staging JSONs (8 creatures + 11 humans + 7 held items + 5 environments + 11 human faces + 3 creature faces) are in `art/source/staging/blender/` bound to their active `director-approved` records
-- evidence: art/source/staging/blender/*.json (90 files staged: 19 bodies + 19 faces + 7 items + 45 environments); docs/team/comms/director/approvals/*.md.
+- evidence: art/source/staging/blender/_.json (90 files staged: 19 bodies + 19 faces + 7 items + 45 environments); docs/team/comms/director/approvals/_.md.
 
 ### B29 · Creature face decals (C3b) on the 8 approved creature bodies
 
@@ -58,7 +58,7 @@ B0 is standing.
      - Re-run `uv run --project art/source/forge python art/source/forge/forge.py faces --asset <id>` on `rivallie`, `bramblefang`, `mireling`, `npc:oren`, and `npc:reed` against their `2026-11-05` body packets so `faces.json` records the `2026-11-05` `bodyPacketDigest` and `bodyManifestSha256`.
   3. Post all new face packet paths (`8` creatures + `npc:oren` + `npc:reed`) `--to-visitor-communicator--` for acting-director approval (`V5`), then run `forge.py publish --faces` so `art/source/staging/blender/*-faces.json` binds to the active `2026-11-05` bodies.
 - done when: all 8 creature face packets reach `status: candidate` (`0` idle hidden frames) on the latest approved bodies and are inspected per `PRD-5`
-- evidence: art/source/staging/blender/*-faces.json (19 files staged); docs/team/comms/director/approvals/*--2026-11-05-*-faces-*.md; commits `6e283fb9`, `d97206ca`.
+- evidence: art/source/staging/blender/_-faces.json (19 files staged); docs/team/comms/director/approvals/_--2026-11-05-_-faces-_.md; commits `6e283fb9`, `d97206ca`.
 
 ## Next (Quality Re-bakes, Icons, Portraits, Flora & World Dressing)
 
@@ -84,7 +84,7 @@ B0 is standing.
 ### B24 · Flora in three states (environment kind)
 
 - status: done (all 18 flora sprites director-approved in 2026-11-05 records and published into art/source/staging/blender/)
-- evidence: docs/team/comms/director/approvals/env-flora-*--2026-11-05-env-flora-*.md; art/source/staging/blender/env-flora-*.json (18 files staged).
+- evidence: docs/team/comms/director/approvals/env-flora-_--2026-11-05-env-flora-_.md; art/source/staging/blender/env-flora-*.json (18 files staged).
 
 ### B26 · Dress the village and the Riverlands with the approved B5 kit
 
@@ -102,7 +102,7 @@ B0 is standing.
   - [x] riverlands: willow (Lark's Bend), Kite Oak, willow footbridge, ferry bell post, fungi ring, sunken gauge post, drowned tree, warm-spring rim rocks;
   - [x] kit pieces reused everywhere: boardwalk straight/corner/end, lantern post, fence, crate and barrel, reed clump, rock large/small.
 - done when: a packet per asset, each `candidate`, posted `--to-visitor-communicator--`
-- evidence: docs/team/comms/director/approvals/env-*--2026-11-05-env-*.md; art/source/staging/blender/env-*.json (18 files staged).
+- evidence: docs/team/comms/director/approvals/env-_--2026-11-05-env-_.md; art/source/staging/blender/env-*.json (18 files staged).
 
 ### B18 · Art for notes, books and paintings
 

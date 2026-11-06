@@ -7,7 +7,9 @@ from __future__ import annotations
 import sys
 import tempfile
 import unittest
+import json
 from pathlib import Path
+from unittest.mock import patch
 
 from PIL import Image
 
@@ -19,7 +21,6 @@ CV = forge.spec("render_spec")["canvases"]["layer.face"]
 PAL = forge.spec("palette")
 ANCHOR = {"x": CV["anchor"][0] * 2, "y": CV["anchor"][1] * 2}
 IMAGES = {(e, f): F.decal(e, f, PAL, CV) for e in F.EXPRESSIONS for f in F.FACINGS}
-COMPACT = {(e, f): F.compact_decal(e, f, PAL, CV) for e in F.EXPRESSIONS for f in F.FACINGS}
 
 
 def packet(tmp: Path, boxes: dict) -> dict:
@@ -35,15 +36,24 @@ def packet(tmp: Path, boxes: dict) -> dict:
 
 
 class CreatureFaces(unittest.TestCase):
+    def test_body_approval_lookup_skips_superseded_pointer(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            approvals = root / "approvals"
+            approvals.mkdir()
+            for name, extra in (("a", "superseded-by: newer.md\n"), ("b", "")):
+                packet_dir = root / name
+                packet_dir.mkdir()
+                (packet_dir / "review.json").write_text(json.dumps({"sourceDigest": name * 64}))
+                (approvals / f"c--{name}.md").write_text(
+                    f"---\nasset: c\ndecision: director-approved\npacket: {name}\npacketDigest: {name * 64}\n{extra}---\n")
+            with patch.object(forge, "REPO", root), patch.object(forge.core, "APPROVALS", approvals):
+                self.assertEqual(forge.approval_for("c"), (approvals / "c--b.md", root / "b"))
+
     def reg(self, boxes, default=(0, 6)):
         with tempfile.TemporaryDirectory() as d:
             m = packet(Path(d), boxes)
             return F.register_frames(m, IMAGES, ANCHOR, F.EXPRESSIONS, Path(d), default)[0], m
-
-    def reg3(self, boxes, default=(0, 6), facing_pos=None):
-        with tempfile.TemporaryDirectory() as d:
-            m = packet(Path(d), boxes)
-            return F.register_frames(m, IMAGES, ANCHOR, F.EXPRESSIONS, Path(d), default, compact=COMPACT)[:2]
 
     def test_a_head_under_the_socket_registers_at_the_default_offset(self):
         table, _ = self.reg({"c:idle:s:0": (30, 30, 82, 80)})
@@ -59,31 +69,36 @@ class CreatureFaces(unittest.TestCase):
         table, _ = self.reg({"c:strike:s:0": (50, 36, 60, 44)})
         self.assertIsNone(table["c:strike:s:0"])
 
-    def test_horizontal_offset_mirrors_for_west_facings(self):
-        # a head box hugging the east side of the socket: only a positive dx fits facing e, only a negative one facing w
-        box = (56 - 8, 30, 56 + 30, 80)
-        e, _ = self.reg3({"c:idle:e:0": box}, default=(4, 6))
-        w, _ = self.reg3({"c:idle:w:0": (56 - 30, 30, 56 + 8, 80)}, default=(4, 6))
-        self.assertGreater(e["c:idle:e:0"][0], 0)
-        self.assertLess(w["c:idle:w:0"][0], 0)
-
-    def test_a_head_too_small_for_the_full_decal_falls_back_to_eyes_only(self):
-        # the full decal is 16 px tall; this head is a 15 px band, enough for the eyes and brows only
-        table, eyes = self.reg3({"c:idle:s:0": (40, 30, 76, 46)})
-        self.assertIsNone(table["c:idle:s:0"])
-        self.assertIn("c:idle:s:0", eyes)
-
-    def test_compact_expressions_stay_distinct_in_every_facing(self):
-        self.assertTrue(F.distinctness_check(COMPACT, F.EXPRESSIONS)["pass"])
-
-    def test_eyes_only_frames_count_as_shown_for_coverage(self):
-        table = {f"c:idle:s:{i}": None for i in range(3)}
-        self.assertFalse(F.coverage_check(table)["pass"])
-        self.assertTrue(F.coverage_check(table, {k: [0, 6] for k in table})["pass"])
-
     def test_back_facings_are_not_registered(self):
         table, _ = self.reg({"c:idle:n:0": (30, 30, 82, 80)})
         self.assertEqual(table, {})
+
+    def test_horizontal_recipe_offset_mirrors_west_and_southwest(self):
+        table, _ = self.reg({f"c:idle:{f}:0": (15, 15, 100, 100) for f in F.FACINGS}, (-6, 8))
+        for f in F.FACINGS:
+            self.assertEqual(table[f"c:idle:{f}:0"], [6 if f in ("w", "sw") else -6, 8])
+
+    def test_compact_profiles_fit_a_narrow_interior_without_changing_canvas(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            m = packet(root, {"c:idle:e:0": (55, 33, 61, 60), "c:idle:w:0": (55, 33, 61, 60)})
+            original = dict(IMAGES)
+            table = F.register_profiles(m, original, ANCHOR, F.EXPRESSIONS, root, (0, 6), PAL, CV)
+            self.assertTrue(all(off is not None for off in table.values()))
+            self.assertTrue(F.distinctness_check(original, F.EXPRESSIONS)["pass"])
+            for f in ("e", "w"):
+                self.assertEqual(original[("neutral", f)].size, IMAGES[("neutral", f)].size)
+                for e in F.EXPRESSIONS:
+                    self.assertLessEqual(original[(e, f)].getbbox()[2] - original[(e, f)].getbbox()[0], 4)
+
+    def test_compact_profiles_do_not_replace_faces_that_already_fit(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            m = packet(root, {f"c:idle:{f}:0": (15, 15, 100, 100) for f in F.FACINGS})
+            images = dict(IMAGES)
+            F.register_profiles(m, images, ANCHOR, F.EXPRESSIONS, root, (0, 6), PAL, CV)
+            self.assertEqual({k: v.tobytes() for k, v in images.items()},
+                             {k: v.tobytes() for k, v in IMAGES.items()})
 
     def test_coverage_never_hides_idle_and_caps_the_rest(self):
         self.assertTrue(F.coverage_check({f"c:run:s:{i}": [0, 6] for i in range(9)} | {"c:run:s:9": None})["pass"])

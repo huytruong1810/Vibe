@@ -1,15 +1,26 @@
+import {
+  MindSnapshotSchema,
+  emptyMinds,
+  initialMindRecord,
+  validateMindState,
+} from './creature-minds';
+import { LiteracySnapshotSchema, seedLegacyDiary } from './literacy';
+import { MemoryStateSchema, migrateMemory } from './memory';
 import { z } from 'zod';
-import { ITEMS, ItemIdSchema } from '../content/definitions';
+import { ITEMS, ItemIdSchema, NPC_PROFILES } from '../content/definitions';
 import { GameSaveV3Schema, migrateSaveV3, type GameSaveV3 } from './save-v3';
 import { EquipmentService, GARMENT_SLOTS } from './equipment';
 import { TwoSlotInventory } from './inventory';
-import { SceneRegistry, sceneSaveLayouts } from './scenes';
+import { SceneRegistry, sceneSaveLayouts, artifactDisplaySpec } from './scenes';
+import { ArtifactIdSchema, ArtifactRecordsSchema } from './artifacts';
 import { ResourceStore } from './resources';
 import { WorldGenerator } from './world';
 import { CONFIG } from './values';
 import { PHYSIQUES } from './physique';
 import { SPECIES } from '../content/definitions';
 import { ATTACKS, WEAPON_ATTACKS } from './combat';
+import { DirectorSnapshotSchema, DEFAULT_COMBAT_SETTINGS } from './combat-director';
+import { CREATURE_MOVES } from '../content/definitions';
 
 export { GameSaveV3Schema } from './save-v3';
 const uint = z.number().int().min(0).max(0xffffffff);
@@ -26,10 +37,12 @@ const item = z
     instance,
     originSpecies: legacy.inventory._def.items[0].unwrap().shape.originSpecies,
     charges: uint.max(12).optional(),
+    artifact: ArtifactIdSchema.optional(),
   })
   .strict();
 const nullableItem = item.nullable();
 const attack = legacy.player.shape.attack.unwrap().extend({
+  category: z.enum(['melee', 'ranged']).optional(),
   moveId: z.enum(['strike', 'element', 'sword_slash', 'spear_thrust', 'bow_shot']).optional(),
   instanceId: z
     .string()
@@ -39,6 +52,7 @@ const attack = legacy.player.shape.attack.unwrap().extend({
   released: z.boolean().optional(),
 });
 const drop = legacy.drops.element.extend({
+  artifact: ArtifactIdSchema.optional(),
   scene: sceneCode.optional(),
   instance: instance.optional(),
   charges: uint.max(12).optional(),
@@ -131,7 +145,24 @@ const projectiles = z
 export const GameSaveSchema = z
   .object({
     ...legacy,
-    version: z.literal(4),
+    version: z.literal(9),
+    literacy: LiteracySnapshotSchema,
+    npcs: z.array(legacy.npcs.element.extend({ memory: MemoryStateSchema })).min(10).max(30),
+    artifacts: ArtifactRecordsSchema,
+    artifactSequence: z.number().int().min(0).max(Number.MAX_SAFE_INTEGER),
+    placements: z
+      .array(
+        z
+          .object({
+            artifactId: ArtifactIdSchema,
+            sceneId: z.string().min(1).max(200),
+            propId: z.string().min(1).max(200),
+            slot: uint.max(511),
+            item,
+          })
+          .strict(),
+      )
+      .max(512),
     contentVersion: z.literal(3),
     worldSource: z.enum(['procedural', 'authored']).default('procedural'),
     entities: legacy.entities.extend({
@@ -140,6 +171,7 @@ export const GameSaveSchema = z
           legacy.entities.shape.records.element.extend({
             x: finite.min(0).max(CONFIG.worldSize),
             y: finite.min(0).max(CONFIG.worldSize),
+            bondHearts: finite.min(0).max(10),
             scene: sceneCode,
             heightMeters: finite.min(0.1).max(4),
             massKg: finite.min(0.2).max(1000),
@@ -151,13 +183,15 @@ export const GameSaveSchema = z
     }),
     player: legacy.player.extend({ attack: attack.nullable(), guarding: z.boolean().optional() }),
     inventory: z.tuple([nullableItem, nullableItem]),
-    npcs: z.array(legacy.npcs.element).min(10).max(30),
     equipment,
     scenes,
     drops: z.array(drop).max(512),
     carrion: z.array(carrion).max(CONFIG.creatureCapacity * 2),
     supplies: z.array(legacy.supplies.element.extend({ scene: sceneCode.optional() })).length(9),
     combat: legacy.combat.extend({
+      minds: MindSnapshotSchema,
+      failedHunts: z.array(z.tuple([uint, uint])).max(CONFIG.creatureCapacity),
+      director: DirectorSnapshotSchema,
       attacks: z.array(z.tuple([uint, attack])).max(CONFIG.creatureCapacity + 31),
       projectiles,
     }),
@@ -177,6 +211,84 @@ export const GameSaveSchema = z
           ctx.addIssue({ code: 'custom', path: issue.path, message: issue.message });
     }
     validateV4(save, fail);
+    validateMindState(save.combat.minds, save.entities.records, save.tick, fail);
+    const artifacts = new Map(save.artifacts.map((a) => [a.id, a]));
+    const refs = new Map<string, number>();
+    const reference = (id: string | undefined, kind: string, hasInstance = true): void => {
+      if (!id) {
+        if (kind === 'painting') fail('Painting item needs an artifact');
+        return;
+      }
+      const record = artifacts.get(id);
+      if (!record || record.kind !== kind || !hasInstance)
+        fail('Dangling or mismatched artifact reference');
+      refs.set(id, (refs.get(id) ?? 0) + 1);
+    };
+    save.inventory.forEach((i) => i && reference(i.artifact, i.id));
+    const day = Math.floor(save.elapsedSeconds / CONFIG.daySeconds);
+    for (const state of save.literacy) {
+      state.hands.forEach((i) => reference(i.artifact, i.id));
+      if (
+        [state.readDay, state.noteDay, state.pageDay].some((d) => d > day) ||
+        (state.readDay === -1 && state.reads !== 0)
+      )
+        fail('Invalid literacy quota day');
+      const next = state.continuation;
+      if (next) {
+        const record = artifacts.get(next.artifactId),
+          length =
+            record?.kind === 'book'
+              ? record.pages.length
+              : record?.kind === 'note'
+                ? record.lines.length
+                : 0;
+        if (
+          !record ||
+          record.kind === 'painting' ||
+          (record.kind === 'book') !== (next.kind === 'pages') ||
+          next.revision > record.revision ||
+          next.next[0] > next.next[1] ||
+          next.next[1] - next.next[0] > (next.kind === 'pages' ? 1 : 47) ||
+          next.next[0] > length ||
+          (next.kind === 'lines' && next.offset !== 0)
+        )
+          fail('Invalid reading continuation');
+      }
+    }
+    for (const loadout of save.equipment.loadouts) {
+      Object.values(loadout.worn).forEach((i) => i && reference(i.artifact, i.id));
+      loadout.combat.forEach((i) => i && reference(i.artifact, i.id));
+    }
+    [...save.drops, ...save.scenes.states.flatMap((s) => s.drops)].forEach((d) =>
+      reference(d.artifact, d.item, Boolean(d.instance)),
+    );
+    const occupied = new Set<string>();
+    for (const p of save.placements) {
+      reference(p.artifactId, p.item.id);
+      const record = artifacts.get(p.artifactId),
+        spec = artifactDisplaySpec(p.sceneId, p.propId);
+      const key = JSON.stringify([p.sceneId, p.propId, p.slot]);
+      if (
+        !save.scenes.bindings.some((b) => b.id === p.sceneId) ||
+        !spec ||
+        p.slot >= spec.slots ||
+        !record ||
+        !spec.accepts.includes(record.kind)
+      )
+        fail('Invalid artifact display destination');
+      if (p.item.artifact !== p.artifactId)
+        fail('Placement item has a mismatched artifact reference');
+      if (occupied.has(key)) fail('Duplicate artifact display slot');
+      occupied.add(key);
+    }
+    for (const a of save.artifacts) {
+      if (
+        Number(a.id.slice(4)) > save.artifactSequence ||
+        !Number.isSafeInteger(Number(a.id.slice(4)))
+      )
+        fail('Artifact allocation counter would reuse identity');
+      if (refs.get(a.id) !== 1) fail('Artifact must be referenced exactly once');
+    }
   });
 export type GameSave = z.infer<typeof GameSaveSchema>;
 
@@ -184,17 +296,42 @@ function v3Attack(value: GameSave['player']['attack']): GameSaveV3['player']['at
   return value ? { kind: value.kind, startedAt: value.startedAt, hit: value.hit } : null;
 }
 function v3Projection(save: GameSave): unknown {
-  const { equipment: _equipment, scenes: _scenes, worldSource: _worldSource, ...base } = save;
+  const {
+    equipment: _equipment,
+    scenes: _scenes,
+    worldSource: _worldSource,
+    artifacts: _artifacts,
+    placements: _placements,
+    artifactSequence: _sequence,
+    literacy: _literacy,
+    ...base
+  } = save;
   const { guarding: _guarding, ...player } = save.player;
-  const { projectiles: _projectiles, ...combat } = save.combat;
+  const {
+    projectiles: _projectiles,
+    director: _director,
+    minds: _minds,
+    failedHunts: _failedHunts,
+    ...combat
+  } = save.combat;
   const oldItem = (value: GameSave['inventory'][number]) => {
     if (!value) return null;
-    const { charges: _charges, ...old } = value;
+    const { charges: _charges, artifact: _artifact, ...old } = value;
     return old;
   };
   return {
     ...base,
     version: 3,
+    npcs: save.npcs.map((n) => ({
+      ...n,
+      memory: {
+        revision: n.memory.revision,
+        serial: n.memory.serial,
+        summary: '',
+        records: [],
+        lastReflection: n.memory.lastReflection,
+      },
+    })),
     contentVersion: 2,
     player: { ...player, attack: v3Attack(player.attack) },
     entities: {
@@ -203,6 +340,7 @@ function v3Projection(save: GameSave): unknown {
         ({
           scene: _scene,
           heightMeters: _height,
+          bondHearts: _bond,
           massKg: _mass,
           recoilX: _rx,
           recoilY: _ry,
@@ -212,7 +350,8 @@ function v3Projection(save: GameSave): unknown {
     },
     inventory: [oldItem(save.inventory[0]), oldItem(save.inventory[1])],
     drops: save.drops.map(
-      ({ scene: _scene, instance: _instance, charges: _charges, ...value }) => value,
+      ({ scene: _scene, instance: _instance, charges: _charges, artifact: _artifact, ...value }) =>
+        value,
     ),
     carrion: save.carrion.map(({ scene: _scene, ...value }) => value),
     supplies: save.supplies.map(({ scene: _scene, ...value }) => value),
@@ -224,6 +363,56 @@ function v3Projection(save: GameSave): unknown {
 
 function validateV4(save: GameSave, fail: (message: string) => void): void {
   const records = new Map(save.entities.records.map((r) => [r.id, r]));
+  const d = save.combat.director,
+    heldActors = new Set<number>(),
+    waitingActors = new Set<number>(),
+    grantTargets = new Set<number>();
+  const attacks = new Map(save.combat.attacks),
+    pursuits = new Map(save.combat.pursuits);
+  for (const [actor, target, category] of d.holds) {
+    const a = records.get(actor),
+      b = records.get(target),
+      action = attacks.get(actor);
+    if (
+      heldActors.has(actor) ||
+      !a ||
+      !b ||
+      !action ||
+      pursuits.get(actor)?.target !== target ||
+      a.scene !== b.scene
+    )
+      fail('Invalid director hold');
+    if (a && action) {
+      const expected =
+        action.category ??
+        (action.moveId === 'bow_shot'
+          ? 'ranged'
+          : action.moveId && action.moveId !== 'element'
+            ? 'melee'
+            : CREATURE_MOVES[SPECIES[a.species]?.id ?? 'human'].category);
+      if (category !== expected) fail('Director category disagrees with attack');
+    }
+    heldActors.add(actor);
+  }
+  for (const [actor] of attacks)
+    if (!heldActors.has(actor)) fail('Attack is missing a director hold');
+  for (const [actor, target, since] of d.waiting) {
+    if (
+      waitingActors.has(actor) ||
+      heldActors.has(actor) ||
+      !records.has(actor) ||
+      !records.has(target) ||
+      pursuits.get(actor)?.target !== target ||
+      since > save.tick
+    )
+      fail('Invalid director wait');
+    waitingActors.add(actor);
+  }
+  for (const [target, tick] of d.grants) {
+    if (grantTargets.has(target) || !records.has(target) || tick > save.tick)
+      fail('Invalid director grant time');
+    grantTargets.add(target);
+  }
   const bindings = new Map(save.scenes.bindings.map((b) => [b.code, b.id]));
   const layouts = new Map(sceneSaveLayouts().map((layout) => [layout.id, layout]));
   const codes = new Map(save.scenes.bindings.map((binding) => [binding.id, binding.code]));
@@ -282,6 +471,8 @@ function validateV4(save: GameSave, fail: (message: string) => void): void {
       fail('Animal food lost species provenance');
   };
   save.inventory.forEach(checkItem);
+  save.literacy.forEach((state) => state.hands.forEach(checkItem));
+  save.placements.forEach((p) => checkItem(p.item));
   const loadouts = new Map(save.equipment.loadouts.map((l) => [l.entityId, l]));
   const expectedHumans = save.worldSource === 'authored' ? save.npcs.length + 1 : 31;
   if (
@@ -514,6 +705,92 @@ export function migrateSave(input: unknown): GameSave {
           }),
         },
       };
+  }
+  if (candidate.version === 4) {
+    if (['artifacts', 'placements', 'artifactSequence'].some((key) => key in candidate))
+      throw Error('Save v4 cannot contain v5 artifact fields');
+    candidate = { ...candidate, version: 5, artifacts: [], placements: [], artifactSequence: 0 };
+  }
+  if (candidate.version === 5 && Array.isArray(candidate.npcs)) {
+    candidate = {
+      ...candidate,
+      version: 6,
+      npcs: candidate.npcs.map((value, i) => {
+        const n = value as Record<string, unknown>;
+        const oldMemory = legacy.npcs.element.shape.memory.parse(n.memory);
+        return { ...n, memory: migrateMemory(NPC_PROFILES[i]!, oldMemory) };
+      }),
+    };
+  }
+  if (candidate.version === 6) {
+    if (!candidate.combat || typeof candidate.combat !== 'object')
+      throw Error('Missing combat state');
+    const combat = candidate.combat as Omit<GameSave['combat'], 'director'>;
+    if ('director' in combat) throw Error('Save v6 cannot contain v7 director fields');
+    const records = (candidate.entities as GameSave['entities']).records;
+    const holds: z.infer<typeof DirectorSnapshotSchema>['holds'] = [];
+    const grants = new Map<number, number>();
+    for (const [actor, attack] of combat.attacks) {
+      const pursuit = combat.pursuits.find(([id]) => id === actor)?.[1];
+      const entity = records.find((r) => r.id === actor);
+      if (!pursuit || !entity) continue;
+      const category =
+        attack.moveId === 'bow_shot'
+          ? 'ranged'
+          : attack.moveId && attack.moveId !== 'element'
+            ? 'melee'
+            : CREATURE_MOVES[SPECIES[entity.species]?.id ?? 'rivallie'].category;
+      holds.push([actor, pursuit.target, category]);
+      grants.set(pursuit.target, Math.max(grants.get(pursuit.target) ?? 0, attack.startedAt));
+    }
+    candidate = {
+      ...candidate,
+      version: 7,
+      combat: {
+        ...combat,
+        director: {
+          settings: structuredClone(DEFAULT_COMBAT_SETTINGS),
+          holds,
+          waiting: [],
+          grants: [...grants],
+        },
+      },
+    };
+  }
+  if (candidate.version === 7) {
+    const combat = candidate.combat as Record<string, unknown>;
+    const director = combat.director as Record<string, unknown>;
+    const settings = director.settings as Record<string, unknown>;
+    const entities = candidate.entities as { records: Record<string, unknown>[] };
+    candidate = {
+      ...candidate,
+      version: 8,
+      entities: { ...entities, records: entities.records.map((r) => ({ ...r, bondHearts: 0 })) },
+      combat: {
+        ...combat,
+        failedHunts: [],
+        minds: {
+          ...emptyMinds(),
+          records: entities.records
+            .filter((r) => Number(r.species) < 8)
+            .map((r) =>
+              initialMindRecord(
+                r as unknown as Parameters<typeof initialMindRecord>[0],
+                candidate.seed as number,
+              ),
+            ),
+        },
+        director: { ...director, settings: { ...settings, reactionDelay: { min: 2, max: 4 } } },
+      },
+    };
+  }
+  if (candidate.version === 8) {
+    if ('literacy' in candidate) throw Error('Save v8 cannot contain v9 literacy fields');
+    candidate = {
+      ...seedLegacyDiary(candidate as unknown as Parameters<typeof seedLegacyDiary>[0]),
+      version: 9,
+      literacy: [],
+    };
   }
   const result = GameSaveSchema.safeParse(candidate);
   if (!result.success)

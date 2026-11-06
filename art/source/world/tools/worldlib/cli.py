@@ -22,7 +22,7 @@ from .project import (
 )
 from .passes import apply_pass
 from .checks import check
-from .review import render, packet, draw_level, PreviewArt, dependencies, require_viewed
+from .review import render, packet, dependencies, require_viewed, next_revision
 
 
 def layout_approval(project, level):
@@ -72,8 +72,8 @@ def main(argv):
         p.add_argument("--level")
         if name == "check":
             p.add_argument("--project", help="Read-only alternate project; receipts remain isolated")
-        if name == "packet":
-            p.add_argument("--revision", type=int, default=1)
+        if name in ("render", "packet"):
+            p.add_argument("--revision", type=int, help="Target revision; defaults to next unused revision")
     args = parser.parse_args(argv)
     try:
         import worldforge
@@ -109,15 +109,6 @@ def main(argv):
                 WORK / "authoring-receipt.json",
                 {"projectSha256": sha(PROJECT.read_bytes()), "command": "new"},
             )
-            work = WORK / region / "aqualia_village"
-            work.mkdir(parents=True, exist_ok=True)
-            art = PreviewArt()
-            image = draw_level(project["levels"][0], art)
-            before = image.resize((image.width // 4, image.height // 4))
-            before.save(work / "before-overview.png")
-            image.close()
-            before.close()
-            art.close()
             print(
                 f"Created draft {PROJECT}; both levels need authoring. digest={sha(project)}"
             )
@@ -158,7 +149,7 @@ def main(argv):
             )
             print(f"Applied {edit['id']}; digest={sha(result)}")
         elif args.command == "render":
-            manifest = render(project, plan, level, work)
+            manifest = render(project, plan, level, work, args.revision)
             print(
                 f"Rendered {len(manifest['images'])} images in {work}; inspect all before packet"
             )
@@ -176,11 +167,12 @@ def main(argv):
             )
             return 0 if report["status"] == "candidate" else 1
         elif args.command == "packet":
-            if args.revision < 1:
+            revision = next_revision(plan, level) if args.revision is None else args.revision
+            if revision < 1:
                 raise WorldError("Revision must be positive")
-            output = REPO / f"art/review/world-{region}-{level}-{args.revision}"
+            output = REPO / f"art/review/world-{region}-{level}-{revision}"
             report = read(work / "qa_report.json")
-            print(packet(project, plan, level, work, output, report))
+            print(packet(project, plan, level, work, output, report, revision))
         else:
             report = check(project, plan, level)
             approval = layout_approval(project, level)
@@ -232,6 +224,8 @@ def main(argv):
                 not (work / "render.json").exists()
                 or read(work / "render.json")["projectDigest"] != sha(project)
                 or read(work / "render.json")["dependenciesDigest"] != dependencies()
+                or read(work / "render.json").get("revision") != next_revision(plan, level)
+                or "comparison" not in read(work / "render.json")
             ):
                 print(
                     "NEXT: render, inspect every image, record SHA-bound viewed receipts, then packet"

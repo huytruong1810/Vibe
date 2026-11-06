@@ -127,9 +127,9 @@ The recommended `qwen2.5:3b` was not installed on this machine and was not downl
 - `gemma4-abliterated:e4b` (about 9 GB): first cold readiness attempt timed out; a warm structured readiness check succeeded, but a character dialogue exceeded the 45-second interactive deadline.
 - `qwen3.6:35b` (about 22 GB): real structured readiness succeeded in approximately 52.8 seconds, but character dialogue exceeded the 45-second deadline.
 
-These are **failed interactive-latency qualifications**, not evidence that the adapter or fallback can guarantee lively real-time generative dialogue on this hardware/model combination. The startup gate, timeout, and active-play fallback are tested. Qualify an installed smaller model with `npm run test:ollama -- MODEL` before accepting LLM latency as production-ready.
+These are **failed interactive-latency qualifications**, not evidence that the adapter or fallback can guarantee lively real-time generative dialogue on this hardware/model combination. The startup gate, timeout, and active-play fallback are tested. Qualify an installed smaller model with `npm run test:ollama -- MODEL` before accepting the model against interactive latency targets.
 
-The current smoke outcome is written to `artifacts/ollama-smoke.json`. It records failures explicitly. A successful shape check alone does not prove persona consistency, accurate memory, useful plans, or multi-day social believability.
+Current smoke outcomes default to the OS temp directory's `hearthwild-ollama-smoke/ollama-smoke.json` (or `conversation-smoke.json` with `--conversation`); override the directory with `OLLAMA_SMOKE_DIR`. See [operations](operations.md#conversation-context-and-compaction-c24) for B0. It records failures explicitly. A successful shape check alone does not prove persona consistency, accurate memory, useful plans, or multi-day social believability.
 
 ## Manual quality scenarios
 

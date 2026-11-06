@@ -1,0 +1,2135 @@
+{
+    "refreshedAt":  "2026-11-05T20:28:58.8215665Z",
+    "jobSets":  [
+                    {
+                        "annotations":  [
+
+                                        ],
+                        "runId":  42092547479,
+                        "jobs":  [
+                                     {
+                                         "id":  127474081244,
+                                         "run_id":  42092547479,
+                                         "workflow_name":  "Reference game checks",
+                                         "head_branch":  "eng/hd-presentation",
+                                         "run_url":  "https://api.github.com/repos/huytruong1810/Vibe/actions/runs/42092547479",
+                                         "run_attempt":  1,
+                                         "node_id":  "CR_kwDOVcnNes8AAAAdrgwd3A",
+                                         "head_sha":  "f46fb6dca5009183fa074cfd06c000f216ac9806",
+                                         "url":  "https://api.github.com/repos/huytruong1810/Vibe/actions/jobs/127474081244",
+                                         "html_url":  "https://github.com/huytruong1810/Vibe/actions/runs/42092547479/job/127474081244",
+                                         "status":  "completed",
+                                         "conclusion":  "success",
+                                         "created_at":  "2026-11-05T19:18:02Z",
+                                         "started_at":  "2026-11-05T19:18:05Z",
+                                         "completed_at":  "2026-11-05T19:23:33Z",
+                                         "name":  "checks",
+                                         "steps":  [
+                                                       {
+                                                           "name":  "Set up job",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  1,
+                                                           "started_at":  "2026-11-05T19:18:07Z",
+                                                           "completed_at":  "2026-11-05T19:18:08Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/checkout@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  2,
+                                                           "started_at":  "2026-11-05T19:18:08Z",
+                                                           "completed_at":  "2026-11-05T19:18:18Z"
+                                                       },
+                                                       {
+                                                           "name":  "Classify source-only art pull request",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  3,
+                                                           "started_at":  "2026-11-05T19:18:18Z",
+                                                           "completed_at":  "2026-11-05T19:18:18Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/setup-node@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  4,
+                                                           "started_at":  "2026-11-05T19:18:18Z",
+                                                           "completed_at":  "2026-11-05T19:18:22Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm ci",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  5,
+                                                           "started_at":  "2026-11-05T19:18:22Z",
+                                                           "completed_at":  "2026-11-05T19:18:50Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/setup-python@v5",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  6,
+                                                           "started_at":  "2026-11-05T19:18:50Z",
+                                                           "completed_at":  "2026-11-05T19:18:51Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m pip install uv==0.13.6",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  7,
+                                                           "started_at":  "2026-11-05T19:18:51Z",
+                                                           "completed_at":  "2026-11-05T19:18:54Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run assets:build",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  8,
+                                                           "started_at":  "2026-11-05T19:18:54Z",
+                                                           "completed_at":  "2026-11-05T19:20:29Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run check:assets",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  9,
+                                                           "started_at":  "2026-11-05T19:20:29Z",
+                                                           "completed_at":  "2026-11-05T19:20:31Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p review_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  10,
+                                                           "started_at":  "2026-11-05T19:20:31Z",
+                                                           "completed_at":  "2026-11-05T19:20:31Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p finish_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  11,
+                                                           "started_at":  "2026-11-05T19:20:31Z",
+                                                           "completed_at":  "2026-11-05T19:20:33Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p human_faces_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  12,
+                                                           "started_at":  "2026-11-05T19:20:33Z",
+                                                           "completed_at":  "2026-11-05T19:20:34Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p items_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  13,
+                                                           "started_at":  "2026-11-05T19:20:34Z",
+                                                           "completed_at":  "2026-11-05T19:20:34Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p item_render_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  14,
+                                                           "started_at":  "2026-11-05T19:20:34Z",
+                                                           "completed_at":  "2026-11-05T19:20:41Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p item_orient_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  15,
+                                                           "started_at":  "2026-11-05T19:20:41Z",
+                                                           "completed_at":  "2026-11-05T19:20:41Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p gaits_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  16,
+                                                           "started_at":  "2026-11-05T19:20:41Z",
+                                                           "completed_at":  "2026-11-05T19:20:41Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p pixelize_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  17,
+                                                           "started_at":  "2026-11-05T19:20:41Z",
+                                                           "completed_at":  "2026-11-05T19:20:42Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p concept_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  18,
+                                                           "started_at":  "2026-11-05T19:20:42Z",
+                                                           "completed_at":  "2026-11-05T19:20:43Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p gpu_window_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  19,
+                                                           "started_at":  "2026-11-05T19:20:43Z",
+                                                           "completed_at":  "2026-11-05T19:20:43Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p portrait_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  20,
+                                                           "started_at":  "2026-11-05T19:20:43Z",
+                                                           "completed_at":  "2026-11-05T19:20:44Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p icon_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  21,
+                                                           "started_at":  "2026-11-05T19:20:44Z",
+                                                           "completed_at":  "2026-11-05T19:20:45Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p upscale_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  22,
+                                                           "started_at":  "2026-11-05T19:20:45Z",
+                                                           "completed_at":  "2026-11-05T19:20:47Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p headroom_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  23,
+                                                           "started_at":  "2026-11-05T19:20:47Z",
+                                                           "completed_at":  "2026-11-05T19:20:48Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p approval_record_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  24,
+                                                           "started_at":  "2026-11-05T19:20:48Z",
+                                                           "completed_at":  "2026-11-05T19:20:48Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p faces_creature_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  25,
+                                                           "started_at":  "2026-11-05T19:20:48Z",
+                                                           "completed_at":  "2026-11-05T19:20:49Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p publish_faces_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  26,
+                                                           "started_at":  "2026-11-05T19:20:49Z",
+                                                           "completed_at":  "2026-11-05T19:20:49Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/world/tools/worldlib -p worldforge_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  27,
+                                                           "started_at":  "2026-11-05T19:20:49Z",
+                                                           "completed_at":  "2026-11-05T19:21:34Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/world/tools/worldlib -p terrain_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  28,
+                                                           "started_at":  "2026-11-05T19:21:34Z",
+                                                           "completed_at":  "2026-11-05T19:21:35Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run node --test .agents/hooks/test/hooks.test.mjs",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  29,
+                                                           "started_at":  "2026-11-05T19:21:35Z",
+                                                           "completed_at":  "2026-11-05T19:21:42Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run check:packets",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  30,
+                                                           "started_at":  "2026-11-05T19:21:42Z",
+                                                           "completed_at":  "2026-11-05T19:21:44Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run check:world -- --region aqualia --level aqualia_village",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  31,
+                                                           "started_at":  "2026-11-05T19:21:44Z",
+                                                           "completed_at":  "2026-11-05T19:21:46Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run world:build -- --region aqualia --level aqualia_village",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  32,
+                                                           "started_at":  "2026-11-05T19:21:46Z",
+                                                           "completed_at":  "2026-11-05T19:21:47Z"
+                                                       },
+                                                       {
+                                                           "name":  "Require reproducible engineering integration bundles",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  33,
+                                                           "started_at":  "2026-11-05T19:21:47Z",
+                                                           "completed_at":  "2026-11-05T19:21:48Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run check",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  34,
+                                                           "started_at":  "2026-11-05T19:21:48Z",
+                                                           "completed_at":  "2026-11-05T19:22:58Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run format:check",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  35,
+                                                           "started_at":  "2026-11-05T19:22:58Z",
+                                                           "completed_at":  "2026-11-05T19:23:11Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run benchmark",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  36,
+                                                           "started_at":  "2026-11-05T19:23:11Z",
+                                                           "completed_at":  "2026-11-05T19:23:28Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/upload-artifact@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  37,
+                                                           "started_at":  "2026-11-05T19:23:28Z",
+                                                           "completed_at":  "2026-11-05T19:23:30Z"
+                                                       },
+                                                       {
+                                                           "name":  "Post Run actions/setup-python@v5",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  72,
+                                                           "started_at":  "2026-11-05T19:23:30Z",
+                                                           "completed_at":  "2026-11-05T19:23:30Z"
+                                                       },
+                                                       {
+                                                           "name":  "Post Run actions/setup-node@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  73,
+                                                           "started_at":  "2026-11-05T19:23:30Z",
+                                                           "completed_at":  "2026-11-05T19:23:30Z"
+                                                       },
+                                                       {
+                                                           "name":  "Post Run actions/checkout@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  74,
+                                                           "started_at":  "2026-11-05T19:23:30Z",
+                                                           "completed_at":  "2026-11-05T19:23:30Z"
+                                                       },
+                                                       {
+                                                           "name":  "Complete job",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  75,
+                                                           "started_at":  "2026-11-05T19:23:30Z",
+                                                           "completed_at":  "2026-11-05T19:23:30Z"
+                                                       }
+                                                   ],
+                                         "check_run_url":  "https://api.github.com/repos/huytruong1810/Vibe/check-runs/127474081244",
+                                         "labels":  [
+                                                        "ubuntu-latest"
+                                                    ],
+                                         "runner_id":  1000001516,
+                                         "runner_name":  "GitHub Actions 1000001516",
+                                         "runner_group_id":  0,
+                                         "runner_group_name":  "GitHub Actions"
+                                     },
+                                     {
+                                         "id":  127474081636,
+                                         "run_id":  42092547479,
+                                         "workflow_name":  "Reference game checks",
+                                         "head_branch":  "eng/hd-presentation",
+                                         "run_url":  "https://api.github.com/repos/huytruong1810/Vibe/actions/runs/42092547479",
+                                         "run_attempt":  1,
+                                         "node_id":  "CR_kwDOVcnNes8AAAAdrgwfZA",
+                                         "head_sha":  "f46fb6dca5009183fa074cfd06c000f216ac9806",
+                                         "url":  "https://api.github.com/repos/huytruong1810/Vibe/actions/jobs/127474081636",
+                                         "html_url":  "https://github.com/huytruong1810/Vibe/actions/runs/42092547479/job/127474081636",
+                                         "status":  "completed",
+                                         "conclusion":  "success",
+                                         "created_at":  "2026-11-05T19:18:02Z",
+                                         "started_at":  "2026-11-05T19:18:05Z",
+                                         "completed_at":  "2026-11-05T19:35:02Z",
+                                         "name":  "browser-journeys (2)",
+                                         "steps":  [
+                                                       {
+                                                           "name":  "Set up job",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  1,
+                                                           "started_at":  "2026-11-05T19:18:06Z",
+                                                           "completed_at":  "2026-11-05T19:18:07Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/checkout@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  2,
+                                                           "started_at":  "2026-11-05T19:18:07Z",
+                                                           "completed_at":  "2026-11-05T19:18:18Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/setup-node@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  3,
+                                                           "started_at":  "2026-11-05T19:18:18Z",
+                                                           "completed_at":  "2026-11-05T19:18:25Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm ci",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  4,
+                                                           "started_at":  "2026-11-05T19:18:25Z",
+                                                           "completed_at":  "2026-11-05T19:18:48Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/setup-python@v5",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  5,
+                                                           "started_at":  "2026-11-05T19:18:48Z",
+                                                           "completed_at":  "2026-11-05T19:18:48Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m pip install uv==0.13.6",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  6,
+                                                           "started_at":  "2026-11-05T19:18:48Z",
+                                                           "completed_at":  "2026-11-05T19:18:51Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run assets:build",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  7,
+                                                           "started_at":  "2026-11-05T19:18:51Z",
+                                                           "completed_at":  "2026-11-05T19:20:03Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run check:world -- --region aqualia --level aqualia_village",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  8,
+                                                           "started_at":  "2026-11-05T19:20:03Z",
+                                                           "completed_at":  "2026-11-05T19:20:04Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run world:build -- --region aqualia --level aqualia_village",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  9,
+                                                           "started_at":  "2026-11-05T19:20:04Z",
+                                                           "completed_at":  "2026-11-05T19:20:06Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npx playwright install --with-deps chromium",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  10,
+                                                           "started_at":  "2026-11-05T19:20:06Z",
+                                                           "completed_at":  "2026-11-05T19:28:37Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run test:browser -- --shard=2/2",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  11,
+                                                           "started_at":  "2026-11-05T19:28:37Z",
+                                                           "completed_at":  "2026-11-05T19:34:57Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/upload-artifact@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  12,
+                                                           "started_at":  "2026-11-05T19:34:57Z",
+                                                           "completed_at":  "2026-11-05T19:34:59Z"
+                                                       },
+                                                       {
+                                                           "name":  "Post Run actions/setup-python@v5",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  22,
+                                                           "started_at":  "2026-11-05T19:34:59Z",
+                                                           "completed_at":  "2026-11-05T19:34:59Z"
+                                                       },
+                                                       {
+                                                           "name":  "Post Run actions/setup-node@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  23,
+                                                           "started_at":  "2026-11-05T19:34:59Z",
+                                                           "completed_at":  "2026-11-05T19:34:59Z"
+                                                       },
+                                                       {
+                                                           "name":  "Post Run actions/checkout@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  24,
+                                                           "started_at":  "2026-11-05T19:34:59Z",
+                                                           "completed_at":  "2026-11-05T19:34:59Z"
+                                                       },
+                                                       {
+                                                           "name":  "Complete job",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  25,
+                                                           "started_at":  "2026-11-05T19:34:59Z",
+                                                           "completed_at":  "2026-11-05T19:34:59Z"
+                                                       }
+                                                   ],
+                                         "check_run_url":  "https://api.github.com/repos/huytruong1810/Vibe/check-runs/127474081636",
+                                         "labels":  [
+                                                        "ubuntu-latest"
+                                                    ],
+                                         "runner_id":  1000001517,
+                                         "runner_name":  "GitHub Actions 1000001517",
+                                         "runner_group_id":  0,
+                                         "runner_group_name":  "GitHub Actions"
+                                     },
+                                     {
+                                         "id":  127474081728,
+                                         "run_id":  42092547479,
+                                         "workflow_name":  "Reference game checks",
+                                         "head_branch":  "eng/hd-presentation",
+                                         "run_url":  "https://api.github.com/repos/huytruong1810/Vibe/actions/runs/42092547479",
+                                         "run_attempt":  1,
+                                         "node_id":  "CR_kwDOVcnNes8AAAAdrgwfwA",
+                                         "head_sha":  "f46fb6dca5009183fa074cfd06c000f216ac9806",
+                                         "url":  "https://api.github.com/repos/huytruong1810/Vibe/actions/jobs/127474081728",
+                                         "html_url":  "https://github.com/huytruong1810/Vibe/actions/runs/42092547479/job/127474081728",
+                                         "status":  "completed",
+                                         "conclusion":  "success",
+                                         "created_at":  "2026-11-05T19:18:02Z",
+                                         "started_at":  "2026-11-05T19:18:05Z",
+                                         "completed_at":  "2026-11-05T19:18:20Z",
+                                         "name":  "ecology-soak",
+                                         "steps":  [
+                                                       {
+                                                           "name":  "Set up job",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  1,
+                                                           "started_at":  "2026-11-05T19:18:06Z",
+                                                           "completed_at":  "2026-11-05T19:18:07Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/checkout@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  2,
+                                                           "started_at":  "2026-11-05T19:18:07Z",
+                                                           "completed_at":  "2026-11-05T19:18:18Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run if [ \"$EVENT\" = schedule ] || [ \"$EVENT\" = workflow_dispatch ] || ! git cat-file -e \"$BASE^{commit}\" 2\u003e/dev/null; then",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  3,
+                                                           "started_at":  "2026-11-05T19:18:18Z",
+                                                           "completed_at":  "2026-11-05T19:18:18Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/setup-node@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "skipped",
+                                                           "number":  4,
+                                                           "started_at":  "2026-11-05T19:18:18Z",
+                                                           "completed_at":  "2026-11-05T19:18:18Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm ci",
+                                                           "status":  "completed",
+                                                           "conclusion":  "skipped",
+                                                           "number":  5,
+                                                           "started_at":  "2026-11-05T19:18:18Z",
+                                                           "completed_at":  "2026-11-05T19:18:18Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run soak",
+                                                           "status":  "completed",
+                                                           "conclusion":  "skipped",
+                                                           "number":  6,
+                                                           "started_at":  "2026-11-05T19:18:18Z",
+                                                           "completed_at":  "2026-11-05T19:18:18Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/upload-artifact@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "skipped",
+                                                           "number":  7,
+                                                           "started_at":  "2026-11-05T19:18:18Z",
+                                                           "completed_at":  "2026-11-05T19:18:18Z"
+                                                       },
+                                                       {
+                                                           "name":  "Post Run actions/checkout@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  14,
+                                                           "started_at":  "2026-11-05T19:18:18Z",
+                                                           "completed_at":  "2026-11-05T19:18:18Z"
+                                                       },
+                                                       {
+                                                           "name":  "Complete job",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  15,
+                                                           "started_at":  "2026-11-05T19:18:18Z",
+                                                           "completed_at":  "2026-11-05T19:18:18Z"
+                                                       }
+                                                   ],
+                                         "check_run_url":  "https://api.github.com/repos/huytruong1810/Vibe/check-runs/127474081728",
+                                         "labels":  [
+                                                        "ubuntu-latest"
+                                                    ],
+                                         "runner_id":  1000001521,
+                                         "runner_name":  "GitHub Actions 1000001521",
+                                         "runner_group_id":  0,
+                                         "runner_group_name":  "GitHub Actions"
+                                     },
+                                     {
+                                         "id":  127474081778,
+                                         "run_id":  42092547479,
+                                         "workflow_name":  "Reference game checks",
+                                         "head_branch":  "eng/hd-presentation",
+                                         "run_url":  "https://api.github.com/repos/huytruong1810/Vibe/actions/runs/42092547479",
+                                         "run_attempt":  1,
+                                         "node_id":  "CR_kwDOVcnNes8AAAAdrgwf8g",
+                                         "head_sha":  "f46fb6dca5009183fa074cfd06c000f216ac9806",
+                                         "url":  "https://api.github.com/repos/huytruong1810/Vibe/actions/jobs/127474081778",
+                                         "html_url":  "https://github.com/huytruong1810/Vibe/actions/runs/42092547479/job/127474081778",
+                                         "status":  "completed",
+                                         "conclusion":  "success",
+                                         "created_at":  "2026-11-05T19:18:02Z",
+                                         "started_at":  "2026-11-05T19:18:05Z",
+                                         "completed_at":  "2026-11-05T19:27:02Z",
+                                         "name":  "browser-journeys (1)",
+                                         "steps":  [
+                                                       {
+                                                           "name":  "Set up job",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  1,
+                                                           "started_at":  "2026-11-05T19:18:06Z",
+                                                           "completed_at":  "2026-11-05T19:18:07Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/checkout@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  2,
+                                                           "started_at":  "2026-11-05T19:18:07Z",
+                                                           "completed_at":  "2026-11-05T19:18:16Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/setup-node@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  3,
+                                                           "started_at":  "2026-11-05T19:18:16Z",
+                                                           "completed_at":  "2026-11-05T19:18:19Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm ci",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  4,
+                                                           "started_at":  "2026-11-05T19:18:19Z",
+                                                           "completed_at":  "2026-11-05T19:18:45Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/setup-python@v5",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  5,
+                                                           "started_at":  "2026-11-05T19:18:45Z",
+                                                           "completed_at":  "2026-11-05T19:18:46Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m pip install uv==0.13.6",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  6,
+                                                           "started_at":  "2026-11-05T19:18:46Z",
+                                                           "completed_at":  "2026-11-05T19:18:49Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run assets:build",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  7,
+                                                           "started_at":  "2026-11-05T19:18:49Z",
+                                                           "completed_at":  "2026-11-05T19:20:25Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run check:world -- --region aqualia --level aqualia_village",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  8,
+                                                           "started_at":  "2026-11-05T19:20:25Z",
+                                                           "completed_at":  "2026-11-05T19:20:27Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run world:build -- --region aqualia --level aqualia_village",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  9,
+                                                           "started_at":  "2026-11-05T19:20:27Z",
+                                                           "completed_at":  "2026-11-05T19:20:29Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npx playwright install --with-deps chromium",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  10,
+                                                           "started_at":  "2026-11-05T19:20:29Z",
+                                                           "completed_at":  "2026-11-05T19:20:49Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run test:browser -- --shard=1/2",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  11,
+                                                           "started_at":  "2026-11-05T19:20:49Z",
+                                                           "completed_at":  "2026-11-05T19:26:57Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/upload-artifact@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  12,
+                                                           "started_at":  "2026-11-05T19:26:57Z",
+                                                           "completed_at":  "2026-11-05T19:26:59Z"
+                                                       },
+                                                       {
+                                                           "name":  "Post Run actions/setup-python@v5",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  22,
+                                                           "started_at":  "2026-11-05T19:26:59Z",
+                                                           "completed_at":  "2026-11-05T19:26:59Z"
+                                                       },
+                                                       {
+                                                           "name":  "Post Run actions/setup-node@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  23,
+                                                           "started_at":  "2026-11-05T19:26:59Z",
+                                                           "completed_at":  "2026-11-05T19:27:00Z"
+                                                       },
+                                                       {
+                                                           "name":  "Post Run actions/checkout@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  24,
+                                                           "started_at":  "2026-11-05T19:27:00Z",
+                                                           "completed_at":  "2026-11-05T19:27:00Z"
+                                                       },
+                                                       {
+                                                           "name":  "Complete job",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  25,
+                                                           "started_at":  "2026-11-05T19:27:00Z",
+                                                           "completed_at":  "2026-11-05T19:27:00Z"
+                                                       }
+                                                   ],
+                                         "check_run_url":  "https://api.github.com/repos/huytruong1810/Vibe/check-runs/127474081778",
+                                         "labels":  [
+                                                        "ubuntu-latest"
+                                                    ],
+                                         "runner_id":  1000001518,
+                                         "runner_name":  "GitHub Actions 1000001518",
+                                         "runner_group_id":  0,
+                                         "runner_group_name":  "GitHub Actions"
+                                     },
+                                     {
+                                         "id":  127474081837,
+                                         "run_id":  42092547479,
+                                         "workflow_name":  "Reference game checks",
+                                         "head_branch":  "eng/hd-presentation",
+                                         "run_url":  "https://api.github.com/repos/huytruong1810/Vibe/actions/runs/42092547479",
+                                         "run_attempt":  1,
+                                         "node_id":  "CR_kwDOVcnNes8AAAAdrgwgLQ",
+                                         "head_sha":  "f46fb6dca5009183fa074cfd06c000f216ac9806",
+                                         "url":  "https://api.github.com/repos/huytruong1810/Vibe/actions/jobs/127474081837",
+                                         "html_url":  "https://github.com/huytruong1810/Vibe/actions/runs/42092547479/job/127474081837",
+                                         "status":  "completed",
+                                         "conclusion":  "success",
+                                         "created_at":  "2026-11-05T19:18:02Z",
+                                         "started_at":  "2026-11-05T19:18:05Z",
+                                         "completed_at":  "2026-11-05T19:19:37Z",
+                                         "name":  "beta-browser (/)",
+                                         "steps":  [
+                                                       {
+                                                           "name":  "Set up job",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  1,
+                                                           "started_at":  "2026-11-05T19:18:06Z",
+                                                           "completed_at":  "2026-11-05T19:18:07Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/checkout@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  2,
+                                                           "started_at":  "2026-11-05T19:18:07Z",
+                                                           "completed_at":  "2026-11-05T19:18:15Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/setup-node@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  3,
+                                                           "started_at":  "2026-11-05T19:18:15Z",
+                                                           "completed_at":  "2026-11-05T19:18:18Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm ci",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  4,
+                                                           "started_at":  "2026-11-05T19:18:18Z",
+                                                           "completed_at":  "2026-11-05T19:18:33Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run build",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  5,
+                                                           "started_at":  "2026-11-05T19:18:33Z",
+                                                           "completed_at":  "2026-11-05T19:18:50Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npx playwright install --with-deps chromium",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  6,
+                                                           "started_at":  "2026-11-05T19:18:50Z",
+                                                           "completed_at":  "2026-11-05T19:19:10Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run test:beta",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  7,
+                                                           "started_at":  "2026-11-05T19:19:10Z",
+                                                           "completed_at":  "2026-11-05T19:19:33Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/upload-artifact@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  8,
+                                                           "started_at":  "2026-11-05T19:19:33Z",
+                                                           "completed_at":  "2026-11-05T19:19:34Z"
+                                                       },
+                                                       {
+                                                           "name":  "Post Run actions/setup-node@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  15,
+                                                           "started_at":  "2026-11-05T19:19:34Z",
+                                                           "completed_at":  "2026-11-05T19:19:34Z"
+                                                       },
+                                                       {
+                                                           "name":  "Post Run actions/checkout@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  16,
+                                                           "started_at":  "2026-11-05T19:19:34Z",
+                                                           "completed_at":  "2026-11-05T19:19:35Z"
+                                                       },
+                                                       {
+                                                           "name":  "Complete job",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  17,
+                                                           "started_at":  "2026-11-05T19:19:35Z",
+                                                           "completed_at":  "2026-11-05T19:19:35Z"
+                                                       }
+                                                   ],
+                                         "check_run_url":  "https://api.github.com/repos/huytruong1810/Vibe/check-runs/127474081837",
+                                         "labels":  [
+                                                        "ubuntu-latest"
+                                                    ],
+                                         "runner_id":  1000001519,
+                                         "runner_name":  "GitHub Actions 1000001519",
+                                         "runner_group_id":  0,
+                                         "runner_group_name":  "GitHub Actions"
+                                     },
+                                     {
+                                         "id":  127474081838,
+                                         "run_id":  42092547479,
+                                         "workflow_name":  "Reference game checks",
+                                         "head_branch":  "eng/hd-presentation",
+                                         "run_url":  "https://api.github.com/repos/huytruong1810/Vibe/actions/runs/42092547479",
+                                         "run_attempt":  1,
+                                         "node_id":  "CR_kwDOVcnNes8AAAAdrgwgLg",
+                                         "head_sha":  "f46fb6dca5009183fa074cfd06c000f216ac9806",
+                                         "url":  "https://api.github.com/repos/huytruong1810/Vibe/actions/jobs/127474081838",
+                                         "html_url":  "https://github.com/huytruong1810/Vibe/actions/runs/42092547479/job/127474081838",
+                                         "status":  "completed",
+                                         "conclusion":  "success",
+                                         "created_at":  "2026-11-05T19:18:02Z",
+                                         "started_at":  "2026-11-05T19:18:05Z",
+                                         "completed_at":  "2026-11-05T19:19:45Z",
+                                         "name":  "beta-browser (/Vibe/)",
+                                         "steps":  [
+                                                       {
+                                                           "name":  "Set up job",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  1,
+                                                           "started_at":  "2026-11-05T19:18:06Z",
+                                                           "completed_at":  "2026-11-05T19:18:07Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/checkout@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  2,
+                                                           "started_at":  "2026-11-05T19:18:07Z",
+                                                           "completed_at":  "2026-11-05T19:18:16Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/setup-node@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  3,
+                                                           "started_at":  "2026-11-05T19:18:16Z",
+                                                           "completed_at":  "2026-11-05T19:18:20Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm ci",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  4,
+                                                           "started_at":  "2026-11-05T19:18:20Z",
+                                                           "completed_at":  "2026-11-05T19:18:34Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run build",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  5,
+                                                           "started_at":  "2026-11-05T19:18:34Z",
+                                                           "completed_at":  "2026-11-05T19:18:52Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npx playwright install --with-deps chromium",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  6,
+                                                           "started_at":  "2026-11-05T19:18:52Z",
+                                                           "completed_at":  "2026-11-05T19:19:13Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run test:beta",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  7,
+                                                           "started_at":  "2026-11-05T19:19:13Z",
+                                                           "completed_at":  "2026-11-05T19:19:41Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/upload-artifact@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  8,
+                                                           "started_at":  "2026-11-05T19:19:41Z",
+                                                           "completed_at":  "2026-11-05T19:19:42Z"
+                                                       },
+                                                       {
+                                                           "name":  "Post Run actions/setup-node@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  15,
+                                                           "started_at":  "2026-11-05T19:19:42Z",
+                                                           "completed_at":  "2026-11-05T19:19:42Z"
+                                                       },
+                                                       {
+                                                           "name":  "Post Run actions/checkout@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  16,
+                                                           "started_at":  "2026-11-05T19:19:42Z",
+                                                           "completed_at":  "2026-11-05T19:19:43Z"
+                                                       },
+                                                       {
+                                                           "name":  "Complete job",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  17,
+                                                           "started_at":  "2026-11-05T19:19:43Z",
+                                                           "completed_at":  "2026-11-05T19:19:43Z"
+                                                       }
+                                                   ],
+                                         "check_run_url":  "https://api.github.com/repos/huytruong1810/Vibe/check-runs/127474081838",
+                                         "labels":  [
+                                                        "ubuntu-latest"
+                                                    ],
+                                         "runner_id":  1000001520,
+                                         "runner_name":  "GitHub Actions 1000001520",
+                                         "runner_group_id":  0,
+                                         "runner_group_name":  "GitHub Actions"
+                                     },
+                                     {
+                                         "id":  127483516751,
+                                         "run_id":  42092547479,
+                                         "workflow_name":  "Reference game checks",
+                                         "head_branch":  "eng/hd-presentation",
+                                         "run_url":  "https://api.github.com/repos/huytruong1810/Vibe/actions/runs/42092547479",
+                                         "run_attempt":  1,
+                                         "node_id":  "CR_kwDOVcnNes8AAAAdrpwXTw",
+                                         "head_sha":  "f46fb6dca5009183fa074cfd06c000f216ac9806",
+                                         "url":  "https://api.github.com/repos/huytruong1810/Vibe/actions/jobs/127483516751",
+                                         "html_url":  "https://github.com/huytruong1810/Vibe/actions/runs/42092547479/job/127483516751",
+                                         "status":  "completed",
+                                         "conclusion":  "success",
+                                         "created_at":  "2026-11-05T19:35:02Z",
+                                         "started_at":  "2026-11-05T19:35:05Z",
+                                         "completed_at":  "2026-11-05T19:35:08Z",
+                                         "name":  "verify",
+                                         "steps":  [
+                                                       {
+                                                           "name":  "Set up job",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  1,
+                                                           "started_at":  "2026-11-05T19:35:06Z",
+                                                           "completed_at":  "2026-11-05T19:35:06Z"
+                                                       },
+                                                       {
+                                                           "name":  "Require CPU checks and browser journeys",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  2,
+                                                           "started_at":  "2026-11-05T19:35:06Z",
+                                                           "completed_at":  "2026-11-05T19:35:06Z"
+                                                       },
+                                                       {
+                                                           "name":  "Complete job",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  3,
+                                                           "started_at":  "2026-11-05T19:35:06Z",
+                                                           "completed_at":  "2026-11-05T19:35:06Z"
+                                                       }
+                                                   ],
+                                         "check_run_url":  "https://api.github.com/repos/huytruong1810/Vibe/check-runs/127483516751",
+                                         "labels":  [
+                                                        "ubuntu-latest"
+                                                    ],
+                                         "runner_id":  1000001533,
+                                         "runner_name":  "GitHub Actions 1000001533",
+                                         "runner_group_id":  0,
+                                         "runner_group_name":  "GitHub Actions"
+                                     }
+                                 ]
+                    },
+                    {
+                        "annotations":  [
+
+                                        ],
+                        "runId":  42092568549,
+                        "jobs":  [
+                                     {
+                                         "id":  127474155163,
+                                         "run_id":  42092568549,
+                                         "workflow_name":  "Reference game checks",
+                                         "head_branch":  "eng/hd-presentation",
+                                         "run_url":  "https://api.github.com/repos/huytruong1810/Vibe/actions/runs/42092568549",
+                                         "run_attempt":  1,
+                                         "node_id":  "CR_kwDOVcnNes8AAAAdrg0-mw",
+                                         "head_sha":  "f46fb6dca5009183fa074cfd06c000f216ac9806",
+                                         "url":  "https://api.github.com/repos/huytruong1810/Vibe/actions/jobs/127474155163",
+                                         "html_url":  "https://github.com/huytruong1810/Vibe/actions/runs/42092568549/job/127474155163",
+                                         "status":  "completed",
+                                         "conclusion":  "success",
+                                         "created_at":  "2026-11-05T19:18:10Z",
+                                         "started_at":  "2026-11-05T19:18:13Z",
+                                         "completed_at":  "2026-11-05T19:28:50Z",
+                                         "name":  "browser-journeys (1)",
+                                         "steps":  [
+                                                       {
+                                                           "name":  "Set up job",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  1,
+                                                           "started_at":  "2026-11-05T19:18:14Z",
+                                                           "completed_at":  "2026-11-05T19:18:15Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/checkout@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  2,
+                                                           "started_at":  "2026-11-05T19:18:15Z",
+                                                           "completed_at":  "2026-11-05T19:18:23Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/setup-node@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  3,
+                                                           "started_at":  "2026-11-05T19:18:23Z",
+                                                           "completed_at":  "2026-11-05T19:18:25Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm ci",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  4,
+                                                           "started_at":  "2026-11-05T19:18:25Z",
+                                                           "completed_at":  "2026-11-05T19:18:49Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/setup-python@v5",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  5,
+                                                           "started_at":  "2026-11-05T19:18:49Z",
+                                                           "completed_at":  "2026-11-05T19:18:49Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m pip install uv==0.13.6",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  6,
+                                                           "started_at":  "2026-11-05T19:18:49Z",
+                                                           "completed_at":  "2026-11-05T19:18:52Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run assets:build",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  7,
+                                                           "started_at":  "2026-11-05T19:18:52Z",
+                                                           "completed_at":  "2026-11-05T19:20:27Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run check:world -- --region aqualia --level aqualia_village",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  8,
+                                                           "started_at":  "2026-11-05T19:20:27Z",
+                                                           "completed_at":  "2026-11-05T19:20:29Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run world:build -- --region aqualia --level aqualia_village",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  9,
+                                                           "started_at":  "2026-11-05T19:20:29Z",
+                                                           "completed_at":  "2026-11-05T19:20:30Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npx playwright install --with-deps chromium",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  10,
+                                                           "started_at":  "2026-11-05T19:20:30Z",
+                                                           "completed_at":  "2026-11-05T19:20:49Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run test:browser -- --shard=1/2",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  11,
+                                                           "started_at":  "2026-11-05T19:20:49Z",
+                                                           "completed_at":  "2026-11-05T19:28:47Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/upload-artifact@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  12,
+                                                           "started_at":  "2026-11-05T19:28:47Z",
+                                                           "completed_at":  "2026-11-05T19:28:48Z"
+                                                       },
+                                                       {
+                                                           "name":  "Post Run actions/setup-python@v5",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  22,
+                                                           "started_at":  "2026-11-05T19:28:48Z",
+                                                           "completed_at":  "2026-11-05T19:28:49Z"
+                                                       },
+                                                       {
+                                                           "name":  "Post Run actions/setup-node@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  23,
+                                                           "started_at":  "2026-11-05T19:28:49Z",
+                                                           "completed_at":  "2026-11-05T19:28:49Z"
+                                                       },
+                                                       {
+                                                           "name":  "Post Run actions/checkout@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  24,
+                                                           "started_at":  "2026-11-05T19:28:49Z",
+                                                           "completed_at":  "2026-11-05T19:28:49Z"
+                                                       },
+                                                       {
+                                                           "name":  "Complete job",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  25,
+                                                           "started_at":  "2026-11-05T19:28:49Z",
+                                                           "completed_at":  "2026-11-05T19:28:49Z"
+                                                       }
+                                                   ],
+                                         "check_run_url":  "https://api.github.com/repos/huytruong1810/Vibe/check-runs/127474155163",
+                                         "labels":  [
+                                                        "ubuntu-latest"
+                                                    ],
+                                         "runner_id":  1000001522,
+                                         "runner_name":  "GitHub Actions 1000001522",
+                                         "runner_group_id":  0,
+                                         "runner_group_name":  "GitHub Actions"
+                                     },
+                                     {
+                                         "id":  127474155541,
+                                         "run_id":  42092568549,
+                                         "workflow_name":  "Reference game checks",
+                                         "head_branch":  "eng/hd-presentation",
+                                         "run_url":  "https://api.github.com/repos/huytruong1810/Vibe/actions/runs/42092568549",
+                                         "run_attempt":  1,
+                                         "node_id":  "CR_kwDOVcnNes8AAAAdrg1AFQ",
+                                         "head_sha":  "f46fb6dca5009183fa074cfd06c000f216ac9806",
+                                         "url":  "https://api.github.com/repos/huytruong1810/Vibe/actions/jobs/127474155541",
+                                         "html_url":  "https://github.com/huytruong1810/Vibe/actions/runs/42092568549/job/127474155541",
+                                         "status":  "completed",
+                                         "conclusion":  "success",
+                                         "created_at":  "2026-11-05T19:18:10Z",
+                                         "started_at":  "2026-11-05T19:18:13Z",
+                                         "completed_at":  "2026-11-05T19:19:51Z",
+                                         "name":  "beta-browser (/)",
+                                         "steps":  [
+                                                       {
+                                                           "name":  "Set up job",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  1,
+                                                           "started_at":  "2026-11-05T19:18:14Z",
+                                                           "completed_at":  "2026-11-05T19:18:15Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/checkout@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  2,
+                                                           "started_at":  "2026-11-05T19:18:15Z",
+                                                           "completed_at":  "2026-11-05T19:18:23Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/setup-node@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  3,
+                                                           "started_at":  "2026-11-05T19:18:23Z",
+                                                           "completed_at":  "2026-11-05T19:18:25Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm ci",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  4,
+                                                           "started_at":  "2026-11-05T19:18:25Z",
+                                                           "completed_at":  "2026-11-05T19:18:40Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run build",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  5,
+                                                           "started_at":  "2026-11-05T19:18:40Z",
+                                                           "completed_at":  "2026-11-05T19:18:58Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npx playwright install --with-deps chromium",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  6,
+                                                           "started_at":  "2026-11-05T19:18:58Z",
+                                                           "completed_at":  "2026-11-05T19:19:17Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run test:beta",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  7,
+                                                           "started_at":  "2026-11-05T19:19:17Z",
+                                                           "completed_at":  "2026-11-05T19:19:48Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/upload-artifact@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  8,
+                                                           "started_at":  "2026-11-05T19:19:48Z",
+                                                           "completed_at":  "2026-11-05T19:19:49Z"
+                                                       },
+                                                       {
+                                                           "name":  "Post Run actions/setup-node@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  15,
+                                                           "started_at":  "2026-11-05T19:19:49Z",
+                                                           "completed_at":  "2026-11-05T19:19:49Z"
+                                                       },
+                                                       {
+                                                           "name":  "Post Run actions/checkout@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  16,
+                                                           "started_at":  "2026-11-05T19:19:49Z",
+                                                           "completed_at":  "2026-11-05T19:19:50Z"
+                                                       },
+                                                       {
+                                                           "name":  "Complete job",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  17,
+                                                           "started_at":  "2026-11-05T19:19:50Z",
+                                                           "completed_at":  "2026-11-05T19:19:50Z"
+                                                       }
+                                                   ],
+                                         "check_run_url":  "https://api.github.com/repos/huytruong1810/Vibe/check-runs/127474155541",
+                                         "labels":  [
+                                                        "ubuntu-latest"
+                                                    ],
+                                         "runner_id":  1000001524,
+                                         "runner_name":  "GitHub Actions 1000001524",
+                                         "runner_group_id":  0,
+                                         "runner_group_name":  "GitHub Actions"
+                                     },
+                                     {
+                                         "id":  127474155590,
+                                         "run_id":  42092568549,
+                                         "workflow_name":  "Reference game checks",
+                                         "head_branch":  "eng/hd-presentation",
+                                         "run_url":  "https://api.github.com/repos/huytruong1810/Vibe/actions/runs/42092568549",
+                                         "run_attempt":  1,
+                                         "node_id":  "CR_kwDOVcnNes8AAAAdrg1ARg",
+                                         "head_sha":  "f46fb6dca5009183fa074cfd06c000f216ac9806",
+                                         "url":  "https://api.github.com/repos/huytruong1810/Vibe/actions/jobs/127474155590",
+                                         "html_url":  "https://github.com/huytruong1810/Vibe/actions/runs/42092568549/job/127474155590",
+                                         "status":  "completed",
+                                         "conclusion":  "success",
+                                         "created_at":  "2026-11-05T19:18:10Z",
+                                         "started_at":  "2026-11-05T19:18:13Z",
+                                         "completed_at":  "2026-11-05T19:19:27Z",
+                                         "name":  "beta-browser (/Vibe/)",
+                                         "steps":  [
+                                                       {
+                                                           "name":  "Set up job",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  1,
+                                                           "started_at":  "2026-11-05T19:18:14Z",
+                                                           "completed_at":  "2026-11-05T19:18:15Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/checkout@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  2,
+                                                           "started_at":  "2026-11-05T19:18:15Z",
+                                                           "completed_at":  "2026-11-05T19:18:24Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/setup-node@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  3,
+                                                           "started_at":  "2026-11-05T19:18:24Z",
+                                                           "completed_at":  "2026-11-05T19:18:27Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm ci",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  4,
+                                                           "started_at":  "2026-11-05T19:18:27Z",
+                                                           "completed_at":  "2026-11-05T19:18:39Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run build",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  5,
+                                                           "started_at":  "2026-11-05T19:18:39Z",
+                                                           "completed_at":  "2026-11-05T19:18:50Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npx playwright install --with-deps chromium",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  6,
+                                                           "started_at":  "2026-11-05T19:18:50Z",
+                                                           "completed_at":  "2026-11-05T19:19:06Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run test:beta",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  7,
+                                                           "started_at":  "2026-11-05T19:19:06Z",
+                                                           "completed_at":  "2026-11-05T19:19:23Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/upload-artifact@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  8,
+                                                           "started_at":  "2026-11-05T19:19:23Z",
+                                                           "completed_at":  "2026-11-05T19:19:25Z"
+                                                       },
+                                                       {
+                                                           "name":  "Post Run actions/setup-node@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  15,
+                                                           "started_at":  "2026-11-05T19:19:25Z",
+                                                           "completed_at":  "2026-11-05T19:19:25Z"
+                                                       },
+                                                       {
+                                                           "name":  "Post Run actions/checkout@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  16,
+                                                           "started_at":  "2026-11-05T19:19:25Z",
+                                                           "completed_at":  "2026-11-05T19:19:25Z"
+                                                       },
+                                                       {
+                                                           "name":  "Complete job",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  17,
+                                                           "started_at":  "2026-11-05T19:19:25Z",
+                                                           "completed_at":  "2026-11-05T19:19:25Z"
+                                                       }
+                                                   ],
+                                         "check_run_url":  "https://api.github.com/repos/huytruong1810/Vibe/check-runs/127474155590",
+                                         "labels":  [
+                                                        "ubuntu-latest"
+                                                    ],
+                                         "runner_id":  1000001523,
+                                         "runner_name":  "GitHub Actions 1000001523",
+                                         "runner_group_id":  0,
+                                         "runner_group_name":  "GitHub Actions"
+                                     },
+                                     {
+                                         "id":  127474155789,
+                                         "run_id":  42092568549,
+                                         "workflow_name":  "Reference game checks",
+                                         "head_branch":  "eng/hd-presentation",
+                                         "run_url":  "https://api.github.com/repos/huytruong1810/Vibe/actions/runs/42092568549",
+                                         "run_attempt":  1,
+                                         "node_id":  "CR_kwDOVcnNes8AAAAdrg1BDQ",
+                                         "head_sha":  "f46fb6dca5009183fa074cfd06c000f216ac9806",
+                                         "url":  "https://api.github.com/repos/huytruong1810/Vibe/actions/jobs/127474155789",
+                                         "html_url":  "https://github.com/huytruong1810/Vibe/actions/runs/42092568549/job/127474155789",
+                                         "status":  "completed",
+                                         "conclusion":  "cancelled",
+                                         "created_at":  "2026-11-05T19:18:10Z",
+                                         "started_at":  "2026-11-05T19:18:13Z",
+                                         "completed_at":  "2026-11-05T19:43:29Z",
+                                         "name":  "ecology-soak",
+                                         "steps":  [
+                                                       {
+                                                           "name":  "Set up job",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  1,
+                                                           "started_at":  "2026-11-05T19:18:14Z",
+                                                           "completed_at":  "2026-11-05T19:18:15Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/checkout@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  2,
+                                                           "started_at":  "2026-11-05T19:18:15Z",
+                                                           "completed_at":  "2026-11-05T19:18:23Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run if [ \"$EVENT\" = schedule ] || [ \"$EVENT\" = workflow_dispatch ] || ! git cat-file -e \"$BASE^{commit}\" 2\u003e/dev/null; then",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  3,
+                                                           "started_at":  "2026-11-05T19:18:23Z",
+                                                           "completed_at":  "2026-11-05T19:18:24Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/setup-node@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  4,
+                                                           "started_at":  "2026-11-05T19:18:24Z",
+                                                           "completed_at":  "2026-11-05T19:18:26Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm ci",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  5,
+                                                           "started_at":  "2026-11-05T19:18:26Z",
+                                                           "completed_at":  "2026-11-05T19:18:46Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run soak",
+                                                           "status":  "completed",
+                                                           "conclusion":  "cancelled",
+                                                           "number":  6,
+                                                           "started_at":  "2026-11-05T19:18:46Z",
+                                                           "completed_at":  "2026-11-05T19:43:27Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/upload-artifact@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  7,
+                                                           "started_at":  "2026-11-05T19:43:27Z",
+                                                           "completed_at":  "2026-11-05T19:43:28Z"
+                                                       },
+                                                       {
+                                                           "name":  "Post Run actions/setup-node@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "skipped",
+                                                           "number":  13,
+                                                           "started_at":  "2026-11-05T19:43:28Z",
+                                                           "completed_at":  "2026-11-05T19:43:28Z"
+                                                       },
+                                                       {
+                                                           "name":  "Post Run actions/checkout@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  14,
+                                                           "started_at":  "2026-11-05T19:43:28Z",
+                                                           "completed_at":  "2026-11-05T19:43:28Z"
+                                                       },
+                                                       {
+                                                           "name":  "Complete job",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  15,
+                                                           "started_at":  "2026-11-05T19:43:28Z",
+                                                           "completed_at":  "2026-11-05T19:43:28Z"
+                                                       }
+                                                   ],
+                                         "check_run_url":  "https://api.github.com/repos/huytruong1810/Vibe/check-runs/127474155789",
+                                         "labels":  [
+                                                        "ubuntu-latest"
+                                                    ],
+                                         "runner_id":  1000001526,
+                                         "runner_name":  "GitHub Actions 1000001526",
+                                         "runner_group_id":  0,
+                                         "runner_group_name":  "GitHub Actions"
+                                     },
+                                     {
+                                         "id":  127474155870,
+                                         "run_id":  42092568549,
+                                         "workflow_name":  "Reference game checks",
+                                         "head_branch":  "eng/hd-presentation",
+                                         "run_url":  "https://api.github.com/repos/huytruong1810/Vibe/actions/runs/42092568549",
+                                         "run_attempt":  1,
+                                         "node_id":  "CR_kwDOVcnNes8AAAAdrg1BXg",
+                                         "head_sha":  "f46fb6dca5009183fa074cfd06c000f216ac9806",
+                                         "url":  "https://api.github.com/repos/huytruong1810/Vibe/actions/jobs/127474155870",
+                                         "html_url":  "https://github.com/huytruong1810/Vibe/actions/runs/42092568549/job/127474155870",
+                                         "status":  "completed",
+                                         "conclusion":  "success",
+                                         "created_at":  "2026-11-05T19:18:10Z",
+                                         "started_at":  "2026-11-05T19:18:13Z",
+                                         "completed_at":  "2026-11-05T19:21:37Z",
+                                         "name":  "checks",
+                                         "steps":  [
+                                                       {
+                                                           "name":  "Set up job",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  1,
+                                                           "started_at":  "2026-11-05T19:18:14Z",
+                                                           "completed_at":  "2026-11-05T19:18:15Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/checkout@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  2,
+                                                           "started_at":  "2026-11-05T19:18:15Z",
+                                                           "completed_at":  "2026-11-05T19:18:23Z"
+                                                       },
+                                                       {
+                                                           "name":  "Classify source-only art pull request",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  3,
+                                                           "started_at":  "2026-11-05T19:18:23Z",
+                                                           "completed_at":  "2026-11-05T19:18:23Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/setup-node@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  4,
+                                                           "started_at":  "2026-11-05T19:18:23Z",
+                                                           "completed_at":  "2026-11-05T19:18:26Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm ci",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  5,
+                                                           "started_at":  "2026-11-05T19:18:26Z",
+                                                           "completed_at":  "2026-11-05T19:18:45Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/setup-python@v5",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  6,
+                                                           "started_at":  "2026-11-05T19:18:45Z",
+                                                           "completed_at":  "2026-11-05T19:18:45Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m pip install uv==0.13.6",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  7,
+                                                           "started_at":  "2026-11-05T19:18:45Z",
+                                                           "completed_at":  "2026-11-05T19:18:50Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run assets:build",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  8,
+                                                           "started_at":  "2026-11-05T19:18:50Z",
+                                                           "completed_at":  "2026-11-05T19:19:45Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run check:assets",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  9,
+                                                           "started_at":  "2026-11-05T19:19:45Z",
+                                                           "completed_at":  "2026-11-05T19:19:46Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p review_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  10,
+                                                           "started_at":  "2026-11-05T19:19:46Z",
+                                                           "completed_at":  "2026-11-05T19:19:46Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p finish_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  11,
+                                                           "started_at":  "2026-11-05T19:19:46Z",
+                                                           "completed_at":  "2026-11-05T19:19:47Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p human_faces_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  12,
+                                                           "started_at":  "2026-11-05T19:19:47Z",
+                                                           "completed_at":  "2026-11-05T19:19:48Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p items_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  13,
+                                                           "started_at":  "2026-11-05T19:19:48Z",
+                                                           "completed_at":  "2026-11-05T19:19:48Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p item_render_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  14,
+                                                           "started_at":  "2026-11-05T19:19:48Z",
+                                                           "completed_at":  "2026-11-05T19:19:51Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p item_orient_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  15,
+                                                           "started_at":  "2026-11-05T19:19:51Z",
+                                                           "completed_at":  "2026-11-05T19:19:52Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p gaits_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  16,
+                                                           "started_at":  "2026-11-05T19:19:52Z",
+                                                           "completed_at":  "2026-11-05T19:19:52Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p pixelize_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  17,
+                                                           "started_at":  "2026-11-05T19:19:52Z",
+                                                           "completed_at":  "2026-11-05T19:19:53Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p concept_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  18,
+                                                           "started_at":  "2026-11-05T19:19:53Z",
+                                                           "completed_at":  "2026-11-05T19:19:53Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p gpu_window_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  19,
+                                                           "started_at":  "2026-11-05T19:19:53Z",
+                                                           "completed_at":  "2026-11-05T19:19:53Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p portrait_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  20,
+                                                           "started_at":  "2026-11-05T19:19:53Z",
+                                                           "completed_at":  "2026-11-05T19:19:54Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p icon_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  21,
+                                                           "started_at":  "2026-11-05T19:19:54Z",
+                                                           "completed_at":  "2026-11-05T19:19:54Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p upscale_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  22,
+                                                           "started_at":  "2026-11-05T19:19:54Z",
+                                                           "completed_at":  "2026-11-05T19:19:55Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p headroom_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  23,
+                                                           "started_at":  "2026-11-05T19:19:55Z",
+                                                           "completed_at":  "2026-11-05T19:19:56Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p approval_record_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  24,
+                                                           "started_at":  "2026-11-05T19:19:56Z",
+                                                           "completed_at":  "2026-11-05T19:19:56Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p faces_creature_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  25,
+                                                           "started_at":  "2026-11-05T19:19:56Z",
+                                                           "completed_at":  "2026-11-05T19:19:57Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/forge/forgelib -p publish_faces_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  26,
+                                                           "started_at":  "2026-11-05T19:19:57Z",
+                                                           "completed_at":  "2026-11-05T19:19:57Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/world/tools/worldlib -p worldforge_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  27,
+                                                           "started_at":  "2026-11-05T19:19:57Z",
+                                                           "completed_at":  "2026-11-05T19:20:21Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/world/tools/worldlib -p terrain_selftest.py",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  28,
+                                                           "started_at":  "2026-11-05T19:20:21Z",
+                                                           "completed_at":  "2026-11-05T19:20:22Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run node --test .agents/hooks/test/hooks.test.mjs",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  29,
+                                                           "started_at":  "2026-11-05T19:20:22Z",
+                                                           "completed_at":  "2026-11-05T19:20:28Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run check:packets",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  30,
+                                                           "started_at":  "2026-11-05T19:20:28Z",
+                                                           "completed_at":  "2026-11-05T19:20:29Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run check:world -- --region aqualia --level aqualia_village",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  31,
+                                                           "started_at":  "2026-11-05T19:20:29Z",
+                                                           "completed_at":  "2026-11-05T19:20:30Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run world:build -- --region aqualia --level aqualia_village",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  32,
+                                                           "started_at":  "2026-11-05T19:20:30Z",
+                                                           "completed_at":  "2026-11-05T19:20:31Z"
+                                                       },
+                                                       {
+                                                           "name":  "Require reproducible engineering integration bundles",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  33,
+                                                           "started_at":  "2026-11-05T19:20:31Z",
+                                                           "completed_at":  "2026-11-05T19:20:31Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run check",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  34,
+                                                           "started_at":  "2026-11-05T19:20:31Z",
+                                                           "completed_at":  "2026-11-05T19:21:16Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run format:check",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  35,
+                                                           "started_at":  "2026-11-05T19:21:16Z",
+                                                           "completed_at":  "2026-11-05T19:21:24Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run benchmark",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  36,
+                                                           "started_at":  "2026-11-05T19:21:24Z",
+                                                           "completed_at":  "2026-11-05T19:21:34Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/upload-artifact@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  37,
+                                                           "started_at":  "2026-11-05T19:21:34Z",
+                                                           "completed_at":  "2026-11-05T19:21:35Z"
+                                                       },
+                                                       {
+                                                           "name":  "Post Run actions/setup-python@v5",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  72,
+                                                           "started_at":  "2026-11-05T19:21:35Z",
+                                                           "completed_at":  "2026-11-05T19:21:35Z"
+                                                       },
+                                                       {
+                                                           "name":  "Post Run actions/setup-node@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  73,
+                                                           "started_at":  "2026-11-05T19:21:35Z",
+                                                           "completed_at":  "2026-11-05T19:21:35Z"
+                                                       },
+                                                       {
+                                                           "name":  "Post Run actions/checkout@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  74,
+                                                           "started_at":  "2026-11-05T19:21:35Z",
+                                                           "completed_at":  "2026-11-05T19:21:35Z"
+                                                       },
+                                                       {
+                                                           "name":  "Complete job",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  75,
+                                                           "started_at":  "2026-11-05T19:21:35Z",
+                                                           "completed_at":  "2026-11-05T19:21:35Z"
+                                                       }
+                                                   ],
+                                         "check_run_url":  "https://api.github.com/repos/huytruong1810/Vibe/check-runs/127474155870",
+                                         "labels":  [
+                                                        "ubuntu-latest"
+                                                    ],
+                                         "runner_id":  1000001527,
+                                         "runner_name":  "GitHub Actions 1000001527",
+                                         "runner_group_id":  0,
+                                         "runner_group_name":  "GitHub Actions"
+                                     },
+                                     {
+                                         "id":  127474156006,
+                                         "run_id":  42092568549,
+                                         "workflow_name":  "Reference game checks",
+                                         "head_branch":  "eng/hd-presentation",
+                                         "run_url":  "https://api.github.com/repos/huytruong1810/Vibe/actions/runs/42092568549",
+                                         "run_attempt":  1,
+                                         "node_id":  "CR_kwDOVcnNes8AAAAdrg1B5g",
+                                         "head_sha":  "f46fb6dca5009183fa074cfd06c000f216ac9806",
+                                         "url":  "https://api.github.com/repos/huytruong1810/Vibe/actions/jobs/127474156006",
+                                         "html_url":  "https://github.com/huytruong1810/Vibe/actions/runs/42092568549/job/127474156006",
+                                         "status":  "completed",
+                                         "conclusion":  "success",
+                                         "created_at":  "2026-11-05T19:18:10Z",
+                                         "started_at":  "2026-11-05T19:18:13Z",
+                                         "completed_at":  "2026-11-05T19:24:40Z",
+                                         "name":  "browser-journeys (2)",
+                                         "steps":  [
+                                                       {
+                                                           "name":  "Set up job",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  1,
+                                                           "started_at":  "2026-11-05T19:18:14Z",
+                                                           "completed_at":  "2026-11-05T19:18:15Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/checkout@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  2,
+                                                           "started_at":  "2026-11-05T19:18:15Z",
+                                                           "completed_at":  "2026-11-05T19:18:23Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/setup-node@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  3,
+                                                           "started_at":  "2026-11-05T19:18:23Z",
+                                                           "completed_at":  "2026-11-05T19:18:26Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm ci",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  4,
+                                                           "started_at":  "2026-11-05T19:18:26Z",
+                                                           "completed_at":  "2026-11-05T19:18:36Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/setup-python@v5",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  5,
+                                                           "started_at":  "2026-11-05T19:18:36Z",
+                                                           "completed_at":  "2026-11-05T19:18:36Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run python -m pip install uv==0.13.6",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  6,
+                                                           "started_at":  "2026-11-05T19:18:36Z",
+                                                           "completed_at":  "2026-11-05T19:18:38Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run assets:build",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  7,
+                                                           "started_at":  "2026-11-05T19:18:38Z",
+                                                           "completed_at":  "2026-11-05T19:19:33Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run check:world -- --region aqualia --level aqualia_village",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  8,
+                                                           "started_at":  "2026-11-05T19:19:33Z",
+                                                           "completed_at":  "2026-11-05T19:19:34Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run world:build -- --region aqualia --level aqualia_village",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  9,
+                                                           "started_at":  "2026-11-05T19:19:34Z",
+                                                           "completed_at":  "2026-11-05T19:19:35Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npx playwright install --with-deps chromium",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  10,
+                                                           "started_at":  "2026-11-05T19:19:35Z",
+                                                           "completed_at":  "2026-11-05T19:19:52Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run npm run test:browser -- --shard=2/2",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  11,
+                                                           "started_at":  "2026-11-05T19:19:52Z",
+                                                           "completed_at":  "2026-11-05T19:24:35Z"
+                                                       },
+                                                       {
+                                                           "name":  "Run actions/upload-artifact@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  12,
+                                                           "started_at":  "2026-11-05T19:24:35Z",
+                                                           "completed_at":  "2026-11-05T19:24:37Z"
+                                                       },
+                                                       {
+                                                           "name":  "Post Run actions/setup-python@v5",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  22,
+                                                           "started_at":  "2026-11-05T19:24:37Z",
+                                                           "completed_at":  "2026-11-05T19:24:37Z"
+                                                       },
+                                                       {
+                                                           "name":  "Post Run actions/setup-node@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  23,
+                                                           "started_at":  "2026-11-05T19:24:37Z",
+                                                           "completed_at":  "2026-11-05T19:24:37Z"
+                                                       },
+                                                       {
+                                                           "name":  "Post Run actions/checkout@v4",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  24,
+                                                           "started_at":  "2026-11-05T19:24:37Z",
+                                                           "completed_at":  "2026-11-05T19:24:37Z"
+                                                       },
+                                                       {
+                                                           "name":  "Complete job",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  25,
+                                                           "started_at":  "2026-11-05T19:24:37Z",
+                                                           "completed_at":  "2026-11-05T19:24:37Z"
+                                                       }
+                                                   ],
+                                         "check_run_url":  "https://api.github.com/repos/huytruong1810/Vibe/check-runs/127474156006",
+                                         "labels":  [
+                                                        "ubuntu-latest"
+                                                    ],
+                                         "runner_id":  1000001525,
+                                         "runner_name":  "GitHub Actions 1000001525",
+                                         "runner_group_id":  0,
+                                         "runner_group_name":  "GitHub Actions"
+                                     },
+                                     {
+                                         "id":  127480101937,
+                                         "run_id":  42092568549,
+                                         "workflow_name":  "Reference game checks",
+                                         "head_branch":  "eng/hd-presentation",
+                                         "run_url":  "https://api.github.com/repos/huytruong1810/Vibe/actions/runs/42092568549",
+                                         "run_attempt":  1,
+                                         "node_id":  "CR_kwDOVcnNes8AAAAdrmf8MQ",
+                                         "head_sha":  "f46fb6dca5009183fa074cfd06c000f216ac9806",
+                                         "url":  "https://api.github.com/repos/huytruong1810/Vibe/actions/jobs/127480101937",
+                                         "html_url":  "https://github.com/huytruong1810/Vibe/actions/runs/42092568549/job/127480101937",
+                                         "status":  "completed",
+                                         "conclusion":  "success",
+                                         "created_at":  "2026-11-05T19:28:51Z",
+                                         "started_at":  "2026-11-05T19:28:54Z",
+                                         "completed_at":  "2026-11-05T19:28:56Z",
+                                         "name":  "verify",
+                                         "steps":  [
+                                                       {
+                                                           "name":  "Set up job",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  1,
+                                                           "started_at":  "2026-11-05T19:28:54Z",
+                                                           "completed_at":  "2026-11-05T19:28:54Z"
+                                                       },
+                                                       {
+                                                           "name":  "Require CPU checks and browser journeys",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  2,
+                                                           "started_at":  "2026-11-05T19:28:54Z",
+                                                           "completed_at":  "2026-11-05T19:28:55Z"
+                                                       },
+                                                       {
+                                                           "name":  "Complete job",
+                                                           "status":  "completed",
+                                                           "conclusion":  "success",
+                                                           "number":  3,
+                                                           "started_at":  "2026-11-05T19:28:55Z",
+                                                           "completed_at":  "2026-11-05T19:28:55Z"
+                                                       }
+                                                   ],
+                                         "check_run_url":  "https://api.github.com/repos/huytruong1810/Vibe/check-runs/127480101937",
+                                         "labels":  [
+                                                        "ubuntu-latest"
+                                                    ],
+                                         "runner_id":  1000001532,
+                                         "runner_name":  "GitHub Actions 1000001532",
+                                         "runner_group_id":  0,
+                                         "runner_group_name":  "GitHub Actions"
+                                     }
+                                 ]
+                    }
+                ],
+    "codeCommit":  "33788a034901b333ab12d38cdfc211ab15d1e680",
+    "sourceSha":  "f46fb6dca5009183fa074cfd06c000f216ac9806"
+}

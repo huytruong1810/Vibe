@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Book draft regression fixture</title>
+  </head>
+  <body>
+    <main id="book-fixture" class="hd-game"></main>
+    <script type="module">
+      import '/src/style.css';
+      import '/src/presentation/ui/hud.css';
+      import '/src/presentation/ui/theme.css';
+      import { BookScreen } from '/src/presentation/ui/book.ts';
+      window.BookScreen = BookScreen;
+    </script>
+  </body>
+</html>

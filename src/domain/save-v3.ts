@@ -368,6 +368,7 @@ export function migrateSaveV3(input: unknown): GameSaveV3 {
             ({
               scene: _scene,
               heightMeters: _height,
+              bondHearts: _bond,
               massKg: _mass,
               recoilX: _rx,
               recoilY: _ry,

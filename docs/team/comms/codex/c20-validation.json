@@ -1,0 +1,467 @@
+{
+  "recordedAt": "2026-11-04T22:55:48.594Z",
+  "baseCommit": "1df43a71891dec84f56835a6f3cb0b077d44f44e",
+  "status": "candidate; local validation passes; source verify fails; external acceptance pending",
+  "changed": [
+    "Authoritative player canvas requests, immutable briefs, revision-checked completion, Keep/Discard/Retry",
+    "Shared content data and canonical subjects/affinity; NPC CREATE/HANG with home reservation and retained-record rates",
+    "Prepared worker encoding and one-time bounded vision caption, fallback subject and artifact-sourced memories",
+    "Native job marker and Web Lock reconciliation across reload, fail-closed GPU recovery and explicit reset",
+    "UI kit modal, nearest previews, hook frames,32 resident textures with mounted pins,16x11 thumbnail"
+  ],
+  "checks": [
+    {
+      "command": "VITEST_MAX_WORKERS=4 npm run check",
+      "outcome": "pass",
+      "tests": 544,
+      "files": 45,
+      "durationSeconds": 63.12,
+      "artifact": "artifacts/c20-check.log",
+      "sha256": "48532af880def75d5ba5313b498196d8e773fe1b622bd6bd51680a5d2e1e60c9"
+    },
+    {
+      "command": "npx playwright test tests/browser/painting-workflow.spec.ts --project=journeys",
+      "outcome": "pass",
+      "tests": 2,
+      "durationSeconds": 60,
+      "artifact": "artifacts/c20-browser-focused.log",
+      "sha256": "ebc8284107d012407940db4e7bf42b0d1ec12e984333910712d1c56e74fd07a0"
+    },
+    {
+      "command": "npx playwright test --project=journeys",
+      "artifact": "artifacts/c20-browser-full.log",
+      "outcome": "pass",
+      "tests": 27,
+      "durationSeconds": 456,
+      "sha256": "07c03b613e846eb6aa6bd2724085306335f4ac779797c0fba0eb43f53bb2d611"
+    },
+    {
+      "command": "npx playwright test --project=beta",
+      "artifact": "artifacts/c20-beta-root.log",
+      "outcome": "pass",
+      "tests": 2,
+      "durationSeconds": 19.3,
+      "sha256": "7bbfc9c146316fac63f05ad84fee932a3496a9852b79eb8c8312f569bfeb822b"
+    },
+    {
+      "command": "VITE_BASE_PATH=/Vibe/ npx vite build; PLAYWRIGHT_BASE_PATH=/Vibe/ npx playwright test --project=beta",
+      "artifact": "artifacts/c20-beta-subpath.log",
+      "outcome": "pass",
+      "tests": 2,
+      "durationSeconds": 19.2,
+      "sha256": "a15ae9278aaeb2acedfecf3e6c4e1bd3cfc896cfddb84542d1c597cd3eec4db5"
+    },
+    {
+      "command": "npm run format:check",
+      "artifact": "artifacts/c20-format-check.log",
+      "outcome": "pass",
+      "sha256": "d4131f633fb8c4fb0fc6b4d858663c406522b33771b6fc8ae8793f9bce9a7b40"
+    },
+    {
+      "command": "npm run check:hygiene",
+      "artifact": "artifacts/c20-hygiene.log",
+      "outcome": "pass",
+      "sha256": "1272532a4e668c1a91ef2c831d5dac2dfad27b3a95bb4b0defc59211d4ac9914"
+    }
+  ],
+  "screenshots": [
+    {
+      "artifact": "artifacts/c20-browser/screenshots/beta-settings.png",
+      "sha256": "8e690ead0620a210cc9ff1c0ee0ad9b3f95e370a6bd044b1c0c74f8cd62eceee",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/beta-title.png",
+      "sha256": "e315cb68fd770be3de8089ce3bc5a744fd6f781e04f2448b5a878a0f3efd562b",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/bramblefang-packet-gallery.png",
+      "sha256": "6b1669aa22f6c316daa876331875be410e542a2eb33e07f01a077fa1dee17db3",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c11b-authored-screen.png",
+      "sha256": "b808e67efa83e6488fe834c3474dbc6bd03d32da37a512be15fdf9e266db8ae6",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c11b-authored-village.png",
+      "sha256": "3ea6c4eb7b76ad274d2e9ff70fb98df5fb7ec4a614a2b88b45eb700827138c6d",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c11b-live-terrain-1080.png",
+      "sha256": "533d929d939c75696ecb95a316315fc848101b01f59e25bc572a78148243cafc",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c13-pack-1080p.png",
+      "sha256": "7eb30a32fcb10f74277b33d4b428d33a53eb18c7deb6b643d7e0aa71f1dc1277",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c13-pack-break-1080p.png",
+      "sha256": "a8558109a8418c7ba44a6aa163bef8b485bbaac20c361d941bc1b194d42643fc",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c13-pack-commit-1080p.png",
+      "sha256": "b61da5ed479a0b8d1cce08355c1ec9323ee95e3b13c8adff97c0efb352effe89",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c13-pack-notice-1080p.png",
+      "sha256": "3166794ff69130290c20ce382c4a9086f101a0e1ad9f1ec1479982908bf9e5fc",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c13-pack-stalk-1080p.png",
+      "sha256": "3ad0038d98756e5fa7e92395ed5f28b22c7c391894f36a834ae0b983d019474e",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c13-zephyrit-1080p.png",
+      "sha256": "e2c07eb6d0cba08b09bb780c1832ea53b3020af3e8563c9e91f8e88fe23eadd6",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c13-zephyrit-break-1080p.png",
+      "sha256": "8edbc1d991815da6cb652a58903b6ffb498fc1836019411e9ec7232b3cd0619d",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c13-zephyrit-commit-1080p.png",
+      "sha256": "b76241b6c4fe38de84ab1b307af4cb3ac885aca950ca8a2435447edd159b57e5",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c13-zephyrit-notice-1080p.png",
+      "sha256": "762f12581a091ca56af8cf73628eebcedb4506bf2807893ca464a6b316b380a4",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c13-zephyrit-stalk-1080p.png",
+      "sha256": "abba50613936735323f03b54320c95c61ceb9c54a5cf6e756cbf8ddf45db1b77",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c14-glint-1080p.png",
+      "sha256": "2bcb66402849d58f192d29dd80f152daa3f1eaaa201ddcdda4e91eccfc5521e5",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c14-pack-1080p.png",
+      "sha256": "4c5f051c4f95556855229b9bb24dbe42553b1c9e25aefa7e44355ad5fa2082db",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c18-book-spread-1080p.png",
+      "sha256": "dda10e1fb2cf4fcb4d00ad0c14455d1c1971ed7186d0503d6b857a75b806e364",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c19-golden-native.png",
+      "sha256": "6d8f4b663386502d5a8d50f5b805ad2eba678c2711e2a3a13af9f35cceec66cf",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c19-golden-preview.png",
+      "sha256": "80c4f9eda90e6c859392670c93d0a8fcdd690e24bf0cf6bbcdd023a3aac39b68",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c20-inventory-thumbnail-1080p.png",
+      "sha256": "7f36828dc957912d0c09ed836fce6bb433917a433f1bfb9357ff7339924b030c",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c20-painting-hook-1080p.png",
+      "sha256": "2d779a7fad109e4f231b5987aa27f12a6821b66a2f9bb7883f37b5407e6be20f",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c20-painting-preview-1080p.png",
+      "sha256": "dd88aed5a19bfb549f9ba7935f2cb07bae95bfe12020e1ff99ab8160a60e92ae",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c20-pending-reloaded-1080p.png",
+      "sha256": "3f143738230d05c3b2adcd182bd43bb93113306aafe7a713582336e1133800e7",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c8-hud-1024.png",
+      "sha256": "301169cee4b96242675da3476cad3cd10d731d2ba4671ee0dc3add4434a3bd7c",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c8-hud-1080.png",
+      "sha256": "888fbbaedb196303e7ab36c2a3cfd03bf96d3141f8ecf1cff440c07a42eca5d4",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c8-packet-fixture.png",
+      "sha256": "c366d8577c7d90cd8be28ad670ef9ae170e1529c00f0d528ef5252ac7c068784",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c8b-combat-1080.png",
+      "sha256": "bc53ae80b6b9f8518bd025dc36ca1dd17ce9ceb9e9e423132b9804067624a4ee",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c8b-companion-1024.png",
+      "sha256": "1c63e7be26244da505b9833dcf6be2a127b96847ddfe611bb36bd52289006170",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c8b-companion-1920.png",
+      "sha256": "816e57704fcd4c82acf7c47a71457cc8615029acc5151a41286929ab476ae6df",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c8b-equipment-1024.png",
+      "sha256": "799efa6b85a8e9ecb81a3375d67e6d17d51614ad1f43ba71a1e2bcd3687e47ba",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c8b-equipment-1920.png",
+      "sha256": "bc74f56b8cc912144fdf58b071dccc09f2934b97e79d11456160b8ba66ccdf28",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c8b-exploration-1024.png",
+      "sha256": "c494d9d4ca00782c71258af8c42f3b5ab3de0c46e5ece907eafa165f6b05c7e8",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c8b-exploration-1080.png",
+      "sha256": "40ad1c33542275217025af89f199743842ed227d7483ddaf4e9b0890b57f979c",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c8b-meter-0.5.png",
+      "sha256": "63307f8fbc2eb7722c4c6c36f1133a43d61a5e43dc7dd59b4aee4413c8ba66cd",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c8b-meter-0.png",
+      "sha256": "2de5b302585d5e4cca2191270a43581285a8cff79f049016b76833d33552b947",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c8b-meter-1.png",
+      "sha256": "adb74c13c2c92a2a58b8f5c670276c05b61a534c8d08655324a1f3154bf64a46",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c8b-worn-1024.png",
+      "sha256": "3ae60f37162e8a0ac2fba63f2ef54734ec15ca765fbad5da2752ca4c2649f25e",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/c8b-worn-1920.png",
+      "sha256": "2c34b337866e41178259a0d129f78062645743a755c6e3214fc31e184665421e",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/diagnostics.png",
+      "sha256": "dbb3506687a840f9592cb0c065d55262e4213cc5ee3623298f2ca349da6bce6d",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/hd-gallery-environment.png",
+      "sha256": "4bae5583df9a867df8aa35737b84a544742ee97227682ccd1a36ed04bdfb1733",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/hd-gallery-missing-neris.png",
+      "sha256": "699fb372651e08b4602ca25c5c6a47cc91f09a000043f2a044fcc3489a6fcbd7",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/hd-gallery-rivallie.png",
+      "sha256": "f5ac1f54b366db6ba416b5afe41dea129b8c8b60f483759791b8f0d802d60252",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/hd-overlays-1024.png",
+      "sha256": "92a9528cb83d208d0b8aa9d94bf96c4dcfb9dc864a28faa75286a5c85c7e6bcf",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/hearthwild.png",
+      "sha256": "b8f85133ee14287135657be2d906d5246e6cdcdb48f2a6a59d42823e812abf2d",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/rivallie-packet-gallery.png",
+      "sha256": "5363cb4731a39b77b33dd9742e180805720f90a738c488fdb6c1300bbef97fa3",
+      "inspected": true
+    },
+    {
+      "artifact": "artifacts/c20-browser/screenshots/unified-entities.png",
+      "sha256": "907b42f73a59b96aa48a332b3c1f93705eeb1f5f1321ecf8e6514524c7d3b84d",
+      "inspected": true
+    }
+  ],
+  "gapsAndRisks": [
+    "Machine-A26b/sd-server overnight, VRAM, cancellation and30s player latency acceptance external",
+    "Actual vision image-token count unverified;192x128 PNG plus140 output-token cap does not enforce140 image tokens",
+    "Pending cover is runtime cream UI over placeholder easel; authored cloth/easel art external",
+    "Notice real-time cooldown is session-local; no replay determinism guarantee across restart",
+    "Finite brand/person lists and conservative NPC writing vocabulary can under-detect novel names or reject ordinary subjects",
+    "C21 requires explicit director authorization",
+    "Source-commit public CI pending",
+    "Mock full-suite worker quantization6ms exceeds5ms target; unchanged Node budget passes"
+  ],
+  "receipts": [
+    {
+      "artifact": "artifacts/c20-browser/c18-book-browser.json",
+      "sha256": "4123155894a0488c59ba3a70916efecf871c35f7f75a28a6fa43cae5bbe5586c"
+    },
+    {
+      "artifact": "artifacts/c20-browser/c18-book-cpu.json",
+      "sha256": "af3c26d528c20a1d5b67db935b5862ab240aab3ed1efe69a0eb051fb6c5fa9e2"
+    },
+    {
+      "artifact": "artifacts/c20-browser/c19-golden.json",
+      "sha256": "37774c1fd8c6eab186438d49ace0eb18dc3601f0deeb4cc7a86711a8548182fb"
+    }
+  ],
+  "literacyRegression": {
+    "openingMs": 42.699999928474426,
+    "mountedPages": 2,
+    "journeyPhase": "complete"
+  },
+  "quantizationRegression": {
+    "quantizeMs": 6,
+    "workerStartupMs": 149.29999995231628,
+    "mockPipelineMs": 542.5,
+    "goldenHash": "80bd3049d7d65ff7f8ce461f9ca0ffb7489b50e1f9780879482b62281f14ba01",
+    "realImageModel": false
+  },
+  "sourceCommit": "e2e2b0f1029f57a4c11e4a60b56453004628da08",
+  "sourceCi": {
+    "receipt": {
+      "path": "artifacts/c20-browser/source-ci-final.json",
+      "sha256": "4a7cf7099c0a84ed50a9c1aa8bca663ed79d544656a314e109829e37b69b4c9c"
+    },
+    "runs": [
+      {
+        "id": 41930714385,
+        "url": "https://github.com/huytruong1810/Vibe/actions/runs/41930714385",
+        "conclusion": "failure",
+        "jobs": [
+          {
+            "name": "checks",
+            "conclusion": "success",
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/41930714385/job/126926585626",
+            "startedAt": "2026-11-04T23:04:30Z",
+            "completedAt": "2026-11-04T23:09:40Z"
+          },
+          {
+            "name": "browser-journeys (2)",
+            "conclusion": "failure",
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/41930714385/job/126926586002",
+            "startedAt": "2026-11-04T23:04:29Z",
+            "completedAt": "2026-11-04T23:14:30Z"
+          },
+          {
+            "name": "beta-browser (/)",
+            "conclusion": "success",
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/41930714385/job/126926586015",
+            "startedAt": "2026-11-04T23:04:30Z",
+            "completedAt": "2026-11-04T23:06:08Z"
+          },
+          {
+            "name": "beta-browser (/Vibe/)",
+            "conclusion": "success",
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/41930714385/job/126926586065",
+            "startedAt": "2026-11-04T23:04:30Z",
+            "completedAt": "2026-11-04T23:06:01Z"
+          },
+          {
+            "name": "browser-journeys (1)",
+            "conclusion": "failure",
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/41930714385/job/126926586190",
+            "startedAt": "2026-11-04T23:04:30Z",
+            "completedAt": "2026-11-04T23:20:09Z"
+          },
+          {
+            "name": "ecology-soak",
+            "conclusion": "cancelled",
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/41930714385/job/126926586196",
+            "startedAt": "2026-11-04T23:04:29Z",
+            "completedAt": "2026-11-04T23:29:45Z"
+          },
+          {
+            "name": "verify",
+            "conclusion": "failure",
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/41930714385/job/126933977126",
+            "startedAt": "2026-11-04T23:20:12Z",
+            "completedAt": "2026-11-04T23:20:15Z"
+          }
+        ]
+      },
+      {
+        "id": 41930723882,
+        "url": "https://github.com/huytruong1810/Vibe/actions/runs/41930723882",
+        "conclusion": "failure",
+        "jobs": [
+          {
+            "name": "beta-browser (/Vibe/)",
+            "conclusion": "success",
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/41930723882/job/126926616655",
+            "startedAt": "2026-11-04T23:04:33Z",
+            "completedAt": "2026-11-04T23:05:41Z"
+          },
+          {
+            "name": "beta-browser (/)",
+            "conclusion": "success",
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/41930723882/job/126926616955",
+            "startedAt": "2026-11-04T23:04:33Z",
+            "completedAt": "2026-11-04T23:06:19Z"
+          },
+          {
+            "name": "checks",
+            "conclusion": "success",
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/41930723882/job/126926616965",
+            "startedAt": "2026-11-04T23:04:33Z",
+            "completedAt": "2026-11-04T23:08:01Z"
+          },
+          {
+            "name": "ecology-soak",
+            "conclusion": "cancelled",
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/41930723882/job/126926616988",
+            "startedAt": "2026-11-04T23:04:33Z",
+            "completedAt": "2026-11-04T23:29:49Z"
+          },
+          {
+            "name": "browser-journeys (2)",
+            "conclusion": "success",
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/41930723882/job/126926616992",
+            "startedAt": "2026-11-04T23:04:33Z",
+            "completedAt": "2026-11-04T23:09:39Z"
+          },
+          {
+            "name": "browser-journeys (1)",
+            "conclusion": "failure",
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/41930723882/job/126926617034",
+            "startedAt": "2026-11-04T23:04:33Z",
+            "completedAt": "2026-11-04T23:20:30Z"
+          },
+          {
+            "name": "verify",
+            "conclusion": "failure",
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/41930723882/job/126934129932",
+            "startedAt": "2026-11-04T23:20:33Z",
+            "completedAt": "2026-11-04T23:20:37Z"
+          }
+        ]
+      }
+    ],
+    "finding": "Both C13 Zephyrit captures miss transient beats; push C18 startup times out; PR C18 passes; aggregate verify fails both. Ecology cancelled, not passing soak."
+  }
+}

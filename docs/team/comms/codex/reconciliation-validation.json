@@ -1,0 +1,1122 @@
+{
+  "recordedAt": "2026-11-05T22:09:25.939Z",
+  "runtimeSourceSha": "6b20ebb42d810e9cc8dc8b4b3bb9f77832c8f549",
+  "receiptHead": "89a9cef6cf6394fba46fb7e5d87d14676595085b",
+  "branch": "eng/hd-presentation",
+  "commits": {
+    "coordination": "89515946",
+    "studioMerge": "1525883e",
+    "dependencyRelay": "176f9d17",
+    "ui": "a4e7d17a",
+    "uiScaleAndApprovalBinding": "4afd2877",
+    "bookPointerFix": "6b20ebb4",
+    "ownerFollowups": "89a9cef6"
+  },
+  "retainedFacesBlob": "b24e1e9620c7e567d58d00230a0df40707b232a8",
+  "sourceFiles": [
+    {
+      "path": "scripts/ui-build.ts",
+      "sha256": "69355d620b36832a7342946d26b40c974275e0e1ef39bbe29bb4ab6a97b5cc4b"
+    },
+    {
+      "path": "src/presentation/paintings.ts",
+      "sha256": "0c0aea3f25d30b7d696cda8f6badb77abf79312fb5af766d20ecbf2759b8c6db"
+    },
+    {
+      "path": "src/presentation/ui/book.ts",
+      "sha256": "4369d761fab97a514880f0ee1178722e149b8a213a88b86c3fc67cabd3c94f09"
+    },
+    {
+      "path": "src/presentation/ui/hud.css",
+      "sha256": "0086f5d10fb439d22e23c7a0e9db9060dc008e2e6053b5e26075780485d3b1ff"
+    },
+    {
+      "path": "src/presentation/ui/painting.ts",
+      "sha256": "b9b8196c55bfc4a5b3945e75123b566584bc5251012090803e5329585ccb5353"
+    },
+    {
+      "path": "src/presentation/ui/theme.css",
+      "sha256": "ca03030f0c1c05324ea5006b4c173573a25e27ff912703fd826adda9288b3d90"
+    },
+    {
+      "path": "tests/art-sidecars.test.ts",
+      "sha256": "13124b0663f895715dcbba4beaffdbf8a1370315bc8be09084dd902bc275ce50"
+    },
+    {
+      "path": "tests/browser/authored-ui.spec.ts",
+      "sha256": "21a5956bf2e5dd2d3f20489bd271afaa348c46aa6e30b5feade9e83720ce66d1"
+    },
+    {
+      "path": "tests/browser/book-drafts.spec.ts",
+      "sha256": "c962a99b83797835f57d3086c592a24c5b0cb37da49e6943f0765905c3b92a05"
+    },
+    {
+      "path": "tests/browser/fixtures/book-screen.html",
+      "sha256": "4854074271a73a90037338e3f38ee226f53a42cac5481f453cca60e6abbcf473"
+    },
+    {
+      "path": "tests/browser/painting-workflow.spec.ts",
+      "sha256": "8b922ceeda5c2bf00110d5d9f6530722b3230e49667e786ca7331be28a4a812c"
+    },
+    {
+      "path": "tests/hud-kit.test.ts",
+      "sha256": "6379f0745d5527aa1fa18c178b05ae572c17b7503d99637da7ac8c8dc516d96e"
+    }
+  ],
+  "intake": {
+    "recordedAt": "2026-11-05T22:03:38.085Z",
+    "engineeringHead": "89a9cef6cf6394fba46fb7e5d87d14676595085b",
+    "studioHead": "74714197ed7888cff5544e16be28800068b89014",
+    "manifestSha256": "bad8f9ba1050471b76dc4ecfe28791a3f294457d64e822c66cb9831f33fa6ebf",
+    "bodies": [
+      {
+        "asset": "bramblefang",
+        "validPublication": true,
+        "packetDigest": "046f3d9e9d990754081aaedb88d5bbc56076ccbebe6cf9e765dfc33c5843f485"
+      },
+      {
+        "asset": "cindermoth",
+        "validPublication": true,
+        "packetDigest": "fcb972ff37ed4488f0d8cdcb4e606035a540f404ac54e6b643a9d872f2a1a383"
+      },
+      {
+        "asset": "ignicap",
+        "validPublication": true,
+        "packetDigest": "a1ed8f0516bd69fa092cad3e8634f683d3b81110162c2718873d2dc14c3de4f2"
+      },
+      {
+        "asset": "marshstalker",
+        "validPublication": true,
+        "packetDigest": "aae5ff53bda3a7451fb7a1d9e1703244e47425a1f34ac54c1bf8fb4838c25ed0"
+      },
+      {
+        "asset": "mireling",
+        "validPublication": true,
+        "packetDigest": "b4a930b71bd34ee41b43f17602f82c06d2c6b87bc56a64e234cb98d4f45b699a"
+      },
+      {
+        "asset": "npc:caelum",
+        "validPublication": true,
+        "packetDigest": "4b93b666744ff09f0e0a36260db3f4510621ec099e22549c4b34f67ba18949d2"
+      },
+      {
+        "asset": "npc:dara",
+        "validPublication": true,
+        "packetDigest": "8f5589a568c1ae6a987785a1cc632223d2b300d57f80d8c11976d23486f9a2c9"
+      },
+      {
+        "asset": "npc:finn",
+        "validPublication": true,
+        "packetDigest": "a96db3852d21e6f7a5b29ef51015f579bd24c34b3d0d9e0fe0e79aad385384dc"
+      },
+      {
+        "asset": "npc:lark",
+        "validPublication": true,
+        "packetDigest": "3d73d91f37bd29bed5af5b0856ae61fa5a23daac5d02bc8f62d7e8e54e8e10e1"
+      },
+      {
+        "asset": "npc:marina",
+        "validPublication": true,
+        "packetDigest": "8cac69662aca5ced3dd5e35f1945c4ae323099d42c3a560aa1c8caf0220cd984"
+      },
+      {
+        "asset": "npc:mira",
+        "validPublication": true,
+        "packetDigest": "abea5010ada30ddf18fdeeff8a619d80fcf5862282b456cb18fc6bab591ddb4b"
+      },
+      {
+        "asset": "npc:neris",
+        "validPublication": true,
+        "packetDigest": "4262b8bf2f1bd6a1424a124f4365325cb10875729fb37bb347874da75d96cab2"
+      },
+      {
+        "asset": "npc:oren",
+        "validPublication": true,
+        "packetDigest": "1f8793f95c223ddfac6b6c030d15150b7b16babcb677679431f61bd8bd0d7f2a"
+      },
+      {
+        "asset": "npc:reed",
+        "validPublication": true,
+        "packetDigest": "8cd4a3cc6bd086f128ee0e011ec504fd137e7096de656dc11f88ef3b6649670c"
+      },
+      {
+        "asset": "npc:willa",
+        "validPublication": true,
+        "packetDigest": "e0c558c009bef75581a0b23475a88b80ca52dde83d7bba3ca9474a0aad776393"
+      },
+      {
+        "asset": "player-aqualia",
+        "validPublication": true,
+        "packetDigest": "d4446c6655c7c452f393272ef52944388c35963588240c9da796887baff95fcf"
+      },
+      {
+        "asset": "rivallie",
+        "validPublication": true,
+        "packetDigest": "d0c7f83d07b91fe33fc91db3f4aab95ae5067726052a7fed5743d542bd3f8673"
+      },
+      {
+        "asset": "steamshell",
+        "validPublication": true,
+        "packetDigest": "377b976f9b6a14de80f3faaab3c93edb9c815b2167759844f7a0c6c2554d94ae"
+      },
+      {
+        "asset": "zephyrit",
+        "validPublication": true,
+        "packetDigest": "5cf0c6947a17bbd6d15325123b792c87632bdc1c77d8b0ee905f0fb2a0add848"
+      }
+    ],
+    "faces": [
+      {
+        "asset": "bramblefang",
+        "frameCount": 50,
+        "refusal": "Error: Integrated body differs from the approved published body"
+      },
+      {
+        "asset": "cindermoth",
+        "frameCount": 50,
+        "refusal": "Error: Merge the matching published body before its faces"
+      },
+      {
+        "asset": "ignicap",
+        "frameCount": 50,
+        "refusal": "Error: Merge the matching published body before its faces"
+      },
+      {
+        "asset": "marshstalker",
+        "frameCount": 50,
+        "refusal": "Error: Integrated body differs from the approved published body"
+      },
+      {
+        "asset": "mireling",
+        "frameCount": 50,
+        "refusal": "Error: Integrated body differs from the approved published body"
+      },
+      {
+        "asset": "rivallie",
+        "frameCount": 25,
+        "refusal": "Error: Face/body packet binding mismatch"
+      },
+      {
+        "asset": "steamshell",
+        "frameCount": 50,
+        "refusal": "Error: Merge the matching published body before its faces"
+      },
+      {
+        "asset": "zephyrit",
+        "frameCount": 50,
+        "refusal": "Error: Merge the matching published body before its faces"
+      }
+    ],
+    "ui": {
+      "sourceDigest": "6cd75bdd8799fa7417302c8792276be0eacbe1a9c9d063aa7ea0cdb860263e37",
+      "reviewSha256": "1bb2d0d718ec0c32793f9381a44d02829a4786cfaf745a9b912f289a0138463c",
+      "approvedReviewSha256": "1bb2d0d718ec0c32793f9381a44d02829a4786cfaf745a9b912f289a0138463c",
+      "digestScheme": "contact-png-sha256 (packet_ui_artifacts.py), plus approved review SHA256 pinned by compiler",
+      "contactDigestMatch": true,
+      "canonicalJsonDigestMatch": false,
+      "frames": [
+        {
+          "id": "frame_book_spread",
+          "packetMatch": true,
+          "sourceMatch": true
+        },
+        {
+          "id": "frame_note_page",
+          "packetMatch": true,
+          "sourceMatch": true
+        },
+        {
+          "id": "icon_page_prev",
+          "packetMatch": true,
+          "sourceMatch": true
+        },
+        {
+          "id": "icon_page_next",
+          "packetMatch": true,
+          "sourceMatch": true
+        },
+        {
+          "id": "seal_stamp",
+          "packetMatch": true,
+          "sourceMatch": true
+        },
+        {
+          "id": "frame_painting_wall",
+          "packetMatch": true,
+          "sourceMatch": true
+        },
+        {
+          "id": "frame_painting_preview",
+          "packetMatch": true,
+          "sourceMatch": true
+        },
+        {
+          "id": "easel_cloth",
+          "packetMatch": true,
+          "sourceMatch": true
+        },
+        {
+          "id": "icon_note-blank",
+          "packetMatch": true,
+          "sourceMatch": true
+        },
+        {
+          "id": "icon_note-written",
+          "packetMatch": true,
+          "sourceMatch": true
+        },
+        {
+          "id": "icon_book-blank",
+          "packetMatch": true,
+          "sourceMatch": true
+        },
+        {
+          "id": "icon_book-written",
+          "packetMatch": true,
+          "sourceMatch": true
+        },
+        {
+          "id": "icon_canvas-blank",
+          "packetMatch": true,
+          "sourceMatch": true
+        },
+        {
+          "id": "icon_canvas-painted",
+          "packetMatch": true,
+          "sourceMatch": true
+        }
+      ]
+    },
+    "world": {
+      "sourceSha256": "b55ad9de356fe9ef65276e7e282ac99fd43eaee797d3d88ec508ca5349a6d81b",
+      "levels": [
+        {
+          "level": "aqualia_village",
+          "counts": {
+            "Settlement": 1,
+            "PlayerSpawn": 1,
+            "Building": 10,
+            "Entrance": 11,
+            "Landmark": 19,
+            "StorySpot": 6,
+            "VillagerAnchor": 50,
+            "Service": 5,
+            "Habitat": 2,
+            "AmbienceEmitter": 7,
+            "MusicZone": 1,
+            "Waystone": 1,
+            "FestivalRoute": 1,
+            "LightSource": 4,
+            "Decor": 33
+          },
+          "decorAssets": [
+            "placeholder:foreground:canopy",
+            "env:prop_hearth",
+            "env:landmark_well",
+            "env:landmark_waystone",
+            "env:tree_oak"
+          ]
+        },
+        {
+          "level": "aqualia_riverlands",
+          "counts": {
+            "Landmark": 16,
+            "StorySpot": 4,
+            "Habitat": 6,
+            "AmbienceEmitter": 6,
+            "MusicZone": 1,
+            "Waystone": 2,
+            "Decor": 144
+          },
+          "decorAssets": [
+            "env:landmark_waystone",
+            "env:tree_oak",
+            "env:rock_boulder_rich",
+            "env:rock_pebbles",
+            "env:flora_reeds_healthy",
+            "env:house_aqualia",
+            "env:flora_fungi_healthy",
+            "placeholder:foreground:canopy",
+            "env:flora_berries_healthy"
+          ]
+        }
+      ]
+    }
+  },
+  "ledgerRecords": 0,
+  "manifestChangedSinceHandoff": false,
+  "assets": {
+    "frames": 4024,
+    "fullPages": 3,
+    "fullBytes": 49988160,
+    "halfBytes": 12801184,
+    "hdMissingRequirements": 1519,
+    "approvedActors": 0,
+    "full19ActorScaleAccepted": false,
+    "atlasBytesChangedSinceHandoff": false,
+    "images": [
+      {
+        "path": "public/assets/generated/bundle-0.png",
+        "sha256": "1327ac4dd2237a223b4b599bc249d905c33c75c7d198b674bbdc9143abe5a2b6",
+        "inspected": true
+      },
+      {
+        "path": "public/assets/generated/bundle-1.png",
+        "sha256": "26cd88d399a2a65fdb340a5fedf4db2553fffab66738d4103852ebad68d6dcfb",
+        "inspected": true
+      },
+      {
+        "path": "public/assets/generated/bundle-2.png",
+        "sha256": "053e35ce8a38211a808eb88d27ae588967e875c87946926ed3e1ed879c02e64d",
+        "inspected": true
+      },
+      {
+        "path": "public/assets/generated/bundle@0.5x.png",
+        "sha256": "f0c82bdcdcdfd58f879beef67c187498441efb462da67ccf9e9f1ec4b13b9d47",
+        "inspected": true
+      }
+    ],
+    "uiImages": [
+      {
+        "path": "public/assets/generated/ui/frame_book_spread.png",
+        "sha256": "cde76082c2644c4d832a06568305140f9d72ed38bc2e0c0d939d99c090bbcd36",
+        "inspected": true
+      },
+      {
+        "path": "public/assets/generated/ui/frame_note_page.png",
+        "sha256": "66948b03764ed26761375556eb102368b54514429e4f636a01346cda26dc758d",
+        "inspected": true
+      },
+      {
+        "path": "public/assets/generated/ui/icon_page_prev.png",
+        "sha256": "e2f28f68b33b5e30bd82244ce845b9292a8fabedd191a040f21607a5602d0fa8",
+        "inspected": true
+      },
+      {
+        "path": "public/assets/generated/ui/icon_page_next.png",
+        "sha256": "de392580c4b92f39f701c31b44ac5b7fd3381114a2fe5a79b502bdaacc75ce53",
+        "inspected": true
+      },
+      {
+        "path": "public/assets/generated/ui/seal_stamp.png",
+        "sha256": "efb9d185a10476b721c037882b3e67c5abe65c8574f8d49f40afdc77eee2d678",
+        "inspected": true
+      },
+      {
+        "path": "public/assets/generated/ui/frame_painting_wall.png",
+        "sha256": "4221ddf707b24f2e4546d10a00e3a7fb445c601476229e6a99b70049bc3e98b7",
+        "inspected": true
+      },
+      {
+        "path": "public/assets/generated/ui/frame_painting_preview.png",
+        "sha256": "6963994fb85a90d51bb4a711ca567ceacdc3cabc23f7a3c67438211dad9bfa98",
+        "inspected": true
+      },
+      {
+        "path": "public/assets/generated/ui/easel_cloth.png",
+        "sha256": "f1b90798489010150b0c209bc2570b1396e8ca45f1d55977e972b010924bd3b8",
+        "inspected": true
+      },
+      {
+        "path": "public/assets/generated/ui/artifact-note-blank.png",
+        "sha256": "0032a43f49d2a9fd1fc026eedc5ccd923d03c9ea8cb57afa1f878cab9b9942cc",
+        "inspected": true
+      },
+      {
+        "path": "public/assets/generated/ui/artifact-note-written.png",
+        "sha256": "e08aba18cfb444051a39943dbd04b7d395bc1be4e808cee5d6311da1441729b2",
+        "inspected": true
+      },
+      {
+        "path": "public/assets/generated/ui/artifact-book-blank.png",
+        "sha256": "45a48abb456c7ddf95d75b598a996ff68a8607c75083be6c59a4b7c4e2dfa868",
+        "inspected": true
+      },
+      {
+        "path": "public/assets/generated/ui/artifact-book-written.png",
+        "sha256": "617638c597a176b10cf92e3cf48121ae699fed33dc98c3f0575bfd6a581fad7f",
+        "inspected": true
+      },
+      {
+        "path": "public/assets/generated/ui/artifact-canvas-blank.png",
+        "sha256": "7c24b19cd9981bd25a2dc17a8840efaff8b0cb4023e5db7bad50a2df0c824d79",
+        "inspected": true
+      },
+      {
+        "path": "public/assets/generated/ui/artifact-canvas-painted.png",
+        "sha256": "2499e3c7d139454b13ec866049d3a3212f5ae7bad76289c539a8591e15223e9c",
+        "inspected": true
+      }
+    ]
+  },
+  "checks": {
+    "latest": {
+      "result": "passed",
+      "testsPassed": 571,
+      "filesPassed": 48,
+      "build": "passed",
+      "sourceNote": "Exact runtime/test bytes subsequently committed at6b20ebb4; build stamp predates that commit. Beta builds below stamp89a9cef6.",
+      "log": {
+        "path": "artifacts/reconcile-20261105-book-final-check.log",
+        "sha256": "f9057e803a01de438e0fc632342da524bcfaaad152e480fb20ee94c694b54bd3"
+      }
+    },
+    "focusedReconciliation": {
+      "result": "passed",
+      "tests": 47,
+      "log": {
+        "path": "artifacts/reconcile-20261105-focused.log",
+        "sha256": "eb1465c43ee07e8bddb59ee61cdb631cbe101ca5dd9745d0959139aefddcfa64"
+      }
+    },
+    "uiBinding": {
+      "result": "passed",
+      "tests": 19,
+      "log": {
+        "path": "artifacts/reconcile-20261105-ui-bound-tests.log",
+        "sha256": "3f64f92f668fe2ea4d388a57d655389298a1d7f6ca6c7fb6b4ab6cb69d4a2479"
+      }
+    },
+    "pointerBefore": {
+      "result": "failed-as-expected",
+      "expectedPages": 2,
+      "receivedPages": 1,
+      "source": "6b20ebb4 parent",
+      "log": {
+        "path": "artifacts/reconcile-20261105-pointer-before.log",
+        "sha256": "0802459ff03ba334772a1aeb6b8dc7154125c47795819b87f1c92feecbf07d67"
+      }
+    },
+    "pointerAndUiAfter": {
+      "result": "passed",
+      "tests": 6,
+      "log": {
+        "path": "artifacts/reconcile-20261105-pointer-fixed.log",
+        "sha256": "60917f16e107c618506ce78dba9fca7c59293a1f233ae24778df3faeae7e2325"
+      }
+    },
+    "preservedRuns": [
+      {
+        "log": {
+          "path": "artifacts/reconcile-20261105-check.log",
+          "sha256": "a8dfb1b5620c59628af8c26365fa2fdb9c9a023e2867ec7151a6974e527bb52b"
+        },
+        "passed": 567,
+        "failed": 3,
+        "failures": [
+          "painting7.287ms/5ms",
+          "artifact97.0539ms/50ms",
+          "incompatible current face packet incorrectly assumed valid by source-bound test"
+        ]
+      },
+      {
+        "log": {
+          "path": "artifacts/reconcile-20261105-final-check.log",
+          "sha256": "97e1552946ffa1458b36d27416b6a3047b600e9ab73d0c98f95c36139365ad85"
+        },
+        "passed": 570,
+        "failed": 0
+      },
+      {
+        "log": {
+          "path": "artifacts/reconcile-20261105-bound-final-check.log",
+          "sha256": "1f5ab0922da83f456f6a92b8f537cb70acb6a359795d451a657ad2b0c4497748"
+        },
+        "passed": 570,
+        "failed": 1,
+        "failure": "artifact70.3733ms/50ms"
+      },
+      {
+        "log": {
+          "path": "artifacts/reconcile-20261105-budgets-final.log",
+          "sha256": "8e66774a6624f9533f862fd40b279e49b5986355e924be513e976fb223dab6a9"
+        },
+        "passed": 1,
+        "failed": 1,
+        "failure": "artifact63.791ms/50ms"
+      }
+    ],
+    "priorFailuresErasedOrLimitsChanged": false,
+    "fullFormat": {
+      "result": "failed",
+      "log": {
+        "path": "artifacts/reconcile-20261105-format.log",
+        "sha256": "f83f80c202bbcac00daa631e38081dfc3261ffa87c132e59913fa81f37a55a7f"
+      },
+      "originalFailures": [
+        "docs/team/queue/blender.md",
+        "docs/team/status-board.md"
+      ],
+      "queueFormattedWithinCodexLane": true,
+      "remainingOwnerFile": "docs/team/status-board.md",
+      "ownerTicket": "M29"
+    },
+    "standardAssets": {
+      "result": "passed",
+      "log": {
+        "path": "artifacts/reconcile-20261105-assets-check.log",
+        "sha256": "b096fc5523aa26be0d643f4aaec9df38d8a0aa418f9e5745025d53dc62af3f80"
+      }
+    },
+    "hdAssets": {
+      "result": "failed",
+      "log": {
+        "path": "artifacts/reconcile-20261105-hd-check.log",
+        "sha256": "40e678f9e73f14d7e3905bb53f00a57b4e61ea286275db2adad8b0e7c4cf8471"
+      }
+    },
+    "authoredWorldValidation": {
+      "result": "passed-on-earlier-canonical-source",
+      "levels": 2,
+      "placements": 331,
+      "resourceNodes": 0,
+      "log": {
+        "path": "artifacts/reconcile-20261105-world-check.log",
+        "sha256": "1bbd1ab63c0811fc65c2d27d2e29da588164ee36887f5b49dccc81e0a62c864f"
+      }
+    },
+    "worldforgeSelftests": {
+      "result": "failed",
+      "passed": 26,
+      "total": 27,
+      "test": "Authoring.test_repeatable_native_schema_and_roundtrip",
+      "replayDigest": "ae34ae141d48512ab02607d274973751db79a0853fdebb74eaa3c6d982b66d5b",
+      "canonicalDigest": "b55ad9de356fe9ef65276e7e282ac99fd43eaee797d3d88ec508ca5349a6d81b",
+      "assertionUnchanged": true,
+      "ownerDependency": "M28: Blender publish the matching canonical project through worldforge",
+      "log": {
+        "path": "artifacts/reconcile-20261105-worldforge-selftests.log",
+        "sha256": "fd9d40c929a06ca797e6cf059857905cf479cfadef4aab8b67b37118853bc2af"
+      }
+    },
+    "changedCodeFormatting": {
+      "result": "passed",
+      "log": {
+        "path": "artifacts/reconcile-20261105-owned-format.log",
+        "sha256": "fbdd37869c73ce85afb11ffefa058e0181874c073fdfee7d7a4b5086b7ea3b1b"
+      }
+    },
+    "ownerFormatting": {
+      "result": "failed-status-board-only",
+      "log": {
+        "path": "artifacts/reconcile-20261105-owner-format.log",
+        "sha256": "350b01a0d68e523c7c6721c407ad4c1e02bd7c282215fa95443b47238f5f3303"
+      }
+    }
+  },
+  "book": {
+    "sourceSha": "6b20ebb42d810e9cc8dc8b4b3bb9f77832c8f549",
+    "native": {
+      "output": "test-results/reconcile-native-book-6b20ebb4-20261105T215709",
+      "exitCode": 0,
+      "directory": "artifacts/reconcile-native-book-6b20ebb4-20261105T215709",
+      "openingMs": 31.5,
+      "limitMs": 100,
+      "mountedPages": 2,
+      "pageLabel": "1–2 / 48",
+      "phase": "complete",
+      "phaseTimingsMs": {
+        "pause": 7.1000001430511475,
+        "content": 13.299999952316284,
+        "render": 0.7000000476837158,
+        "show-modal": 10.399999856948853
+      },
+      "measurements": [
+        {
+          "name": "hearthwild:book-open:pause",
+          "startTime": 16894.5,
+          "duration": 7.1000001430511475
+        },
+        {
+          "name": "hearthwild:book-open",
+          "startTime": 16894.5,
+          "duration": 31.5
+        },
+        {
+          "name": "hearthwild:book-open:content",
+          "startTime": 16901.60000014305,
+          "duration": 13.299999952316284
+        },
+        {
+          "name": "hearthwild:book-open:render",
+          "startTime": 16914.900000095367,
+          "duration": 0.7000000476837158
+        },
+        {
+          "name": "hearthwild:book-open:show-modal",
+          "startTime": 16915.60000014305,
+          "duration": 10.399999856948853
+        }
+      ],
+      "pageErrors": [],
+      "gpu": "ANGLE (Intel, Intel(R) Iris(R) Xe Graphics (0x0000A7A1) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "diagnostics": {
+        "path": "artifacts/reconcile-native-book-6b20ebb4-20261105T215709/c18-book-browser.json",
+        "sha256": "67ef4fb0e223d2884f3bf8719a6be77680bf39e88828e6efc80906210d3b2ac4"
+      },
+      "cpu": {
+        "path": "artifacts/reconcile-native-book-6b20ebb4-20261105T215709/c18-book-cpu.json",
+        "sha256": "c624fac10592ec37b547ccbe3529aee9e996726a99bb50b925be73c9b7e3e112"
+      },
+      "images": [
+        {
+          "path": "artifacts/reconcile-native-book-6b20ebb4-20261105T215709/c18-book-spread-1080p.png",
+          "sha256": "935a4601890d9fe94aeb30139a3ad5e33d9e97d0789ac2b54c96d5f7776ee8b5",
+          "inspected": true
+        }
+      ]
+    },
+    "software": {
+      "output": "test-results/reconcile-software-book-6b20ebb4-20261105T215709",
+      "exitCode": 1,
+      "directory": "artifacts/reconcile-software-book-6b20ebb4-20261105T215709",
+      "openingMs": 578.1000001430511,
+      "limitMs": 100,
+      "mountedPages": 2,
+      "pageLabel": "1–2 / 48",
+      "phase": "assert opening measurements",
+      "phaseTimingsMs": {
+        "pause": 298.80000019073486,
+        "content": 274,
+        "render": 0.39999985694885254,
+        "show-modal": 4.900000095367432
+      },
+      "measurements": [
+        {
+          "name": "hearthwild:book-open:pause",
+          "startTime": 75691.59999990463,
+          "duration": 298.80000019073486
+        },
+        {
+          "name": "hearthwild:book-open",
+          "startTime": 75691.59999990463,
+          "duration": 578.1000001430511
+        },
+        {
+          "name": "hearthwild:book-open:content",
+          "startTime": 75990.40000009537,
+          "duration": 274
+        },
+        {
+          "name": "hearthwild:book-open:render",
+          "startTime": 76264.40000009537,
+          "duration": 0.39999985694885254
+        },
+        {
+          "name": "hearthwild:book-open:show-modal",
+          "startTime": 76264.79999995232,
+          "duration": 4.900000095367432
+        }
+      ],
+      "pageErrors": [],
+      "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "diagnostics": {
+        "path": "artifacts/reconcile-software-book-6b20ebb4-20261105T215709/c18-book-browser.json",
+        "sha256": "986d3ceaea7204b3c789f14d64c27d7711bb621fb01a1441627b27af90917474"
+      },
+      "cpu": {
+        "path": "artifacts/reconcile-software-book-6b20ebb4-20261105T215709/c18-book-cpu.json",
+        "sha256": "0c758a9b55f2f961b3f7e4952e48a5e23546c1eb1ada01bdbc52e5e2bf74c098"
+      },
+      "images": [
+        {
+          "path": "artifacts/reconcile-software-book-6b20ebb4-20261105T215709/c18-book-spread-1080p.png",
+          "sha256": "af44f2712bd8573aa31e41d69330ef3386019aa5e6b838f51d8ed670f42639ff",
+          "inspected": true
+        }
+      ]
+    },
+    "softwareAcceptance": false,
+    "softwareBeforePointerFix": {
+      "result": "failed-before-maximum-book-opening",
+      "phase": "write three pages",
+      "expected": "3 / 3",
+      "received": "2 / 2",
+      "cpuTraceStarted": false,
+      "staleCopiedCpuAndImageRemoved": true,
+      "output": "test-results/reconcile-software-4afd2877-20261105T214823",
+      "diagnostics": {
+        "path": "artifacts/reconcile-software-4afd2877-20261105T214823/c18-book-browser.json",
+        "sha256": "2aa62037643fa7d6ebafd312b50233053861734db860e148d22f9e8a4e65012f"
+      }
+    }
+  },
+  "painting": {
+    "sourceSha": "4afd2877b6cf1d820d9abc2856483562a893cb18",
+    "nativeTestsPassed": 3,
+    "includesBookJourney": true,
+    "paletteContentWidth": 192,
+    "paletteContentHeight": 128,
+    "sharedUiBytes": 72704,
+    "residentPaintingLimit": 32,
+    "realImageModelOrGpuAcceptance": false,
+    "log": {
+      "path": "artifacts/reconcile-20261105-native-final.log",
+      "sha256": "2cf994c426a43f9d10acbcad472eedeb22dbea2c5c579fc6c5b536da4515fbd4"
+    },
+    "images": [
+      {
+        "path": "artifacts/reconcile-native-final-4afd2877-20261105T214551/c20-painting-preview-1080p.png",
+        "sha256": "d0490ba48f79dee98936f187fc5f596925e8667592c519b760ccb58805a61638",
+        "inspected": true
+      },
+      {
+        "path": "artifacts/reconcile-native-final-4afd2877-20261105T214551/c20-painting-hook-1080p.png",
+        "sha256": "ce421f606882595db0ecbe25f304991d9246cafc6abdd68f6611103b5bf909a2",
+        "inspected": true
+      },
+      {
+        "path": "artifacts/reconcile-native-final-4afd2877-20261105T214551/c20-pending-reloaded-1080p.png",
+        "sha256": "6754827e705982573914c23e582aed51c9607c9d75e746d46b3e0676af6a0d64",
+        "inspected": true
+      },
+      {
+        "path": "artifacts/reconcile-native-final-4afd2877-20261105T214551/c20-inventory-thumbnail-1080p.png",
+        "sha256": "5b8a49d5a2ea664462045d1787870c30d5f2aff5b651ef370455b9fe0108a862",
+        "inspected": true
+      }
+    ]
+  },
+  "gallery": {
+    "pages": [
+      {
+        "id": "bundle-0",
+        "width": 2040,
+        "height": 2042,
+        "canvasSha256": "f0d6ab9a824d1e84069766daab601a948643f0948ee972b4e32d9ac063e225fc"
+      },
+      {
+        "id": "bundle-1",
+        "width": 2040,
+        "height": 2042,
+        "canvasSha256": "c00ba5a3f0d4cef773c65a6329631c9ca05a0edf01bf59c215ba3e1b77b30143"
+      },
+      {
+        "id": "bundle-2",
+        "width": 2040,
+        "height": 2042,
+        "canvasSha256": "29866f921daa7b328393e041a3e5821aa1335dc413a14e92ef812e5d50a1217d"
+      }
+    ],
+    "frames": 4024,
+    "fullBytes": 49988160,
+    "halfBytes": 12801184,
+    "residentMiB": 47.67,
+    "pageCacheLimitMiB": 128
+  },
+  "beta": {
+    "runtimeSourceSha": "6b20ebb42d810e9cc8dc8b4b3bb9f77832c8f549",
+    "cases": [
+      {
+        "output": "test-results/reconcile-beta-root-20261105T220131",
+        "testExitCode": 0,
+        "directory": "artifacts/reconcile-beta-root-20261105T220131",
+        "buildExitCode": 0,
+        "base": "/",
+        "images": [
+          {
+            "path": "artifacts/reconcile-beta-root-20261105T220131/beta-settings.png",
+            "sha256": "a539eaf6db1d0bf3c30f5fdc23f0d5f5b429627047dcc39859eb2f958b85405a",
+            "inspected": true
+          },
+          {
+            "path": "artifacts/reconcile-beta-root-20261105T220131/beta-title.png",
+            "sha256": "994feea5a65647904fc3e3991d6accd755231bf03e8f1773b827cfa9cbec61c6",
+            "inspected": true
+          }
+        ]
+      },
+      {
+        "output": "test-results/reconcile-beta-subpath-20261105T220131",
+        "testExitCode": 0,
+        "directory": "artifacts/reconcile-beta-subpath-20261105T220131",
+        "buildExitCode": 0,
+        "base": "/Vibe/",
+        "images": [
+          {
+            "path": "artifacts/reconcile-beta-subpath-20261105T220131/beta-settings.png",
+            "sha256": "1941782812f57b63f21407f51065bb1abd106d09f0f97fa0fe1151084e30fac1",
+            "inspected": true
+          },
+          {
+            "path": "artifacts/reconcile-beta-subpath-20261105T220131/beta-title.png",
+            "sha256": "994feea5a65647904fc3e3991d6accd755231bf03e8f1773b827cfa9cbec61c6",
+            "inspected": true
+          }
+        ]
+      }
+    ],
+    "sourceSha": "89a9cef6cf6394fba46fb7e5d87d14676595085b",
+    "testsPassedPerBase": 2
+  },
+  "ci": {
+    "refreshedAt": "2026-11-05T22:09:25.5422086Z",
+    "sourceSha": "89a9cef6cf6394fba46fb7e5d87d14676595085b",
+    "runs": [
+      {
+        "id": 42117869814,
+        "url": "https://github.com/huytruong1810/Vibe/actions/runs/42117869814",
+        "headSha": "89a9cef6cf6394fba46fb7e5d87d14676595085b",
+        "status": "in_progress",
+        "conclusion": null,
+        "jobs": [
+          {
+            "name": "browser-journeys (2)",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/42117869814/job/127562186537",
+            "relevantSteps": []
+          },
+          {
+            "name": "browser-journeys (1)",
+            "status": "completed",
+            "conclusion": "failure",
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/42117869814/job/127562186821",
+            "relevantSteps": [
+              {
+                "name": "Run npm run test:browser -- --shard=1/2",
+                "status": "completed",
+                "conclusion": "failure"
+              }
+            ]
+          },
+          {
+            "name": "checks",
+            "status": "completed",
+            "conclusion": "failure",
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/42117869814/job/127562186895",
+            "relevantSteps": [
+              {
+                "name": "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/world/tools/worldlib -p worldforge_selftest.py",
+                "status": "completed",
+                "conclusion": "failure"
+              },
+              {
+                "name": "Run npm run format:check",
+                "status": "completed",
+                "conclusion": "skipped"
+              },
+              {
+                "name": "Run npm run benchmark",
+                "status": "completed",
+                "conclusion": "skipped"
+              }
+            ]
+          },
+          {
+            "name": "beta-browser (/Vibe/)",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/42117869814/job/127562186960",
+            "relevantSteps": []
+          },
+          {
+            "name": "ecology-soak",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/42117869814/job/127562186988",
+            "relevantSteps": [
+              {
+                "name": "Run npm run soak",
+                "status": "in_progress",
+                "conclusion": null
+              }
+            ]
+          },
+          {
+            "name": "beta-browser (/)",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/42117869814/job/127562187110",
+            "relevantSteps": []
+          }
+        ]
+      },
+      {
+        "id": 42117847371,
+        "url": "https://github.com/huytruong1810/Vibe/actions/runs/42117847371",
+        "headSha": "89a9cef6cf6394fba46fb7e5d87d14676595085b",
+        "status": "in_progress",
+        "conclusion": null,
+        "jobs": [
+          {
+            "name": "beta-browser (/Vibe/)",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/42117847371/job/127562112054",
+            "relevantSteps": []
+          },
+          {
+            "name": "checks",
+            "status": "completed",
+            "conclusion": "failure",
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/42117847371/job/127562112479",
+            "relevantSteps": [
+              {
+                "name": "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/world/tools/worldlib -p worldforge_selftest.py",
+                "status": "completed",
+                "conclusion": "failure"
+              },
+              {
+                "name": "Run npm run format:check",
+                "status": "completed",
+                "conclusion": "skipped"
+              },
+              {
+                "name": "Run npm run benchmark",
+                "status": "completed",
+                "conclusion": "skipped"
+              }
+            ]
+          },
+          {
+            "name": "browser-journeys (2)",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/42117847371/job/127562112508",
+            "relevantSteps": []
+          },
+          {
+            "name": "browser-journeys (1)",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/42117847371/job/127562112511",
+            "relevantSteps": []
+          },
+          {
+            "name": "ecology-soak",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/42117847371/job/127562112512",
+            "relevantSteps": [
+              {
+                "name": "Run npm run soak",
+                "status": "completed",
+                "conclusion": "skipped"
+              }
+            ]
+          },
+          {
+            "name": "beta-browser (/)",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/huytruong1810/Vibe/actions/runs/42117847371/job/127562112593",
+            "relevantSteps": []
+          }
+        ]
+      }
+    ],
+    "latestReceiptOnlyPushCiClaimedGreen": false,
+    "pagesActivation": "director-external",
+    "failedAnnotations": [
+      {
+        "path": ".github",
+        "line": 30,
+        "title": "",
+        "message": "Process completed with exit code 1.",
+        "evidence": {
+          "path": "artifacts/reconcile-20261105-ci-127562112479-annotations.json",
+          "sha256": "2da5ae97006490657f8367ec7a075d87474fc138924f22eba3e975444c76f807"
+        }
+      },
+      {
+        "path": ".github",
+        "line": 96,
+        "title": "",
+        "message": "Process completed with exit code 1.",
+        "evidence": {
+          "path": "artifacts/reconcile-20261105-ci-127562186821-annotations.json",
+          "sha256": "4c3f07f49a22c46c84cdd568ee4afa5f8473720c56b02c7d7a89e89006ba4262"
+        }
+      },
+      {
+        "path": "tests/browser/combat-director.spec.ts",
+        "line": 127,
+        "title": "[journeys] � tests/browser/combat-director.spec.ts:8:1 � 20 hostile Bramblefang have staggered tokens",
+        "message": "  1) [journeys] � tests/browser/combat-director.spec.ts:8:1 � 20 hostile Bramblefang have staggered tokens, readable windups and saved settings \n    Error: expect(received).toBe(expected) // Object.is equality\n\n    Expected: true\n    Received: false\n\n    Call Log:\n    - Timeout 15000ms exceeded while waiting on the predicate\n\n      125 |       ),\n      126 |     )\n    > 127 |     .toBe(true);\n          |      ^\n      128 |   await page.screenshot({ path: 'artifacts/c14-pack-1080p.png' });\n      129 |   await page.getByRole('button', { name: 'Settings', exact: true }).click();\n      130 |   await page.locator('#combat-spacing').fill('12');\n        at /home/runner/work/Vibe/Vibe/tests/browser/combat-director.spec.ts:127:6",
+        "evidence": {
+          "path": "artifacts/reconcile-20261105-ci-127562186821-annotations.json",
+          "sha256": "4c3f07f49a22c46c84cdd568ee4afa5f8473720c56b02c7d7a89e89006ba4262"
+        }
+      },
+      {
+        "path": ".github",
+        "line": 30,
+        "title": "",
+        "message": "Process completed with exit code 1.",
+        "evidence": {
+          "path": "artifacts/reconcile-20261105-ci-127562186895-annotations.json",
+          "sha256": "2da5ae97006490657f8367ec7a075d87474fc138924f22eba3e975444c76f807"
+        }
+      }
+    ],
+    "knownFailures": [
+      "Both checks jobs fail worldforge_selftest.py source equality",
+      "PR browser-journeys (1): combat-director.spec.ts:127 predator windup not observed within15000ms"
+    ],
+    "finalDocsOnlyPushWillNeedSeparateCiRefresh": true
+  },
+  "c7": {
+    "owner": "visitor",
+    "claim": "56b29afa",
+    "implementationDeliveredOnObservedStudio": false,
+    "observedStudio": "74714197ed7888cff5544e16be28800068b89014",
+    "newGameStillUsesWorldGenerator": true,
+    "saveWorldSourceAdded": false,
+    "fixedVillageConsumers": [
+      "src/domain/entities.ts",
+      "src/domain/query.ts",
+      "src/domain/scenes.ts",
+      "src/domain/simulation.ts",
+      "src/domain/world.ts"
+    ],
+    "approvedR3Digest": "ae34ae141d48512ab02607d274973751db79a0853fdebb74eaa3c6d982b66d5b",
+    "canonicalDigest": "b55ad9de356fe9ef65276e7e282ac99fd43eaee797d3d88ec508ca5349a6d81b",
+    "approvedR3CanonicalMapPresent": false,
+    "authoredWorldSoakAccepted": false,
+    "c11bRealAuthoredVillageProofAccepted": false
+  },
+  "sharedUiProofs": [
+    {
+      "path": "docs/team/comms/codex/reconciliation-book.png",
+      "sha256": "935a4601890d9fe94aeb30139a3ad5e33d9e97d0789ac2b54c96d5f7776ee8b5",
+      "inspected": true,
+      "source": "artifacts/reconcile-native-book-6b20ebb4-20261105T215709/c18-book-spread-1080p.png",
+      "fixture": false
+    },
+    {
+      "path": "docs/team/comms/codex/reconciliation-painting-preview.png",
+      "sha256": "d0490ba48f79dee98936f187fc5f596925e8667592c519b760ccb58805a61638",
+      "inspected": true,
+      "source": "artifacts/reconcile-native-final-4afd2877-20261105T214551/c20-painting-preview-1080p.png",
+      "fixture": false
+    },
+    {
+      "path": "docs/team/comms/codex/reconciliation-note-fixture.png",
+      "sha256": "31ff9420c6b6e5e92848d733e6840b7fdc159fececcb3cabe75f2f6f0f2daf9c",
+      "inspected": true,
+      "source": "test-results/reconcile-pointer-fixed-20261105T2154/authored-ui-approved-note-UI-preserves-sealed-text-at-1920px-journeys/note-1920.png",
+      "fixture": true
+    }
+  ],
+  "remaining": [
+    "M25 manifest integration SHA and exact refusals",
+    "M28 matching R3 canonical map, gameplay ResourceNodes and canonical asset bindings",
+    "Visitor C7 implementation and engineering review",
+    "Full19actor memory/scale and C11b authored-world proof",
+    "M29 owner status-board formatting",
+    "C18 software100ms opening gate",
+    "Current hosted verify and actual soak evidence; Pages activation external",
+    "Previously recorded local budget variability; reference-machine/live-model acceptance",
+    "Hosted C14 predator-windup assertion failure; no current-source aggregate verify pass"
+  ],
+  "cleanup": {
+    "preExistingScratchPreserved": true,
+    "taskOwnedVibeNodeProcessesAtAudit": 0,
+    "processAudit": {
+      "path": "artifacts/reconcile-20261105-process-audit.json",
+      "sha256": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f"
+    }
+  },
+  "acceptanceAdvanced": false
+}

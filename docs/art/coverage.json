@@ -2,7 +2,7 @@
   "requiredAppearances": 19,
   "declaredHdAppearances": 19,
   "completeAnimationAppearances": 4,
-  "approvedAppearances": 4,
+  "approvedAppearances": 0,
   "portraitPairs": 19,
   "completePortraitSets": 0,
   "approvedPortraitSets": 0,
@@ -1454,6 +1454,10 @@
     },
     {
       "appearanceId": "species:rivallie",
+      "requirement": "engineering approval for this source digest"
+    },
+    {
+      "appearanceId": "species:rivallie",
       "requirement": "nine identity-matched portrait expressions at both HUD tiers"
     },
     { "appearanceId": "species:zephyrit", "requirement": "walk/n: 8 authored frames" },
@@ -1539,6 +1543,10 @@
     {
       "appearanceId": "species:zephyrit",
       "requirement": "nine identity-matched portrait expressions at both HUD tiers"
+    },
+    {
+      "appearanceId": "species:mireling",
+      "requirement": "engineering approval for this source digest"
     },
     {
       "appearanceId": "species:mireling",
@@ -1738,7 +1746,15 @@
     },
     {
       "appearanceId": "species:bramblefang",
+      "requirement": "engineering approval for this source digest"
+    },
+    {
+      "appearanceId": "species:bramblefang",
       "requirement": "nine identity-matched portrait expressions at both HUD tiers"
+    },
+    {
+      "appearanceId": "species:marshstalker",
+      "requirement": "engineering approval for this source digest"
     },
     {
       "appearanceId": "species:marshstalker",
@@ -1797,7 +1813,7 @@
     "requiredAppearances": 41,
     "declaredHdAppearances": 41,
     "completeAnimationAppearances": 4,
-    "approvedAppearances": 4,
+    "approvedAppearances": 0,
     "portraitPairs": 32,
     "completePortraitSets": 0,
     "approvedPortraitSets": 0,
@@ -7091,6 +7107,10 @@
       },
       {
         "appearanceId": "species:rivallie",
+        "requirement": "engineering approval for this source digest"
+      },
+      {
+        "appearanceId": "species:rivallie",
         "requirement": "nine identity-matched portrait expressions at both HUD tiers"
       },
       { "appearanceId": "species:zephyrit", "requirement": "walk/n: 8 authored frames" },
@@ -7188,6 +7208,10 @@
       {
         "appearanceId": "species:zephyrit",
         "requirement": "nine identity-matched portrait expressions at both HUD tiers"
+      },
+      {
+        "appearanceId": "species:mireling",
+        "requirement": "engineering approval for this source digest"
       },
       {
         "appearanceId": "species:mireling",
@@ -7459,7 +7483,15 @@
       },
       {
         "appearanceId": "species:bramblefang",
+        "requirement": "engineering approval for this source digest"
+      },
+      {
+        "appearanceId": "species:bramblefang",
         "requirement": "nine identity-matched portrait expressions at both HUD tiers"
+      },
+      {
+        "appearanceId": "species:marshstalker",
+        "requirement": "engineering approval for this source digest"
       },
       {
         "appearanceId": "species:marshstalker",
@@ -7467,12 +7499,12 @@
       }
     ]
   },
-  "reviewAppearanceCount": 37,
-  "fullTextureBytes": 83722320,
-  "halfTextureBytes": 20848820,
+  "reviewAppearanceCount": 41,
+  "fullTextureBytes": 49988160,
+  "halfTextureBytes": 12801184,
   "terrain": {
-    "pageIds": ["bundle-0", "bundle-1", "bundle-2"],
-    "fullTextureBytes": 50233392,
-    "halfTextureBytes": 16679056
+    "pageIds": ["bundle-0", "bundle-1"],
+    "fullTextureBytes": 33325440,
+    "halfTextureBytes": 12801184
   }
 }

@@ -1,3 +1,4 @@
+import { telegraphBounds } from './telegraphs';
 import {
   Application,
   Container,
@@ -53,6 +54,7 @@ import {
   layerSockets,
   selectModularLayers,
   heldLayerFrame,
+  faceLayerPose,
   socketWorld,
   frameAnchor,
   type CompositeLease,
@@ -60,6 +62,8 @@ import {
 } from './compositor';
 import { EffectDirector, visibleProjectiles, effectSeed } from './effects';
 import { actorInScene, sceneCamera } from './scene-view';
+import { WorldPaintings } from './paintings';
+import type { Artifact } from '../domain/artifacts';
 
 export type { Quality } from './quality';
 export { CameraController } from './projection';
@@ -192,6 +196,7 @@ export class LightingRenderer {
 
 /** Owns disposable terrain caches and copied actor read models, never authoritative worker arrays. */
 export class WorldRenderer {
+  onDiagnostic: (start: number, end: number) => void = () => undefined;
   readonly app = new Application();
   readonly projection = new WorldProjection();
   readonly camera = new CameraController(this.projection);
@@ -211,6 +216,8 @@ export class WorldRenderer {
   private readonly entities = new Map<number, EntitySprite>();
   private readonly props = new Map<string, PropView>();
   private readonly indicators = new Graphics();
+  private readonly telegraphs = new Graphics();
+  private readonly telegraphMask = new Graphics();
   private readonly surfaceEffects = new Graphics();
   private readonly debug = new Graphics();
   private readonly weather = new WeatherRenderer();
@@ -246,6 +253,21 @@ export class WorldRenderer {
   private assetError = '';
   private needsRedraw = true;
   private sceneSignature = '';
+  private readArtifact: (id: string) => Promise<Artifact | null> = async () => null;
+  private readonly paintings = new WorldPaintings(
+    this.objects,
+    this.projection,
+    (id) => this.readArtifact(id),
+    () => {
+      this.needsRedraw = true;
+    },
+    (message) => {
+      this.assetError = message;
+    },
+  );
+  setArtifactContent(read: (id: string) => Promise<Artifact | null>): void {
+    this.readArtifact = read;
+  }
   private gpu = 'unreported';
   private initialized = false;
   private disposed = false;
@@ -349,6 +371,8 @@ export class WorldRenderer {
       this.footprintGraphics,
       this.objects,
       this.foreground,
+      this.telegraphs,
+      this.telegraphMask,
       this.vfxLayer,
       this.indicators,
       this.labels,
@@ -357,6 +381,9 @@ export class WorldRenderer {
       this.weather.graphics,
       this.debug,
     );
+    // Inverse holes reserve cue space even when large effects extend beyond their origins.
+    for (const layer of [this.vfxLayer, this.indicators, this.labels, this.weather.graphics])
+      layer.setMask({ mask: this.telegraphMask, inverse: true });
     try {
       await this.assets.loadCatalog('/assets/generated/catalog.json');
       if (this.disposed) return;
@@ -384,7 +411,9 @@ export class WorldRenderer {
     // DOM menus remain responsive without continuously redrawing a frozen world.
     this.app.ticker.remove(this.app.render, this.app);
     this.app.ticker.add(() => {
+      const started = performance.now();
       if (this.render()) this.app.render();
+      this.onDiagnostic(started, performance.now());
     });
   }
   fit(width: number, height: number): void {
@@ -637,6 +666,7 @@ export class WorldRenderer {
     this.sceneSignature = signature;
     // packed/ids are returned to the worker immediately after apply; retaining empty views is intentional.
     this.frame = { ...frame, packed: new Float32Array(0), ids: new Uint32Array(0) };
+    this.paintings.apply(frame);
     this.clock.accept(
       frame.session,
       frame.tick,
@@ -1472,6 +1502,12 @@ export class WorldRenderer {
       e.body.anchor.set(0.5, 1);
       e.body.scale.set(e.kind === 2 ? LEGACY_SCALE : PROFILE.humanHeight / 24);
     }
+    const anticipation =
+      e.actor.telegraph?.predator && e.actor.action && tick < e.actor.action.activeAt;
+    if (anticipation) {
+      e.body.scale.y *= 0.9;
+      if (!this.reducedMotion) e.body.x += Math.floor(tick) % 2 ? 2 : -2;
+    }
     e.body.rotation = 0;
     e.body.tint = hit || reactionActive ? 0xffc7aa : 0xffffff;
     e.body.alpha = e.hp <= 0 ? 0.55 : 1;
@@ -1494,12 +1530,21 @@ export class WorldRenderer {
     }[] = [];
     const bodyZ = selection.layers.find((l) => l.layerSet.slot === 'body')?.definition.z ?? 0;
     for (const layer of selection.layers) {
+      const face = layer.layerSet.face
+        ? faceLayerPose(
+            layer.layerSet,
+            { ...e.actor, pose: sample.state },
+            bodyFrame,
+            sample.facing,
+          )
+        : undefined;
+      if (layer.layerSet.face && !face) continue;
       const held =
         layer.layerSet.slot === 'held' && layer.definition.socketId
           ? heldLayerFrame(layer.clip, bodyFrame, layer.definition.socketId)
           : undefined;
       if (layer.layerSet.slot === 'held' && !held) continue; // this pose shows no item
-      const id = held ? held.frameId : layerFrameId(layer.clip, sample),
+      const id = face?.frameId ?? (held ? held.frameId : layerFrameId(layer.clip, sample)),
         frame = id && this.frames.get(id),
         texture = id && this.assets.texture(id);
       const socket = layer.definition.socketId
@@ -1512,7 +1557,7 @@ export class WorldRenderer {
       layers.push({
         texture,
         frame,
-        target: socket ?? registration.anchorPx,
+        target: face?.target ?? socket ?? registration.anchorPx,
         order: held?.behind ? bodyZ - 0.5 : layer.definition.z,
       });
     }
@@ -1526,7 +1571,7 @@ export class WorldRenderer {
     const key = compositeKey(
       e.actor,
       recipe.id,
-      layers.map((l) => `${l.frame.id}:${l.texture.uid}`),
+      layers.map((l) => `${l.frame.id}:${l.texture.uid}@${l.target.x},${l.target.y}`),
       this.loadedTextureResolution,
     );
     if (e.compositeKey !== key || !e.composite) {
@@ -1628,6 +1673,28 @@ export class WorldRenderer {
       });
     }
   }
+  private telegraphBlocked(x: number, y: number, radius: number): boolean {
+    const tick = this.frame?.tick ?? 0;
+    for (const e of this.entities.values()) {
+      const cue = e.actor.telegraph,
+        action = e.actor.action;
+      if (!cue || !action || tick >= action.recoveryAt) continue;
+      const b = telegraphBounds(
+        cue,
+        e.body.x - this.renderCamera.x,
+        e.body.y - this.renderCamera.y,
+        TILE,
+      );
+      if (
+        x + radius >= b.x &&
+        x - radius <= b.x + b.width &&
+        y + radius >= b.y &&
+        y - radius <= b.y + b.height
+      )
+        return true;
+    }
+    return false;
+  }
   private renderEffects(tick: number, quality: Quality, cx: number, cy: number): void {
     for (const [id, effect] of this.authoredEffects) {
       const age = tick - effect.startedAt,
@@ -1669,17 +1736,23 @@ export class WorldRenderer {
       effect.sprite.texture = texture;
       effect.sprite.anchor.set(anchor.x / frame.sourceSize.w, anchor.y / frame.sourceSize.h);
       effect.sprite.position.set(point.x - cx, point.y - cy);
-      effect.sprite.visible = true;
+      effect.sprite.visible = !this.telegraphBlocked(
+        point.x - cx,
+        point.y - cy,
+        Math.max(frame.sourceSize.w, frame.sourceSize.h),
+      );
     }
     for (const particle of this.effectDirector.sample(
       this.scene.id,
       tick,
       this.reducedMotion,
       quality === 'low',
-    ))
+    )) {
+      if (this.telegraphBlocked(particle.x - cx, particle.y - cy - 32, particle.radius)) continue;
       this.indicators
         .circle(particle.x - cx, particle.y - cy - 32, particle.radius)
         .fill({ color: particle.kind === 'hit' ? 0xf5d2a1 : 0xaed5bf, alpha: particle.alpha });
+    }
     const projectiles =
       (this.frame as (RenderSnapshot & { projectiles?: readonly ProjectilePresentation[] }) | null)
         ?.projectiles ?? [];
@@ -1709,7 +1782,9 @@ export class WorldRenderer {
       elevation =
         t.elevation[Math.floor(frame.player.y) * t.size + Math.floor(frame.player.x)] ?? 0;
     const presentation = this.clock.sample(now);
-    this.camera.follow(frame.player.x, frame.player.y, elevation, dt);
+    // During incoming attacks, center immediately so camera lag cannot hide a legal start.
+    const incoming = frame.actors.some((a) => a.action && a.attackTarget === 0);
+    this.camera.follow(frame.player.x, frame.player.y, elevation, incoming ? 10 : dt);
     const camera = sceneCamera(this.camera, this.scene, TILE, PROFILE);
     this.camera.x = camera.x;
     this.camera.y = camera.y;
@@ -1800,6 +1875,45 @@ export class WorldRenderer {
             : 1;
       }
     this.indicators.clear();
+    this.telegraphs.clear();
+    this.telegraphMask.clear();
+    for (const e of this.entities.values()) {
+      const cue = e.actor.telegraph,
+        action = e.actor.action;
+      if (
+        !cue ||
+        !action ||
+        presentation.tick < action.startedAt ||
+        presentation.tick >= action.recoveryAt
+      )
+        continue;
+      const x = Math.round((e.body.x - cx) / 2) * 2,
+        y = Math.round((e.body.y - cy) / 2) * 2;
+      const radius = Math.round((cue.range * TILE) / 2) * 2;
+      const angle = Math.atan2(cue.facingY, cue.facingX);
+      const color = cue.kind === 'ground' ? 0xf5dfab : 0xb6e0d3;
+      const bounds = telegraphBounds(cue, x, y, TILE);
+      this.telegraphMask.rect(bounds.x, bounds.y, bounds.width, bounds.height).fill(0xffffff);
+      if (cue.kind === 'ground') {
+        this.telegraphs
+          .arc(x, y, radius, angle - Math.PI / 3, angle + Math.PI / 3)
+          .stroke({ color: 0x263c36, width: 12 });
+        this.telegraphs
+          .arc(x, y, radius, angle - Math.PI / 3, angle + Math.PI / 3)
+          .stroke({ color, width: 6 });
+      } else {
+        const gx = x + Math.round((cue.facingX * radius) / 2) * 2,
+          gy = y + Math.round((cue.facingY * radius) / 2) * 2;
+        this.telegraphs
+          .rect(gx - 6, gy - 18, 12, 36)
+          .rect(gx - 18, gy - 6, 36, 12)
+          .fill(0x263c36);
+        this.telegraphs
+          .rect(gx - 2, gy - 14, 4, 28)
+          .rect(gx - 14, gy - 2, 28, 4)
+          .fill(color);
+      }
+    }
     for (const e of this.entities.values())
       if (e.gesture)
         this.indicators
@@ -1814,7 +1928,9 @@ export class WorldRenderer {
       if (
         e.actor.action &&
         presentation.tick >= e.actor.action.startedAt &&
-        presentation.tick < e.actor.action.endsAt
+        presentation.tick < e.actor.action.endsAt &&
+        !e.actor.telegraph &&
+        !this.telegraphBlocked(e.body.x - cx, e.body.y - cy - 32, 104)
       ) {
         const active =
           presentation.tick >= e.actor.action.activeAt &&
@@ -1840,12 +1956,18 @@ export class WorldRenderer {
         continue;
       }
       const e = this.entities.get(cue.target ?? cue.actor);
-      if (e && cue.kind === 'hit')
+      if (e && cue.kind === 'hit' && !this.telegraphBlocked(e.body.x - cx, e.body.y - cy - 48, 52))
         this.indicators
           .circle(e.body.x - cx, e.body.y - cy - 48, 20 + age * 2)
           .stroke({ color: 0xf6dda7, width: 3, alpha: (1 - age / 16) * 0.8 });
     }
     this.renderEffects(presentation.tick, effectQuality, cx, cy);
+    for (const label of this.labels.children)
+      label.visible = !this.telegraphBlocked(
+        label.x - cx,
+        label.y - cy,
+        Math.max(label.width, label.height),
+      );
     for (const portal of this.scene.portals) {
       const p = this.projection.screen(portal.x, portal.y, 0, { x: cx, y: cy });
       if (p.x < 0 || p.y < 0 || p.x > PROFILE.width || p.y > PROFILE.height) continue;
@@ -1973,9 +2095,11 @@ export class WorldRenderer {
     gpu: string;
     assetError: string;
     prototypeActors: number;
+    paintingTextures: number;
   } {
     const atlasBytes = this.assets.stats.residentBytes;
     let cacheBytes = 0;
+    cacheBytes += this.paintings.bytes;
     for (const c of this.chunks.values()) {
       const source = c.container.renderGroup?.texture?.source;
       if (source) cacheBytes += source.pixelWidth * source.pixelHeight * 4;
@@ -1984,6 +2108,7 @@ export class WorldRenderer {
       PROFILE.width * PROFILE.height * this.qualitySettings.framebufferScale ** 2 * 8;
     return {
       sprites: this.entities.size + this.props.size,
+      paintingTextures: this.paintings.textureCount,
       chunks: this.chunks.size,
       fps: this.initialized ? this.app.ticker.FPS : 0,
       renderMs: this.renderMs,
@@ -2004,6 +2129,7 @@ export class WorldRenderer {
   }
   dispose(): void {
     this.disposed = true;
+    this.paintings.dispose();
     this.assetRequest?.abort();
     this.assetLease?.release();
     this.prepareRequest?.abort();

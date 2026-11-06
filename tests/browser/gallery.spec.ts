@@ -1,4 +1,109 @@
 import { expect, test } from '@playwright/test';
+import { writeFile } from 'node:fs/promises';
+
+test('atlas review renders every catalog page and reports catalog and resident bytes separately', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1920, height: 1080 });
+  const catalog = await (await page.request.get('/assets/generated/catalog.json')).json();
+  const full = catalog.pages.reduce((sum: number, p: any) => sum + p.width * p.height * 4, 0);
+  // Measure actual unique PNGs, independently of the catalog's per-page aliases.
+  const halfImages = new Set<string>(
+    catalog.pages.flatMap((p: any) =>
+      p.variants.filter((v: any) => v.resolution === 0.5).map((v: any) => v.imageUrl),
+    ),
+  );
+  let half = 0;
+  for (const image of halfImages) {
+    const png = await (await page.request.get(image)).body();
+    half += png.readUInt32BE(16) * png.readUInt32BE(20) * 4;
+  }
+  await page.goto('/?gallery=1');
+  await page.locator('#tab-atlas').click();
+  await expect(page.locator('#atlas-page option')).toHaveCount(catalog.pages.length);
+  await expect(page.locator('#art-stat-pages')).toHaveText(`${catalog.pages.length} pages`);
+  await expect(page.locator('#art-stat-frames')).toHaveText(String(catalog.frames.length));
+  await expect(page.locator('#art-stat-decoded-ram')).toHaveText(
+    `Catalog page RGBA: ${(full / 1048576).toFixed(2)} MiB`,
+  );
+  await expect(page.locator('#art-stat-half')).toHaveText(`${(half / 1048576).toFixed(2)} MiB`);
+  const hashes: string[] = [];
+  for (const entry of catalog.pages) {
+    await page.locator('#atlas-page').selectOption(entry.id);
+    await expect(page.locator('#art-atlas-canvas')).toHaveAttribute('aria-busy', 'false');
+    await expect(page.locator('#art-atlas-canvas')).toHaveAttribute('width', String(entry.width));
+    await expect(page.locator('#art-atlas-canvas')).toHaveAttribute('height', String(entry.height));
+    await expect(page.locator('#atlas-status')).toHaveText(
+      `${entry.id}: ${entry.width} × ${entry.height}`,
+    );
+    hashes.push(
+      await page.locator('#art-atlas-canvas').evaluate(async (node) => {
+        const canvas = node as HTMLCanvasElement,
+          bytes = canvas.getContext('2d')!.getImageData(0, 0, canvas.width, canvas.height).data;
+        if (!bytes.some((v, n) => n % 4 === 3 && v > 0))
+          throw Error('Atlas page has no rendered pixels');
+        return Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', bytes)))
+          .map((b) => b.toString(16).padStart(2, '0'))
+          .join('');
+      }),
+    );
+  }
+  expect(new Set(hashes).size).toBe(catalog.pages.length);
+  const residentMiB = Number(
+    (await page.locator('#art-stat-resident').innerText()).match(/: ([\d.]+) \//)![1],
+  );
+  expect(residentMiB).toBeGreaterThan(0);
+  expect(residentMiB).toBeLessThanOrEqual(128);
+  await writeFile(
+    'artifacts/c3g-atlas.json',
+    JSON.stringify(
+      {
+        pages: catalog.pages.map((p: any, n: number) => ({
+          id: p.id,
+          width: p.width,
+          height: p.height,
+          canvasSha256: hashes[n],
+        })),
+        frames: catalog.frames.length,
+        fullBytes: full,
+        halfBytes: half,
+        residentMiB,
+        pageCacheLimitMiB: 128,
+      },
+      null,
+      2,
+    ),
+  );
+  await page.locator('#atlas-zoom').selectOption('0.5');
+  await page.locator('#view-atlas').scrollIntoViewIfNeeded();
+  await page.screenshot({ path: 'artifacts/c3g-atlas-budget-1080p.png' });
+  await page.locator('#art-atlas-canvas').scrollIntoViewIfNeeded();
+  await page.screenshot({ path: 'artifacts/c3g-atlas-last-page-1080p.png' });
+});
+
+test('atlas page failures clear stale pixels and report the selected page accessibly', async ({
+  page,
+}) => {
+  const catalog = await (await page.request.get('/assets/generated/catalog.json')).json(),
+    last = catalog.pages.at(-1);
+  await page.route(`**/${last.imageUrl.split('/').at(-1)}`, (route) =>
+    route.fulfill({ status: 503, body: 'unavailable' }),
+  );
+  await page.goto('/?gallery=1');
+  await page.locator('#tab-atlas').click();
+  await page.locator('#atlas-page').selectOption(last.id);
+  await expect(page.locator('#atlas-status')).toHaveAttribute('role', 'alert');
+  await expect(page.locator('#atlas-status')).toContainText('Could not decode atlas image');
+  expect(
+    await page.locator('#art-atlas-canvas').evaluate((node) => {
+      const c = node as HTMLCanvasElement;
+      return c
+        .getContext('2d')!
+        .getImageData(0, 0, c.width, c.height)
+        .data.some((v, n) => n % 4 === 3 && v > 0);
+    }),
+  ).toBe(false);
+});
 
 test('art review is independent of Ollama and preserves missing identities and facings', async ({
   page,

@@ -201,6 +201,46 @@ The commands (`scripts/art-integrate.ts`, 2026-11-02):
 
 Re-running `merge` on an integrated asset is a no-op apart from key order (tested on
 Mireling: same source digest, byte-identical build).
+
+### Approved creature faces and inventory icons
+
+Communicator runs `npm run art:integrate -- merge-faces <species>` after merging
+the matching published body. This verifies both approval records, packet hashes,
+all exported bytes, the integrated body clips/sockets and the face-to-body digest.
+The three current approved sidecars are Rivallie, Bramblefang and Mireling.
+The later B20 body candidates cannot inherit these earlier face approvals.
+Per-frame offsets and null hidden markers enter an optional `face` attachment on
+the face layer set, with the expression/facing frame table and bound body digest.
+The runtime uses the body sample's head socket, hides back facings, selects the
+expression independently of body cadence and includes attachment position in its
+composite key. Offset edits and every decal participate in source digests.
+
+For the inventory packet, communicator runs
+`npm run art:integrate -- merge-icons docs/team/comms/director/approvals/icons-items--2026-11-04-icons-items-1.md`.
+The 17 images bind to 34 existing item identities: 16 individual items plus the
+shared garment image for the 18 canonical garments. No generic garment item is
+introduced. Inventory markup draws approved atlas rectangles with their original
+transparent margins; URLs resolve at both `/` and `/Vibe/`.
+
+Both commands validate before installing immutable intake receipts under
+`art/source/exports/intake/`. The additive `reviewed-export` provenance method
+pins the approved PNGs, packet, approval records, intake script, dependency lock
+and actual Node version. It describes intake only; the staged face generator's
+hash remains in the receipt, without invented historical Python/Pillow versions.
+Existing Blender and image-generation provenance rules remain in force.
+
+After communicator commits the manifest and intake receipts, Codex runs
+`npm run assets:build`, then `npm run art:integrate -- ledger-faces <species>`
+and/or the equivalent `ledger-icons <approval-record>`, followed by another
+`assets:build` and asset checks. Ledger commands revalidate intake and reject a
+stale catalog digest. Face intake transcribes the body, face and composition
+subjects only from their matching body/face approvals. Repeated intake is tested;
+changed, superseded or mismatched records fail before manifest or ledger writes.
+
+Codex can run `npm run art:integrate -- reconcile-ledger` to withdraw grants whose
+cited director records are superseded or no longer approve them. Withdrawal does
+not create a rejection or approve a replacement. Rebuild the catalog afterward;
+replacement activation still needs the matching manifest and approval records.
 Commit the complete source-bundle directory together with staging and exports, so
 Machine B and CI can verify provenance without Blender, the original workspace or
 network access. Internal historical paths inside the copied animate record remain
@@ -504,10 +544,67 @@ fields in the Python publisher or the source manifest. The source manifest remai
 the communicator's integration artifact; the tested 1,848-frame V2 graph in
 `assets-v2.test.ts` is a fixture, not a committed production manifest or approval.
 
-## Atlas memory budget (C3g, proposal 007 part 1)
+## Atlas reproducibility across Windows and Linux (C22)
 
-Decoded RGBA atlas memory is `sum(width × height × 4)` over `catalog.pages`. Budgets: 128 MiB on the Low tier and
-256 MiB on Balanced. The gallery's Atlas tab lists every page in `#atlas-page` and prints the page count and decoded
-MiB total from the catalog. The 2026-11-01 beta slice measured 63.88 MiB across four 2048 pages. Still open: alpha
-bounding-box trimming of per-clip canvases, content-hash frame deduplication and keeping review-only clips
-(`turntable`, `ExpressionSheet`) out of the runtime atlas (`scripts/assets-build.ts`, `src/presentation/renderer.ts`).
+The asset compiler supplies frame paths in binary descending order to AssetPack's
+packer. AssetPack 1.7's public folder pipe uses unsorted `glob` results; feeding those
+results straight into its order-sensitive rectangle packer produced different page
+placements, PNGs, catalogs and memory reports on Windows and Linux. CI's unchanged
+reproducibility gate caught this at b2afda6.
+
+`scripts/lib/atlas-packer.ts` is a narrow adapter to the existing packing implementation,
+resolved relative to AssetPack's public texture-packer entry. `@assetpack/core` is pinned
+to 1.7.0 because this adapter calls its internal packing function; an upgrade must review
+that interface and pass the shuffled-input multi-page tests at both resolutions.
+Trimming, nearest-neighbor resizing, padding, frame names and source provenance are
+unchanged. Input enumeration is explicit; the compiler no longer relies on directory
+order, glob traversal order or locale collation.
+
+After a repack, compare every decoded full/half frame crop and trim/source dimensions
+against the previous catalog before treating page/rectangle changes as packaging-only.
+Structural asset and decoded-memory gates still apply; a repack grants no art approval.
+
+## C3g gallery pages and decoded memory
+
+The atlas tab selects every full-resolution page in the current catalog, loads it
+on demand and shows its native dimensions. Half-resolution totals come from the
+catalog variants. Frame count, page count and full/half RGBA bytes are computed
+from that catalog; the former single-page/16 MiB invariant is retired in this view.
+This follows ART-M7: "Support multi-page atlases streamed by region (the full slice
+clip matrix cannot fit one 16 MiB page)."
+
+The existing gallery page-image cache budget remains **128 MiB**. Its meter reports
+resident decoded page pixels (`width � height �4`) separately from the bytes needed
+if every full-resolution catalog page were decoded. It does not include canvas
+backing stores, portraits, UI textures, GPU copies or framebuffer allocation; it
+is not a claim about total browser/GPU memory. Selected-page errors clear stale
+canvas content and identify the failed page, with no substitute artwork.
+
+Main-game quality texture budgets remain High512 MiB, Balanced256 MiB, Low128 MiB
+(`src/presentation/quality.ts`). Runtime leases,64 MiB presentation reserve, paging,
+HD validation and approval gates are unchanged. Current catalog totals are3908
+frames/five pages,79.84 MiB full and19.88 MiB half (`npm run check:assets`). No source
+canvases or review-only clips were repacked by this gallery correction. Scale must
+be reviewed again when modular human bodies replace the legacy placeholders;
+this engineering change supplies no art acceptance. See ADR038.
+
+## B18 authored artifact UI integration
+
+`ui:authored-artifacts` uses the eight frames and six icons approved in the
+2026-11-05 packet. `ui:build` copies them into the generated UI bundle; this does
+not integrate actor bodies, gameplay inventory appearances or terrain into the
+manifest. The compiler verifies the approval, packet/source frame hashes and
+exact nearest-neighbour 2× frame exports. This packet's v1 `sourceDigest` hashes
+the contact sheet, so the compiler also pins the approved `review.json` bytes
+from76ef620c; changing its frame list while retaining the contact sheet fails.
+An updated packet needs its matching approval and a reviewed binding update.
+
+Books and notes use the parchment art, page arrows, sealed stamp and blank/written
+header icons. Painting previews retain192×128 content pixels (4×48×32) inside
+their frame. World paintings use the wall frame or the pending easel cloth and
+include both shared UI textures in their memory report; the32-painting cache
+limit is unchanged. The page reader still mounts at most two pages. Autosave locks
+text inputs, while buttons submit through the existing serial queue: disabling a
+button between pointer-down and pointer-up used to discard that action. The real
+DOM regression in `book-drafts.spec.ts` reproduces the lost page-add click before
+the repair and preserves the newer-draft validation tests.

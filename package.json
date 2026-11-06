@@ -14,7 +14,8 @@
     "format": "prettier --write src tests scripts docs art/source .github README.md *.json *.ts index.html gallery.html",
     "format:check": "prettier --check src tests scripts docs art/source .github README.md *.json *.ts index.html gallery.html",
     "test:ollama": "tsx scripts/ollama-smoke.ts",
-    "test:browser": "playwright test",
+    "test:villagers": "tsx scripts/verify-villagers.ts",
+    "test:browser": "playwright test --project=journeys",
     "benchmark": "tsx scripts/benchmark.ts",
     "soak": "tsx scripts/soak.ts",
     "check:architecture": "tsx scripts/check-architecture.ts",
@@ -31,14 +32,16 @@
     "world:build": "tsx scripts/world-build.ts",
     "check:world": "tsx scripts/world-build.ts --check",
     "check:assets:hd": "tsx scripts/assets-check.ts --require-hd",
-    "benchmark:render": "tsx scripts/render-benchmark.ts"
+    "benchmark:render": "tsx scripts/render-benchmark.ts",
+    "beta:notes": "tsx scripts/beta-notes.ts",
+    "test:beta": "playwright test --project=beta"
   },
   "dependencies": {
     "pixi.js": "^8.14.0",
     "zod": "^4.1.0"
   },
   "devDependencies": {
-    "@assetpack/core": "^1.7.0",
+    "@assetpack/core": "1.7.0",
     "@playwright/test": "^1.56.0",
     "@types/node": "^22.18.0",
     "fake-indexeddb": "^6.2.0",

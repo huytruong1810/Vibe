@@ -11,6 +11,21 @@ export const BAR_PARTS = {
   need: { width: 32, height: 12, segment: 2 },
 } as const;
 
+/** B18 v1 hashes its contact sheet, so also bind the frame list approved at76ef620c. */
+export function verifyArtifactUiApproval(review: Buffer, contact: Buffer, approval: string): void {
+  const hash = (bytes: Buffer) => createHash('sha256').update(bytes).digest('hex');
+  const contactDigest = hash(contact);
+  if (
+    hash(review) !== '1bb2d0d718ec0c32793f9381a44d02829a4786cfaf745a9b912f289a0138463c' ||
+    !/^asset: ui:authored-artifacts\s*$/m.test(approval) ||
+    !/^decision: director-approved\s*$/m.test(approval) ||
+    /^superseded-by:/m.test(approval) ||
+    !approval.includes(`packetDigest: ${contactDigest}`) ||
+    JSON.parse(review.toString('utf8')).sourceDigest !== contactDigest
+  )
+    throw new Error('Authored artifact UI approval does not match its packet');
+}
+
 /** Lossless compilation of authored pixels, not a repaint of the kit. */
 export async function compileBarStrip(
   bytes: Buffer,
@@ -72,6 +87,75 @@ export async function buildUi(): Promise<void> {
     .filter((f) => f.endsWith('.png'))
     .sort();
   for (const file of files) await copyFile(join(source, 'kit/export', file), join(output, file));
+  // These icons accompany the approved B18 UI packet; gameplay atlas intake remains M25.
+  const artifactPacket = join(root, 'art/review/2026-11-05-ui-authored-artifacts');
+  const artifactReviewBytes = await readFile(join(artifactPacket, 'review.json'));
+  const artifactReview = JSON.parse(artifactReviewBytes.toString('utf8'));
+  const approval = await readFile(
+    join(
+      root,
+      'docs/team/comms/director/approvals/ui-authored-artifacts--2026-11-05-ui-authored-artifacts.md',
+    ),
+    'utf8',
+  );
+  verifyArtifactUiApproval(
+    artifactReviewBytes,
+    await readFile(join(artifactPacket, 'contact.png')),
+    approval,
+  );
+  for (const name of [
+    'frame_book_spread',
+    'frame_note_page',
+    'icon_page_prev',
+    'icon_page_next',
+    'seal_stamp',
+    'frame_painting_wall',
+    'frame_painting_preview',
+    'easel_cloth',
+  ]) {
+    const record = artifactReview.frames.find((frame: { id: string }) => frame.id === name);
+    const bytes = await readFile(join(source, 'kit', `${name}.png`));
+    const packetBytes = await readFile(join(artifactPacket, `frames/${name}.png`));
+    if (
+      !record ||
+      createHash('sha256').update(bytes).digest('hex') !== record.sha256 ||
+      !bytes.equals(packetBytes)
+    )
+      throw new Error(`Authored artifact UI frame differs from its approved packet: ${name}`);
+    const expected = await sharp(bytes)
+      .resize(record.width * 2, record.height * 2, { kernel: 'nearest' })
+      .raw()
+      .toBuffer();
+    const exported = await sharp(join(source, 'kit/export', `${name}.png`))
+      .raw()
+      .toBuffer();
+    if (!exported.equals(expected))
+      throw new Error(`Authored artifact UI export is not the approved 2x pixels: ${name}`);
+  }
+  for (const name of [
+    'note-blank',
+    'note-written',
+    'book-blank',
+    'book-written',
+    'canvas-blank',
+    'canvas-painted',
+  ]) {
+    const record = artifactReview.frames.find(
+      (frame: { id: string }) => frame.id === `icon_${name}`,
+    );
+    const bytes = await readFile(join(source, 'icons/items', `${name}.png`));
+    const packetBytes = await readFile(join(artifactPacket, `frames/icon_${name}.png`));
+    if (
+      !record ||
+      createHash('sha256').update(bytes).digest('hex') !== record.sha256 ||
+      !bytes.equals(packetBytes)
+    )
+      throw new Error(`Authored artifact UI icon differs from its approved packet: ${name}`);
+    const file = `artifact-${name}.png`;
+    await writeFile(join(output, file), bytes);
+    files.push(file);
+  }
+  files.sort();
   const digest = async (file: string) =>
     createHash('sha256')
       .update(await readFile(file))

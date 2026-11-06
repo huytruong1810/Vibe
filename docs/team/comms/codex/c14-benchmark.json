@@ -1,0 +1,71 @@
+{
+  "recordedAt": "2026-11-02T22:52:18.559Z",
+  "runtime": "v22.22.3",
+  "platform": "win32 x64",
+  "cpu": "13th Gen Intel(R) Core(TM) i7-1365U",
+  "logicalCpus": 12,
+  "systemMemoryGiB": 39.7,
+  "seed": 42,
+  "villagers": 30,
+  "creatures": 1000,
+  "livingEntities": 1031,
+  "measuredTicks": 3000,
+  "warmupTicks": 300,
+  "generationMs": 675.76,
+  "simulation": {
+    "meanMs": 0.715,
+    "p95Ms": 1.82,
+    "maxMs": 8.355
+  },
+  "renderSnapshot": {
+    "meanMs": 2.434,
+    "p95Ms": 5,
+    "maxMs": 7.77
+  },
+  "structuredClone": {
+    "meanMs": 1.482,
+    "p95Ms": 3.016,
+    "maxMs": 4.7
+  },
+  "maximumDetailed": 16,
+  "maximumPaths": 1,
+  "denseSimulation": {
+    "meanMs": 1.138,
+    "p95Ms": 2.802,
+    "maxMs": 13.157
+  },
+  "denseMaximumDetailed": 128,
+  "activeCombat": {
+    "meanMs": 2.974,
+    "p95Ms": 9.679,
+    "maxMs": 76.797
+  },
+  "activeCombatActors": 128,
+  "activeCombatFixture": "64 paired territorial encounters; needs, stamina and HP refill between ordinary ticks; no rendering or inference.",
+  "memoryRetrieval": {
+    "meanMs": 0.54,
+    "p95Ms": 1.169,
+    "maxMs": 2.353
+  },
+  "memoryPrompt": {
+    "meanMs": 0.857,
+    "p95Ms": 1.914,
+    "maxMs": 2.642
+  },
+  "memoryFixture": "400 valid records, cached 256-d embeddings, full prompt construction; 100 warmups and 1000 samples",
+  "director150": {
+    "meanMs": 0.071,
+    "p95Ms": 0.15,
+    "maxMs": 1.184
+  },
+  "directorWild150": {
+    "meanMs": 0.046,
+    "p95Ms": 0.095,
+    "maxMs": 0.384
+  },
+  "directorFixture": "150 ready Bramblefang: one player target, then 75 independent wild pairs; 300 warmups and 3000 samples each; collection, release and selection included.",
+  "checkpointMs": 196.54,
+  "checkpointBytes": 812015,
+  "nodeRssMiB": 155,
+  "limitations": "Headless Node CPU measurements; excludes GPU, browser rendering, and live model inference. Maxima include garbage collection. This is a measured host, not an ordinary-laptop guarantee."
+}

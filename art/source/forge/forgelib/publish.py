@@ -124,9 +124,9 @@ def publish_body(repo: Path, wd: Path, packet: Path, approval: Path, asset: str,
     Machine-A source artifacts must be available: an approval is not a source substitute.
     """
     repo = repo.resolve()
-    if not re.fullmatch(r"(npc:)?[a-z][a-z0-9-]*", asset):
-        raise ForgeError("Body asset must be <slug> or npc:<slug>")
-    slug = asset.replace(":", "-")  # files and directories; the record keeps the asset id
+    if not re.fullmatch(r"(?:npc:)?[a-z][a-z0-9-]*", asset):
+        raise ForgeError("Body asset must use its canonical creature or NPC ID")
+    slug = asset.replace(":", "-")
     packet, approval = packet.resolve(), approval.resolve()
     if not approval.is_relative_to(repo / "docs/team/comms/director/approvals"):
         raise ForgeError("Approval must come from the director records directory")
@@ -151,9 +151,9 @@ def publish_body(repo: Path, wd: Path, packet: Path, approval: Path, asset: str,
     strides = animate["extra"]["strideTiles"]
     for clip in clips:
         if clip["playback"] == "distance":
-            stride = strides.get(clip["state"], clip.get("stride"))  # clips keyed by runtime state or by their own stride
+            stride = strides.get(clip["state"], clip.get("stride"))
             if type(stride) not in (int, float) or not math.isfinite(stride) or stride <= 0:
-                raise ForgeError("Distance clip needs its actual animate-record stride")
+                raise ForgeError("Distance clip needs a positive animate-record or reviewed stride")
             clip["stride"] = stride
     model = wd / "animate.blend"
     model_key = model.relative_to(repo).as_posix()

@@ -1,5 +1,5 @@
 import { Assets, type Texture } from 'pixi.js';
-import { resolveAssetUrl } from './url';
+import { appUrl } from './url';
 import { AssetCatalogSchema, type AssetCatalog, type AssetFrame } from './catalog';
 
 export interface AssetBackend<T = Texture> {
@@ -19,10 +19,10 @@ interface Page<T> {
 const abortError = () => new DOMException('Asset request canceled', 'AbortError');
 const pixiBackend: AssetBackend = {
   async load(url) {
-    return Assets.load(resolveAssetUrl(url));
+    return Assets.load(url);
   },
   async unload(url) {
-    await Assets.unload(resolveAssetUrl(url));
+    await Assets.unload(url);
   },
 };
 
@@ -37,21 +37,14 @@ export class AssetManager<T = Texture> {
   private reservation: Promise<void> = Promise.resolve();
   private readonly backend: AssetBackend<T>;
   private readonly fetcher: typeof fetch;
-  private readonly base: string | undefined;
   private budget: number;
   constructor(
-    options: {
-      budgetBytes?: number;
-      backend?: AssetBackend<T>;
-      fetcher?: typeof fetch;
-      base?: string;
-    } = {},
+    options: { budgetBytes?: number; backend?: AssetBackend<T>; fetcher?: typeof fetch } = {},
   ) {
     this.budget = options.budgetBytes ?? 256 * 1024 * 1024;
     if (!Number.isFinite(this.budget) || this.budget <= 0)
       throw new Error('Texture budget must be positive');
     this.backend = options.backend ?? (pixiBackend as unknown as AssetBackend<T>);
-    this.base = options.base;
     this.fetcher = options.fetcher ?? globalThis.fetch.bind(globalThis);
   }
   get catalog(): AssetCatalog | null {
@@ -88,7 +81,7 @@ export class AssetManager<T = Texture> {
     const epoch = ++this.epoch;
     this.current = null;
     await this.clearPages();
-    const response = await this.fetcher(resolveAssetUrl(url, this.base), { signal });
+    const response = await this.fetcher(appUrl(url), { signal });
     if (!response.ok) throw new Error(`Asset catalog HTTP ${response.status}: ${url}`);
     const catalog = AssetCatalogSchema.parse(await response.json());
     if (signal?.aborted || this.disposed || this.epoch !== epoch) throw abortError();
@@ -118,8 +111,9 @@ export class AssetManager<T = Texture> {
       if (!variants.length) throw new Error(`Missing ${resolution}× texture variant: ${page.id}`);
       const urls = new Set<string>();
       for (const v of variants) {
-        requested.set(v.url, { bytes: v.width * v.height * 4 });
-        urls.add(v.url);
+        const url = appUrl(v.url);
+        requested.set(url, { bytes: v.width * v.height * 4 });
+        urls.add(url);
       }
       framePages.set(id, urls);
     }

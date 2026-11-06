@@ -1,3 +1,16 @@
+import { remapMindScenes } from './creature-minds';
+import { editCarriedArtifact } from './artifact-writing';
+import { LiteracyService } from './literacy';
+import {
+  PaintingService,
+  validatePaintingBrief,
+  isPaintingAction,
+  type PaintingAction,
+} from './painting';
+import { groundWriting } from '../content/writing-grounding';
+import { ReadingResponseSchema, type LiteracyAction } from './text-contracts';
+import type { DialogueSession } from './conversation';
+import { applyExtraction, applySynthesis, validMemory } from './memory';
 import {
   NPC_PROFILES,
   SPECIES,
@@ -37,6 +50,7 @@ import {
   CareInteractionSystem,
   CreatureDecisionSystem,
   CreatureMode,
+  creatureTraversal,
   NeedsSystem,
   WellbeingPolicy,
   PartnershipService,
@@ -78,6 +92,7 @@ import {
 import { CONFIG, clamp, distanceSquared, normalize, type WorldPosition } from './values';
 import { migrateSave, type GameSave } from './save-schema';
 import { WorldQuery } from './query';
+import { ArtifactStore, type ArtifactPlacement } from './artifacts';
 import { EntityStore, bindBody, NatureRules, SleepSystem } from './entities';
 import { SurvivalController, EcologyService } from './survival';
 import type { ActorPresentation, PresentationCue } from './presentation-contract';
@@ -123,6 +138,9 @@ export class SimulationHost {
   readonly inventory = new TwoSlotInventory();
   readonly equipment = new EquipmentService(this.inventory);
   readonly scenes: SceneRegistry;
+  readonly artifacts = new ArtifactStore();
+  readonly placements: ArtifactPlacement[] = [];
+  readonly literacy: LiteracyService;
   private readonly sceneSystems = new Map<number, SceneSystems>();
   private readonly portalPaths = new Map<
     number,
@@ -159,17 +177,26 @@ export class SimulationHost {
   private readonly schedules: ScheduleExecutor;
   private readonly perception = new PerceptionSystem(this.memories);
   private readonly social = new SocialEncounterSystem(this.memories);
-  private readonly plans = new PlanService(this.memories, (id) => this.query.perceivedFacts(id));
+  private readonly plans = new PlanService(this.memories, (id) => ({
+    ...this.query.perceivedFacts(id),
+    ...this.literacy.facts(id, this.dialogue?.npcId === id),
+    ...this.paintingFacts(id),
+  }));
   private readonly reflections = new ReflectionService(this.memories);
   private readonly validator = new AgentActionValidator();
   private readonly pendingJobs = new Map<string, InferenceJob>();
   private readonly outgoingJobs: InferenceJob[] = [];
   private readonly deferredResults: WorldCommand[] = [];
-  private readonly deferredConversations: DialogueState[] = [];
+  private readonly deferredConversations: (DialogueState & {
+    memorySession?: DialogueSession | null;
+  })[] = [];
   private readonly sentDeltas = new Map<number, string>();
   private movement = { x: 0, y: 0 };
   private debugEnabled = false;
+  private inspectedCreature: number | null = null;
   private eventSerial = 0;
+  private paintingsEnabled = false;
+  private readonly paintingNotices = new Map<string, number>();
   private cueSerial = 0;
   private readonly presentationCues = new RingBuffer<PresentationCue & { readonly scene: number }>(
     64,
@@ -190,7 +217,7 @@ export class SimulationHost {
     readonly seed = 42,
     origin = 1,
     population: number = CONFIG.population,
-    session = `world:${Date.now()}:${seed}`,
+    session = `world:${crypto.randomUUID()}:${seed}`,
     options: SimulationOptions = {},
   ) {
     new ContentRegistry().validate();
@@ -365,6 +392,14 @@ export class SimulationHost {
       reactions: this.reactions,
     });
     this.equipment.initialize(origin, [0, ...this.npcs.map((n) => n.entityId)]);
+    this.literacy = new LiteracyService(
+      this.entities,
+      this.artifacts,
+      this.inventory,
+      this.placements,
+      this.scenes,
+    );
+    this.literacy.seedDiary(this.calendar.day);
     if (population > 0)
       for (const i of this.entities.slots())
         if (!this.entities.protected(i)) this.allocateCaveHabitat(i);
@@ -376,6 +411,7 @@ export class SimulationHost {
       (id) => this.systems(this.entities.scene[this.entities.require(id)]!).survival.feeding(id),
       this.equipment,
       (scene) => this.scenes.context(scene).world,
+      (scene) => this.scenes.isLoaded(scene),
     );
     this.rebuildSpatial();
     this.tiers.update(this.creatures, this.player);
@@ -547,6 +583,20 @@ export class SimulationHost {
     const c = envelope.command;
     const allowedPaused = [
       'debug',
+      'configureContext',
+      'configurePainting',
+      'configureCombat',
+      'inspectCreature',
+      'partnerCommand',
+      'artifactWrite',
+      'artifactPageAdd',
+      'artifactPageRemove',
+      'artifactSeal',
+      'paintingRequest',
+      'paintingKeep',
+      'paintingDiscard',
+      'paintingResult',
+      'paintingFailure',
       'move',
       'dialogue',
       'closeDialogue',
@@ -575,7 +625,24 @@ export class SimulationHost {
     if (c.type === 'guard' && c.active && this.pauses.paused)
       return { id: envelope.id, ok: false, message: 'Close the menu before guarding.' };
     if (
-      ['equip', 'unequip', 'combine', 'drop', 'swap', 'use', 'enterPortal'].includes(c.type) &&
+      [
+        'equip',
+        'unequip',
+        'combine',
+        'drop',
+        'swap',
+        'use',
+        'enterPortal',
+        'artifactDisplay',
+        'artifactTake',
+        'artifactWrite',
+        'artifactPageAdd',
+        'artifactPageRemove',
+        'artifactSeal',
+        'paintingRequest',
+        'paintingKeep',
+        'paintingDiscard',
+      ].includes(c.type) &&
       (this.player.attack || this.equipment.hasReservation(0))
     )
       return {
@@ -600,7 +667,16 @@ export class SimulationHost {
         'unequip',
         'enterPortal',
         'furniture',
+        'artifactDisplay',
+        'artifactTake',
         'reaction',
+        'artifactWrite',
+        'artifactPageAdd',
+        'artifactPageRemove',
+        'artifactSeal',
+        'paintingRequest',
+        'paintingKeep',
+        'paintingDiscard',
       ].includes(c.type)
     )
       return {
@@ -608,11 +684,154 @@ export class SimulationHost {
         ok: false,
         message: 'You are asleep or recovering. Wake when safe, or wait for an emergency.',
       };
-    if ((c.type === 'agentResult' || c.type === 'agentFailure') && envelope.issuer !== 'inference')
+    if (
+      ['agentResult', 'agentFailure', 'paintingResult', 'paintingFailure'].includes(c.type) &&
+      envelope.issuer !== 'inference'
+    )
       return { id: envelope.id, ok: false, message: 'Inference receipt required.' };
     let message = '',
-      ok = true;
+      ok = true,
+      artifactId: string | undefined;
     switch (c.type) {
+      case 'configurePainting':
+        this.paintingsEnabled = c.enabled;
+        break;
+      case 'paintingRequest':
+      case 'paintingKeep':
+      case 'paintingDiscard':
+      case 'paintingResult':
+      case 'paintingFailure': {
+        const paintings = new PaintingService(this.artifacts, this.inventory);
+        try {
+          if (c.type === 'paintingRequest' && !this.paintingsEnabled)
+            throw Error('No image endpoint is configured.');
+          if (c.type === 'paintingRequest')
+            artifactId = paintings.requestPlayer(
+              c.slot,
+              c.prompt,
+              c.mood,
+              c.composition ?? 'wide landscape',
+              this.calendar.day,
+              (id) => this.npcs.find((n) => n.profileId === id)?.affinity ?? -100,
+            ).id;
+          else if (c.type === 'paintingKeep') artifactId = paintings.keep(c.requestId).id;
+          else if (c.type === 'paintingDiscard') paintings.discard(c.requestId);
+          else if (c.type === 'paintingResult') {
+            const painting = paintings.complete(c.artifactId, c.revision, c.result);
+            artifactId = painting.id;
+            if (painting.author.kind === 'npc') {
+              const authorId = painting.author.id,
+                npc = this.npcs.find((n) => n.profileId === authorId)!;
+              this.memories.append(npc, {
+                type: 'semantic',
+                text: `I painted '${painting.title}'.`,
+                subjects: [npc.profileId],
+                importance: 4,
+                createdTick: this.tick,
+                lastAccessTick: this.tick,
+                confidence: 'witnessed',
+                source: { kind: 'artifact', ids: [painting.id] },
+              });
+            }
+          } else paintings.fail(c.artifactId, c.revision, c.reason);
+          message =
+            c.type === 'paintingRequest'
+              ? 'Painting in progress.'
+              : c.type === 'paintingKeep'
+                ? 'Painting kept.'
+                : c.type === 'paintingDiscard'
+                  ? 'Canvas ready for another painting.'
+                  : c.type === 'paintingResult'
+                    ? 'Palette preview ready.'
+                    : 'Painting could not finish.';
+        } catch (error) {
+          ok = false;
+          message =
+            error instanceof Error && error.name !== 'ZodError'
+              ? error.message
+              : 'Invalid painting request or result.';
+        }
+        break;
+      }
+      case 'artifactWrite':
+      case 'artifactPageAdd':
+      case 'artifactPageRemove':
+      case 'artifactSeal':
+        try {
+          artifactId = editCarriedArtifact(this.artifacts, this.inventory, c, this.calendar.day).id;
+          this.literacy.clearContinuation(artifactId);
+          message = c.type === 'artifactSeal' ? 'Text sealed.' : 'Page saved.';
+        } catch (error) {
+          ok = false;
+          message =
+            error instanceof Error && error.name !== 'ZodError'
+              ? error.message
+              : 'Keep text within 24 lines of 96 characters and use a title of at most 48 characters.';
+        }
+        break;
+      case 'artifactDisplay':
+      case 'artifactTake': {
+        const scene = this.scenes.definitions[this.entities.scene[playerSlot]!]!;
+        const prop = scene.props.find((p) => p.id === c.propId);
+        if (
+          !prop?.display ||
+          c.displaySlot >= prop.display.slots ||
+          distanceSquared(this.player, prop) > 2.25 ||
+          this.combat.active(0)
+        ) {
+          ok = false;
+          message = 'Move closer to an available display.';
+          break;
+        }
+        const index = this.placements.findIndex(
+          (p) => p.sceneId === scene.id && p.propId === prop.id && p.slot === c.displaySlot,
+        );
+        if (c.type === 'artifactDisplay') {
+          const item = this.inventory.state[c.slot],
+            record = item?.artifact && this.artifacts.get(item.artifact);
+          if (
+            !item ||
+            !record ||
+            record.kind !== item.id ||
+            (record.kind === 'painting' && record.status !== 'ready') ||
+            !prop.display.accepts.includes(record.kind) ||
+            index >= 0
+          ) {
+            ok = false;
+            message = 'That artifact cannot occupy this display slot.';
+            break;
+          }
+          this.placements.push({
+            artifactId: record.id,
+            sceneId: scene.id,
+            propId: prop.id,
+            slot: c.displaySlot,
+            item: { ...item },
+          });
+          this.inventory.remove(c.slot);
+          if (record.kind === 'painting') this.noticePainting(record.id, scene.code, prop);
+          message = 'Artifact displayed.';
+        } else {
+          const placement = this.placements[index];
+          const displayed = placement && this.artifacts.get(placement.artifactId);
+          if (
+            displayed?.kind === 'painting' &&
+            (!displayed.sealed || displayed.status !== 'ready')
+          ) {
+            ok = false;
+            message = 'The painter has not hung this painting yet.';
+            break;
+          }
+          if (!placement || !this.inventory.insert(placement.item)) {
+            ok = false;
+            message = placement ? 'Both hands are full.' : 'That display slot is empty.';
+            break;
+          }
+          this.placements.splice(index, 1);
+          message = 'Artifact taken.';
+        }
+        break;
+      }
       case 'furniture': {
         const prop = this.scenes.definitions[this.entities.scene[playerSlot]!]!.props.find(
           (p) => p.id === c.propId,
@@ -663,6 +882,8 @@ export class SimulationHost {
             message = 'You eat from the finite settlement supply.';
             this.presentationActions.set(0, { pose: 'eat', until: this.tick + 24 });
           }
+        } else if (prop.interaction === 'paint') {
+          message = 'The easel is ready for a carried blank canvas.';
         } else
           message =
             'Use the equipment panel to change carried garments; this wardrobe has no storage.';
@@ -848,6 +1069,16 @@ export class SimulationHost {
         break;
       case 'drop': {
         const item = this.inventory.state[c.slot];
+        const record = item?.artifact ? this.artifacts.get(item.artifact) : null;
+        if (
+          record?.kind === 'painting' &&
+          record.author.kind === 'player' &&
+          record.status !== 'ready'
+        ) {
+          ok = false;
+          message = 'Finish or discard the painting preview before dropping its canvas.';
+          break;
+        }
         if (
           !item ||
           !current.resources.dropItem(item, {
@@ -944,6 +1175,7 @@ export class SimulationHost {
         this.pauses.acquire('dialogue');
         npc.facingX = this.player.x - npc.x;
         npc.facingY = this.player.y - npc.y;
+        this.plans.context.open(npc.profileId, this.session);
         this.dialogue = {
           npcId: npc.profileId,
           revision: npc.revision,
@@ -959,33 +1191,44 @@ export class SimulationHost {
         };
         break;
       }
+      case 'partnerCommand':
+        ok = this.combat.minds.command(c.command, c.target, this.tick);
+        if (!ok) message = 'Choose a visible target and an available companion.';
+        break;
+      case 'inspectCreature':
+        this.inspectedCreature = c.entityId;
+        break;
+      case 'configureCombat':
+        ok = this.combat.configure(c.settings);
+        break;
+      case 'configureContext':
+        ok = this.plans.context.configure(c.settings);
+        if (!ok) message = 'Close this conversation before reducing its context size.';
+        break;
       case 'dialogue': {
+        if (
+          this.dialogue?.pendingJob &&
+          this.pendingJobs.get(this.dialogue.pendingJob)?.kind === 'reading'
+        ) {
+          this.pendingJobs.delete(this.dialogue.pendingJob);
+          this.dialogue.pendingJob = null;
+          this.dialogue.reading = false;
+        }
         if (!this.dialogue || this.dialogue.pendingJob) {
           ok = false;
           message = 'Wait for the villager’s response.';
           break;
         }
-        if (this.dialogue.lines.length >= 31) {
-          ok = false;
-          message = 'Finish this conversation before starting a new one.';
-          break;
-        }
         const npc = this.npcs.find((n) => n.profileId === this.dialogue!.npcId)!;
-        if (
-          !this.memories.append(npc, {
-            kind: 'conversation',
-            text: `Player said: ${c.text}`,
-            tick: this.tick,
-            day: this.calendar.day,
-            importance: 5,
-            subjects: ['player'],
-            sourceIds: [],
-          })
-        ) {
-          ok = false;
-          message = 'Memory storage is full. Let consolidation finish before continuing.';
-          break;
-        }
+        this.memories.append(npc, {
+          kind: 'conversation',
+          text: `Player said: ${c.text}`,
+          tick: this.tick,
+          day: this.calendar.day,
+          importance: 5,
+          subjects: ['player'],
+          sourceIds: [this.plans.context.session!.id],
+        });
         this.dialogue.lines.push({ speaker: 'player', text: c.text });
         const job = this.plans.job(
           npc,
@@ -995,8 +1238,12 @@ export class SimulationHost {
           'dialogue',
           c.text,
         );
+        this.plans.context.append('player', c.text);
+        this.dialogue.lines.splice(0, Math.max(0, this.dialogue.lines.length - 32));
         this.dialogue.pendingJob = job.id;
         this.queueJob(job);
+        const embedding = this.plans.embedding(npc, this.session, c.text);
+        if (embedding) this.queueJob(embedding);
         break;
       }
       case 'closeDialogue':
@@ -1020,13 +1267,21 @@ export class SimulationHost {
       }
       case 'agentFailure': {
         const job = this.pendingJobs.get(c.jobId);
-        if (job?.kind === 'dialogue' && this.dialogue?.pendingJob === job.id) {
+        if (job?.kind === 'reading' && this.dialogue?.pendingJob === job.id) {
+          this.failedDialogue(
+            job,
+            'The reading could not finish. Please try another bounded range.',
+          );
+          this.pendingJobs.delete(job.id);
+          message = 'Reading failed; no reading memory was written.';
+        } else if (job?.kind === 'dialogue' && this.dialogue?.pendingJob === job.id) {
           const profile = NPC_PROFILES.find((p) => p.id === job.npcId)!;
           const lastLine =
             this.dialogue.lines.filter((l) => l.speaker === 'player').at(-1)?.text ?? '';
           this.acceptInference(job.id, fallbackDialogue(profile, lastLine));
           message = `Local AI unavailable (${c.reason}). A deterministic response kept the conversation playable.`;
         } else {
+          this.plans.context.release(c.jobId);
           this.pendingJobs.delete(c.jobId);
           message = 'Background inference postponed.';
         }
@@ -1034,7 +1289,14 @@ export class SimulationHost {
       }
       case 'agentResult': {
         const job = this.pendingJobs.get(c.jobId);
-        if ((this.pauses.paused || this.acceleration > 1) && job && job.kind !== 'dialogue') {
+        if (
+          (this.pauses.paused || this.acceleration > 1) &&
+          job &&
+          job.kind !== 'dialogue' &&
+          job.kind !== 'compaction' &&
+          job.kind !== 'embedding' &&
+          !(job.kind === 'reading' && job.readingTarget?.conversationId)
+        ) {
           if (
             !this.deferredResults.some(
               (e) => e.command.type === 'agentResult' && e.command.jobId === c.jobId,
@@ -1043,6 +1305,12 @@ export class SimulationHost {
             this.deferredResults.push(envelope);
           message = 'Background proposal waits for simulation resume.';
         } else {
+          if (job)
+            this.plans.context.calibrate(
+              job.model ?? this.plans.context.settings.dialogueModel,
+              job.messages,
+              c.promptTokens,
+            );
           const result = this.acceptInference(c.jobId, c.output);
           message = result.message;
           ok = result.ok;
@@ -1099,12 +1367,217 @@ export class SimulationHost {
               : null;
       if (pose) this.presentationActions.set(0, { pose, until: this.tick + 24 });
     }
-    return { id: envelope.id, ok, message };
+    return { id: envelope.id, ok, message, ...(artifactId ? { artifactId } : {}) };
+  }
+  private paintingFacts(id: import('./values').NpcId) {
+    const npc = this.npcs.find((n) => n.profileId === id);
+    if (!npc) return {};
+    const scene = this.scenes.definitions[npc.scene ?? 0],
+      home = this.scenes.home(npc.entityId);
+    return {
+      paintingEnabled: this.paintingsEnabled,
+      ownPaintings: this.artifacts
+        .views()
+        .filter(
+          (a) =>
+            a.kind === 'painting' && a.author.kind === 'npc' && a.author.id === id && !a.sealed,
+        )
+        .slice(0, 3),
+      paintingAtHome: home?.code === npc.scene,
+      paintings: this.placements
+        .filter(
+          (p) =>
+            p.sceneId === scene?.id &&
+            scene.props.some(
+              (prop) => prop.id === p.propId && distanceSquared(npc, prop) <= 12 ** 2,
+            ),
+        )
+        .flatMap((p) => {
+          const a = this.artifacts.get(p.artifactId);
+          return a?.kind === 'painting' && a.sealed && a.status === 'ready'
+            ? [{ id: a.id, title: a.title, caption: a.caption }]
+            : [];
+        })
+        .slice(0, 5),
+    };
+  }
+  private validateNpcPainting(npc: NpcState, action: PaintingAction): string | null {
+    try {
+      const body = this.entities.require(npc.entityId),
+        home = this.scenes.home(npc.entityId);
+      if (this.entities.hp[body]! <= 0 || this.entities.sleeping[body])
+        throw Error('The painter must be awake and well.');
+      if (!home) throw Error('The painter needs a home.');
+      if (action.type === 'CREATE_PAINTING') {
+        if (!this.paintingsEnabled) throw Error('No image endpoint is configured.');
+        validatePaintingBrief(action.brief, (id) =>
+          id === npc.profileId ? 0 : (npc.relations[id] ?? 0),
+        );
+        groundWriting(action.brief.subject);
+        groundWriting(action.brief.title, true);
+        if (action.brief.subject.length < 3 || action.brief.subject.length > 160)
+          throw Error('Villager subjects need3–160 characters.');
+        const words = action.brief.subject.toLowerCase().match(/[\p{L}]{4,}/gu) ?? [];
+        const memories = npc.memory.records
+          .filter(validMemory)
+          .map((m) => m.text.toLowerCase())
+          .join(' ');
+        if (!words.some((word) => memories.includes(word)))
+          throw Error('Choose a subject from existing memories or sight notes.');
+        const days = NPC_PROFILES.find((p) => p.id === npc.profileId)!.role.includes('painter')
+          ? 1
+          : 7;
+        if (
+          this.artifacts
+            .views()
+            .some(
+              (a) =>
+                a.kind === 'painting' &&
+                a.author.kind === 'npc' &&
+                a.author.id === npc.profileId &&
+                this.calendar.day - a.createdDay < days,
+            )
+        )
+          throw Error('Painting rate reached for this villager.');
+        if (
+          !home.props.some(
+            (prop) =>
+              prop.display?.accepts.includes('painting') &&
+              !this.placements.some((p) => p.sceneId === home.id && p.propId === prop.id),
+          )
+        )
+          throw Error('The painter needs a free home hook.');
+      } else {
+        const a = this.artifacts.get(action.artifactId);
+        if (
+          npc.scene !== home.code ||
+          !a ||
+          a.kind !== 'painting' ||
+          a.author.kind !== 'npc' ||
+          a.author.id !== npc.profileId ||
+          a.status !== 'ready' ||
+          a.sealed ||
+          !this.placements.some((p) => p.artifactId === a.id && p.sceneId === home.id)
+        )
+          throw Error('Return home to hang your finished painting.');
+      }
+      return null;
+    } catch (error) {
+      return error instanceof Error ? error.message : 'Invalid painting action.';
+    }
+  }
+  executePainting(npc: NpcState, action: PaintingAction): { ok: boolean; message: string } {
+    const error = this.validateNpcPainting(npc, action);
+    if (error) return { ok: false, message: error };
+    try {
+      const home = this.scenes.home(npc.entityId)!;
+      if (action.type === 'CREATE_PAINTING') {
+        const hook = home.props.find(
+          (prop) =>
+            prop.display?.accepts.includes('painting') &&
+            !this.placements.some((p) => p.sceneId === home.id && p.propId === prop.id),
+        )!;
+        new PaintingService(this.artifacts, this.inventory).requestNpc(
+          {
+            id: npc.profileId,
+            artist: NPC_PROFILES.find((p) => p.id === npc.profileId)!.role.includes('painter'),
+            relations: npc.relations,
+          },
+          action.brief,
+          this.calendar.day,
+          (item) => {
+            this.scenes.context(home.code);
+            this.placements.push({
+              artifactId: item.artifact!,
+              sceneId: home.id,
+              propId: hook.id,
+              slot: 0,
+              item,
+            });
+            return true;
+          },
+        );
+        return { ok: true, message: 'Painting in progress at home.' };
+      }
+      const record = this.artifacts.seal(action.artifactId),
+        placement = this.placements.find((p) => p.artifactId === record.id)!;
+      this.noticePainting(
+        record.id,
+        home.code,
+        home.props.find((p) => p.id === placement.propId)!,
+      );
+      return { ok: true, message: `Hung '${record.title}'.` };
+    } catch (error) {
+      return {
+        ok: false,
+        message: error instanceof Error ? error.message : 'Painting action failed.',
+      };
+    }
+  }
+  private noticePainting(id: string, scene: number, prop: { x: number; y: number }): void {
+    const a = this.artifacts.get(id);
+    if (a?.kind !== 'painting' || !a.caption) return;
+    const now = Date.now();
+    for (const npc of this.npcs) {
+      if (
+        npc.scene !== scene ||
+        distanceSquared(npc, prop) > 12 ** 2 ||
+        now - (this.paintingNotices.get(npc.profileId) ?? -Infinity) < 600_000
+      )
+        continue;
+      this.paintingNotices.set(npc.profileId, now);
+      this.memories.append(npc, {
+        type: 'sight',
+        text: `Painting '${a.title}': ${a.caption}`
+          .split(/\s+/)
+          .slice(0, 40)
+          .join(' ')
+          .slice(0, 280),
+        subjects: [npc.profileId],
+        importance: 4,
+        createdTick: this.tick,
+        lastAccessTick: this.tick,
+        confidence: 'witnessed',
+        source: { kind: 'artifact', ids: [id] },
+      });
+    }
+  }
+  /** On-demand text is available only in the player's hands or a nearby display. */
+  artifactContent(
+    id: string,
+    paintingPurpose?: 'display' | 'generation',
+  ): import('./artifacts').Artifact | null {
+    const record = this.artifacts.get(id);
+    if (record?.kind === 'painting') {
+      if (paintingPurpose === 'generation' && record.status === 'pending' && !record.pixels)
+        return record;
+      if (
+        paintingPurpose === 'display' &&
+        this.placements.some(
+          (p) =>
+            p.artifactId === id &&
+            p.sceneId === this.scenes.definitions[this.player.scene ?? 0]?.id,
+        )
+      )
+        return record;
+    }
+    if (this.inventory.state.some((item) => item?.artifact === id)) return this.artifacts.get(id);
+    const scene = this.scenes.definitions[this.entities.scene[this.entities.require(0)]!]!;
+    const reachable = this.placements.some(
+      (p) =>
+        p.artifactId === id &&
+        p.sceneId === scene.id &&
+        scene.props.some((prop) => prop.id === p.propId && distanceSquared(this.player, prop) <= 4),
+    );
+    return reachable ? this.artifacts.get(id) : null;
   }
   private queueJob(job: InferenceJob): void {
     if (this.pendingJobs.size >= 16) {
       const oldest = [...this.pendingJobs.values()].find((j) => j.kind !== 'dialogue');
-      if (oldest) this.pendingJobs.delete(oldest.id);
+      if (oldest) {
+        this.plans.context.release(oldest.id);
+        this.pendingJobs.delete(oldest.id);
+      }
     }
     this.pendingJobs.set(job.id, job);
     this.outgoingJobs.push(job);
@@ -1114,14 +1587,121 @@ export class SimulationHost {
     if (!job || job.session !== this.session)
       return { ok: false, message: 'Obsolete inference result ignored.' };
     this.pendingJobs.delete(id);
+    if (job.kind === 'compaction') {
+      const applied =
+        !!job.compactionTarget && this.plans.context.apply(id, job.compactionTarget, output);
+      return {
+        ok: applied,
+        message: applied ? '' : 'Stale or invalid conversation summary ignored.',
+      };
+    }
     const npc = this.npcs.find((n) => n.profileId === job.npcId)!;
+    if (job.kind === 'embedding') {
+      const value = output as { query?: unknown; records?: unknown };
+      const vector = (v: unknown): v is number[] =>
+        Array.isArray(v) &&
+        v.length === 256 &&
+        v.every((x) => typeof x === 'number' && Number.isFinite(x));
+      if (
+        !job.embeddingInput ||
+        !value ||
+        !vector(value.query) ||
+        !Array.isArray(value.records) ||
+        value.records.length !== job.embeddingInput.records.length
+      )
+        return { ok: false, message: 'Invalid embedding result ignored.' };
+      const records = value.records as { id: string; text: string; vector: unknown }[];
+      if (
+        records.some(
+          (r, i) =>
+            !r ||
+            !vector(r.vector) ||
+            r.id !== job.embeddingInput!.records[i]!.id ||
+            r.text !== job.embeddingInput!.records[i]!.text,
+        )
+      )
+        return { ok: false, message: 'Stale embedding result ignored.' };
+      this.plans.queries.set(job.embeddingInput.query, value.query);
+      if (this.plans.queries.size > 64)
+        this.plans.queries.delete(this.plans.queries.keys().next().value!);
+      for (const r of records)
+        if (npc.memory.records.some((m) => m.id === r.id && m.text === r.text && validMemory(m)))
+          this.plans.vectors.set(r.id, { text: r.text, vector: r.vector as number[] });
+      return { ok: true, message: '' };
+    }
+    if (job.kind === 'extraction' || job.kind === 'fold') {
+      const entities = new Set([
+        'player',
+        ...this.npcs.map((n) => n.profileId),
+        ...NPC_PROFILES.map((p) => p.name),
+        ...this.entities.snapshot().records.map((r) => `entity:${r.id}`),
+        ...Object.keys(ITEMS),
+        ...SPECIES.map((s) => s.id),
+      ]);
+      const applied =
+        !!job.memoryTarget &&
+        (job.kind === 'extraction'
+          ? applyExtraction(npc, job.memoryTarget, output, this.tick, entities)
+          : applySynthesis(npc, job.memoryTarget, output, this.tick, true));
+      return {
+        ok: applied,
+        message: applied
+          ? ''
+          : 'Stale or invalid memory proposal rejected; existing memories retained.',
+      };
+    }
     if (job.expectedRevision !== npc.revision)
       return this.failedDialogue(job, 'The villager’s state changed before the response arrived.');
+    if (job.kind === 'reading') {
+      const target = job.readingTarget,
+        parsed = ReadingResponseSchema.safeParse(output);
+      const foreground = !!target?.conversationId;
+      if (
+        !target ||
+        !parsed.success ||
+        !this.literacy.validateResult(npc.profileId, target, foreground) ||
+        (foreground &&
+          (!this.dialogue ||
+            this.dialogue.npcId !== npc.profileId ||
+            this.dialogue.pendingJob !== job.id ||
+            this.plans.context.session?.id !== target.conversationId))
+      )
+        return this.failedDialogue(
+          job,
+          'Stale or invalid reading response rejected; no memory was written.',
+        );
+      this.memories.append(npc, {
+        type: 'reading',
+        text: parsed.data.summary,
+        subjects: [npc.profileId],
+        importance: 4,
+        createdTick: this.tick,
+        lastAccessTick: this.tick,
+        confidence: 'told',
+        source: { kind: 'artifact', ids: [target.source.artifactId], reading: target.source },
+      });
+      this.literacy.finishRead(npc.profileId, target, parsed.data.wantsMore);
+      if (foreground && this.dialogue) {
+        this.dialogue.pendingJob = null;
+        this.dialogue.reading = false;
+        this.dialogue.lines.push({
+          speaker: 'npc',
+          text: parsed.data.dialogue,
+          emotion: parsed.data.emotion,
+        });
+        this.plans.context.append('npc', parsed.data.dialogue, parsed.data.emotion);
+        this.dialogue.lines.splice(0, Math.max(0, this.dialogue.lines.length - 32));
+        const compact = this.plans.compaction(npc, this.session);
+        if (compact) this.queueJob(compact);
+      }
+      return { ok: true, message: '' };
+    }
     if (job.kind === 'dialogue') {
       if (!this.dialogue || this.dialogue.npcId !== job.npcId || this.dialogue.pendingJob !== id)
         return { ok: false, message: 'Conversation ended before response arrived.' };
       const parsed = DialogueResponseSchema.safeParse(output);
       this.dialogue.pendingJob = null;
+      this.dialogue.reading = false;
       if (!parsed.success) {
         this.dialogue.lines.push({
           speaker: 'system',
@@ -1129,6 +1709,8 @@ export class SimulationHost {
         });
         return { ok: false, message: 'Invalid structured dialogue rejected.' };
       }
+      if (parsed.data.action.type === 'READ_TEXT')
+        return this.startReading(npc, parsed.data.action, true);
       this.dialogue.lines.push({
         speaker: 'npc',
         text: parsed.data.dialogue,
@@ -1141,9 +1723,14 @@ export class SimulationHost {
         day: this.calendar.day,
         importance: 5,
         subjects: ['player', npc.profileId],
-        sourceIds: [],
+        sourceIds: [this.plans.context.session!.id],
       });
-      if (parsed.data.action.type !== 'NONE') this.dialogue.staged.push(parsed.data.action);
+      this.plans.context.append('npc', parsed.data.dialogue, parsed.data.emotion);
+      this.dialogue.lines.splice(0, Math.max(0, this.dialogue.lines.length - 32));
+      const compaction = this.plans.compaction(npc, this.session);
+      if (compaction) this.queueJob(compaction);
+      if (parsed.data.action.type !== 'NONE' && this.dialogue.staged.length < 32)
+        this.dialogue.staged.push(parsed.data.action);
       return {
         ok: true,
         message:
@@ -1157,6 +1744,23 @@ export class SimulationHost {
         parsed.data.sourceIds.some((source) => !job.sourceIds.includes(source))
       )
         return { ok: false, message: 'Ungrounded personal plan rejected.' };
+      if (parsed.data.action) {
+        if (isPaintingAction(parsed.data.action)) {
+          const receipt = this.executePainting(npc, parsed.data.action);
+          if (receipt.ok) npc.revision++;
+          return receipt;
+        }
+        if (parsed.data.action.type === 'READ_TEXT')
+          return this.startReading(npc, parsed.data.action, false);
+        const receipt = this.literacy.execute(
+          npc.profileId,
+          parsed.data.action,
+          this.calendar.day,
+          false,
+        );
+        if (receipt.ok) npc.revision++;
+        return receipt;
+      }
       const index = this.npcs.indexOf(npc),
         point = new SettlementPlanner().locations(index)[parsed.data.location];
       if (!SurfaceRules.walkable(this.world, point.x, point.y))
@@ -1178,17 +1782,14 @@ export class SimulationHost {
     }
     const parsed = ReflectionResponseSchema.safeParse(output);
     if (!parsed.success) return { ok: false, message: 'Invalid memory synthesis rejected.' };
-    const committed =
-      job.kind === 'compaction'
-        ? this.memories.compact(npc, job.memoryRevision, job.sourceIds, parsed.data)
-        : this.reflections.commit(
-            npc,
-            job,
-            parsed.data,
-            this.tick,
-            this.calendar.day,
-            this.calendar.elapsedSeconds,
-          );
+    const committed = this.reflections.commit(
+      npc,
+      job,
+      parsed.data,
+      this.tick,
+      this.calendar.day,
+      this.calendar.elapsedSeconds,
+    );
     return {
       ok: committed,
       message: committed ? '' : 'Memory revision changed; source records were retained.',
@@ -1197,23 +1798,61 @@ export class SimulationHost {
   private failedDialogue(job: InferenceJob, reason: string): { ok: boolean; message: string } {
     if (this.dialogue?.pendingJob === job.id) {
       this.dialogue.pendingJob = null;
+      this.dialogue.reading = false;
       this.dialogue.lines.push({ speaker: 'system', text: reason });
     }
     return { ok: false, message: reason };
   }
+  private startReading(
+    npc: NpcState,
+    action: Extract<LiteracyAction, { type: 'READ_TEXT' }>,
+    foreground: boolean,
+  ): { ok: boolean; message: string } {
+    try {
+      const target = this.literacy.beginRead(
+        npc.profileId,
+        action,
+        this.calendar.day,
+        foreground ? this.plans.context.session?.id : undefined,
+      );
+      const job = this.plans.reading(
+        npc,
+        NPC_PROFILES.find((p) => p.id === npc.profileId)!,
+        this.session,
+        target,
+      );
+      this.queueJob(job);
+      if (foreground && this.dialogue) {
+        this.dialogue.pendingJob = job.id;
+        this.dialogue.reading = true;
+      }
+      return { ok: true, message: 'The villager is reading the selected range.' };
+    } catch (error) {
+      return {
+        ok: false,
+        message: error instanceof Error ? error.message : 'The reading proposal was rejected.',
+      };
+    }
+  }
   private closeDialogue(): string {
     if (!this.dialogue) return '';
-    const dialogue = this.dialogue;
+    const dialogue = Object.assign(this.dialogue, { memorySession: this.plans.context.session });
     if (dialogue.pendingJob) this.pendingJobs.delete(dialogue.pendingJob);
     this.dialogue = null;
     this.pauses.release('dialogue');
     if (this.pauses.paused) {
       this.deferredConversations.push(dialogue);
+      this.plans.context.close();
       return 'Your offers will be checked when the world resumes.';
     }
-    return this.commitConversation(dialogue);
+    const message = this.commitConversation(dialogue);
+    this.plans.context.close();
+    return message;
   }
-  private commitConversation(dialogue: DialogueState): string {
+
+  private commitConversation(
+    dialogue: DialogueState & { memorySession?: DialogueSession | null },
+  ): string {
     const npc = this.npcs.find((n) => n.profileId === dialogue.npcId)!;
     const receipts: string[] = [];
     const local = this.systems(this.entities.scene[this.entities.require(npc.entityId)]!);
@@ -1231,6 +1870,16 @@ export class SimulationHost {
     if (npc.revision === dialogue.revision)
       for (const action of dialogue.staged) {
         const receipt = this.validator.execute(npc, action, {
+          paintings: {
+            validate: (proposal) => this.validateNpcPainting(npc, proposal),
+            execute: (proposal) => this.executePainting(npc, proposal),
+          },
+          literacy: {
+            validate: (proposal) =>
+              this.literacy.validate(npc.profileId, proposal, this.calendar.day, true),
+            execute: (proposal) =>
+              this.literacy.execute(npc.profileId, proposal, this.calendar.day, true),
+          },
           calendar: this.calendar,
           world: local.world,
           resources: local.resources,
@@ -1239,7 +1888,7 @@ export class SimulationHost {
           player: this.player,
           markers: this.markers,
           sourceIds: npc.memory.records
-            .filter((m) => m.kind === 'conversation')
+            .filter((m) => validMemory(m) && m.source.kind === 'session')
             .slice(-4)
             .map((m) => m.id),
         });
@@ -1258,6 +1907,17 @@ export class SimulationHost {
     this.entities.recreation[body] = clamp(this.entities.recreation[body]! + 0.15);
     this.entities.recreation[playerBody] = clamp(this.entities.recreation[playerBody]! + 0.15);
     this.journal.add('conversation');
+    const extraction = this.plans.extraction(
+      npc,
+      this.session,
+      this.tick,
+      dialogue.memorySession ?? null,
+    );
+    if (extraction) this.queueJob(extraction);
+    else if (dialogue.memorySession?.turns.length)
+      receipts.push(
+        'Conversation records retained; increase Conversation context size to allow memory extraction.',
+      );
     return receipts.join(' ') || 'The world stirs again. Your conversation is remembered.';
   }
   private emit(
@@ -1340,6 +2000,8 @@ export class SimulationHost {
       direction.y * speed * dt,
       { lava: false, water: true },
     );
+    this.entities.vx[playerSlot] = (moved.x - this.player.x) * CONFIG.tickRate;
+    this.entities.vy[playerSlot] = (moved.y - this.player.y) * CONFIG.tickRate;
     this.player.x = moved.x;
     this.player.y = moved.y;
     if (this.tick % 10 === 0) {
@@ -1348,6 +2010,8 @@ export class SimulationHost {
     }
     const s = this.creatures,
       now = this.calendar.elapsedSeconds;
+    this.rebuildSpatial();
+    this.combat.prepareTick(this.tick, this.spatial, now);
     // Universal survival runs on simulation time; tactical combat preempts ordinary plans.
     if (this.tick % 30 === 0)
       for (const i of s.slots()) {
@@ -1358,7 +2022,7 @@ export class SimulationHost {
         SleepSystem.update(s, i, 0, now, this.combat.danger(s.id(i)));
       }
     for (const i of this.tiers.detailed) {
-      if (this.combat.active(s.id(i))) continue;
+      if (this.combat.active(s.id(i)) || this.combat.minds.active(i)) continue;
       if (s.owner[i] === 0 && s.scene[i] !== s.scene[playerSlot]) {
         this.followPortal(i, s.scene[playerSlot]!, dt);
         continue;
@@ -1430,7 +2094,12 @@ export class SimulationHost {
     }
     if (this.tick % 30 === 0)
       for (let i = 0; i < s.count; i++)
-        if (s.alive[i] && !s.tier[i] && !this.combat.active(s.id(i))) {
+        if (
+          s.alive[i] &&
+          !s.tier[i] &&
+          !this.combat.active(s.id(i)) &&
+          !this.combat.minds.active(i)
+        ) {
           const system = this.systems(s.scene[i]!);
           if (s.owner[i] === 0 && s.scene[i] !== s.scene[playerSlot])
             this.followPortal(i, s.scene[playerSlot]!, 1);
@@ -1866,29 +2535,58 @@ export class SimulationHost {
                   : this.combat.presentationGuard(id, this.tick)
                     ? 'guard'
                     : moving
-                      ? 'walk'
+                      ? this.combat.minds.active(slot) &&
+                        ['flankLeft', 'flankRight', 'flee', 'dash'].includes(
+                          this.combat.minds.intent(slot),
+                        )
+                        ? 'run'
+                        : 'walk'
                       : task === 'food' || (mode === CreatureMode.Feed && atGoal)
                         ? 'eat'
                         : task === 'water' || (mode === CreatureMode.Drink && atGoal)
                           ? 'drink'
                           : task === 'clean' || (mode === CreatureMode.Bathe && atGoal)
                             ? 'bathe'
-                            : task === 'social' || (mode === CreatureMode.Socialize && atGoal)
+                            : this.combat.minds.active(slot) &&
+                                this.combat.minds.intent(slot) === 'callPack'
                               ? 'social'
-                              : recent && recent.until > this.tick
-                                ? recent.pose
-                                : npc
-                                  ? this.schedules.presentation(
-                                      npc,
-                                      this.npcs.indexOf(npc),
-                                      this.calendar,
-                                    )
-                                  : 'idle';
+                              : task === 'social' || (mode === CreatureMode.Socialize && atGoal)
+                                ? 'social'
+                                : recent && recent.until > this.tick
+                                  ? recent.pose
+                                  : npc
+                                    ? this.schedules.presentation(
+                                        npc,
+                                        this.npcs.indexOf(npc),
+                                        this.calendar,
+                                      )
+                                    : 'idle';
       actors.push({
+        ...(npc && this.dialogue?.npcId === npc.profileId
+          ? {
+              faceExpression:
+                [...this.dialogue.lines].reverse().find((l) => l.speaker === 'npc')?.emotion ??
+                ('neutral' as const),
+            }
+          : {}),
+        ...(action && id !== 0
+          ? {
+              telegraph: this.combat.telegraph(id, this.tick),
+              attackTarget: this.combat.pursuits.get(id)?.target,
+            }
+          : {}),
+        ...(!s.isHuman(slot)
+          ? {
+              intent:
+                s.owner[slot] === 0
+                  ? this.combat.partnerIntent(id, this.tick)
+                  : this.combat.minds.intent(slot),
+            }
+          : {}),
         physique: {
           ...s.physique(slot),
           strideTiles: PhysiquePolicy.stride(s.physique(slot)),
-          grounded: s.definition(slot).id !== 'cindermoth',
+          grounded: !creatureTraversal(s, slot).air,
         },
         activityInstanceId: recent ? `${id}:${recent.pose}:${recent.until}` : undefined,
         activityVariant: npc ? NPC_PROFILES.find((p) => p.id === npc.profileId)?.role : undefined,
@@ -1929,8 +2627,14 @@ export class SimulationHost {
         x,
         y,
         elevation: local.world.elevation[local.world.index(x, y)] ?? 0,
-        facingX: id === 0 ? this.player.facingX : (npc?.facingX ?? s.vx[slot]!),
-        facingY: id === 0 ? this.player.facingY : (npc?.facingY ?? s.vy[slot]!),
+        facingX:
+          id === 0
+            ? this.player.facingX
+            : (npc?.facingX ?? (action ? s.facingX[slot]! : s.vx[slot]!)),
+        facingY:
+          id === 0
+            ? this.player.facingY
+            : (npc?.facingY ?? (action ? s.facingY[slot]! : s.vy[slot]!)),
         pose,
         protected: s.isHuman(slot) || s.owner[slot]! >= 0,
         action,
@@ -1941,6 +2645,12 @@ export class SimulationHost {
       if (!presentIds.has(id)) this.presentationPositions.delete(id);
     return {
       equipment: this.equipment.view(),
+      creatureDebug: this.debugEnabled
+        ? this.combat.minds.debug(this.inspectedCreature, this.tick)
+        : [],
+      combatSettings: structuredClone(this.combat.director.settings),
+      artifacts: this.artifacts.views(),
+      placements: structuredClone(this.placements),
       scene: this.scenes.presentation(activeScene, 0, this.calendar.day),
       projectiles: this.combat.projectiles
         .snapshot()
@@ -2035,7 +2745,11 @@ export class SimulationHost {
         .map((n) =>
           structuredClone({
             ...n,
-            memory: { ...n.memory, records: n.memory.records.slice(-12) },
+            memory: { ...n.memory, records: n.memory.records.slice(-12), pending: [] },
+            memoryCounts: {
+              active: n.memory.records.filter(validMemory).length,
+              pending: n.memory.pending.length,
+            },
             heard: [],
           }),
         ),
@@ -2063,12 +2777,17 @@ export class SimulationHost {
           0,
         ),
         inferencePending: this.pendingJobs.size,
+        context: { ...this.plans.context.debug },
       },
     };
   }
   snapshot(): GameSave {
     return structuredClone({
       version: CONFIG.saveVersion,
+      artifacts: this.artifacts.snapshot(),
+      artifactSequence: this.artifacts.serial,
+      placements: this.placements,
+      literacy: this.literacy.snapshot(),
       generatorVersion: CONFIG.generatorVersion,
       contentVersion: CONFIG.contentVersion,
       worldSource: this.worldSource,
@@ -2140,6 +2859,9 @@ export class SimulationHost {
       ? { ...save.player.attack, hit: [...save.player.attack.hit] }
       : null;
     this.inventory.restore(save.inventory, save.inventorySerial);
+    this.artifacts.restore(save.artifacts, save.artifactSequence);
+    this.placements.splice(0, this.placements.length, ...structuredClone(save.placements));
+    this.literacy.restore(save.literacy);
     this.equipment.restore(save.equipment);
     this.entities.restore(save.entities);
     for (let i = 0; i < this.npcs.length; i++)
@@ -2187,6 +2909,7 @@ export class SimulationHost {
     this.reactions.restore(save.reactions);
     this.combat.restore({
       ...save.combat,
+      minds: remapMindScenes(save.combat.minds, (scene) => this.scenes.remap(save.scenes, scene)),
       projectiles: {
         ...save.combat.projectiles,
         arrows: save.combat.projectiles.arrows.map((a) => ({
@@ -2206,6 +2929,9 @@ export class SimulationHost {
     this.deferredResults.length = 0;
     this.deferredConversations.length = 0;
     this.dialogue = null;
+    this.plans.context.close();
+    this.plans.queries.clear();
+    this.plans.vectors.clear();
     this.pauses.clear();
     this.movement = { x: 0, y: 0 };
     this.navigation.invalidate();
@@ -2217,7 +2943,12 @@ export class SimulationHost {
     this.creatures.validate();
   }
   dispose(): void {
+    this.combat.director.reset();
+    this.combat.minds.reset();
     this.disposed = true;
+    this.plans.context.close();
+    this.plans.queries.clear();
+    this.plans.vectors.clear();
     this.pendingJobs.clear();
     this.outgoingJobs.length = 0;
     this.deferredConversations.length = 0;

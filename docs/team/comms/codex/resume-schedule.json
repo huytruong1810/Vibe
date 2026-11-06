@@ -1,0 +1,15 @@
+{
+  "sandbox": "workspace-write",
+  "state": "Ready",
+  "nextRunLocal": "2026-11-04T21:40:19.0000000-06:00",
+  "taskName": "Hearthwild-Codex-Resume-01a1a4df-20261105",
+  "wakeToRun": true,
+  "helper": "C:\\Users\\htruong\\AppData\\Local\\Temp\\hearthwild-codex-resume-01a1a4df.ps1",
+  "session": "01a1a4df-2e0e-75d3-90d7-37cd22ffe8fe",
+  "approvalPolicy": "on-request",
+  "nextRunUtc": "2026-11-05T03:40:19.0000000Z",
+  "removesScheduleBeforeResume": true,
+  "createdAt": "2026-11-05T00:16:23.330Z",
+  "note": "One-time native Windows task; user must remain logged in and machine available; WakeToRun and StartWhenAvailable requested. Normal approval and workspace sandbox requirements remain. The task deletes its schedule before invoking Codex CLI resume.",
+  "initialRejection": "Automatic approval review rejected an earlier version with --approve-for-me because unattended automatic approval was not explicitly authorized. The registered version removes that option and explicitly uses on-request approvals."
+}

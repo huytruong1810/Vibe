@@ -2,6 +2,24 @@
 
 Finished tickets, moved out of the live queue so agents read less. Newest batch first. Read only when a live ticket links here.
 
+## Archived 2026-11-05
+
+### C14 · Combat director and telegraphs: fair fights first (CRM-4, CMB-4)
+
+- status: done (director-approved simulation and playtest; record 2026-11-03)
+- owner: codex
+- goal: no matter how many hostiles, the player faces one or two clear threats at a time, every heavy attack is telegraphed, and nothing attacks from off screen.
+- spec: [creature minds](../../../engineering/creature-minds.md) §1, §2, §7, §10 (partner icon), §11 rows "director" and "telegraphs"; doctrine CRM-4, CRM-10.3, CMB-4; ADR 033.
+- work:
+  1. Token pools per target (player 2 melee / 1 ranged-element, partner 2/1, villager 1/1; wild targets 2/1 in independent pools per director decision 2026-11-02), held windup→recovery, priority grants with ≥ 8 ticks between grants on a target, no player tokens outside the 30 × 17 tile view rectangle.
+  2. Gate today's `CombatSystem.advance` attack start on a token; creatures without one hold at their readiness ring (`max(range + 1.5, kiteRange)`) and circle (a minimal orbit is enough until C13).
+  3. Telegraphs for every creature attack over 15% of the target's max HP from windup tick 0 (`ground` arc or `glint`), drawn in the effect layer under VFX, plus the predator crouch-and-shiver on windup frames.
+  4. Difficulty knobs (token counts, grant spacing, aggression bias) in settings.
+  5. Partner intent icon slot in the HUD (shows `attack`/`guard`/`follow` from today's state until C13 provides intents).
+- done when: unit and browser tests from §11 "director" and "telegraphs" pass; a Playwright journey with 20 hostile Bramblefang shows at most the token count in windup or active at any tick; a 1080p capture of that fight is looked at (PRD-5) and attached; `npm run benchmark` unchanged within 5%.
+- evidence: [C14 candidate digest](../../comms/codex/2026-11-02T2300--to-all--c14-combat-candidate.md), [validation](../../comms/codex/c14-validation.json), [benchmark](../../comms/codex/c14-benchmark.json), [browser proof](../../comms/codex/c14-browser.json); implementation **17672f7** plus final lifecycle fixes.
+- acceptance reconciliation (2026-11-05): [director record](../../comms/director/approvals/simulation--c13-c14.md) explicitly approves the combat director after hands-on playtesting. Historical validation remains linked; current C13 capture and C18 startup CI failures remain in the live queue, not counted as green regression evidence.
+
 ## Archived 2026-11-02
 
 The queue header as it stood before the cleanup:
@@ -360,3 +378,19 @@ hand, thigh, calf, foot, ball`, fingers), 43 actions, and no plain
 - work: per template, `spec/skeletons/<template>.json` (bones, sockets, landmark rules, gait parameters), landmark detection in `rig.py`, parametric clips in `gaits.py` for the full creature clip matrix (winged: hover idle and wing-beat locomotion; shelled: withdraw for guard and sleep; biped: a waddle), a fixture mesh and a `selftest --kind creature-<template>`.
 - done when: each template's selftest reaches QA candidate with drift 0; doctor lists the templates; the `sprite-forge` skill names the species-to-template map
 - evidence: `spec/skeletons/{shelled,winged,mushroom-biped}.json`, `blender/rig_winged.py`, `blender/rig_biped.py`, `blender/gaits.py` (SHELLED, WINGED, BIPED), `blender/fixture_creature.py`; `forge.py selftest --kind creature-<template>` PASS for all three (QA candidate, drift 0); `selftest --kind creature` (Rivallie) still PASS; `forgelib/gaits_selftest.py` OK; doctor lists the four templates; `sprite-forge` skill names the species-to-template map
+
+### C17 · Artifact item class and save v5 (foundation for notes, books, paintings)
+
+- status: done
+- owner: codex
+- goal: one `artifact` record behind notes, books and paintings: carried, dropped, displayed and saved with hard caps, so C18 and C20 only add behaviour.
+- spec: [authored artifacts](../../../engineering/authored-artifacts.md) §3, §4 (`artifactDisplay`/`artifactTake`), §9, §10; doctrine AGT-9, AGT-8.1; ADR 031.
+- work:
+  1. `src/domain/artifacts.ts`: types, `ArtifactStore` (create, get, update with revision bump, seal, remove), caps and the text sanitizer as pure functions.
+  2. Items `note`, `book`, `canvas`, `painting` with icons from the UI kit placeholders; recipes `fiber+fiber→note`, `note+fiber→book`, `note+stick→canvas`; `ItemInstance.artifact?` and `GroundDrop.artifact?` carried through drop, pick-up, swap and existing transfers.
+  3. Display furniture: `display` on scene props; one wall hook per home interior, three plus an easel (`interaction: 'paint'`) in Lark's home; `ArtifactPlacement`; commands `artifactDisplay`, `artifactTake`.
+  4. Save v5 with v4→v5 migration, retaining earlier migrations, zod caps, referential validation (§9); export/import round-trip.
+  5. Frame snapshot `ArtifactView` (metadata only) plus an on-demand content query.
+- out of scope: screens (C18, C20), villager actions, image generation.
+- done when: `npm run check` passes; unit tests for every cap, sanitizer case, command receipt, migration and referential rule; a 512-artifact save round-trips under 3 MB and validates in < 50 ms (test asserts both); existing saves load unchanged.
+- evidence: 2026-11-01: [C17 implementation and local checks](../../comms/codex/archive/2026-11-02T0206--to-all--re-directive-010.md); 345 TypeScript tests in 26 files and 60 forge tests pass; rebuilt assets validate with unchanged decoded frame pixels; 512-artifact save 1,195,812 bytes, isolated validation 23.29 ms.

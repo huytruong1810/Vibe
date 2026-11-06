@@ -1,0 +1,103 @@
+{
+  "branch": "eng/hd-presentation",
+  "pickupCommit": "692b4de",
+  "saveVersion": 8,
+  "check": {
+    "command": "VITEST_MAX_WORKERS=4 npm run check",
+    "exitCode": 0,
+    "testFiles": 32,
+    "tests": 444,
+    "creatureMindTests": 30,
+    "durationSeconds": 63.11,
+    "typesArchitectureNormalAssetsBuild": "passed",
+    "hygiene": "0 errors, 0 warnings",
+    "artifactValidationGateMs": 50,
+    "artifactGate": "passed unchanged"
+  },
+  "replay": {
+    "ticks": 3000,
+    "intentMotionSha256": "d0c664d43d5cdd3110d6d3105c376d719589d609e15b34034e281ae8a599f10e",
+    "comparisons": [
+      "full body snapshot",
+      "full mind state",
+      "director and combat state",
+      "intent and motion stream"
+    ],
+    "fullHostMidFightV8Continuation": "passed"
+  },
+  "browser": {
+    "integrationSuiteBeforeFinalPerformanceOnlyOptimization": {
+      "passed": 22,
+      "total": 22
+    },
+    "finalC13PackAndZephyrit": {
+      "passed": 2,
+      "total": 2
+    },
+    "finalC14": "passed 1/1, 50.8 seconds; all original token assertions retained",
+    "productionRoot": "passed 2/2, 21.7 seconds",
+    "productionSubpath": "passed 2/2 at /Vibe/, 21.7 seconds",
+    "retainedRegressions": [
+      "C14 pools, spacing and telegraphs",
+      "C25 memory and save-resume",
+      "HUD focus",
+      "interior save-load"
+    ],
+    "notes": [
+      "C14 fixed 420-tick window observed three starts; now retains a 420-tick minimum and 900-tick maximum to observe the required four, without relaxing token assertions."
+    ]
+  },
+  "visualReview": {
+    "viewport": {
+      "width": 1920,
+      "height": 1080
+    },
+    "lookedAt": [
+      "c13-pack-notice-1080p.png",
+      "c13-pack-stalk-1080p.png",
+      "c13-pack-commit-1080p.png",
+      "c13-pack-break-1080p.png",
+      "c13-zephyrit-notice-1080p.png",
+      "c13-zephyrit-stalk-1080p.png",
+      "c13-zephyrit-commit-1080p.png",
+      "c13-zephyrit-break-1080p.png"
+    ],
+    "observations": "Six pack actors begin together, spread around the player, show a pale commit arc, and back away around a fallen leader. Zephyrit closes, shows a circular cue, and moves away. Prototype sprites, crowd overlap and import toast remain visible; stills cannot prove timing."
+  },
+  "performance": {
+    "report": "c13-benchmark.json",
+    "failedMeasurementHistory": "c13-benchmark-history.json",
+    "exitCode": 0,
+    "assertions": "p95 brain <=1ms, movement <=1ms, director <=0.2ms; 150 execute, at most 48 full-rate",
+    "limitations": "Machine B i7-1365U, Node22.22.3, win32x64, 39.7GiB; excludes GPU/browser/live inference. Runtime outliers exceed per-tick targets; reference-machine acceptance and unchanged global throughput are not claimed."
+  },
+  "baselineCi": {
+    "41564371915": "completed/success",
+    "41564379329": "completed/failure in verify browser step; beta/ecology passed",
+    "logs": "Public logs 403; automatic review rejected stored-credential access, never executed",
+    "isolatedBaselineReproduction": "19 journeys passed plus terrain after export-junction correction; exact remote failed test unknown"
+  },
+  "hdGate": {
+    "missingRequirements": 1515,
+    "approvedAppearances": 4,
+    "totalAppearances": 41,
+    "gateChanged": false
+  },
+  "gaps": [
+    "Director playtest and approval",
+    "Reference-machine timing acceptance",
+    "Authored C3h behavior clips requested from Blender",
+    "Historical CI failed test log inaccessible",
+    "C22/C24/C25 external acceptance remains separate"
+  ],
+  "formatting": "npm run format:check passed",
+  "remoteCi": {
+    "run": 41653896737,
+    "verify": "success",
+    "betaRoot": "success",
+    "betaSubpath": "success",
+    "ecology": "25-minute timeout; optimized follow-up pending",
+    "overall": "cancelled"
+  },
+  "soakFollowup": "c13-soak-profile.json"
+}

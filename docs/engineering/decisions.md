@@ -485,3 +485,255 @@ player; cost scales with engaged creatures, not population; replays stay exact. 
 straight-line chase in `CombatSystem.advance` is replaced; hunting, territory and
 retaliation rules remain the reasons to engage. A typed-array perception grid replaces
 string-keyed spatial queries in the hot path. See [creature minds](creature-minds.md).
+
+**C14 implementation, 2026-11-02:** the director selected independent 2/1 pools for
+wild targets, resolving the spec exemption in favor of CRM-4.1. Save v7 persists
+settings, holds, waiting times and grant timestamps; legacy attack phases continue
+unchanged. Move categories are separate from existing damage kinds. A selection
+permits closing; a hold commits only at successful attack startup. Projection uses a
+one-tile inset inside the 30 × 17 content window and catches up the camera during
+incoming attacks. Inverse effect masks reserve cue space. Existing predator sprites
+receive presentation-only crouch/shiver; authored anticipation remains an art follow-up.
+Full perception, intent selection and reaction delay remain C13.
+
+**C13 implementation, 2026-11-03:** save v8 adds fixed observation/conditioning and
+scripted-rules identity, typed-array intent/reaction/history/home/pack/RNG state and
+separate 0–10 bond hearts. Perception precedes engagement, director selection, brain,
+one intent movement update and attack resolution. Category-specific transient
+selection commits only when the matching attack starts. Calm needs behavior and
+human/NPC combat remain. Both winged species use separate air navigation cache keys
+and land for needs; home uses spawn plus a 12-tile fallback until habitats activate.
+At most 48 nearby brains decide at full cadence; remaining loaded combatants decide
+at 2 Hz while movement/combat continues. The overworld remains one loaded scene;
+this does not add a region streamer. No learned policy ships in C13.
+
+## ADR 034 - Exact-SHA beta deployments and optional local AI
+
+**Decision:** C22 deploys only a successful studio push's SHA, via a separate Pages
+workflow on the default branch. The workflow checks for newer successful runs before
+building and deploying. Catalog records retain canonical `/assets/` URLs; a shared
+transport resolver applies the Vite base at use time, including atlas JSON loading,
+portraits and gallery assets. Vite rewrites CSS public-resource URLs at build time.
+
+**Consequences:** production smoke tests run at `/` and `/Vibe/`, with no development
+test hooks. Export-only build metadata is validated and removed by the persistence
+adapter before the unchanged save-v5 validator. Explicit fallback entry uses the normal
+bounded inference scheduler and deterministic failure receipts, with no model/network
+calls or action bypass. Connect continues to require a real capability check. See
+[beta operations](../operations/operations.md#beta-channel-and-ci-c22).
+
+## ADR 035 - Bounded written-word jobs and durable literacy
+
+**Decision:** C18 uses authoritative worker commands for player edits and a separate
+literacy service for NPC reach, daily quotas, carried artifacts and continuation.
+Save v9 preserves the v8 creature/director/memory state and migrates older saves with
+a blank Lark diary when capacity permits. Restoring v9 never adds content.
+
+An accepted READ_TEXT proposal replaces its response's other effects. A second job
+receives at most 600 estimated tokens of JSON-quoted text in a 2000-token prompt;
+its strict response has no action field. Applying it rechecks session, NPC, reach and
+artifact revision. Memory pins the actual pages and line prefix read. New dialogue
+can interrupt reading. Metadata-only readables drop before other prompt facts.
+
+**Consequences:** arbitrary player prose cannot directly execute actions or expand
+prompts without bounds. Conservative canonical vocabulary grounding can reject valid
+ordinary words; it is not a general named-entity recognizer. Only the current spread
+mounts in the book screen. Reading transport buffers bounded NDJSON before applying
+the result; incremental dialogue presentation remains C20. CPU functional evidence
+does not substitute for machine-A GPU latency acceptance.
+
+## ADR 036 - Acknowledged image cancellation and bounded palette workers
+
+**Decision:** C19 retains the specified SDAPI adapter and probes its loaded model
+through `/sdapi/v1/sd-models`. Managed jobs use the pinned sd-server native async
+API because disconnecting SDAPI does not stop GPU execution. GpuArbiter holds
+`InferenceScheduler.exclusive` through terminal cancellation acknowledgement;
+dialogue preempts/requeues villager images and never preempts a player image.
+Uncertain server state suspends subsequent chat instead of assuming GPU release.
+Optional awaited Ollama unload defaults on; the next chat reloads naturally.
+
+PNG headers and response bytes are bounded before worker bitmap allocation.
+Pure linear-light area filtering and exact OKLab nearest-palette selection use
+stable ties, exclude outline colours, retain at most 16 colours and pack high
+nibbles first. Alpha composites onto palette `cream.mid`. Explicit worker
+preparation compiles the bounded default path during the image pipeline;
+receipts include preparation separately from quantization and in total latency.
+
+**Consequences:** no artifact/save-schema change. Browser connection preferences
+are separate from saves. Machine-B mocked evidence does not establish machine-A
+VRAM, cancellation latency or the 30-second unload/generate/reload budget. The
+[pinned operations guide](../operations/image-generation.md) records source links,
+model licenses, exact launch commands and the remaining acceptance procedure.
+
+## ADR 037 � durable painting requests and native GPU recovery
+
+**Problem:** a browser reload can leave an image job running on the server even
+though its fetch has disappeared. Pending player previews and NPC work also need
+one authoritative identity through retries, saves and late results.
+
+**Decision:** the simulation owns immutable briefs and revision-checked completion.
+Player requests convert the carried blank canvas in place; Keep seals, Discard
+returns that same canvas, and Retry allocates a new artifact/seed. Player subjects
+retain1�240 characters; NPC actions enforce3�160. This widens an existing validator
+without adding save fields or changing save v9. Existing saves remain readable.
+
+NPC work reserves a free home hook using existing placement/item fields, remains
+covered until ready, and requires an explicit validated HANG_PAINTING action at
+home to seal and reveal it. Rates derive from retained authored records. The painter
+receives an artifact-sourced semantic memory; nearby witnesses receive a bounded
+sight note. Captions enter prompts as quoted data, never image history or authority.
+
+Native submissions persist an endpoint/job marker outside the world save before
+POST. Same-origin Web Locks serialize recovery and submission. Reload cancels and
+polls the previous job to a terminal state before another submission or model warmup.
+A missing acknowledgement or unknown state quarantines image/chat GPU use. Only the
+explicit server-restarted recovery control clears an unknown marker. No inferred
+GPU-idle state comes from aborting fetch. Endpoint preferences remain browser-local.
+
+Caption encoding runs in the image worker:48�32 palette pixels become a192�128
+nearest-neighbour PNG. A vision-capability probe precedes one bounded structured
+chat request under the same exclusive lease; offline/non-vision/failure uses the
+brief subject. The adapter rejects extra response fields and captions over40 words.
+Ollama documents capability discovery and base64 chat images in its
+[model details](https://docs.ollama.com/api-reference/show-model-details) and
+[vision](https://docs.ollama.com/capabilities/vision) references.
+
+**Consequences:** no C21 pixel editor, new baked art, approval or model install.
+Rendering fetches painting content on demand, separately from text-inspection reach,
+uses nearest textures with32 resident entries, and pins mounted textures during
+LRU eviction. Runtime covers identify pending work; authored easel/cloth art remains
+external. The192�128 input and140 output-token cap do not prove the model's actual
+140-image-token budget; reference-machine measurement remains required. Real-time
+notice cooldown is session-local and is not a replay-determinism guarantee.
+
+## ADR 038 � distinguish catalog size from gallery residency
+
+**Problem:** the gallery atlas tab used page0 and hardcoded dimensions, counts and
+16 MiB while the compiled catalog already contained multiple pages (ART-M7/C3g).
+That could hide delivered frames and misstate the memory used by the review tool.
+
+**Decision:** offer every full-resolution catalog page and retain nearest canvas
+drawing at the selected zoom. Derive counts/full/half RGBA totals from the catalog.
+Report actual resident page RGBA against the existing128 MiB gallery cache,
+separately from total catalog bytes. Clear old pixels during selected-page loads
+and failures; expose loading and errors accessibly. Avoid repainting unchanged
+static atlas canvases during the animation ticker.
+
+**Consequences:** no atlas repack, source-art edits, approval, save-schema change,
+runtime texture-budget change or weakening of HD gates. Canvas/UI/GPU overhead is
+outside this page-cache accounting. Browser checks render and hash every page,
+verify distinct nonempty results and validate selected-page failure behavior.
+The [engineering budget](hd-presentation.md#c3g-gallery-pages-and-decoded-memory)
+records128 MiB review residency and the separate runtime quality budgets.
+
+## ADR 039 - bind world review comparisons to packet revisions
+
+**Problem:** C32 found Riverlands revision 2 comparing against a cached initial
+draft, because packaging checked an image's viewed hash without its provenance.
+
+**Decision:** render and packet share an explicit target revision (or next unused
+numeric revision). The first revision renders its selected level from the initial
+protected plan. Later revisions require the exact previous packet and copy its
+registered overview bytes. Receipts bind predecessor packet, source and overview
+digests. Packaging revalidates lineage and includes the before image in the
+existing inspection gate; missing, changed or mismatched predecessors fail.
+
+**Consequences:** no map, pass, protected plan or approval changes. Historical
+packets stay intact. Current dependency hashes require fresh check/render receipts.
+Machine-A Riverlands revision 3 and director review remain external; synthetic
+receipt tests establish tooling behavior, never visual acceptance. See
+[worldforge review semantics](worldforge.md#qa-and-review-semantics).
+
+## ADR 040 - bind creature face composition to approved body poses
+
+**Problem:** published C3b face sidecars carry expression decals and per-body-frame
+offsets, while body-only integration and cadence-based layers cannot consume them.
+The approved inventory packet also contains one shared garment icon rather than
+an invented generic garment item.
+
+**Decision:** add optional face attachment metadata to layer sets and explicit
+face/icon intake and ledger commands. Verify packet bytes, approval scope and
+body identity before writing. Expression selection follows the sampled body pose;
+hidden frames and back facings remain hidden. Preserve the original sprite frame
+and socket registration, and include target positions in composite cache keys.
+Map the garment export to existing canonical garment identities.
+
+**Consequences:** source digests cover every decal and registration. Separate
+`reviewed-export` provenance captures immutable intake receipts and pins the
+actual intake toolchain without claiming missing generator versions. Existing
+body publication and provenance requirements remain. Communicator owns manifest
+merges; Codex transcribes approvals and owns generated outputs. New face art
+still needs new approval. See [intake commands](hd-presentation.md#approved-creature-faces-and-inventory-icons).
+
+## ADR 041 ? Shared reference GPU and deterministic memory pinning
+
+**Decision:** implement the director-ratified Proposal005 on the existing memory
+representation: `type` and absence of `invalidAtTick` express kind and active state.
+Add relationship records without adding save fields; existing version9 saves remain
+readable. Pin four relevant persistent claims, rank remaining slots with fixed-domain
+scores and creation-time age, and supply all active interlocutor claims to extraction.
+A claim is remembered data and never authorizes a simulation action. Required prompt
+pins survive optional memory caps; an impossible budget fails explicitly.
+
+New settings share GPU e4b across dialogue/background requests; explicit saved model
+and CPU choices remain. Dialogue uses the existing bounded stream collector to report
+TTFT while validating complete structured output before display. Existing scheduler
+preemption and image-GPU arbitration remain the serialization boundary.
+
+**Validation:** focused retrieval/conversation/inference tests and the separate
+`test:villagers` collector/evaluator. Offline fixtures prove gate behavior only. Live
+M1?M5, both official/development weights, actual weight hashes/private mirror and
+reference-GPU timing remain external acceptance. See [operations](../operations/operations.md#ratified-reference-tier-and-villager-evaluation-proposals005006).
+
+## ADR 042 ? Exact alpha bounds and shared atlas rectangles
+
+**Decision:** compute bounds using alpha greater than zero at each runtime resolution,
+hash cropped RGBA plus dimensions, and pack one representative of identical pixels.
+Expand aliases with independent logical source sizes and trim offsets. Existing frame
+anchors, sockets and held metadata remain independent even when atlas rectangles share
+bytes. Existing renderer Sprite orig/trim handling and Graphics trim reconstruction
+preserve pivots; deduplication never changes logical actor coordinates.
+
+Exclude turntable and ExpressionSheet review artifacts from runtime clip reachability;
+source approval digests still cover original packet bytes. Runtime expression decals
+are retained. This applies only Proposal007 Part1. Part2 base-body eyes is excluded;
+Part3 portrait identity work remains with its assigned owner.
+
+**Validation:** shuffled-input determinism at full/half resolutions, faint-alpha bounds,
+shared pixels with distinct offsets, review artifact classification and catalog checks.
+The 128 MiB Low / 256 MiB Balanced budgets remain unchanged. A compact current catalog
+is not evidence that all nineteen actors have been integrated.
+
+## ADR 043 - Checkpoint storage outside the UI event loop
+
+**Evidence:** native source688eab26 completed the C18 functional journey but opening
+measured323.5ms, pause262.5ms, with a221.6ms main-thread worker-message task. CPU
+samples include checkpoint validation, serialization and hashing while autosave
+was active. Raw CPU/Playwright evidence is retained separately from later runs.
+
+**Decision:** routine save requests capture the same owned SimulationHost snapshot
+and send it directly from the simulation worker to a lazy checkpoint worker. The
+existing IndexedDbSaveRepository performs migration/validation, JSON serialization,
+checksumming and the same atomic rotating-slot transaction there. The UI receives a
+request-correlated completion or error only after the transaction completes. The
+writer serializes requests, recovers its queue after rejected input, and reports
+storage errors. Explicit checkpoint/export/restore APIs and save version9 remain.
+
+Periodic presentation additionally requires a recycled buffer, acknowledging that
+the main thread consumed earlier transport. Simulation ticks still advance when no
+buffer is available; command replies and command frames remain immediate. The
+existing100ms healthy publication cadence and all simulation rates/limits remain.
+This bounds stale frame queues without pausing or shrinking the world.
+
+**Validation:** real fake-indexeddb writer tests verify ordered commits, existing
+restore compatibility, rejected-save recovery and terminal errors; worker/bridge
+tests verify receipt correlation, no full checkpoint on the UI path, continued ticks
+and immediate commands under presentation backpressure. Native source4bbabb7b C8,
+atlas and C18 checks pass; opening61.3ms, two pages, all five measurements and no
+page errors. Forced software startup remains under investigation; neither this
+local result nor mocked storage establishes current-source remote verify acceptance.
+
+**Related:**9469018a excludes immutable published-art trees and build/test receipts
+from development source watching, keeping explicit HTTP asset fetching intact.
+C482b30b counts each shared half-resolution PNG once in the gallery and verifies
+that total against actual PNG headers.

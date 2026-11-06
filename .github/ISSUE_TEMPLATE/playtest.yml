@@ -1,0 +1,41 @@
+name: Beta playtest
+description: Report what happened in a Hearthwild beta session.
+title: '[Playtest] '
+labels: []
+body:
+  - type: input
+    id: build
+    attributes:
+      label: Build stamp
+      description: Copy the SHA, branch, and date from Settings.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: What you did
+      description: Include steps, browser, and whether local AI was enabled.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: What you saw
+    validations:
+      required: true
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshot
+      description: Attach a capture if it helps explain the issue.
+  - type: textarea
+    id: save
+    attributes:
+      label: Exported save
+      description: Export from Settings. Attach the JSON as a ZIP or TXT if GitHub rejects the JSON extension. Check the contents before sharing.

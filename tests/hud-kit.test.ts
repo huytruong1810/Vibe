@@ -2,11 +2,30 @@ import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import sharp from 'sharp';
 import { expect, it } from 'vitest';
-import { BAR_PARTS, compileBarStrip } from '../scripts/ui-build';
+import { BAR_PARTS, compileBarStrip, verifyArtifactUiApproval } from '../scripts/ui-build';
 import { meterFraction, meterPixels } from '../src/presentation/ui/meters';
 import { hudTime } from '../src/presentation/ui/state';
 import { SimulationHost } from '../src/domain/simulation';
 import { CONFIG } from '../src/domain/values';
+
+it('binds the B18 frame list even when a changed packet retains the approved contact sheet', async () => {
+  const review = await readFile('art/review/2026-11-05-ui-authored-artifacts/review.json');
+  const contact = await readFile('art/review/2026-11-05-ui-authored-artifacts/contact.png');
+  const approval = await readFile(
+    'docs/team/comms/director/approvals/ui-authored-artifacts--2026-11-05-ui-authored-artifacts.md',
+    'utf8',
+  );
+  expect(() => verifyArtifactUiApproval(review, contact, approval)).not.toThrow();
+  const changed = JSON.parse(review.toString('utf8'));
+  changed.frames.find((frame: { id: string }) => frame.id === 'frame_painting_preview').sha256 =
+    '0'.repeat(64);
+  expect(() =>
+    verifyArtifactUiApproval(Buffer.from(JSON.stringify(changed)), contact, approval),
+  ).toThrow(/approval/);
+  expect(() =>
+    verifyArtifactUiApproval(review, contact, approval.replace('director-approved', 'rejected')),
+  ).toThrow(/approval/);
+});
 
 for (const kind of Object.keys(BAR_PARTS) as (keyof typeof BAR_PARTS)[]) {
   it(`compiles ${kind} losslessly from authored two-pixel blocks`, async () => {

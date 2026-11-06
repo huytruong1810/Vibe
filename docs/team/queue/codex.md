@@ -15,7 +15,7 @@ and local-generation tickets (C26–C31) sit in their own section.
 
 ### C22 · Beta channel: green CI, a deploy on every green push, a playtest loop
 
-- status: in-progress (visitor; non-workflow parts only: BASE_URL asset resolve, build stamp, beta-notes, operations doc; .github/ stays with codex)
+- status: candidate (sourcef46fb6dc hosted verify passes; director Pages activation, local painting CPU budget and software C18 timing remain)
 - owner: codex
 - goal: the director plays the latest green build from a URL on any day, files playtest notes in one place, and they become tickets, without anyone on machine A.
 - context: CI was red for 100+ runs (`format:check` failed on machine-written sources, so browser tests and the benchmark never ran) until claude's `88b11ba`. The repo is public, so GitHub Pages is free.
@@ -29,11 +29,11 @@ and local-generation tickets (C26–C31) sit in their own section.
 - out of scope: hosting Ollama or an image server anywhere but the player's machine.
 - note: editing `.github/workflows/` needs a token with the `workflow` scope on machine B.
 - done when: a green push to `studio/doctrine-v1` is live on the Pages URL with its sha within 15 minutes; the playtest template exists; the operations doc lists the jobs and the green-CI rule; claude's local check of `/Vibe/` asset loading is replaced by a CI browser test
-- evidence:
+- evidence: **Changed:** existing beta/base-URL/build-stamp work is retained. **Evidence:** [current CI receipt](../comms/codex/current-ci-receipt.json), source281f4b31 CPU and both beta bases pass in push/PR, push browser shard2 passes. **Gaps:** remaining browser/verify still running at Huy's1820Z pause;33788a03 fixes the subsequently proven book draft race and requires final exact-source validation. See HANDOFF. No live Pages claim.
 
 ### C24 · Conversation context and compaction on gemma4-abliterated:e4b at 75%
 
-- status: open (after C22)
+- status: candidate (implemented; reference-GPU long conversation acceptance remains)
 - owner: codex
 - goal: a villager keeps the thread of a long conversation, and no prompt ever passes its budget, without compaction touching long-term memory.
 - spec: [memory and context](../../engineering/memory-and-context.md) §1, §2, §3.1, §4; doctrine AGT-1.3, AGT-10.1–10.2, AGT-7; ADR 032.
@@ -43,11 +43,11 @@ and local-generation tickets (C26–C31) sit in their own section.
   3. Settings: background model, "run on CPU", context size; model check in the setup dialog (`gemma4-abliterated:e4b` missing → clear install line, fallback to the dialogue model with a warning).
   4. Remove the count-based `needsCompaction` path and the deleting `MemoryRepository.compact`; until C25 lands, keep memory records as they are (no deletion).
 - done when: §4 rows "budget and trigger" and "no memory loss" pass in `npm run check`; the debug overlay shows prompt tokens, budget and compactions; blender's live smoke (B0) runs a 30-turn conversation where the villager recalls a turn-3 promise at turn 28, with compaction and reply latencies recorded in `docs/operations/`.
-- evidence:
+- evidence: **Changed:** bounded context/75% compaction84f08a32;005 default shared-GPU e4b at522d85ae. **Evidence:** conversation regressions and [resume validation](../comms/codex/resume-validation.json). **Gaps:** live machine-A compaction/recall and latency on the current model; do not rebuild the delivered context implementation.
 
 ### C25 · Long-term memory v2: typed records, extraction operations, core blocks, embedding retrieval
 
-- status: open (after C24; before C18, whose `reading` memories use these types)
+- status: candidate (implemented; C34 applied, live multi-session quality remains)
 - owner: codex
 - goal: villagers remember structured, sourced facts across conversations, update them when they change, and retrieve the right ones, the way current agent-memory systems do.
 - spec: [memory and context](../../engineering/memory-and-context.md) §2, §3.2, §3.3, §4; doctrine AGT-10.3–10.6; ADR 032.
@@ -57,11 +57,13 @@ and local-generation tickets (C26–C31) sit in their own section.
   3. Retrieval: recency (0.995 per game hour) + importance + relevance, min-max normalized, equal weights; `embeddinggemma` 256-d via `/api/embed`, cached in IndexedDB (not in saves), keyword fallback; invalidated records excluded; `lastAccessTick` updated.
   4. Reflection at an importance-sum threshold (start 150) on the dialogue model when idle; capacity cap 400 with episodic folding (never semantic facts or commitments).
 - done when: §4 rows "extraction", "retrieval", "migration" pass; the C24 live smoke repeated across two conversations: the villager recalls a fact from the first in the second; soak (`npm run benchmark` or ecology soak) shows retrieval ≤ 5 ms per prompt.
-- evidence:
+- evidence: **Changed:** typed memory/extraction68af413c, fixed-domain ranking and claim pinning522d85ae. **Evidence:** memory tests, [benchmark](../comms/codex/c25-benchmark.json), [operations/evaluation](../../operations/operations.md#ratified-reference-tier-and-villager-evaluation-proposals005006). **Gaps:** both live official/development model transcripts, independent M1-M5 review and reference-GPU timing.
 
 ### C14 · Combat director and telegraphs: fair fights first (CRM-4, CMB-4)
 
-- status: open (after C25)
+- validation follow-up (2026-11-05): hosted89a9 PR42117869814 browser shard1 fails `combat-director.spec.ts:127` waiting15000ms for a predator windup, after its token-spacing assertions. [Exact annotation/job evidence](../comms/codex/reconciliation-validation.json) is retained; no C14 acceptance is advanced and no limit was changed.
+
+- status: candidate regression follow-up (director-approved baseline retained in archive)
 - owner: codex
 - goal: no matter how many hostiles, the player faces one or two clear threats at a time, every heavy attack is telegraphed, and nothing attacks from off screen.
 - spec: [creature minds](../../engineering/creature-minds.md) §1, §2, §7, §10 (partner icon), §11 rows "director" and "telegraphs"; doctrine CRM-4, CRM-10.3, CMB-4; ADR 033.
@@ -72,11 +74,12 @@ and local-generation tickets (C26–C31) sit in their own section.
   4. Difficulty knobs (token counts, grant spacing, aggression bias) in settings.
   5. Partner intent icon slot in the HUD (shows `attack`/`guard`/`follow` from today's state until C13 provides intents).
 - done when: unit and browser tests from §11 "director" and "telegraphs" pass; a Playwright journey with 20 hostile Bramblefang shows at most the token count in windup or active at any tick; a 1080p capture of that fight is looked at (PRD-5) and attached; `npm run benchmark` unchanged within 5%.
-- evidence:
+- evidence: **Changed:** existing17672f7 combat director retained. **Evidence:** [director baseline record](../comms/director/approvals/simulation--c13-c14.md), [historical archive](archive/codex.md), native688eab26 20-hostile journey and inspected captures pass. **Gaps:** final current-source regression/verify and unchanged benchmark acceptance. The archived baseline does not close this follow-up.
 
 ### C13 · Creature minds v1: engagement, perception, intents, scripted brain, flight (CRM-1…3, CRM-10)
 
-- status: open (after C14)
+- status: candidate regression follow-up (feature approval retained; sourcef46fb6dc hosted/native/software C13 pass; authored-art acceptance remains)
+- evidence: 2026-11-05 native exact HEAD pack/Zephyrit and draft/C18 suite5/5 pass; all11 captures inspected. Both C13 journeys also pass forced SwiftShader. Push42092547479 browser shards/checks/beta/verify pass. See [resume checkpoint](../comms/codex/HANDOFF.md#current-resume-checkpoint-supersedes-pause-state-below); software C18 timing and local painting budget failures remain separately recorded there.
 - owner: codex
 - goal: creatures notice, stalk, commit and break like animals, each species recognisably itself, within budget and deterministic.
 - spec: [creature minds](../../engineering/creature-minds.md) §2–§6, §8–§11; doctrine CRM-1.4, CRM-2 (incl. flight), CRM-3, CRM-6.1, CRM-6.4, CRM-8, CRM-9, CRM-10; ADR 033.
@@ -89,12 +92,12 @@ and local-generation tickets (C26–C31) sit in their own section.
   6. Engaged tier (cap 48) and the 2 Hz scripted fallback; save the brain state; debug overlay, observation inspector.
   7. Partner: `focus`/`regroup` commands with bond-scaled weight; real intents on the HUD icon.
 - done when: §11 rows "determinism", "masking and reaction", "species identity" (all 8 species) and "budget" (`engagedCombat150` in the benchmark, asserted on CI) pass; a mid-fight save replays to identical intents; 1080p captures of a 6-Bramblefang pack fight and a Zephyrit skirmish for the director show notice, stalk, staggered strikes and break.
-- evidence:
+- evidence: **Changed:** existing scripted brains retained;1613d9dc uses valid pause tokens and observes worker beats. **Evidence:** native688eab26 both pack/Zephyrit journeys pass with inspected notice/stalk/commit/break captures; [validation](../comms/codex/resume-validation.json). **Gaps:** current-source software-rendered/remote regression and authored-art integration. Learned brains remain gated.
 
 ### C17 · Artifact item class and its save version (foundation for notes, books, paintings)
 
-- status: partial (visitor candidate 2026-11-05: `src/domain/artifacts.ts` store, sanitizer, caps and `tests/artifacts.test.ts` 5/5 incl. 512-artifact round-trip; items/recipes, display hooks, save version and commands remain with codex after C25)
-- owner: codex (item-class domain & test suite: visitor)
+- status: open
+- owner: codex
 - goal: one `artifact` record behind notes, books and paintings: carried, dropped, displayed and saved with hard caps, so C18 and C20 only add behaviour.
 - spec: [authored artifacts](../../engineering/authored-artifacts.md) §3, §4 (`artifactDisplay`/`artifactTake`), §9, §10; doctrine AGT-9, AGT-8.1; ADR 031.
 - work:
@@ -109,7 +112,9 @@ and local-generation tickets (C26–C31) sit in their own section.
 
 ### C18 · The written word: book screen, villager reading and writing
 
-- status: open (after C17)
+- evidence: 2026-11-05 exact HEADf46fb6dc native5/5 includes both async-draft regressions and full C18; opening30.7ms,5measurements,2mounted pages,0page errors. SwiftShader draft regressions pass, but C18 fails100ms opening at1433.2ms combined/149.9ms isolated; all23 images inspected. Build49.74s and full format pass. Hosted source-matched checks/browser/beta/verify pass; unchanged local full check569pass/1painting-budget failure remains. See [resume checkpoint](../comms/codex/HANDOFF.md#current-resume-checkpoint-supersedes-pause-state-below).
+
+- status: candidate (feature delivered; focused production performance repair authorized by Huy)
 - owner: codex
 - goal: the player reads and writes notes and books on a book screen; villagers read bounded ranges, write notes and diary pages, and no prompt grows with what was written.
 - spec: [authored artifacts](../../engineering/authored-artifacts.md) §4 (`artifactWrite`, page add/remove, seal), §5 (actions, validation, grounding, the two-step reading job, `readables` world facts), §8.1, §11; doctrine AGT-8, AGT-7 budgets.
@@ -120,11 +125,11 @@ and local-generation tickets (C26–C31) sit in their own section.
   4. Give two villagers a reason to use it in content: Lark keeps a sketch diary (one `WRITE_PAGE` per day at home); the dock master posts a tide notice note on a shelf. Profile text only, no scripted calls.
 - out of scope: rich text, villagers editing others' text, sharing outside the save.
 - done when: unit tests in spec §11 rows "caps/commands", "`READ_TEXT` bounds" (property test: any content → reading prompt ≤ 2000 estimated tokens), "prompt injection" (a page ordering a gift changes no state), "writing grounding"; Playwright writes a 3-page book, seals it, reopens it read-only and captures the spread at 1080p (look at it, PRD-5); `npm run test:ollama` gains a reading round-trip that blender runs on machine A (`--to-blender--test-`), AGT-7 reading budget recorded in `docs/operations/`.
-- evidence:
+- evidence: **Changed:** existing feature retained;380da409 avoids unchanged paused snapshots,4bbabb7b moves routine checkpoint persistence between workers with unchanged save9 validation/checksum/two-slot commits. **Evidence:** worker/persistence13pass and production build; [resume validation](../comms/codex/resume-validation.json). **Gaps:**688eab26 native opening323.5ms fails100ms; native4bbabb7b focused3/3 passes, opening61.3ms/two pages/no errors;001c7cf8 adds periodic transport backpressure. Full check568pass/2timing failures, both budgets pass alone; latest native/software and CI remain required. Preserve all assertions, traces, five measurements, two-page mount and limits; native281f4b31 passes3/3/opening41.3ms.33788a03 fixes proven draft ownership race; two browser regressions fail before/pass after, forced software C18 passes40.6ms on matching precommit runtime bytes. Huy paused at1820Z before final whole check completed; exact-source confirmation/browser/verify remains.
 
 ### C19 · Image provider adapter, GPU arbiter, palette quantizer, operations guide
 
-- status: open (parallel with C18; needs C17 only for the painting record in step 4)
+- status: candidate (implemented; machine-A GPU acceptance remains)
 - owner: codex
 - goal: the game can turn a brief into a 48×32 palette painting through a local loopback server on Linux, Windows and macOS, without fighting the villager model for the GPU.
 - spec: [authored artifacts](../../engineering/authored-artifacts.md) §6, §6.1, §7.4, §10, §12; doctrine AGT-6.4; ADR 031. Research behind the provider choice is in the spec and in claude's message `2026-11-02T0139--to-codex--artifacts-and-image-generation.md`.
@@ -136,11 +141,11 @@ and local-generation tickets (C26–C31) sit in their own section.
   5. `docs/operations/image-generation.md`: install and launch `sd-server` on Windows (CUDA build) and Linux; pinned release; model files (Z-Image Turbo GGUF + its Qwen3-4B text encoder + VAE, Apache-2.0; FLUX.2 klein 4B as the alternative; never klein 9B, non-commercial); the exact command line verified against the project's docs; VRAM and timing measured on machine A; CORS check; troubleshooting.
 - out of scope: ComfyUI provider; any model other than Apache-2.0 weights; Ollama image generation beyond the stub.
 - done when: unit tests for adapters (mock fetch: ok, HTTP error, oversize, timeout, abort, non-loopback URL), arbiter (dialogue preempts and requeues a villager job; a player job is not preempted; unload is called when enabled), quantizer (golden hash, ≤ 16 colours, all palette members, deterministic); the ops guide exists; blender's live smoke on machine A generates one painting through `sd-server` and records the player-painting timing against the 30 s budget.
-- evidence:
+- evidence: **Changed:**8f1c399/1c14403 provider, arbiter and quantizer retained. **Evidence:** [validation](../comms/codex/c19-validation.json); native688eab26 both mocked browser journeys pass and images inspected. **Gaps:** actual machine-A model/VRAM/latency/native cancellation and final-source CI.
 
 ### C20 · Paintings: villagers paint, the player paints, everyone sees them
 
-- status: open (after C17 and C19)
+- status: candidate (implemented; machine-A overnight/latency acceptance remains)
 - owner: codex
 - goal: villagers paint from their memories and hang paintings at home; the player paints at an easel from a prompt and keeps or retries; villagers perceive paintings by caption.
 - spec: [authored artifacts](../../engineering/authored-artifacts.md) §4 (`paintingRequest`, `paintingKeep`, `paintingDiscard`), §7.1–7.3, §7.5, §8.2, §11; doctrine AGT-6 (all of it), AGT-3.2/3.3 for captions.
@@ -152,7 +157,7 @@ and local-generation tickets (C26–C31) sit in their own section.
   5. Rendering: LRU texture cache (32), framed display on hooks, inventory thumbnail, pending easel.
 - out of scope: pixel editing (C21); painting sizes other than 48×32.
 - done when: unit tests for brief validation, rates, allowlist rejections (lettering, URL, brand list), pending-survives-reload; Playwright with a mocked provider paints, keeps, hangs the painting on a hook and captures it at 1080p (look at it, PRD-5); blender's live smoke on machine A: Lark paints overnight during sleep acceleration with `gemma4-abliterated:26b` and `sd-server`, the painting hangs, a villager's next dialogue can mention it from the caption; contact capture attached to the reply.
-- evidence:
+- evidence: **Changed:**e2e2b0f1 durable painting workflow retained. **Evidence:** [validation](../comms/codex/c20-validation.json); native688eab26 mocked player/hook and pending-reload journeys pass, all captures inspected. **Gaps:** actual A overnight villager painting, GPU/VRAM/cancellation, captions and director review. C21 remains gated.
 
 ### C21 · Player pixel touch-up for paintings (optional)
 
@@ -167,26 +172,25 @@ and local-generation tickets (C26–C31) sit in their own section.
 
 ### C32 · worldforge packets compare against the previous revision
 
-- status: candidate (visitor; 2026-11-05, awaiting codex/claude review)
-- owner: visitor
+- status: open
+- owner: codex
 - goal: a world packet's before/after shows the last revision, not the blank draft (gap found in Riverlands revision 2).
 - work: `worldforge render`/`packet` writes `before-overview.png` from the previous packet's overview (or re-renders the previous map); README wording follows.
 - done when: Riverlands revision 3's packet shows revision 2 as its before
-- evidence: `art/source/forge/tools/worldforge_compare.py`; `forgelib/worldforge_compare_selftest.py` (1/1); `docs/engineering/worldforge.md`. Not yet wired into `worldforge render`/`packet` (that code is outside the visitor lane): codex calls `prepare_packet_comparison`.
+- evidence:
 
-### C3g · Follow-ups from the beta slice (claude, 2026-11-01)
+### C3g - Atlas pages, trimming, deduplication and scale follow-up
 
-- status: in-progress (visitor; gallery multi-page viewer slice 2026-11-05; build-side trimming, dedup and review-clip exclusion remain open)
-- goal: tidy what the beta slice exposed.
-- work:
-  1. Packet gallery atlas tab (`src/presentation/gallery.ts:332`, `renderAtlas`) shows only page 0 under a hard-coded "Single page: bundle.png" label. The build now emits four pages.
-  2. Decoded atlas memory went from 14.97 to 63.88 MiB full-res (four 2048 pages, mostly 160×144 quadruped canvases). Decide on a budget, then trim per-clip canvases or move review-only frames out of the runtime atlas.
-  3. Scale: forge creatures render at doctrine scale and look small beside the oversized legacy humans and creatures. Expected while legacy art remains; check it again when M11 humans land.
-- done when: the gallery shows every page and the atlas budget is written into `docs/engineering/`
+- status: candidate (engineering delivered; full19-actor integration/scale acceptance remains)
+- owner: codex (direct Huy instruction; visitor should review rather than duplicate)
+- changed:7a3ae74b page selection/memory reporting;3f2cb346 exact-alpha trim, cropped-RGBA dedup and review-sheet exclusion;8051a212 regenerated catalog; c482b30b counts shared half textures once.
+- evidence: [ADR042](../../engineering/decisions.md#adr-042--exact-alpha-bounds-and-shared-atlas-rectangles), [validation](../comms/codex/resume-validation.json). Current4024frames/3full pages use47.67MiB full and12.21MiB half; all atlas PNGs inspected. Existing renderer pivots/sockets stay independent per frame. Native gallery checks cover every page; budgets remain128MiB Low/256MiB Balanced.
+- gaps: communicator must integrate the approved19 actors; then measure the real catalog and recheck scale against M11 humans. Current compact catalog does not prove full integration. Proposal007 Part2 base eyes is excluded; Part3 portrait work is tracked in C33.
 
 ### C7 · Authored world in the engine (WLD-M1…M4)
 
-- status: candidate (visitor; WLD-M2/M3 authored simulation, spawn, 10 Aqualia NPCs, habitat creature seeding, and save migration under opt-in beta toggle, tests green). Prior: partial (candidate compiler/loader slice). Claude scoped activation on 2026-11-01 and handed it back: `Simulation` builds only from `WorldGenerator().generate(seed)` (`simulation.ts:187`), saves regenerate from seed (`save-schema.ts:447`), 40 sites read fixed `VILLAGES` coordinates, and the authored map is one 90×68 level, so 20 villagers of the other two villages would be in void. Next: map-driven settlements and player spawn (WLD-M2), save `worldSource` versioning (WLD-M3), then a beta toggle. Village layout approved (village-1/-2 records); Riverlands layout approved 2026-11-02 (`world-aqualia--world-aqualia-aqualia_riverlands-2.md`)
+- status: candidate (visitor; WLD-M2/M3 authored simulation, spawn, 10 Aqualia NPCs, habitat creature seeding, and save migration under opt-in beta toggle, tests green). Codex reviews/supports without duplicating settlement, spawn or save-provenance changes.
+- evidence: 2026-11-05 studio 74714197 and c5104a14. Village/Riverlands R3 approvals bind ae34ae141d48512ab02607d274973751db79a0853fdebb74eaa3c6d982b66d5b. Unit tests pass in tests/simulation.test.ts.
 - goal: a new game loads the authored LDtk map; procedural world generation is retired.
 - work:
   - a build-time importer from the schema into `ChunkStore`;
@@ -335,19 +339,21 @@ fit → C9c.
 - work: in `forgelib/portrait.py` composite each img2img edit through a feathered interior face mask over the neutral (hair, clothes, background and the 2 px border stay neutral pixels), quantize against the neutral's own LAB palette plus outline and eye-highlight tokens instead of all 64 colours, then add QA: skin LAB mean within delta-E 2.5 of the neutral and at least 3.5% changed pixels inside the eye, brow and mouth region so thoughtful, concerned and sad stay apart at 96 px. Selftest without GPU on synthetic portraits.
 - evidence: `art/source/forge/forgelib/portrait.py` (`face_interior_mask`, `quantize_to_neutral_palette`, `composite_interior_face`, `identity_report`, `pairwise_expression_warnings`); `art/source/forge/forgelib/portrait_selftest.py` (9/9 passing, 128/128 forge selftests passing).
 
+- Codex review gaps (2026-11-05): synthetic9pass does not establish real-neutral hair/fringe preservation inside the geometric ellipse; skin QA uses median chroma instead of the proposed mean/std. Add a fringe regression and reconcile QA before portrait batch acceptance. No art approval is inferred.
+
 ### C34 · Retrieval and extraction text for C25 (proposal 005)
 
-- status: candidate (visitor; 2026-11-05, awaiting codex/claude engineering review)
-- owner: visitor
+- status: candidate (codex; direct Huy instruction, 2026-11-05; live-model M1-M5 pending)
+- owner: codex
 - work: replace `docs/engineering/memory-and-context.md` §3.3 with the fixed-domain score and commitment/relationship pinning; pass every active commitment and relationship of the interlocutor to session-end extraction; add `npm run test:villagers` (M1-M5) after C25. (`AGT-10.5`/`AGT-10.7` in `docs/doctrine/` is DOC-1 protected and waits for claude's next call-back).
-- evidence: `docs/engineering/memory-and-context.md` (§3.2, §3.3, §4); `src/domain/agents.ts` (`MemoryRetriever.isPinned`, `relevance`, `score`, `retrieve`, `extractionCandidates`); `scripts/verify-villagers.ts` (M1–M5 100% pass, p95 1.65 ms); `tests/agents.test.ts` (8/8 passing).
+- evidence: **522d85ae**, ADR041, [operations](../../operations/operations.md#ratified-reference-tier-and-villager-evaluation-proposals005006), [validation](../comms/codex/resume-validation.json). GPU defaults, fixed-domain scores, four pins/eight slots, all active interlocutor claims in extraction, streaming TTFT and transcript-bound evaluator are implemented. Full pre-later-merge check566pass; live reference-GPU and independent M1-M5 acceptance remain open.
 
 ### C35 · Commercial status in the model registry (proposal 006)
 
-- status: candidate (visitor; 2026-11-05, awaiting codex/claude engineering review)
+- status: candidate (visitor implementation reviewed; Codex metadata repair89d2bbb9)
 - owner: visitor
 - work: `commercialStatus` (`apache-2.0`, `mit`, `commercial-licensed`, `dev-only-noncommercial`) and `territoryRestrictions` per entry in `art/source/forge/models.json` (or `forgelib/core.py` fallback table if `models.json` is lane-guarded), enforced and printed by `forge.py doctor`, with the licence name and the URL it was read from. Verify each licence text before filling a value; unknown stays `unverified`.
-- evidence: `art/source/forge/forgelib/core.py` (`COMMERCIAL_STATUSES`, `MODEL_COMMERCIAL_METADATA`, `load_model_registry`); `art/source/forge/forge.py` (`registry_checks`); `art/source/forge/forgelib/registry_selftest.py` (3/3 passing); `forge.py doctor` (17/17 passing); `docs/operations/operations.md` (pinned GGUF & projector SHA256 digests).
+- evidence: **Changed:** inheritedfcc78fa7 registry/doctor plus89d2bbb9 arrays and all-entry verification. **Evidence:** registry4/4 tests; primary-source links in [operations](../../operations/operations.md#registry-verification-follow-up-2026-11-05). **Gaps:** two third-party GGUF aliases remain unverified and fail metadata verification; actual manifest/blob rehash and private mirror receipt on A remain required. Historical17/17 doctor result predates this fail-closed repair.
 
 ### C36 · Held-item orientation on elongated weapons (visitor finding 3)
 

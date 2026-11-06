@@ -1,0 +1,7397 @@
+{
+  "rows": [
+    {
+      "tick": 195,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.287109375,
+          "y": 285.3170471191406,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.5881042480469,
+          "y": 284.70843505859375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 261.8980712890625,
+          "y": 285.6758117675781,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.70001220703125,
+          "y": 285.64263916015625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 267.5958251953125,
+          "y": 286.56671142578125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.6666564941406,
+          "y": 285.6087951660156,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 197,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.5388488769531,
+          "y": 285.3367614746094,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.4931335449219,
+          "y": 284.44195556640625,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 262.18939208984375,
+          "y": 285.6751403808594,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.6885070800781,
+          "y": 285.64080810546875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 267.6997375488281,
+          "y": 286.29736328125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.7545166015625,
+          "y": 285.3310852050781,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 201,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.61016845703125,
+          "y": 285.25592041015625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.83990478515625,
+          "y": 284.0819091796875,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 262.77203369140625,
+          "y": 285.6737976074219,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.7076110839844,
+          "y": 285.47119140625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 267.76214599609375,
+          "y": 286.0135498046875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.7012023925781,
+          "y": 284.9924011230469,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 204,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.90350341796875,
+          "y": 285.4416198730469,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.71148681640625,
+          "y": 284.4686584472656,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 263.0580749511719,
+          "y": 285.63177490234375,
+          "intent": "strike",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:102:203",
+            "startedAt": 203,
+            "activeAt": 207,
+            "recoveryAt": 209,
+            "endsAt": 218
+          }
+        },
+        {
+          "id": 103,
+          "x": 267.675537109375,
+          "y": 285.6157531738281,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 267.88653564453125,
+          "y": 286.4281921386719,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.7798767089844,
+          "y": 285.3807067871094,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 207,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.708251953125,
+          "y": 285.69580078125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.6023864746094,
+          "y": 284.6991882324219,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 263.0580749511719,
+          "y": 285.63177490234375,
+          "intent": "strike",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:102:203",
+            "startedAt": 203,
+            "activeAt": 207,
+            "recoveryAt": 209,
+            "endsAt": 218
+          }
+        },
+        {
+          "id": 103,
+          "x": 267.7431335449219,
+          "y": 285.7394714355469,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 267.7258605957031,
+          "y": 286.5375061035156,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.56939697265625,
+          "y": 285.5412902832031,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 211,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.3931884765625,
+          "y": 285.45257568359375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.31243896484375,
+          "y": 284.3923645019531,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 263.0580749511719,
+          "y": 285.63177490234375,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:102:203",
+            "startedAt": 203,
+            "activeAt": 207,
+            "recoveryAt": 209,
+            "endsAt": 218
+          }
+        },
+        {
+          "id": 103,
+          "x": 267.78387451171875,
+          "y": 285.6900329589844,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 267.432373046875,
+          "y": 286.1664733886719,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.35107421875,
+          "y": 285.0758972167969,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 214,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.54840087890625,
+          "y": 285.62774658203125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.18402099609375,
+          "y": 284.4947509765625,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 263.0580749511719,
+          "y": 285.63177490234375,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:102:203",
+            "startedAt": 203,
+            "activeAt": 207,
+            "recoveryAt": 209,
+            "endsAt": 218
+          }
+        },
+        {
+          "id": 103,
+          "x": 267.6328125,
+          "y": 285.61090087890625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 267.7256164550781,
+          "y": 286.45703125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.40570068359375,
+          "y": 285.370849609375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 217,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.6552734375,
+          "y": 285.91485595703125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 266.7717590332031,
+          "y": 284.48394775390625,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 263.0580749511719,
+          "y": 285.63177490234375,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:102:203",
+            "startedAt": 203,
+            "activeAt": 207,
+            "recoveryAt": 209,
+            "endsAt": 218
+          }
+        },
+        {
+          "id": 103,
+          "x": 267.774658203125,
+          "y": 285.61572265625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 267.6798400878906,
+          "y": 286.8591613769531,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.4095458984375,
+          "y": 285.6708068847656,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 220,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.0221252441406,
+          "y": 285.8408203125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 266.34674072265625,
+          "y": 284.4939880371094,
+          "intent": "strike",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:101:220",
+            "startedAt": 220,
+            "activeAt": 224,
+            "recoveryAt": 226,
+            "endsAt": 235
+          }
+        },
+        {
+          "id": 102,
+          "x": 263.4944763183594,
+          "y": 285.61468505859375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.6247863769531,
+          "y": 285.5167236328125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 268.0550231933594,
+          "y": 286.66595458984375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.405517578125,
+          "y": 285.4647216796875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 224,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.104736328125,
+          "y": 286.0691223144531,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 266.34674072265625,
+          "y": 284.4939880371094,
+          "intent": "strike",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:101:220",
+            "startedAt": 220,
+            "activeAt": 224,
+            "recoveryAt": 226,
+            "endsAt": 235
+          }
+        },
+        {
+          "id": 102,
+          "x": 264.0746765136719,
+          "y": 285.64581298828125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.587646484375,
+          "y": 285.6897888183594,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 267.88909912109375,
+          "y": 287.1259765625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.3111877441406,
+          "y": 285.8770446777344,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 227,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.87225341796875,
+          "y": 285.8414001464844,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 266.34674072265625,
+          "y": 284.4939880371094,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:101:220",
+            "startedAt": 220,
+            "activeAt": 224,
+            "recoveryAt": 226,
+            "endsAt": 235
+          }
+        },
+        {
+          "id": 102,
+          "x": 264.5082702636719,
+          "y": 285.61456298828125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.6810607910156,
+          "y": 285.5778503417969,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 267.8049011230469,
+          "y": 286.7138977050781,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.44476318359375,
+          "y": 285.4652099609375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 230,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.9002685546875,
+          "y": 285.5902099609375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 266.34674072265625,
+          "y": 284.4939880371094,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:101:220",
+            "startedAt": 220,
+            "activeAt": 224,
+            "recoveryAt": 226,
+            "endsAt": 235
+          }
+        },
+        {
+          "id": 102,
+          "x": 264.9382629394531,
+          "y": 285.5499267578125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.7421569824219,
+          "y": 285.70904541015625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 267.93084716796875,
+          "y": 286.4130859375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.4563293457031,
+          "y": 285.0618591308594,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 234,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.9107666015625,
+          "y": 285.829345703125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 266.34674072265625,
+          "y": 284.4939880371094,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:101:220",
+            "startedAt": 220,
+            "activeAt": 224,
+            "recoveryAt": 226,
+            "endsAt": 235
+          }
+        },
+        {
+          "id": 102,
+          "x": 265.5125732421875,
+          "y": 285.5499267578125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.76214599609375,
+          "y": 285.69189453125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 268.23541259765625,
+          "y": 286.452880859375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.08380126953125,
+          "y": 284.6205749511719,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 237,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.0288391113281,
+          "y": 285.8400573730469,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 266.7080383300781,
+          "y": 284.5793151855469,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 265.8759765625,
+          "y": 285.6205139160156,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.68121337890625,
+          "y": 285.5705871582031,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 268.2606201171875,
+          "y": 286.2315368652344,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.84130859375,
+          "y": 284.2786865234375,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 240,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.2535400390625,
+          "y": 286.1419982910156,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 266.8111572265625,
+          "y": 284.9674072265625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 266.0025939941406,
+          "y": 286.0252990722656,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.7677917480469,
+          "y": 285.6054382324219,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 268.6687927246094,
+          "y": 286.3536376953125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.53424072265625,
+          "y": 284.2366943359375,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 244,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.7063903808594,
+          "y": 286.2073059082031,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.1099548339844,
+          "y": 285.1616516113281,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 266.5537109375,
+          "y": 286.0591125488281,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 268.08984375,
+          "y": 285.1479187011719,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 268.8831481933594,
+          "y": 285.9518737792969,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.13116455078125,
+          "y": 283.8662109375,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 247,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.70941162109375,
+          "y": 286.5663146972656,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.0966796875,
+          "y": 285.3402404785156,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 266.3464050292969,
+          "y": 286.2931823730469,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.8308410644531,
+          "y": 285.2239990234375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 268.5274658203125,
+          "y": 285.94287109375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 266.7398986816406,
+          "y": 284.0577087402344,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 251,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.5176696777344,
+          "y": 286.3551025390625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 266.962158203125,
+          "y": 285.05670166015625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 266.3355712890625,
+          "y": 286.07086181640625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.8982849121094,
+          "y": 284.8778991699219,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 268.04193115234375,
+          "y": 285.69219970703125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 266.3271484375,
+          "y": 283.9822692871094,
+          "intent": "strike",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:105:250",
+            "startedAt": 250,
+            "activeAt": 254,
+            "recoveryAt": 256,
+            "endsAt": 265
+          }
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 254,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.7560729980469,
+          "y": 286.17413330078125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.0934753417969,
+          "y": 285.13385009765625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 266.7032775878906,
+          "y": 286.211669921875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 268.2791748046875,
+          "y": 284.7608642578125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 268.2968444824219,
+          "y": 285.7254333496094,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 266.3271484375,
+          "y": 283.9822692871094,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:105:250",
+            "startedAt": 250,
+            "activeAt": 254,
+            "recoveryAt": 256,
+            "endsAt": 265
+          }
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 257,
+      "actors": [
+        {
+          "id": 100,
+          "x": 268.0667724609375,
+          "y": 286.39202880859375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.4737548828125,
+          "y": 285.3247375488281,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 267.1282043457031,
+          "y": 286.2640686035156,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 268.6072692871094,
+          "y": 284.5585021972656,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 268.5162353515625,
+          "y": 285.9226379394531,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 266.3271484375,
+          "y": 283.9822692871094,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:105:250",
+            "startedAt": 250,
+            "activeAt": 254,
+            "recoveryAt": 256,
+            "endsAt": 265
+          }
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 261,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.7169189453125,
+          "y": 286.50994873046875,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.1138000488281,
+          "y": 285.1300964355469,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 266.9200439453125,
+          "y": 286.02825927734375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 268.1134033203125,
+          "y": 284.32415771484375,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 268.1817626953125,
+          "y": 285.5504455566406,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 266.3271484375,
+          "y": 283.9822692871094,
+          "intent": "approach",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:105:250",
+            "startedAt": 250,
+            "activeAt": 254,
+            "recoveryAt": 256,
+            "endsAt": 265
+          }
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 264,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.3819274902344,
+          "y": 286.66436767578125,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.322265625,
+          "y": 284.8592224121094,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 266.7921142578125,
+          "y": 286.1390380859375,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.8117980957031,
+          "y": 284.02899169921875,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 267.9461364746094,
+          "y": 285.50311279296875,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 266.3271484375,
+          "y": 283.9822692871094,
+          "intent": "approach",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:105:250",
+            "startedAt": 250,
+            "activeAt": 254,
+            "recoveryAt": 256,
+            "endsAt": 265
+          }
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 267,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.34100341796875,
+          "y": 286.9537353515625,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.6047058105469,
+          "y": 285.14080810546875,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 266.8977355957031,
+          "y": 286.44061279296875,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.6513671875,
+          "y": 283.7228698730469,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 268.31903076171875,
+          "y": 285.7286071777344,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 266.75921630859375,
+          "y": 284.04779052734375,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 271,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.7161865234375,
+          "y": 287.2934875488281,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 268.12799072265625,
+          "y": 285.2339172363281,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 267.4751281738281,
+          "y": 286.42657470703125,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 268.0362548828125,
+          "y": 283.83502197265625,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 268.64630126953125,
+          "y": 285.80517578125,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.2381591796875,
+          "y": 284.32940673828125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 274,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.5564270019531,
+          "y": 287.4598388671875,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 268.2750244140625,
+          "y": 285.2759704589844,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 267.8643493652344,
+          "y": 286.6148986816406,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.6239013671875,
+          "y": 283.70819091796875,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 268.62957763671875,
+          "y": 286.1468811035156,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.24755859375,
+          "y": 284.7365417480469,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 277,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.1799621582031,
+          "y": 287.4435119628906,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.9189758300781,
+          "y": 285.1598815917969,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 267.5452575683594,
+          "y": 286.32843017578125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.1973876953125,
+          "y": 283.70281982421875,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 268.2686462402344,
+          "y": 285.9884338378906,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.1522521972656,
+          "y": 285.13348388671875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 281,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.71392822265625,
+          "y": 287.2894287109375,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.9940185546875,
+          "y": 284.8570556640625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 267.194091796875,
+          "y": 285.8897399902344,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 266.64190673828125,
+          "y": 283.71258544921875,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 267.92449951171875,
+          "y": 285.9535217285156,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.0982971191406,
+          "y": 284.901123046875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 284,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.3699951171875,
+          "y": 287.21014404296875,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 268.2679443359375,
+          "y": 284.980712890625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 266.9986267089844,
+          "y": 286.1855163574219,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 266.2433166503906,
+          "y": 283.7608947753906,
+          "intent": "strike",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:103:284",
+            "startedAt": 284,
+            "activeAt": 288,
+            "recoveryAt": 290,
+            "endsAt": 299
+          }
+        },
+        {
+          "id": 104,
+          "x": 267.843505859375,
+          "y": 286.0894470214844,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.07696533203125,
+          "y": 285.038818359375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 288,
+      "actors": [
+        {
+          "id": 100,
+          "x": 265.8797302246094,
+          "y": 287.2187194824219,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 268.2142028808594,
+          "y": 285.5087890625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 266.72418212890625,
+          "y": 286.2499694824219,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 266.2433166503906,
+          "y": 283.7608947753906,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:103:284",
+            "startedAt": 284,
+            "activeAt": 288,
+            "recoveryAt": 290,
+            "endsAt": 299
+          }
+        },
+        {
+          "id": 104,
+          "x": 267.7146911621094,
+          "y": 286.6519775390625,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.32513427734375,
+          "y": 285.2224426269531,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 291,
+      "actors": [
+        {
+          "id": 100,
+          "x": 265.5210266113281,
+          "y": 287.1252136230469,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.9535217285156,
+          "y": 285.6830139160156,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 266.4907531738281,
+          "y": 285.9029541015625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 266.2433166503906,
+          "y": 283.7608947753906,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:103:284",
+            "startedAt": 284,
+            "activeAt": 288,
+            "recoveryAt": 290,
+            "endsAt": 299
+          }
+        },
+        {
+          "id": 104,
+          "x": 267.33148193359375,
+          "y": 286.8082580566406,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.452392578125,
+          "y": 285.1024475097656,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 294,
+      "actors": [
+        {
+          "id": 100,
+          "x": 265.1822814941406,
+          "y": 286.953857421875,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.8057556152344,
+          "y": 285.73052978515625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 266.5432434082031,
+          "y": 285.63818359375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 266.2433166503906,
+          "y": 283.7608947753906,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:103:284",
+            "startedAt": 284,
+            "activeAt": 288,
+            "recoveryAt": 290,
+            "endsAt": 299
+          }
+        },
+        {
+          "id": 104,
+          "x": 266.9250183105469,
+          "y": 286.8365478515625,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.6597595214844,
+          "y": 284.7740783691406,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 298,
+      "actors": [
+        {
+          "id": 100,
+          "x": 264.7509765625,
+          "y": 286.6953430175781,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.8013610839844,
+          "y": 285.757568359375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 266.578857421875,
+          "y": 285.34051513671875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 266.2433166503906,
+          "y": 283.7608947753906,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:103:284",
+            "startedAt": 284,
+            "activeAt": 288,
+            "recoveryAt": 290,
+            "endsAt": 299
+          }
+        },
+        {
+          "id": 104,
+          "x": 266.4341125488281,
+          "y": 286.5823059082031,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.7115173339844,
+          "y": 284.849853515625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 301,
+      "actors": [
+        {
+          "id": 100,
+          "x": 264.4000244140625,
+          "y": 286.5615234375,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.7088317871094,
+          "y": 285.816162109375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 266.64813232421875,
+          "y": 285.2548522949219,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 266.5439758300781,
+          "y": 284.0390319824219,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 266.06658935546875,
+          "y": 286.40032958984375,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.86541748046875,
+          "y": 285.0462951660156,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 304,
+      "actors": [
+        {
+          "id": 100,
+          "x": 264.02545166015625,
+          "y": 286.5048522949219,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.7695617675781,
+          "y": 286.2301025390625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 266.8569641113281,
+          "y": 285.6214599609375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 266.76336669921875,
+          "y": 284.4094543457031,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 265.6394958496094,
+          "y": 286.32672119140625,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.1651916503906,
+          "y": 285.36236572265625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 307,
+      "actors": [
+        {
+          "id": 100,
+          "x": 263.6537780761719,
+          "y": 286.426513671875,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.9686584472656,
+          "y": 286.4388122558594,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 266.77392578125,
+          "y": 286.02740478515625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 266.8665771484375,
+          "y": 284.8094177246094,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 265.4555358886719,
+          "y": 286.1202392578125,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:104:306",
+            "startedAt": 306,
+            "activeAt": 310,
+            "recoveryAt": 312,
+            "endsAt": 321
+          }
+        },
+        {
+          "id": 105,
+          "x": 267.9512939453125,
+          "y": 285.4910583496094,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 311,
+      "actors": [
+        {
+          "id": 100,
+          "x": 263.1803283691406,
+          "y": 286.2693176269531,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.94317626953125,
+          "y": 286.7798156738281,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 266.8730163574219,
+          "y": 286.3150634765625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.2149963378906,
+          "y": 285.0720520019531,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 265.4555358886719,
+          "y": 286.1202392578125,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:104:306",
+            "startedAt": 306,
+            "activeAt": 310,
+            "recoveryAt": 312,
+            "endsAt": 321
+          }
+        },
+        {
+          "id": 105,
+          "x": 268.0220642089844,
+          "y": 285.7854919433594,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 314,
+      "actors": [
+        {
+          "id": 100,
+          "x": 262.8105773925781,
+          "y": 286.1846923828125,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.60675048828125,
+          "y": 286.98773193359375,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 266.6905517578125,
+          "y": 286.285400390625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.234375,
+          "y": 284.927978515625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 265.4555358886719,
+          "y": 286.1202392578125,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:104:306",
+            "startedAt": 306,
+            "activeAt": 310,
+            "recoveryAt": 312,
+            "endsAt": 321
+          }
+        },
+        {
+          "id": 105,
+          "x": 267.7447204589844,
+          "y": 285.7948913574219,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 317,
+      "actors": [
+        {
+          "id": 100,
+          "x": 263.095458984375,
+          "y": 285.9332275390625,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.6668701171875,
+          "y": 286.847412109375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 266.8472900390625,
+          "y": 285.8917541503906,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.51226806640625,
+          "y": 284.6087951660156,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 265.4555358886719,
+          "y": 286.1202392578125,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:104:306",
+            "startedAt": 306,
+            "activeAt": 310,
+            "recoveryAt": 312,
+            "endsAt": 321
+          }
+        },
+        {
+          "id": 105,
+          "x": 267.9786071777344,
+          "y": 285.6429138183594,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 320,
+      "actors": [
+        {
+          "id": 100,
+          "x": 263.1832275390625,
+          "y": 285.8419189453125,
+          "intent": "strike",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:100:318",
+            "startedAt": 318,
+            "activeAt": 322,
+            "recoveryAt": 324,
+            "endsAt": 333
+          }
+        },
+        {
+          "id": 101,
+          "x": 267.7158203125,
+          "y": 286.5156555175781,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 266.8968811035156,
+          "y": 285.45806884765625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.8492431640625,
+          "y": 284.4190673828125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 265.4555358886719,
+          "y": 286.1202392578125,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:104:306",
+            "startedAt": 306,
+            "activeAt": 310,
+            "recoveryAt": 312,
+            "endsAt": 321
+          }
+        },
+        {
+          "id": 105,
+          "x": 268.1959533691406,
+          "y": 285.4984130859375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 324,
+      "actors": [
+        {
+          "id": 100,
+          "x": 263.1832275390625,
+          "y": 285.8419189453125,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:100:318",
+            "startedAt": 318,
+            "activeAt": 322,
+            "recoveryAt": 324,
+            "endsAt": 333
+          }
+        },
+        {
+          "id": 101,
+          "x": 267.7309875488281,
+          "y": 286.0766296386719,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 267.31341552734375,
+          "y": 285.154541015625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 268.30303955078125,
+          "y": 284.17950439453125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 266.00909423828125,
+          "y": 285.9459533691406,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.6384582519531,
+          "y": 285.53436279296875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 327,
+      "actors": [
+        {
+          "id": 100,
+          "x": 263.1832275390625,
+          "y": 285.8419189453125,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:100:318",
+            "startedAt": 318,
+            "activeAt": 322,
+            "recoveryAt": 324,
+            "endsAt": 333
+          }
+        },
+        {
+          "id": 101,
+          "x": 267.74432373046875,
+          "y": 286.32647705078125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 267.58636474609375,
+          "y": 285.442138671875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 268.333251953125,
+          "y": 284.6051025390625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 266.4452209472656,
+          "y": 285.95050048828125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.9607238769531,
+          "y": 285.8113098144531,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 331,
+      "actors": [
+        {
+          "id": 100,
+          "x": 263.1832275390625,
+          "y": 285.8419189453125,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:100:318",
+            "startedAt": 318,
+            "activeAt": 322,
+            "recoveryAt": 324,
+            "endsAt": 333
+          }
+        },
+        {
+          "id": 101,
+          "x": 267.5556945800781,
+          "y": 286.4533996582031,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 267.2938232421875,
+          "y": 285.3713073730469,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.92449951171875,
+          "y": 284.6229248046875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 266.4586181640625,
+          "y": 285.8259582519531,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.53009033203125,
+          "y": 285.7357482910156,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 334,
+      "actors": [
+        {
+          "id": 100,
+          "x": 263.4333801269531,
+          "y": 285.8573913574219,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.6505126953125,
+          "y": 286.5535888671875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 266.8999328613281,
+          "y": 285.18927001953125,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.7569274902344,
+          "y": 284.9559020996094,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 266.51812744140625,
+          "y": 286.111572265625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.1273498535156,
+          "y": 285.7177429199219,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 337,
+      "actors": [
+        {
+          "id": 100,
+          "x": 263.8111877441406,
+          "y": 285.8332214355469,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 268.012451171875,
+          "y": 286.38629150390625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 266.52099609375,
+          "y": 284.9756164550781,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.7996826171875,
+          "y": 284.7991027832031,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 266.92529296875,
+          "y": 286.1197509765625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.9331970214844,
+          "y": 285.64862060546875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 341,
+      "actors": [
+        {
+          "id": 100,
+          "x": 264.31304931640625,
+          "y": 285.7906188964844,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.96533203125,
+          "y": 286.5431213378906,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 266.2412414550781,
+          "y": 284.9229431152344,
+          "intent": "flankLeft",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:102:339",
+            "startedAt": 339,
+            "activeAt": 343,
+            "recoveryAt": 345,
+            "endsAt": 354
+          }
+        },
+        {
+          "id": 103,
+          "x": 267.54595947265625,
+          "y": 284.7665710449219,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 266.9596862792969,
+          "y": 286.103271484375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.78070068359375,
+          "y": 285.748291015625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 344,
+      "actors": [
+        {
+          "id": 100,
+          "x": 264.6910400390625,
+          "y": 285.8049621582031,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.7849426269531,
+          "y": 286.9063415527344,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 266.2412414550781,
+          "y": 284.9229431152344,
+          "intent": "flankLeft",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:102:339",
+            "startedAt": 339,
+            "activeAt": 343,
+            "recoveryAt": 345,
+            "endsAt": 354
+          }
+        },
+        {
+          "id": 103,
+          "x": 267.6306457519531,
+          "y": 284.9521179199219,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 266.85833740234375,
+          "y": 286.2605285644531,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.79736328125,
+          "y": 285.6064453125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 348,
+      "actors": [
+        {
+          "id": 100,
+          "x": 265.1921691894531,
+          "y": 285.7621765136719,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.42633056640625,
+          "y": 286.8904724121094,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 266.2412414550781,
+          "y": 284.9229431152344,
+          "intent": "flankLeft",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:102:339",
+            "startedAt": 339,
+            "activeAt": 343,
+            "recoveryAt": 345,
+            "endsAt": 354
+          }
+        },
+        {
+          "id": 103,
+          "x": 267.7781982421875,
+          "y": 284.7046203613281,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 267.1019592285156,
+          "y": 285.8145446777344,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.0228271484375,
+          "y": 285.7592468261719,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 351,
+      "actors": [
+        {
+          "id": 100,
+          "x": 265.4377746582031,
+          "y": 285.91107177734375,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.03936767578125,
+          "y": 287.0350036621094,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 266.2412414550781,
+          "y": 284.9229431152344,
+          "intent": "flankLeft",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:102:339",
+            "startedAt": 339,
+            "activeAt": 343,
+            "recoveryAt": 345,
+            "endsAt": 354
+          }
+        },
+        {
+          "id": 103,
+          "x": 267.866943359375,
+          "y": 284.4772644042969,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 266.97406005859375,
+          "y": 286.1494140625,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.8115539550781,
+          "y": 285.6994934082031,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 354,
+      "actors": [
+        {
+          "id": 100,
+          "x": 265.49700927734375,
+          "y": 286.27740478515625,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 266.62744140625,
+          "y": 287.13372802734375,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 266.3624267578125,
+          "y": 285.0037536621094,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.9693908691406,
+          "y": 284.2985534667969,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 267.0912780761719,
+          "y": 286.5110778808594,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.7326354980469,
+          "y": 285.5230407714844,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 358,
+      "actors": [
+        {
+          "id": 100,
+          "x": 265.7049255371094,
+          "y": 286.7331237792969,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 266.23699951171875,
+          "y": 287.4325866699219,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 266.85205078125,
+          "y": 285.31939697265625,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 268.5299987792969,
+          "y": 284.26654052734375,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 267.5694274902344,
+          "y": 286.8433837890625,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.2836608886719,
+          "y": 285.64581298828125,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 361,
+      "actors": [
+        {
+          "id": 100,
+          "x": 265.9268493652344,
+          "y": 287.031005859375,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 266.6551818847656,
+          "y": 287.3932800292969,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 267.25518798828125,
+          "y": 285.4879150390625,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 268.39996337890625,
+          "y": 284.3968505859375,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 267.8236999511719,
+          "y": 286.7802734375,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.54498291015625,
+          "y": 285.59039306640625,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 364,
+      "actors": [
+        {
+          "id": 100,
+          "x": 265.6211853027344,
+          "y": 287.05572509765625,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 266.4155578613281,
+          "y": 287.0416259765625,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 267.21783447265625,
+          "y": 285.3350524902344,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 268.0075988769531,
+          "y": 284.2052917480469,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 267.5092468261719,
+          "y": 286.5602111816406,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.2175598144531,
+          "y": 285.4011535644531,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 367,
+      "actors": [
+        {
+          "id": 100,
+          "x": 265.2510070800781,
+          "y": 286.9723205566406,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 266.13861083984375,
+          "y": 286.71905517578125,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 266.79498291015625,
+          "y": 285.2372741699219,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.6181640625,
+          "y": 284.2954406738281,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 267.4515686035156,
+          "y": 286.3432922363281,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.05718994140625,
+          "y": 285.4891662597656,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 371,
+      "actors": [
+        {
+          "id": 100,
+          "x": 264.7471008300781,
+          "y": 286.9221496582031,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 265.8401794433594,
+          "y": 286.3771667480469,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 266.2421569824219,
+          "y": 285.1589050292969,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.4870910644531,
+          "y": 284.673828125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 267.11669921875,
+          "y": 286.21307373046875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.8040466308594,
+          "y": 285.6243591308594,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 375,
+      "actors": [
+        {
+          "id": 100,
+          "x": 264.2413330078125,
+          "y": 286.89569091796875,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 265.2982177734375,
+          "y": 286.212158203125,
+          "intent": "strike",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:101:375",
+            "startedAt": 375,
+            "activeAt": 379,
+            "recoveryAt": 381,
+            "endsAt": 390
+          }
+        },
+        {
+          "id": 102,
+          "x": 265.6771545410156,
+          "y": 285.0325012207031,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.0914306640625,
+          "y": 285.08685302734375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 266.7832946777344,
+          "y": 286.4508056640625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.7919006347656,
+          "y": 285.6185302734375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 378,
+      "actors": [
+        {
+          "id": 100,
+          "x": 263.87249755859375,
+          "y": 286.81439208984375,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 265.2982177734375,
+          "y": 286.212158203125,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:101:375",
+            "startedAt": 375,
+            "activeAt": 379,
+            "recoveryAt": 381,
+            "endsAt": 390
+          }
+        },
+        {
+          "id": 102,
+          "x": 265.2520446777344,
+          "y": 284.931884765625,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 266.9536437988281,
+          "y": 285.48211669921875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 266.91180419921875,
+          "y": 286.6606750488281,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.7312316894531,
+          "y": 285.7525634765625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 381,
+      "actors": [
+        {
+          "id": 100,
+          "x": 263.53826904296875,
+          "y": 286.6336669921875,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 265.2982177734375,
+          "y": 286.212158203125,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:101:375",
+            "startedAt": 375,
+            "activeAt": 379,
+            "recoveryAt": 381,
+            "endsAt": 390
+          }
+        },
+        {
+          "id": 102,
+          "x": 264.83465576171875,
+          "y": 284.8822326660156,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 266.8322448730469,
+          "y": 285.2852478027344,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 266.8970642089844,
+          "y": 286.51055908203125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.7872619628906,
+          "y": 285.6216125488281,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 385,
+      "actors": [
+        {
+          "id": 100,
+          "x": 263.1233825683594,
+          "y": 286.34283447265625,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 265.2982177734375,
+          "y": 286.212158203125,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:101:375",
+            "startedAt": 375,
+            "activeAt": 379,
+            "recoveryAt": 381,
+            "endsAt": 390
+          }
+        },
+        {
+          "id": 102,
+          "x": 264.2622985839844,
+          "y": 284.9757995605469,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 266.9457702636719,
+          "y": 284.7206726074219,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 266.89678955078125,
+          "y": 285.94085693359375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.7386169433594,
+          "y": 285.62847900390625,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 388,
+      "actors": [
+        {
+          "id": 100,
+          "x": 262.7774658203125,
+          "y": 286.1871643066406,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 265.2982177734375,
+          "y": 286.212158203125,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:101:375",
+            "startedAt": 375,
+            "activeAt": 379,
+            "recoveryAt": 381,
+            "endsAt": 390
+          }
+        },
+        {
+          "id": 102,
+          "x": 263.825927734375,
+          "y": 284.9938659667969,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.06207275390625,
+          "y": 284.3067626953125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 267.0890808105469,
+          "y": 285.72601318359375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.9368591308594,
+          "y": 285.2919006347656,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 391,
+      "actors": [
+        {
+          "id": 100,
+          "x": 262.41668701171875,
+          "y": 286.06793212890625,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 265.58074951171875,
+          "y": 286.185791015625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 263.4290771484375,
+          "y": 285.1684265136719,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.1595153808594,
+          "y": 284.7289733886719,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 267.2842712402344,
+          "y": 286.11004638671875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.32470703125,
+          "y": 285.3300476074219,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 394,
+      "actors": [
+        {
+          "id": 100,
+          "x": 262.04437255859375,
+          "y": 286.0292663574219,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 265.99560546875,
+          "y": 286.09368896484375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 263.0211181640625,
+          "y": 285.3167419433594,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.433837890625,
+          "y": 285.01458740234375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 267.67742919921875,
+          "y": 286.0348815917969,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.59490966796875,
+          "y": 284.9879150390625,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 397,
+      "actors": [
+        {
+          "id": 100,
+          "x": 261.6695556640625,
+          "y": 285.9695739746094,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 266.40350341796875,
+          "y": 285.9896240234375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 262.59857177734375,
+          "y": 285.2131652832031,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.2836608886719,
+          "y": 285.01519775390625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 267.66790771484375,
+          "y": 285.84393310546875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.3608093261719,
+          "y": 284.675537109375,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 401,
+      "actors": [
+        {
+          "id": 100,
+          "x": 261.20233154296875,
+          "y": 285.79193115234375,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 266.6353759765625,
+          "y": 286.002197265625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 262.01812744140625,
+          "y": 285.2129821777344,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.16754150390625,
+          "y": 284.72784423828125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 267.8383483886719,
+          "y": 285.59967041015625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.13958740234375,
+          "y": 284.1824951171875,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 404,
+      "actors": [
+        {
+          "id": 100,
+          "x": 261.0644226074219,
+          "y": 285.93890380859375,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 266.89666748046875,
+          "y": 285.92755126953125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 261.70843505859375,
+          "y": 285.43524169921875,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.0151672363281,
+          "y": 284.86871337890625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 267.9631042480469,
+          "y": 285.8099670410156,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.7522277832031,
+          "y": 284.0660095214844,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 408,
+      "actors": [
+        {
+          "id": 100,
+          "x": 260.6387634277344,
+          "y": 286.1402893066406,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 266.9837951660156,
+          "y": 286.47174072265625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 261.243408203125,
+          "y": 285.7397766113281,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 266.7524719238281,
+          "y": 285.3829345703125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 267.82598876953125,
+          "y": 285.76416015625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.2000427246094,
+          "y": 284.17474365234375,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 411,
+      "actors": [
+        {
+          "id": 100,
+          "x": 260.71685791015625,
+          "y": 286.0399169921875,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.15936279296875,
+          "y": 286.56610107421875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 261.5331726074219,
+          "y": 285.5408020019531,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 266.67828369140625,
+          "y": 285.27618408203125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 267.9345703125,
+          "y": 285.5663757324219,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 266.827392578125,
+          "y": 284.0505676269531,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 414,
+      "actors": [
+        {
+          "id": 100,
+          "x": 261.0111083984375,
+          "y": 285.85162353515625,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.4071044921875,
+          "y": 286.5769348144531,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 261.736083984375,
+          "y": 285.2191467285156,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 266.98199462890625,
+          "y": 285.4341125488281,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 268.214111328125,
+          "y": 285.4862976074219,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 266.4288635253906,
+          "y": 284.1252746582031,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 418,
+      "actors": [
+        {
+          "id": 100,
+          "x": 261.23101806640625,
+          "y": 285.6566467285156,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.6941223144531,
+          "y": 286.27301025390625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 262.00006103515625,
+          "y": 285.2176513671875,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.1960144042969,
+          "y": 285.35675048828125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 268.4141845703125,
+          "y": 285.28900146484375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 266.3006286621094,
+          "y": 284.0561828613281,
+          "intent": "strike",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:105:415",
+            "startedAt": 415,
+            "activeAt": 419,
+            "recoveryAt": 421,
+            "endsAt": 430
+          }
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 421,
+      "actors": [
+        {
+          "id": 100,
+          "x": 260.96075439453125,
+          "y": 285.810302734375,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.8037414550781,
+          "y": 286.5946350097656,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 261.64447021484375,
+          "y": 285.4322814941406,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.33734130859375,
+          "y": 285.62628173828125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 268.3837890625,
+          "y": 285.5038146972656,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 266.3006286621094,
+          "y": 284.0561828613281,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:105:415",
+            "startedAt": 415,
+            "activeAt": 419,
+            "recoveryAt": 421,
+            "endsAt": 430
+          }
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 424,
+      "actors": [
+        {
+          "id": 100,
+          "x": 260.6776123046875,
+          "y": 286.0589599609375,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.4874267578125,
+          "y": 286.5113525390625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 261.28045654296875,
+          "y": 285.64691162109375,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.1268005371094,
+          "y": 285.248291015625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 268.0955810546875,
+          "y": 285.3053894042969,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 266.3006286621094,
+          "y": 284.0561828613281,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:105:415",
+            "startedAt": 415,
+            "activeAt": 419,
+            "recoveryAt": 421,
+            "endsAt": 430
+          }
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 428,
+      "actors": [
+        {
+          "id": 100,
+          "x": 260.8631286621094,
+          "y": 285.91680908203125,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.49359130859375,
+          "y": 286.2674865722656,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 261.732177734375,
+          "y": 285.4852600097656,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 266.6366882324219,
+          "y": 285.0705871582031,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 268.0052185058594,
+          "y": 285.427734375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 266.3006286621094,
+          "y": 284.0561828613281,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:105:415",
+            "startedAt": 415,
+            "activeAt": 419,
+            "recoveryAt": 421,
+            "endsAt": 430
+          }
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 431,
+      "actors": [
+        {
+          "id": 100,
+          "x": 261.1670837402344,
+          "y": 285.7029113769531,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.3178405761719,
+          "y": 286.1913757324219,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 262.01116943359375,
+          "y": 285.1571044921875,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 266.2229309082031,
+          "y": 285.131591796875,
+          "intent": "strike",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:103:431",
+            "startedAt": 431,
+            "activeAt": 435,
+            "recoveryAt": 437,
+            "endsAt": 446
+          }
+        },
+        {
+          "id": 104,
+          "x": 267.7970886230469,
+          "y": 285.55242919921875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 266.5582580566406,
+          "y": 284.1543884277344,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 434,
+      "actors": [
+        {
+          "id": 100,
+          "x": 261.28411865234375,
+          "y": 285.7322692871094,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.4748229980469,
+          "y": 286.35589599609375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 262.0747375488281,
+          "y": 285.3465881347656,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 266.2229309082031,
+          "y": 285.131591796875,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:103:431",
+            "startedAt": 431,
+            "activeAt": 435,
+            "recoveryAt": 437,
+            "endsAt": 446
+          }
+        },
+        {
+          "id": 104,
+          "x": 267.7944030761719,
+          "y": 285.578857421875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 266.9670104980469,
+          "y": 284.2939147949219,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 438,
+      "actors": [
+        {
+          "id": 100,
+          "x": 260.8870544433594,
+          "y": 285.8695983886719,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.43109130859375,
+          "y": 286.3266296386719,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 261.5547180175781,
+          "y": 285.5318603515625,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 266.2229309082031,
+          "y": 285.131591796875,
+          "intent": "approach",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:103:431",
+            "startedAt": 431,
+            "activeAt": 435,
+            "recoveryAt": 437,
+            "endsAt": 446
+          }
+        },
+        {
+          "id": 104,
+          "x": 267.7098693847656,
+          "y": 285.6118469238281,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.4651794433594,
+          "y": 284.56591796875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 441,
+      "actors": [
+        {
+          "id": 100,
+          "x": 260.5506896972656,
+          "y": 286.0295104980469,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.6207275390625,
+          "y": 285.9819641113281,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 261.3349914550781,
+          "y": 285.54095458984375,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 266.2229309082031,
+          "y": 285.131591796875,
+          "intent": "approach",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:103:431",
+            "startedAt": 431,
+            "activeAt": 435,
+            "recoveryAt": 437,
+            "endsAt": 446
+          }
+        },
+        {
+          "id": 104,
+          "x": 267.5155029296875,
+          "y": 285.2317199707031,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.72137451171875,
+          "y": 284.2129821777344,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 445,
+      "actors": [
+        {
+          "id": 100,
+          "x": 260.9372253417969,
+          "y": 285.76702880859375,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.56982421875,
+          "y": 286.1956787109375,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 261.5495300292969,
+          "y": 285.1746520996094,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 266.2229309082031,
+          "y": 285.131591796875,
+          "intent": "retreat",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:103:431",
+            "startedAt": 431,
+            "activeAt": 435,
+            "recoveryAt": 437,
+            "endsAt": 446
+          }
+        },
+        {
+          "id": 104,
+          "x": 267.0233154296875,
+          "y": 284.9281311035156,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.93719482421875,
+          "y": 283.9172058105469,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 448,
+      "actors": [
+        {
+          "id": 100,
+          "x": 260.8294982910156,
+          "y": 285.8409423828125,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.7305908203125,
+          "y": 286.1744079589844,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 261.2856750488281,
+          "y": 284.8911437988281,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 266.3128662109375,
+          "y": 285.50457763671875,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 266.8810729980469,
+          "y": 284.5214538574219,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.35894775390625,
+          "y": 283.8328552246094,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 451,
+      "actors": [
+        {
+          "id": 100,
+          "x": 260.49078369140625,
+          "y": 286.01300048828125,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 268.13189697265625,
+          "y": 286.31634521484375,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 260.8580627441406,
+          "y": 284.8013610839844,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 266.6742248535156,
+          "y": 285.6513671875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 266.55712890625,
+          "y": 284.2289733886719,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.5044860839844,
+          "y": 283.8272705078125,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 455,
+      "actors": [
+        {
+          "id": 100,
+          "x": 260.6626892089844,
+          "y": 285.9458923339844,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 268.1344909667969,
+          "y": 286.3088684082031,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 260.59222412109375,
+          "y": 284.6004943847656,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.1906433105469,
+          "y": 285.5356750488281,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 266.2724914550781,
+          "y": 284.2896423339844,
+          "intent": "strike",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:104:453",
+            "startedAt": 453,
+            "activeAt": 457,
+            "recoveryAt": 459,
+            "endsAt": 468
+          }
+        },
+        {
+          "id": 105,
+          "x": 267.9410705566406,
+          "y": 283.9578857421875,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 458,
+      "actors": [
+        {
+          "id": 100,
+          "x": 261.004150390625,
+          "y": 285.7792663574219,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.77484130859375,
+          "y": 286.3226318359375,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 260.97991943359375,
+          "y": 284.3989562988281,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.54266357421875,
+          "y": 285.4788818359375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 266.2724914550781,
+          "y": 284.2896423339844,
+          "intent": "flankLeft",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:104:453",
+            "startedAt": 453,
+            "activeAt": 457,
+            "recoveryAt": 459,
+            "endsAt": 468
+          }
+        },
+        {
+          "id": 105,
+          "x": 267.7949523925781,
+          "y": 284.2584228515625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 461,
+      "actors": [
+        {
+          "id": 100,
+          "x": 261.3389892578125,
+          "y": 285.6026611328125,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.89990234375,
+          "y": 286.5334167480469,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 261.060302734375,
+          "y": 284.3899841308594,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.60809326171875,
+          "y": 285.5965881347656,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 266.2724914550781,
+          "y": 284.2896423339844,
+          "intent": "flankLeft",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:104:453",
+            "startedAt": 453,
+            "activeAt": 457,
+            "recoveryAt": 459,
+            "endsAt": 468
+          }
+        },
+        {
+          "id": 105,
+          "x": 267.8158264160156,
+          "y": 284.6902160644531,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 465,
+      "actors": [
+        {
+          "id": 100,
+          "x": 261.4209899902344,
+          "y": 285.8309326171875,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.87799072265625,
+          "y": 286.54156494140625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 261.1720886230469,
+          "y": 284.90142822265625,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.6699523925781,
+          "y": 285.5787353515625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 266.2724914550781,
+          "y": 284.2896423339844,
+          "intent": "flankLeft",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:104:453",
+            "startedAt": 453,
+            "activeAt": 457,
+            "recoveryAt": 459,
+            "endsAt": 468
+          }
+        },
+        {
+          "id": 105,
+          "x": 267.9151916503906,
+          "y": 284.965087890625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 468,
+      "actors": [
+        {
+          "id": 100,
+          "x": 261.7629699707031,
+          "y": 285.9966125488281,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.8929443359375,
+          "y": 286.40008544921875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 261.27337646484375,
+          "y": 285.3190612792969,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.6174011230469,
+          "y": 285.7138977050781,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 266.1369934082031,
+          "y": 284.3431091308594,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.8420715332031,
+          "y": 285.0806579589844,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 471,
+      "actors": [
+        {
+          "id": 100,
+          "x": 262.12451171875,
+          "y": 286.1083984375,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.82708740234375,
+          "y": 286.5384826660156,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 261.3504333496094,
+          "y": 285.7240295410156,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.38885498046875,
+          "y": 285.7435607910156,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 265.7145080566406,
+          "y": 284.4545593261719,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.86383056640625,
+          "y": 285.26708984375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 475,
+      "actors": [
+        {
+          "id": 100,
+          "x": 262.6070556640625,
+          "y": 285.9837341308594,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.607177734375,
+          "y": 286.8406982421875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 261.38568115234375,
+          "y": 285.67657470703125,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 266.8667907714844,
+          "y": 285.64599609375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 265.1529846191406,
+          "y": 284.597900390625,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.6955871582031,
+          "y": 285.54437255859375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 478,
+      "actors": [
+        {
+          "id": 100,
+          "x": 262.8879699707031,
+          "y": 285.7545166015625,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.4591064453125,
+          "y": 286.4418029785156,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 261.244384765625,
+          "y": 285.6409912109375,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 266.6779479980469,
+          "y": 285.2616271972656,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 264.7193298339844,
+          "y": 284.6514892578125,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.8666687011719,
+          "y": 285.5514221191406,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 481,
+      "actors": [
+        {
+          "id": 100,
+          "x": 263.05743408203125,
+          "y": 285.5693054199219,
+          "intent": "strike",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:100:480",
+            "startedAt": 480,
+            "activeAt": 484,
+            "recoveryAt": 486,
+            "endsAt": 495
+          }
+        },
+        {
+          "id": 101,
+          "x": 267.29205322265625,
+          "y": 286.050537109375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 261.3800048828125,
+          "y": 285.6941223144531,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 266.7335205078125,
+          "y": 285.00360107421875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 264.29815673828125,
+          "y": 284.75604248046875,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.0308837890625,
+          "y": 285.58294677734375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 485,
+      "actors": [
+        {
+          "id": 100,
+          "x": 263.05743408203125,
+          "y": 285.5693054199219,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:100:480",
+            "startedAt": 480,
+            "activeAt": 484,
+            "recoveryAt": 486,
+            "endsAt": 495
+          }
+        },
+        {
+          "id": 101,
+          "x": 267.5700378417969,
+          "y": 286.5329284667969,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 261.3799133300781,
+          "y": 285.6940612792969,
+          "intent": "flankLeft",
+          "pose": "idle",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.18634033203125,
+          "y": 285.36273193359375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 263.86590576171875,
+          "y": 285.1463317871094,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.5828552246094,
+          "y": 285.71820068359375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 488,
+      "actors": [
+        {
+          "id": 100,
+          "x": 263.05743408203125,
+          "y": 285.5693054199219,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:100:480",
+            "startedAt": 480,
+            "activeAt": 484,
+            "recoveryAt": 486,
+            "endsAt": 495
+          }
+        },
+        {
+          "id": 101,
+          "x": 267.2972412109375,
+          "y": 286.7661437988281,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 261.24908447265625,
+          "y": 285.6270446777344,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.11895751953125,
+          "y": 285.3415832519531,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 263.6062927246094,
+          "y": 284.9909362792969,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.1873474121094,
+          "y": 285.77081298828125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 492,
+      "actors": [
+        {
+          "id": 100,
+          "x": 263.05743408203125,
+          "y": 285.5693054199219,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:100:480",
+            "startedAt": 480,
+            "activeAt": 484,
+            "recoveryAt": 486,
+            "endsAt": 495
+          }
+        },
+        {
+          "id": 101,
+          "x": 267.31549072265625,
+          "y": 286.20977783203125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 261.5067443847656,
+          "y": 285.4862976074219,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 266.99346923828125,
+          "y": 284.7934265136719,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 263.2328186035156,
+          "y": 284.5655822753906,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.1170959472656,
+          "y": 285.4898376464844,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 495,
+      "actors": [
+        {
+          "id": 100,
+          "x": 263.1768798828125,
+          "y": 285.61151123046875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.16436767578125,
+          "y": 285.82373046875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 261.9068908691406,
+          "y": 285.3132019042969,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 266.6530456542969,
+          "y": 284.520263671875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 262.81756591796875,
+          "y": 284.44189453125,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.78857421875,
+          "y": 285.489501953125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 498,
+      "actors": [
+        {
+          "id": 100,
+          "x": 263.54779052734375,
+          "y": 285.690673828125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.35467529296875,
+          "y": 285.9848937988281,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 262.3129577636719,
+          "y": 285.4468688964844,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 266.9543762207031,
+          "y": 284.808837890625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 262.55419921875,
+          "y": 284.600341796875,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.0284729003906,
+          "y": 285.5688171386719,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 502,
+      "actors": [
+        {
+          "id": 100,
+          "x": 264.0498352050781,
+          "y": 285.7586669921875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.6347961425781,
+          "y": 286.45947265625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 262.848876953125,
+          "y": 285.65118408203125,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.3119201660156,
+          "y": 285.2650146484375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 262.0084533691406,
+          "y": 284.7854309082031,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.5828857421875,
+          "y": 285.73590087890625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 505,
+      "actors": [
+        {
+          "id": 100,
+          "x": 264.4276428222656,
+          "y": 285.791748046875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.71942138671875,
+          "y": 286.3431091308594,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 262.9936828613281,
+          "y": 285.6354675292969,
+          "intent": "strike",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:102:503",
+            "startedAt": 503,
+            "activeAt": 507,
+            "recoveryAt": 509,
+            "endsAt": 518
+          }
+        },
+        {
+          "id": 103,
+          "x": 267.46600341796875,
+          "y": 285.2598571777344,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 261.72930908203125,
+          "y": 285.0963134765625,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.75274658203125,
+          "y": 285.4393615722656,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 508,
+      "actors": [
+        {
+          "id": 100,
+          "x": 264.80517578125,
+          "y": 285.74859619140625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.5039367675781,
+          "y": 286.0442810058594,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 262.9936828613281,
+          "y": 285.6354675292969,
+          "intent": "strike",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:102:503",
+            "startedAt": 503,
+            "activeAt": 507,
+            "recoveryAt": 509,
+            "endsAt": 518
+          }
+        },
+        {
+          "id": 103,
+          "x": 267.10235595703125,
+          "y": 285.030029296875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 261.53741455078125,
+          "y": 285.48773193359375,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.4354553222656,
+          "y": 285.14324951171875,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 512,
+      "actors": [
+        {
+          "id": 100,
+          "x": 265.30877685546875,
+          "y": 285.7084655761719,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.69232177734375,
+          "y": 285.91278076171875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 262.9936828613281,
+          "y": 285.6354675292969,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:102:503",
+            "startedAt": 503,
+            "activeAt": 507,
+            "recoveryAt": 509,
+            "endsAt": 518
+          }
+        },
+        {
+          "id": 103,
+          "x": 266.9532775878906,
+          "y": 285.17388916015625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 261.32513427734375,
+          "y": 285.67864990234375,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.1959533691406,
+          "y": 285.09759521484375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 515,
+      "actors": [
+        {
+          "id": 100,
+          "x": 265.6475830078125,
+          "y": 285.8403625488281,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.4859313964844,
+          "y": 286.2550354003906,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 262.9936828613281,
+          "y": 285.6354675292969,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:102:503",
+            "startedAt": 503,
+            "activeAt": 507,
+            "recoveryAt": 509,
+            "endsAt": 518
+          }
+        },
+        {
+          "id": 103,
+          "x": 266.8733825683594,
+          "y": 285.302001953125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 261.1987609863281,
+          "y": 285.6092224121094,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.0934753417969,
+          "y": 285.378173828125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 518,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.0211181640625,
+          "y": 285.8547668457031,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.1368103027344,
+          "y": 286.4879455566406,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 263.13909912109375,
+          "y": 285.62689208984375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.2799987792969,
+          "y": 285.1445007324219,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 261.33477783203125,
+          "y": 285.65484619140625,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 268.2061462402344,
+          "y": 285.6958923339844,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 522,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.4521179199219,
+          "y": 285.58929443359375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 266.61285400390625,
+          "y": 286.6327209472656,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 263.7213439941406,
+          "y": 285.62890625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.80560302734375,
+          "y": 285.39013671875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 261.3510437011719,
+          "y": 285.65643310546875,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.8541564941406,
+          "y": 286.1448669433594,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 525,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.70556640625,
+          "y": 285.3176574707031,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 266.2486877441406,
+          "y": 286.47906494140625,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 264.1514892578125,
+          "y": 285.562744140625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 268.0538635253906,
+          "y": 285.05126953125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 261.2214660644531,
+          "y": 285.7193908691406,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.8323669433594,
+          "y": 285.7958984375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 529,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.1293029785156,
+          "y": 285.06640625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 266.0057067871094,
+          "y": 285.9698181152344,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 264.72906494140625,
+          "y": 285.4934997558594,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 268.2930603027344,
+          "y": 284.67047119140625,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 261.209716796875,
+          "y": 285.6832580566406,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.5702209472656,
+          "y": 285.9090270996094,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 532,
+      "actors": [
+        {
+          "id": 100,
+          "x": 266.78997802734375,
+          "y": 285.2244567871094,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 265.7312316894531,
+          "y": 285.9000244140625,
+          "intent": "approach",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:101:531",
+            "startedAt": 531,
+            "activeAt": 535,
+            "recoveryAt": 537,
+            "endsAt": 546
+          }
+        },
+        {
+          "id": 102,
+          "x": 264.9873352050781,
+          "y": 285.1448974609375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.86346435546875,
+          "y": 284.61712646484375,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 261.3351135253906,
+          "y": 285.5011291503906,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.68341064453125,
+          "y": 286.0307922363281,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 535,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.0247802734375,
+          "y": 285.3442077636719,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 265.7312316894531,
+          "y": 285.9000244140625,
+          "intent": "approach",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:101:531",
+            "startedAt": 531,
+            "activeAt": 535,
+            "recoveryAt": 537,
+            "endsAt": 546
+          }
+        },
+        {
+          "id": 102,
+          "x": 264.900634765625,
+          "y": 285.5447998046875,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 268.2870178222656,
+          "y": 284.6298522949219,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 261.2425537109375,
+          "y": 285.6693420410156,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.53265380859375,
+          "y": 286.26611328125,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 539,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.52777099609375,
+          "y": 285.3215637207031,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 265.7312316894531,
+          "y": 285.9000244140625,
+          "intent": "retreat",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:101:531",
+            "startedAt": 531,
+            "activeAt": 535,
+            "recoveryAt": 537,
+            "endsAt": 546
+          }
+        },
+        {
+          "id": 102,
+          "x": 264.5989685058594,
+          "y": 286.04046630859375,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 268.8606872558594,
+          "y": 284.7126770019531,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 260.77264404296875,
+          "y": 286.0131530761719,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.936767578125,
+          "y": 286.6858215332031,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 542,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.7509765625,
+          "y": 285.6025390625,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 265.7312316894531,
+          "y": 285.9000244140625,
+          "intent": "retreat",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:101:531",
+            "startedAt": 531,
+            "activeAt": 535,
+            "recoveryAt": 537,
+            "endsAt": 546
+          }
+        },
+        {
+          "id": 102,
+          "x": 264.4510803222656,
+          "y": 286.4516906738281,
+          "intent": "retreat",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 268.44293212890625,
+          "y": 284.641357421875,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 260.9544982910156,
+          "y": 286.10699462890625,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.7578125,
+          "y": 286.8122253417969,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 545,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.6404113769531,
+          "y": 285.6712646484375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 265.7312316894531,
+          "y": 285.9000244140625,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:101:531",
+            "startedAt": 531,
+            "activeAt": 535,
+            "recoveryAt": 537,
+            "endsAt": 546
+          }
+        },
+        {
+          "id": 102,
+          "x": 264.3255615234375,
+          "y": 286.6932678222656,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 268.04595947265625,
+          "y": 284.4631652832031,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 261.3604736328125,
+          "y": 286.0176696777344,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.32220458984375,
+          "y": 286.81414794921875,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 548,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.75701904296875,
+          "y": 285.62164306640625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 266.1484069824219,
+          "y": 285.8314208984375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 263.9437561035156,
+          "y": 286.4833679199219,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.8883056640625,
+          "y": 284.8690490722656,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 261.31365966796875,
+          "y": 285.6794128417969,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 266.95880126953125,
+          "y": 286.6503601074219,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 552,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.8062438964844,
+          "y": 285.7398376464844,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 266.51708984375,
+          "y": 285.4159851074219,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 263.41961669921875,
+          "y": 286.22943115234375,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.77001953125,
+          "y": 284.90716552734375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 261.2663269042969,
+          "y": 285.68389892578125,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 266.44000244140625,
+          "y": 286.5624694824219,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 555,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.7441711425781,
+          "y": 285.84857177734375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 266.8180847167969,
+          "y": 285.14422607421875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 263.0162353515625,
+          "y": 286.0660400390625,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 268.1900634765625,
+          "y": 284.90155029296875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 261.3943176269531,
+          "y": 285.637939453125,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 266.08612060546875,
+          "y": 286.32958984375,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 558,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.8055114746094,
+          "y": 285.8072814941406,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.2341003417969,
+          "y": 285.1957092285156,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 262.6098937988281,
+          "y": 285.90802001953125,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 268.6040954589844,
+          "y": 284.91796875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 261.25018310546875,
+          "y": 285.64617919921875,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 265.85028076171875,
+          "y": 285.96380615234375,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 562,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.5942077636719,
+          "y": 286.2333984375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.0289001464844,
+          "y": 285.4214782714844,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 262.07080078125,
+          "y": 285.6913757324219,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 268.32940673828125,
+          "y": 285.2687683105469,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 261.0889587402344,
+          "y": 285.62646484375,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 265.7454833984375,
+          "y": 285.8626403808594,
+          "intent": "strike",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:105:559",
+            "startedAt": 559,
+            "activeAt": 563,
+            "recoveryAt": 565,
+            "endsAt": 574
+          }
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 565,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.69781494140625,
+          "y": 286.5039367675781,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.174560546875,
+          "y": 285.4169921875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 261.6842041015625,
+          "y": 285.6705322265625,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 268.4134521484375,
+          "y": 285.3468017578125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 260.79742431640625,
+          "y": 285.5295715332031,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 265.7454833984375,
+          "y": 285.8626403808594,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:105:559",
+            "startedAt": 559,
+            "activeAt": 563,
+            "recoveryAt": 565,
+            "endsAt": 574
+          }
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 568,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.71380615234375,
+          "y": 286.2120666503906,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.0295104980469,
+          "y": 285.19537353515625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 261.29010009765625,
+          "y": 285.7304992675781,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 268.242431640625,
+          "y": 285.1141357421875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 260.39886474609375,
+          "y": 285.6595153808594,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 265.7454833984375,
+          "y": 285.8626403808594,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:105:559",
+            "startedAt": 559,
+            "activeAt": 563,
+            "recoveryAt": 565,
+            "endsAt": 574
+          }
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 572,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.6844177246094,
+          "y": 286.129150390625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 266.7696838378906,
+          "y": 285.1675109863281,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 261.75164794921875,
+          "y": 285.631591796875,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.9869384765625,
+          "y": 284.7596130371094,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 260.9450378417969,
+          "y": 285.6175231933594,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 265.7454833984375,
+          "y": 285.8626403808594,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:105:559",
+            "startedAt": 559,
+            "activeAt": 563,
+            "recoveryAt": 565,
+            "endsAt": 574
+          }
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 575,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.7904052734375,
+          "y": 285.7666320800781,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 266.9267883300781,
+          "y": 285.15570068359375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 262.1732482910156,
+          "y": 285.7428894042969,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.8477783203125,
+          "y": 284.3515625,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 261.3668518066406,
+          "y": 285.63677978515625,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 266.0232849121094,
+          "y": 285.91986083984375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 578,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.8611755371094,
+          "y": 285.6694030761719,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.2989807128906,
+          "y": 285.2981872558594,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 262.0360107421875,
+          "y": 285.6790771484375,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.55340576171875,
+          "y": 284.07537841796875,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 261.0137023925781,
+          "y": 285.673583984375,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 266.44610595703125,
+          "y": 285.9720764160156,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 582,
+      "actors": [
+        {
+          "id": 100,
+          "x": 268.2066345214844,
+          "y": 285.9432678222656,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.79241943359375,
+          "y": 285.5631103515625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 261.49530029296875,
+          "y": 285.6160583496094,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.0330505371094,
+          "y": 284.2596740722656,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 260.5271301269531,
+          "y": 285.5074768066406,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.0041809082031,
+          "y": 286.1048583984375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 585,
+      "actors": [
+        {
+          "id": 100,
+          "x": 268.0681457519531,
+          "y": 285.98284912109375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.5581359863281,
+          "y": 285.3187561035156,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 261.36175537109375,
+          "y": 285.67498779296875,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 266.60345458984375,
+          "y": 284.2455139160156,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 260.4260559082031,
+          "y": 285.6313171386719,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 266.8272399902344,
+          "y": 286.0362854003906,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 588,
+      "actors": [
+        {
+          "id": 100,
+          "x": 268.41650390625,
+          "y": 285.92169189453125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.7301940917969,
+          "y": 284.9512634277344,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 261.6115417480469,
+          "y": 285.78424072265625,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 266.3130798339844,
+          "y": 284.22686767578125,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:103:587",
+            "startedAt": 587,
+            "activeAt": 591,
+            "recoveryAt": 593,
+            "endsAt": 602
+          }
+        },
+        {
+          "id": 104,
+          "x": 260.8102722167969,
+          "y": 285.71551513671875,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.1903381347656,
+          "y": 285.88214111328125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 592,
+      "actors": [
+        {
+          "id": 100,
+          "x": 268.377685546875,
+          "y": 286.0910949707031,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.49346923828125,
+          "y": 285.0562744140625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 262.12335205078125,
+          "y": 285.6673278808594,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 266.3130798339844,
+          "y": 284.22686767578125,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:103:587",
+            "startedAt": 587,
+            "activeAt": 591,
+            "recoveryAt": 593,
+            "endsAt": 602
+          }
+        },
+        {
+          "id": 104,
+          "x": 261.33489990234375,
+          "y": 285.7273864746094,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 266.97802734375,
+          "y": 286.03961181640625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 595,
+      "actors": [
+        {
+          "id": 100,
+          "x": 268.2944641113281,
+          "y": 285.87738037109375,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.68072509765625,
+          "y": 284.711181640625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 261.96148681640625,
+          "y": 285.72467041015625,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 266.3130798339844,
+          "y": 284.22686767578125,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:103:587",
+            "startedAt": 587,
+            "activeAt": 591,
+            "recoveryAt": 593,
+            "endsAt": 602
+          }
+        },
+        {
+          "id": 104,
+          "x": 260.9944152832031,
+          "y": 285.5867004394531,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.207275390625,
+          "y": 285.8421936035156,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 599,
+      "actors": [
+        {
+          "id": 100,
+          "x": 268.3121032714844,
+          "y": 286.2639465332031,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.672607421875,
+          "y": 285.12213134765625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 261.4244689941406,
+          "y": 285.6829528808594,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 266.3130798339844,
+          "y": 284.22686767578125,
+          "intent": "flankRight",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:103:587",
+            "startedAt": 587,
+            "activeAt": 591,
+            "recoveryAt": 593,
+            "endsAt": 602
+          }
+        },
+        {
+          "id": 104,
+          "x": 260.788330078125,
+          "y": 285.0478820800781,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 266.9549560546875,
+          "y": 286.0714416503906,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 602,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.94976806640625,
+          "y": 286.1755676269531,
+          "intent": "approach",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.7497253417969,
+          "y": 285.0530700683594,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 261.34173583984375,
+          "y": 285.7688903808594,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 266.4284362792969,
+          "y": 284.3158264160156,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 261.0322570800781,
+          "y": 284.7299499511719,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 266.9715881347656,
+          "y": 285.91925048828125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 605,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.9351501464844,
+          "y": 286.54705810546875,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 267.98974609375,
+          "y": 285.3430480957031,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 261.38720703125,
+          "y": 285.6311950683594,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 266.73944091796875,
+          "y": 284.62164306640625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 261.36767578125,
+          "y": 284.46405029296875,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.09051513671875,
+          "y": 285.9836730957031,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 609,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.6936340332031,
+          "y": 286.94122314453125,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 268.2300720214844,
+          "y": 285.61383056640625,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 261.375,
+          "y": 285.6203918457031,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.164306640625,
+          "y": 284.8958740234375,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 261.88543701171875,
+          "y": 284.3520812988281,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.33294677734375,
+          "y": 285.84747314453125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 612,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.3823547363281,
+          "y": 287.154296875,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 268.5861511230469,
+          "y": 285.8471374511719,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 261.2430725097656,
+          "y": 285.66082763671875,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.5615539550781,
+          "y": 285.0666198730469,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 262.30340576171875,
+          "y": 284.4487609863281,
+          "intent": "strike",
+          "pose": "walk",
+          "action": null
+        },
+        {
+          "id": 105,
+          "x": 267.6238708496094,
+          "y": 285.9285888671875,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    },
+    {
+      "tick": 615,
+      "actors": [
+        {
+          "id": 100,
+          "x": 267.0274658203125,
+          "y": 287.22283935546875,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 101,
+          "x": 268.4599609375,
+          "y": 286.00830078125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 102,
+          "x": 261.3883361816406,
+          "y": 285.6681213378906,
+          "intent": "flankLeft",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 103,
+          "x": 267.4031066894531,
+          "y": 285.0089111328125,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        },
+        {
+          "id": 104,
+          "x": 262.7389221191406,
+          "y": 284.484130859375,
+          "intent": "strike",
+          "pose": "attack",
+          "action": {
+            "move": "strike",
+            "instanceId": "action:104:615",
+            "startedAt": 615,
+            "activeAt": 619,
+            "recoveryAt": 621,
+            "endsAt": 630
+          }
+        },
+        {
+          "id": 105,
+          "x": 267.2466735839844,
+          "y": 285.9281311035156,
+          "intent": "flankRight",
+          "pose": "run",
+          "action": null
+        }
+      ],
+      "debug": []
+    }
+  ],
+  "starts": [
+    203,
+    220,
+    250,
+    284,
+    306,
+    318,
+    339,
+    375,
+    415,
+    431,
+    453,
+    480,
+    503,
+    531,
+    559,
+    587,
+    615
+  ],
+  "beats": {
+    "notice": 61,
+    "stalk": 77,
+    "commit": 180
+  }
+}

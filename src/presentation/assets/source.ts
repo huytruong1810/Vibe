@@ -353,6 +353,11 @@ export function sourceSubjectDependencies(
     rig(l!.rigId);
     for (const id of l!.buildProfileIds) profile(id);
     appearance(l!.appearanceId);
+    if (l!.face) {
+      appearance(l!.face.bodyAppearanceId);
+      for (const poses of Object.values(l!.face.frames))
+        for (const id of Object.values(poses ?? {})) frame(id);
+    }
   };
   const recipe = (recipeId: string) => {
     const r = v2?.recipes?.find((r) => r.id === recipeId);

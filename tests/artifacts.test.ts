@@ -1,219 +1,199 @@
 import { describe, expect, it } from 'vitest';
 import {
-  ARTIFACT_CAPS,
-  ArtifactSchema,
   ArtifactStore,
-  encodePaintingPixels,
-  decodePaintingPixels,
+  ArtifactSchema,
+  ArtifactRecordsSchema,
   sanitizeArtifactText,
-  sanitizeTitle,
-  validateArtifactReferences,
+  ARTIFACT_PALETTE,
+  type NewArtifact,
 } from '../src/domain/artifacts';
+import { ARTIFACT_LIMITS, NPC_PROFILES } from '../src/content/definitions';
+import { TwoSlotInventory, CraftingService } from '../src/domain/inventory';
+import { HarvestSystem, ResourceStore } from '../src/domain/resources';
+import { flatWorld } from './helpers';
 
-describe('authored artifacts item class and store (C17 / V12)', () => {
-  it('sanitizes text with NFC normalization, strips control/BiDi chars, replaces tabs, and enforces line/char caps', () => {
-    const raw = 'e\u0301\t\u0007\u202eHello\n' + 'A'.repeat(120) + '\n' + 'line\n'.repeat(30);
-    const cleaned = sanitizeArtifactText(
-      raw,
-      ARTIFACT_CAPS.maxNoteLines,
-      ARTIFACT_CAPS.maxNoteLineChars,
-      ARTIFACT_CAPS.maxNoteChars,
-    );
-    const lines = cleaned.split('\n');
-    expect(lines.length).toBeLessThanOrEqual(ARTIFACT_CAPS.maxNoteLines);
-    expect(lines[0]).toBe('é  Hello');
-    expect(Array.from(lines[1]!).length).toBe(ARTIFACT_CAPS.maxNoteLineChars);
-    expect(cleaned).not.toContain('\u0007');
-    expect(cleaned).not.toContain('\u202e');
-
-    expect(sanitizeTitle('  A\u0000\tTitle ' + 'x'.repeat(80))).toHaveLength(
-      ARTIFACT_CAPS.maxTitleChars,
-    );
-  });
-
-  it('creates, updates, pages, seals, and views notes, books, and paintings with revision bumps', () => {
+const note = (title = 'Field note'): NewArtifact => ({
+  kind: 'note',
+  title,
+  author: { kind: 'player' },
+  createdDay: 1,
+  lines: ['By the river.'],
+});
+describe('bounded authored records', () => {
+  it('retains field limits and rejects noncanonical text across repeated validations', () => {
     const store = new ArtifactStore();
-    const note = store.createNote({
-      author: 'player',
-      createdAtDay: 1,
-      title: 'Tide Notice',
-      body: 'High tide at dusk.',
-    });
-    expect(note.revision).toBe(1);
-    expect(note.immutable).toBe(false);
-
-    const updatedNote = store.updateNote(note.id, 'Updated Tide Notice', 'High tide at dawn.');
-    expect(updatedNote.revision).toBe(2);
-    expect(updatedNote.content.kind === 'note' && updatedNote.content.body).toBe(
-      'High tide at dawn.',
-    );
-
-    const sealed = store.seal(note.id);
-    expect(sealed.immutable).toBe(true);
-    expect(sealed.revision).toBe(3);
-    expect(() => store.updateNote(note.id, 'Cannot Edit', 'Locked')).toThrow(/immutable|sealed/i);
-
-    const book = store.createBook({
-      author: 'npc:lark',
-      createdAtDay: 2,
-      title: 'Lark Sketch Diary',
-      pages: [{ heading: 'Day 1', body: 'Sketched the canal lanterns.' }],
-    });
-    const withPage2 = store.addBookPage(book.id, {
-      heading: 'Day 2',
-      body: 'Painted the boathouse.',
-    });
-    expect(withPage2.content.kind === 'book' && withPage2.content.pages).toHaveLength(2);
-    const afterRemove = store.removeBookPage(book.id, 0);
-    expect(afterRemove.content.kind === 'book' && afterRemove.content.pages).toHaveLength(1);
-
-    // Painting with 48x32 = 1536 palette indices (<= 16 unique colours, all < 64)
-    const rawPixels = new Uint8Array(ARTIFACT_CAPS.paintingPixelsLen);
-    for (let i = 0; i < rawPixels.length; i++) rawPixels[i] = i % 12;
-    const b64 = encodePaintingPixels(rawPixels);
-    expect(decodePaintingPixels(b64)).toEqual(rawPixels);
-
-    const painting = store.createPainting({
-      author: 'npc:lark',
-      createdAtDay: 3,
-      title: 'Evening Canal',
-      pixels: b64,
-      paletteUsed: Array.from({ length: 12 }, (_, i) => i),
-      caption: 'Warm lantern reflections on still canal water.',
-      subject: 'canal at dusk',
-      seed: 42,
-      model: 'z-image-turbo',
-      status: 'ready',
-    });
-    expect(painting.immutable).toBe(true);
-    const view = store.view(painting.id)!;
-    expect(view.id).toBe(painting.id);
-    expect(view.kind).toBe('painting');
-    expect('pixels' in view).toBe(false);
+    const record = store.create({ ...note(), kind: 'note', lines: ['x'.repeat(96)] });
+    for (let repeat = 0; repeat < 3; repeat++) {
+      expect(ArtifactSchema.safeParse(record).success).toBe(true);
+      expect(ArtifactSchema.safeParse({ ...record, title: 'x'.repeat(96) }).success).toBe(false);
+      expect(ArtifactSchema.safeParse({ ...record, lines: ['e\u0301'] }).success).toBe(false);
+      expect(ArtifactSchema.safeParse({ ...record, lines: ['hidden\u0000control'] }).success).toBe(
+        false,
+      );
+    }
   });
-
-  it('rejects paintings with > 16 unique colours or out-of-range palette indices', () => {
+  it('normalizes NFC, tabs, line endings and controls without truncation', () => {
+    expect(sanitizeArtifactText('e\u0301\tA\u0000\u0085\r\nB\rC')).toBe('é A\nB\nC');
     const store = new ArtifactStore();
-    const tooManyColors = new Uint8Array(ARTIFACT_CAPS.paintingPixelsLen);
-    for (let i = 0; i < tooManyColors.length; i++) tooManyColors[i] = i % 20;
-    expect(() =>
-      store.createPainting({
-        author: 'player',
-        createdAtDay: 1,
-        title: 'Invalid Palette Count',
-        pixels: encodePaintingPixels(tooManyColors),
-        paletteUsed: Array.from({ length: 20 }, (_, i) => i),
-        caption: 'Too many colours.',
-        subject: 'test',
-        seed: 1,
-        model: 'test',
-        status: 'ready',
-      }),
-    ).toThrow(/16|colour|color/i);
+    const a = store.create({ ...note('e\u0301'), kind: 'note', lines: ['a\tb\u0000'] });
+    expect(a.title).toBe('é');
+    expect(a.kind === 'note' && a.lines).toEqual(['a b']);
+    expect(() => store.create(note('x'.repeat(49)))).toThrow();
+    expect(store.serial).toBe(1);
   });
-
-  it('validates referential integrity across inventory, ground drops, and display hooks', () => {
-    const store = new ArtifactStore();
-    const n1 = store.createNote({
-      author: 'player',
-      createdAtDay: 1,
-      title: 'Note 1',
-      body: 'Body 1',
-    });
-    const n2 = store.createNote({
-      author: 'player',
-      createdAtDay: 1,
-      title: 'Note 2',
-      body: 'Body 2',
-    });
-
+  it('copies inputs and outputs, increments revisions and keeps provenance immutable', () => {
+    const store = new ArtifactStore(),
+      a = store.create(note());
+    a.title = 'Outside';
+    expect(store.get(a.id)?.title).toBe('Field note');
+    const change = { lines: ['Changed'] };
+    expect(store.update(a.id, change).revision).toBe(2);
+    change.lines[0] = 'Outside';
+    expect(store.get(a.id)).toMatchObject({ lines: ['Changed'] });
+    expect(() => store.update(a.id, { author: { kind: 'player' } } as never)).toThrow(/Immutable/);
+    expect(() => store.update(a.id, { pages: [[]] })).toThrow();
+    expect(store.get(a.id)?.revision).toBe(2);
+    expect(store.seal(a.id).revision).toBe(3);
+    expect(store.seal(a.id).revision).toBe(3);
+    expect(() => store.update(a.id, { title: 'No' })).toThrow(/sealed/);
+    expect(() => store.seal('art:999')).toThrow(/Unknown/);
+    expect(() => store.update('art:999', {})).toThrow(/Unknown/);
+  });
+  it('never reuses removed IDs, and restores atomically', () => {
+    const store = new ArtifactStore(),
+      a = store.create(note());
+    store.remove(a.id);
+    expect(store.create(note()).id).toBe('art:2');
+    const next = new ArtifactStore();
+    next.restore(store.snapshot(), store.serial);
+    expect(next.create(note()).id).toBe('art:3');
+    expect(() => next.restore(store.snapshot(), 0)).toThrow(/counter/);
+    expect(next.serial).toBe(3);
+    expect(() => next.restore([], -1)).toThrow();
+  });
+  it.each([
+    { title: '' },
+    { title: ' ' },
+    { title: 'x'.repeat(49) },
+    { lines: ['x'.repeat(97)] },
+    { lines: Array(25).fill('') },
+    { lines: ['a\nb'] },
+    { createdDay: -1 },
+    { revision: 0 },
+    { author: { kind: 'npc', id: 'npc:unknown' } },
+    { extra: true },
+  ])('rejects invalid note fields %j', (change) => {
     expect(
-      validateArtifactReferences(
-        store.toJSON(),
-        [n1.id],
-        [],
-        [{ sceneId: 1, propId: 'hook-1', artifactId: n2.id }],
-      ).ok,
-    ).toBe(true);
-
-    // Duplicate reference (both held and on a wall hook) fails
-    expect(
-      validateArtifactReferences(
-        store.toJSON(),
-        [n1.id],
-        [],
-        [{ sceneId: 1, propId: 'hook-1', artifactId: n1.id }],
-      ).ok,
+      ArtifactSchema.safeParse({ ...note(), id: 'art:1', revision: 1, sealed: false, ...change })
+        .success,
     ).toBe(false);
-
-    // Missing artifact reference fails
-    expect(validateArtifactReferences(store.toJSON(), ['art:missing'], [], []).ok).toBe(false);
   });
-
-  it('round-trips a full 512-artifact store under 3 MB and validates in < 50 ms', () => {
+  it('accepts boundary text sizes, known authors and 48 pages; rejects page count overflow', () => {
     const store = new ArtifactStore();
-    const pixels = new Uint8Array(ARTIFACT_CAPS.paintingPixelsLen);
-    for (let i = 0; i < pixels.length; i++) pixels[i] = (i * 7) % 16;
-    const encodedPixels = encodePaintingPixels(pixels);
-
-    for (let i = 0; i < ARTIFACT_CAPS.maxArtifactsPerSave; i++) {
-      if (i % 3 === 0) {
-        store.createNote({
-          author: 'player',
-          createdAtDay: i,
-          title: `Field Note #${i}`,
-          body: Array.from(
-            { length: 12 },
-            (_, l) => `Line ${l} of note ${i} with observations.`,
-          ).join('\n'),
-        });
-      } else if (i % 3 === 1) {
-        store.createBook({
-          author: 'npc:lark',
-          createdAtDay: i,
-          title: `Chronicle Volume #${i}`,
-          pages: Array.from({ length: 6 }, (_, p) => ({
-            heading: `Chapter ${p + 1}`,
-            body: Array.from(
-              { length: 10 },
-              (__, l) => `Page ${p + 1} line ${l + 1} prose text.`,
-            ).join('\n'),
-          })),
-        });
-      } else {
-        store.createPainting({
-          author: 'npc:lark',
-          createdAtDay: i,
-          title: `Aqualia Study #${i}`,
-          pixels: encodedPixels,
-          paletteUsed: Array.from({ length: 16 }, (_, c) => c),
-          caption: 'A quiet study of lanterns and bridges over the canal.',
-          subject: 'canal bridge',
-          seed: 1000 + i,
-          model: 'z-image-turbo',
-          status: 'ready',
-        });
-      }
-    }
-
+    const book = store.create({
+      kind: 'book',
+      title: 'x'.repeat(48),
+      author: { kind: 'npc', id: NPC_PROFILES[0]!.id },
+      createdDay: 0,
+      pages: Array.from({ length: 48 }, () => Array(24).fill('x'.repeat(96))),
+    });
+    expect(book.kind === 'book' && book.pages.length).toBe(48);
+    expect(() => store.update(book.id, { pages: [] })).toThrow();
+    expect(() => store.update(book.id, { pages: Array.from({ length: 49 }, () => []) })).toThrow();
+    const view = store.views()[0]!;
+    expect(view.length).toBe(48);
+    expect(view).not.toHaveProperty('pages');
+  });
+  it('enforces record and aggregate UTF-16 text budgets without partial updates', () => {
+    const store = new ArtifactStore();
+    const big = {
+      kind: 'book',
+      title: 'Book',
+      author: { kind: 'player' },
+      createdDay: 0,
+      pages: Array.from({ length: 48 }, () => Array(24).fill('界'.repeat(96))),
+    } as const;
+    for (let i = 0; i < 9; i++) store.create(structuredClone(big) as NewArtifact);
+    expect(() => store.create(structuredClone(big) as NewArtifact)).toThrow(/budget/);
+    expect(store.serial).toBe(9);
+    const a = new ArtifactStore().create(note());
+    const records = Array.from({ length: ARTIFACT_LIMITS.records }, (_, i) => ({
+      ...a,
+      id: `art:${i + 1}`,
+    }));
+    expect(ArtifactRecordsSchema.safeParse(records).success).toBe(true);
+    expect(ArtifactRecordsSchema.safeParse([...records, { ...a, id: 'art:513' }]).success).toBe(
+      false,
+    );
+    expect(ArtifactRecordsSchema.safeParse([a, a]).success).toBe(false);
+  });
+  it('validates painting bytes, colors, provenance and captions', () => {
+    const store = new ArtifactStore();
+    const a = store.create({
+      kind: 'painting',
+      title: 'River',
+      author: { kind: 'player' },
+      createdDay: 1,
+      status: 'pending',
+      brief: {
+        title: 'River',
+        subject: 'River bend',
+        composition: 'wide landscape',
+        mood: 'dawn',
+        subjects: [],
+      },
+    });
+    const color = [...ARTIFACT_PALETTE][0]!;
+    expect(
+      store.update(a.id, {
+        status: 'ready',
+        pixels: 'A'.repeat(1024),
+        palette: [color],
+        caption: 'A river.',
+      }),
+    ).toMatchObject({ status: 'ready' });
+    for (const change of [
+      { pixels: 'A' },
+      { pixels: '/'.repeat(1024) },
+      { palette: ['#000000'] },
+      { palette: Array(17).fill(color) },
+      { palette: [color, color] },
+      { caption: Array(41).fill('word').join(' ') },
+      { failure: 'x'.repeat(201) },
+      { render: { provider: 'mock', model: 'test', seed: 1, steps: 0, width: 48, height: 32 } },
+    ])
+      expect(() => store.update(a.id, change)).toThrow();
     expect(() =>
-      store.createNote({ author: 'player', createdAtDay: 999, title: 'Overflow', body: 'No room' }),
-    ).toThrow(/512|limit|cap/i);
-
-    const exported = store.toJSON();
-    const jsonBytes = new TextEncoder().encode(JSON.stringify(exported)).byteLength;
-    expect(jsonBytes).toBeLessThan(3 * 1024 * 1024);
-
-    // Best of three runs: a loaded CI worker can stall a single run; validation cost is what is asserted.
-    let restored = ArtifactStore.fromJSON(exported);
-    let elapsedMs = Infinity;
-    for (let run = 0; run < 3; run++) {
-      const t0 = performance.now();
-      restored = ArtifactStore.fromJSON(exported);
-      elapsedMs = Math.min(elapsedMs, performance.now() - t0);
-    }
-    expect(elapsedMs).toBeLessThan(50);
-    expect(restored.size).toBe(ARTIFACT_CAPS.maxArtifactsPerSave);
-    expect(ArtifactSchema.safeParse(exported[0]).success).toBe(true);
+      new ArtifactStore().create({
+        ...a,
+        status: 'ready',
+        pixels: undefined,
+        palette: undefined,
+      } as NewArtifact),
+    ).toThrow();
+  });
+  it('preserves item identity and artifact through swaps, drop and pickup; crafts only blank inputs', () => {
+    const inventory = new TwoSlotInventory(),
+      store = new ResourceStore(flatWorld());
+    const a = { ...inventory.create('note'), artifact: 'art:1' };
+    inventory.insert(a);
+    inventory.add('fiber');
+    inventory.swap();
+    expect(new CraftingService().combine(inventory)).not.toContain('Crafted');
+    inventory.swap();
+    expect(inventory.remove(0)).toEqual(a);
+    expect(store.dropItem(a, { x: 4, y: 4 })).toBe(true);
+    expect(new HarvestSystem(store).harvest({ x: 4, y: 4 }, inventory, 0).ok).toBe(true);
+    expect(inventory.state[0]).toEqual(a);
+    inventory.restore([null, null]);
+    inventory.add('fiber');
+    inventory.add('fiber');
+    expect(new CraftingService().combine(inventory)).toBe('Crafted Note.');
+    inventory.add('stick');
+    expect(new CraftingService().combine(inventory)).toBe('Crafted Blank canvas.');
+    inventory.restore([null, null]);
+    inventory.add('fiber');
+    inventory.add('stick');
+    expect(new CraftingService().combine(inventory)).toBe('Crafted Shortbow.');
   });
 });

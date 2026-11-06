@@ -1,3 +1,5 @@
+import { ContextSettingsSchema } from './conversation';
+import { CombatSettingsSchema, type CombatSettings } from './combat-director';
 import { z } from 'zod';
 import { NPC_PROFILES, SETTLEMENTS } from '../content/definitions';
 import type { InventoryState } from './inventory';
@@ -9,12 +11,60 @@ import type { Building, WorldDelta } from './world';
 import type { DebugPath, NpcId, WorldPosition } from './values';
 import type { WeatherState } from './core';
 import type { DialogueEmotion } from './dialogue';
+import { PaintingResultSchema } from './painting';
+import { ArtifactIdSchema, PaintingBriefSchema } from './artifacts';
 import type { EquipmentView } from './equipment';
+import type { Artifact, ArtifactView, ArtifactPlacement } from './artifacts';
 import type { ScenePresentation, ProjectilePresentation } from './presentation-contract';
 
 const npc = z.enum(NPC_PROFILES.map((n) => n.id) as [NpcId, ...NpcId[]]);
 const slot = z.union([z.literal(0), z.literal(1)]);
 export const CommandPayloadSchema = z.discriminatedUnion('type', [
+  z.object({ type: z.literal('configurePainting'), enabled: z.boolean() }).strict(),
+  z
+    .object({
+      type: z.literal('artifactWrite'),
+      slot,
+      title: z.string().min(1).max(48).optional(),
+      page: z.number().int().min(1).max(48).optional(),
+      lines: z.array(z.string().max(96)).max(24),
+    })
+    .strict(),
+  z.object({ type: z.literal('artifactPageAdd'), slot }).strict(),
+  z
+    .object({ type: z.literal('artifactPageRemove'), slot, page: z.number().int().min(1).max(48) })
+    .strict(),
+  z.object({ type: z.literal('artifactSeal'), slot }).strict(),
+  z
+    .object({
+      type: z.literal('partnerCommand'),
+      command: z.enum(['focus', 'regroup']),
+      target: z.number().int().nonnegative().optional(),
+    })
+    .strict(),
+  z
+    .object({
+      type: z.literal('inspectCreature'),
+      entityId: z.number().int().nonnegative().nullable(),
+    })
+    .strict(),
+  z.object({ type: z.literal('configureCombat'), settings: CombatSettingsSchema }).strict(),
+  z.object({ type: z.literal('configureContext'), settings: ContextSettingsSchema }).strict(),
+  z
+    .object({
+      type: z.literal('artifactDisplay'),
+      slot,
+      propId: z.string().min(1).max(200),
+      displaySlot: z.number().int().min(0).max(511),
+    })
+    .strict(),
+  z
+    .object({
+      type: z.literal('artifactTake'),
+      propId: z.string().min(1).max(200),
+      displaySlot: z.number().int().min(0).max(511),
+    })
+    .strict(),
   z.object({ type: z.literal('furniture'), propId: z.string().min(1).max(200) }).strict(),
   z.object({ type: z.literal('equip'), slot }).strict(),
   z
@@ -59,6 +109,33 @@ export const CommandPayloadSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('use'), slot }).strict(),
   z
     .object({
+      type: z.literal('paintingRequest'),
+      slot,
+      prompt: z.string().min(1).max(240),
+      mood: PaintingBriefSchema.shape.mood,
+      composition: PaintingBriefSchema.shape.composition.optional(),
+    })
+    .strict(),
+  z.object({ type: z.literal('paintingKeep'), requestId: ArtifactIdSchema }).strict(),
+  z.object({ type: z.literal('paintingDiscard'), requestId: ArtifactIdSchema }).strict(),
+  z
+    .object({
+      type: z.literal('paintingResult'),
+      artifactId: ArtifactIdSchema,
+      revision: z.number().int().min(1).max(Number.MAX_SAFE_INTEGER),
+      result: PaintingResultSchema,
+    })
+    .strict(),
+  z
+    .object({
+      type: z.literal('paintingFailure'),
+      artifactId: ArtifactIdSchema,
+      revision: z.number().int().min(1).max(Number.MAX_SAFE_INTEGER),
+      reason: z.string().max(200),
+    })
+    .strict(),
+  z
+    .object({
       type: z.literal('care'),
       creature: z.number().int().nonnegative(),
       action: z.enum(['feed', 'water', 'pet', 'bathe', 'heal']),
@@ -71,7 +148,12 @@ export const CommandPayloadSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('closeDialogue') }).strict(),
   z.object({ type: z.literal('battle'), npcId: npc }).strict(),
   z
-    .object({ type: z.literal('agentResult'), jobId: z.string().max(200), output: z.unknown() })
+    .object({
+      type: z.literal('agentResult'),
+      jobId: z.string().max(200),
+      output: z.unknown(),
+      promptTokens: z.number().int().nonnegative().optional(),
+    })
     .strict(),
   z
     .object({
@@ -106,6 +188,7 @@ export interface CommandResult {
   readonly id: string;
   readonly ok: boolean;
   readonly message: string;
+  readonly artifactId?: string;
 }
 export interface DialogueState {
   readonly npcId: NpcId;
@@ -118,6 +201,7 @@ export interface DialogueState {
   invitePending?: boolean;
   readonly staged: AgentAction[];
   pendingJob: string | null;
+  reading?: boolean;
 }
 export interface CreatureView {
   readonly heightMeters: number;
@@ -159,8 +243,18 @@ export interface PerformanceView {
   readonly expansions: number;
   readonly reactions: number;
   readonly inferencePending: number;
+  readonly context?: { tokens: number; budget: number; compactions: number; truncated: boolean };
 }
 export interface RenderSnapshot {
+  readonly creatureDebug?: readonly {
+    id: number;
+    intent: string;
+    target: number;
+    token: number;
+    scores: readonly { intent: string; score: number }[];
+    observation?: readonly number[];
+  }[];
+  readonly combatSettings: CombatSettings;
   readonly equipment: EquipmentView;
   readonly scene: ScenePresentation;
   readonly projectiles: readonly ProjectilePresentation[];
@@ -195,8 +289,12 @@ export interface RenderSnapshot {
   readonly paused: readonly string[];
   readonly player: PlayerState;
   readonly inventory: InventoryState;
+  readonly artifacts: readonly ArtifactView[];
+  readonly placements: readonly ArtifactPlacement[];
   readonly creatures: readonly CreatureView[];
-  readonly npcs: readonly NpcState[];
+  readonly npcs: readonly (NpcState & {
+    readonly memoryCounts?: { active: number; pending: number };
+  })[];
   readonly events: readonly DomainEvent[];
   readonly drops: readonly GroundDrop[];
   readonly markers: readonly Marker[];
@@ -239,7 +337,26 @@ export interface TerrainView {
   readonly groundNames?: readonly string[];
   readonly buildings: readonly Building[];
 }
-export type ToWorker =
+/** Diagnostic timestamps are local to their thread; only durations may be compared. */
+export interface WorkTiming {
+  name: string;
+  start: number;
+  end: number;
+}
+export interface WorkerTiming {
+  requestId: string;
+  received: number;
+  serviceEnd: number;
+  reply: number;
+  recent: readonly WorkTiming[];
+}
+export type ToWorker = (
+  | {
+      type: 'artifactContent';
+      requestId: string;
+      artifactId: string;
+      paintingPurpose?: 'display' | 'generation';
+    }
   | {
       type: 'initialize';
       seed: number;
@@ -250,13 +367,18 @@ export type ToWorker =
     }
   | { type: 'command'; envelope: WorldCommand }
   | { type: 'checkpoint'; requestId: string }
+  | { type: 'persistCheckpoint'; requestId: string }
   | { type: 'restore'; requestId: string; snapshot: unknown; compiledWorld?: unknown }
   | { type: 'recycle'; buffer: ArrayBuffer }
-  | { type: 'dispose' };
-export type FromWorker =
+  | { type: 'dispose' }
+) & { diagnostic?: boolean };
+export type FromWorker = (
+  | { type: 'artifactContent'; requestId: string; artifact: Artifact | null }
   | { type: 'ready'; terrain: TerrainView; frame: RenderSnapshot }
   | { type: 'frame'; frame: RenderSnapshot; terrain?: TerrainView }
   | { type: 'result'; result: CommandResult }
   | { type: 'checkpoint'; requestId: string; snapshot: unknown }
+  | { type: 'checkpointSaved'; requestId: string }
   | { type: 'restored'; requestId: string; terrain: TerrainView; frame: RenderSnapshot }
-  | { type: 'error'; message: string; requestId?: string };
+  | { type: 'error'; message: string; requestId?: string }
+) & { diagnostic?: WorkerTiming };

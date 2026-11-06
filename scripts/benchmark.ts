@@ -1,8 +1,14 @@
+import { ChunkStore } from '../src/domain/world';
+import { SpatialIndex } from '../src/domain/navigation';
+import { NpcProfileRegistry, PlanService, MemoryRepository } from '../src/domain/agents';
 import { cpus, platform, arch, totalmem } from 'node:os';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { performance } from 'node:perf_hooks';
 import { SimulationHost } from '../src/domain/simulation';
+import { NPC_PROFILES } from '../src/content/definitions';
 import { migrateSave } from '../src/domain/save-schema';
+import { CombatSystem } from '../src/domain/combat';
+import { EntityStore, bindBody } from '../src/domain/entities';
 
 const samples = Number(process.env.BENCHMARK_TICKS ?? 3000);
 const started = performance.now(),
@@ -91,7 +97,124 @@ for (let n = 0; n < Math.min(samples, 1500); n++) {
   host.step();
   activeCombat.push(performance.now() - before);
 }
+const memoryNpc = new NpcProfileRegistry().create()[0]!,
+  memoryRepository = new MemoryRepository();
+for (let i = 0; i < 400; i++)
+  memoryRepository.append(memoryNpc, {
+    type: 'episodic',
+    text: `River bridge observation ${i}`,
+    subjects: ['player'],
+    importance: 1 + (i % 10),
+    createdTick: i,
+    lastAccessTick: i,
+    confidence: 'witnessed',
+    source: { kind: 'event', ids: [`fixture:${i}`] },
+  });
+const memoryPlans = new PlanService(memoryRepository);
+const query = 'river bridge';
+memoryPlans.queries.set(query, [1, ...Array<number>(255).fill(0)]);
+for (const record of memoryNpc.memory.records)
+  memoryPlans.vectors.set(record.id, {
+    text: record.text,
+    vector: [1, ...Array<number>(255).fill(0)],
+  });
+const memoryTimings: number[] = [],
+  memoryPromptTimings: number[] = [];
+for (let i = 0; i < 1100; i++) {
+  const start = performance.now();
+  memoryPlans.retrieval.retrieve(memoryNpc, query, 1000, 12, {
+    query: memoryPlans.queries.get(query)!,
+    records: memoryPlans.vectors,
+  });
+  if (i >= 100) memoryTimings.push(performance.now() - start);
+  const promptStart = performance.now();
+  memoryPlans.job(memoryNpc, NPC_PROFILES[0]!, 'world:benchmark-memory', 1000, 'dialogue', query);
+  if (i >= 100) memoryPromptTimings.push(performance.now() - promptStart);
+}
+// Director preparation includes release, candidate collection and deterministic selection.
+// Exercise both one crowded target and 75 independent wild-target pools.
+const directorStore = new EntityStore(),
+  directorPlayer = { ...host.player };
+directorStore.spawnHuman(0, 1, 20, 20);
+bindBody(directorPlayer, directorStore, 0);
+const directorCombat = new CombatSystem(directorStore, directorPlayer, []);
+for (let n = 0; n < 150; n++) directorStore.spawn(6, 20 + (n % 2), 20);
+directorCombat.minds.sync();
+for (let i = 0; i < 150; i++) directorCombat.minds.state.engage[i] = 2;
+const directorTimings: number[] = [],
+  wildDirectorTimings: number[] = [];
+for (const paired of [false, true]) {
+  directorCombat.pursuits.clear();
+  directorCombat.director.reset();
+  for (let n = 0; n < 150; n++)
+    directorCombat.pursuits.set(directorStore.id(n), {
+      target: paired ? directorStore.id(n % 2 ? n - 1 : n + 1) : 0,
+      cause: 'territory',
+      until: 10000,
+    });
+  for (let n = 0; n < 3300; n++) {
+    const before = performance.now();
+    directorCombat.prepareDirector(n);
+    if (n >= 300) (paired ? wildDirectorTimings : directorTimings).push(performance.now() - before);
+  }
+}
+// 150 living combatants execute every tick; the 48-slot cap affects decision cadence only.
+const engagedStore = new EntityStore(),
+  engagedPlayer = { ...host.player };
+engagedStore.spawnHuman(0, 1, 64, 64);
+bindBody(engagedPlayer, engagedStore, 0);
+const engagedWorld = new ChunkStore(128),
+  engagedCombat = new CombatSystem(engagedStore, engagedPlayer, [], engagedWorld),
+  engagedSpatial = new SpatialIndex();
+for (let i = 0; i < 150; i++)
+  engagedStore.spawn(i % 8, 64 + ((i % 15) - 7) * 0.5, 64 + (Math.floor(i / 15) - 5) * 0.5);
+const brain150: number[] = [],
+  movement150: number[] = [],
+  engagedDirector150: number[] = [];
+let minimumExecuted = 150,
+  maximumFullRate = 0;
+for (let tick = 1; tick <= samples + 300; tick++) {
+  engagedPlayer.invulnerableUntil = tick + 100;
+  for (let i = 0; i < 150; i++) {
+    engagedStore.hp[i] = engagedStore.maxHp(i);
+    engagedStore.stamina[i] = 100;
+    engagedCombat.pursuits.set(engagedStore.id(i), {
+      target: 0,
+      cause: 'territory',
+      until: tick + 600,
+    });
+    // Keep this sustained-load fixture inside the same home/leash, independently of motion.
+    if (engagedCombat.minds.ids[i]! >= 0) {
+      engagedCombat.minds.state.lastSeen[i] = tick;
+      engagedCombat.minds.state.homeX[i] = 64;
+      engagedCombat.minds.state.homeY[i] = 64;
+    }
+  }
+  engagedCombat.advance(tick, engagedSpatial);
+  let executed = 0,
+    full = 0;
+  for (let i = 0; i < 150; i++) {
+    if (engagedCombat.minds.state.lastMove[i] === tick) executed++;
+    full += engagedCombat.minds.fullRate[i]!;
+  }
+  if (tick > 300) {
+    brain150.push(engagedCombat.minds.brainMs);
+    movement150.push(engagedCombat.minds.movementMs);
+    engagedDirector150.push(engagedCombat.directorMs);
+    minimumExecuted = Math.min(minimumExecuted, executed);
+    maximumFullRate = Math.max(maximumFullRate, full);
+  }
+}
+const engagedCombat150 = {
+  actors: 150,
+  minimumExecuted,
+  maximumFullRate,
+  brain: summarize(brain150),
+  movement: summarize(movement150),
+  director: summarize(engagedDirector150),
+};
 const report = {
+  engagedCombat150,
   recordedAt: new Date().toISOString(),
   runtime: process.version,
   platform: `${platform()} ${arch()}`,
@@ -116,6 +239,14 @@ const report = {
   activeCombatActors: fighters.length,
   activeCombatFixture:
     '64 paired territorial encounters; needs, stamina and HP refill between ordinary ticks; no rendering or inference.',
+  memoryRetrieval: summarize(memoryTimings),
+  memoryPrompt: summarize(memoryPromptTimings),
+  memoryFixture:
+    '400 valid records, cached 256-d embeddings, full prompt construction; 100 warmups and 1000 samples',
+  director150: summarize(directorTimings),
+  directorWild150: summarize(wildDirectorTimings),
+  directorFixture:
+    '150 ready Bramblefang: one player target, then 75 independent wild pairs; 300 warmups and 3000 samples each; collection, release and selection included.',
   checkpointMs: +saveMs.toFixed(2),
   checkpointBytes: Buffer.byteLength(serialized),
   nodeRssMiB: +(process.memoryUsage().rss / 2 ** 20).toFixed(1),
@@ -126,3 +257,22 @@ await mkdir('artifacts', { recursive: true });
 await writeFile('artifacts/benchmark.json', `${JSON.stringify(report, null, 2)}\n`);
 console.log(JSON.stringify(report, null, 2));
 host.dispose();
+if (summarize(memoryTimings).p95Ms > 5) {
+  console.error('Memory retrieval/prompt p95 exceeds 5 ms');
+  process.exitCode = 1;
+}
+if (Math.max(summarize(directorTimings).p95Ms, summarize(wildDirectorTimings).p95Ms) > 0.2) {
+  console.error('Combat director p95 exceeds 0.2 ms/tick');
+  process.exitCode = 1;
+}
+
+if (
+  engagedCombat150.minimumExecuted !== 150 ||
+  engagedCombat150.maximumFullRate > 48 ||
+  engagedCombat150.brain.p95Ms > 1 ||
+  engagedCombat150.movement.p95Ms > 1 ||
+  engagedCombat150.director.p95Ms > 0.2
+) {
+  console.error('CRM-8 engagedCombat150 budget/execution gate failed');
+  process.exitCode = 1;
+}

@@ -346,8 +346,8 @@
     "subjectKind": "appearance",
     "subjectId": "species:mireling",
     "digest": "fa52c6000baa2f4b37f8afcf105911b9e9cb807a18bb7b12869ee281602f06d5",
-    "approvalMatches": true,
-    "runtimeStage": "approved"
+    "approvalMatches": false,
+    "runtimeStage": "candidate"
   },
   {
     "subjectKind": "appearance",
@@ -577,21 +577,21 @@
     "subjectKind": "appearance",
     "subjectId": "species:rivallie",
     "digest": "081a7f661d34b4d8738f2262fad74f6a11d9212833862d9dff0466d2e79a8611",
-    "approvalMatches": true,
-    "runtimeStage": "approved"
+    "approvalMatches": false,
+    "runtimeStage": "candidate"
   },
   {
     "subjectKind": "appearance",
     "subjectId": "species:bramblefang",
     "digest": "f731cfbaf1a3fee932e783aa983345c4ae54a51cc6a4886ed9ac97af367889ca",
-    "approvalMatches": true,
-    "runtimeStage": "approved"
+    "approvalMatches": false,
+    "runtimeStage": "candidate"
   },
   {
     "subjectKind": "appearance",
     "subjectId": "species:marshstalker",
     "digest": "3e88e7fb5a77ae1f45c0c469c3d4bf293a3a408e32042160c898d4d1fc09e567",
-    "approvalMatches": true,
-    "runtimeStage": "approved"
+    "approvalMatches": false,
+    "runtimeStage": "candidate"
   }
 ]

@@ -7,6 +7,7 @@ export type FurnitureView = Pick<
   'id' | 'contentId' | 'x' | 'y' | 'interaction'
 >;
 export const FURNITURE_ACTION_LABELS = {
+  paint: 'Easel',
   rest: 'Rest',
   work: 'Work',
   wash: 'Wash',

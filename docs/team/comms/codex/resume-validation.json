@@ -1,0 +1,2682 @@
+{
+  "recordedAt": "2026-11-05T04:44:17.710214+00:00",
+  "merge": "296a7598",
+  "forge": "5655aa23",
+  "python": {
+    "finish": 24,
+    "creatureFaces": 11,
+    "publishFaces": 5
+  },
+  "cpu": {
+    "firstConcurrentRun": {
+      "passed": 552,
+      "failed": 1,
+      "failure": "painting 5ms median budget measured 7.1638ms while browser proof was running"
+    },
+    "sequentialRun": {
+      "passed": 553,
+      "files": 46,
+      "seconds": 58.48,
+      "check": "passed (hygiene, types, architecture, assets, unit tests, production build)"
+    },
+    "laterChangesRequiringValidation": [
+      "face packet/body binding comparison",
+      "ledger reconciliation",
+      "C13 worker-frame observer"
+    ]
+  },
+  "normalBrowser": {
+    "passed": 30,
+    "minutes": 7.9,
+    "note": "Before C13 worker-frame observer repair and ledger reconciliation",
+    "literacy": {
+      "bootstrap": {
+        "setupStatus": "Preparing your world with fallback dialogue...",
+        "loadMs": 1064.6000001430511,
+        "assetError": "",
+        "gpu": "ANGLE (Intel, Intel(R) Iris(R) Xe Graphics (0x0000A7A1) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "hasFrame": true,
+        "io": [
+          [
+            "worker in:result",
+            8171
+          ],
+          [
+            "idb tx:readwrite",
+            8366
+          ],
+          [
+            "worker in:checkpoint",
+            8366
+          ],
+          [
+            "idb tx:readwrite:complete",
+            8401
+          ],
+          [
+            "worker out:resume",
+            8498
+          ],
+          [
+            "worker in:result",
+            8501
+          ],
+          [
+            "worker out:pause",
+            8697
+          ],
+          [
+            "worker in:result",
+            8718
+          ],
+          [
+            "worker out:artifactWrite",
+            9298
+          ],
+          [
+            "worker out:artifactContent",
+            9301
+          ],
+          [
+            "worker in:result",
+            9301
+          ],
+          [
+            "worker out:artifactPageAdd",
+            9323
+          ],
+          [
+            "worker in:artifactContent",
+            9323
+          ],
+          [
+            "worker out:artifactContent",
+            9330
+          ],
+          [
+            "worker in:result",
+            9331
+          ],
+          [
+            "worker in:artifactContent",
+            9341
+          ],
+          [
+            "worker out:artifactWrite",
+            9464
+          ],
+          [
+            "worker out:artifactContent",
+            9467
+          ],
+          [
+            "worker in:result",
+            9467
+          ],
+          [
+            "worker out:artifactPageAdd",
+            9478
+          ],
+          [
+            "worker in:artifactContent",
+            9478
+          ],
+          [
+            "worker out:artifactContent",
+            9492
+          ],
+          [
+            "worker in:result",
+            9492
+          ],
+          [
+            "worker in:artifactContent",
+            9503
+          ],
+          [
+            "worker out:artifactWrite",
+            9649
+          ],
+          [
+            "worker out:artifactContent",
+            9652
+          ],
+          [
+            "worker in:result",
+            9652
+          ],
+          [
+            "worker in:artifactContent",
+            9672
+          ],
+          [
+            "worker out:artifactSeal",
+            9798
+          ],
+          [
+            "worker out:artifactContent",
+            9801
+          ],
+          [
+            "worker in:result",
+            9801
+          ],
+          [
+            "worker in:artifactContent",
+            9808
+          ],
+          [
+            "worker out:resume",
+            9941
+          ],
+          [
+            "worker in:result",
+            9954
+          ],
+          [
+            "worker out:pause",
+            10046
+          ],
+          [
+            "worker out:artifactContent",
+            10054
+          ],
+          [
+            "worker in:result",
+            10054
+          ],
+          [
+            "worker in:artifactContent",
+            10083
+          ],
+          [
+            "worker out:move",
+            10206
+          ],
+          [
+            "worker in:result",
+            10215
+          ],
+          [
+            "worker out:resume",
+            10719
+          ],
+          [
+            "worker in:result",
+            10733
+          ],
+          [
+            "worker out:pause",
+            10844
+          ],
+          [
+            "worker in:result",
+            10860
+          ],
+          [
+            "worker out:checkpoint",
+            10899
+          ],
+          [
+            "worker in:checkpoint",
+            11248
+          ],
+          [
+            "worker out:restore",
+            12949
+          ],
+          [
+            "worker out:pause",
+            13715
+          ],
+          [
+            "worker out:configureContext",
+            13715
+          ],
+          [
+            "worker out:configurePainting",
+            13715
+          ],
+          [
+            "worker in:restored",
+            13716
+          ],
+          [
+            "worker in:result",
+            13742
+          ],
+          [
+            "worker out:checkpoint",
+            13746
+          ],
+          [
+            "worker in:result",
+            13746
+          ],
+          [
+            "worker in:result",
+            13755
+          ],
+          [
+            "idb tx:readwrite",
+            13888
+          ],
+          [
+            "worker in:checkpoint",
+            13889
+          ],
+          [
+            "idb tx:readwrite:complete",
+            13917
+          ],
+          [
+            "worker out:resume",
+            13985
+          ],
+          [
+            "worker in:result",
+            13987
+          ],
+          [
+            "worker out:pause",
+            14893
+          ],
+          [
+            "worker out:artifactContent",
+            14904
+          ],
+          [
+            "worker in:result",
+            14905
+          ],
+          [
+            "worker in:artifactContent",
+            14919
+          ]
+        ]
+      },
+      "workerWaits": {
+        "start": 14893.100000143051,
+        "end": 14918.700000047684,
+        "requests": [
+          {
+            "id": "world:21041817-f767-4315-8889-6d190cc012c3:42:c38",
+            "type": "command",
+            "dispatched": 14893.200000047684,
+            "received": 14904.100000143051,
+            "worker": {
+              "requestId": "world:21041817-f767-4315-8889-6d190cc012c3:42:c38",
+              "received": 13818.399999856949,
+              "serviceEnd": 13818.399999856949,
+              "reply": 13818.399999856949,
+              "recent": [
+                {
+                  "name": "post-frame",
+                  "start": 13722.299999952316,
+                  "end": 13722.799999952316
+                },
+                {
+                  "name": "publish-frame",
+                  "start": 13718.5,
+                  "end": 13722.799999952316
+                },
+                {
+                  "name": "periodic-work",
+                  "start": 13718.399999856949,
+                  "end": 13722.799999952316
+                },
+                {
+                  "name": "clock-consume",
+                  "start": 13734,
+                  "end": 13747
+                },
+                {
+                  "name": "periodic-work",
+                  "start": 13734,
+                  "end": 13747
+                },
+                {
+                  "name": "clock-consume",
+                  "start": 13751.099999904633,
+                  "end": 13751.299999952316
+                },
+                {
+                  "name": "periodic-work",
+                  "start": 13751.099999904633,
+                  "end": 13751.299999952316
+                },
+                {
+                  "name": "clock-consume",
+                  "start": 13765.599999904633,
+                  "end": 13765.599999904633
+                },
+                {
+                  "name": "periodic-work",
+                  "start": 13765.599999904633,
+                  "end": 13765.599999904633
+                },
+                {
+                  "name": "clock-consume",
+                  "start": 13781.899999856949,
+                  "end": 13786.099999904633
+                },
+                {
+                  "name": "periodic-work",
+                  "start": 13781.899999856949,
+                  "end": 13786.099999904633
+                },
+                {
+                  "name": "clock-consume",
+                  "start": 13797.799999952316,
+                  "end": 13797.799999952316
+                },
+                {
+                  "name": "periodic-work",
+                  "start": 13797.799999952316,
+                  "end": 13797.799999952316
+                },
+                {
+                  "name": "clock-consume",
+                  "start": 13813.899999856949,
+                  "end": 13818.200000047684
+                },
+                {
+                  "name": "periodic-work",
+                  "start": 13813.899999856949,
+                  "end": 13818.200000047684
+                },
+                {
+                  "name": "host-submit",
+                  "start": 13818.399999856949,
+                  "end": 13818.399999856949
+                }
+              ]
+            },
+            "resolved": 14904.100000143051
+          },
+          {
+            "id": "artifact:39",
+            "type": "artifactContent",
+            "dispatched": 14904.299999952316,
+            "received": 14911.200000047684,
+            "worker": {
+              "requestId": "artifact:39",
+              "received": 13829,
+              "serviceEnd": 13830.399999856949,
+              "reply": 13830.399999856949,
+              "recent": [
+                {
+                  "name": "periodic-work",
+                  "start": 13751.099999904633,
+                  "end": 13751.299999952316
+                },
+                {
+                  "name": "clock-consume",
+                  "start": 13765.599999904633,
+                  "end": 13765.599999904633
+                },
+                {
+                  "name": "periodic-work",
+                  "start": 13765.599999904633,
+                  "end": 13765.599999904633
+                },
+                {
+                  "name": "clock-consume",
+                  "start": 13781.899999856949,
+                  "end": 13786.099999904633
+                },
+                {
+                  "name": "periodic-work",
+                  "start": 13781.899999856949,
+                  "end": 13786.099999904633
+                },
+                {
+                  "name": "clock-consume",
+                  "start": 13797.799999952316,
+                  "end": 13797.799999952316
+                },
+                {
+                  "name": "periodic-work",
+                  "start": 13797.799999952316,
+                  "end": 13797.799999952316
+                },
+                {
+                  "name": "clock-consume",
+                  "start": 13813.899999856949,
+                  "end": 13818.200000047684
+                },
+                {
+                  "name": "periodic-work",
+                  "start": 13813.899999856949,
+                  "end": 13818.200000047684
+                },
+                {
+                  "name": "host-submit",
+                  "start": 13818.399999856949,
+                  "end": 13818.399999856949
+                },
+                {
+                  "name": "post-result",
+                  "start": 13818.399999856949,
+                  "end": 13818.5
+                },
+                {
+                  "name": "host-frame",
+                  "start": 13818.5,
+                  "end": 13825.899999856949
+                },
+                {
+                  "name": "post-frame",
+                  "start": 13825.899999856949,
+                  "end": 13827.299999952316
+                },
+                {
+                  "name": "publish-frame",
+                  "start": 13818.5,
+                  "end": 13827.299999952316
+                },
+                {
+                  "name": "command-publish",
+                  "start": 13818.5,
+                  "end": 13827.299999952316
+                },
+                {
+                  "name": "host-artifact-content",
+                  "start": 13829,
+                  "end": 13830.299999952316
+                }
+              ]
+            },
+            "resolved": 14911.200000047684
+          }
+        ],
+        "main": [
+          {
+            "name": "renderer-tick",
+            "start": 14896.200000047684,
+            "end": 14899.100000143051
+          },
+          {
+            "name": "renderer-apply",
+            "start": 14905.700000047684,
+            "end": 14907.100000143051
+          },
+          {
+            "name": "hud-update",
+            "start": 14907.100000143051,
+            "end": 14910.100000143051
+          },
+          {
+            "name": "frame-handler",
+            "start": 14905.700000047684,
+            "end": 14910.200000047684
+          }
+        ]
+      },
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "maximumPages": 48,
+      "mountedPages": 2,
+      "pageLabel": "1â€“2 / 48",
+      "openingMs": 25.299999952316284,
+      "phaseTimingsMs": {
+        "pause": 11.099999904632568,
+        "content": 7,
+        "render": 0.20000004768371582,
+        "show-modal": 7
+      },
+      "measurements": [
+        {
+          "name": "hearthwild:book-open:pause",
+          "startTime": 14893.100000143051,
+          "duration": 11.099999904632568
+        },
+        {
+          "name": "hearthwild:book-open",
+          "startTime": 14893.100000143051,
+          "duration": 25.299999952316284
+        },
+        {
+          "name": "hearthwild:book-open:content",
+          "startTime": 14904.200000047684,
+          "duration": 7
+        },
+        {
+          "name": "hearthwild:book-open:render",
+          "startTime": 14911.200000047684,
+          "duration": 0.20000004768371582
+        },
+        {
+          "name": "hearthwild:book-open:show-modal",
+          "startTime": 14911.400000095367,
+          "duration": 7
+        }
+      ],
+      "journeyPhase": "complete",
+      "cpuSummary": {
+        "windowMs": 25.3,
+        "main": [
+          [
+            "CrRendererMain:ThreadControllerImpl::RunTask:",
+            17.6,
+            8.1,
+            7.7
+          ],
+          [
+            "CrRendererMain:HandlePostMessage:",
+            17.6,
+            8.1,
+            7.7
+          ],
+          [
+            "CrRendererMain:v8.callFunction:",
+            17.6,
+            8,
+            7.7
+          ],
+          [
+            "CrRendererMain:ProxyMain::BeginMainFrame:",
+            2.7,
+            6.6,
+            6.6
+          ],
+          [
+            "CrRendererMain:FunctionCall:WorkerBridge.worker.onmessage",
+            11.6,
+            5.5,
+            5.5
+          ],
+          [
+            "CrRendererMain:FireAnimationFrame:",
+            3.1,
+            3,
+            3
+          ]
+        ],
+        "other": [
+          [
+            "ThreadPoolForegroundWorker:ThreadPool_RunTask:",
+            3.2,
+            18.7,
+            18.7
+          ],
+          [
+            "GpuVSyncThread:ThreadControllerImpl::RunTask:",
+            2.4,
+            16.6,
+            16.6
+          ],
+          [
+            "DedicatedWorker thread:ThreadControllerImpl::RunTask:",
+            0.6,
+            9.1,
+            9.1
+          ],
+          [
+            "DedicatedWorker thread:HandlePostMessage:",
+            0.6,
+            9.1,
+            9.1
+          ]
+        ]
+      },
+      "pageErrors": []
+    }
+  },
+  "inspectedNormalPngs": [
+    {
+      "path": "artifacts/c13-pack-1080p.png",
+      "sha256": "3069f481af56f5be1b98b9dd8dc69cb09d06f1f8416bbb7c89d5fc8180d464ef"
+    },
+    {
+      "path": "artifacts/c13-pack-break-1080p.png",
+      "sha256": "dee00b18f89b9c11f9d095514ddc50676eee857e9aa3a40daba360973ae6aa0b"
+    },
+    {
+      "path": "artifacts/c13-pack-commit-1080p.png",
+      "sha256": "9e09d89cc792db2f5330cf15e91fa2090db158c21019669d51544e683714b392"
+    },
+    {
+      "path": "artifacts/c13-pack-notice-1080p.png",
+      "sha256": "4b75754b45d1bcd9ed024782a55a7f52cf61246f1bf2e152532067c91b29e77f"
+    },
+    {
+      "path": "artifacts/c13-pack-stalk-1080p.png",
+      "sha256": "5b204721c89e20a98c4b1dfed82ede5fe2cd6907dd8d13d47753311071cf8f56"
+    },
+    {
+      "path": "artifacts/c13-zephyrit-1080p.png",
+      "sha256": "17cde23148bd9ae6bcb932f92c64abe99995bc7ec16ad2fe23fc1040ea4a084f"
+    },
+    {
+      "path": "artifacts/c13-zephyrit-break-1080p.png",
+      "sha256": "d353bba094808c06e44a0e4a15d7ad021c905eaafcff6ed3b2dd0b83d8120322"
+    },
+    {
+      "path": "artifacts/c13-zephyrit-commit-1080p.png",
+      "sha256": "5b6fde13fff186f7e20b6ea76f917cead560df8b25d0f7f3d8bed8c3b6af72ca"
+    },
+    {
+      "path": "artifacts/c13-zephyrit-notice-1080p.png",
+      "sha256": "2662bee04dcc68102132e2d9b52da72e1521b4cdf3a95d4d8a60864c8d841bda"
+    },
+    {
+      "path": "artifacts/c13-zephyrit-stalk-1080p.png",
+      "sha256": "82b90a08836a6ec2b62f911966b57a6f9dc1641e194a8d1008555e61b91d17cf"
+    },
+    {
+      "path": "artifacts/c14-glint-1080p.png",
+      "sha256": "3acfe612fed345a867d7dcac5f228d41bd8a9bf0728947a00a856493ce91aa6f"
+    },
+    {
+      "path": "artifacts/c14-pack-1080p.png",
+      "sha256": "a6ff9df85733231979dc793a3947df083a1d4f2a8cf7933add16b390d13677fe"
+    },
+    {
+      "path": "artifacts/c18-book-spread-1080p.png",
+      "sha256": "06113a97c774e9e181cb7e62ed648f681835cef05be536687b85c46dca078e0a"
+    },
+    {
+      "path": "artifacts/c19-golden-native.png",
+      "sha256": "6d8f4b663386502d5a8d50f5b805ad2eba678c2711e2a3a13af9f35cceec66cf"
+    },
+    {
+      "path": "artifacts/c19-golden-preview.png",
+      "sha256": "80c4f9eda90e6c859392670c93d0a8fcdd690e24bf0cf6bbcdd023a3aac39b68"
+    },
+    {
+      "path": "artifacts/c20-inventory-thumbnail-1080p.png",
+      "sha256": "1234c39d2dbabcd008c4a26ede28b4e8bfea16e2642409cc5e02ac49ef6157c4"
+    },
+    {
+      "path": "artifacts/c20-painting-hook-1080p.png",
+      "sha256": "4d705c45020582760cfc36c04fc77cfb3dcf04f861b898d0f0b91a5966160eb1"
+    },
+    {
+      "path": "artifacts/c20-painting-preview-1080p.png",
+      "sha256": "2adae7e097fe77cc77e4c734e5c9fb74d23e8bda62baa04e850e2c9f009d83ff"
+    },
+    {
+      "path": "artifacts/c20-pending-reloaded-1080p.png",
+      "sha256": "319bab7524fd08a801255e0805d80a39169a91629cfee76955319bcce9abf8ab"
+    },
+    {
+      "path": "artifacts/c3g-atlas-budget-1080p.png",
+      "sha256": "489fbcf2d1e582812932f5fd250c5de06112e518caca0522166f250b7775b144"
+    },
+    {
+      "path": "artifacts/c3g-atlas-last-page-1080p.png",
+      "sha256": "56ad7bc86e425368d9030c0dc547eee2bcdf9a521d3b79fc7b6977a4b0a55a25"
+    },
+    {
+      "path": "artifacts/diagnostics.png",
+      "sha256": "cc34da3ff6cb7e33092b3df9263cfbe5059e06508ccdbf687e95f9e46bd1930d"
+    },
+    {
+      "path": "artifacts/hd-gallery-environment.png",
+      "sha256": "4bae5583df9a867df8aa35737b84a544742ee97227682ccd1a36ed04bdfb1733"
+    },
+    {
+      "path": "artifacts/hd-gallery-missing-neris.png",
+      "sha256": "a233529b103657f17462856b4e47506492d5278acfc93621236f0c781c6ccf8c"
+    },
+    {
+      "path": "artifacts/hd-gallery-rivallie.png",
+      "sha256": "a0b1ff0a1f989008b2a4ac4794f01375381a449a0603ee946a442ba58508ac66"
+    },
+    {
+      "path": "artifacts/hd-overlays-1024.png",
+      "sha256": "2b086b1800b1d3394af8230aece372588bc0e9b694d32d74e3c94d21e668de48"
+    },
+    {
+      "path": "artifacts/hearthwild.png",
+      "sha256": "92411b0b59668a9fb015b8b2b64a023e303961829dedda16430fc0e9a82e74e4"
+    },
+    {
+      "path": "artifacts/unified-entities.png",
+      "sha256": "3e22a4959d8cbf1ebdca8062195aaea025b83a998ee658baa9c30cb4f0e988c5"
+    }
+  ],
+  "gaps": [
+    "Communicator must merge manifest and intake receipts before new face/icon ledger activation",
+    "B27 publishing and revised B29 candidates require machine A",
+    "HD gate fails 1515 missing slice requirements before stale-ledger withdrawal",
+    "Remote current-source browser/verify not yet green"
+  ],
+  "nativeCiBrowser": {
+    "passed": 3,
+    "minutes": 2,
+    "includes": [
+      "C13 pack with worker-frame observer",
+      "C13 zephyrit with worker-frame observer",
+      "C18 unchanged literacy"
+    ],
+    "literacy": {
+      "bootstrap": {
+        "setupStatus": "Preparing your world with fallback dialogue...",
+        "loadMs": 966.4000000953674,
+        "assetError": "",
+        "gpu": "ANGLE (Intel, Intel(R) Iris(R) Xe Graphics (0x0000A7A1) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "hasFrame": true,
+        "io": [
+          [
+            "worker in:result",
+            5392
+          ],
+          [
+            "idb tx:readwrite",
+            5465
+          ],
+          [
+            "worker in:checkpoint",
+            5465
+          ],
+          [
+            "idb tx:readwrite:complete",
+            5483
+          ],
+          [
+            "worker out:resume",
+            5836
+          ],
+          [
+            "worker in:result",
+            5843
+          ],
+          [
+            "worker out:pause",
+            6092
+          ],
+          [
+            "worker in:result",
+            6120
+          ],
+          [
+            "worker out:artifactWrite",
+            6505
+          ],
+          [
+            "worker out:artifactContent",
+            6521
+          ],
+          [
+            "worker in:result",
+            6521
+          ],
+          [
+            "worker out:artifactPageAdd",
+            6540
+          ],
+          [
+            "worker in:artifactContent",
+            6540
+          ],
+          [
+            "worker out:artifactContent",
+            6546
+          ],
+          [
+            "worker in:result",
+            6546
+          ],
+          [
+            "worker in:artifactContent",
+            6558
+          ],
+          [
+            "worker out:artifactWrite",
+            6683
+          ],
+          [
+            "worker out:artifactContent",
+            6687
+          ],
+          [
+            "worker in:result",
+            6687
+          ],
+          [
+            "worker out:artifactPageAdd",
+            6694
+          ],
+          [
+            "worker in:artifactContent",
+            6694
+          ],
+          [
+            "worker out:artifactContent",
+            6695
+          ],
+          [
+            "worker in:result",
+            6695
+          ],
+          [
+            "worker in:artifactContent",
+            6712
+          ],
+          [
+            "worker out:artifactWrite",
+            6841
+          ],
+          [
+            "worker out:artifactContent",
+            6851
+          ],
+          [
+            "worker in:result",
+            6852
+          ],
+          [
+            "worker in:artifactContent",
+            6872
+          ],
+          [
+            "worker out:artifactSeal",
+            6976
+          ],
+          [
+            "worker out:artifactContent",
+            6987
+          ],
+          [
+            "worker in:result",
+            6987
+          ],
+          [
+            "worker in:artifactContent",
+            6994
+          ],
+          [
+            "worker out:resume",
+            7095
+          ],
+          [
+            "worker in:result",
+            7102
+          ],
+          [
+            "worker out:pause",
+            7201
+          ],
+          [
+            "worker out:artifactContent",
+            7208
+          ],
+          [
+            "worker in:result",
+            7208
+          ],
+          [
+            "worker in:artifactContent",
+            7229
+          ],
+          [
+            "worker out:move",
+            7337
+          ],
+          [
+            "worker in:result",
+            7350
+          ],
+          [
+            "worker out:resume",
+            7754
+          ],
+          [
+            "worker in:result",
+            7758
+          ],
+          [
+            "worker out:pause",
+            7847
+          ],
+          [
+            "worker in:result",
+            7856
+          ],
+          [
+            "worker out:checkpoint",
+            7879
+          ],
+          [
+            "worker in:checkpoint",
+            8135
+          ],
+          [
+            "worker out:restore",
+            9054
+          ],
+          [
+            "worker out:pause",
+            9551
+          ],
+          [
+            "worker out:configureContext",
+            9551
+          ],
+          [
+            "worker out:configurePainting",
+            9551
+          ],
+          [
+            "worker in:restored",
+            9551
+          ],
+          [
+            "worker in:result",
+            9567
+          ],
+          [
+            "worker out:checkpoint",
+            9572
+          ],
+          [
+            "worker in:result",
+            9572
+          ],
+          [
+            "worker in:result",
+            9576
+          ],
+          [
+            "idb tx:readwrite",
+            9684
+          ],
+          [
+            "worker in:checkpoint",
+            9685
+          ],
+          [
+            "idb tx:readwrite:complete",
+            9701
+          ],
+          [
+            "worker out:resume",
+            10066
+          ],
+          [
+            "worker in:result",
+            10069
+          ],
+          [
+            "worker out:pause",
+            10945
+          ],
+          [
+            "worker out:artifactContent",
+            10955
+          ],
+          [
+            "worker in:result",
+            10955
+          ],
+          [
+            "worker in:artifactContent",
+            10972
+          ]
+        ]
+      },
+      "workerWaits": {
+        "start": 10944.899999856949,
+        "end": 10971.5,
+        "requests": [
+          {
+            "id": "world:ea34c193-1a3b-4538-b79d-5b6b79e78ae8:42:c38",
+            "type": "command",
+            "dispatched": 10945.099999904633,
+            "received": 10954.199999809265,
+            "worker": {
+              "requestId": "world:ea34c193-1a3b-4538-b79d-5b6b79e78ae8:42:c38",
+              "received": 9890.199999809265,
+              "serviceEnd": 9890.299999952316,
+              "reply": 9890.299999952316,
+              "recent": [
+                {
+                  "name": "post-frame",
+                  "start": 9793.399999856949,
+                  "end": 9794.099999904633
+                },
+                {
+                  "name": "publish-frame",
+                  "start": 9789.099999904633,
+                  "end": 9794.099999904633
+                },
+                {
+                  "name": "periodic-work",
+                  "start": 9789.099999904633,
+                  "end": 9794.099999904633
+                },
+                {
+                  "name": "clock-consume",
+                  "start": 9805.099999904633,
+                  "end": 9811.5
+                },
+                {
+                  "name": "periodic-work",
+                  "start": 9805.099999904633,
+                  "end": 9811.5
+                },
+                {
+                  "name": "clock-consume",
+                  "start": 9831,
+                  "end": 9831
+                },
+                {
+                  "name": "periodic-work",
+                  "start": 9831,
+                  "end": 9831
+                },
+                {
+                  "name": "clock-consume",
+                  "start": 9837,
+                  "end": 9841
+                },
+                {
+                  "name": "periodic-work",
+                  "start": 9837,
+                  "end": 9841
+                },
+                {
+                  "name": "clock-consume",
+                  "start": 9853.299999952316,
+                  "end": 9853.299999952316
+                },
+                {
+                  "name": "periodic-work",
+                  "start": 9853.299999952316,
+                  "end": 9853.299999952316
+                },
+                {
+                  "name": "clock-consume",
+                  "start": 9869.899999856949,
+                  "end": 9878.299999952316
+                },
+                {
+                  "name": "periodic-work",
+                  "start": 9869.899999856949,
+                  "end": 9878.299999952316
+                },
+                {
+                  "name": "clock-consume",
+                  "start": 9885.899999856949,
+                  "end": 9885.899999856949
+                },
+                {
+                  "name": "periodic-work",
+                  "start": 9885.899999856949,
+                  "end": 9885.899999856949
+                },
+                {
+                  "name": "host-submit",
+                  "start": 9890.199999809265,
+                  "end": 9890.299999952316
+                }
+              ]
+            },
+            "resolved": 10954.199999809265
+          },
+          {
+            "id": "artifact:39",
+            "type": "artifactContent",
+            "dispatched": 10954.699999809265,
+            "received": 10964.399999856949,
+            "worker": {
+              "requestId": "artifact:39",
+              "received": 9899.899999856949,
+              "serviceEnd": 9901.5,
+              "reply": 9901.5,
+              "recent": [
+                {
+                  "name": "periodic-work",
+                  "start": 9831,
+                  "end": 9831
+                },
+                {
+                  "name": "clock-consume",
+                  "start": 9837,
+                  "end": 9841
+                },
+                {
+                  "name": "periodic-work",
+                  "start": 9837,
+                  "end": 9841
+                },
+                {
+                  "name": "clock-consume",
+                  "start": 9853.299999952316,
+                  "end": 9853.299999952316
+                },
+                {
+                  "name": "periodic-work",
+                  "start": 9853.299999952316,
+                  "end": 9853.299999952316
+                },
+                {
+                  "name": "clock-consume",
+                  "start": 9869.899999856949,
+                  "end": 9878.299999952316
+                },
+                {
+                  "name": "periodic-work",
+                  "start": 9869.899999856949,
+                  "end": 9878.299999952316
+                },
+                {
+                  "name": "clock-consume",
+                  "start": 9885.899999856949,
+                  "end": 9885.899999856949
+                },
+                {
+                  "name": "periodic-work",
+                  "start": 9885.899999856949,
+                  "end": 9885.899999856949
+                },
+                {
+                  "name": "host-submit",
+                  "start": 9890.199999809265,
+                  "end": 9890.299999952316
+                },
+                {
+                  "name": "post-result",
+                  "start": 9890.299999952316,
+                  "end": 9890.399999856949
+                },
+                {
+                  "name": "host-frame",
+                  "start": 9890.399999856949,
+                  "end": 9892.899999856949
+                },
+                {
+                  "name": "post-frame",
+                  "start": 9892.899999856949,
+                  "end": 9893.599999904633
+                },
+                {
+                  "name": "publish-frame",
+                  "start": 9890.399999856949,
+                  "end": 9893.599999904633
+                },
+                {
+                  "name": "command-publish",
+                  "start": 9890.399999856949,
+                  "end": 9893.599999904633
+                },
+                {
+                  "name": "host-artifact-content",
+                  "start": 9899.899999856949,
+                  "end": 9901.5
+                }
+              ]
+            },
+            "resolved": 10964.399999856949
+          }
+        ],
+        "main": [
+          {
+            "name": "renderer-tick",
+            "start": 10948.799999952316,
+            "end": 10949.899999856949
+          },
+          {
+            "name": "renderer-apply",
+            "start": 10956.199999809265,
+            "end": 10957.5
+          },
+          {
+            "name": "hud-update",
+            "start": 10957.5,
+            "end": 10960.099999904633
+          },
+          {
+            "name": "frame-handler",
+            "start": 10956.199999809265,
+            "end": 10960.199999809265
+          }
+        ]
+      },
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "maximumPages": 48,
+      "mountedPages": 2,
+      "pageLabel": "1â€“2 / 48",
+      "openingMs": 26.199999809265137,
+      "phaseTimingsMs": {
+        "pause": 9.399999856948853,
+        "content": 10.100000143051147,
+        "render": 0.19999980926513672,
+        "show-modal": 6.5
+      },
+      "measurements": [
+        {
+          "name": "hearthwild:book-open:pause",
+          "startTime": 10945,
+          "duration": 9.399999856948853
+        },
+        {
+          "name": "hearthwild:book-open",
+          "startTime": 10945,
+          "duration": 26.199999809265137
+        },
+        {
+          "name": "hearthwild:book-open:content",
+          "startTime": 10954.399999856949,
+          "duration": 10.100000143051147
+        },
+        {
+          "name": "hearthwild:book-open:render",
+          "startTime": 10964.5,
+          "duration": 0.19999980926513672
+        },
+        {
+          "name": "hearthwild:book-open:show-modal",
+          "startTime": 10964.699999809265,
+          "duration": 6.5
+        }
+      ],
+      "journeyPhase": "complete",
+      "cpuSummary": {
+        "windowMs": 26.2,
+        "main": [
+          [
+            "CrRendererMain:ThreadControllerImpl::RunTask:",
+            19.1,
+            7.5,
+            7.1
+          ],
+          [
+            "CrRendererMain:HandlePostMessage:",
+            19.1,
+            7.5,
+            7.1
+          ],
+          [
+            "CrRendererMain:v8.callFunction:",
+            19.1,
+            7.5,
+            7.1
+          ],
+          [
+            "CrRendererMain:ProxyMain::BeginMainFrame:",
+            3.5,
+            5.3,
+            5.3
+          ],
+          [
+            "CrRendererMain:FunctionCall:WorkerBridge.worker.onmessage",
+            9.9,
+            5.2,
+            5.2
+          ],
+          [
+            "CrRendererMain:UpdateLayoutTree:",
+            19.8,
+            3.6,
+            3.6
+          ]
+        ],
+        "other": [
+          [
+            "GpuVSyncThread:ThreadControllerImpl::RunTask:",
+            3.3,
+            16.6,
+            16.6
+          ],
+          [
+            "CrGpuMain:ThreadControllerImpl::RunTask:",
+            20.4,
+            6.4,
+            5.8
+          ],
+          [
+            "CrGpuMain:Scheduler::RunTask:",
+            20.4,
+            6.4,
+            5.8
+          ],
+          [
+            "CrGpuMain:GpuChannel::ExecuteDeferredRequest:",
+            20.4,
+            6.4,
+            5.8
+          ]
+        ]
+      },
+      "pageErrors": []
+    },
+    "inspectedImages": [
+      {
+        "path": "artifacts/c13-pack-1080p.png",
+        "sha256": "600ce057b85db69829bef5df91a0f18c0b609dd6eee80ef97b32f0be152b3efa"
+      },
+      {
+        "path": "artifacts/c13-pack-break-1080p.png",
+        "sha256": "a838784b390f991c98dd803dd5493eb55d661673277530f7dc87c3399e99f8a4"
+      },
+      {
+        "path": "artifacts/c13-pack-commit-1080p.png",
+        "sha256": "9e09d89cc792db2f5330cf15e91fa2090db158c21019669d51544e683714b392"
+      },
+      {
+        "path": "artifacts/c13-pack-notice-1080p.png",
+        "sha256": "4b75754b45d1bcd9ed024782a55a7f52cf61246f1bf2e152532067c91b29e77f"
+      },
+      {
+        "path": "artifacts/c13-pack-stalk-1080p.png",
+        "sha256": "5b204721c89e20a98c4b1dfed82ede5fe2cd6907dd8d13d47753311071cf8f56"
+      },
+      {
+        "path": "artifacts/c13-zephyrit-1080p.png",
+        "sha256": "b4b592e97ffe017aacf9c7ff1a23a88965fa7ab0a6ac44c189af7380dfb126f7"
+      },
+      {
+        "path": "artifacts/c13-zephyrit-break-1080p.png",
+        "sha256": "d1d5ea3e02511eb35550870ce8ff372704d8c2799383d3aeaac954ddc4fc4615"
+      },
+      {
+        "path": "artifacts/c13-zephyrit-commit-1080p.png",
+        "sha256": "7b6c03533f132720d710ddfd5245df923a5bd980dee022591f3527886c6cac8a"
+      },
+      {
+        "path": "artifacts/c13-zephyrit-notice-1080p.png",
+        "sha256": "ec6b844ad12ac574b74744c54ba264fe1515c2c18d8ac22b9f172a77b51921d0"
+      },
+      {
+        "path": "artifacts/c13-zephyrit-stalk-1080p.png",
+        "sha256": "35206e0a5d9bb3b541565ddd092856489126ac224dec62722419935d8f7f9e1e"
+      },
+      {
+        "path": "artifacts/c18-book-spread-1080p.png",
+        "sha256": "f11e335113e31c9c4aef48060f3ce6b1fe0fa897546141cc027f0252bf999770"
+      }
+    ]
+  },
+  "forcedSwiftShader": {
+    "passed": 1,
+    "failed": 3,
+    "minutes": 7.6,
+    "flags": [
+      "--enable-gpu",
+      "--use-gl=angle",
+      "--use-angle=swiftshader",
+      "--enable-unsafe-swiftshader"
+    ],
+    "failures": {
+      "C13 pack": "120000ms test timeout during break screenshot after notice/stalk/commit/break predicates",
+      "C13 zephyrit": "120000ms test timeout",
+      "C18": "114.6ms opening exceeds unchanged100ms gate"
+    },
+    "literacy": {
+      "bootstrap": {
+        "setupStatus": "Preparing your world with fallback dialogue...",
+        "loadMs": 2877.5999999046326,
+        "assetError": "",
+        "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+        "hasFrame": true,
+        "io": [
+          [
+            "worker out:resume",
+            35630
+          ],
+          [
+            "worker in:result",
+            35632
+          ],
+          [
+            "worker out:pause",
+            43329
+          ],
+          [
+            "worker in:result",
+            43355
+          ],
+          [
+            "worker out:artifactWrite",
+            45220
+          ],
+          [
+            "worker out:artifactContent",
+            45233
+          ],
+          [
+            "worker in:result",
+            45233
+          ],
+          [
+            "worker out:artifactPageAdd",
+            45249
+          ],
+          [
+            "worker in:artifactContent",
+            45249
+          ],
+          [
+            "worker out:artifactContent",
+            45252
+          ],
+          [
+            "worker in:result",
+            45252
+          ],
+          [
+            "worker in:artifactContent",
+            45306
+          ],
+          [
+            "worker out:artifactWrite",
+            46659
+          ],
+          [
+            "worker out:artifactContent",
+            46663
+          ],
+          [
+            "worker in:result",
+            46663
+          ],
+          [
+            "worker out:artifactPageAdd",
+            46674
+          ],
+          [
+            "worker in:artifactContent",
+            46674
+          ],
+          [
+            "worker out:artifactContent",
+            46676
+          ],
+          [
+            "worker in:result",
+            46676
+          ],
+          [
+            "worker in:artifactContent",
+            46738
+          ],
+          [
+            "worker out:artifactWrite",
+            47873
+          ],
+          [
+            "worker out:artifactContent",
+            47879
+          ],
+          [
+            "worker in:result",
+            47879
+          ],
+          [
+            "worker in:artifactContent",
+            47952
+          ],
+          [
+            "worker out:artifactSeal",
+            49005
+          ],
+          [
+            "worker out:artifactContent",
+            49044
+          ],
+          [
+            "worker in:result",
+            49044
+          ],
+          [
+            "worker in:artifactContent",
+            49065
+          ],
+          [
+            "worker out:resume",
+            50001
+          ],
+          [
+            "worker in:result",
+            50005
+          ],
+          [
+            "worker out:checkpoint",
+            66005
+          ],
+          [
+            "idb tx:readwrite",
+            67695
+          ],
+          [
+            "worker in:checkpoint",
+            67695
+          ],
+          [
+            "worker out:pause",
+            68792
+          ],
+          [
+            "worker out:artifactContent",
+            68851
+          ],
+          [
+            "worker in:result",
+            68851
+          ],
+          [
+            "idb tx:readwrite:complete",
+            68856
+          ],
+          [
+            "worker in:artifactContent",
+            68939
+          ],
+          [
+            "worker out:move",
+            70401
+          ],
+          [
+            "worker in:result",
+            70417
+          ],
+          [
+            "worker out:resume",
+            76101
+          ],
+          [
+            "worker in:result",
+            76112
+          ],
+          [
+            "worker out:pause",
+            86193
+          ],
+          [
+            "worker in:result",
+            86291
+          ],
+          [
+            "worker out:checkpoint",
+            86458
+          ],
+          [
+            "worker in:checkpoint",
+            87632
+          ],
+          [
+            "worker out:restore",
+            99604
+          ],
+          [
+            "worker out:pause",
+            101124
+          ],
+          [
+            "worker out:configureContext",
+            101124
+          ],
+          [
+            "worker out:configurePainting",
+            101124
+          ],
+          [
+            "worker in:restored",
+            101124
+          ],
+          [
+            "worker in:result",
+            101165
+          ],
+          [
+            "worker out:checkpoint",
+            101199
+          ],
+          [
+            "worker in:result",
+            101199
+          ],
+          [
+            "worker in:result",
+            101840
+          ],
+          [
+            "idb tx:readwrite",
+            102019
+          ],
+          [
+            "worker in:checkpoint",
+            102019
+          ],
+          [
+            "idb tx:readwrite:complete",
+            102548
+          ],
+          [
+            "worker out:resume",
+            102676
+          ],
+          [
+            "worker in:result",
+            102677
+          ],
+          [
+            "worker out:pause",
+            108624
+          ],
+          [
+            "worker out:artifactContent",
+            108702
+          ],
+          [
+            "worker in:result",
+            108702
+          ],
+          [
+            "worker in:artifactContent",
+            108739
+          ]
+        ]
+      },
+      "workerWaits": {
+        "start": 108623.59999990463,
+        "end": 108738.5,
+        "requests": [
+          {
+            "id": "world:57f7d5f3-501f-4b03-a7cf-583056837c3a:42:c39",
+            "type": "command",
+            "dispatched": 108623.69999980927,
+            "received": 108701.59999990463,
+            "worker": {
+              "requestId": "world:57f7d5f3-501f-4b03-a7cf-583056837c3a:42:c39",
+              "received": 107888.5,
+              "serviceEnd": 107888.59999990463,
+              "reply": 107888.59999990463,
+              "recent": [
+                {
+                  "name": "clock-consume",
+                  "start": 107786.39999985695,
+                  "end": 107806.5
+                },
+                {
+                  "name": "periodic-work",
+                  "start": 107786.39999985695,
+                  "end": 107806.5
+                },
+                {
+                  "name": "clock-consume",
+                  "start": 107808.09999990463,
+                  "end": 107808.09999990463
+                },
+                {
+                  "name": "periodic-work",
+                  "start": 107808.09999990463,
+                  "end": 107808.09999990463
+                },
+                {
+                  "name": "clock-consume",
+                  "start": 107831.69999980927,
+                  "end": 107838.09999990463
+                },
+                {
+                  "name": "host-frame",
+                  "start": 107838.09999990463,
+                  "end": 107842.39999985695
+                },
+                {
+                  "name": "post-frame",
+                  "start": 107842.39999985695,
+                  "end": 107844.39999985695
+                },
+                {
+                  "name": "publish-frame",
+                  "start": 107838.09999990463,
+                  "end": 107844.39999985695
+                },
+                {
+                  "name": "periodic-work",
+                  "start": 107831.69999980927,
+                  "end": 107844.39999985695
+                },
+                {
+                  "name": "clock-consume",
+                  "start": 107844.5,
+                  "end": 107844.59999990463
+                },
+                {
+                  "name": "periodic-work",
+                  "start": 107844.5,
+                  "end": 107844.59999990463
+                },
+                {
+                  "name": "clock-consume",
+                  "start": 107864.19999980927,
+                  "end": 107871.19999980927
+                },
+                {
+                  "name": "periodic-work",
+                  "start": 107864.19999980927,
+                  "end": 107871.19999980927
+                },
+                {
+                  "name": "clock-consume",
+                  "start": 107873.59999990463,
+                  "end": 107873.59999990463
+                },
+                {
+                  "name": "periodic-work",
+                  "start": 107873.59999990463,
+                  "end": 107873.59999990463
+                },
+                {
+                  "name": "host-submit",
+                  "start": 107888.5,
+                  "end": 107888.59999990463
+                }
+              ]
+            },
+            "resolved": 108701.59999990463
+          },
+          {
+            "id": "artifact:40",
+            "type": "artifactContent",
+            "dispatched": 108701.79999995232,
+            "received": 108732.39999985695,
+            "worker": {
+              "requestId": "artifact:40",
+              "received": 107963.69999980927,
+              "serviceEnd": 107965.29999995232,
+              "reply": 107965.29999995232,
+              "recent": [
+                {
+                  "name": "clock-consume",
+                  "start": 107864.19999980927,
+                  "end": 107871.19999980927
+                },
+                {
+                  "name": "periodic-work",
+                  "start": 107864.19999980927,
+                  "end": 107871.19999980927
+                },
+                {
+                  "name": "clock-consume",
+                  "start": 107873.59999990463,
+                  "end": 107873.59999990463
+                },
+                {
+                  "name": "periodic-work",
+                  "start": 107873.59999990463,
+                  "end": 107873.59999990463
+                },
+                {
+                  "name": "host-submit",
+                  "start": 107888.5,
+                  "end": 107888.59999990463
+                },
+                {
+                  "name": "post-result",
+                  "start": 107888.69999980927,
+                  "end": 107888.69999980927
+                },
+                {
+                  "name": "host-frame",
+                  "start": 107888.79999995232,
+                  "end": 107953.5
+                },
+                {
+                  "name": "post-frame",
+                  "start": 107953.5,
+                  "end": 107955.19999980927
+                },
+                {
+                  "name": "publish-frame",
+                  "start": 107888.79999995232,
+                  "end": 107955.19999980927
+                },
+                {
+                  "name": "command-publish",
+                  "start": 107888.69999980927,
+                  "end": 107955.19999980927
+                },
+                {
+                  "name": "clock-consume",
+                  "start": 107955.29999995232,
+                  "end": 107955.29999995232
+                },
+                {
+                  "name": "host-frame",
+                  "start": 107955.29999995232,
+                  "end": 107962.39999985695
+                },
+                {
+                  "name": "post-frame",
+                  "start": 107962.39999985695,
+                  "end": 107963.5
+                },
+                {
+                  "name": "publish-frame",
+                  "start": 107955.29999995232,
+                  "end": 107963.5
+                },
+                {
+                  "name": "periodic-work",
+                  "start": 107955.29999995232,
+                  "end": 107963.5
+                },
+                {
+                  "name": "host-artifact-content",
+                  "start": 107963.69999980927,
+                  "end": 107965.29999995232
+                }
+              ]
+            },
+            "resolved": 108732.5
+          }
+        ],
+        "main": [
+          {
+            "name": "renderer-tick",
+            "start": 108624.89999985695,
+            "end": 108627.09999990463
+          },
+          {
+            "name": "renderer-tick",
+            "start": 108628.69999980927,
+            "end": 108629.89999985695
+          },
+          {
+            "name": "renderer-apply",
+            "start": 108686.69999980927,
+            "end": 108687.69999980927
+          },
+          {
+            "name": "hud-update",
+            "start": 108687.69999980927,
+            "end": 108693.89999985695
+          },
+          {
+            "name": "frame-handler",
+            "start": 108686.69999980927,
+            "end": 108694.09999990463
+          },
+          {
+            "name": "renderer-tick",
+            "start": 108696.39999985695,
+            "end": 108697.89999985695
+          },
+          {
+            "name": "renderer-tick",
+            "start": 108699.69999980927,
+            "end": 108700.89999985695
+          },
+          {
+            "name": "renderer-apply",
+            "start": 108702.89999985695,
+            "end": 108703.89999985695
+          },
+          {
+            "name": "hud-update",
+            "start": 108703.89999985695,
+            "end": 108711.5
+          },
+          {
+            "name": "frame-handler",
+            "start": 108702.79999995232,
+            "end": 108711.69999980927
+          },
+          {
+            "name": "renderer-tick",
+            "start": 108714.69999980927,
+            "end": 108718
+          },
+          {
+            "name": "renderer-apply",
+            "start": 108720.29999995232,
+            "end": 108720.69999980927
+          },
+          {
+            "name": "hud-update",
+            "start": 108720.69999980927,
+            "end": 108731.79999995232
+          },
+          {
+            "name": "frame-handler",
+            "start": 108720.29999995232,
+            "end": 108731.89999985695
+          }
+        ]
+      },
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "maximumPages": 48,
+      "mountedPages": 2,
+      "pageLabel": "1â€“2 / 48",
+      "openingMs": 114.59999990463257,
+      "phaseTimingsMs": {
+        "pause": 78.09999990463257,
+        "content": 30.800000190734863,
+        "render": 0.2999999523162842,
+        "show-modal": 5.3999998569488525
+      },
+      "measurements": [
+        {
+          "name": "hearthwild:book-open:pause",
+          "startTime": 108623.59999990463,
+          "duration": 78.09999990463257
+        },
+        {
+          "name": "hearthwild:book-open",
+          "startTime": 108623.59999990463,
+          "duration": 114.59999990463257
+        },
+        {
+          "name": "hearthwild:book-open:content",
+          "startTime": 108701.69999980927,
+          "duration": 30.800000190734863
+        },
+        {
+          "name": "hearthwild:book-open:render",
+          "startTime": 108732.5,
+          "duration": 0.2999999523162842
+        },
+        {
+          "name": "hearthwild:book-open:show-modal",
+          "startTime": 108732.79999995232,
+          "duration": 5.3999998569488525
+        }
+      ],
+      "journeyPhase": "assert opening measurements",
+      "cpuSummary": {
+        "windowMs": 114.6,
+        "main": [
+          [
+            "CrRendererMain:ThreadControllerImpl::RunTask:",
+            7.1,
+            64.5,
+            64.5
+          ],
+          [
+            "CrRendererMain:HandlePostMessage:",
+            7.1,
+            64.4,
+            64.4
+          ],
+          [
+            "CrRendererMain:v8.callFunction:",
+            7.1,
+            64.4,
+            64.4
+          ],
+          [
+            "CrRendererMain:FunctionCall:WorkerBridge.worker.onmessage",
+            7.1,
+            63.3,
+            63.3
+          ],
+          [
+            "CrRendererMain:ProxyMain::BeginMainFrame:",
+            88.8,
+            6.8,
+            6.8
+          ],
+          [
+            "CrRendererMain:FireAnimationFrame:",
+            91,
+            3.4,
+            3.4
+          ]
+        ],
+        "other": [
+          [
+            "DedicatedWorker thread:ThreadControllerImpl::RunTask:",
+            4.3,
+            66.9,
+            66.9
+          ],
+          [
+            "DedicatedWorker thread:HandlePostMessage:",
+            4.3,
+            66.8,
+            66.8
+          ],
+          [
+            "DedicatedWorker thread:v8.callFunction:",
+            4.3,
+            66.8,
+            66.8
+          ],
+          [
+            "DedicatedWorker thread:FunctionCall:worker.onmessage",
+            4.3,
+            66.8,
+            66.8
+          ]
+        ]
+      },
+      "pageErrors": []
+    },
+    "traces": [
+      {
+        "path": "test-results/c18-swiftshader/creature-minds-C13-pack-no-6fb58-ggered-commitment-and-break-journeys/trace.zip",
+        "sha256": "22ecaa92318a680d396f23b7359b34bf08381dad92e6f4d450442f351ed2d35f"
+      },
+      {
+        "path": "test-results/c18-swiftshader/creature-minds-C13-zephyri-96223-ggered-commitment-and-break-journeys/trace.zip",
+        "sha256": "0f6050d79df7726cd9db50f139126ca60faf1912d6e4bd327210572830dfdcbc"
+      },
+      {
+        "path": "test-results/c18-swiftshader/literacy-C18-writes-three--4dc98--reopens-a-read-only-spread-journeys/trace.zip",
+        "sha256": "a9b984765e6379ac4efb210d2a833d00a0a9cf84a3078fc2275e53a978c6c5df"
+      }
+    ],
+    "rawTraceRetentionGap": "The initial shared Playwright output directory was reused for the control, replacing earlier raw traces. Full JSON diagnostics, CPU summaries and trace hashes remain. Subsequent runs use unique output directories."
+  },
+  "performanceCandidate": {
+    "commit": "380da409",
+    "scopeAuthorization": "Huy explicitly authorized focused production performance work preserving simulation, saves, assertions and limits",
+    "unitResult": "10 worker/bridge/diagnostic tests pass after correcting the fixture to supported pause tokens",
+    "browserResult": "not accepted; comparison interrupted for mandatory studio synchronization",
+    "controlArtifacts": "artifacts/c18-control-20261105T050829",
+    "controlResult": "unchanged periodic-frame control exceeded120s test limit on rebuilt catalog",
+    "candidateRun": "test-results/c18-paused-periodic-20261105T050830; interrupted by synchronization request"
+  },
+  "c13Harness": {
+    "commit": "1613d9dc",
+    "finding": "c13:capture was rejected by the existing menu/hidden token enum; old harness ignored the receipt",
+    "repair": "use menu, check successful pause/resume receipts, observe delivered frames before rendering",
+    "validation": "native 3/3 preceded valid-token correction; corrected browser harness still requires rerun"
+  },
+  "rebuiltAfterWithdrawal": {
+    "frames": 3966,
+    "pages": 5,
+    "fullMiB": 79.73,
+    "halfMiB": 20,
+    "approvedAppearances": 2,
+    "assetCheck": "passed",
+    "sliceGaps": 1517
+  },
+  "ratifiedProposalCheckpoint": {
+    "recordedAt": "2026-11-05T16:55:57.764442+00:00",
+    "requestedStudioMerge": "aace9882",
+    "laterStudioMerge": "112ca67e",
+    "laterStudioSource": "047ee6b9",
+    "facesBlob": "b24e1e9620c7e567d58d00230a0df40707b232a8",
+    "C34": "522d85ae",
+    "C3g": "3f2cb346",
+    "generated": "8051a212",
+    "bindingRegression": "a633e817",
+    "browserMocks": "688eab26",
+    "check": {
+      "tests": 566,
+      "files": 47,
+      "seconds": 64.87,
+      "log": "artifacts/resume-c34-check.log",
+      "scope": "before later studio merge; final whole-source checks pending"
+    },
+    "pythonAfterMerge": {
+      "portrait": 9,
+      "registry": 3,
+      "creatureFaces": 11,
+      "finish": 26,
+      "facePublication": 5
+    },
+    "focusedAfterMerge": 49,
+    "atlas": {
+      "frames": 4024,
+      "fullPages": 3,
+      "fullMiB": 47.67,
+      "halfMiB": 12.21,
+      "approvedActors": 0,
+      "hdGateGaps": 1519,
+      "inspected": [
+        "bundle-0.png",
+        "bundle-1.png",
+        "bundle-2.png",
+        "bundle@0.5x.png"
+      ]
+    },
+    "gaps": [
+      "B29 current creature packets use 50 frames; require fresh 25-frame publications and approvals",
+      "Communicator manifest integration",
+      "A live official/development model quality, manifest and private mirror receipts",
+      "C33/C35 review findings",
+      "C18 software startup/performance and current-source verify"
+    ]
+  },
+  "followupCheckpoint": {
+    "recordedAt": "2026-11-05T17:43:52.322718+00:00",
+    "source": "001c7cf8",
+    "commits": {
+      "browserMocks": "688eab26",
+      "registryRepair": "89d2bbb9",
+      "galleryAccounting": "c482b30b",
+      "devWatcher": "9469018a",
+      "checkpointWriter": "4bbabb7b",
+      "frameBackpressure": "001c7cf8"
+    },
+    "nativeControl": {
+      "source": "688eab26",
+      "passed": 27,
+      "failed": 2,
+      "skipped": 1,
+      "seconds": 834,
+      "openingMs": 323.5,
+      "failures": [
+        "C8 cold page load",
+        "C18 opening exceeds 100ms"
+      ],
+      "artifacts": "artifacts/c18-control-688eab26/"
+    },
+    "nativeFocused": {
+      "source": "4bbabb7b",
+      "passed": 3,
+      "openingMs": 61.3,
+      "mountedPages": 2,
+      "pageErrors": 0,
+      "artifacts": "artifacts/c18-native-4bbabb7b/"
+    },
+    "softwareFocused": {
+      "source": "4bbabb7b",
+      "status": "interrupted after C13 startup failure; no passing C18 receipt"
+    },
+    "finalValidation": {
+      "source": "001c7cf8",
+      "fullChecks": [
+        {
+          "log": "artifacts/resume-final-check.log",
+          "passed": 568,
+          "failed": 2,
+          "failures": {
+            "artifactValidationMs": 76.9779,
+            "paintingMedianMs": 6.1293
+          }
+        },
+        {
+          "log": "artifacts/resume-final-check-isolated.log",
+          "passed": 568,
+          "failed": 2,
+          "failures": {
+            "artifactValidationMs": 252.0948,
+            "paintingMedianMs": 6.786
+          }
+        }
+      ],
+      "freshProcessBudgets": {
+        "log": "artifacts/resume-isolated-budgets.log",
+        "passed": 2,
+        "artifactValidationMs": 45.57,
+        "thresholdsUnchanged": true
+      },
+      "pythonFocused": {
+        "tests": 55,
+        "seconds": 23.921,
+        "log": "artifacts/resume-forge-focused-final.log",
+        "modules": [
+          "faces_creature_selftest",
+          "finish_selftest",
+          "publish_faces_selftest",
+          "portrait_selftest",
+          "registry_selftest"
+        ]
+      },
+      "broadForge": "Interrupted Windows discovery after gpu_window removed-after-exception test; no whole-suite pass claim",
+      "build": {
+        "passed": true,
+        "seconds": 41.56,
+        "log": "artifacts/resume-final-build.log"
+      },
+      "format": {
+        "passed": true,
+        "log": "artifacts/resume-final-format-recheck.log"
+      },
+      "browser": "native3pass, forced software C18 running, remote full journeys running",
+      "assets": {
+        "build": "passed",
+        "check": "passed",
+        "generatedDiff": false,
+        "frames": 4024,
+        "fullPages": 3,
+        "fullMiB": 47.67,
+        "halfMiB": 12.21,
+        "approvedActors": 0,
+        "buildLog": "artifacts/resume-assets-final-build.log",
+        "checkLog": "artifacts/resume-assets-final-check.log",
+        "hd": "unchanged expected failure:1519 coverage gaps",
+        "hdLog": "artifacts/resume-hd-final.log"
+      },
+      "native": {
+        "sourceSha": "281f4b3196c46a7afe0825109bd55055acbc1abc",
+        "passed": 3,
+        "seconds": 108,
+        "openingMs": 41.3,
+        "phaseTimingsMs": {
+          "pause": 10.8,
+          "content": 24.2,
+          "render": 0.9,
+          "showModal": 5.4
+        },
+        "mountedPages": 2,
+        "pageErrors": 0,
+        "imagesInspected": 11,
+        "receipt": "artifacts/native-281f4b31/receipt.json",
+        "receiptSha256": "f327afc63ab282bcc1c29f06b176ca54867e850c294658e63e8a02954c28c4eb",
+        "log": "artifacts/resume-native-281f4b31.log"
+      }
+    },
+    "newStudio": {
+      "source": "d97206ca",
+      "merged": false,
+      "findings": [
+        "10 new face approvals recognized on studio; creature packet format remains 50 frames",
+        "visitor duplicates already delivered C34 and C3g work; route ownership before another merge"
+      ]
+    }
+  },
+  "pauseCheckpoint": {
+    "at": "2026-11-05T18:22:37.065846+00:00",
+    "requestedBy": "Huy direct chat",
+    "codeCommit": "33788a034901b333ab12d38cdfc211ab15d1e680",
+    "status": "paused until explicit resume in a new session",
+    "ownedProcesses": "stopped; final process audit found no node.exe validation/server processes",
+    "wakeTaskCreated": false,
+    "latestWholeCheck": {
+      "source": "33788a03",
+      "status": "interrupted at user pause after hygiene/types/architecture/standard assets passed and tests started",
+      "log": "artifacts/resume-book-fix-check.log",
+      "buildAndFullFormat": "not reached after this final code commit"
+    },
+    "native": {
+      "sourceSha": "281f4b3196c46a7afe0825109bd55055acbc1abc",
+      "passed": 3,
+      "seconds": 108,
+      "openingMs": 41.3,
+      "phaseTimingsMs": {
+        "pause": 10.8,
+        "content": 24.2,
+        "render": 0.9,
+        "showModal": 5.4
+      },
+      "mountedPages": 2,
+      "pageErrors": 0,
+      "imagesInspected": 11,
+      "receipt": "artifacts/native-281f4b31/receipt.json",
+      "receiptSha256": "f327afc63ab282bcc1c29f06b176ca54867e850c294658e63e8a02954c28c4eb",
+      "log": "artifacts/resume-native-281f4b31.log"
+    },
+    "software": {
+      "receipt": "artifacts/software-book-fix-33788a03/receipt.json",
+      "sha256": "14b0c2286f5687d13b0310623c8cb23682cb44eddc554c28c8df573f81b13c1a",
+      "committedCodeSha": "33788a034901b333ab12d38cdfc211ab15d1e680",
+      "executionBaseSha": "281f4b3196c46a7afe0825109bd55055acbc1abc",
+      "measuredBeforeCommit": true,
+      "runtimeSourceMatchesCommittedBytes": true,
+      "softwarePassed": 1,
+      "openingMs": 40.6,
+      "mountedPages": 2,
+      "pageErrors": 0,
+      "regressions": {
+        "originalFailed": 2,
+        "fixedPassed": 2,
+        "note": "Before-fix wrapper had a console encoding error after the browser completed; original failure log and restored fixed bytes retained"
+      },
+      "runtimeSourceMatchesAfterLineEndingNormalization": true
+    },
+    "CI": "current-ci-receipt.json records281f4b31 only; latest code33788a03 needs fresh exact-source CI after publication",
+    "gaps": [
+      "Latest exact-source whole check/build/format and native/software browser confirmation",
+      "Current-source aggregate verify; ecology separately",
+      "Communicator manifest intake and25frame current-body face packets/fresh approvals",
+      "Machine-A model M1-M5/GGUF/private mirror and paintings acceptance",
+      "C33 hair/fringe and mean/std evidence",
+      "Unchanged HD1519 gaps and full19actor scale acceptance",
+      "Studio d97206ca duplicate C34/gallery reconciliation"
+    ]
+  },
+  "resumedValidation": {
+    "at": "2026-11-05T20:58:51.995Z",
+    "requestedBy": "Huy direct chat: implement validation plan, plus communicator LDtk unblock",
+    "head": "f46fb6dca5009183fa074cfd06c000f216ac9806",
+    "codeCommit": "33788a034901b333ab12d38cdfc211ab15d1e680",
+    "runtimeChanges": false,
+    "acceptance": "candidate; local CPU and software timing failures remain",
+    "pull": "ff-only up to date",
+    "wholeCheck": {
+      "passed": 569,
+      "failed": 1,
+      "paintingMedianMs": 7.853,
+      "limitMs": 5,
+      "log": "artifacts/resume-20261105-check-elevated.log",
+      "isolatedPaintingMedianMs": 7.609,
+      "isolatedLog": "artifacts/resume-20261105-budgets.log"
+    },
+    "experiments": {
+      "adopted": false,
+      "note": "Quantizer optimization trials preserved golden outputs but did not reliably pass the unchanged CPU budget. All source/test edits reverted. Logs retained in artifacts/resume-20261105-quantizer-* and experimental full checks."
+    },
+    "build": {
+      "passed": true,
+      "seconds": 49.74,
+      "log": "artifacts/resume-20261105-build.log"
+    },
+    "format": {
+      "passed": true,
+      "log": "artifacts/resume-20261105-format.log"
+    },
+    "native": {
+      "sourceSha": "f46fb6dca5009183fa074cfd06c000f216ac9806",
+      "mountedPages": 2,
+      "passed": 5,
+      "openingMs": 30.699999809265137,
+      "files": [
+        {
+          "sha256": "5916daed1b0089a27300c26efab816d2703b27e8cddf69bdd775e57d1b6e67c9",
+          "path": "artifacts/resume-native-f46fb6dc-20261105T2046/c13-pack-1080p.png"
+        },
+        {
+          "sha256": "18e4a01454558ff391c2e8161ad113c3b1f387a5efe5854faba540714a60c922",
+          "path": "artifacts/resume-native-f46fb6dc-20261105T2046/c13-pack-break-1080p.png"
+        },
+        {
+          "sha256": "72b5c175786a2363f4d43a700522c76353e4d0e2c9413f5458709a440cdd2493",
+          "path": "artifacts/resume-native-f46fb6dc-20261105T2046/c13-pack-browser.json"
+        },
+        {
+          "sha256": "576fec1973801cb928875604f43360b8a33d93ac0cb474c8cb10298766f1d7dd",
+          "path": "artifacts/resume-native-f46fb6dc-20261105T2046/c13-pack-commit-1080p.png"
+        },
+        {
+          "sha256": "51c661512314ff68df138a52242c143fdebc1e239d06abe300facac709532484",
+          "path": "artifacts/resume-native-f46fb6dc-20261105T2046/c13-pack-notice-1080p.png"
+        },
+        {
+          "sha256": "2f8c60305b5c461f613623613361b82f202071d87eefeab96a2dfc7d38a02bed",
+          "path": "artifacts/resume-native-f46fb6dc-20261105T2046/c13-pack-stalk-1080p.png"
+        },
+        {
+          "sha256": "9d6f12b2cd2153c0eb34ef9ba49a700072e7abe91883c06d81cc1982cd3bfef4",
+          "path": "artifacts/resume-native-f46fb6dc-20261105T2046/c13-zephyrit-1080p.png"
+        },
+        {
+          "sha256": "6eadcc075b638de297a55aafe490a8714564c42868c828beaac328d33f0fb0e9",
+          "path": "artifacts/resume-native-f46fb6dc-20261105T2046/c13-zephyrit-break-1080p.png"
+        },
+        {
+          "sha256": "133d7b98656d5fe35fe44139ce8b8b82437b971fd5dbcae6672ec0f9071274d1",
+          "path": "artifacts/resume-native-f46fb6dc-20261105T2046/c13-zephyrit-browser.json"
+        },
+        {
+          "sha256": "c7836bfc2850011cb9bbc912e1b5899e189974d13e5b30e63b442a1c95d8f1ae",
+          "path": "artifacts/resume-native-f46fb6dc-20261105T2046/c13-zephyrit-commit-1080p.png"
+        },
+        {
+          "sha256": "6db158e682e7b8a8070b98025790dea25ddbad1e0713741a472e25942fb5b304",
+          "path": "artifacts/resume-native-f46fb6dc-20261105T2046/c13-zephyrit-notice-1080p.png"
+        },
+        {
+          "sha256": "f391d7464b6c739836f0291f947295c7a7a08732f01ab99581a088f0ba93404f",
+          "path": "artifacts/resume-native-f46fb6dc-20261105T2046/c13-zephyrit-stalk-1080p.png"
+        },
+        {
+          "sha256": "b9c8b81ab476283c25297d02daaaa24acf79f5abf109d894a883e3af25af0661",
+          "path": "artifacts/resume-native-f46fb6dc-20261105T2046/c18-book-browser.json"
+        },
+        {
+          "sha256": "eaf1ab7ef0d25ce4a557753443e9cf439636ccd33369e8243e085b494c28b5c6",
+          "path": "artifacts/resume-native-f46fb6dc-20261105T2046/c18-book-cpu.json"
+        },
+        {
+          "sha256": "43edcec2ba8951f3fd204585d510fdaa847a7f953b14d0f82f46eb145de58966",
+          "path": "artifacts/resume-native-f46fb6dc-20261105T2046/c18-book-spread-1080p.png"
+        },
+        {
+          "sha256": "3837286645c5d9191f8d86219a11c8ed061cb01474f3f9392384a21966747c99",
+          "path": "artifacts/resume-native-f46fb6dc-20261105T2046/resume-20261105-native.log"
+        }
+      ],
+      "recordedAt": "2026-11-05T20:48:40.5062937Z",
+      "imagesInspected": 11,
+      "pageErrors": 0,
+      "phaseTimingsMs": {
+        "pause": 17.5,
+        "content": 5,
+        "render": 2.5999999046325684,
+        "show-modal": 5.599999904632568
+      },
+      "gpu": "ANGLE (Intel, Intel(R) Iris(R) Xe Graphics (0x0000A7A1) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "measurements": 5,
+      "codeCommit": "33788a034901b333ab12d38cdfc211ab15d1e680",
+      "observations": "Pack and Zephyrit phases show changed positions, commitment arcs and retreat; legacy NPC bodies remain. Sealed River diary spread shows two readable columns and navigation, with the world dimmed behind the modal.",
+      "receipt": "artifacts/resume-native-f46fb6dc-20261105T2046/receipt.json",
+      "receiptSha256": "eb3d7b87e62fdc8397700682c764aa43c1eedd2c4bfba65a1c64e3ee1e3119db"
+    },
+    "software": {
+      "sourceSha": "f46fb6dca5009183fa074cfd06c000f216ac9806",
+      "mountedPages": 2,
+      "passed": 4,
+      "openingMs": 1433.1999998092651,
+      "files": [
+        {
+          "sha256": "f4bd681d86230895b5d4b1176dfac36188d25f87694478934f79844255eb7b6c",
+          "path": "artifacts/resume-software-f46fb6dc-20261105T2049/c13-pack-1080p.png"
+        },
+        {
+          "sha256": "a578e365f4ba29f320f81a9b2e060128ce461eb394c67ecfa86ecff94dc6273b",
+          "path": "artifacts/resume-software-f46fb6dc-20261105T2049/c13-pack-break-1080p.png"
+        },
+        {
+          "sha256": "a9a1a6fc7806511aa2cd985b70fef025a0bfa64c886fdd08e30137a58f878798",
+          "path": "artifacts/resume-software-f46fb6dc-20261105T2049/c13-pack-browser.json"
+        },
+        {
+          "sha256": "fb6debf4bf242720d87bd00b2dd0ea3583edeb89c63f2cd182d52e95864b0aa8",
+          "path": "artifacts/resume-software-f46fb6dc-20261105T2049/c13-pack-commit-1080p.png"
+        },
+        {
+          "sha256": "bb0f34e3e74d530bd519a3c13b91cfc7c8ee3c755768c3e30e490a6daf345b4f",
+          "path": "artifacts/resume-software-f46fb6dc-20261105T2049/c13-pack-notice-1080p.png"
+        },
+        {
+          "sha256": "41670a36427222c3da7a205e2f3cb6ea7ab3273f240c39c25cdd5b0a19f0d9de",
+          "path": "artifacts/resume-software-f46fb6dc-20261105T2049/c13-pack-stalk-1080p.png"
+        },
+        {
+          "sha256": "103499ed19b6b766cc93c651709ad956815aeea9a19c3d281437ac21e9a238a9",
+          "path": "artifacts/resume-software-f46fb6dc-20261105T2049/c13-zephyrit-1080p.png"
+        },
+        {
+          "sha256": "d4bbbcd21f272e252b660afd93db430c81243bb77d8cf6d62c12b409ffba1972",
+          "path": "artifacts/resume-software-f46fb6dc-20261105T2049/c13-zephyrit-break-1080p.png"
+        },
+        {
+          "sha256": "66eba2628a0badccf7f707f9f2088b263197b42a9b3f2650dad3711d84301583",
+          "path": "artifacts/resume-software-f46fb6dc-20261105T2049/c13-zephyrit-browser.json"
+        },
+        {
+          "sha256": "ff71359a1afd378a04960bb5430e50d8a60661f8ba0ab8ae50e8048f7b726cdb",
+          "path": "artifacts/resume-software-f46fb6dc-20261105T2049/c13-zephyrit-commit-1080p.png"
+        },
+        {
+          "sha256": "df3a4de5b72d0d9f2087e3cbbbc3f314db5236c66ce0a2f12b3e1d422573ef92",
+          "path": "artifacts/resume-software-f46fb6dc-20261105T2049/c13-zephyrit-notice-1080p.png"
+        },
+        {
+          "sha256": "1d6cbc8d68841d7b37b8a9839f97708b55588daf03f9411db7e62b8b01abdb58",
+          "path": "artifacts/resume-software-f46fb6dc-20261105T2049/c13-zephyrit-stalk-1080p.png"
+        },
+        {
+          "sha256": "77a72d1303859e02dfc41071615ef3b09c4066379f44f7ae84339e3cb69cd50f",
+          "path": "artifacts/resume-software-f46fb6dc-20261105T2049/c18-book-browser.json"
+        },
+        {
+          "sha256": "010807f47a742e6eb13aea5d231346cd17d54b65573b25dec94b58f949a0a1b2",
+          "path": "artifacts/resume-software-f46fb6dc-20261105T2049/c18-book-cpu.json"
+        },
+        {
+          "sha256": "eb4338eed889afbee9f3f5dabe6842a28cef906d6fe2382d4b35ada90dedee05",
+          "path": "artifacts/resume-software-f46fb6dc-20261105T2049/c18-book-spread-1080p.png"
+        },
+        {
+          "sha256": "9483944300ab80846ca6089ebfbc06d78c589781cc95709333f834606582dd02",
+          "path": "artifacts/resume-software-f46fb6dc-20261105T2049/resume-20261105-software.log"
+        }
+      ],
+      "recordedAt": "2026-11-05T20:54:48.5298820Z",
+      "trace": "test-results/resume-software-f46fb6dc-20261105T2049/literacy-C18-writes-three--4dc98--reopens-a-read-only-spread-journeys/trace.zip",
+      "imagesInspected": 11,
+      "pageErrors": 0,
+      "phaseTimingsMs": {
+        "pause": 1367.3999998569489,
+        "content": 61.60000014305115,
+        "render": 0.2999999523162842,
+        "show-modal": 3.8999998569488525
+      },
+      "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "measurements": 5,
+      "codeCommit": "33788a034901b333ab12d38cdfc211ab15d1e680",
+      "observations": "Pack and Zephyrit captures show approach, attack arcs and retreat. Sealed two-column book spread remains readable. Pause-wait timing fails; do not count as software acceptance.",
+      "failed": 1,
+      "receipt": "artifacts/resume-software-f46fb6dc-20261105T2049/receipt.json",
+      "receiptSha256": "9360853d90479fd012d2fc0a7b49836a2d71f777210b8786421f33dc17ab9d0d"
+    },
+    "softwareC18Isolated": {
+      "sourceSha": "f46fb6dca5009183fa074cfd06c000f216ac9806",
+      "codeCommit": "33788a034901b333ab12d38cdfc211ab15d1e680",
+      "recordedAt": "2026-11-05T20:58:51.962Z",
+      "passed": 0,
+      "failed": 1,
+      "openingMs": 149.89999985694885,
+      "phaseTimingsMs": {
+        "pause": 129.89999985694885,
+        "content": 4.5,
+        "render": 6.700000047683716,
+        "show-modal": 8.799999952316284
+      },
+      "measurements": 5,
+      "mountedPages": 2,
+      "pageErrors": 0,
+      "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "imagesInspected": 1,
+      "cpuSummary": {
+        "windowMs": 149.9,
+        "main": [
+          [
+            "CrRendererMain:ThreadControllerImpl::RunTask:",
+            4.7,
+            73.3,
+            73.3
+          ],
+          [
+            "CrRendererMain:MinorGC:",
+            4.7,
+            73.3,
+            73.3
+          ],
+          [
+            "CrRendererMain:V8.GCScavenger:",
+            4.7,
+            73.3,
+            73.3
+          ],
+          [
+            "CrRendererMain:V8.GC_TIME_TO_SAFEPOINT:",
+            4.7,
+            71.7,
+            71.7
+          ],
+          [
+            "CrRendererMain:ProxyMain::BeginMainFrame:",
+            78.1,
+            51.1,
+            51.1
+          ],
+          [
+            "CrRendererMain:LayerTreeHost::WaitForCommitCompletion:",
+            79.3,
+            49.6,
+            49.6
+          ]
+        ],
+        "other": [
+          [
+            "ThreadPoolForegroundWorker:ThreadPool_RunTask:",
+            -59.9,
+            206.4,
+            146.5
+          ],
+          [
+            "ThreadPoolForegroundWorker:V8.GC_BACKGROUND_SAFEPOINT:",
+            24.8,
+            108.7,
+            108.7
+          ],
+          [
+            "DedicatedWorker thread:ThreadControllerImpl::RunTask:",
+            56.6,
+            68.1,
+            68.1
+          ],
+          [
+            "DedicatedWorker thread:HandlePostMessage:",
+            56.6,
+            68,
+            68
+          ]
+        ]
+      },
+      "observations": "Sealed River diary shows readable two-column spread and navigation. Timing fails; GC and compositor waits overlap pause. No software acceptance.",
+      "trace": "test-results/resume-software-c18-f46fb6dc-20261105T2055/literacy-C18-writes-three--4dc98--reopens-a-read-only-spread-journeys/trace.zip",
+      "files": [
+        {
+          "path": "artifacts/resume-software-c18-f46fb6dc-20261105T2055/c18-book-browser.json",
+          "sha256": "395f137a33b36779070e9d26b5148f2f4d13b8162a00f168a69a8853d4fa8bc6"
+        },
+        {
+          "path": "artifacts/resume-software-c18-f46fb6dc-20261105T2055/c18-book-cpu.json",
+          "sha256": "23f7d705ff44b38dbf73bf8d257d04a3f8714a1e71753fa4d6dc94bae1f2c9de"
+        },
+        {
+          "path": "artifacts/resume-software-c18-f46fb6dc-20261105T2055/c18-book-spread-1080p.png",
+          "sha256": "ae729e4450cc470e3818e0206b173bf35630ab50b2a2ec112b110aeb4528d7f5"
+        },
+        {
+          "path": "artifacts/resume-software-c18-f46fb6dc-20261105T2055/resume-20261105-software-c18.log",
+          "sha256": "bafb2e82fd7e5cdab4cb285d3dd00020f51df4a6a5edc614980c0a2baf3e763b"
+        }
+      ],
+      "receipt": "artifacts/resume-software-c18-f46fb6dc-20261105T2055/receipt.json",
+      "receiptSha256": "4ce835c36138be4a2f0ba40e170657f2ca7ed08a9c6cec517173c3958ad7a9a3"
+    },
+    "CI": {
+      "receipt": "current-ci-receipt.json",
+      "sourceSha": "f46fb6dca5009183fa074cfd06c000f216ac9806",
+      "push": 42092547479,
+      "pullRequest": 42092568549,
+      "checks": "success including benchmark",
+      "browserShards": "both success",
+      "betaBases": "both success",
+      "verify": "success on both runs",
+      "ecology": "push soak step skipped; PR soak cancelled; no soak pass claim"
+    },
+    "world": {
+      "studio": "76ef620c",
+      "merged": false,
+      "approved": [
+        "layout:aqualia_village",
+        "dressing:aqualia_village",
+        "layout:aqualia_riverlands",
+        "dressing:aqualia_riverlands"
+      ],
+      "sourceDigest": "ae34ae141d48512ab02607d274973751db79a0853fdebb74eaa3c6d982b66d5b",
+      "communicatorTicket": "M28",
+      "gap": "Pass008 flora are Decor, not gameplay ResourceNode. C7 activation and controlled studio integration remain."
+    },
+    "gaps": [
+      "Local painting CPU budget",
+      "Software C18 100ms opening:1433.2ms combined /149.9ms isolated",
+      "Machine-A live-model and painting acceptance",
+      "Manifest/face-format intake and unchanged HD coverage",
+      "Controlled studio merge, C7 authored gameplay and ResourceNode input",
+      "Director Pages activation; no source-matched soak pass"
+    ]
+  }
+}

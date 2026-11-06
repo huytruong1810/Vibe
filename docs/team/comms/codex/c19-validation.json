@@ -1,0 +1,389 @@
+{
+  "goldenSlice": {
+    "commit": "8f1c399",
+    "changed": [
+      "SDAPI loopback provider with bounded response, timeout, abort and unavailable Ollama stub",
+      "Disposable prepared PNG decode worker and pure linear-light area/OKLab palette quantizer",
+      "Synthetic golden PNG and adapter/worker/quantizer tests"
+    ],
+    "evidence": {
+      "golden": {
+        "pixels": "AAAAAHd3d3d3iIiIqqqqqqqqqq//+ZmZAAAAAAd3d3d3GIGIqqqqqqqqqq//mfmZAAAAd3d3d3d3ERiIqqqqqqqq////mZmZAAAAd3d3d3d3ERiIqqqqqqqq//qqmZmZAAAAd3d3F3d3ERiIqqqqqqqq//+qmZmZAAd3d3d3ERERGIiIqqqqqqqq///5mZmZd3d3AAAAEREReIiIqqqqqqqq+ZmZqq/5d3d3B3d3ERERiIiIiqiKqqqqmZmZ+qn7d3d3d3d3ERERiIiIiIqqqqqqmZmZ//+7EXd3d3d3ERERiIiIiIqqqqqqmZmZ+Zu7ERF3dxERIhERGIiIiKqq//qqmZmZmZu7ERERERERERERiIj////////5mf//+7u7ERERERIizMzMiIiP///5mZmZu7u7u7u7ERERIiIizMzMiI////mfmZmZu7u7u7u7IiIiIiIizMzMyIjP////mZmZu7u7u7u7IiEiIiIizMzMzMzMmZn5mZmZu7u7u7u7IiIiIiIizMzMzMzMmZmZmZmZu7u7u7u7IiIiIiIizMzMzMzMmZmZmZmZu7u7u7u7IiIiIiIizMzMzMzMZmZmRGZmu7u73du7ZmZmIiZmzMREzMzEZmZmZEZm3du73VVVZmZmZmZmzEREzEREZmZmZmMz3du71VVVZmZmZmImREREREREZmMzMz0zVVVVVVVVZmZmZmbd1EREREREZmMzMzM9VVVVVVVVZjMz3d3d3d3d0zMzMz3d3dVVVe7u7u7u3d3d3d3d3TMzMzMz3d3d1VVVXu7u7u7u3d3d3d3dM9MzMzMz3d3dVVVV7u7u7u7u3d3d3d3dMzMzMzMz3dVVVVVV7u7u7u7u3d3d3d3dMzVTMzM+VVVVVeVV7u7u7u7u3d3d3d3dPuVV7u7uVVVV7u7u7u7u7u7u3d1VVVVV7u7u7u7uVV7u7u7u7u7u7u7uVVVVVVVV7u7u7u7u7u7u7u7u7u7u7u7u7u7uVV7u7u7u7u7u7u7u7u7u7u7u7u7u",
+        "palette": [
+          "#191928",
+          "#335e97",
+          "#4f80ba",
+          "#6ec1b2",
+          "#8ba65b",
+          "#b0c37f",
+          "#6fa7d8",
+          "#553868",
+          "#6e4b7b",
+          "#a97ea5",
+          "#9e1c3c",
+          "#ec7c64",
+          "#5f8f3f",
+          "#92b56b",
+          "#c3d9a2",
+          "#a8708c"
+        ],
+        "quantizeMs": 3.700000047683716,
+        "workerStartupMs": 113,
+        "probe": {
+          "ok": true,
+          "model": "z_image_turbo-Q4_K"
+        },
+        "mockPipelineMs": 373.2000000476837,
+        "rejectsOversizedHeader": true,
+        "hash": "80bd3049d7d65ff7f8ce461f9ca0ffb7489b50e1f9780879482b62281f14ba01",
+        "realImageModel": false
+      },
+      "focusedUnit": {
+        "command": "npx vitest run tests/image.test.ts tests/painting-quantize.test.ts",
+        "tests": 32,
+        "files": 2,
+        "passed": true
+      },
+      "browser": {
+        "command": "npm run test:browser -- tests/browser/painting-provider.spec.ts",
+        "tests": 1,
+        "passed": true,
+        "durationSeconds": 32.2,
+        "imagesInspected": true
+      },
+      "check": {
+        "command": "VITEST_MAX_WORKERS=4 npm run check",
+        "tests": 502,
+        "files": 39,
+        "vitestSeconds": 56.53,
+        "passed": true
+      },
+      "artifacts": [
+        {
+          "path": "tests/fixtures/painting-golden.png",
+          "sha256": "d99a5ac9215ba573d7cae40948e999787f21ca2f9867d6bf2efb1a120b218646"
+        },
+        {
+          "path": "artifacts/c19-golden.json",
+          "sha256": "fbc7f6e97df3999e6ab84a50db50c3dbf394f7652bf1b7b9d91ba55d2baab00c"
+        },
+        {
+          "path": "artifacts/c19-golden-native.png",
+          "sha256": "6d8f4b663386502d5a8d50f5b805ad2eba678c2711e2a3a13af9f35cceec66cf"
+        },
+        {
+          "path": "artifacts/c19-golden-preview.png",
+          "sha256": "80c4f9eda90e6c859392670c93d0a8fcdd690e24bf0cf6bbcdd023a3aac39b68"
+        },
+        {
+          "path": "artifacts/c19-check.log",
+          "sha256": "5443fb868222a6c0abde91f03c3585f093ef7e41fa788d11c4accf05216bbad7"
+        }
+      ]
+    },
+    "gapsAndRisks": [
+      "No real image model or GPU smoke on machine B; machine-A 30-second unload/generate/reload and VRAM acceptance remain external",
+      "C19 arbiter, settings and operations guide are not implemented in this golden slice",
+      "Cold worker quantization measured46ms; preparation startup is113ms and is included in373.2ms mocked pipeline",
+      "SDAPI client abort does not establish stopped GPU work; native server job cancellation and terminal acknowledgement needed for preemption",
+      "Latest CI reporter follow-up4979a66 is queued; earlier sharded runs had functional failures, not job timeouts"
+    ],
+    "note": "Historical golden-slice observations; latest validation below supersedes mutable artifact paths and implementation gaps."
+  },
+  "followup": {
+    "changed": [
+      "Acknowledged native job cancellation, bounded cleanup and fail-closed inference suspension",
+      "GpuArbiter serialization, villager preemption/requeue, non-preemptible player work and optional awaited Ollama unload",
+      "Image endpoint/provider/unload settings, probe button, browser-local preferences and no-endpoint behavior",
+      "Pinned Apache-2.0 sd-server/model operations guide and machine-A-only --painting smoke",
+      "Exact cached box footprints and opaque fast path; serial 5ms performance gate in existing budget project"
+    ],
+    "evidence": {
+      "check": {
+        "command": "VITEST_MAX_WORKERS=4 npm run check",
+        "passed": true,
+        "tests": 513,
+        "files": 42,
+        "vitestSeconds": 56.8
+      },
+      "focusedCoordination": {
+        "command": "npx vitest run tests/gpu-arbiter.test.ts tests/image-managed.test.ts tests/image.test.ts tests/inference.test.ts",
+        "tests": 48,
+        "passed": true
+      },
+      "browser": {
+        "command": "npm run test:browser",
+        "tests": 25,
+        "passed": true,
+        "minutes": 6.7,
+        "pngsInspected": 42
+      },
+      "golden": {
+        "pixels": "AAAAAHd3d3d3iIiIqqqqqqqqqq//+ZmZAAAAAAd3d3d3GIGIqqqqqqqqqq//mfmZAAAAd3d3d3d3ERiIqqqqqqqq////mZmZAAAAd3d3d3d3ERiIqqqqqqqq//qqmZmZAAAAd3d3F3d3ERiIqqqqqqqq//+qmZmZAAd3d3d3ERERGIiIqqqqqqqq///5mZmZd3d3AAAAEREReIiIqqqqqqqq+ZmZqq/5d3d3B3d3ERERiIiIiqiKqqqqmZmZ+qn7d3d3d3d3ERERiIiIiIqqqqqqmZmZ//+7EXd3d3d3ERERiIiIiIqqqqqqmZmZ+Zu7ERF3dxERIhERGIiIiKqq//qqmZmZmZu7ERERERERERERiIj////////5mf//+7u7ERERERIizMzMiIiP///5mZmZu7u7u7u7ERERIiIizMzMiI////mfmZmZu7u7u7u7IiIiIiIizMzMyIjP////mZmZu7u7u7u7IiEiIiIizMzMzMzMmZn5mZmZu7u7u7u7IiIiIiIizMzMzMzMmZmZmZmZu7u7u7u7IiIiIiIizMzMzMzMmZmZmZmZu7u7u7u7IiIiIiIizMzMzMzMZmZmRGZmu7u73du7ZmZmIiZmzMREzMzEZmZmZEZm3du73VVVZmZmZmZmzEREzEREZmZmZmMz3du71VVVZmZmZmImREREREREZmMzMz0zVVVVVVVVZmZmZmbd1EREREREZmMzMzM9VVVVVVVVZjMz3d3d3d3d0zMzMz3d3dVVVe7u7u7u3d3d3d3d3TMzMzMz3d3d1VVVXu7u7u7u3d3d3d3dM9MzMzMz3d3dVVVV7u7u7u7u3d3d3d3dMzMzMzMz3dVVVVVV7u7u7u7u3d3d3d3dMzVTMzM+VVVVVeVV7u7u7u7u3d3d3d3dPuVV7u7uVVVV7u7u7u7u7u7u3d1VVVVV7u7u7u7uVV7u7u7u7u7u7u7uVVVVVVVV7u7u7u7u7u7u7u7u7u7u7u7u7u7uVV7u7u7u7u7u7u7u7u7u7u7u7u7u",
+        "palette": [
+          "#191928",
+          "#335e97",
+          "#4f80ba",
+          "#6ec1b2",
+          "#8ba65b",
+          "#b0c37f",
+          "#6fa7d8",
+          "#553868",
+          "#6e4b7b",
+          "#a97ea5",
+          "#9e1c3c",
+          "#ec7c64",
+          "#5f8f3f",
+          "#92b56b",
+          "#c3d9a2",
+          "#a8708c"
+        ],
+        "quantizeMs": 2.600000023841858,
+        "workerStartupMs": 106.60000002384186,
+        "probe": {
+          "ok": true,
+          "model": "z_image_turbo-Q4_K"
+        },
+        "mockPipelineMs": 296,
+        "rejectsOversizedHeader": true,
+        "hash": "80bd3049d7d65ff7f8ce461f9ca0ffb7489b50e1f9780879482b62281f14ba01",
+        "realImageModel": false
+      },
+      "priorWorkerObservationsMs": [
+        46,
+        10,
+        8.1,
+        3.7,
+        5.2,
+        6.7
+      ],
+      "isolatedOptimizedNodeMedianMs": 1.9353,
+      "formatPassed": true,
+      "artifacts": [
+        {
+          "path": "artifacts/c19-browser/screenshots/bramblefang-packet-gallery.png",
+          "sha256": "6b1669aa22f6c316daa876331875be410e542a2eb33e07f01a077fa1dee17db3"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/c11b-authored-screen.png",
+          "sha256": "b808e67efa83e6488fe834c3474dbc6bd03d32da37a512be15fdf9e266db8ae6"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/c11b-authored-village.png",
+          "sha256": "3ea6c4eb7b76ad274d2e9ff70fb98df5fb7ec4a614a2b88b45eb700827138c6d"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/c11b-live-terrain-1080.png",
+          "sha256": "1b1adef2ca6af5bbf0d90c9412115df0aa31b9565d4f302a2fa89670e250ee69"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/c8-hud-1024.png",
+          "sha256": "62175b42c1cf5574a697cc161ea1443dbd6c463e35a4f50c6b35652436e4b03f"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/c8-hud-1080.png",
+          "sha256": "20ac76403a6d4de1a7adcce0a4bc0bde1d49bb9eeaedb8535679866160a9abca"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/c8-packet-fixture.png",
+          "sha256": "ccc6f0c230aee8ddbaea025a2a6f6e9d8be71be0c7c4ac03653cbf78d2273c55"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/c8b-combat-1080.png",
+          "sha256": "f8aeaac3c6f4d0152ca6df0fc752a8a464ebed66c3f2ed9e84611cc529d926f3"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/c8b-companion-1024.png",
+          "sha256": "0d5bb4a6bd722b7335fe4d0aa431c292bf9b8771d16277cf674ba458087c0c5e"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/c8b-companion-1920.png",
+          "sha256": "1c5b74e252bcdb320f30222a8cdfea24be643027a4a8a260eb1d30ae6d421556"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/c8b-equipment-1024.png",
+          "sha256": "8a849e8e26899cf92b641e68f89f6b7ba43c5ada3dac8c936342255fbde6e080"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/c8b-equipment-1920.png",
+          "sha256": "c9cd7f7ec982c1b74e8c34c74640bcda6ed346ed7f7e32c67efe6cd0e9babb78"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/c8b-exploration-1024.png",
+          "sha256": "92a316d50f02bd801e42b046b338d52c79e210d77c3f8e2b68d6072c35bb6845"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/c8b-exploration-1080.png",
+          "sha256": "732dc919f7e56482ce3862f168a9781dc0d325fffa9da5e3775bfb82d583daab"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/c8b-meter-0.5.png",
+          "sha256": "63307f8fbc2eb7722c4c6c36f1133a43d61a5e43dc7dd59b4aee4413c8ba66cd"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/c8b-meter-0.png",
+          "sha256": "2de5b302585d5e4cca2191270a43581285a8cff79f049016b76833d33552b947"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/c8b-meter-1.png",
+          "sha256": "adb74c13c2c92a2a58b8f5c670276c05b61a534c8d08655324a1f3154bf64a46"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/c8b-worn-1024.png",
+          "sha256": "92fab8645a95c3d9a13c65d9deae162ede1b6b9639d9c1aa7f1fd36f74ba1d90"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/c8b-worn-1920.png",
+          "sha256": "5f74997de303fd8a050b446e45cdebfa491cbd9aeb35c58c8c4909a9b486fded"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/rivallie-packet-gallery.png",
+          "sha256": "5363cb4731a39b77b33dd9742e180805720f90a738c488fdb6c1300bbef97fa3"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/c13-pack-1080p.png",
+          "sha256": "a1ca0e4ae1249861667dd16c1e047b0e439d913b7cd3ccc002b59614b9dbfd77"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/c13-pack-break-1080p.png",
+          "sha256": "677c0b12a50c7ae2807542d296f55ab46c8b88a17693a63ce6346473b70f96ee"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/c13-pack-commit-1080p.png",
+          "sha256": "70a9a4464efcfb33351e654b20f14e10c39c74dd1a59ff0d76094a219a543bb1"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/c13-pack-notice-1080p.png",
+          "sha256": "9c3607e48f8d1215621f510f1c3cb7563605be0767945bf6e211a54dc062cc8d"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/c13-pack-stalk-1080p.png",
+          "sha256": "94aa0fd3c673c473d9dbef7ddde083d59fcf42c846ce83124473ab038e0084b4"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/c13-zephyrit-1080p.png",
+          "sha256": "8779f72f9a9c2c866125442c5a9d8a344a60ad8c235422ac7774374ee6d90a89"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/c13-zephyrit-break-1080p.png",
+          "sha256": "923f6fb067c2f47c764c2621f7af2234a488d649cbe0279a782829c5c8f63447"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/c13-zephyrit-commit-1080p.png",
+          "sha256": "0b4026dd1d3eab5e6dd141045648eb62c5cb66561bcd202d54dcff12dba0964e"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/c13-zephyrit-notice-1080p.png",
+          "sha256": "daea033faf66ca12513e88987d7060dcd013e612b7eaf708d3e6ae79ce79782b"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/c13-zephyrit-stalk-1080p.png",
+          "sha256": "782dfc73a83ff44afd0ea124ae05cbe4a2175edf44fd8403b483e56249968b61"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/c14-glint-1080p.png",
+          "sha256": "58b12959aa0b8fd1ff57fa9d8cb5e7c3805fd2dab9a37c8b04293fad87d5587f"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/c14-pack-1080p.png",
+          "sha256": "d1328157da3772e50ca5f27747a9178799554ff6ba714d5d4f805cd8804c6960"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/c18-book-spread-1080p.png",
+          "sha256": "59a109211a62da62c5e6d364c8c385f0e6246d9eea2eccb59ed24a595719aab9"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/c19-golden-native.png",
+          "sha256": "6d8f4b663386502d5a8d50f5b805ad2eba678c2711e2a3a13af9f35cceec66cf"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/c19-golden-preview.png",
+          "sha256": "80c4f9eda90e6c859392670c93d0a8fcdd690e24bf0cf6bbcdd023a3aac39b68"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/diagnostics.png",
+          "sha256": "7fb8bbef5b50d3595a7ff94813fd178b39cf76bc2e42f051f95261d6d490e97f"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/hd-gallery-environment.png",
+          "sha256": "4bae5583df9a867df8aa35737b84a544742ee97227682ccd1a36ed04bdfb1733"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/hd-gallery-missing-neris.png",
+          "sha256": "699fb372651e08b4602ca25c5c6a47cc91f09a000043f2a044fcc3489a6fcbd7"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/hd-gallery-rivallie.png",
+          "sha256": "a10e4bdecb35f11cc6777bc68185579b7d961e6a8236d611556c028b2cec82b1"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/hd-overlays-1024.png",
+          "sha256": "fc8d6f9b2d57f372d8ef12b9c5a700e3edbf804b63a886f4b6cfc3ed68f38b3f"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/hearthwild.png",
+          "sha256": "09ec96013235dbbedc2ac20030cc9b01226905489f6167b19297dc19eaec6015"
+        },
+        {
+          "path": "artifacts/c19-browser/screenshots/unified-entities.png",
+          "sha256": "c69182beb2d59152f2a5fd1ba7eaca63d2ac695e5aca841a07404f05997e9278"
+        },
+        {
+          "path": "artifacts/c19-browser/c19-golden.json",
+          "sha256": "82ab93dc6ceace2dbff415fe68106fcf3deb92b5a1f98867e6fb172cbfb13e86"
+        },
+        {
+          "path": "artifacts/c19-browser/c18-book-browser.json",
+          "sha256": "2fa4699678cf187a42c3267a480297fb0ee58fbfcfdfc8286650dc5eca5127c3"
+        },
+        {
+          "path": "artifacts/c19-browser/c18-book-cpu.json",
+          "sha256": "ad5c82fba32848453d386461ca2ffc5d21dad312975991938e724af1d2526a9c"
+        },
+        {
+          "path": "artifacts/c19-check.log",
+          "sha256": "0181ec91732198a790cb771c53b602643b125d7201bb2a307bb3f34e904b8c87"
+        },
+        {
+          "path": "artifacts/c19-browser.log",
+          "sha256": "3be280f694bb78f693aabfaaba6876f5149061ce5eacf0c25fad669156ea010d"
+        },
+        {
+          "path": "artifacts/c19-format.log",
+          "sha256": "d4131f633fb8c4fb0fc6b4d858663c406522b33771b6fc8ae8793f9bce9a7b40"
+        }
+      ],
+      "remote": {
+        "source": "ef890fd",
+        "prRun": 41868377375,
+        "checks": "success",
+        "browserShards": "both success",
+        "verify": "success",
+        "betaBases": "both success",
+        "pushRun": 41868358995,
+        "pushVerify": "failure (literacy startup)",
+        "pushEcology": "actual soak step success,22m52s",
+        "prEcology": "25-minute timeout",
+        "receipt": "artifacts/c18-trace-repair/phase-diagnostics/ef890fd-ci.json"
+      }
+    },
+    "gapsAndRisks": [
+      "Machine-A live model generation, VRAM, cancellation checkpoints and 30-second unload/preview/reload acceptance are unmeasured; test request prepared for blender",
+      "Browser quantization varied3.7-6.7ms in focused attempts; latest full-suite2.6ms and serial5ms Node gate pass, not reference-machine acceptance",
+      "No real GPU/model execution on machine B; raw/native previews are synthetic fixture data",
+      "C20 Paint/Keep/Hang, durable pending job integration and caption workflows remain separate",
+      "Latest C19 PR browser/verify gate is green; matching push literacy fails before offline world starts. Bootstrap diagnostics follow separately.",
+      "Push ecology actually completed22m52s; PR ecology reached25-minute limit. These outcomes are independent of verify."
+    ]
+  },
+  "c20Regression": {
+    "recordedAt": "2026-11-04T22:58:40.847Z",
+    "artifact": "artifacts/c20-browser/c19-golden.json",
+    "goldenHash": "80bd3049d7d65ff7f8ce461f9ca0ffb7489b50e1f9780879482b62281f14ba01",
+    "quantizeMs": 6,
+    "workerStartupMs": 149.29999995231628,
+    "mockPipelineMs": 542.5,
+    "outcome": "Golden bytes preserved;6ms full-browser quantization exceeds5ms target. Reference-machine acceptance remains external.",
+    "realImageModel": false
+  }
+}

@@ -65,6 +65,7 @@ export type EntityRecord = Record<FloatColumn | ByteColumn, number> & {
   scene: number;
   heightMeters: number;
   massKg: number;
+  bondHearts: number;
   recoilX: number;
   recoilY: number;
   nature: NaturePolicy;
@@ -108,6 +109,7 @@ export class EntityStore {
   readonly stamina!: Float32Array;
   readonly wildness!: Float32Array;
   readonly trust!: Float32Array;
+  readonly bondHearts: Float32Array;
   readonly targetX!: Float32Array;
   readonly targetY!: Float32Array;
   readonly commitUntil!: Float32Array;
@@ -159,6 +161,7 @@ export class EntityStore {
     this.scene = new Uint16Array(this.capacity);
     this.heightMeters = new Float32Array(this.capacity);
     this.massKg = new Float32Array(this.capacity);
+    this.bondHearts = new Float32Array(this.capacity);
     this.recoilX = new Float32Array(this.capacity);
     this.recoilY = new Float32Array(this.capacity);
   }
@@ -194,6 +197,7 @@ export class EntityStore {
     this.heightMeters[slot] = physique.heightMeters;
     this.massKg[slot] = physique.massKg;
     this.recoilX[slot] = this.recoilY[slot] = 0;
+    this.bondHearts[slot] = 0;
     this.herd[slot] = Math.floor(slot / 6);
     this.policies.set(id, species === 2 || species === 4 ? PASSIVE : NEUTRAL);
     if (owner >= 0) this.policies.set(id, NEUTRAL);
@@ -333,6 +337,7 @@ export class EntityStore {
             scene: this.scene[slot]!,
             heightMeters: this.heightMeters[slot]!,
             massKg: this.massKg[slot]!,
+            bondHearts: this.bondHearts[slot]!,
             recoilX: this.recoilX[slot]!,
             recoilY: this.recoilY[slot]!,
             nature: this.nature(slot),
@@ -345,6 +350,7 @@ export class EntityStore {
   restore(snapshot: EntitySnapshot): void {
     for (const k of [...FLOAT_COLUMNS, ...BYTE_COLUMNS]) this[k].fill(0);
     this.owner.fill(-1);
+    this.bondHearts.fill(0);
     this.scene.fill(0);
     this.byId.clear();
     this.policies.clear();
@@ -362,6 +368,7 @@ export class EntityStore {
       const baseline = PHYSIQUES[this.definition(r.slot).id];
       this.heightMeters[r.slot] = r.heightMeters ?? baseline.heightMeters;
       this.massKg[r.slot] = r.massKg ?? baseline.massKg;
+      this.bondHearts[r.slot] = r.bondHearts ?? 0;
       this.recoilX[r.slot] = r.recoilX ?? 0;
       this.recoilY[r.slot] = r.recoilY ?? 0;
       this.byId.set(r.id, r.slot);

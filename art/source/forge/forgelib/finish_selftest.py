@@ -104,6 +104,37 @@ class FinishingTest(unittest.TestCase):
         schema = json.loads((self.repo / "docs/art/source-manifest.schema.json").read_text())
         Draft202012Validator(schema["oneOf"][1]["properties"]["authoringProvenance"]["items"]).validate(provenance)
 
+    def test_npc_identity_uses_slugged_paths(self):
+        asset = "npc:neris"
+        self.write(self.repo / "art/source/forge/recipes/npc-neris.json", {"asset": asset})
+        manifest = export_packet(self.wd, self.packet, asset, self.rs, self.cv)
+        self.approval.write_text("---\nasset: npc:neris\npacket: art/review/body/\npacketDigest: " + manifest["sourceDigest"] + "\ndecision: director-approved\nscope: [body, clips]\n---\n")
+        path = publish_body(self.repo, self.wd, self.packet, self.approval, asset, self.rs, self.cv, "4.2.3")
+        record = json.loads(path.read_text())
+        self.assertEqual(path.name, "npc-neris.json")
+        self.assertEqual(record["asset"], asset)
+        self.assertEqual(record["authoringProvenance"]["id"], "forge-npc-neris")
+        self.assertTrue(all(f["file"].startswith("exports/npc-neris/") for f in record["frames"]))
+        self.assertTrue(all(p["path"].startswith("blender/models/published/npc-neris/")
+                            for p in record["authoringProvenance"]["inputs"]))
+
+    def test_reviewed_stride_fallback_without_animate_changes(self):
+        animate = json.loads((self.wd / "animate.json").read_text())
+        animate["extra"]["strideTiles"] = {}
+        self.write(self.wd / "animate.json", animate)
+        before = (self.wd / "animate.json").read_bytes()
+        record = json.loads(self.publish().read_text())
+        self.assertTrue(all(c["stride"] == 1.5 for c in record["clips"] if c["playback"] == "distance"))
+        self.assertEqual(before, (self.wd / "animate.json").read_bytes())
+
+    def test_invalid_explicit_stride_cannot_fall_back(self):
+        for value in (None, 0, -1, True, float("inf")):
+            animate = json.loads((self.wd / "animate.json").read_text())
+            animate["extra"]["strideTiles"] = {"walk": value}
+            self.write(self.wd / "animate.json", animate)
+            with self.assertRaisesRegex(core.ForgeError, "stride"):
+                self.publish()
+
     def test_live_tool_edit_does_not_invalidate_published_source_bytes(self):
         path = self.publish()
         old = json.loads(path.read_text())
@@ -202,7 +233,7 @@ class FinishingTest(unittest.TestCase):
         before = (self.packet / "review.json").read_bytes()
         report = build_faces(self.packet, self.wd / "faces", "rivallie", rs, core.spec("palette"))
         self.assertEqual(report["status"], "candidate")
-        self.assertEqual(len(report["frames"]), 50)  # 25 full decals and 25 eyes-only (compact/) fallbacks
+        self.assertEqual(len(report["frames"]), 25)  # One selected grammar per expression/facing, no variant sidecars.
         self.assertEqual(before, (self.packet / "review.json").read_bytes())
         for f in report["frames"]:
             with Image.open(self.wd / "faces" / f["file"]) as image:

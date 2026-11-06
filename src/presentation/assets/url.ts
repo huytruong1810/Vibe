@@ -1,14 +1,7 @@
-/** Deploy base of the page (`/` locally, `/Vibe/` on GitHub Pages). */
-export const defaultAssetBase = (): string =>
-  (import.meta as { env?: { BASE_URL?: string } }).env?.BASE_URL ?? '/';
-
-/**
- * Resolves a root-absolute asset path (`/assets/...`) against the deploy base.
- * Relative, external, blob and data urls pass through; already-prefixed paths are unchanged.
- */
-export function resolveAssetUrl(url: string, base: string = defaultAssetBase()): string {
-  if (!url.startsWith('/') || url.startsWith('//')) return url;
-  const prefix = base.endsWith('/') ? base : `${base}/`;
-  if (prefix === '/' || url.startsWith(prefix)) return url;
-  return prefix + url.slice(1);
+/** Resolve at the transport boundary; canonical catalog URLs remain /assets/ paths. */
+export function appUrl(path: string, base = import.meta.env.BASE_URL): string {
+  if (/^(?:[a-z][a-z\d+.-]*:|\/\/|#)/i.test(path)) return path;
+  const prefix = `/${base.replace(/^\/+|\/+$/g, '')}/`.replace(/^\/\//, '/');
+  if (prefix !== '/' && path.startsWith(prefix)) return path;
+  return prefix + path.replace(/^\/+/, '');
 }

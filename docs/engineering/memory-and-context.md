@@ -1,7 +1,8 @@
 # Villager memory and conversation context (AGT-10)
 
-Status: specification, 2026-11-02 (claude, on the director's request). Implementation is
-codex tickets C24 (context and compaction) and C25 (long-term memory). Doctrine:
+Status: C24 candidate; C25 candidate, 2026-11-02. Live B0 acceptance remains pending.
+Original spec by claude on the director's request. Implementation: C24 (context and
+compaction) and C25 (long-term memory). Doctrine:
 `docs/doctrine/11-living-minds.md` AGT-1.3, AGT-10, AGT-7; ADR 032.
 
 ## 1. What is wrong today (the correction)
@@ -103,10 +104,23 @@ decided[], open[], mood }`, each list ≤ 5 items of ≤ 20 words. Apply only if
 - **Remove** the old count-based `compaction` job and `MemoryRepository.compact`'s deletion
   path (C25 replaces consolidation).
 
+C24 implementation notes: the worker's `ConversationContext` owns session state;
+`PlanService.compaction` builds session jobs independently of memory. A turn here is one
+speaker entry, so K=4 retains two player/villager exchanges. The UI frame contains only 32
+recent lines; session history remains worker-owned. Settings live in browser preferences,
+not saves. Summary validation also bounds string lengths and rejects summaries consuming
+more than half of the dialogue input budget at the maximum calibration ratio (4).
+`prompt_eval_count` calibrates estimates per model using cumulative actual/estimated
+ratios, bounded to 1 to 4 times the initial UTF-8 estimate to contain malformed/outlier
+telemetry. No token estimator guarantees the exact tokenizer count; the 5% reserve and
+95% fallback provide headroom. See the C24 operation/smoke procedure in
+[operations](../operations/operations.md).
+
 ### 3.2 Long-term memory (C25)
 
 ```ts
-type MemoryType = 'episodic' | 'semantic' | 'commitment' | 'reflection' | 'sight' | 'reading';
+type MemoryType =
+  'episodic' | 'semantic' | 'commitment' | 'relationship' | 'reflection' | 'sight' | 'reading';
 interface MemoryRecordV2 {
   id: string;
   type: MemoryType;
@@ -130,21 +144,26 @@ interface CoreBlocks {
 - **Deterministic writes** (no LLM): perception, gifts, battles, care, commitments: the
   existing `PerceptionSystem`/action paths write typed records directly.
 - **Extraction at session end** (`gemma4-abliterated:e4b`, background): input = final
-  `CompactionSummary` + last K turns + **every active (non-superseded) `commitment` and
-  `relationship` memory involving the interlocutor** + the top-8 most similar remaining
-  memories (`MemoryRetriever.extractionCandidates`) + core blocks. Output: `operations:
-({op:'ADD', type, text, subjects, importance} | {op:'UPDATE', id, text, importance?} |
-{op:'INVALIDATE', id, reason} | {op:'NOOP'})[] ≤ 8` and `blocks: {block, value}[] ≤ 2`.
-  Passing all active commitments and relationships to extraction guarantees that when an old
-  promise is fulfilled or revised days later, its existing record ID is present in the
-  candidate set and can be updated or invalidated instead of duplicated. Validation: ids
-  only from the supplied set; the grounding filter (entities must exist; player claims stay
-  `told`); caps; ≤ 1 extraction per session. Applied by the simulation with provenance
-  `{kind:'session', ids:[sessionId]}`.
-- **Retrieval**: two-stage deterministic commitment/relationship pinning followed by
-  fixed-domain hybrid scoring (see §3.3 below). Passive retrieval reads do **not** reset
-  `createdTick` (`tick`), preventing positive-feedback loops where an old trivial memory
-  stays perpetually "recent".
+  `CompactionSummary` + last K turns + the top-10 most similar existing memories (ids) +
+  all active commitment and relationship records involving the interlocutor, deduplicated,
+  plus core blocks. Mandatory records are never silently dropped: if they cannot fit after
+  removing uncovered transcript entries, extraction returns no job and retains the session.
+  Output: `operations: ({op:'ADD', type, text, subjects, importance} | {op:
+'UPDATE', id, text, importance?} | {op:'INVALIDATE', id, reason} | {op:'NOOP'})[] ≤ 8`
+  and `blocks: {block, value}[] ≤ 2`. Validation: ids only from the supplied set; the
+  grounding filter (entities must exist; player claims stay `told`); caps; ≤ 1 extraction
+  per session. Applied by the simulation with provenance `{kind:'session', ids:[sessionId]}`.
+- **Retrieval (ratified proposal005 / C34)**: pin up to four active commitment or
+  relationship records involving the player or a named villager, newest first with an ID
+  tie break. Fill the remaining slots up to eight with `0.35 * recency + 0.35 * importance
+  - 0.65 * relevance`. Recency is `0.995^(game hours since createdTick)`, importance is
+`importance / 10`, and vector relevance is `clamp((cosine - 0.30) / 0.70, 0, 1)`.
+Without embeddings, relevance is query-word overlap divided by query-word count.
+Neither uses pool-relative stretching. Invalidated/superseded records are excluded.
+`lastAccessTick`remains bookkeeping; passive reads never reset ranking age. Maintenance
+queries may request more records, without dialogue pinning. Required pins survive the
+optional 600-token memory cap; an impossible context fails explicitly.
+The existing schema spells proposal`kind/status/createdAtTick`as`type/invalidAtTick/createdTick`; no redundant persistent fields are introduced.
 - **Embeddings** are a cache, not save data: IndexedDB keyed by (model, dimensions, record
   id, text hash), recomputed on demand in the background. Saves stay small.
 - **Reflection**: when the importance sum since the last reflection reaches a threshold
@@ -160,21 +179,38 @@ interface CoreBlocks {
   core blocks seed from the profile. C18's `reading` memories and AGT-3 `sight` notes use
   the new types.
 
-### 3.3 Two-stage hybrid retrieval and commitment pinning (C34 / Proposal 005)
+C25 implementation notes: saves use version 6. Legacy records longer than 280 characters
+are split into bounded records with unchanged provenance; the first retains the legacy ID.
+The legacy summary is preserved in the same way. The serial reserves all old IDs before
+allocating continuation records. Reflection/folding do not delete historical records.
 
-Per-candidate min-max normalization is replaced with fixed-domain scoring (`[0, 1]` per term) and a two-stage selection pipeline (`MemoryRetriever` in `src/domain/agents.ts`):
+The 400-record limit applies to admitted, valid records. Additional validated writes wait
+in saved `pending` storage, excluded from retrieval until folding or invalidation frees
+capacity. If no episodic records can be folded, pending writes remain visible in diagnostics;
+semantic facts and commitments are never removed to make room. Historical and pending
+storage can grow, particularly without a working background model.
 
-1. **Stage 1 — Deterministic Pinning (Up to 4 Slots)**:
-   - Any active (`!supersededById`) memory record with `subkind === 'commitment'` or `subkind === 'relationship'` involving the current interlocutor, or referenced by a `planned` commitment in `npc.commitments`, is deterministically pinned into the first `min(4, count)` slots (ordered by hybrid score descending).
-   - The same active commitment and relationship records are always included in `MemoryRetriever.extractionCandidates()` at session end so `ADD / UPDATE / INVALIDATE` consolidation never misses an older promise when the player fulfills or breaks it.
-2. **Stage 2 — Fixed-Domain Hybrid Scoring (Remaining Slots)**:
-   - Each remaining active memory record is scored on its intrinsic fixed domain `[0, 1]` without batch-dependent min-max stretching:
-     - `Recency = exp(-0.005 * hoursSinceCreated)` where `hoursSinceCreated = max(0, tick - record.tick) / 60` (passive retrieval never resets `record.tick`).
-     - `Importance = clamp((record.importance - 1) / 9, 0, 1)`.
-     - `Relevance = cosine < 0.30 ? 0 : clamp(cosine, 0, 1)` using `embeddinggemma` 256-d Matryoshka vectors when available, or lexical overlap ratio with the same `< 0.30` noise floor when embeddings are absent.
-     - `Score = 0.35 * Recency + 0.35 * Importance + 0.65 * Relevance`.
+Session provenance includes the unique world-session identifier. Closing under another
+pause captures the transcript and waits for simulation resume before committing staged
+actions and building extraction. Extraction includes the summary, four recent entries and
+a bounded tail of uncompacted entries; `omittedEntries` explicitly counts uncovered entries
+that did not fit. An extraction that cannot fit its configured context is skipped; existing
+conversation records remain. Extraction revisions reject intervening memory changes.
 
-### 3.4 Safety
+Optional embeddings run at background priority with CPU placement and never delay a reply.
+The first uncached query uses keywords; a subsequent identical query can use its cached
+vector. Queries are bounded to 64 in worker memory. Persistent cache entries are keyed by
+model, dimensions, record ID and text hash, with full text checked on read, in a separate
+IndexedDB database. Missing models, failed storage and canceled embedding jobs keep keyword
+retrieval available. Vectors are excluded from save data.
+
+Extraction bypasses the routine background quota. Dialogue preemption requeues the same
+extraction within its original 30-second deadline; cancellation on world replacement drops
+it. The deadline is measured from enqueue (after resume for a paused close). Reflection
+starts at accumulated importance 150 and does not count its own generated insights or
+folded digests as new experience.
+
+### 3.3 Safety
 
 Memory text and transcripts are data, never instructions (existing identity line). A
 model can propose memory operations but only the simulation applies them after
@@ -182,12 +218,11 @@ validation (ADR 005/006). Player claims stay `told` until the simulation witness
 
 ## 4. Tests and evidence
 
-| Area                               | Test                                                                                                                                                                                                                                                            |
-| ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Budget and trigger                 | Unit: a session crosses 75% → exactly one compaction job; recent K turns verbatim; summary applied only on unchanged revision; ≥ 95% overflow drops oldest turns deterministically                                                                              |
-| No memory loss                     | Unit: compaction never changes `npc.memory`; property test: any session length keeps the prompt ≤ B                                                                                                                                                             |
-| Extraction                         | Unit per op: ADD/UPDATE/INVALIDATE/NOOP validation, foreign ids rejected, hearsay stays `told`, caps; injection text in a turn cannot create an action or a witnessed fact; active commitments/relationships always supplied via `extractionCandidates`         |
-| Retrieval                          | Golden ranking on a fixture with fixed vectors; Stage-1 commitment/relationship pinning across 15+ game days; `cos < 0.30` relevance floor; passive reads do not mutate `tick`; invalidated/superseded records excluded                                         |
-| Villager eval gate (`M1–M5`)       | `npx tsx scripts/verify-villagers.ts` (and `tests/agents.test.ts`): M1 JSON validity `100%`, M2 character/lore consistency `>= 95%`, M3 action grounding `100%`, M4 15-day promise recall & non-contradiction `>= 90%`, M5 preparation latency `p95 <= 2500 ms` |
-| Migration                          | v-current → next save: counts, types, ids, summary record                                                                                                                                                                                                       |
-| Live smoke (machine A, blender B0) | `npm run test:ollama` extended: a 30-turn conversation with `gemma4-abliterated:26b` + `gemma4-abliterated:e4b` (CPU) stays coherent (the villager recalls a turn-3 promise at turn 28), compaction latency and reply latency recorded against AGT-7            |
+| Area                               | Test                                                                                                                                                                                                                                                 |
+| ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Budget and trigger                 | Unit: a session crosses 75% → exactly one compaction job; recent K turns verbatim; summary applied only on unchanged revision; ≥ 95% overflow drops oldest turns deterministically                                                                   |
+| No memory loss                     | Unit: compaction never changes `npc.memory`; property test: any session length keeps the prompt ≤ B                                                                                                                                                  |
+| Extraction                         | Unit per op: ADD/UPDATE/INVALIDATE/NOOP validation, foreign ids rejected, hearsay stays `told`, caps; injection text in a turn cannot create an action or a witnessed fact                                                                           |
+| Retrieval                          | Golden ranking on a fixture with fixed vectors; keyword fallback; invalidated records excluded                                                                                                                                                       |
+| Migration                          | v-current → next save: counts, types, ids, summary record                                                                                                                                                                                            |
+| Live smoke (machine A, blender B0) | `npm run test:ollama` extended: a 30-turn conversation with `gemma4-abliterated:26b` + `gemma4-abliterated:e4b` (CPU) stays coherent (the villager recalls a turn-3 promise at turn 28), compaction latency and reply latency recorded against AGT-7 |

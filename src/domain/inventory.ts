@@ -12,6 +12,7 @@ export interface ItemInstance {
   readonly instance: string;
   readonly originSpecies?: readonly SpeciesId[];
   readonly charges?: number;
+  readonly artifact?: string;
 }
 export type InventoryState = readonly [ItemInstance | null, ItemInstance | null];
 export class TwoSlotInventory {
@@ -60,6 +61,7 @@ export class TwoSlotInventory {
   combine(registry: RecipeRegistry): ItemId | null {
     const [a, b] = this.slots;
     if (!a || !b) return null;
+    if (a.artifact || b.artifact) return null;
     const result = registry.lookup(a.id, b.id);
     if (!result) return null;
     const originSpecies = [...new Set([...(a.originSpecies ?? []), ...(b.originSpecies ?? [])])];

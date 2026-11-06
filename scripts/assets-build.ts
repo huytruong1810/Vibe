@@ -1,8 +1,6 @@
-import { FrameDeduper } from './lib/frame-dedup';
 import { writeCoverageReport } from './lib/coverage-report';
 import { writeAssetSchemas } from './lib/asset-schemas';
-import { AssetPack } from '@assetpack/core';
-import { texturePacker } from '@assetpack/core/texture-packer';
+import { packAtlasTextures, isReviewOnlySprite } from './lib/atlas-packer';
 import sharp from 'sharp';
 import { buildUi } from './ui-build';
 import { format } from 'prettier';
@@ -306,6 +304,22 @@ for (const frame of source.frames) {
     source: frame,
   });
 }
+// Exclude review clips before reachability; approval/source digests still cover their source bytes.
+const reviewOnlyFrames = new Set(
+  [...frameSources]
+    .filter(([id, f]) => isReviewOnlySprite(id) || isReviewOnlySprite(f.path ?? ''))
+    .map(([id]) => id),
+);
+for (const list of [clips, reviewClips]) {
+  for (let i = list.length - 1; i >= 0; i--) {
+    const clip = list[i]!;
+    if (isReviewOnlySprite(clip.id) || clip.frameIds.some((id) => reviewOnlyFrames.has(id)))
+      list.splice(i, 1);
+  }
+}
+for (const list of [appearances, reviewAppearances])
+  for (let i = list.length - 1; i >= 0; i--)
+    if (list[i]!.frameId && reviewOnlyFrames.has(list[i]!.frameId!)) list.splice(i, 1);
 const referenced = new Set([
   ...appearances.flatMap((a) => (a.frameId ? [a.frameId] : [])),
   ...clips.flatMap((c) => c.frameIds),
@@ -330,7 +344,6 @@ async function exactPath(path: string): Promise<void> {
   checkedPaths.add(absolute);
 }
 const sizeById = new Map<string, { w: number; h: number }>();
-const deduper = new FrameDeduper();
 for (const [id, frame] of [...frameSources].sort(([a], [b]) => a.localeCompare(b))) {
   const input = frame.legacy
     ? resolve(root, 'public', frame.legacy.image.slice(1))
@@ -363,30 +376,22 @@ for (const [id, frame] of [...frameSources].sort(([a], [b]) => a.localeCompare(b
   const stats = await sharp(data).stats();
   if ((stats.channels[3]?.max ?? 0) === 0) throw new Error(`Empty transparent frame: ${id}`);
   sizeById.set(id, { w: info.width, h: info.height });
-  if (deduper.add(id, data) === id)
-    await writeFile(join(cache, 'input/bundle{tps}', `${id}.png`), data);
+  await writeFile(join(cache, 'input/bundle{tps}', `${id}.png`), data);
 }
-await new AssetPack({
-  entry: join(cache, 'input'),
-  output: join(cache, 'packed'),
-  cache: false,
-  strict: true,
-  logLevel: 'warn',
-  pipes: [
-    texturePacker({
-      texturePacker: {
-        padding: 2,
-        allowTrim: true,
-        allowRotation: false,
-        nameStyle: 'short',
-        removeFileExtension: true,
-        autodetectAnimations: false,
-        sharpOptions: { resize: { kernel: 'nearest' } },
-      },
-      resolutionOptions: { resolutions: { full: 1, half: 0.5 }, maximumTextureSize: 2044 }, // padding is added past this; pages stay ≤ 2048
-    }),
-  ],
-}).run();
+const packingInputs = await Promise.all(
+  [...frameSources.keys()].map(async (id) => ({
+    path: `${id}.png`,
+    contents: await readFile(join(cache, 'input/bundle{tps}', `${id}.png`)),
+  })),
+);
+await mkdir(join(cache, 'packed'), { recursive: true });
+for (const resolution of [1, 0.5] as const) {
+  const packed = await packAtlasTextures(packingInputs, resolution);
+  for (const texture of packed.textures)
+    await writeFile(join(cache, 'packed', texture.name), texture.buffer);
+  for (const atlas of packed.jsons)
+    await writeFile(join(cache, 'packed', atlas.name), JSON.stringify(atlas.json));
+}
 type Atlas = {
   frames: Record<
     string,
@@ -474,30 +479,23 @@ for (const atlas of atlases.filter((a) => a.resolution === 1)) {
     const low = lowByFrame.get(id);
     if (!low) throw new Error(`Missing half-resolution frame: ${id}`);
     addVariant(low);
-    const entry = (frameId: string) => {
-      const src = frameSources.get(frameId)!;
-      return {
-        id: frameId,
-        pageId,
-        textureKey: id,
-        rect: f.frame,
-        sourceSize: sizeById.get(frameId)!,
-        trim: f.spriteSourceSize,
-        anchor: src.anchor,
-        ...(src.source && 'anchorPx' in src.source
-          ? {
-              anchorPx: src.source.anchorPx,
-              rigId: src.source.rigId,
-              sockets: src.source.sockets,
-              ...('held' in src.source && src.source.held ? { held: src.source.held } : {}),
-            }
-          : {}),
-      };
-    };
-    catalog.frames.push(entry(id));
-    // Byte-identical frames share one packed image but keep their own metadata.
-    for (const [alias, canonical] of deduper.aliases())
-      if (canonical === id) catalog.frames.push(entry(alias));
+    catalog.frames.push({
+      id,
+      pageId,
+      textureKey: id,
+      rect: f.frame,
+      sourceSize: sizeById.get(id)!,
+      trim: f.spriteSourceSize,
+      anchor: source.anchor,
+      ...(source.source && 'anchorPx' in source.source
+        ? {
+            anchorPx: source.source.anchorPx,
+            rigId: source.source.rigId,
+            sockets: source.source.sockets,
+            ...('held' in source.source && source.source.held ? { held: source.source.held } : {}),
+          }
+        : {}),
+    });
   }
   catalog.pages.push({
     id: pageId,
