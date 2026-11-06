@@ -12,7 +12,8 @@ import type { DebugPath, NpcId, WorldPosition } from './values';
 import type { WeatherState } from './core';
 import type { DialogueEmotion } from './dialogue';
 import { PaintingResultSchema } from './painting';
-import { ArtifactIdSchema, PaintingBriefSchema } from './artifacts';
+import { ArtifactIdSchema, PaintingBriefSchema, ARTIFACT_PALETTE } from './artifacts';
+import { ARTIFACT_LIMITS } from '../content/definitions';
 import type { EquipmentView } from './equipment';
 import type { Artifact, ArtifactView, ArtifactPlacement } from './artifacts';
 import type { ScenePresentation, ProjectilePresentation } from './presentation-contract';
@@ -35,6 +36,22 @@ export const CommandPayloadSchema = z.discriminatedUnion('type', [
     .object({ type: z.literal('artifactPageRemove'), slot, page: z.number().int().min(1).max(48) })
     .strict(),
   z.object({ type: z.literal('artifactSeal'), slot }).strict(),
+  z
+    .object({
+      type: z.literal('paintingTouchUp'),
+      slot,
+      pixels: z.string().length(1024).regex(/^[A-Za-z0-9+/]+$/),
+      palette: z
+        .array(
+          z
+            .string()
+            .regex(/^#[0-9a-f]{6}$/)
+            .refine((color) => ARTIFACT_PALETTE.has(color)),
+        )
+        .min(1)
+        .max(ARTIFACT_LIMITS.colors),
+    })
+    .strict(),
   z
     .object({
       type: z.literal('partnerCommand'),

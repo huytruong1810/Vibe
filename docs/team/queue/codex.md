@@ -161,23 +161,23 @@ and local-generation tickets (C26–C31) sit in their own section.
 
 ### C21 · Player pixel touch-up for paintings (optional)
 
-- status: open (after C20; take it only if the director says go after seeing C20)
+- status: candidate (implemented; domain paintingTouchUp command with exact 1024 base64 characters nibble encoding/decoding, palette <= 16 doctrine verification, unsealed carried validation; PaintingEditor modal with pencil, flood fill, eyedropper, doctrine palette swatches, doctrine color dropdown, 32-step undo/redo stack; tests/painting-touchup.test.ts 4/4 passing; full suite 49/49 passing)
 - owner: codex
 - goal: the player can retouch a kept painting pixel by pixel in the game palette; no model involved (AGT-6.7).
 - spec: [authored artifacts](../../engineering/authored-artifacts.md) §8.3.
 - done when: editor with pencil, fill, eyedropper and 32-step undo; output passes the same palette and colour-count validation; Playwright edit-and-save test; capture looked at.
-- evidence:
+- evidence: `src/domain/contracts.ts` (`paintingTouchUp` payload schema), `src/domain/painting-pixels.ts` (`decodePaintingIndices`, `encodePaintingIndices`), `src/domain/artifact-writing.ts` (`touchUpCarriedPainting`), `src/domain/simulation.ts` (`paintingTouchUp` simulation command dispatcher), `src/presentation/ui/painting-editor.ts` (`PaintingEditor` UI modal with pencil, flood fill, dropper, undo/redo, palette manager), `src/presentation/ui/painting.ts` (wiring into preview workflow and button controls), `tests/painting-touchup.test.ts` (4 unit tests passing).
 
 ## After C20: codex
 
 ### C32 · worldforge packets compare against the previous revision
 
-- status: open
+- status: candidate (implemented in c998d532; review.py comparison_source binds predecessor overview.png, before-overview.png hash, and README wording; 27/27 tests green in worldforge_selftest.py)
 - owner: codex
 - goal: a world packet's before/after shows the last revision, not the blank draft (gap found in Riverlands revision 2).
 - work: `worldforge render`/`packet` writes `before-overview.png` from the previous packet's overview (or re-renders the previous map); README wording follows.
 - done when: Riverlands revision 3's packet shows revision 2 as its before
-- evidence:
+- evidence: commit `c998d532`; `art/source/world/tools/worldlib/review.py` (`comparison_source`, `packet_path`, `next_revision`); `art/source/world/tools/worldlib/worldforge_selftest.py` (27/27 passing).
 
 ### C3g - Atlas pages, trimming, deduplication and scale follow-up
 
@@ -189,8 +189,8 @@ and local-generation tickets (C26–C31) sit in their own section.
 
 ### C7 · Authored world in the engine (WLD-M1…M4)
 
-- status: candidate (visitor; WLD-M2/M3 authored simulation, spawn, 10 Aqualia NPCs, habitat creature seeding, and save migration under opt-in beta toggle, tests green). Codex reviews/supports without duplicating settlement, spawn or save-provenance changes.
-- evidence: 2026-11-05 studio 74714197 and c5104a14. Village/Riverlands R3 approvals bind ae34ae141d48512ab02607d274973751db79a0853fdebb74eaa3c6d982b66d5b. Unit tests pass in tests/simulation.test.ts.
+- status: candidate (visitor; WLD-M2/M3 authored simulation, spawn, 10 Aqualia NPCs, habitat creature seeding, 263 authored props registered to overworld scene, procedural suppression, save migration under opt-in beta toggle, sustained 600-tick soak test on authored map, and BENCHMARK_WORLD=authored support; tests green). Codex reviews/supports without duplicating settlement, spawn or save-provenance changes.
+- evidence: 2026-11-05 studio 74714197, c5104a14, and b8b8fe46. Village/Riverlands R3 approvals bind ae34ae141d48512ab02607d274973751db79a0853fdebb74eaa3c6d982b66d5b. Unit tests pass in tests/authored-world.test.ts (29/29) and tests/simulation.test.ts (14/14, including 600-tick sustained movement soak on authored map).
 - goal: a new game loads the authored LDtk map; procedural world generation is retired.
 - work:
   - a build-time importer from the schema into `ChunkStore`;

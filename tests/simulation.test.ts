@@ -232,4 +232,30 @@ describe('authored world beta toggle (C7 WLD-M2/M3)', () => {
     const migrated = migrateSave(save);
     expect(migrated.worldSource).toBe('procedural');
   });
+
+  it('keeps world state finite and capacity bounded under sustained movement on the authored map', async () => {
+    const { readFile } = await import('node:fs/promises');
+    const compiled = JSON.parse(
+      await readFile('art/source/world/work/import/aqualia-region.json', 'utf8'),
+    );
+    const host = new SimulationHost(83, 1, 100, 'world:authored:soak', {
+      worldSource: 'authored',
+      compiledWorld: compiled,
+    });
+    send(host, { type: 'move', x: 1, y: 0.5 });
+    host.advance(600);
+    host.creatures.validate();
+    expect(host.tiers.detailed.length).toBeLessThanOrEqual(128);
+    expect(host.npcs).toHaveLength(10);
+    expect(host.navigation.pending).toBeLessThanOrEqual(200);
+    const save = migrateSave(host.snapshot());
+    expect(save.tick).toBe(600);
+    expect(save.worldSource).toBe('authored');
+    const restored = new SimulationHost(83, 1, 0, 'world:authored:restored', {
+      worldSource: 'authored',
+      compiledWorld: compiled,
+    });
+    restored.restore(save);
+    expect(restored.snapshot()).toEqual(save);
+  });
 });

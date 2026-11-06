@@ -16,11 +16,11 @@ export function editCarriedArtifact(
   day: number,
 ): Artifact {
   const item = inventory.state[command.slot];
-  if (!item || (item.id !== 'note' && item.id !== 'book'))
+  if (!item || (item.id !== 'note' && item.id !== 'book' && (command.type !== 'artifactSeal' || item.id !== 'painting')))
     throw Error('Carry a note or book to write.');
   const record = item.artifact ? store.get(item.artifact) : null;
   if (item.artifact && (!record || record.kind !== item.id))
-    throw Error('That text is unavailable.');
+    throw Error('That artifact is unavailable.');
   if (record && (record.author.kind !== 'player' || record.sealed))
     throw Error('Only your own unsealed text can be changed.');
   if (!record) {
@@ -69,4 +69,28 @@ export function editCarriedArtifact(
     record.pages.splice(command.page - 1, 1);
   }
   return store.update(record.id, { pages: record.pages });
+}
+
+export function touchUpCarriedPainting(
+  store: ArtifactStore,
+  inventory: TwoSlotInventory,
+  command: { slot: 0 | 1; pixels: string; palette: string[] },
+): Artifact {
+  const item = inventory.state[command.slot];
+  if (!item || (item.id !== 'painting' && item.id !== 'canvas'))
+    throw Error('Carry a painting or canvas to edit.');
+  if (!item.artifact) throw Error('That painting is unavailable.');
+  const record = store.get(item.artifact);
+  if (!record || record.kind !== 'painting')
+    throw Error('That painting is unavailable.');
+  if (record.author.kind !== 'player')
+    throw Error('Only your own paintings can be edited.');
+  if (record.sealed)
+    throw Error('Only unsealed paintings can be edited.');
+  if (!record.pixels || !record.palette)
+    throw Error('Only paintings with pixel previews can be edited.');
+  return store.update(record.id, {
+    pixels: command.pixels,
+    palette: command.palette,
+  });
 }

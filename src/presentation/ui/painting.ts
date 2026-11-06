@@ -2,6 +2,7 @@ import type { Artifact } from '../../domain/artifacts';
 import type { CommandPayload, CommandResult, RenderSnapshot } from '../../domain/contracts';
 import type { Painting } from '../../domain/painting';
 import { paintingRgba } from '../../domain/painting-pixels';
+import { PaintingEditor } from './painting-editor';
 
 interface PaintingHandlers {
   frame(): RenderSnapshot | null;
@@ -28,6 +29,7 @@ export class PaintingScreen {
   private focus: HTMLElement | null = null;
   private padFrame = 0;
   private padButtons: boolean[] = [];
+  private readonly editor: PaintingEditor;
   constructor(
     root: HTMLElement,
     private readonly handlers: PaintingHandlers,
@@ -36,6 +38,11 @@ export class PaintingScreen {
     template.innerHTML = `<dialog id="painting-dialog" class="painting-dialog" aria-labelledby="painting-heading"><div class="modal-heading"><h2 id="painting-heading">Paint a canvas</h2><button id="painting-close" aria-label="Close painting">×</button></div><label>Painting prompt<textarea id="painting-prompt" maxlength="240" rows="3"></textarea></label><p id="painting-counter" aria-live="polite">0 / 240</p><fieldset id="painting-composition"><legend>Composition</legend>${['wide landscape', 'close study', 'portrait', 'still life', 'scene'].map((value, n) => `<label class="painting-chip"><input type="radio" name="painting-composition" value="${value}" ${n === 0 ? 'checked' : ''} />${value}</label>`).join('')}</fieldset><fieldset id="painting-mood"><legend>Mood</legend>${['dawn', 'noon', 'dusk', 'night', 'storm', 'festival', 'quiet'].map((value, n) => `<label class="painting-chip"><input type="radio" name="painting-mood" value="${value}" ${n === 6 ? 'checked' : ''} />${value}</label>`).join('')}</fieldset><section id="painting-previews" class="painting-previews" hidden><figure><figcaption>Game palette · 4×</figcaption><canvas id="painting-palette" width="48" height="32" aria-label="Palette painting preview"></canvas></figure><figure id="painting-raw-figure" hidden><figcaption>Model output</figcaption><img id="painting-raw" alt="Original local model output" /></figure></section><p id="painting-caption"></p><p id="painting-status" role="status"></p><div class="button-row"><button id="painting-generate" class="secondary">Generate</button><button id="painting-cancel" class="secondary" hidden>Cancel painting</button><button id="painting-keep" class="secondary" hidden>Keep painting</button><button id="painting-retry" class="secondary" hidden>Retry with a new seed</button><button id="painting-discard" class="secondary" hidden>Discard painting</button><button id="painting-settings" class="secondary">Open painting settings</button></div></dialog>`;
     root.append(template.content);
     this.dialog = root.querySelector('#painting-dialog')!;
+    this.editor = new PaintingEditor(root, {
+      onSave: async (pixels, palette) => {
+        await this.saveTouchUp(pixels, palette);
+      },
+    });
     this.el('painting-close').addEventListener('click', () => {
       void this.close();
     });
@@ -53,12 +60,21 @@ export class PaintingScreen {
     this.el('painting-keep').addEventListener('click', () => {
       void this.keep();
     });
+    const edit = document.createElement('button');
+    edit.id = 'painting-edit';
+    edit.className = 'secondary';
+    edit.textContent = 'Touch up pixels';
+    edit.hidden = true;
+    this.el('painting-keep').after(edit);
+    edit.addEventListener('click', () => {
+      this.touchUp();
+    });
     const hang = document.createElement('button');
     hang.id = 'painting-hang';
     hang.className = 'secondary';
     hang.textContent = 'Hang on nearby hook';
     hang.hidden = true;
-    this.el('painting-keep').after(hang);
+    edit.after(hang);
     hang.addEventListener('click', () => {
       void this.display();
     });
@@ -322,6 +338,34 @@ export class PaintingScreen {
       this.busy = false;
     }
   }
+  private touchUp(): void {
+    if (!this.current() || !this.record?.pixels || !this.record.palette) return;
+    this.editor.open({ pixels: this.record.pixels, palette: this.record.palette });
+  }
+  private async saveTouchUp(pixels: string, palette: string[]): Promise<void> {
+    if (!this.record || this.slot === null) return;
+    this.busy = true;
+    try {
+      const result = await this.handlers.send({
+        type: 'paintingTouchUp',
+        slot: this.slot,
+        pixels,
+        palette,
+      });
+      if (!result.ok) {
+        this.status(result.message);
+        throw new Error(result.message);
+      }
+      const updated = await this.handlers.content(this.record.id);
+      if (updated?.kind === 'painting') {
+        this.record = updated;
+        this.revision = updated.revision;
+        this.render();
+      }
+    } finally {
+      this.busy = false;
+    }
+  }
   private render(): void {
     const record = this.record,
       writable =
@@ -336,6 +380,7 @@ export class PaintingScreen {
     this.el<HTMLButtonElement>('painting-generate').disabled = !this.handlers.enabled();
     this.el('painting-cancel').hidden = !writable || !pending;
     this.el('painting-keep').hidden = !writable || !preview;
+    this.el('painting-edit').hidden = !writable || !preview || !record || record.sealed;
     this.el('painting-hang').hidden =
       this.slot === null || record?.status !== 'ready' || !record.sealed;
     this.el('painting-take').hidden =
@@ -403,6 +448,7 @@ export class PaintingScreen {
   async close(resume = true): Promise<void> {
     ++this.epoch;
     cancelAnimationFrame(this.padFrame);
+    this.editor.close();
     this.dialog.close();
     if (this.rawUrl) URL.revokeObjectURL(this.rawUrl);
     this.rawUrl = null;
@@ -418,6 +464,7 @@ export class PaintingScreen {
   }
   dispose(): void {
     void this.close(false);
+    this.editor.dispose();
     this.dialog.remove();
   }
 }

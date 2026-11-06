@@ -1,5 +1,5 @@
 import { remapMindScenes } from './creature-minds';
-import { editCarriedArtifact } from './artifact-writing';
+import { editCarriedArtifact, touchUpCarriedPainting } from './artifact-writing';
 import { LiteracyService } from './literacy';
 import {
   PaintingService,
@@ -595,6 +595,7 @@ export class SimulationHost {
       'paintingRequest',
       'paintingKeep',
       'paintingDiscard',
+      'paintingTouchUp',
       'paintingResult',
       'paintingFailure',
       'move',
@@ -642,6 +643,7 @@ export class SimulationHost {
         'paintingRequest',
         'paintingKeep',
         'paintingDiscard',
+        'paintingTouchUp',
       ].includes(c.type) &&
       (this.player.attack || this.equipment.hasReservation(0))
     )
@@ -677,6 +679,7 @@ export class SimulationHost {
         'paintingRequest',
         'paintingKeep',
         'paintingDiscard',
+        'paintingTouchUp',
       ].includes(c.type)
     )
       return {
@@ -750,6 +753,19 @@ export class SimulationHost {
             error instanceof Error && error.name !== 'ZodError'
               ? error.message
               : 'Invalid painting request or result.';
+        }
+        break;
+      }
+      case 'paintingTouchUp': {
+        try {
+          artifactId = touchUpCarriedPainting(this.artifacts, this.inventory, c).id;
+          message = 'Painting retouched.';
+        } catch (error) {
+          ok = false;
+          message =
+            error instanceof Error && error.name !== 'ZodError'
+              ? error.message
+              : 'Painting could not be updated.';
         }
         break;
       }

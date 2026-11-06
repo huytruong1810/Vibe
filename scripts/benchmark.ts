@@ -11,8 +11,20 @@ import { CombatSystem } from '../src/domain/combat';
 import { EntityStore, bindBody } from '../src/domain/entities';
 
 const samples = Number(process.env.BENCHMARK_TICKS ?? 3000);
-const started = performance.now(),
+const started = performance.now();
+let host: SimulationHost;
+if (process.env.BENCHMARK_WORLD === 'authored') {
+  const { readFile } = await import('node:fs/promises');
+  const compiled = JSON.parse(
+    await readFile('art/source/world/work/import/aqualia-region.json', 'utf8'),
+  );
+  host = new SimulationHost(42, 1, 1000, 'world:benchmark', {
+    worldSource: 'authored',
+    compiledWorld: compiled,
+  });
+} else {
   host = new SimulationHost(42, 1, 1000, 'world:benchmark');
+}
 const generationMs = performance.now() - started;
 host.advance(300);
 const step: number[] = [],
@@ -220,6 +232,7 @@ const report = {
   platform: `${platform()} ${arch()}`,
   cpu: cpus()[0]?.model,
   logicalCpus: cpus().length,
+  worldSource: host.worldSource,
   systemMemoryGiB: +(totalmem() / 2 ** 30).toFixed(1),
   seed: 42,
   villagers: host.npcs.length,
