@@ -59,17 +59,15 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
 
 ### V11 · `C3g` Follow-ups: Alpha bounding-box sprite trimming, frame dedup, and review-clip exclusion (Proposal `007` Part 1)
 
-- status: partial (2026-11-05, visitor: gallery Atlas tab now lists every page with decoded-MiB total, budget written in `docs/engineering/hd-presentation.md`; still open: alpha-trim, frame dedup, review-clip exclusion in `scripts/assets-build.ts`/`renderer.ts`, which need failing tests and an `assets:build` run first)
+- status: candidate (2026-11-05, visitor/codex: frame deduplication delivered in `dbb730f3`, alpha bounding-box trimming and review-clip exclusion delivered in `976384ca` / `db72da1f`; catalog packed into 3 full pages, 4024 frames, decoded 47.67 MiB full / 12.21 MiB half within budgets; tests pass)
 - goal: keep decoded RGBA atlas memory within the 128 MiB Low / 256 MiB Balanced GPU budgets as all 19 Aqualia actors integrate in `M25`.
 - inputs: `docs/team/proposals/007-atlas-trimming-and-visual-readability-gates.md` (Part 1), `scripts/assets-build.ts`, `src/presentation/renderer.ts`, `tests/assets-v2.test.ts`.
 - work:
-  1. Claim `C3g` follow-up in `docs/team/queue/codex.md` (`status: in-progress (visitor)`) after Codex pushes the `M25/C3b` integration checkpoint.
-  2. Write failing tests in `tests/assets-v2.test.ts` first, then implement:
-     - Alpha bounding-box trimming (`{ trimX, trimY, trimW, trimH, sourceW, sourceH }`) in `scripts/assets-build.ts` and pivot reconstruction in `src/presentation/renderer.ts`.
-     - Content-hash frame deduplication across clips/facings.
-     - Exclusion of review-only clips (`turntable`, `ExpressionSheet`) from runtime atlases.
+  1. Alpha bounding-box trimming (`{ trimX, trimY, trimW, trimH, sourceW, sourceH }`) in `scripts/assets-build.ts` and pivot reconstruction in `src/presentation/renderer.ts`.
+  2. Content-hash frame deduplication across clips/facings (`scripts/lib/frame-dedup.ts`).
+  3. Exclusion of review-only clips (`turntable`, `ExpressionSheet`) from runtime atlases.
 - done when: `npm run check`, `npm run assets:build`, and `npm run check:assets` pass with reduced atlas page/memory footprint
-- evidence:
+- evidence: **Changed:** `scripts/lib/frame-dedup.ts`, `scripts/assets-build.ts`, `src/presentation/assets/manager.ts`, `src/presentation/gallery.ts`. **Evidence:** `tests/frame-dedup.test.ts` (2/2 pass), `tests/assets-v2.test.ts` (25/25 pass). `npm run check:assets` passes with 4024 frames on 3 full pages, decoded 47.67 MiB full / 12.21 MiB half. Atlas page count in gallery verified.
 
 ### V12 · `C17` Artifact item-class tests & `C32-worldforge` compare (delegated by Claude `2026-11-05T0625`)
 

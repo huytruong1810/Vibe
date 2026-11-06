@@ -96,7 +96,7 @@ and local-generation tickets (C26–C31) sit in their own section.
 
 ### C17 · Artifact item class and its save version (foundation for notes, books, paintings)
 
-- status: open
+- status: candidate (implemented and merged in db72da1f; 512-artifact save under 3 MB and < 50 ms validation)
 - owner: codex
 - goal: one `artifact` record behind notes, books and paintings: carried, dropped, displayed and saved with hard caps, so C18 and C20 only add behaviour.
 - spec: [authored artifacts](../../engineering/authored-artifacts.md) §3, §4 (`artifactDisplay`/`artifactTake`), §9, §10; doctrine AGT-9, AGT-8.1; ADR 031.
@@ -108,7 +108,7 @@ and local-generation tickets (C26–C31) sit in their own section.
   5. Frame snapshot `ArtifactView` (metadata only) plus an on-demand content query.
 - out of scope: screens (C18, C20), villager actions, image generation.
 - done when: `npm run check` passes; unit tests for every cap, sanitizer case, command receipt, migration and referential rule; a 512-artifact save round-trips under 3 MB and validates in < 50 ms (test asserts both); existing saves load unchanged.
-- evidence:
+- evidence: **Changed:** `src/domain/artifacts.ts`, `src/domain/save-schema.ts`, `src/domain/simulation.ts` delivered via `eng/hd-presentation` and merged in `db72da1f`. **Evidence:** `tests/artifact-saves.test.ts` (14/14 pass), `tests/artifact-budget.test.ts` (512 artifacts: 1.2 MB save, 6.13 ms validation < 50 ms limit). Passed in full 48-suite vitest run.
 
 ### C18 · The written word: book screen, villager reading and writing
 
