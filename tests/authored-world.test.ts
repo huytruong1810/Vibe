@@ -80,6 +80,11 @@ it('preserves every selected placement, stable IDs, anchors and world point fiel
   ).toBe(10);
   for (const kind of ['Habitat', 'Service', 'Entrance', 'StorySpot', 'FestivalRoute', 'Decor'])
     expect(compiled.entities.some((e) => e.kind === kind)).toBe(true);
+  expect(result.props.length).toBeGreaterThan(50);
+  expect(result.props.some((p) => p.contentId === 'house_aqualia')).toBe(true);
+  expect(result.props.some((p) => p.contentId === 'landmark_well')).toBe(true);
+  expect(result.props.some((p) => p.layer === 'canopy')).toBe(true);
+  expect(result.props.some((p) => p.layer === 'object')).toBe(true);
   expect(compiled.excludedLevels).toEqual(['aqualia_riverlands']);
 });
 it('preserves authored geometry, void and legacy boundary behavior', () => {

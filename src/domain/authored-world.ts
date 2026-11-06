@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { ChunkStore, Fluid, SettlementPlanner, TileFlag } from './world';
 import { CONFIG, clamp, type WorldPosition } from './values';
 import { NPC_PROFILES, itemIds } from '../content/definitions';
+import type { ScenePropPresentation } from './presentation-contract';
 
 const hash = z.string().regex(/^[a-f0-9]{64}$/);
 const integer = z.number().int().nonnegative();
@@ -138,6 +139,7 @@ export interface LoadedAuthoredWorld {
   readonly presentation: Readonly<
     Record<'ground' | 'water' | 'paths' | 'surface' | 'waterDepth' | 'deck', Uint8Array>
   >;
+  readonly props: readonly ScenePropPresentation[];
 }
 
 /** No random generation: all occupied tiles and actors originate in authored data. */
@@ -220,6 +222,7 @@ export class AuthoredWorldLoader {
             throw new Error('Inconsistent compiled tile channels');
         }
     ids.clear();
+    const props: ScenePropPresentation[] = [];
     for (const e of data.entities) {
       const lv = levelsById.get(e.level);
       if (
@@ -243,6 +246,60 @@ export class AuthoredWorldLoader {
           village: 1,
           name: `Aqualia cottage ${sceneId.split(':').at(-1) ?? e.id}`,
         });
+        const contentId = fields.asset
+          ? String(fields.asset).replace(/^env:/, '')
+          : 'house_aqualia';
+        props.push({
+          id: `prop:${e.id}`,
+          contentId,
+          x: e.x + e.width / 2,
+          y: e.y + e.height,
+          layer: 'object',
+        });
+      } else if (e.kind === 'Landmark') {
+        const fields = e.fields as Record<string, unknown>;
+        const landmarkId = String(fields.id ?? '');
+        const contentId =
+          landmarkId === 'hearth' || landmarkId === 'aqualia-hearth'
+            ? 'prop_hearth'
+            : landmarkId === 'village-well' || landmarkId === 'aqualia-well'
+              ? 'landmark_well'
+              : landmarkId === 'village-waystone' ||
+                  landmarkId === 'weir-waystone' ||
+                  landmarkId === 'tidecross-stones' ||
+                  landmarkId === 'aqualia-waystone'
+                ? 'landmark_waystone'
+                : landmarkId.replace(/-/g, '_');
+        props.push({
+          id: `prop:${e.id}`,
+          contentId,
+          x: e.x + 0.5,
+          y: e.y + 0.5,
+          layer: 'object',
+        });
+      } else if (e.kind === 'Decor') {
+        const fields = e.fields as Record<string, unknown>;
+        const asset = String(fields.asset ?? '');
+        if (asset && asset !== 'placeholder:foreground:canopy') {
+          const contentId = asset.replace(/^env:/, '');
+          const isCanopy = contentId.includes('canopy') || contentId.includes('tree');
+          const isGround = contentId.startsWith('flora_') || contentId.startsWith('rock_');
+          props.push({
+            id: `prop:${e.id}`,
+            contentId,
+            x: e.x + 0.5,
+            y: e.y + 0.5,
+            layer: isCanopy ? 'canopy' : isGround ? 'ground' : 'object',
+          });
+        }
+      } else if (e.kind === 'Waystone') {
+        props.push({
+          id: `prop:${e.id}`,
+          contentId: 'landmark_waystone',
+          x: e.x + 0.5,
+          y: e.y + 0.5,
+          layer: 'object',
+        });
       }
     }
     const waterDistance = distanceField(world, (i) => presentation.water[i]! > 0);
@@ -262,7 +319,7 @@ export class AuthoredWorldLoader {
         world.moisture[i] = clamp(1 - waterDistance[i]! / 16);
         world.temperature[i] = temperatures[world.biome[i]!]!;
       }
-    return { world, definition: data, presentation };
+    return { world, definition: data, presentation, props };
   }
 }
 

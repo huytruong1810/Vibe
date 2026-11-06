@@ -188,6 +188,13 @@ describe('authored world beta toggle (C7 WLD-M2/M3)', () => {
     }
     // Creatures exist (habitats on the map)
     expect(host.creatures.count).toBeGreaterThan(0);
+    // Authored props are registered into the scene
+    const frame = host.frame();
+    expect(frame.scene.props.length).toBeGreaterThan(50);
+    const propContentIds = new Set(frame.scene.props.map((p) => p.contentId));
+    expect(propContentIds.has('house_aqualia')).toBe(true);
+    expect(propContentIds.has('landmark_well')).toBe(true);
+    expect(propContentIds.has('prop_hearth')).toBe(true);
     // The simulation ticks without errors
     host.advance(60);
     host.creatures.validate();

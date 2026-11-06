@@ -17,6 +17,7 @@ import { IndexedDbSaveRepository, IndexedDbEmbeddingCache } from './adapters/per
 import { WorkerBridge } from './adapters/worker-bridge';
 import type { CommandPayload, RenderSnapshot } from './domain/contracts';
 import { AudioDirector } from './presentation/audio';
+import { appUrl } from './presentation/assets/url';
 import { HudPresenter } from './presentation/hud';
 import { WorldRenderer } from './presentation/renderer';
 import { nearestInteraction, PortalEntryController } from './presentation/ui/interaction';
@@ -300,7 +301,7 @@ export class GameBootstrap {
       let compiledWorld: unknown = undefined;
       if (options.authored) {
         try {
-          const res = await fetch('/art/source/world/work/import/aqualia-region.json');
+          const res = await fetch(appUrl('assets/generated/aqualia-region.json'));
           if (res.ok) compiledWorld = await res.json();
         } catch {
           /* fallback to procedural */

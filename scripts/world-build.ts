@@ -106,8 +106,16 @@ export async function buildWorld(options: {
     'art/source/world/work/import',
     `${options.region}-${options.level ?? 'region'}.json`,
   );
+  const staticOutput = resolve(
+    root,
+    'public/assets/generated',
+    `${options.region}-${options.level ?? 'region'}.json`,
+  );
   const bytes = canonical(compiled);
-  if (!options.check) await writeCompiledWorld(output, bytes);
+  if (!options.check) {
+    await writeCompiledWorld(output, bytes);
+    await writeCompiledWorld(staticOutput, bytes);
+  }
   console.log(
     `Candidate ${compiled.scope}: ${compiled.levels.length} level(s), ${compiled.entities.length} placements; excluded=${compiled.excludedLevels.join(',') || 'none'}; ${options.check ? 'validated without output' : output}`,
   );

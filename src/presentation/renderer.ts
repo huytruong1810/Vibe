@@ -1283,68 +1283,76 @@ export class WorldRenderer {
             );
         }
       }
-    for (const b of t.buildings)
-      if (Math.abs(b.x - centerX) < 22 && Math.abs(b.y - centerY) < 18)
-        prop(
-          b.id,
-          b.x + 0.5,
-          b.y + 1.2,
-          this.art.house(b.village),
-          { kind: 'environment', id: HOUSE_ART[b.village]! },
-          true,
-        );
-    for (const s of SETTLEMENTS)
-      if (Math.abs(s.x - centerX) < 36 && Math.abs(s.y - centerY) < 30) {
-        prop(`${s.id}:stone`, s.x - 2.5, s.y + 1, this.art.landmark('waystone'), {
-          kind: 'environment',
-          id: 'landmark_waystone',
-        });
-        prop(`${s.id}:well`, s.x + 4.5, s.y - 2, this.art.landmark('well'), {
-          kind: 'environment',
-          id: 'landmark_well',
-        });
-        const hearth = this.resolver?.resolve('environment', 'prop_hearth');
-        if (hearth?.frameId && this.assets.texture(hearth.frameId)) {
-          const offset = [
-            [-4, 3],
-            [4, 3],
-            [-5, -3],
-            [5, -3],
-          ].find(([dx, dy]) => {
-            const i = (s.y + dy!) * t.size + s.x + dx!;
-            return (
-              !t.fluid[i] && !(t.flags[i]! & (TileFlag.Road | TileFlag.Solid)) && !t.resource[i]
-            );
-          });
-          if (offset)
-            prop(
-              `${s.id}:hearth`,
-              s.x + offset[0]! + 0.5,
-              s.y + offset[1]! + 1,
-              this.art.landmark('well'),
-              { kind: 'environment', id: 'prop_hearth' },
-            );
-        }
-        for (const [i, [dx, dy]] of [
-          [-6, -3],
-          [6, -3],
-          [-6, 5],
-          [6, 5],
-        ].entries())
-          prop(`${s.id}:flowers:${i}`, s.x + dx!, s.y + dy!, this.art.landmark('flowers'));
-        for (const dx of [-2, 2])
-          prop(`${s.id}:lamp:${dx}`, s.x + dx, s.y - 2, this.art.landmark('lantern'), {
+    if (this.scene.props.length === 0) {
+      for (const b of t.buildings)
+        if (Math.abs(b.x - centerX) < 22 && Math.abs(b.y - centerY) < 18)
+          prop(
+            b.id,
+            b.x + 0.5,
+            b.y + 1.2,
+            this.art.house(b.village),
+            { kind: 'environment', id: HOUSE_ART[b.village]! },
+            true,
+          );
+      for (const s of SETTLEMENTS)
+        if (Math.abs(s.x - centerX) < 36 && Math.abs(s.y - centerY) < 30) {
+          prop(`${s.id}:stone`, s.x - 2.5, s.y + 1, this.art.landmark('waystone'), {
             kind: 'environment',
-            id: 'landmark_lantern',
+            id: 'landmark_waystone',
           });
-        if (s.capital)
-          for (let dx = -14; dx <= 14; dx += 2)
-            if (!(t.flags[(s.y + 12) * t.size + s.x + dx]! & TileFlag.Road))
-              prop(`${s.id}:fence:${dx}`, s.x + dx + 0.5, s.y + 12.9, this.art.landmark('fence'), {
-                kind: 'environment',
-                id: 'landmark_fence',
-              });
-      }
+          prop(`${s.id}:well`, s.x + 4.5, s.y - 2, this.art.landmark('well'), {
+            kind: 'environment',
+            id: 'landmark_well',
+          });
+          const hearth = this.resolver?.resolve('environment', 'prop_hearth');
+          if (hearth?.frameId && this.assets.texture(hearth.frameId)) {
+            const offset = [
+              [-4, 3],
+              [4, 3],
+              [-5, -3],
+              [5, -3],
+            ].find(([dx, dy]) => {
+              const i = (s.y + dy!) * t.size + s.x + dx!;
+              return (
+                !t.fluid[i] && !(t.flags[i]! & (TileFlag.Road | TileFlag.Solid)) && !t.resource[i]
+              );
+            });
+            if (offset)
+              prop(
+                `${s.id}:hearth`,
+                s.x + offset[0]! + 0.5,
+                s.y + offset[1]! + 1,
+                this.art.landmark('well'),
+                { kind: 'environment', id: 'prop_hearth' },
+              );
+          }
+          for (const [i, [dx, dy]] of [
+            [-6, -3],
+            [6, -3],
+            [-6, 5],
+            [6, 5],
+          ].entries())
+            prop(`${s.id}:flowers:${i}`, s.x + dx!, s.y + dy!, this.art.landmark('flowers'));
+          for (const dx of [-2, 2])
+            prop(`${s.id}:lamp:${dx}`, s.x + dx, s.y - 2, this.art.landmark('lantern'), {
+              kind: 'environment',
+              id: 'landmark_lantern',
+            });
+          if (s.capital)
+            for (let dx = -14; dx <= 14; dx += 2)
+              if (!(t.flags[(s.y + 12) * t.size + s.x + dx]! & TileFlag.Road))
+                prop(
+                  `${s.id}:fence:${dx}`,
+                  s.x + dx + 0.5,
+                  s.y + 12.9,
+                  this.art.landmark('fence'),
+                  {
+                    kind: 'environment',
+                    id: 'landmark_fence',
+                  },
+                );
+        }
+    }
     for (const corpse of frame.carrion)
       if (Math.abs(corpse.x - centerX) < 20 && Math.abs(corpse.y - centerY) < 15)
         prop(
@@ -1375,14 +1383,15 @@ export class WorldRenderer {
         this.props.delete(id);
       }
     for (const child of this.labels.removeChildren()) child.destroy();
-    for (const s of SETTLEMENTS)
-      if (Math.abs(s.x - centerX) < 26 && Math.abs(s.y - centerY) < 20) {
-        const label = new Text({ text: s.name.toUpperCase(), style: this.labelStyle });
-        label.anchor.set(0.5, 1);
-        const p = this.projection.world(s.x, s.y - 13);
-        label.position.set(p.x, p.y);
-        this.labels.addChild(label);
-      }
+    if (this.scene.props.length === 0)
+      for (const s of SETTLEMENTS)
+        if (Math.abs(s.x - centerX) < 26 && Math.abs(s.y - centerY) < 20) {
+          const label = new Text({ text: s.name.toUpperCase(), style: this.labelStyle });
+          label.anchor.set(0.5, 1);
+          const p = this.projection.world(s.x, s.y - 13);
+          label.position.set(p.x, p.y);
+          this.labels.addChild(label);
+        }
   }
   private updateLocalProps(scene: ScenePresentation): void {
     const key = `${scene.id}:${scene.props.map((p) => `${p.id}:${p.variant ?? ''}`).join(',')}`;

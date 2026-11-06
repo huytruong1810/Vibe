@@ -270,7 +270,7 @@ export class SimulationHost {
     this.navigation = new NavigationService(this.world);
     this.resources = new ResourceStore(this.world);
     this.locator = new ResourceLocator(this.resources);
-    this.scenes = new SceneRegistry(this.world, this.resources);
+    this.scenes = new SceneRegistry(this.world, this.resources, this.authoredData?.props);
     this.scenes.bindOverworldNavigation(this.navigation);
     this.population = new PopulationDirector(this.world, this.ecologyRandom, this.locator);
     if (this.authoredData) {

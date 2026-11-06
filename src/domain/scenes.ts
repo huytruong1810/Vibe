@@ -107,6 +107,7 @@ export class SceneRegistry {
   constructor(
     readonly overworld: ChunkStore,
     readonly supplies: ResourceStore,
+    overworldProps: readonly ScenePropPresentation[] = [],
   ) {
     this.definitions.push({
       id: 'overworld',
@@ -117,7 +118,7 @@ export class SceneRegistry {
       village: 0,
       settlement: null,
       owner: null,
-      props: [],
+      props: [...overworldProps],
     });
     for (const building of overworld.buildings) {
       const settlement = SETTLEMENTS.find((s) => building.id.startsWith(`${s.id}:home:`))!;
@@ -401,18 +402,24 @@ export class SceneRegistry {
         code === 0
           ? undefined
           : `${d.kind === 'cave' ? 'cave' : 'interior'}_floor_${VILLAGES[d.village]!.name.toLowerCase()}`,
-      sceneAssetIds: code === 0 ? [] : d.props.map((p) => p.contentId),
+      sceneAssetIds:
+        code === 0
+          ? [...new Set(d.props.map((p) => p.contentId))]
+          : d.props.map((p) => p.contentId),
       props:
         code === 0
-          ? this.portals
-              .filter((p) => p.source === 0 && p.id.includes('cave:'))
-              .map((p) => ({
-                id: `visual:${p.id}`,
-                contentId: 'cave_entrance',
-                x: p.x,
-                y: p.y - 1,
-                layer: 'object' as const,
-              }))
+          ? [
+              ...d.props,
+              ...this.portals
+                .filter((p) => p.source === 0 && p.id.includes('cave:'))
+                .map((p) => ({
+                  id: `visual:${p.id}`,
+                  contentId: 'cave_entrance',
+                  x: p.x,
+                  y: p.y - 1,
+                  layer: 'object' as const,
+                })),
+            ]
           : d.props,
       portals: this.portals
         .filter((p) => p.source === code)
