@@ -35,6 +35,7 @@ export interface HudHandlers {
     seed: number;
     origin: number;
     resume: boolean;
+    authored?: boolean;
   }): Promise<void>;
   discover(endpoint: string): Promise<readonly ModelInfo[]>;
   save(): Promise<void>;
@@ -333,11 +334,13 @@ export class HudPresenter {
     begin.disabled = resumeButton.disabled = true;
     status.textContent =
       'Checking local AI and preparing the world. A cold model can take a moment…';
+    const authoredToggle = document.getElementById('authored-toggle') as HTMLInputElement | null;
     const options = {
       endpoint: this.el<HTMLInputElement>('endpoint').value,
       model: this.el<HTMLSelectElement>('model').value,
       seed: Number(this.el<HTMLInputElement>('seed').value),
       origin: Number(this.el<HTMLSelectElement>('origin').value),
+      authored: !!authoredToggle?.checked,
       resume,
     };
     try {

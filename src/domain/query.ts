@@ -3,7 +3,7 @@ import type { NpcState } from './agents';
 import type { CreatureStateStore } from './creatures';
 import { SeasonSystem, type WorldCalendar } from './core';
 import { SettlementPlanner, nearestSettlement } from './world';
-import { distanceSquared, type NpcId } from './values';
+import { distanceSquared, type NpcId, type WorldPosition } from './values';
 import type { ResourceStore } from './resources';
 
 /** Read-only, actor-scoped facts. A prompt never receives the complete world store. */
@@ -14,12 +14,19 @@ export class WorldQuery {
     private readonly calendar: WorldCalendar,
     private readonly resources?: ResourceStore,
     private readonly resourcesFor?: (scene: number) => ResourceStore,
+    private readonly locations?: {
+      locations(
+        index: number,
+      ): Record<'home' | 'work' | 'square' | 'shrine' | 'outpost', WorldPosition>;
+    },
   ) {}
   perceivedFacts(npcId: NpcId): object {
     const index = this.npcs.findIndex((n) => n.profileId === npcId);
     if (index < 0) throw new Error('Unknown observer');
     const observer = this.npcs[index]!,
       s = this.creatures;
+    const profileIndex = NPC_PROFILES.findIndex((p) => p.id === npcId);
+    const profile = NPC_PROFILES[profileIndex]!;
     const resources = this.resourcesFor?.(observer.scene ?? 0) ?? this.resources;
     const nearbyCreatures: { name: string; position: { x: number; y: number } }[] = [];
     for (let i = 0; i < s.count && nearbyCreatures.length < 12; i++)
@@ -30,7 +37,7 @@ export class WorldQuery {
       hour: this.calendar.hour,
       weather: new SeasonSystem().weather(this.calendar),
       settlement: observer.scene
-        ? VILLAGES[NPC_PROFILES[index]!.village]!.name
+        ? VILLAGES[profile.village]!.name
         : nearestSettlement(observer).name,
       scene: observer.scene ?? 0,
       partner: observer.partner === null ? null : s.definition(s.require(observer.partner)).name,
@@ -47,7 +54,7 @@ export class WorldQuery {
         rest: s.rest[s.require(observer.entityId)],
         sleeping: !!s.sleeping[s.require(observer.entityId)],
       },
-      knownDestinations: new SettlementPlanner().locations(index),
+      knownDestinations: (this.locations ?? new SettlementPlanner()).locations(profileIndex),
       nearbyVillagers: this.npcs
         .filter((n) => n !== observer && distanceSquared(n, observer) < 12 ** 2)
         .map((n) => ({

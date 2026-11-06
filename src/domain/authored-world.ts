@@ -1,7 +1,7 @@
 import { z } from 'zod';
-import { ChunkStore, Fluid, TileFlag } from './world';
-import { CONFIG, clamp } from './values';
-import { itemIds } from '../content/definitions';
+import { ChunkStore, Fluid, SettlementPlanner, TileFlag } from './world';
+import { CONFIG, clamp, type WorldPosition } from './values';
+import { NPC_PROFILES, itemIds } from '../content/definitions';
 
 const hash = z.string().regex(/^[a-f0-9]{64}$/);
 const integer = z.number().int().nonnegative();
@@ -88,6 +88,50 @@ export function authoredInteractionPosition(e: AuthoredEntity): { x: number; y: 
     throw new Error('Invalid interaction point');
   return { x: point.x + 0.5, y: point.y + 0.5 };
 }
+
+/** Resolves villager anchor positions from compiled authored data. */
+export class AuthoredSettlementPlanner {
+  private readonly anchorsByNpcRole = new Map<string, WorldPosition>();
+  private readonly fallback = new SettlementPlanner();
+
+  constructor(definition: CompiledWorld) {
+    for (const e of definition.entities) {
+      if (e.kind === 'VillagerAnchor') {
+        const fields = e.fields as Record<string, unknown>;
+        const npcId = fields.npcId as string | undefined;
+        const role = fields.role as string | undefined;
+        if (npcId && role) {
+          this.anchorsByNpcRole.set(`${npcId}:${role}`, { x: e.x + 0.5, y: e.y + 0.5 });
+        }
+      }
+    }
+  }
+
+  locations(
+    profileIndex: number,
+  ): Record<'home' | 'work' | 'square' | 'shrine' | 'outpost', WorldPosition> {
+    const profile = NPC_PROFILES[profileIndex];
+    if (!profile) {
+      return this.fallback.locations(profileIndex);
+    }
+    const npcId = profile.id;
+    const lookup = (role: 'home' | 'work' | 'square' | 'shrine' | 'outpost'): WorldPosition => {
+      const pos = this.anchorsByNpcRole.get(`${npcId}:${role}`);
+      if (pos) return pos;
+      const sq = this.anchorsByNpcRole.get(`${npcId}:square`);
+      if (sq) return sq;
+      return this.fallback.locations(profileIndex)[role];
+    };
+    return {
+      home: lookup('home'),
+      work: lookup('work'),
+      square: lookup('square'),
+      shrine: lookup('shrine'),
+      outpost: lookup('outpost'),
+    };
+  }
+}
+
 export interface LoadedAuthoredWorld {
   readonly world: ChunkStore;
   readonly definition: CompiledWorld;
@@ -188,6 +232,18 @@ export class AuthoredWorldLoader {
       )
         throw new Error('Duplicate or out-of-bounds authored entity');
       ids.add(e.id);
+      if (e.kind === 'Building') {
+        const fields = e.fields as Record<string, unknown>;
+        const door = fields.door as { x: number; y: number } | undefined;
+        const sceneId = (fields.sceneId as string) || e.id;
+        world.buildings.push({
+          id: sceneId,
+          x: door ? door.x : e.x,
+          y: door ? door.y : e.y,
+          village: 1,
+          name: `Aqualia cottage ${sceneId.split(':').at(-1) ?? e.id}`,
+        });
+      }
     }
     const waterDistance = distanceField(world, (i) => presentation.water[i]! > 0);
     const saltDistance = distanceField(

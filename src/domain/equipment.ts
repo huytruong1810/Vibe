@@ -37,10 +37,11 @@ export class EquipmentService {
   private readonly reservations = new Map<string, AmmoReservation>();
   constructor(private readonly inventory: TwoSlotInventory) {}
 
-  initialize(origin: number): void {
+  initialize(origin: number, humanIds?: readonly number[]): void {
     this.loadouts.clear();
     this.reservations.clear();
-    for (const entityId of [0, ...NPC_PROFILES.map((_, i) => i + 1)]) {
+    const ids = humanIds ?? [0, ...NPC_PROFILES.map((_, i) => i + 1)];
+    for (const entityId of ids) {
       const region = (['pyrador', 'aqualia', 'zephyria'] as const)[
         entityId === 0 ? origin : NPC_PROFILES[entityId - 1]!.village
       ]!;

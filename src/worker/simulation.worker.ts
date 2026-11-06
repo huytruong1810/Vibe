@@ -45,7 +45,10 @@ worker.onmessage = (message: MessageEvent<ToWorker>): void => {
       case 'initialize':
         host?.dispose();
         buffers.length = 0;
-        host = new SimulationHost(data.seed, data.origin, data.population);
+        host = new SimulationHost(data.seed, data.origin, data.population, undefined, {
+          worldSource: data.worldSource,
+          compiledWorld: data.compiledWorld,
+        });
         previous = performance.now();
         publish('ready');
         break;
@@ -61,7 +64,10 @@ worker.onmessage = (message: MessageEvent<ToWorker>): void => {
         break;
       case 'restore': {
         const save = migrateSave(data.snapshot);
-        const restored = new SimulationHost(save.seed, save.player.origin, 0);
+        const restored = new SimulationHost(save.seed, save.player.origin, 0, undefined, {
+          worldSource: save.worldSource,
+          compiledWorld: data.compiledWorld,
+        });
         restored.restore(save);
         host?.dispose();
         host = restored;

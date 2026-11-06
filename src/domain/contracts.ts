@@ -240,10 +240,17 @@ export interface TerrainView {
   readonly buildings: readonly Building[];
 }
 export type ToWorker =
-  | { type: 'initialize'; seed: number; origin: number; population?: number }
+  | {
+      type: 'initialize';
+      seed: number;
+      origin: number;
+      population?: number;
+      worldSource?: 'procedural' | 'authored';
+      compiledWorld?: unknown;
+    }
   | { type: 'command'; envelope: WorldCommand }
   | { type: 'checkpoint'; requestId: string }
-  | { type: 'restore'; requestId: string; snapshot: unknown }
+  | { type: 'restore'; requestId: string; snapshot: unknown; compiledWorld?: unknown }
   | { type: 'recycle'; buffer: ArrayBuffer }
   | { type: 'dispose' };
 export type FromWorker =

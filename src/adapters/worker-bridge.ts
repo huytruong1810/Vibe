@@ -112,14 +112,24 @@ export class WorkerBridge {
       this.start = null;
     }
   }
-  initialize(seed: number, origin: number): Promise<void> {
+  initialize(
+    seed: number,
+    origin: number,
+    options?: { worldSource?: 'procedural' | 'authored'; compiledWorld?: unknown },
+  ): Promise<void> {
     return new Promise((resolve, reject) => {
       const timeout = setTimeout(() => {
         this.start = null;
         reject(new Error('World generation timed out'));
       }, 20_000);
       this.start = { resolve, reject, timeout };
-      this.post({ type: 'initialize', seed, origin });
+      this.post({
+        type: 'initialize',
+        seed,
+        origin,
+        worldSource: options?.worldSource,
+        compiledWorld: options?.compiledWorld,
+      });
     });
   }
   send(command: CommandPayload, issuer: 'player' | 'inference' = 'player'): Promise<CommandResult> {

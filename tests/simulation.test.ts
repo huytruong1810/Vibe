@@ -162,3 +162,67 @@ describe('integrated simulation lifecycle', () => {
     expect(migrateSave(host.snapshot()).tick).toBe(600);
   });
 });
+
+describe('authored world beta toggle (C7 WLD-M2/M3)', () => {
+  it('constructs a simulation from the authored world with map-placed NPCs and creatures', async () => {
+    const { readFile } = await import('node:fs/promises');
+    const compiled = JSON.parse(
+      await readFile('art/source/world/work/import/aqualia-region.json', 'utf8'),
+    );
+    const host = new SimulationHost(42, 1, 24, 'world:authored', {
+      worldSource: 'authored',
+      compiledWorld: compiled,
+    });
+    expect(host.worldSource).toBe('authored');
+    // Player spawns at the authored PlayerSpawn, not VILLAGES coordinates
+    expect(host.player.x).toBeCloseTo(66.5, 0);
+    expect(host.player.y).toBeCloseTo(60.5, 0);
+    // Only Aqualia NPCs (village=1, indices 10-19) are placed
+    expect(host.npcs).toHaveLength(10);
+    // Each NPC is at a valid authored anchor position (not in void)
+    for (const npc of host.npcs) {
+      expect(npc.x).toBeGreaterThanOrEqual(0);
+      expect(npc.y).toBeGreaterThanOrEqual(0);
+      expect(npc.x).toBeLessThan(210);
+      expect(npc.y).toBeLessThan(68);
+    }
+    // Creatures exist (habitats on the map)
+    expect(host.creatures.count).toBeGreaterThan(0);
+    // The simulation ticks without errors
+    host.advance(60);
+    host.creatures.validate();
+  });
+
+  it('round-trips an authored-world save and preserves worldSource', async () => {
+    const { readFile } = await import('node:fs/promises');
+    const compiled = JSON.parse(
+      await readFile('art/source/world/work/import/aqualia-region.json', 'utf8'),
+    );
+    const host = new SimulationHost(42, 1, 24, 'world:rt', {
+      worldSource: 'authored',
+      compiledWorld: compiled,
+    });
+    host.advance(30);
+    const save = migrateSave(host.snapshot());
+    expect(save.worldSource).toBe('authored');
+    const restored = new SimulationHost(42, 1, 0, 'world:restored', {
+      worldSource: 'authored',
+      compiledWorld: compiled,
+    });
+    restored.restore(save);
+    expect(restored.snapshot()).toEqual(save);
+  });
+
+  it('defaults to procedural when no worldSource option is given', () => {
+    const host = new SimulationHost(42, 1, 0);
+    expect(host.worldSource).toBe('procedural');
+    expect(host.npcs).toHaveLength(30);
+  });
+
+  it('old saves migrate with worldSource procedural', () => {
+    const host = new SimulationHost(42, 1, 0);
+    const save = host.snapshot();
+    const migrated = migrateSave(save);
+    expect(migrated.worldSource).toBe('procedural');
+  });
+});

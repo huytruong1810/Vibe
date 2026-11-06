@@ -125,6 +125,7 @@ export class GameBootstrap {
     seed: number;
     origin: number;
     resume: boolean;
+    authored?: boolean;
   }): Promise<void> {
     await this.rendererReady;
     const provider = new OllamaAdapter(options.endpoint);
@@ -150,7 +151,21 @@ export class GameBootstrap {
       if (!saved)
         throw new Error('There is no saved journey in this browser yet. Begin a new journey.');
       await this.bridge.restore(saved);
-    } else await this.bridge.initialize(options.seed, options.origin);
+    } else {
+      let compiledWorld: unknown = undefined;
+      if (options.authored) {
+        try {
+          const res = await fetch('/art/source/world/work/import/aqualia-region.json');
+          if (res.ok) compiledWorld = await res.json();
+        } catch {
+          /* fallback to procedural */
+        }
+      }
+      await this.bridge.initialize(options.seed, options.origin, {
+        worldSource: options.authored && compiledWorld ? 'authored' : 'procedural',
+        compiledWorld,
+      });
+    }
     await this.save();
   }
   private async requireConnection(): Promise<void> {

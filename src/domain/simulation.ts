@@ -70,6 +70,11 @@ import {
   type ChunkStore,
   nearestSettlement,
 } from './world';
+import {
+  AuthoredSettlementPlanner,
+  AuthoredWorldLoader,
+  type LoadedAuthoredWorld,
+} from './authored-world';
 import { CONFIG, clamp, distanceSquared, normalize, type WorldPosition } from './values';
 import { migrateSave, type GameSave } from './save-schema';
 import { WorldQuery } from './query';
@@ -92,8 +97,17 @@ interface SceneSystems {
   reactions: EnvironmentalReactionSystem;
 }
 
+export type WorldSource = 'procedural' | 'authored';
+
+export interface SimulationOptions {
+  readonly worldSource?: WorldSource;
+  readonly compiledWorld?: unknown;
+}
+
 export class SimulationHost {
   readonly world: ChunkStore;
+  readonly worldSource: WorldSource;
+  private readonly authoredData: LoadedAuthoredWorld | null = null;
   readonly calendar = new WorldCalendar();
   readonly pauses = new PauseController();
   readonly dispatcher: CommandDispatcher;
@@ -177,23 +191,39 @@ export class SimulationHost {
     origin = 1,
     population: number = CONFIG.population,
     session = `world:${Date.now()}:${seed}`,
+    options: SimulationOptions = {},
   ) {
     new ContentRegistry().validate();
-    if (!Number.isInteger(origin) || origin < 0 || origin > 2 || !Number.isInteger(seed))
-      throw new Error('Invalid world origin or seed');
+    this.worldSource = options.worldSource ?? 'procedural';
+    if (this.worldSource === 'authored') {
+      if (!options.compiledWorld) throw new Error('Authored world requires compiledWorld data');
+      this.authoredData = new AuthoredWorldLoader().load(options.compiledWorld);
+      this.world = this.authoredData.world;
+      // For authored worlds, origin is always Aqualia (index 1)
+      origin = 1;
+    } else {
+      if (!Number.isInteger(origin) || origin < 0 || origin > 2)
+        throw new Error('Invalid world origin or seed');
+      this.world = new WorldGenerator().generate(seed);
+    }
+    if (!Number.isInteger(seed)) throw new Error('Invalid world origin or seed');
     if (!Number.isInteger(population) || population < 0 || population > CONFIG.creatureCapacity)
       throw new Error('Invalid population');
     this.dispatcher = new CommandDispatcher(session);
-    this.world = new WorldGenerator().generate(seed);
     const root = new SeededRandom(seed);
     this.ecologyRandom = root.fork('ecology');
     this.combatRandom = root.fork('combat');
-    this.entities.spawnHuman(0, origin, VILLAGES[origin]!.x + 0.5, VILLAGES[origin]!.y + 2.5);
+
+    // --- Player spawn ---
+    const playerSpawn = this.authoredData
+      ? this.findAuthoredSpawn()
+      : { x: VILLAGES[origin]!.x + 0.5, y: VILLAGES[origin]!.y + 2.5 };
+    this.entities.spawnHuman(0, origin, playerSpawn.x, playerSpawn.y);
     this.player = bindBody(
       {
         entityId: 0,
-        x: VILLAGES[origin]!.x + 0.5,
-        y: VILLAGES[origin]!.y + 2.5,
+        x: playerSpawn.x,
+        y: playerSpawn.y,
         facingX: 0,
         facingY: 1,
         hp: 100,
@@ -216,29 +246,40 @@ export class SimulationHost {
     this.scenes = new SceneRegistry(this.world, this.resources);
     this.scenes.bindOverworldNavigation(this.navigation);
     this.population = new PopulationDirector(this.world, this.ecologyRandom, this.locator);
-    this.population.seed(
-      this.creatures,
-      Math.max(
-        0,
-        population - NPC_PROFILES.filter((p) => p.partner).length - (population > 0 ? 6 : 0),
-      ),
+    if (this.authoredData) {
+      // Authored world: spawn creatures at map-placed habitats
+      this.seedCreaturesFromHabitats(population);
+    } else {
+      this.population.seed(
+        this.creatures,
+        Math.max(
+          0,
+          population - NPC_PROFILES.filter((p) => p.partner).length - (population > 0 ? 6 : 0),
+        ),
+      );
+      // Visible first encounters make the complete care loop discoverable at every origin.
+      for (let v = 0; v < VILLAGES.length; v++)
+        for (let s = 0; s < 2; s++) {
+          if (population > 0)
+            this.creatures.spawn(
+              (v + s) % SPECIES.length,
+              VILLAGES[v]!.x + 5 + s * 2,
+              VILLAGES[v]!.y + 4,
+            );
+        }
+    }
+    const locationsProvider = this.authoredData
+      ? new AuthoredSettlementPlanner(this.authoredData.definition)
+      : new SettlementPlanner();
+    this.npcs = new NpcProfileRegistry().create(
+      locationsProvider,
+      this.authoredData ? 1 : undefined,
     );
-    // Visible first encounters make the complete care loop discoverable at every origin.
-    for (let v = 0; v < VILLAGES.length; v++)
-      for (let s = 0; s < 2; s++) {
-        if (population > 0)
-          this.creatures.spawn(
-            (v + s) % SPECIES.length,
-            VILLAGES[v]!.x + 5 + s * 2,
-            VILLAGES[v]!.y + 4,
-          );
-      }
-    this.npcs = new NpcProfileRegistry().create();
     for (let i = 0; i < this.npcs.length; i++) {
       const npc = this.npcs[i]!;
-      this.entities.spawnHuman(npc.entityId, NPC_PROFILES[i]!.village, npc.x, npc.y);
-      const profile = NPC_PROFILES[i]!,
-        body = this.entities.require(npc.entityId);
+      const profile = NPC_PROFILES.find((p) => p.id === npc.profileId)!;
+      this.entities.spawnHuman(npc.entityId, profile.village, npc.x, npc.y);
+      const body = this.entities.require(npc.entityId);
       this.entities.preferDiet(
         body,
         profile.dietPreferences ?? [(['wheat', 'fungi', 'berries'] as const)[i % 3]!],
@@ -252,10 +293,11 @@ export class SimulationHost {
       this.calendar,
       this.resources,
       (scene) => this.systems(scene).resources,
+      locationsProvider,
     );
     for (let i = 0; i < this.npcs.length; i++) {
-      const profile = NPC_PROFILES[i]!,
-        npc = this.npcs[i]!;
+      const npc = this.npcs[i]!;
+      const profile = NPC_PROFILES.find((p) => p.id === npc.profileId)!;
       npc.affinity = profile.village === origin ? 5 : 0;
       if (profile.partner)
         npc.partner = this.creatures.id(
@@ -280,11 +322,18 @@ export class SimulationHost {
     this.harvest = new HarvestSystem(this.resources);
     this.regrowth = new RegrowthSystem(this.world);
     this.reactions = new EnvironmentalReactionSystem(this.world);
-    this.schedules = new ScheduleExecutor(this.world, this.navigation, this.entities, (id) =>
-      this.equipment.movement(id),
+    this.schedules = new ScheduleExecutor(
+      this.world,
+      this.navigation,
+      this.entities,
+      (id) => this.equipment.movement(id),
+      locationsProvider,
     );
     const homes = new Map(
-      this.npcs.map((npc, index) => [npc.entityId, new SettlementPlanner().locations(index).home]),
+      this.npcs.map((npc) => {
+        const profileIndex = NPC_PROFILES.findIndex((p) => p.id === npc.profileId);
+        return [npc.entityId, locationsProvider.locations(profileIndex).home];
+      }),
     );
     this.survival = new SurvivalController(
       this.entities,
@@ -315,7 +364,7 @@ export class SimulationHost {
       regrowth: this.regrowth,
       reactions: this.reactions,
     });
-    this.equipment.initialize(origin);
+    this.equipment.initialize(origin, [0, ...this.npcs.map((n) => n.entityId)]);
     if (population > 0)
       for (const i of this.entities.slots())
         if (!this.entities.protected(i)) this.allocateCaveHabitat(i);
@@ -1561,9 +1610,11 @@ export class SimulationHost {
     for (let i = 0; i < ticks; i++) this.step();
   }
   private rescue(): void {
-    const v = VILLAGES[this.player.origin]!;
-    this.player.x = v.x + 0.5;
-    this.player.y = v.y + 2.5;
+    const v = this.authoredData
+      ? this.findAuthoredSpawn()
+      : { x: VILLAGES[this.player.origin]!.x + 0.5, y: VILLAGES[this.player.origin]!.y + 2.5 };
+    this.player.x = v.x;
+    this.player.y = v.y;
     this.player.hp = this.player.maxHp;
     this.player.stamina = 100;
     this.combat.cancelAction(0);
@@ -1584,6 +1635,51 @@ export class SimulationHost {
       this.creatures.y[partner] = this.player.y;
       this.creatures.hp[partner] = this.creatures.maxHp(partner) * 0.65;
       this.creatures.mode[partner] = CreatureMode.Follow;
+    }
+  }
+
+  private findAuthoredSpawn(): WorldPosition {
+    if (!this.authoredData)
+      return {
+        x: VILLAGES[this.player?.origin ?? 1]!.x + 0.5,
+        y: VILLAGES[this.player?.origin ?? 1]!.y + 2.5,
+      };
+    const spawnEntity = this.authoredData.definition.entities.find((e) => e.kind === 'PlayerSpawn');
+    if (spawnEntity) {
+      return { x: spawnEntity.x + 0.5, y: spawnEntity.y + 0.5 };
+    }
+    const lv = this.authoredData.definition.levels[0]!;
+    return {
+      x: lv.x + Math.floor(lv.width / 2) + 0.5,
+      y: lv.y + Math.floor(lv.height / 2) + 0.5,
+    };
+  }
+
+  private seedCreaturesFromHabitats(target: number): void {
+    if (!this.authoredData || target <= 0) return;
+    const habitats = this.authoredData.definition.entities.filter(
+      (e) => e.kind === 'Habitat' && Array.isArray((e.fields as Record<string, unknown>).species),
+    );
+    if (!habitats.length) return;
+    let habIndex = 0;
+    while (this.creatures.count < target) {
+      const hab = habitats[habIndex % habitats.length]!;
+      habIndex++;
+      const speciesList = (hab.fields as Record<string, unknown>).species as string[];
+      for (const spName of speciesList) {
+        if (this.creatures.count >= target) break;
+        const spIndex = SPECIES.findIndex((s) => s.id === spName);
+        if (spIndex < 0) continue;
+        const x = Math.max(
+          1,
+          Math.min(this.world.size - 2, hab.x + 0.5 + (this.ecologyRandom.next() - 0.5) * 4),
+        );
+        const y = Math.max(
+          1,
+          Math.min(this.world.size - 2, hab.y + 0.5 + (this.ecologyRandom.next() - 0.5) * 4),
+        );
+        this.creatures.spawn(spIndex, x, y);
+      }
     }
   }
   terrain(): TerrainView {
@@ -1975,6 +2071,7 @@ export class SimulationHost {
       version: CONFIG.saveVersion,
       generatorVersion: CONFIG.generatorVersion,
       contentVersion: CONFIG.contentVersion,
+      worldSource: this.worldSource,
       seed: this.seed,
       tick: this.tick,
       elapsedSeconds: this.calendar.elapsedSeconds,

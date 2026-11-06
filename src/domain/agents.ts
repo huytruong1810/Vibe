@@ -161,32 +161,46 @@ export interface NpcState {
 }
 export class NpcProfileRegistry {
   readonly profiles = new Map(NPC_PROFILES.map((profile) => [profile.id, profile]));
-  create(): NpcState[] {
-    const planner = new SettlementPlanner();
-    return NPC_PROFILES.map((profile, i) => ({
-      entityId: i + 1,
-      profileId: profile.id,
-      ...planner.locations(i).square,
-      activity: 'Greeting the morning',
-      facingX: 0,
-      facingY: 1,
-      revision: 0,
-      lastBattleDay: -1,
-      lastGiftDay: -1,
-      partner: null,
-      affinity: profile.village === 1 ? 5 : 0,
-      relations: Object.fromEntries(profile.relationships.map((id) => [id, 10])),
-      memory: { revision: 0, serial: 0, summary: '', records: [], lastReflection: 0 },
-      override: null,
-      tomorrow: null,
-      followingUntil: 0,
-      lastPlan: 0,
-      lastSocial: -90,
-      heard: [],
-      commitments: [],
-      gesture: null,
-      gestureUntil: 0,
-    }));
+  create(
+    locationsProvider?: {
+      locations(
+        index: number,
+      ): Record<'home' | 'work' | 'square' | 'shrine' | 'outpost', WorldPosition>;
+    },
+    villageFilter?: number,
+  ): NpcState[] {
+    const planner = locationsProvider ?? new SettlementPlanner();
+    const profiles =
+      villageFilter !== undefined
+        ? NPC_PROFILES.filter((p) => p.village === villageFilter)
+        : NPC_PROFILES;
+    return profiles.map((profile) => {
+      const i = NPC_PROFILES.findIndex((p) => p.id === profile.id);
+      return {
+        entityId: i + 1,
+        profileId: profile.id,
+        ...planner.locations(i).square,
+        activity: 'Greeting the morning',
+        facingX: 0,
+        facingY: 1,
+        revision: 0,
+        lastBattleDay: -1,
+        lastGiftDay: -1,
+        partner: null,
+        affinity: profile.village === 1 ? 5 : 0,
+        relations: Object.fromEntries(profile.relationships.map((id) => [id, 10])),
+        memory: { revision: 0, serial: 0, summary: '', records: [], lastReflection: 0 },
+        override: null,
+        tomorrow: null,
+        followingUntil: 0,
+        lastPlan: 0,
+        lastSocial: -90,
+        heard: [],
+        commitments: [],
+        gesture: null,
+        gestureUntil: 0,
+      };
+    });
   }
 }
 
@@ -432,7 +446,11 @@ export class ScheduleExecutor {
         ? 'social'
         : 'idle';
   }
-  private readonly locations = new SettlementPlanner();
+  private readonly locations: {
+    locations(
+      index: number,
+    ): Record<'home' | 'work' | 'square' | 'shrine' | 'outpost', WorldPosition>;
+  };
   private readonly paths = new Map<NpcId, readonly WorldPosition[]>();
   private readonly goals = new Map<NpcId, string>();
   private readonly retryAt = new Map<NpcId, number>();
@@ -442,7 +460,14 @@ export class ScheduleExecutor {
     private readonly navigation: NavigationService,
     private readonly entities?: EntityStore,
     private readonly movementFor: (id: number) => number = () => 1,
-  ) {}
+    locations?: {
+      locations(
+        index: number,
+      ): Record<'home' | 'work' | 'square' | 'shrine' | 'outpost', WorldPosition>;
+    },
+  ) {
+    this.locations = locations ?? new SettlementPlanner();
+  }
   destination(
     npc: NpcState,
     index: number,

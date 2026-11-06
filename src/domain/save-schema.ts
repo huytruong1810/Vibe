@@ -65,7 +65,8 @@ const equipment = z
           })
           .strict(),
       )
-      .length(31),
+      .min(11)
+      .max(31),
     reservations: z
       .array(
         z
@@ -132,10 +133,13 @@ export const GameSaveSchema = z
     ...legacy,
     version: z.literal(4),
     contentVersion: z.literal(3),
+    worldSource: z.enum(['procedural', 'authored']).default('procedural'),
     entities: legacy.entities.extend({
       records: z
         .array(
           legacy.entities.shape.records.element.extend({
+            x: finite.min(0).max(CONFIG.worldSize),
+            y: finite.min(0).max(CONFIG.worldSize),
             scene: sceneCode,
             heightMeters: finite.min(0.1).max(4),
             massKg: finite.min(0.2).max(1000),
@@ -147,6 +151,7 @@ export const GameSaveSchema = z
     }),
     player: legacy.player.extend({ attack: attack.nullable(), guarding: z.boolean().optional() }),
     inventory: z.tuple([nullableItem, nullableItem]),
+    npcs: z.array(legacy.npcs.element).min(10).max(30),
     equipment,
     scenes,
     drops: z.array(drop).max(512),
@@ -165,10 +170,12 @@ export const GameSaveSchema = z
   .superRefine((save, ctx) => {
     const fail = (message: string): void => ctx.addIssue({ code: 'custom', message });
     // Retain the established entity/ecology/social invariants across the additive schema change.
-    const old = GameSaveV3Schema.safeParse(v3Projection(save));
-    if (!old.success)
-      for (const issue of old.error.issues)
-        ctx.addIssue({ code: 'custom', path: issue.path, message: issue.message });
+    if (save.worldSource !== 'authored') {
+      const old = GameSaveV3Schema.safeParse(v3Projection(save));
+      if (!old.success)
+        for (const issue of old.error.issues)
+          ctx.addIssue({ code: 'custom', path: issue.path, message: issue.message });
+    }
     validateV4(save, fail);
   });
 export type GameSave = z.infer<typeof GameSaveSchema>;
@@ -177,7 +184,7 @@ function v3Attack(value: GameSave['player']['attack']): GameSaveV3['player']['at
   return value ? { kind: value.kind, startedAt: value.startedAt, hit: value.hit } : null;
 }
 function v3Projection(save: GameSave): unknown {
-  const { equipment: _equipment, scenes: _scenes, ...base } = save;
+  const { equipment: _equipment, scenes: _scenes, worldSource: _worldSource, ...base } = save;
   const { guarding: _guarding, ...player } = save.player;
   const { projectiles: _projectiles, ...combat } = save.combat;
   const oldItem = (value: GameSave['inventory'][number]) => {
@@ -226,8 +233,13 @@ function validateV4(save: GameSave, fail: (message: string) => void): void {
     bindings.get(0) !== 'overworld'
   )
     fail('Duplicate or invalid scene bindings');
-  if (bindings.size !== layouts.size || [...bindings.values()].some((id) => !layouts.has(id)))
-    fail('Saved scene bindings must cover the canonical scene registry');
+  if (save.worldSource === 'authored') {
+    if ([...bindings.values()].some((id) => !layouts.has(id)))
+      fail('Saved scene bindings must cover known scenes');
+  } else {
+    if (bindings.size !== layouts.size || [...bindings.values()].some((id) => !layouts.has(id)))
+      fail('Saved scene bindings must cover the canonical scene registry');
+  }
   const inside = (point: { x: number; y: number }, code: number): boolean => {
     const layout = layouts.get(bindings.get(code) ?? '');
     return (
@@ -271,8 +283,12 @@ function validateV4(save: GameSave, fail: (message: string) => void): void {
   };
   save.inventory.forEach(checkItem);
   const loadouts = new Map(save.equipment.loadouts.map((l) => [l.entityId, l]));
-  if (loadouts.size !== 31 || [...loadouts.keys()].some((id) => records.get(id)?.species !== 8))
-    fail('Equipment must bind exactly the 31 humans');
+  const expectedHumans = save.worldSource === 'authored' ? save.npcs.length + 1 : 31;
+  if (
+    loadouts.size !== expectedHumans ||
+    [...loadouts.keys()].some((id) => records.get(id)?.species !== 8)
+  )
+    fail(`Equipment must bind exactly the ${expectedHumans} humans`);
   for (const loadout of save.equipment.loadouts) {
     for (const slot of GARMENT_SLOTS) {
       const value = loadout.worn[slot];
@@ -454,6 +470,7 @@ export function migrateSave(input: unknown): GameSave {
       ...old,
       version: 4,
       contentVersion: 3,
+      worldSource: 'procedural',
       entities: {
         ...old.entities,
         records: old.entities.records.map((record) => ({ ...record, scene: 0 })),
