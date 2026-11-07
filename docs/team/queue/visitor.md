@@ -143,7 +143,7 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
 
 ### V21 · `AMB-M1…M4` World ambience emitters, foliage wind sway & phase color grading (AMB-1…4)
 
-- status: open (visitor)
+- status: in-progress (visitor)
 - goal: implement presentation-only ambient particle emitter system (petals, river mist, fireflies, spores, autumn leaves), continuous global wind field driving foliage and reed sway, 4-phase time-of-day color grading (dawn, midday, dusk, night), and prop additive light pools.
 - inputs: `docs/doctrine/08-world-and-ambience.md` (AMB-1…4), `src/presentation/ambience.ts`, `src/presentation/renderer.ts`.
 - done when: unit tests verify ambient particle generation per biome/season/weather, quality settings scaling, wind sway calculation, and phase color grading tints; `npm run check` passes.
