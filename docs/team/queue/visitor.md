@@ -127,10 +127,11 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
 
 ### V19 · `LIF-M1` & `LIF-M2` Villager 10-step heart presentation & gift taste tables (LIF-2, LIF-3)
 
-- status: in-progress (visitor)
+- status: candidate (visitor)
 - goal: map villager affinity substrate to 10-step heart presentation in dialogue headers and inspection overlays, and author canonical gift taste tables (loved, liked, neutral, disliked, hated) for all 10 Aqualia villagers.
-- inputs: `docs/doctrine/07-life-sim.md` (LIF-2, LIF-3), `src/content/villagers.ts`, `src/domain/agents.ts`, `src/presentation/hud.ts`.
+- inputs: `docs/doctrine/07-life-sim.md` (LIF-2, LIF-3), `src/content/villagers.ts`, `src/domain/agents.ts`, `src/domain/contracts.ts`, `src/domain/simulation.ts`, `src/presentation/hud.ts`, `src/presentation/ui/view.ts`, `src/presentation/ui/hud.css`.
 - done when: unit tests verify 10-step heart calculations, gift taste evaluations and affinity deltas, and journal taste discovery; `npm run check` passes.
+- evidence: **Changed:** `src/content/villagers.ts`, `src/domain/agents.ts`, `src/domain/contracts.ts`, `src/domain/simulation.ts`, `src/presentation/hud.ts`, `src/presentation/ui/view.ts`, `src/presentation/ui/hud.css`, `tests/life-sim-hearts.test.ts`. **Evidence:** `tests/life-sim-hearts.test.ts` (4/4 passed). Authored distinct lore-grounded gift taste tables (`loved`, `liked`, `neutral`, `disliked`, `hated`) for all 10 Aqualia villagers; mapped affinity substrate (-100..100) into 10 fixed heart steps (0..10) per LIF-2.3; implemented affinity deltas (+8, +4, +2, -4, -8) with 4x birthday scaling and dialogue emotions; added player `giveGift` command enforcing 1 gift per day, inventory removal, taste discovery recording, and dialogue reaction lines; updated HUD dialogue header with 10-heart visual meter and gift offering button, and updated People inspector with heart count and discovered gift tastes. Full `npm run check` passed (55 test suites, 606 tests passed, Vite build passed).
 
 ## Now: Acting-Director Art Review & Triage (`TEAM-4.2`)
 

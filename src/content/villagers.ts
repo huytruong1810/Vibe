@@ -1,4 +1,5 @@
-import type { SpeciesId } from './definitions';
+import type { SpeciesId, ItemId } from './definitions';
+import type { DialogueEmotion } from '../domain/dialogue';
 
 /** Authored persona seeds. Named tuple fields keep the compact source auditable. */
 type Persona = readonly [
@@ -331,3 +332,116 @@ export const VILLAGER_SEEDS = authored.map((village) =>
     partner,
   })),
 );
+
+export type GiftTaste = 'loved' | 'liked' | 'neutral' | 'disliked' | 'hated';
+
+export interface VillagerGiftTastes {
+  readonly loved: readonly ItemId[];
+  readonly liked: readonly ItemId[];
+  readonly disliked: readonly ItemId[];
+  readonly hated: readonly ItemId[];
+}
+
+export const VILLAGER_GIFT_PREFERENCES: Readonly<Record<string, VillagerGiftTastes>> = {
+  'npc:caelum': {
+    loved: ['water', 'aqualia-poncho'],
+    liked: ['flint', 'reeds', 'painting'],
+    disliked: ['ashgrass', 'meat'],
+    hated: ['sword'],
+  },
+  'npc:marina': {
+    loved: ['fiber', 'reeds'],
+    liked: ['nectar', 'flint', 'aqualia-hat'],
+    disliked: ['meat', 'ashgrass'],
+    hated: ['fungi'],
+  },
+  'npc:neris': {
+    loved: ['meal', 'aqualia-cape'],
+    liked: ['water', 'flint', 'note', 'hatchet'],
+    disliked: ['berries'],
+    hated: ['spear'],
+  },
+  'npc:reed': {
+    loved: ['wheat', 'meal'],
+    liked: ['reeds', 'berries', 'fiber', 'water'],
+    disliked: ['flint'],
+    hated: ['meat'],
+  },
+  'npc:willa': {
+    loved: ['poultice', 'fungi'],
+    liked: ['reeds', 'nectar', 'berries', 'water'],
+    disliked: ['hatchet'],
+    hated: ['ashgrass'],
+  },
+  'npc:oren': {
+    loved: ['stick', 'hatchet'],
+    liked: ['flint', 'fiber', 'ore', 'meal'],
+    disliked: ['nectar'],
+    hated: ['sword'],
+  },
+  'npc:mira': {
+    loved: ['berries', 'nectar'],
+    liked: ['reeds', 'water', 'note'],
+    disliked: ['meat'],
+    hated: ['spear'],
+  },
+  'npc:lark': {
+    loved: ['canvas', 'painting'],
+    liked: ['nectar', 'reeds', 'fiber', 'note'],
+    disliked: ['meat'],
+    hated: ['hatchet'],
+  },
+  'npc:dara': {
+    loved: ['poultice', 'meal'],
+    liked: ['water', 'berries', 'note', 'arrow-bundle'],
+    disliked: ['canvas'],
+    hated: ['fungi'],
+  },
+  'npc:finn': {
+    loved: ['tool-head', 'flint'],
+    liked: ['stick', 'water', 'fiber', 'berries'],
+    disliked: ['poultice'],
+    hated: ['ashgrass'],
+  },
+};
+
+export function evaluateGiftTaste(npcId: string, itemId: ItemId): GiftTaste {
+  const tastes = VILLAGER_GIFT_PREFERENCES[npcId];
+  if (!tastes) return 'neutral';
+  if (tastes.loved.includes(itemId)) return 'loved';
+  if (tastes.liked.includes(itemId)) return 'liked';
+  if (tastes.hated.includes(itemId)) return 'hated';
+  if (tastes.disliked.includes(itemId)) return 'disliked';
+  return 'neutral';
+}
+
+export function giftAffinityDelta(taste: GiftTaste, isBirthday = false): number {
+  const mult = isBirthday ? 4 : 1;
+  switch (taste) {
+    case 'loved':
+      return 8 * mult;
+    case 'liked':
+      return 4 * mult;
+    case 'neutral':
+      return 2 * mult;
+    case 'disliked':
+      return -4 * mult;
+    case 'hated':
+      return -8 * mult;
+  }
+}
+
+export function giftReactionEmotion(taste: GiftTaste): DialogueEmotion {
+  switch (taste) {
+    case 'loved':
+      return 'warm';
+    case 'liked':
+      return 'amused';
+    case 'neutral':
+      return 'thoughtful';
+    case 'disliked':
+      return 'concerned';
+    case 'hated':
+      return 'angry';
+  }
+}

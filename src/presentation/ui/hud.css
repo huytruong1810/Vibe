@@ -791,3 +791,21 @@ body:has(.hd-game) {
   gap: 10px;
   margin-top: 10px;
 }
+.conversation-hearts {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 13px;
+  margin-top: 3px;
+}
+.villager-heart.filled {
+  color: #e05338;
+}
+.villager-heart.empty {
+  color: #777;
+}
+.villager-tastes {
+  font-size: 12px;
+  color: #c0b8a0;
+  margin: 4px 0 8px;
+}

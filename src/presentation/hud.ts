@@ -20,7 +20,9 @@ import {
   SPECIES,
   VILLAGES,
   findMoveDefinition,
+  type ItemId,
 } from '../content/definitions';
+import { calculateVillagerHearts } from '../domain/agents';
 import type {
   CommandPayload,
   CommandResult,
@@ -365,6 +367,16 @@ export class HudPresenter {
     this.el('dialogue-invite').addEventListener('click', () => {
       const npcId = this.frame?.dialogue?.npcId;
       if (npcId) void this.command({ type: 'invite', npcId });
+    });
+    this.el('dialogue-gift').addEventListener('click', () => {
+      const npcId = this.frame?.dialogue?.npcId;
+      if (!npcId) return;
+      const slot = this.frame?.inventory[0] ? 0 : this.frame?.inventory[1] ? 1 : null;
+      if (slot === null) {
+        this.notify('Carry an item in your hotbar to offer as a gift.');
+        return;
+      }
+      void this.command({ type: 'giveGift', npcId, slot });
     });
     this.el('inventory-panel').addEventListener('keydown', (event) => {
       if (event.ctrlKey || event.metaKey || event.altKey || event.repeat) return;
@@ -917,20 +929,40 @@ export class HudPresenter {
         }))
         .sort((a, b) => a.distance - b.distance)
         .slice(0, 10);
-      html = `<div class="journal-intro compact"><div class="eyebrow">FAMILIAR FACES</div><h3>Everyone has a rhythm.</h3><p>Villagers work, wander, share news, and make plans. Stop by and say hello.</p></div><div class="people-list">${nearby.map(({ npc, index, distance }) => `<div class="person-card" data-key="${escapeHtml(npc.profileId)}"><span class="person-avatar village-${NPC_PROFILES[index]!.village}">${NPC_PROFILES[index]!.name[0]}</span><div><h4>${escapeHtml(NPC_PROFILES[index]!.name)} <small>${npc.partner !== null ? '✧' : ''}</small></h4><p>${escapeHtml(NPC_PROFILES[index]!.role)}</p><small>${escapeHtml(npc.activity)}</small></div><button class="person-talk" data-action="talk" data-id="${index}" ${distance > 3 ? 'disabled' : ''} aria-label="Talk to ${escapeHtml(NPC_PROFILES[index]!.name)}">${distance <= 3 ? 'Talk ↗' : `${Math.round(distance)}m`}</button></div>`).join('')}</div>`;
+      html = `<div class="journal-intro compact"><div class="eyebrow">FAMILIAR FACES</div><h3>Everyone has a rhythm.</h3><p>Villagers work, wander, share news, and make plans. Stop by and say hello.</p></div><div class="people-list">${nearby
+        .map(({ npc, index, distance }) => {
+          const hearts = npc.hearts ?? calculateVillagerHearts(npc.affinity);
+          return `<div class="person-card" data-key="${escapeHtml(npc.profileId)}"><span class="person-avatar village-${NPC_PROFILES[index]!.village}">${NPC_PROFILES[index]!.name[0]}</span><div><h4>${escapeHtml(NPC_PROFILES[index]!.name)} <small>${npc.partner !== null ? '✧' : ''}</small></h4><p>${escapeHtml(NPC_PROFILES[index]!.role)}</p><small>${escapeHtml(npc.activity)} · ♥ ${hearts}/10</small></div><button class="person-talk" data-action="talk" data-id="${index}" ${distance > 3 ? 'disabled' : ''} aria-label="Talk to ${escapeHtml(NPC_PROFILES[index]!.name)}">${distance <= 3 ? 'Talk ↗' : `${Math.round(distance)}m`}</button></div>`;
+        })
+        .join('')}</div>`;
     }
     if (this.panel === 'people') {
       const human =
         frame.humanNeeds.find((h) => h.id === this.selectedHuman) ?? frame.humanNeeds[0]!;
       const name = human.id === 0 ? 'You' : NPC_PROFILES.find((_, i) => i + 1 === human.id)!.name;
+      const villager =
+        human.id > 0
+          ? frame.npcs.find((n) => n.profileId === NPC_PROFILES[human.id - 1]!.id)
+          : null;
+      const villagerHearts = villager
+        ? (villager.hearts ?? calculateVillagerHearts(villager.affinity))
+        : null;
       const selector = frame.humanNeeds
         .map(
           (h) =>
             `<button data-action="inspect-human" data-id="${h.id}">${h.id === 0 ? 'You' : escapeHtml(NPC_PROFILES[h.id - 1]!.name)}</button>`,
         )
         .join('');
+      const tastesList = villager?.discoveredTastes
+        ? Object.entries(villager.discoveredTastes)
+            .map(([id, taste]) => `${ITEMS[id as ItemId]?.name ?? id}: ${taste}`)
+            .join(', ')
+        : '';
+      const tastesHtml = tastesList
+        ? `<p class="villager-tastes"><b>Known tastes:</b> ${escapeHtml(tastesList)}</p>`
+        : '';
       html =
-        `<details class="human-inspector" open><summary>${escapeHtml(name)} · HP ${Math.ceil(human.hp)} / ${human.maxHp} · ${human.elements.join(' / ')}</summary><p>${human.nature.join(', ')} · ${human.sleeping ? 'Sleeping' : 'Awake'}</p>${meter('Food', human.food)}${meter('Water', human.water, 'water')}${meter('Recreation', human.recreation)}${meter('Cleanliness', human.cleanliness, 'water')}${meter('Rest', human.rest, 'warm')}<div class="human-selector">${selector}</div></details>` +
+        `<details class="human-inspector" open><summary>${escapeHtml(name)}${villagerHearts !== null ? ` · ♥ ${villagerHearts}/10 hearts` : ''} · HP ${Math.ceil(human.hp)} / ${human.maxHp} · ${human.elements.join(' / ')}</summary><p>${human.nature.join(', ')} · ${human.sleeping ? 'Sleeping' : 'Awake'}</p>${tastesHtml}${meter('Food', human.food)}${meter('Water', human.water, 'water')}${meter('Recreation', human.recreation)}${meter('Cleanliness', human.cleanliness, 'water')}${meter('Rest', human.rest, 'warm')}<div class="human-selector">${selector}</div></details>` +
         html;
     }
     this.setHtml('panel-content', html);
@@ -963,6 +995,17 @@ export class HudPresenter {
     this.el('conversation-name').textContent = profile.name;
     this.el('conversation-role').textContent =
       `${profile.role} · ${VILLAGES[profile.village]!.name}`;
+    const npc = frame.npcs.find((n) => n.profileId === conversation.npcId);
+    const hearts = npc ? (npc.hearts ?? calculateVillagerHearts(npc.affinity)) : 0;
+    const heartsHtml = Array.from(
+      { length: 10 },
+      (_, i) =>
+        `<span class="villager-heart ${i < hearts ? 'filled' : 'empty'}">${i < hearts ? '♥' : '♡'}</span>`,
+    ).join('');
+    this.setHtml(
+      'conversation-hearts',
+      `<span class="hearts-display" title="${hearts}/10 hearts (${npc?.affinity ?? 0} affinity)">${heartsHtml} <small>${hearts}/10</small></span>`,
+    );
     const emotion = latestNpcEmotion(conversation.lines);
     const portrait = this.appearance?.portrait('npc', profile.id, emotion);
     this.el('portrait').dataset.emotion = emotion;
@@ -1016,6 +1059,15 @@ export class HudPresenter {
       !!conversation.pendingJob && !conversation.reading;
     this.el<HTMLButtonElement>('dialogue-battle').hidden = profile.partner === null;
     this.el<HTMLButtonElement>('dialogue-invite').disabled = conversation.invitePending === true;
+    const giftBtn = this.el<HTMLButtonElement>('dialogue-gift');
+    const hasItem = Boolean(frame.inventory[0] || frame.inventory[1]);
+    const alreadyGifted = npc?.lastGiftDay === frame.day;
+    giftBtn.disabled = !hasItem || alreadyGifted;
+    giftBtn.title = alreadyGifted
+      ? `${profile.name} already received a gift today`
+      : hasItem
+        ? 'Offer the carried item to this villager'
+        : 'Carry an item in your hotbar to give as a gift';
     const staged = this.el('staged-note');
     const offers = conversation.staged.length + (conversation.invitePending ? 1 : 0);
     staged.hidden = offers === 0;

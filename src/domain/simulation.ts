@@ -18,7 +18,9 @@ import {
   VILLAGES,
   ITEMS,
   ContentRegistry,
+  type ItemId,
 } from '../content/definitions';
+import { evaluateGiftTaste, giftAffinityDelta, giftReactionEmotion } from '../content/villagers';
 import {
   AgentActionValidator,
   DialogueResponseSchema,
@@ -32,6 +34,7 @@ import {
   ScheduleExecutor,
   SocialEncounterSystem,
   fallbackDialogue,
+  calculateVillagerHearts,
   type DomainEvent,
   type InferenceJob,
   type Marker,
@@ -607,6 +610,7 @@ export class SimulationHost {
       'move',
       'dialogue',
       'closeDialogue',
+      'giveGift',
       'battle',
       'agentResult',
       'agentFailure',
@@ -1229,6 +1233,67 @@ export class SimulationHost {
           staged: [],
           pendingJob: null,
         };
+        break;
+      }
+      case 'giveGift': {
+        const npc = this.npcs.find((n) => n.profileId === c.npcId);
+        if (!npc) {
+          ok = false;
+          message = 'Villager not found.';
+          break;
+        }
+        if (npc.lastGiftDay === this.calendar.day) {
+          ok = false;
+          message = `${NPC_PROFILES.find((p) => p.id === npc.profileId)?.name ?? 'Villager'} already received a gift today.`;
+          break;
+        }
+        const item = this.inventory.state[c.slot];
+        if (!item) {
+          ok = false;
+          message = 'Choose an inventory slot with an item.';
+          break;
+        }
+        const taste = evaluateGiftTaste(npc.profileId, item.id as ItemId);
+        const delta = giftAffinityDelta(taste, false);
+        npc.affinity = Math.max(-100, Math.min(100, npc.affinity + delta));
+        npc.lastGiftDay = this.calendar.day;
+        if (!npc.discoveredTastes) npc.discoveredTastes = {};
+        npc.discoveredTastes[item.id] = taste;
+
+        this.inventory.remove(c.slot);
+
+        const villagerName = NPC_PROFILES.find((p) => p.id === npc.profileId)?.name ?? 'Villager';
+        const emotion = giftReactionEmotion(taste);
+        let reactionText = '';
+        switch (taste) {
+          case 'loved':
+            reactionText = `${villagerName} glows with genuine delight upon receiving the ${item.id}. "This is wonderful! Thank you so much!"`;
+            break;
+          case 'liked':
+            reactionText = `${villagerName} smiles warmly at the ${item.id}. "Thank you, this will come in handy."`;
+            break;
+          case 'disliked':
+            reactionText = `${villagerName} looks puzzled by the ${item.id}. "Oh... thank you, I suppose."`;
+            break;
+          case 'hated':
+            reactionText = `${villagerName} frowns and steps back from the ${item.id}. "Why would you give me this?"`;
+            break;
+          case 'neutral':
+          default:
+            reactionText = `${villagerName} politely accepts the ${item.id}. "Thank you for thinking of me."`;
+            break;
+        }
+
+        if (this.dialogue && this.dialogue.npcId === npc.profileId) {
+          this.dialogue.lines.push({
+            speaker: 'npc',
+            text: reactionText,
+            emotion,
+          });
+        }
+        this.emit('gift', reactionText, this.player, ['player', c.npcId], 4);
+        ok = true;
+        message = reactionText;
         break;
       }
       case 'partnerCommand':
@@ -2796,6 +2861,7 @@ export class SimulationHost {
         .map((n) =>
           structuredClone({
             ...n,
+            hearts: calculateVillagerHearts(n.affinity),
             memory: { ...n.memory, records: n.memory.records.slice(-12), pending: [] },
             memoryCounts: {
               active: n.memory.records.filter(validMemory).length,

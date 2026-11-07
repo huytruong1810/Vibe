@@ -165,6 +165,7 @@ export const CommandPayloadSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('tame'), creature: z.number().int().nonnegative() }).strict(),
   z.object({ type: z.literal('release') }).strict(),
   z.object({ type: z.literal('interact'), npcId: npc }).strict(),
+  z.object({ type: z.literal('giveGift'), npcId: npc, slot }).strict(),
   z.object({ type: z.literal('dialogue'), text: z.string().trim().min(1).max(1200) }).strict(),
   z.object({ type: z.literal('closeDialogue') }).strict(),
   z.object({ type: z.literal('battle'), npcId: npc }).strict(),

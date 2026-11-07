@@ -168,6 +168,8 @@ export interface NpcState {
   lastGiftDay: number;
   partner: number | null;
   affinity: number;
+  hearts?: number;
+  discoveredTastes?: Record<string, string>;
   relations: Record<string, number>;
   memory: MemoryState;
   override: { location: z.infer<typeof LocationSchema>; until: number; activity: string } | null;
@@ -185,6 +187,11 @@ export interface NpcState {
   gesture: 'spark' | 'bubble' | 'chirp' | null;
   gestureUntil: number;
 }
+
+export function calculateVillagerHearts(affinity: number): number {
+  return Math.max(0, Math.min(10, Math.floor(affinity / 10)));
+}
+
 export class NpcProfileRegistry {
   readonly profiles = new Map(NPC_PROFILES.map((profile) => [profile.id, profile]));
   create(
