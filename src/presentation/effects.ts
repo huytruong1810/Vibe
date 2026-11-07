@@ -1,4 +1,4 @@
-import type { ProjectilePresentation } from '../domain/presentation-contract';
+import type { ElementType, ProjectilePresentation } from '../domain/presentation-contract';
 import type { PixelPoint } from './compositor';
 
 export type EffectKind = 'hit' | 'gather' | 'craft' | 'care' | 'defeat' | 'recover' | 'projectile';
@@ -12,12 +12,22 @@ export interface EffectEmission {
   readonly socket?: PixelPoint;
   readonly count: number;
   readonly essential?: boolean;
+  readonly element?: ElementType;
 }
 export interface EffectParticle extends PixelPoint {
   readonly alpha: number;
   readonly kind: EffectKind;
   readonly radius: number;
+  readonly color?: number;
 }
+
+export const ELEMENT_PARTICLE_COLORS: Readonly<Record<ElementType, readonly number[]>> = {
+  physical: [0xe8c170, 0xffffff],
+  fire: [0xe05338, 0xf4a261],
+  water: [0x2a9d8f, 0x48cae4],
+  earth: [0x8d5b4c, 0xa7c957],
+  air: [0x90e0ef, 0xcaf0f8],
+};
 const random = (seed: number, index: number): number => {
   let x = (seed ^ Math.imul(index + 1, 0x9e3779b1)) >>> 0;
   x ^= x << 13;
@@ -68,12 +78,15 @@ export class EffectDirector {
         const angle = random(emission.seed, n * 2) * Math.PI * 2,
           speed = 1 + random(emission.seed, n * 2 + 1) * 2;
         const origin = emission.socket ?? emission.origin;
+        const colors = emission.element ? ELEMENT_PARTICLE_COLORS[emission.element] : undefined;
+        const color = colors ? colors[n % colors.length] : undefined;
         particles.push({
           x: origin.x + Math.cos(angle) * age * speed,
           y: origin.y + Math.sin(angle) * age * speed + age * age * 0.04,
           alpha: 1 - age / 19,
           kind: emission.kind,
           radius: 2 + random(emission.seed, n + 80) * 2,
+          color,
         });
       }
     }

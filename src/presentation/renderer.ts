@@ -93,6 +93,8 @@ interface EntitySprite {
   appearance: AssetAppearance | undefined;
   facing: Facing;
   hitUntil: number;
+  hitStopUntil?: number;
+  hitStopTick?: number;
   fallback: boolean;
   composite?: CompositeLease<RenderTexture>;
   compositeKey?: string;
@@ -701,8 +703,24 @@ export class WorldRenderer {
     for (const cue of cues) {
       const actor = actors.get(cue.target ?? cue.actor);
       if (!actor || !actorInScene(actor, this.scene.id)) continue;
-      if (cue.kind === 'hit' && Math.hypot(actor.x - frame.player.x, actor.y - frame.player.y) < 6)
-        this.shake.add(cue.tick, (cue.strength ?? 1) * (actor.id === 0 ? 2 : 0.7), cue.sequence);
+      if (cue.kind === 'hit') {
+        if (Math.hypot(actor.x - frame.player.x, actor.y - frame.player.y) < 6)
+          this.shake.add(cue.tick, (cue.strength ?? 1) * (actor.id === 0 ? 2 : 0.7), cue.sequence);
+        const hitStopFrames =
+          cue.critical || (cue.strength ?? 1) >= 1.5 ? 3 : (cue.strength ?? 1) >= 1.0 ? 2 : 0;
+        if (hitStopFrames > 0 && !this.reducedMotion) {
+          const targetSprite = this.entities.get(cue.target ?? actor.id);
+          if (targetSprite) {
+            targetSprite.hitStopUntil = cue.tick + hitStopFrames;
+            targetSprite.hitStopTick = cue.tick;
+          }
+          const attackerSprite = this.entities.get(cue.actor);
+          if (attackerSprite) {
+            attackerSprite.hitStopUntil = cue.tick + hitStopFrames;
+            attackerSprite.hitStopTick = cue.tick;
+          }
+        }
+      }
       this.emitEffect(
         cue.kind === 'hit'
           ? 'hit'
@@ -721,7 +739,8 @@ export class WorldRenderer {
         tick: cue.tick,
         seed: cue.sequence,
         origin: p,
-        count: cue.kind === 'hit' ? 8 : 4,
+        count: cue.kind === 'hit' ? (cue.critical ? 12 : 8) : 4,
+        element: cue.element,
       });
     }
     const visibleActors: ActorPresentation[] = [];
@@ -1450,7 +1469,9 @@ export class WorldRenderer {
     const pose = this.poses.resolve(reactionActor, hit),
       clip =
         e.appearance && this.resolver?.clip(e.appearance, pose, e.facing, e.actor.action?.move);
-    const sample = clip && this.animations.sample(e.actor, clip, tick);
+    const animatedTick =
+      e.hitStopUntil && tick < e.hitStopUntil && e.hitStopTick !== undefined ? e.hitStopTick : tick;
+    const sample = clip && this.animations.sample(e.actor, clip, animatedTick);
     e.poseSample = sample;
     const frameId = sample?.frameId,
       frame = frameId && this.frames.get(frameId),

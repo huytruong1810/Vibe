@@ -17,6 +17,7 @@ import {
   type AttackCategory,
   type DirectorSnapshot,
 } from './combat-director';
+import type { ElementType, HitEffectiveness } from './presentation-contract';
 
 export interface AttackDefinition {
   readonly id: string;
@@ -328,6 +329,9 @@ export interface CombatEvent {
   readonly text: string;
   readonly target: number | null;
   readonly actor?: number;
+  readonly element?: ElementType;
+  readonly effectiveness?: HitEffectiveness;
+  readonly critical?: boolean;
 }
 /** Combat, threats and hit windows operate on stable entity IDs for every controller. */
 export class CombatSystem {
@@ -862,12 +866,20 @@ export class CombatSystem {
           : null;
       this.encounters.open(target, duel, tick);
     }
+    const isFinisher = actor === 0 && this.player.attack?.chainIndex === 2;
+    const element: ElementType =
+      kind === 'strike' ? 'physical' : ((s.definition(a).elements[0] as ElementType) ?? 'physical');
+    const effectiveness: HitEffectiveness =
+      damage > power * 1.15 ? 'effective' : damage < power * 0.85 ? 'resisted' : 'neutral';
     events.push({
       type: 'hit',
       actor,
       target,
-      impact: impulse,
+      impact: isFinisher ? Math.max(1.5, impulse) : impulse,
       text: `${defend.name} took ${damage} damage.`,
+      element,
+      effectiveness,
+      critical: isFinisher,
     });
     if (s.hp[b]! <= 0 && this.pursuits.get(actor)?.cause === 'hunt')
       events.push({

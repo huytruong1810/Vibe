@@ -2156,6 +2156,9 @@ export class SimulationHost {
           kind: event.type === 'hit' ? 'hit' : 'defeat',
           strength: event.impact,
           scene: s.scene[s.require(event.target ?? event.actor ?? 0)]!,
+          element: event.element,
+          effectiveness: event.effectiveness,
+          critical: event.critical,
         });
       this.emit(
         event.type,

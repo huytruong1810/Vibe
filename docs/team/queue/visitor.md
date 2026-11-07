@@ -103,10 +103,11 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
 
 ### V16 · `CMB-M3` & `CMB-M5` Action combat feel: presentation hit-stop and rich hit-cues (CMB-6.1, CMB-9)
 
-- status: in-progress (visitor)
+- status: candidate (visitor)
 - goal: implement presentation-only hit-stop freeze (2-4 frames) on heavy strikes and combo finishers without desyncing simulation ticks, and enrich presentation cues with element, effectiveness, and critical flags routed to element-specific spark particle colors and camera shake.
 - inputs: `docs/doctrine/05-combat-direction.md` (CMB-6.1, CMB-9), `src/domain/presentation-contract.ts`, `src/domain/combat.ts`, `src/presentation/effects.ts`, `src/presentation/renderer.ts`.
 - done when: unit tests verify cue enrichment (element, effectiveness, critical), renderer hit-stop freeze window calculation, elemental particle colors, and deterministic tick decoupling; `npm run check` passes.
+- evidence: **Changed:** `src/domain/presentation-contract.ts`, `src/domain/combat.ts`, `src/domain/simulation.ts`, `src/presentation/effects.ts`, `src/presentation/renderer.ts`. **Evidence:** `tests/combat-hitstop.test.ts` (4/4 pass). Hit cues enriched with `element` (`physical`, `fire`, `water`, `earth`, `air`), `effectiveness` (`effective`, `resisted`, `neutral`), and `critical` (finisher hit). Presentation-only hit-stop freeze (2-3 display frames on heavy/crit hits) suspends pose clock sampling in `renderer.ts` without altering deterministic simulation ticks. `EffectDirector` maps elemental spark colors (`physical` golden/white, `fire` crimson/orange, `water` aquamarine/cyan, `earth` loam/moss, `air` zephyr/white). `npm test` (53 test suites, 597 tests) passes.
 
 ### V17 · `CRE-M4` & `CRE-M5` Species move pools & disposition player-facing rename (CRE-4, CRE-5)
 

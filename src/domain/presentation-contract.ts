@@ -69,6 +69,9 @@ export interface AttackTelegraph {
   readonly phase: 'windup' | 'active';
   readonly predator: boolean;
 }
+export type ElementType = 'physical' | 'fire' | 'water' | 'earth' | 'air';
+export type HitEffectiveness = 'effective' | 'resisted' | 'neutral' | 'immune';
+
 export interface PresentationCue {
   readonly strength?: number;
   readonly sequence: number;
@@ -76,6 +79,9 @@ export interface PresentationCue {
   readonly actor: number;
   readonly target: number | null;
   readonly kind: 'hit' | 'gather' | 'craft' | 'care' | 'defeat' | 'recover';
+  readonly element?: ElementType;
+  readonly effectiveness?: HitEffectiveness;
+  readonly critical?: boolean;
 }
 export interface ScenePropPresentation {
   readonly id: string;
