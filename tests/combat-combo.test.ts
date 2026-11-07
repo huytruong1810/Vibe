@@ -6,7 +6,7 @@ import { COMBO_ATTACKS } from '../src/domain/combat';
 describe('CMB-M1..M5 3-hit combo chain and recovery dash cancels (CMB-2)', () => {
   it('chains 3 consecutive strike attacks during recovery windows and resets after finisher', () => {
     const host = new SimulationHost(42, 1, 0, 'world:combo:test');
-    
+
     // Hit 1: start attack from idle
     const hit1 = send(host, { type: 'attack', kind: 'strike' });
     expect(hit1.ok).toBe(true);
@@ -14,7 +14,7 @@ describe('CMB-M1..M5 3-hit combo chain and recovery dash cancels (CMB-2)', () =>
     expect(host.player.attack?.chainIndex).toBe(0);
 
     const def1 = COMBO_ATTACKS.strike[0]!;
-    
+
     // Advance into windup - cannot chain during windup
     for (let t = 0; t < def1.windup; t++) host.step();
     expect(host.combat.stateMachine.phase(host.player, host.tick)).toBe('active');
@@ -31,7 +31,7 @@ describe('CMB-M1..M5 3-hit combo chain and recovery dash cancels (CMB-2)', () =>
     expect(host.player.attack?.chainIndex).toBe(1);
 
     const def2 = COMBO_ATTACKS.strike[1]!;
-    
+
     // Advance through windup and active of hit 2 to recovery
     for (let t = 0; t < def2.windup + def2.active; t++) host.step();
     expect(host.combat.stateMachine.phase(host.player, host.tick)).toBe('recovery');
@@ -55,13 +55,13 @@ describe('CMB-M1..M5 3-hit combo chain and recovery dash cancels (CMB-2)', () =>
 
   it('resets combo to hit 1 when attack recovery window expires without input', () => {
     const host = new SimulationHost(42, 1, 0, 'world:combo:expire');
-    
+
     // Start hit 1
     expect(send(host, { type: 'attack', kind: 'strike' }).ok).toBe(true);
     expect(host.player.attack?.chainIndex).toBe(0);
 
     const def1 = COMBO_ATTACKS.strike[0]!;
-    
+
     // Advance past the entire attack duration
     for (let t = 0; t <= def1.windup + def1.active + def1.recovery; t++) host.step();
     expect(host.player.attack).toBeNull();
@@ -73,7 +73,7 @@ describe('CMB-M1..M5 3-hit combo chain and recovery dash cancels (CMB-2)', () =>
 
   it('allows dash to cancel recovery of hits 1 and 2, but rejects dash during hit 3 or windup', () => {
     const host = new SimulationHost(42, 1, 0, 'world:combo:dash');
-    
+
     // Start hit 1
     expect(send(host, { type: 'attack', kind: 'strike' }).ok).toBe(true);
     const def1 = COMBO_ATTACKS.strike[0]!;
@@ -124,7 +124,7 @@ describe('CMB-M1..M5 3-hit combo chain and recovery dash cancels (CMB-2)', () =>
     // Start hit 1 jab
     expect(send(host, { type: 'attack', kind: 'strike' }).ok).toBe(true);
     const def1 = COMBO_ATTACKS.strike[0]!;
-    
+
     // Step through windup and 1 active tick to deliver damage and recoil
     for (let t = 0; t <= def1.windup; t++) host.step();
     const jabRecoil = s.recoilX[targetSlot]!;
@@ -146,12 +146,12 @@ describe('CMB-M1..M5 3-hit combo chain and recovery dash cancels (CMB-2)', () =>
     s.recoilY[targetSlot] = 0;
     s.x[targetSlot] = host.player.x + 1.2;
     s.y[targetSlot] = host.player.y;
-    
+
     // Chain to hit 3 finisher
     expect(send(host, { type: 'attack', kind: 'strike' }).ok).toBe(true);
     expect(host.player.attack?.chainIndex).toBe(2);
     const def3 = COMBO_ATTACKS.strike[2]!;
-    
+
     // Step into active frame of hit 3
     for (let t = 0; t <= def3.windup; t++) host.step();
     const finisherRecoil = s.recoilX[targetSlot]!;

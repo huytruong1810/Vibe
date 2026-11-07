@@ -1,6 +1,7 @@
 import {
   SPECIES,
   VILLAGES,
+  CREATURE_MOVES,
   type CreatureDefinition,
   type SpeciesId,
   type ItemId,
@@ -18,6 +19,168 @@ export interface NaturePolicy {
 }
 export const PASSIVE: NaturePolicy = Object.freeze({ response: 'avoid', aggression: [] });
 export const NEUTRAL: NaturePolicy = Object.freeze({ response: 'retaliate', aggression: [] });
+
+export type StatName = 'hp' | 'attack' | 'defense' | 'attunement' | 'resonance' | 'speed';
+export type CareAction = 'feed' | 'water' | 'pet' | 'bathe' | 'heal' | 'walk';
+
+export interface Temperament {
+  readonly id: string;
+  readonly name: string;
+  readonly boosted: StatName | null;
+  readonly hindered: StatName | null;
+  readonly favoredCare: CareAction;
+  readonly dislikedCare: CareAction;
+}
+
+export const TEMPERAMENTS: Readonly<Record<string, Temperament>> = {
+  hardy: {
+    id: 'hardy',
+    name: 'Hardy',
+    boosted: null,
+    hindered: null,
+    favoredCare: 'walk',
+    dislikedCare: 'bathe',
+  },
+  brave: {
+    id: 'brave',
+    name: 'Brave',
+    boosted: 'attack',
+    hindered: 'speed',
+    favoredCare: 'pet',
+    dislikedCare: 'bathe',
+  },
+  adamant: {
+    id: 'adamant',
+    name: 'Adamant',
+    boosted: 'attack',
+    hindered: 'attunement',
+    favoredCare: 'walk',
+    dislikedCare: 'heal',
+  },
+  bold: {
+    id: 'bold',
+    name: 'Bold',
+    boosted: 'defense',
+    hindered: 'attack',
+    favoredCare: 'bathe',
+    dislikedCare: 'pet',
+  },
+  impish: {
+    id: 'impish',
+    name: 'Impish',
+    boosted: 'defense',
+    hindered: 'attunement',
+    favoredCare: 'pet',
+    dislikedCare: 'walk',
+  },
+  modest: {
+    id: 'modest',
+    name: 'Modest',
+    boosted: 'attunement',
+    hindered: 'attack',
+    favoredCare: 'feed',
+    dislikedCare: 'walk',
+  },
+  calm: {
+    id: 'calm',
+    name: 'Calm',
+    boosted: 'resonance',
+    hindered: 'attack',
+    favoredCare: 'bathe',
+    dislikedCare: 'pet',
+  },
+  gentle: {
+    id: 'gentle',
+    name: 'Gentle',
+    boosted: 'resonance',
+    hindered: 'defense',
+    favoredCare: 'heal',
+    dislikedCare: 'bathe',
+  },
+  timid: {
+    id: 'timid',
+    name: 'Timid',
+    boosted: 'speed',
+    hindered: 'attack',
+    favoredCare: 'walk',
+    dislikedCare: 'bathe',
+  },
+  jolly: {
+    id: 'jolly',
+    name: 'Jolly',
+    boosted: 'speed',
+    hindered: 'attunement',
+    favoredCare: 'pet',
+    dislikedCare: 'heal',
+  },
+  careful: {
+    id: 'careful',
+    name: 'Careful',
+    boosted: 'resonance',
+    hindered: 'attunement',
+    favoredCare: 'heal',
+    dislikedCare: 'walk',
+  },
+  sassy: {
+    id: 'sassy',
+    name: 'Sassy',
+    boosted: 'resonance',
+    hindered: 'speed',
+    favoredCare: 'feed',
+    dislikedCare: 'pet',
+  },
+  quiet: {
+    id: 'quiet',
+    name: 'Quiet',
+    boosted: 'attunement',
+    hindered: 'speed',
+    favoredCare: 'bathe',
+    dislikedCare: 'walk',
+  },
+  rash: {
+    id: 'rash',
+    name: 'Rash',
+    boosted: 'attunement',
+    hindered: 'resonance',
+    favoredCare: 'walk',
+    dislikedCare: 'heal',
+  },
+  stoic: {
+    id: 'stoic',
+    name: 'Stoic',
+    boosted: 'defense',
+    hindered: 'speed',
+    favoredCare: 'heal',
+    dislikedCare: 'pet',
+  },
+};
+
+export const TEMPERAMENT_KEYS = Object.keys(TEMPERAMENTS);
+
+export function calculateEffectiveStat(
+  stat: StatName,
+  base: number,
+  potential: number,
+  conditioning: number,
+  level: number,
+  temperament: Temperament,
+): number {
+  const isHp = stat === 'hp';
+  const raw =
+    Math.floor(((2 * base + potential + Math.floor(conditioning / 4)) * level) / 100) +
+    (isHp ? level + 10 : 5);
+  const mult = temperament.boosted === stat ? 1.1 : temperament.hindered === stat ? 0.9 : 1.0;
+  return Math.max(1, Math.floor(raw * mult));
+}
+
+export function revealedPotentialCount(bondHearts: number): number {
+  if (bondHearts >= 10) return 6;
+  if (bondHearts >= 8) return 4;
+  if (bondHearts >= 6) return 3;
+  if (bondHearts >= 4) return 2;
+  if (bondHearts >= 2) return 1;
+  return 0;
+}
 
 export const FLOAT_COLUMNS = [
   'x',
@@ -71,6 +234,10 @@ export type EntityRecord = Record<FloatColumn | ByteColumn, number> & {
   nature: NaturePolicy;
   preferences: readonly ItemId[];
   restrictions: readonly ItemId[];
+  potential?: readonly number[];
+  conditioning?: readonly number[];
+  temperament?: string;
+  moves?: readonly string[];
 };
 export interface EntitySnapshot {
   count: number;
@@ -88,6 +255,8 @@ const humans: readonly CreatureDefinition[] = VILLAGES.map((v) => ({
   hp: 100,
   attack: 8,
   defense: 8,
+  attunement: 10,
+  resonance: 10,
   speed: 4.2,
   habitat: [],
   description: 'A human with individual preferences, memories, and elemental affinity.',
@@ -141,6 +310,13 @@ export class EntityStore {
   private readonly policies = new Map<number, NaturePolicy>();
   private readonly restrictions = new Map<number, readonly ItemId[]>();
   private readonly preferences = new Map<number, readonly ItemId[]>();
+  private readonly potentials = new Map<number, [number, number, number, number, number, number]>();
+  private readonly conditionings = new Map<
+    number,
+    [number, number, number, number, number, number]
+  >();
+  private readonly temperaments = new Map<number, string>();
+  private readonly loadouts = new Map<number, readonly string[]>();
   private nextId = 100;
   private humanCount = 0;
   count = 0;
@@ -201,6 +377,26 @@ export class EntityStore {
     this.herd[slot] = Math.floor(slot / 6);
     this.policies.set(id, species === 2 || species === 4 ? PASSIVE : NEUTRAL);
     if (owner >= 0) this.policies.set(id, NEUTRAL);
+
+    const def = this.definition(slot);
+    let h = (id * 1664525 + 1013904223) >>> 0;
+    const p: [number, number, number, number, number, number] = [
+      (h = (h * 1664525 + 1013904223) >>> 0) % 16,
+      (h = (h * 1664525 + 1013904223) >>> 0) % 16,
+      (h = (h * 1664525 + 1013904223) >>> 0) % 16,
+      (h = (h * 1664525 + 1013904223) >>> 0) % 16,
+      (h = (h * 1664525 + 1013904223) >>> 0) % 16,
+      (h = (h * 1664525 + 1013904223) >>> 0) % 16,
+    ];
+    this.potentials.set(id, p);
+    this.conditionings.set(id, [0, 0, 0, 0, 0, 0]);
+    const tempKey = TEMPERAMENT_KEYS[h % TEMPERAMENT_KEYS.length] ?? 'hardy';
+    this.temperaments.set(id, tempKey);
+
+    const moves: string[] = ['strike'];
+    const spMoves = CREATURE_MOVES[def.id as SpeciesId];
+    if (spMoves?.attackName) moves.push(spMoves.attackName);
+    this.loadouts.set(id, moves);
   }
   spawn(species: number, x: number, y: number, owner = -1): number {
     let slot = 0;
@@ -231,6 +427,10 @@ export class EntityStore {
     this.policies.delete(id);
     this.restrictions.delete(id);
     this.preferences.delete(id);
+    this.potentials.delete(id);
+    this.conditionings.delete(id);
+    this.temperaments.delete(id);
+    this.loadouts.delete(id);
   }
   slot(id: number): number | undefined {
     return this.byId.get(id);
@@ -343,9 +543,64 @@ export class EntityStore {
             nature: this.nature(slot),
             preferences: this.preferences.get(this.id(slot)) ?? [],
             restrictions: this.restrictions.get(this.id(slot)) ?? [],
-          }) as EntityRecord,
+            ...(this.potentials.has(this.id(slot))
+              ? { potential: this.potentials.get(this.id(slot))! }
+              : {}),
+            ...(this.conditionings.has(this.id(slot))
+              ? { conditioning: this.conditionings.get(this.id(slot))! }
+              : {}),
+            ...(this.temperaments.has(this.id(slot))
+              ? { temperament: this.temperaments.get(this.id(slot))! }
+              : {}),
+            ...(this.loadouts.has(this.id(slot))
+              ? { moves: this.loadouts.get(this.id(slot))! }
+              : {}),
+          }) as unknown as EntityRecord,
       ),
     };
+  }
+  potential(slot: number): readonly number[] {
+    const id = this.ids[slot]!;
+    return this.potentials.get(id) ?? [0, 0, 0, 0, 0, 0];
+  }
+  conditioning(slot: number): readonly number[] {
+    const id = this.ids[slot]!;
+    return this.conditionings.get(id) ?? [0, 0, 0, 0, 0, 0];
+  }
+  addConditioning(slot: number, stat: StatName, amount: number): void {
+    const id = this.ids[slot]!;
+    const cond = [...(this.conditionings.get(id) ?? [0, 0, 0, 0, 0, 0])];
+    const statIndex = ['hp', 'attack', 'defense', 'attunement', 'resonance', 'speed'].indexOf(stat);
+    if (statIndex < 0) return;
+    const current = cond[statIndex]!;
+    const totalCurrent = cond.reduce((a, b) => a + b, 0);
+    const maxStatGain = Math.min(amount, 40 - current);
+    const maxTotalGain = Math.min(maxStatGain, 120 - totalCurrent);
+    if (maxTotalGain > 0) {
+      cond[statIndex] = current + maxTotalGain;
+      this.conditionings.set(id, cond as [number, number, number, number, number, number]);
+    }
+  }
+  temperament(slot: number): Temperament {
+    const id = this.ids[slot]!;
+    const key = this.temperaments.get(id) ?? 'hardy';
+    return TEMPERAMENTS[key] ?? TEMPERAMENTS['hardy']!;
+  }
+  moves(slot: number): readonly string[] {
+    const id = this.ids[slot]!;
+    return this.loadouts.get(id) ?? ['strike'];
+  }
+  maxMoveSlots(slot: number): number {
+    const hearts = this.bondHearts[slot] ?? 0;
+    if (hearts >= 8) return 4;
+    if (hearts >= 6) return 3;
+    return 2;
+  }
+  setMoves(slot: number, moves: readonly string[]): boolean {
+    const max = this.maxMoveSlots(slot);
+    if (moves.length > max || moves.length === 0) return false;
+    this.loadouts.set(this.ids[slot]!, moves);
+    return true;
   }
   restore(snapshot: EntitySnapshot): void {
     for (const k of [...FLOAT_COLUMNS, ...BYTE_COLUMNS]) this[k].fill(0);
@@ -356,6 +611,10 @@ export class EntityStore {
     this.policies.clear();
     this.restrictions.clear();
     this.preferences.clear();
+    this.potentials.clear();
+    this.conditionings.clear();
+    this.temperaments.clear();
+    this.loadouts.clear();
     this.count = snapshot.count;
     this.humanCount = snapshot.records.filter((r) => r.species === 8).length;
     this.nextId = snapshot.nextId;
@@ -375,6 +634,15 @@ export class EntityStore {
       this.policies.set(r.id, r.nature);
       this.preferences.set(r.id, r.preferences);
       this.restrictions.set(r.id, r.restrictions);
+      if (r.potential)
+        this.potentials.set(r.id, r.potential as [number, number, number, number, number, number]);
+      if (r.conditioning)
+        this.conditionings.set(
+          r.id,
+          r.conditioning as [number, number, number, number, number, number],
+        );
+      if (r.temperament) this.temperaments.set(r.id, r.temperament);
+      if (r.moves) this.loadouts.set(r.id, r.moves);
     }
     this.validate();
   }

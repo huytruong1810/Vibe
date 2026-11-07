@@ -196,6 +196,8 @@ export interface CreatureDefinition {
   readonly hp: number;
   readonly attack: number;
   readonly defense: number;
+  readonly attunement: number;
+  readonly resonance: number;
   readonly speed: number;
   readonly habitat: readonly number[];
   readonly description: string;
@@ -211,6 +213,8 @@ export const SPECIES: readonly CreatureDefinition[] = [
     hp: 64,
     attack: 12,
     defense: 7,
+    attunement: 14,
+    resonance: 8,
     speed: 2.5,
     habitat: [3, 5],
     description: 'A warm-hearted wanderer with a smoldering mushroom cap.',
@@ -225,6 +229,8 @@ export const SPECIES: readonly CreatureDefinition[] = [
     hp: 72,
     attack: 10,
     defense: 9,
+    attunement: 11,
+    resonance: 10,
     speed: 2.7,
     habitat: [0, 6],
     description: 'Playful river spirits that gather wherever the reeds grow.',
@@ -239,6 +245,8 @@ export const SPECIES: readonly CreatureDefinition[] = [
     hp: 56,
     attack: 11,
     defense: 6,
+    attunement: 16,
+    resonance: 11,
     speed: 3.3,
     habitat: [1, 4],
     description: 'These bright little companions follow the sea breeze.',
@@ -253,6 +261,8 @@ export const SPECIES: readonly CreatureDefinition[] = [
     hp: 70,
     attack: 10,
     defense: 10,
+    attunement: 8,
+    resonance: 12,
     speed: 2.3,
     habitat: [2, 6],
     description: 'Mossy creatures that keep the wetlands company.',
@@ -267,6 +277,8 @@ export const SPECIES: readonly CreatureDefinition[] = [
     hp: 52,
     attack: 14,
     defense: 5,
+    attunement: 18,
+    resonance: 10,
     speed: 3.2,
     habitat: [1, 5],
     description: 'Fluttering sparks that pollinate hardy wildflowers.',
@@ -281,6 +293,8 @@ export const SPECIES: readonly CreatureDefinition[] = [
     hp: 84,
     attack: 9,
     defense: 13,
+    attunement: 6,
+    resonance: 14,
     speed: 2.0,
     habitat: [0, 3],
     description: 'Gentle grazers with little clouds above their shells.',
@@ -296,6 +310,8 @@ export const SPECIES: readonly CreatureDefinition[] = [
     hp: 84,
     attack: 14,
     defense: 9,
+    attunement: 6,
+    resonance: 6,
     speed: 3.8,
     habitat: [1, 4, 5],
     description: 'An ember-maned hunter that stalks grassland margins.',
@@ -311,6 +327,8 @@ export const SPECIES: readonly CreatureDefinition[] = [
     hp: 68,
     attack: 12,
     defense: 7,
+    attunement: 10,
+    resonance: 9,
     speed: 3.5,
     habitat: [2, 6],
     description: 'A patient wetland hunter with a low, rippling gait.',

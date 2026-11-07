@@ -372,6 +372,10 @@ export function migrateSaveV3(input: unknown): GameSaveV3 {
               massKg: _mass,
               recoilX: _rx,
               recoilY: _ry,
+              potential: _pot,
+              conditioning: _cond,
+              temperament: _temp,
+              moves: _moves,
               ...record
             }) => record,
           ),

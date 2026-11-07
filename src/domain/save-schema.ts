@@ -148,7 +148,10 @@ export const GameSaveSchema = z
     ...legacy,
     version: z.literal(9),
     literacy: LiteracySnapshotSchema,
-    npcs: z.array(legacy.npcs.element.extend({ memory: MemoryStateSchema })).min(10).max(30),
+    npcs: z
+      .array(legacy.npcs.element.extend({ memory: MemoryStateSchema }))
+      .min(10)
+      .max(30),
     artifacts: ArtifactRecordsSchema,
     artifactSequence: z.number().int().min(0).max(Number.MAX_SAFE_INTEGER),
     placements: z
@@ -178,6 +181,10 @@ export const GameSaveSchema = z
             massKg: finite.min(0.2).max(1000),
             recoilX: finite.min(-8).max(8),
             recoilY: finite.min(-8).max(8),
+            temperament: z.string().optional(),
+            potential: z.array(finite.min(0).max(15)).length(6).optional(),
+            conditioning: z.array(finite.min(0).max(40)).length(6).optional(),
+            moves: z.array(z.string().min(1).max(64)).max(4).optional(),
           }),
         )
         .max(CONFIG.creatureCapacity + 31),
@@ -345,6 +352,10 @@ function v3Projection(save: GameSave): unknown {
           massKg: _mass,
           recoilX: _rx,
           recoilY: _ry,
+          temperament: _temp,
+          potential: _pot,
+          conditioning: _cond,
+          moves: _moves,
           ...record
         }) => record,
       ),

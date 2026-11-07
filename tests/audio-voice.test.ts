@@ -1,8 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import {
-  AudioDirector,
-  VILLAGER_VOICES,
-} from '../src/presentation/audio';
+import { AudioDirector, VILLAGER_VOICES } from '../src/presentation/audio';
 
 class MockAudioParam {
   value = 0;

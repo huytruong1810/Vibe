@@ -650,12 +650,7 @@ export class CombatSystem {
   }
   attack(kind: 'strike' | 'element', tick: number): boolean {
     const i = this.store.slot(this.player.entityId);
-    if (
-      i === undefined ||
-      this.store.sleeping[i] ||
-      this.player.guarding ||
-      this.player.hp <= 0
-    )
+    if (i === undefined || this.store.sleeping[i] || this.player.guarding || this.player.hp <= 0)
       return false;
 
     let chainIndex: 0 | 1 | 2 = 0;
@@ -821,8 +816,7 @@ export class CombatSystem {
             ? 1.0
             : 0.75
         : 1.0;
-    const impulse =
-      PhysiquePolicy.impact(s.physique(a), s.physique(b), guarded) * comboMultiplier;
+    const impulse = PhysiquePolicy.impact(s.physique(a), s.physique(b), guarded) * comboMultiplier;
     const dx = s.x[b]! - s.x[a]!,
       dy = s.y[b]! - s.y[a]!,
       length = Math.hypot(dx, dy);

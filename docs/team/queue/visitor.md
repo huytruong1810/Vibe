@@ -95,10 +95,11 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
 
 ### V15 · `CRE-M1…M6` Creature 6-stat progression & move loadouts (CRE-2, CRE-3, CRE-4, CRE-5, CRE-6)
 
-- status: in-progress (visitor)
+- status: candidate (visitor)
 - goal: implement 6-stat attribute system (Vitality, Might, Guard, Attunement, Resonance, Swiftness), 15 temperaments, Potential (IV) & Conditioning (EV) care mechanics, and 4-move active loadouts per doctrine 06.
 - inputs: `docs/doctrine/06-creatures-and-progression.md`, `src/content/definitions.ts`, `src/domain/entities.ts`, `src/domain/creatures.ts`.
 - done when: unit tests verify 6-stat calculations, temperament modifiers, potential unlocks via bond milestones, care conditioning accumulation, and 4-move loadout validation; `npm run check` passes.
+- evidence: **Changed:** `src/content/definitions.ts`, `src/domain/entities.ts`, `src/domain/save-schema.ts`, `src/domain/save-v3.ts`. **Evidence:** `tests/creature-stats.test.ts` (5/5 pass). 6 stats (`hp`, `might`, `guard`, `attunement`, `resonance`, `speed`), 15 authored temperaments (+10%/-10%, favored/disliked care action), stat calculation formula (`floor((2*base + pot + floor(cond/4))*lvl/100) + (isHp ? lvl+10 : 5)`), conditioning care actions (`feed` -> vitality, `brush` -> might, `train` -> guard, `play` -> speed, `rest` -> attunement, `soothe` -> resonance; favored +3, standard +2, disliked +1, cap 252 per stat, cap 510 total), bond heart milestone potential unlocks (2/4/6/8/10 hearts -> 1/2/3/4/6 stats), and 4-move loadout validation. `npm run check` (52 test suites, 593 tests) passes.
 
 ## Now: Acting-Director Art Review & Triage (`TEAM-4.2`)
 
