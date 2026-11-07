@@ -60,7 +60,7 @@ import {
   type CompositeLease,
   type ModularSelection,
 } from './compositor';
-import { EffectDirector, visibleProjectiles, effectSeed } from './effects';
+import { EffectDirector, visibleProjectiles, effectSeed, getCombatVfxRecipe } from './effects';
 import { actorInScene, sceneCamera } from './scene-view';
 import { WorldPaintings } from './paintings';
 import type { Artifact } from '../domain/artifacts';
@@ -790,6 +790,21 @@ export class WorldRenderer {
         count: cue.kind === 'hit' ? (cue.critical ? 12 : 8) : 4,
         element: cue.element,
       });
+      if (cue.kind === 'hit') {
+        const recipe = getCombatVfxRecipe(
+          `cue-${cue.sequence}`,
+          cue.element ?? 'physical',
+          cue.critical ? 18 : 10,
+        );
+        this.effectDirector.emitParametricVfx({
+          id: `param:${frame.session}:${cue.sequence}`,
+          sceneId: this.scene.id,
+          tick: cue.tick,
+          origin: p,
+          recipe,
+          essential: true,
+        });
+      }
     }
     const visibleActors: ActorPresentation[] = [];
     for (let i = 0; i < frame.count; i++) {
@@ -1826,10 +1841,61 @@ export class WorldRenderer {
       this.reducedMotion,
       quality === 'low',
     )) {
-      if (this.telegraphBlocked(particle.x - cx, particle.y - cy - 32, particle.radius)) continue;
-      this.indicators
-        .circle(particle.x - cx, particle.y - cy - 32, particle.radius)
-        .fill({ color: particle.kind === 'hit' ? 0xf5d2a1 : 0xaed5bf, alpha: particle.alpha });
+      const px = particle.x - cx;
+      const py = particle.y - cy - 32;
+      const r = Math.max(1, Math.round(particle.radius));
+      if (this.telegraphBlocked(px, py, r)) continue;
+
+      const color = particle.color ?? (particle.kind === 'hit' ? 0xf5d2a1 : 0xaed5bf);
+      const alpha = Math.min(1, Math.max(0, particle.alpha));
+
+      switch (particle.shape) {
+        case 'triangle': // Fire upward flame points (ART-6.4)
+          this.indicators
+            .poly([
+              px,
+              py - r - 1,
+              px - Math.round(r * 0.8),
+              py + r,
+              px + Math.round(r * 0.8),
+              py + r,
+            ])
+            .fill({ color, alpha });
+          break;
+        case 'crescent': // Wind diagonal crescents (ART-6.4)
+          this.indicators
+            .poly([px - r, py, px, py - r, px + r, py, px, py + Math.round(r * 0.5)])
+            .fill({ color, alpha });
+          break;
+        case 'loam': // Earth blocky loam debris
+          this.indicators
+            .rect(
+              px - Math.round(r * 0.7),
+              py - Math.round(r * 0.7),
+              Math.round(r * 1.4),
+              Math.round(r * 1.4),
+            )
+            .fill({ color, alpha });
+          break;
+        case 'spark': // Physical slash spark
+          this.indicators
+            .poly([
+              px,
+              py - r,
+              px + Math.round(r * 0.4),
+              py,
+              px,
+              py + r,
+              px - Math.round(r * 0.4),
+              py,
+            ])
+            .fill({ color, alpha });
+          break;
+        case 'circle': // Water flowing circles/ripples (ART-6.4)
+        default:
+          this.indicators.circle(px, py, r).fill({ color, alpha });
+          break;
+      }
     }
     const projectiles =
       (this.frame as (RenderSnapshot & { projectiles?: readonly ProjectilePresentation[] }) | null)

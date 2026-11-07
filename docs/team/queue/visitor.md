@@ -151,19 +151,19 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
 
 ### V22 · `AMB-M5` Surface-material footsteps & biome ambience audio beds (AMB-5, AUD-6)
 
-- status: in-progress (visitor)
+- status: candidate (visitor)
 - goal: implement surface material resolution under moving actors (boardwalk/wood, grass, stone, water wading, mud, sand, dirt), procedural WebAudio footstep synthesis with cadence throttling, and continuous diurnal biome ambience audio beds with weather modulation.
 - inputs: `docs/doctrine/08-world-and-ambience.md` (AMB-5, AMB-M5), `docs/doctrine/12-audio-direction.md` (AUD-6), `src/domain/world.ts`, `src/presentation/audio.ts`, `src/main.ts`.
 - done when: unit tests verify surface material resolution, footstep synthesis parameters, cadence throttling, and biome ambience diurnal frequency filtering; `npm run check` passes.
-- evidence:
+- evidence: **Changed:** `src/presentation/audio.ts`, `src/main.ts`, `tests/audio-footsteps.test.ts`. **Evidence:** `tests/audio-footsteps.test.ts` (4/4 passed). Implemented `resolveSurfaceMaterial` and `resolveSnapshotSurface` mapping world fluids and authored surface names into physical materials (`boardwalk`, `grass`, `stone`, `water`, `mud`, `sand`, `dirt`); implemented `AudioDirector.footstep` synthesizing procedural resonant wood thuds, crisp stone clicks, soft grass rustles, and water splashes with actor cadence throttling; enhanced `AudioDirector.ambience` maintaining continuous diurnal Day/Night frequency filters (1050 Hz day vs 520 Hz night hush) and weather rain/storm adaptation; wired footstep triggering into `main.ts` on active player motion. Full `npm run check` passed (58 test suites, 618 tests passed, Vite build passed).
 
 ### V23 · `CMB-M6` Parametric pixel particle VFX system (CMB-9, ART-6.4, ART-12)
 
-- status: in-progress (visitor)
+- status: candidate (visitor)
 - goal: implement parametric pixel particle VFX system driven by per-move recipes on the integer art grid, expressing elemental shape language (water circles, fire triangles, wind crescents, earth loam bursts, physical sparks) and respecting telegraph masks.
 - inputs: `docs/doctrine/05-combat-direction.md` (CMB-9, CMB-M6), `docs/doctrine/03-art-bible.md` (ART-6.4, ART-12), `src/presentation/effects.ts`, `src/presentation/renderer.ts`.
 - done when: unit tests verify deterministic recipe generation, shape language mapping, integer art grid snapping, telegraph masking compliance, and quality scaling; `npm run check` passes.
-- evidence:
+- evidence: **Changed:** `src/presentation/effects.ts`, `src/presentation/renderer.ts`, `tests/combat-vfx.test.ts`. **Evidence:** `tests/combat-vfx.test.ts` (4/4 passed). Implemented `getCombatVfxRecipe` generating deterministic parametric particle recipes mapped to elemental shape language (circles for water, upward triangles for fire, crescents for wind, loam blocks for earth, and sparks for physical strikes) and doctrine palette ramps; implemented `EffectDirector.emitParametricVfx` and snapped particle sampling to integer art grid (`Math.round`); wired shape drawing into `renderer.ts` with `telegraphBlocked` masking (CMB-4.3); integrated quality scaling and reduced motion travel clamping. Full `npm run check` passed (59 test suites, 622 tests passed, Vite build passed).
 
 ## Now: Acting-Director Art Review & Triage (`TEAM-4.2`)
 
