@@ -101,6 +101,34 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
 - done when: unit tests verify 6-stat calculations, temperament modifiers, potential unlocks via bond milestones, care conditioning accumulation, and 4-move loadout validation; `npm run check` passes.
 - evidence: **Changed:** `src/content/definitions.ts`, `src/domain/entities.ts`, `src/domain/save-schema.ts`, `src/domain/save-v3.ts`. **Evidence:** `tests/creature-stats.test.ts` (5/5 pass). 6 stats (`hp`, `might`, `guard`, `attunement`, `resonance`, `speed`), 15 authored temperaments (+10%/-10%, favored/disliked care action), stat calculation formula (`floor((2*base + pot + floor(cond/4))*lvl/100) + (isHp ? lvl+10 : 5)`), conditioning care actions (`feed` -> vitality, `brush` -> might, `train` -> guard, `play` -> speed, `rest` -> attunement, `soothe` -> resonance; favored +3, standard +2, disliked +1, cap 252 per stat, cap 510 total), bond heart milestone potential unlocks (2/4/6/8/10 hearts -> 1/2/3/4/6 stats), and 4-move loadout validation. `npm run check` (52 test suites, 593 tests) passes.
 
+### V16 · `CMB-M3` & `CMB-M5` Action combat feel: presentation hit-stop and rich hit-cues (CMB-6.1, CMB-9)
+
+- status: in-progress (visitor)
+- goal: implement presentation-only hit-stop freeze (2-4 frames) on heavy strikes and combo finishers without desyncing simulation ticks, and enrich presentation cues with element, effectiveness, and critical flags routed to element-specific spark particle colors and camera shake.
+- inputs: `docs/doctrine/05-combat-direction.md` (CMB-6.1, CMB-9), `src/domain/presentation-contract.ts`, `src/domain/combat.ts`, `src/presentation/effects.ts`, `src/presentation/renderer.ts`.
+- done when: unit tests verify cue enrichment (element, effectiveness, critical), renderer hit-stop freeze window calculation, elemental particle colors, and deterministic tick decoupling; `npm run check` passes.
+
+### V17 · `CRE-M4` & `CRE-M5` Species move pools & disposition player-facing rename (CRE-4, CRE-5)
+
+- status: open
+- goal: author canonical learnable move pools for all 8 species unlocking by level and bond heart milestones, wire move equipping validation, and rename player-facing "Nature" to "Disposition" per doctrine CRE-5.
+- inputs: `docs/doctrine/06-creatures-and-progression.md` (CRE-4, CRE-5), `src/content/definitions.ts`, `src/domain/entities.ts`.
+- done when: unit tests verify species learnable move unlocks, slot assignment validation, and disposition labeling; `npm run check` passes.
+
+### V18 · `UI-M4` Companion inspection page with 6-stat progression & moves (UI-M4, CRE-3)
+
+- status: open
+- goal: implement companion inspection sheet in the HUD (toggled via 'P' or medallion click) displaying 6-stat meters, bond hearts, potential stars, equipped moves, and disposition description.
+- inputs: `docs/doctrine/04-agent-model.md` (UI-M4), `src/presentation/hud.ts`, `src/presentation/ui/view.ts`.
+- done when: companion sheet opens reliably, accurately displays companion 6-stats, moves, and bond hearts, and maintains accessibility focus traps; `npm run check` passes.
+
+### V19 · `LIF-M1` & `LIF-M2` Villager 10-step heart presentation & gift taste tables (LIF-2, LIF-3)
+
+- status: open
+- goal: map villager affinity substrate to 10-step heart presentation in dialogue headers and inspection overlays, and author canonical gift taste tables (loved, liked, neutral, disliked, hated) for all 10 Aqualia villagers.
+- inputs: `docs/doctrine/07-life-sim.md` (LIF-2, LIF-3), `src/content/villagers.ts`, `src/domain/agents.ts`, `src/presentation/hud.ts`.
+- done when: unit tests verify 10-step heart calculations, gift taste evaluations and affinity deltas, and journal taste discovery; `npm run check` passes.
+
 ## Now: Acting-Director Art Review & Triage (`TEAM-4.2`)
 
 ### V3 · Verify `B27` staging output and `M25` manifest integration readiness
