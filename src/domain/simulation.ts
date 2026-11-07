@@ -617,12 +617,30 @@ export class SimulationHost {
       };
     const playerSlot = this.entities.require(this.player.entityId);
     const current = this.systems(this.entities.scene[playerSlot]!);
-    if (c.type === 'dash' && (this.player.attack || this.player.guarding))
-      return {
-        id: envelope.id,
-        ok: false,
-        message: 'Finish the attack or release guard before dashing.',
-      };
+    if (c.type === 'dash') {
+      if (this.player.guarding) {
+        return {
+          id: envelope.id,
+          ok: false,
+          message: 'Finish the attack or release guard before dashing.',
+        };
+      }
+      if (this.player.attack) {
+        const phase = this.combat.stateMachine.phase(this.player, this.tick);
+        const canCancel =
+          phase === 'recovery' &&
+          (this.player.attack.chainIndex === 0 || this.player.attack.chainIndex === 1);
+        if (canCancel) {
+          this.combat.cancelAction(0);
+        } else {
+          return {
+            id: envelope.id,
+            ok: false,
+            message: 'Finish the attack or release guard before dashing.',
+          };
+        }
+      }
+    }
     if (c.type === 'guard' && c.active && this.pauses.paused)
       return { id: envelope.id, ok: false, message: 'Close the menu before guarding.' };
     if (

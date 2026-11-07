@@ -39,6 +39,18 @@ export const ATTACKS: Readonly<Record<'strike' | 'element', AttackDefinition>> =
     range: 3.5,
   },
 };
+export const COMBO_ATTACKS: Readonly<
+  Record<'strike', readonly [AttackDefinition, AttackDefinition, AttackDefinition]>
+> = {
+  strike: [
+    // Hit 1: quick jab
+    { id: 'strike', windup: 4, active: 2, recovery: 9, power: 10, stamina: 4, range: 2.2 },
+    // Hit 2: wider sweep
+    { id: 'strike', windup: 4, active: 2, recovery: 8, power: 14, stamina: 5, range: 2.3 },
+    // Hit 3: heavier finisher with knockback
+    { id: 'strike', windup: 6, active: 3, recovery: 11, power: 20, stamina: 7, range: 2.5 },
+  ],
+};
 export const WEAPON_ATTACKS: Readonly<Record<string, AttackDefinition>> = {
   sword_slash: {
     id: 'sword_slash',
@@ -68,8 +80,16 @@ export const WEAPON_ATTACKS: Readonly<Record<string, AttackDefinition>> = {
     range: 12,
   },
 };
-export const attackDefinition = (attack: AttackState): AttackDefinition =>
-  (attack.moveId && WEAPON_ATTACKS[attack.moveId]) || ATTACKS[attack.kind];
+export const attackDefinition = (attack: AttackState): AttackDefinition => {
+  if (
+    attack.kind === 'strike' &&
+    attack.chainIndex !== undefined &&
+    (!attack.moveId || attack.moveId === 'strike')
+  ) {
+    return COMBO_ATTACKS.strike[attack.chainIndex] ?? ATTACKS.strike;
+  }
+  return (attack.moveId && WEAPON_ATTACKS[attack.moveId]) || ATTACKS[attack.kind];
+};
 export interface AttackState {
   kind: 'strike' | 'element';
   category?: AttackCategory;
@@ -78,6 +98,7 @@ export interface AttackState {
   moveId?: string;
   instanceId?: string;
   released?: boolean;
+  chainIndex?: 0 | 1 | 2;
 }
 export interface PlayerState extends WorldPosition {
   guarding?: boolean;
@@ -165,9 +186,23 @@ export class ProgressionService {
 }
 export class CombatStateMachine {
   start(player: PlayerState, kind: 'strike' | 'element', tick: number): boolean {
-    if (player.attack || player.stamina < ATTACKS[kind].stamina || player.hp <= 0) return false;
-    player.stamina -= ATTACKS[kind].stamina;
-    player.attack = { kind, startedAt: tick, hit: [] };
+    if (player.attack) {
+      if (kind === 'strike' && this.phase(player, tick) === 'recovery') {
+        const nextIndex = ((player.attack.chainIndex ?? 0) + 1) as 1 | 2;
+        if (nextIndex <= 2) {
+          const nextDef = COMBO_ATTACKS.strike[nextIndex]!;
+          if (player.stamina < nextDef.stamina || player.hp <= 0) return false;
+          player.stamina -= nextDef.stamina;
+          player.attack = { kind, startedAt: tick, hit: [], chainIndex: nextIndex };
+          return true;
+        }
+      }
+      return false;
+    }
+    const def = kind === 'strike' ? COMBO_ATTACKS.strike[0]! : ATTACKS[kind];
+    if (player.stamina < def.stamina || player.hp <= 0) return false;
+    player.stamina -= def.stamina;
+    player.attack = { kind, startedAt: tick, hit: [], chainIndex: 0 };
     return true;
   }
   phase(player: PlayerState, tick: number): 'idle' | 'windup' | 'active' | 'recovery' {
@@ -619,17 +654,36 @@ export class CombatSystem {
       i === undefined ||
       this.store.sleeping[i] ||
       this.player.guarding ||
-      this.player.attack ||
       this.player.hp <= 0
     )
       return false;
+
+    let chainIndex: 0 | 1 | 2 = 0;
+    if (this.player.attack) {
+      const currentPhase = this.stateMachine.phase(this.player, tick);
+      if (
+        kind === 'strike' &&
+        this.player.attack.kind === 'strike' &&
+        currentPhase === 'recovery' &&
+        (this.player.attack.chainIndex ?? 0) < 2
+      ) {
+        chainIndex = ((this.player.attack.chainIndex ?? 0) + 1) as 1 | 2;
+        if (this.player.attack.instanceId) this.equipment?.cancel(this.player.attack.instanceId);
+      } else {
+        return false;
+      }
+    }
+
     const weapon = kind === 'strike' ? this.equipment?.held(0)[0]?.id : undefined;
     const moveId =
       weapon && ['sword', 'spear', 'bow'].includes(weapon)
         ? `${weapon}_${weapon === 'sword' ? 'slash' : weapon === 'spear' ? 'thrust' : 'shot'}`
         : kind;
-    const definition = WEAPON_ATTACKS[moveId] ?? ATTACKS[kind],
-      instanceId = `action:0:${tick}`;
+    const definition =
+      kind === 'strike' && (!weapon || moveId === 'strike')
+        ? COMBO_ATTACKS.strike[chainIndex]!
+        : (WEAPON_ATTACKS[moveId] ?? ATTACKS[kind]);
+    const instanceId = `action:0:${tick}`;
     if (this.player.stamina < definition.stamina) return false;
     if (
       moveId === 'bow_shot' &&
@@ -637,7 +691,7 @@ export class CombatSystem {
     )
       return false;
     this.player.stamina -= definition.stamina;
-    this.player.attack = { kind, startedAt: tick, hit: [], moveId, instanceId };
+    this.player.attack = { kind, startedAt: tick, hit: [], moveId, instanceId, chainIndex };
     return true;
   }
   active(id: number): boolean {
@@ -759,17 +813,26 @@ export class CombatSystem {
       this.minds.reaction(b, tick);
     }
     const guarded = target === 0 ? !!this.player.guarding : this.presentationGuard(target, tick);
-    const impulse = PhysiquePolicy.impact(s.physique(a), s.physique(b), guarded);
+    const comboMultiplier =
+      actor === 0 && this.player.attack?.chainIndex !== undefined
+        ? this.player.attack.chainIndex === 2
+          ? 2.5
+          : this.player.attack.chainIndex === 1
+            ? 1.0
+            : 0.75
+        : 1.0;
+    const impulse =
+      PhysiquePolicy.impact(s.physique(a), s.physique(b), guarded) * comboMultiplier;
     const dx = s.x[b]! - s.x[a]!,
       dy = s.y[b]! - s.y[a]!,
       length = Math.hypot(dx, dy);
     const nx = length > 0.001 ? dx / length : s.facingX[a]!,
       ny = length > 0.001 ? dy / length : s.facingY[a]!;
-    s.recoilX[b] = clamp(s.recoilX[b]! + nx * impulse, -4, 4);
-    s.recoilY[b] = clamp(s.recoilY[b]! + ny * impulse, -4, 4);
+    s.recoilX[b] = clamp(s.recoilX[b]! + nx * impulse, -8, 8);
+    s.recoilY[b] = clamp(s.recoilY[b]! + ny * impulse, -8, 8);
     const reaction = clamp(((impulse * s.massKg[b]!) / s.massKg[a]!) * 0.12, 0, 0.5);
-    s.recoilX[a] = clamp(s.recoilX[a]! - nx * reaction, -4, 4);
-    s.recoilY[a] = clamp(s.recoilY[a]! - ny * reaction, -4, 4);
+    s.recoilX[a] = clamp(s.recoilX[a]! - nx * reaction, -8, 8);
+    s.recoilY[a] = clamp(s.recoilY[a]! - ny * reaction, -8, 8);
     SleepSystem.interrupt(s, b, this.now);
     if (s.hp[b]! <= 0 && s.protected(b)) {
       s.downed[b] = 1;

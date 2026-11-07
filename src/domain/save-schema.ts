@@ -50,6 +50,7 @@ const attack = legacy.player.shape.attack.unwrap().extend({
     .max(120)
     .optional(),
   released: z.boolean().optional(),
+  chainIndex: z.union([z.literal(0), z.literal(1), z.literal(2)]).optional(),
 });
 const drop = legacy.drops.element.extend({
   artifact: ArtifactIdSchema.optional(),
@@ -175,8 +176,8 @@ export const GameSaveSchema = z
             scene: sceneCode,
             heightMeters: finite.min(0.1).max(4),
             massKg: finite.min(0.2).max(1000),
-            recoilX: finite.min(-4).max(4),
-            recoilY: finite.min(-4).max(4),
+            recoilX: finite.min(-8).max(8),
+            recoilY: finite.min(-8).max(8),
           }),
         )
         .max(CONFIG.creatureCapacity + 31),
