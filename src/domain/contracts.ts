@@ -315,6 +315,13 @@ export interface RenderSnapshot {
   readonly calendar: string;
   readonly season: number;
   readonly weather: WeatherState;
+  readonly festival?: {
+    readonly id: string;
+    readonly name: string;
+    readonly description: string;
+    readonly village: string;
+  } | null;
+  readonly birthdaysToday?: readonly string[];
   readonly journal: readonly string[];
   readonly paused: readonly string[];
   readonly player: PlayerState;

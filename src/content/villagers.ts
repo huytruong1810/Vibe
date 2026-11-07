@@ -445,3 +445,79 @@ export function giftReactionEmotion(taste: GiftTaste): DialogueEmotion {
       return 'angry';
   }
 }
+
+export interface VillagerBirthday {
+  readonly season: number;
+  readonly day: number;
+}
+
+export const VILLAGER_BIRTHDAYS: Readonly<Record<string, VillagerBirthday>> = {
+  'npc:caelum': { season: 0, day: 3 },
+  'npc:marina': { season: 0, day: 5 },
+  'npc:reed': { season: 0, day: 7 },
+  'npc:willa': { season: 1, day: 2 },
+  'npc:oren': { season: 1, day: 6 },
+  'npc:mira': { season: 2, day: 1 },
+  'npc:lark': { season: 2, day: 4 },
+  'npc:neris': { season: 2, day: 7 },
+  'npc:dara': { season: 3, day: 2 },
+  'npc:finn': { season: 3, day: 5 },
+};
+
+export function isVillagerBirthday(npcId: string, season: number, day: number): boolean {
+  const bday = VILLAGER_BIRTHDAYS[npcId];
+  return bday !== undefined && bday.season === season && bday.day === day;
+}
+
+export interface FestivalDefinition {
+  readonly id: string;
+  readonly name: string;
+  readonly season: number;
+  readonly day: number;
+  readonly village: string;
+  readonly description: string;
+  readonly themeActivity: string;
+}
+
+export const FESTIVALS: readonly FestivalDefinition[] = [
+  {
+    id: 'festival:reedlight-float',
+    name: 'Reedlight Float',
+    season: 0,
+    day: 7,
+    village: 'village:aqualia',
+    description: 'Lantern boats drift along the canal waters at dusk.',
+    themeActivity: 'Releasing canal lanterns with villagers',
+  },
+  {
+    id: 'festival:kiln-fair',
+    name: 'Kiln Fair',
+    season: 1,
+    day: 7,
+    village: 'village:pyrador',
+    description: 'Glassblowing and forge competitions beneath the summer sun.',
+    themeActivity: 'Master craft exhibitions',
+  },
+  {
+    id: 'festival:kite-moon',
+    name: 'Kite Moon',
+    season: 2,
+    day: 7,
+    village: 'village:zephyria',
+    description: 'Soaring kite races against the autumn cliff winds.',
+    themeActivity: 'High altitude kite racing',
+  },
+  {
+    id: 'festival:hearth-night',
+    name: 'Hearth Night',
+    season: 3,
+    day: 7,
+    village: 'all',
+    description: 'A great shared feast and winter gift exchange around the communal hearth.',
+    themeActivity: 'Gift exchange and festival feast',
+  },
+];
+
+export function getFestivalForDay(season: number, day: number): FestivalDefinition | null {
+  return FESTIVALS.find((f) => f.season === season && f.day === day) ?? null;
+}

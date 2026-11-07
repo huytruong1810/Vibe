@@ -135,10 +135,11 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
 
 ### V20 · `LIF-M3…M5` Villager birthdays, seasonal festivals & heart-event skeletons (LIF-4, LIF-5)
 
-- status: in-progress (visitor)
+- status: candidate (visitor)
 - goal: author canonical birthdays across the 28-day year for all 10 Aqualia villagers, wire 4x birthday gift affinity scaling and birthday celebration dialogue, author the 4 seasonal festival definitions (Spring Reedlight Float, Summer Kiln Fair, Autumn Kite Moon, Winter Hearth Night) with Day 7 schedule overrides, and author grounded heart-event skeletons at 2, 4, 6, 8, 10 hearts with expression tags.
-- inputs: `docs/doctrine/07-life-sim.md` (LIF-4, LIF-5), `src/content/villagers.ts`, `src/content/heart-events.ts`, `src/domain/core.ts`, `src/domain/contracts.ts`, `src/domain/simulation.ts`, `src/presentation/hud.ts`.
+- inputs: `docs/doctrine/07-life-sim.md` (LIF-4, LIF-5), `src/content/villagers.ts`, `src/content/heart-events.ts`, `src/domain/core.ts`, `src/domain/contracts.ts`, `src/domain/simulation.ts`, `src/presentation/hud.ts`, `src/presentation/ui/hud.css`.
 - done when: unit tests verify birthday coverage, 4x birthday gift multiplier, festival schedules and overrides on Day 7, and heart event skeleton validation; `npm run check` passes.
+- evidence: **Changed:** `src/content/villagers.ts`, `src/content/heart-events.ts`, `src/domain/contracts.ts`, `src/domain/simulation.ts`, `src/presentation/hud.ts`, `src/presentation/ui/hud.css`, `tests/life-sim-festivals.test.ts`. **Evidence:** `tests/life-sim-festivals.test.ts` (4/4 passed). Authored birthdays for all 10 Aqualia villagers across 4 seasons × 7 days (28-day year); wired 4x affinity scaling on birthday gifts with custom dialogue reaction lines; defined 4 seasonal festivals with Day 7 schedule/activity overrides and snapshot exposition; authored grounded heart-event skeletons across milestone thresholds (2, 4, 6, 8, 10 hearts) with validated dialogue emotions; updated HUD with birthday badges, 4x gift bonus indicators, and seasonal festival banners in the People/Nearby journal views. `npm run check` passed (56 test suites, 610 tests passed, Vite build passed).
 
 ### V21 · `AMB-M1…M4` World ambience emitters, foliage wind sway & phase color grading (AMB-1…4)
 
