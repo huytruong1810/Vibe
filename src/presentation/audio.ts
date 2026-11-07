@@ -6,6 +6,78 @@ export interface VillagerVoiceConfig {
   readonly decayMs: number;
 }
 
+export type SurfaceMaterial =
+  | 'boardwalk'
+  | 'grass'
+  | 'stone'
+  | 'water'
+  | 'mud'
+  | 'sand'
+  | 'dirt';
+
+export interface SurfaceQuery {
+  readonly fluid?: number;
+  readonly surface?: string;
+  readonly biome?: number;
+  readonly flags?: number;
+}
+
+/**
+ * Resolves physical surface material under an actor according to doctrine AMB-5.
+ * Boardwalk/wood, grass, stone, and shallow water are primary audible surfaces.
+ */
+export function resolveSurfaceMaterial(query: SurfaceQuery): SurfaceMaterial {
+  // Fluid check: 1 = Freshwater, 2 = Saltwater (shallow wading)
+  if (query.fluid === 1 || query.fluid === 2) {
+    return 'water';
+  }
+  // Surface names from authored levels or props
+  if (query.surface === 'boardwalk' || query.surface === 'wood') {
+    return 'boardwalk';
+  }
+  if (query.surface === 'stone') {
+    return 'stone';
+  }
+  if (query.fluid === 3) {
+    // 3 = Mud
+    return 'mud';
+  }
+  // Biome: 0 = Beach (or explicit surface sand)
+  if (query.biome === 0 || query.surface === 'sand') {
+    return 'sand';
+  }
+  if (query.surface === 'dirt' || query.surface === 'path') {
+    return 'dirt';
+  }
+  return 'grass';
+}
+
+export function resolveSnapshotSurface(
+  snapshot: {
+    surface?: Uint8Array;
+    surfaceNames?: readonly string[];
+    terrain?: { fluid?: Uint8Array; biome?: Uint8Array; size?: number };
+    width?: number;
+  },
+  tileX: number,
+  tileY: number,
+): SurfaceMaterial {
+  const width = snapshot.terrain?.size ?? snapshot.width ?? 128;
+  const index = Math.max(0, Math.floor(tileY) * width + Math.floor(tileX));
+  const fluid = snapshot.terrain?.fluid?.[index];
+  const biome = snapshot.terrain?.biome?.[index];
+  const surfaceIdx = snapshot.surface?.[index];
+  const surface = surfaceIdx !== undefined ? snapshot.surfaceNames?.[surfaceIdx] : undefined;
+  return resolveSurfaceMaterial({ fluid, surface, biome });
+}
+
+export interface AmbienceAudioState {
+  readonly season: number;
+  readonly biome: string;
+  readonly phase: string;
+  readonly weather: string;
+}
+
 /**
  * Authored procedural syllable blip parameters for the 10 Aqualia villagers
  * conforming strictly to Proposal 002-r2 and doctrine AGT-4.2.
@@ -36,9 +108,17 @@ export class AudioDirector {
   private context: AudioContext | null = null;
   private master: GainNode | null = null;
   private noise: AudioBufferSourceNode | null = null;
+  private ambienceFilter: BiquadFilterNode | null = null;
   private dialogueDucked = false;
   private currentSeason = 0;
   private readonly lastBlipAt = new Map<string, number>();
+  private readonly lastStepAt = new Map<string, number>();
+  private ambienceState: AmbienceAudioState = {
+    season: 0,
+    biome: 'aqualia',
+    phase: 'day',
+    weather: 'clear',
+  };
   muted = true;
 
   async toggle(): Promise<boolean> {
@@ -67,6 +147,7 @@ export class AudioDirector {
       lowpass.frequency.value = 900;
       this.noise.connect(lowpass);
       lowpass.connect(this.master);
+      this.ambienceFilter = lowpass;
       this.noise.start();
     }
     await this.context.resume();
@@ -119,6 +200,132 @@ export class AudioDirector {
     return true;
   }
 
+  /**
+   * Synthesizes procedural footsteps matched to the underlying surface material (AMB-5, AUD-6).
+   * Cadence throttling enforces a realistic minimum step interval per actor.
+   */
+  footstep(material: SurfaceMaterial, actorId = 'player'): boolean {
+    if (!this.context || !this.master || this.muted) return false;
+    const nowMs = performance.now();
+    const last = this.lastStepAt.get(actorId) ?? 0;
+    if (nowMs - last < 160) return false; // Minimum 160ms between steps per actor
+    this.lastStepAt.set(actorId, nowMs);
+
+    const now = this.context.currentTime;
+    const envelope = this.context.createGain();
+
+    switch (material) {
+      case 'boardwalk': {
+        // Resonant wood thud: low triangle frequency drop + fast decay
+        const osc = this.context.createOscillator();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(160, now);
+        osc.frequency.exponentialRampToValueAtTime(70, now + 0.07);
+        envelope.gain.setValueAtTime(0.001, now);
+        envelope.gain.linearRampToValueAtTime(0.16, now + 0.005);
+        envelope.gain.exponentialRampToValueAtTime(0.001, now + 0.07);
+        osc.connect(envelope);
+        envelope.connect(this.master);
+        osc.start(now);
+        osc.stop(now + 0.075);
+        break;
+      }
+      case 'grass': {
+        // Soft rustle: high filtered noise brush
+        const osc = this.context.createOscillator();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(450, now);
+        osc.frequency.exponentialRampToValueAtTime(180, now + 0.045);
+        envelope.gain.setValueAtTime(0.001, now);
+        envelope.gain.linearRampToValueAtTime(0.09, now + 0.008);
+        envelope.gain.exponentialRampToValueAtTime(0.001, now + 0.045);
+        osc.connect(envelope);
+        envelope.connect(this.master);
+        osc.start(now);
+        osc.stop(now + 0.05);
+        break;
+      }
+      case 'stone': {
+        // Crisp high click/tap
+        const osc = this.context.createOscillator();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(880, now);
+        osc.frequency.exponentialRampToValueAtTime(420, now + 0.035);
+        envelope.gain.setValueAtTime(0.001, now);
+        envelope.gain.linearRampToValueAtTime(0.16, now + 0.002);
+        envelope.gain.exponentialRampToValueAtTime(0.001, now + 0.035);
+        osc.connect(envelope);
+        envelope.connect(this.master);
+        osc.start(now);
+        osc.stop(now + 0.04);
+        break;
+      }
+      case 'water': {
+        // Wet splash / slosh
+        const osc = this.context.createOscillator();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(240, now);
+        osc.frequency.exponentialRampToValueAtTime(360, now + 0.03);
+        osc.frequency.exponentialRampToValueAtTime(180, now + 0.08);
+        envelope.gain.setValueAtTime(0.001, now);
+        envelope.gain.linearRampToValueAtTime(0.14, now + 0.008);
+        envelope.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+        osc.connect(envelope);
+        envelope.connect(this.master);
+        osc.start(now);
+        osc.stop(now + 0.085);
+        break;
+      }
+      case 'mud': {
+        // Suction pop
+        const osc = this.context.createOscillator();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(120, now);
+        osc.frequency.exponentialRampToValueAtTime(55, now + 0.055);
+        envelope.gain.setValueAtTime(0.001, now);
+        envelope.gain.linearRampToValueAtTime(0.13, now + 0.006);
+        envelope.gain.exponentialRampToValueAtTime(0.001, now + 0.055);
+        osc.connect(envelope);
+        envelope.connect(this.master);
+        osc.start(now);
+        osc.stop(now + 0.06);
+        break;
+      }
+      case 'sand': {
+        // Grainy scuff
+        const osc = this.context.createOscillator();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(350, now);
+        osc.frequency.exponentialRampToValueAtTime(150, now + 0.05);
+        envelope.gain.setValueAtTime(0.001, now);
+        envelope.gain.linearRampToValueAtTime(0.08, now + 0.008);
+        envelope.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+        osc.connect(envelope);
+        envelope.connect(this.master);
+        osc.start(now);
+        osc.stop(now + 0.055);
+        break;
+      }
+      case 'dirt':
+      default: {
+        // Damped dirt thud
+        const osc = this.context.createOscillator();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(135, now);
+        osc.frequency.exponentialRampToValueAtTime(80, now + 0.045);
+        envelope.gain.setValueAtTime(0.001, now);
+        envelope.gain.linearRampToValueAtTime(0.12, now + 0.005);
+        envelope.gain.exponentialRampToValueAtTime(0.001, now + 0.045);
+        osc.connect(envelope);
+        envelope.connect(this.master);
+        osc.start(now);
+        osc.stop(now + 0.05);
+        break;
+      }
+    }
+    return true;
+  }
+
   cue(kind: 'gather' | 'craft' | 'care' | 'victory' | 'hit'): void {
     if (!this.context || !this.master || this.muted) return;
     const oscillator = this.context.createOscillator(),
@@ -138,14 +345,50 @@ export class AudioDirector {
     oscillator.stop(now + 0.18);
   }
 
-  ambience(season: number): void {
+  /**
+   * Updates continuous diurnal and biome ambience bed per doctrine AMB-5.
+   */
+  ambience(
+    season: number,
+    biome = 'aqualia',
+    phase = 'day',
+    weather = 'clear',
+  ): void {
     this.currentSeason = season;
+    this.ambienceState = { season, biome, phase, weather };
+
+    if (this.ambienceFilter && this.context) {
+      let targetFreq = 1050; // Day neutral
+      if (phase === 'night') {
+        targetFreq = 520; // Nocturnal hush
+      } else if (phase === 'dusk' || phase === 'dawn') {
+        targetFreq = 750; // Translucent twilight
+      }
+
+      if (weather === 'rain') {
+        targetFreq += 400; // Rain hiss
+      } else if (weather === 'storm') {
+        targetFreq += 600; // Storm turbulence
+      }
+
+      this.ambienceFilter.frequency.setTargetAtTime(targetFreq, this.context.currentTime, 0.4);
+    }
+
     this.updateMasterVolume();
+  }
+
+  getAmbienceState(): AmbienceAudioState {
+    return { ...this.ambienceState };
   }
 
   private updateMasterVolume(): void {
     if (!this.master || !this.context) return;
-    const base = this.currentSeason === 3 ? 0.07 : 0.1;
+    let base = this.currentSeason === 3 ? 0.07 : 0.1;
+    if (this.ambienceState.weather === 'rain') {
+      base *= 1.3;
+    } else if (this.ambienceState.weather === 'storm') {
+      base *= 1.6;
+    }
     const target = this.muted ? 0 : this.dialogueDucked ? base * 0.4 : base;
     this.master.gain.setTargetAtTime(target, this.context.currentTime, 0.25);
   }
@@ -155,3 +398,4 @@ export class AudioDirector {
     void this.context?.close();
   }
 }
+

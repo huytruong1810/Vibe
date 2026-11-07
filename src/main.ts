@@ -15,8 +15,8 @@ import { GpuArbiter } from './adapters/gpu-arbiter';
 import { paintingCaptionFallback } from './domain/painting';
 import { IndexedDbSaveRepository, IndexedDbEmbeddingCache } from './adapters/persistence';
 import { WorkerBridge } from './adapters/worker-bridge';
-import type { CommandPayload, RenderSnapshot } from './domain/contracts';
-import { AudioDirector } from './presentation/audio';
+import type { CommandPayload, RenderSnapshot, TerrainView } from './domain/contracts';
+import { AudioDirector, resolveSnapshotSurface } from './presentation/audio';
 import { appUrl } from './presentation/assets/url';
 import { HudPresenter } from './presentation/hud';
 import { WorldRenderer } from './presentation/renderer';
@@ -43,6 +43,9 @@ export class GameBootstrap {
   private readonly paintingProgress = new Map<string, string>();
   private readonly paintingRaw = new Map<string, Blob>();
   private frame: RenderSnapshot | null = null;
+  private currentTerrain: TerrainView | null = null;
+  private lastPlayerX = 0;
+  private lastPlayerY = 0;
   private readonly keys = new Set<string>();
   private movementSignature = '';
   private guardActive = false;
@@ -146,6 +149,7 @@ export class GameBootstrap {
     this.bridge.onError = (message) => this.hud.notify(message);
     this.bridge.onFrame = (frame, terrain) => {
       if (terrain) {
+        this.currentTerrain = terrain;
         this.paintingWorldSeed = terrain.seed;
         this.renderer.setTerrain(terrain);
         this.hud.setTerrain(terrain);
@@ -194,7 +198,40 @@ export class GameBootstrap {
           this.audio.cue(event.type as 'gather' | 'craft' | 'care' | 'victory' | 'hit');
       }
       this.audio.setDialogueDucking(!!frame.dialogue);
-      this.audio.ambience(frame.season);
+
+      // AMB-M5: Update continuous diurnal and weather ambience bed
+      const hour = frame.hour % 24;
+      const phase =
+        hour < 5 || hour >= 20
+          ? 'night'
+          : hour < 8
+            ? 'dawn'
+            : hour >= 17
+              ? 'dusk'
+              : 'day';
+      const weatherKind = frame.weather.kind;
+      this.audio.ambience(frame.season, 'aqualia', phase, weatherKind);
+
+      // AMB-M5: Trigger procedural surface footsteps on player motion
+      const dist = Math.hypot(frame.player.x - this.lastPlayerX, frame.player.y - this.lastPlayerY);
+      if (this.currentTerrain && dist > 0.05) {
+        this.lastPlayerX = frame.player.x;
+        this.lastPlayerY = frame.player.y;
+        const surface = resolveSnapshotSurface(
+          {
+            surface: this.currentTerrain.surface,
+            surfaceNames: this.currentTerrain.surfaceNames,
+            terrain: {
+              fluid: this.currentTerrain.fluid,
+              biome: this.currentTerrain.biome,
+              size: this.currentTerrain.size,
+            },
+          },
+          frame.player.x,
+          frame.player.y,
+        );
+        this.audio.footstep(surface, 'player');
+      }
       // Renderer copied entity coordinates; UI never reads packed data. Return only the disposable copy.
       this.bridge.recycle(frame.packed.buffer as ArrayBuffer);
       if (terrain && document.hidden) void this.bridge.send({ type: 'pause', token: 'hidden' });
