@@ -93,6 +93,13 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
 - done when: unit tests verify all 10 villager blip configurations, cadence/envelope synthesis, ducking transition, and conversation dialogue integration; `npm run check` passes.
 - evidence: **Changed:** `src/presentation/audio.ts`, `src/presentation/hud.ts`, `src/main.ts`. **Evidence:** `tests/audio-voice.test.ts` (4/4 pass). 10 authored villager profiles matching Proposal 002-r2 (`caelum` 125Hz triangle, `marina` 260Hz sine, `neris` 145Hz saw, `reed` 180Hz square, `willa` 220Hz sine, `oren` 110Hz triangle, `mira` 240Hz triangle, `lark` 165Hz sine, `dara` 200Hz square, `finn` 175Hz triangle), syllable cadence throttling, audio ducking (-60% ambient volume) during `#conversation-dialog`, and `npm run check` (51 test suites, 588 tests) passes.
 
+### V15 · `CRE-M1…M6` Creature 6-stat progression & move loadouts (CRE-2, CRE-3, CRE-4, CRE-5, CRE-6)
+
+- status: in-progress (visitor)
+- goal: implement 6-stat attribute system (Vitality, Might, Guard, Attunement, Resonance, Swiftness), 15 temperaments, Potential (IV) & Conditioning (EV) care mechanics, and 4-move active loadouts per doctrine 06.
+- inputs: `docs/doctrine/06-creatures-and-progression.md`, `src/content/definitions.ts`, `src/domain/entities.ts`, `src/domain/creatures.ts`.
+- done when: unit tests verify 6-stat calculations, temperament modifiers, potential unlocks via bond milestones, care conditioning accumulation, and 4-move loadout validation; `npm run check` passes.
+
 ## Now: Acting-Director Art Review & Triage (`TEAM-4.2`)
 
 ### V3 · Verify `B27` staging output and `M25` manifest integration readiness
