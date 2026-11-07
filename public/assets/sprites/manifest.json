@@ -1,0 +1,928 @@
+{
+  "version": "1.0.0",
+  "format": "RGBA32",
+  "scale": 1,
+  "categories": {
+    "creatures": {
+      "bramblefang": {
+        "path": "/assets/sprites/creatures/bramblefang.png",
+        "width": 32,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "cindermoth": {
+        "path": "/assets/sprites/creatures/cindermoth.png",
+        "width": 24,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "ignicap": {
+        "path": "/assets/sprites/creatures/ignicap.png",
+        "width": 24,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "marshstalker": {
+        "path": "/assets/sprites/creatures/marshstalker.png",
+        "width": 32,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "mireling": {
+        "path": "/assets/sprites/creatures/mireling.png",
+        "width": 24,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "rivallie": {
+        "path": "/assets/sprites/creatures/rivallie.png",
+        "width": 24,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "steamshell": {
+        "path": "/assets/sprites/creatures/steamshell.png",
+        "width": 24,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "zephyrit": {
+        "path": "/assets/sprites/creatures/zephyrit.png",
+        "width": 24,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      }
+    },
+    "characters": {
+      "npc_aster": {
+        "path": "/assets/sprites/characters/npc_aster.png",
+        "width": 16,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "npc_bram": {
+        "path": "/assets/sprites/characters/npc_bram.png",
+        "width": 16,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "npc_bran": {
+        "path": "/assets/sprites/characters/npc_bran.png",
+        "width": 16,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "npc_caelum": {
+        "path": "/assets/sprites/characters/npc_caelum.png",
+        "width": 16,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "npc_cora": {
+        "path": "/assets/sprites/characters/npc_cora.png",
+        "width": 16,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "npc_emberlyn": {
+        "path": "/assets/sprites/characters/npc_emberlyn.png",
+        "width": 16,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "npc_fenn": {
+        "path": "/assets/sprites/characters/npc_fenn.png",
+        "width": 16,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "npc_flint": {
+        "path": "/assets/sprites/characters/npc_flint.png",
+        "width": 16,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "npc_iona": {
+        "path": "/assets/sprites/characters/npc_iona.png",
+        "width": 16,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "npc_isla": {
+        "path": "/assets/sprites/characters/npc_isla.png",
+        "width": 16,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "npc_jax": {
+        "path": "/assets/sprites/characters/npc_jax.png",
+        "width": 16,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "npc_kael": {
+        "path": "/assets/sprites/characters/npc_kael.png",
+        "width": 16,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "npc_kaelen": {
+        "path": "/assets/sprites/characters/npc_kaelen.png",
+        "width": 16,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "npc_lyanna": {
+        "path": "/assets/sprites/characters/npc_lyanna.png",
+        "width": 16,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "npc_lyra": {
+        "path": "/assets/sprites/characters/npc_lyra.png",
+        "width": 16,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "npc_marina": {
+        "path": "/assets/sprites/characters/npc_marina.png",
+        "width": 16,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "npc_mira": {
+        "path": "/assets/sprites/characters/npc_mira.png",
+        "width": 16,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "npc_nadia": {
+        "path": "/assets/sprites/characters/npc_nadia.png",
+        "width": 16,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "npc_nyle": {
+        "path": "/assets/sprites/characters/npc_nyle.png",
+        "width": 16,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "npc_oona": {
+        "path": "/assets/sprites/characters/npc_oona.png",
+        "width": 16,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "npc_orin": {
+        "path": "/assets/sprites/characters/npc_orin.png",
+        "width": 16,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "npc_solen": {
+        "path": "/assets/sprites/characters/npc_solen.png",
+        "width": 16,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "npc_soren": {
+        "path": "/assets/sprites/characters/npc_soren.png",
+        "width": 16,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "npc_tala": {
+        "path": "/assets/sprites/characters/npc_tala.png",
+        "width": 16,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "npc_talia": {
+        "path": "/assets/sprites/characters/npc_talia.png",
+        "width": 16,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "npc_torin": {
+        "path": "/assets/sprites/characters/npc_torin.png",
+        "width": 16,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "npc_vesper": {
+        "path": "/assets/sprites/characters/npc_vesper.png",
+        "width": 16,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "npc_vulkan": {
+        "path": "/assets/sprites/characters/npc_vulkan.png",
+        "width": 16,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "npc_zephira": {
+        "path": "/assets/sprites/characters/npc_zephira.png",
+        "width": 16,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "npc_zephyr": {
+        "path": "/assets/sprites/characters/npc_zephyr.png",
+        "width": 16,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "player_aqualia": {
+        "path": "/assets/sprites/characters/player_aqualia.png",
+        "width": 16,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "player_pyrador": {
+        "path": "/assets/sprites/characters/player_pyrador.png",
+        "width": 16,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "player_zephyria": {
+        "path": "/assets/sprites/characters/player_zephyria.png",
+        "width": 16,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      }
+    },
+    "environment": {
+      "flora_ashgrass_burnt": {
+        "path": "/assets/sprites/environment/flora_ashgrass_burnt.png",
+        "width": 18,
+        "height": 18,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "flora_ashgrass_harvested": {
+        "path": "/assets/sprites/environment/flora_ashgrass_harvested.png",
+        "width": 18,
+        "height": 18,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "flora_ashgrass_healthy": {
+        "path": "/assets/sprites/environment/flora_ashgrass_healthy.png",
+        "width": 18,
+        "height": 18,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "flora_berries_burnt": {
+        "path": "/assets/sprites/environment/flora_berries_burnt.png",
+        "width": 20,
+        "height": 20,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "flora_berries_harvested": {
+        "path": "/assets/sprites/environment/flora_berries_harvested.png",
+        "width": 20,
+        "height": 20,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "flora_berries_healthy": {
+        "path": "/assets/sprites/environment/flora_berries_healthy.png",
+        "width": 20,
+        "height": 20,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "flora_fungi_burnt": {
+        "path": "/assets/sprites/environment/flora_fungi_burnt.png",
+        "width": 18,
+        "height": 18,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "flora_fungi_harvested": {
+        "path": "/assets/sprites/environment/flora_fungi_harvested.png",
+        "width": 18,
+        "height": 18,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "flora_fungi_healthy": {
+        "path": "/assets/sprites/environment/flora_fungi_healthy.png",
+        "width": 18,
+        "height": 18,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "flora_nectar_burnt": {
+        "path": "/assets/sprites/environment/flora_nectar_burnt.png",
+        "width": 18,
+        "height": 18,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "flora_nectar_harvested": {
+        "path": "/assets/sprites/environment/flora_nectar_harvested.png",
+        "width": 18,
+        "height": 18,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "flora_nectar_healthy": {
+        "path": "/assets/sprites/environment/flora_nectar_healthy.png",
+        "width": 18,
+        "height": 18,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "flora_reeds_burnt": {
+        "path": "/assets/sprites/environment/flora_reeds_burnt.png",
+        "width": 18,
+        "height": 20,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "flora_reeds_harvested": {
+        "path": "/assets/sprites/environment/flora_reeds_harvested.png",
+        "width": 18,
+        "height": 20,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "flora_reeds_healthy": {
+        "path": "/assets/sprites/environment/flora_reeds_healthy.png",
+        "width": 18,
+        "height": 20,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "flora_wheat_burnt": {
+        "path": "/assets/sprites/environment/flora_wheat_burnt.png",
+        "width": 18,
+        "height": 20,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "flora_wheat_harvested": {
+        "path": "/assets/sprites/environment/flora_wheat_harvested.png",
+        "width": 18,
+        "height": 20,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "flora_wheat_healthy": {
+        "path": "/assets/sprites/environment/flora_wheat_healthy.png",
+        "width": 18,
+        "height": 20,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "rock_boulder_depleted": {
+        "path": "/assets/sprites/environment/rock_boulder_depleted.png",
+        "width": 24,
+        "height": 20,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "rock_boulder_rich": {
+        "path": "/assets/sprites/environment/rock_boulder_rich.png",
+        "width": 24,
+        "height": 20,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "rock_copper_depleted": {
+        "path": "/assets/sprites/environment/rock_copper_depleted.png",
+        "width": 20,
+        "height": 18,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "rock_copper_rich": {
+        "path": "/assets/sprites/environment/rock_copper_rich.png",
+        "width": 20,
+        "height": 18,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "rock_pebbles": {
+        "path": "/assets/sprites/environment/rock_pebbles.png",
+        "width": 18,
+        "height": 16,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "rock_sulfur_depleted": {
+        "path": "/assets/sprites/environment/rock_sulfur_depleted.png",
+        "width": 18,
+        "height": 18,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "rock_sulfur_rich": {
+        "path": "/assets/sprites/environment/rock_sulfur_rich.png",
+        "width": 18,
+        "height": 18,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "tree_oak": {
+        "path": "/assets/sprites/environment/tree_oak.png",
+        "width": 38,
+        "height": 52,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "tree_oak_variant": {
+        "path": "/assets/sprites/environment/tree_oak_variant.png",
+        "width": 38,
+        "height": 52,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      }
+    },
+    "furniture": {
+      "house_aqualia": {
+        "path": "/assets/sprites/furniture/house_aqualia.png",
+        "width": 56,
+        "height": 60,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "house_pyrador": {
+        "path": "/assets/sprites/furniture/house_pyrador.png",
+        "width": 56,
+        "height": 60,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "house_zephyria": {
+        "path": "/assets/sprites/furniture/house_zephyria.png",
+        "width": 56,
+        "height": 60,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "landmark_fence": {
+        "path": "/assets/sprites/furniture/landmark_fence.png",
+        "width": 28,
+        "height": 36,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "landmark_lantern": {
+        "path": "/assets/sprites/furniture/landmark_lantern.png",
+        "width": 16,
+        "height": 32,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "landmark_waystone": {
+        "path": "/assets/sprites/furniture/landmark_waystone.png",
+        "width": 28,
+        "height": 36,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "landmark_well": {
+        "path": "/assets/sprites/furniture/landmark_well.png",
+        "width": 28,
+        "height": 36,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "prop_anvil": {
+        "path": "/assets/sprites/furniture/prop_anvil.png",
+        "width": 24,
+        "height": 20,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      },
+      "prop_hearth": {
+        "path": "/assets/sprites/furniture/prop_hearth.png",
+        "width": 32,
+        "height": 28,
+        "anchor": {
+          "x": 0.5,
+          "y": 1.0
+        }
+      }
+    },
+    "items": {
+      "item_ashgrass": {
+        "path": "/assets/sprites/items/item_ashgrass.png",
+        "width": 16,
+        "height": 16,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "item_berries": {
+        "path": "/assets/sprites/items/item_berries.png",
+        "width": 16,
+        "height": 16,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "item_fiber": {
+        "path": "/assets/sprites/items/item_fiber.png",
+        "width": 16,
+        "height": 16,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "item_flint": {
+        "path": "/assets/sprites/items/item_flint.png",
+        "width": 16,
+        "height": 16,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "item_fungi": {
+        "path": "/assets/sprites/items/item_fungi.png",
+        "width": 16,
+        "height": 16,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "item_hatchet": {
+        "path": "/assets/sprites/items/item_hatchet.png",
+        "width": 16,
+        "height": 16,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "item_meal": {
+        "path": "/assets/sprites/items/item_meal.png",
+        "width": 16,
+        "height": 16,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "item_meat": {
+        "path": "/assets/sprites/items/item_meat.png",
+        "width": 16,
+        "height": 16,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "item_nectar": {
+        "path": "/assets/sprites/items/item_nectar.png",
+        "width": 16,
+        "height": 16,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "item_ore": {
+        "path": "/assets/sprites/items/item_ore.png",
+        "width": 16,
+        "height": 16,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "item_poultice": {
+        "path": "/assets/sprites/items/item_poultice.png",
+        "width": 16,
+        "height": 16,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "item_reeds": {
+        "path": "/assets/sprites/items/item_reeds.png",
+        "width": 16,
+        "height": 16,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "item_stick": {
+        "path": "/assets/sprites/items/item_stick.png",
+        "width": 16,
+        "height": 16,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "item_tool-head": {
+        "path": "/assets/sprites/items/item_tool-head.png",
+        "width": 16,
+        "height": 16,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "item_water": {
+        "path": "/assets/sprites/items/item_water.png",
+        "width": 16,
+        "height": 16,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "item_wheat": {
+        "path": "/assets/sprites/items/item_wheat.png",
+        "width": 16,
+        "height": 16,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      }
+    },
+    "vfx": {
+      "vfx_fire_tap": {
+        "path": "/assets/sprites/vfx/vfx_fire_tap.png",
+        "width": 20,
+        "height": 16,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "vfx_fire_veil": {
+        "path": "/assets/sprites/vfx/vfx_fire_veil.png",
+        "width": 24,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "vfx_ice_wall": {
+        "path": "/assets/sprites/vfx/vfx_ice_wall.png",
+        "width": 24,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "vfx_slash": {
+        "path": "/assets/sprites/vfx/vfx_slash.png",
+        "width": 24,
+        "height": 16,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "vfx_steam_burst": {
+        "path": "/assets/sprites/vfx/vfx_steam_burst.png",
+        "width": 24,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "vfx_water_bubble": {
+        "path": "/assets/sprites/vfx/vfx_water_bubble.png",
+        "width": 24,
+        "height": 24,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "vfx_water_pulse": {
+        "path": "/assets/sprites/vfx/vfx_water_pulse.png",
+        "width": 24,
+        "height": 16,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      },
+      "vfx_wind_gust": {
+        "path": "/assets/sprites/vfx/vfx_wind_gust.png",
+        "width": 24,
+        "height": 16,
+        "anchor": {
+          "x": 0.5,
+          "y": 0.5
+        }
+      }
+    }
+  }
+}

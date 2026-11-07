@@ -1,0 +1,106 @@
+name: Beta Pages
+on:
+  workflow_run:
+    workflows: ['Reference game checks']
+    branches: ['studio/doctrine-v1']
+    types: [completed]
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: beta-pages
+  cancel-in-progress: false
+jobs:
+  build:
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'push' &&
+      github.event.workflow_run.head_repository.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      current: ${{ steps.latest.outputs.current }}
+    steps:
+      - uses: actions/github-script@v7
+        id: latest
+        with:
+          script: |
+            const runs = await github.rest.actions.listWorkflowRuns({
+              ...context.repo, workflow_id: 'ci.yml', branch: 'studio/doctrine-v1',
+              event: 'push', status: 'success', per_page: 1
+            });
+            core.setOutput('current', runs.data.workflow_runs[0]?.id === context.payload.workflow_run.id);
+      - uses: actions/checkout@v4
+        if: steps.latest.outputs.current == 'true'
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        if: steps.latest.outputs.current == 'true'
+        with:
+          node-version: '22'
+          cache: npm
+      - if: steps.latest.outputs.current == 'true'
+        run: npm ci
+      - if: steps.latest.outputs.current == 'true'
+        run: npm run beta:notes
+      - if: steps.latest.outputs.current == 'true'
+        run: npm run build
+        env:
+          VITE_BASE_PATH: /Vibe/
+          BUILD_SHA: ${{ github.event.workflow_run.head_sha }}
+          BUILD_BRANCH: studio/doctrine-v1
+      - uses: actions/upload-pages-artifact@v4
+        if: steps.latest.outputs.current == 'true'
+        with:
+          path: dist
+  deploy:
+    needs: build
+    if: needs.build.outputs.current == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      actions: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/github-script@v7
+        id: latest
+        with:
+          script: |
+            const runs = await github.rest.actions.listWorkflowRuns({
+              ...context.repo, workflow_id: 'ci.yml', branch: 'studio/doctrine-v1',
+              event: 'push', status: 'success', per_page: 1
+            });
+            core.setOutput('current', runs.data.workflow_runs[0]?.id === context.payload.workflow_run.id);
+      - uses: actions/deploy-pages@v4
+        id: deployment
+        if: steps.latest.outputs.current == 'true'
+      - name: Verify the live build SHA
+        if: steps.latest.outputs.current == 'true'
+        uses: actions/github-script@v7
+        env:
+          BETA_URL: ${{ steps.deployment.outputs.page_url }}
+        with:
+          script: |
+            const expected = context.payload.workflow_run.head_sha;
+            const url = new URL('beta-notes.json', process.env.BETA_URL);
+            url.searchParams.set('build', expected);
+            let visible = false;
+            for (let attempt = 0; attempt < 24; attempt++) {
+              try {
+                const response = await fetch(url, { signal: AbortSignal.timeout(5000), cache: 'no-cache' });
+                if (response.ok && (await response.json()).sha === expected) { visible = true; break; }
+              } catch { /* Pages/CDN may still be updating. */ }
+              await new Promise(resolve => setTimeout(resolve, 5000));
+            }
+            if (!visible) { core.setFailed(`Pages did not expose build ${expected}`); return; }
+            const seconds = Math.round((Date.now() - Date.parse(context.payload.workflow_run.updated_at)) / 1000);
+            await core.summary.addHeading('Live beta').addLink(expected, process.env.BETA_URL)
+              .addRaw(`\n\nVisible ${seconds}s after checks completed.\n`).write();
+            if (seconds > 900) core.setFailed(`Beta exceeded the 15-minute target (${seconds}s)`);

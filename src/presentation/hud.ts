@@ -1,0 +1,1503 @@
+import { appUrl } from './assets/url';
+import { BookScreen } from './ui/book';
+import { PaintingScreen } from './ui/painting';
+import { paintingRgba } from '../domain/painting-pixels';
+import type { Artifact } from '../domain/artifacts';
+import { mountHudView, loadBetaNotes, escapeHtml } from './ui/view';
+import {
+  commandForIntent,
+  hudViewState,
+  type UiIntent,
+  type Overlay,
+  type HudViewState,
+} from './ui/state';
+import { patchView } from './ui/patch';
+import { AppearanceResolver, type AssetCatalog } from './assets/catalog';
+import {
+  ITEMS,
+  NPC_PROFILES,
+  SETTLEMENTS,
+  SPECIES,
+  VILLAGES,
+  findMoveDefinition,
+  type ItemId,
+} from '../content/definitions';
+import { calculateVillagerHearts } from '../domain/agents';
+import type {
+  CommandPayload,
+  CommandResult,
+  CreatureView,
+  RenderSnapshot,
+  TerrainView,
+} from '../domain/contracts';
+import { BIOME_COLORS, BIOME_NAMES, nearestSettlement, TileFlag } from '../domain/world';
+import type { InferenceUsage, ModelInfo } from '../adapters/inference';
+import type { ImageSettings, ImageProbe } from '../adapters/image';
+import type { Quality } from './renderer';
+import { GARMENT_SLOTS, type GearSlot } from '../domain/equipment';
+import { latestNpcEmotion } from './ui/dialogue';
+import { inventoryIcon } from './ui/inventory-icon';
+import { updateExploration } from './ui/exploration';
+import { meterMarkup, refreshMeters } from './ui/meters';
+
+const percent = (n: number): number => Math.round(Math.max(0, Math.min(1, n)) * 100);
+const meter = (label: string, value: number, _color = 'sage'): string => meterMarkup(label, value);
+
+export interface HudHandlers {
+  imageRecoveryNeeded(): boolean;
+  recoverImages(): Promise<void>;
+  painting: {
+    enabled(): boolean;
+    progress(id: string): string;
+    raw(id: string): Blob | null;
+    cancel(id: string): void;
+  };
+  imageSettings(settings: ImageSettings): Promise<void>;
+  testImage(settings: ImageSettings): Promise<ImageProbe>;
+  bookDiagnostics?(active: boolean): void;
+  artifactContent(id: string): Promise<Artifact | null>;
+  send(command: CommandPayload): Promise<CommandResult>;
+  enter(options: {
+    endpoint: string;
+    model: string;
+    backgroundModel: string;
+    backgroundCpu: boolean;
+    contextTokens: number;
+    seed: number;
+    origin: number;
+    resume: boolean;
+    authored?: boolean;
+    offline: boolean;
+    image: ImageSettings;
+  }): Promise<string | void>;
+  discover(endpoint: string): Promise<readonly ModelInfo[]>;
+  save(): Promise<void>;
+  load(): Promise<void>;
+  export(): Promise<void>;
+  import(file: File): Promise<void>;
+  settings(quality: Quality, reducedMotion: boolean, debug: boolean): void;
+  audio(): Promise<boolean>;
+  dialogueBlip?(npcId: string): void;
+  select(id: number | null): void;
+}
+
+export class HudPresenter {
+  readonly gameElement: HTMLElement;
+  private frame: RenderSnapshot | null = null;
+  private terrain: TerrainView | null = null;
+  private panel: 'journey' | 'companion' | 'people' = 'journey';
+  private selectedHuman = 0;
+  private selectedCreature: number | null = null;
+  private dialogSignature = '';
+  private toastTimer: ReturnType<typeof setTimeout> | null = null;
+  private mapBackground: HTMLCanvasElement | null = null;
+  private worldMapBackground: HTMLCanvasElement | null = null;
+  private worldMapPlayer: { x: number; y: number } | null = null;
+  private mapLayer: 'world' | 'local' = 'local';
+  private mapScene = '';
+  private readonly handlers: HudHandlers;
+  private readonly book: BookScreen;
+  private readonly painting: PaintingScreen;
+  private readonly paintingIcons = new Map<string, string | null>();
+  private appearance: AppearanceResolver | null = null;
+  private viewState: HudViewState | null = null;
+  private readonly overlayFocus = new Map<Overlay, HTMLElement>();
+  constructor(root: HTMLElement, handlers: HudHandlers) {
+    this.handlers = handlers;
+    mountHudView(root);
+    this.book = new BookScreen(root, {
+      diagnostics: (active) => this.handlers.bookDiagnostics?.(active),
+      frame: () => this.frame,
+      send: (command) => this.handlers.send(command),
+      content: (id) => this.handlers.artifactContent(id),
+      notify: (message) => this.notify(message),
+    });
+    this.painting = new PaintingScreen(root, {
+      ...handlers.painting,
+      frame: () => this.frame,
+      send: (command) => this.handlers.send(command),
+      content: (id) => this.handlers.artifactContent(id),
+      settings: () => this.openMenu('settings-dialog'),
+    });
+    void loadBetaNotes(root);
+    this.gameElement = root.querySelector<HTMLElement>('#game-viewport')!;
+    this.bind();
+    this.renderEmpty();
+    const setup = this.el<HTMLDialogElement>('setup-dialog');
+    setup.showModal();
+    setup.addEventListener('cancel', (event) => event.preventDefault());
+    try {
+      const settings = JSON.parse(localStorage.getItem('hearthwild-connection') ?? 'null') as {
+        endpoint?: string;
+        model?: string;
+        backgroundModel?: string;
+        backgroundCpu?: boolean;
+        contextTokens?: number;
+      } | null;
+      if (settings?.backgroundModel)
+        this.el<HTMLInputElement>('background-model').value = settings.backgroundModel;
+      if (settings?.backgroundCpu !== undefined)
+        this.el<HTMLInputElement>('background-cpu').checked = settings.backgroundCpu;
+      if (settings?.contextTokens)
+        this.el<HTMLInputElement>('context-tokens').value = String(settings.contextTokens);
+      if (settings?.endpoint) this.el<HTMLInputElement>('endpoint').value = settings.endpoint;
+      if (settings?.model)
+        this.el<HTMLSelectElement>('model').replaceChildren(
+          new Option(settings.model, settings.model),
+        );
+    } catch {
+      /* Storage preference failure must not block play. */
+    }
+    try {
+      const image = JSON.parse(
+        localStorage.getItem('hearthwild-image-connection') ?? 'null',
+      ) as Partial<ImageSettings> | null;
+      if (image?.endpoint) this.el<HTMLInputElement>('image-endpoint').value = image.endpoint;
+      if (image?.provider === 'ollama')
+        this.el<HTMLSelectElement>('image-provider').value = 'ollama';
+      if (typeof image?.unload === 'boolean')
+        this.el<HTMLInputElement>('image-unload').checked = image.unload;
+    } catch {
+      /* Optional preferences must not block play. */
+    }
+  }
+  private el<T extends HTMLElement = HTMLElement>(id: string): T {
+    return document.getElementById(id) as T;
+  }
+  private bind(): void {
+    const imageAction = async (test: boolean) => {
+      const status = this.el('image-status'),
+        button = this.el<HTMLButtonElement>(test ? 'image-test' : 'image-apply');
+      button.disabled = true;
+      try {
+        const settings = this.imageSettings();
+        if (test) {
+          const result = await this.handlers.testImage(settings);
+          status.textContent = result.ok ? `Ready: ${result.model}` : result.reason;
+        } else {
+          await this.handlers.imageSettings(settings);
+          try {
+            localStorage.setItem('hearthwild-image-connection', JSON.stringify(settings));
+          } catch {
+            /* Optional. */
+          }
+          status.textContent = settings.endpoint
+            ? 'Painting settings saved.'
+            : 'Image endpoint disabled. Existing paintings remain available.';
+        }
+      } catch (error) {
+        status.textContent = error instanceof Error ? error.message : 'Image server unavailable';
+      } finally {
+        button.disabled = false;
+      }
+    };
+    this.el('image-settings').addEventListener('submit', (event) => {
+      event.preventDefault();
+      void imageAction(false);
+    });
+    this.el('image-test').addEventListener('click', () => void imageAction(true));
+    this.el('image-recover').addEventListener('click', () => {
+      void this.handlers
+        .recoverImages()
+        .then(() => {
+          this.el('image-recover').hidden = true;
+          this.el('image-status').textContent = 'Painting recovery reset after the server restart.';
+        })
+        .catch((error) => {
+          this.el('image-status').textContent = String(error);
+        });
+    });
+    for (const button of document.querySelectorAll<HTMLButtonElement>('[data-combat]'))
+      button.addEventListener('click', () => {
+        const kind = button.dataset.combat;
+        if (kind === 'dash') void this.command({ type: 'dash' });
+        else if (kind === 'strike' || kind === 'element')
+          void this.command({ type: 'attack', kind });
+      });
+    this.el('setup-form').addEventListener('submit', (event) => {
+      event.preventDefault();
+      void this.enter(false);
+    });
+    this.el('resume-button').addEventListener('click', () => void this.enter(true));
+    this.el('offline-button').addEventListener('click', () => void this.enter(false, true));
+    this.el('offline-resume-button').addEventListener('click', () => void this.enter(true, true));
+    this.el('discover-button').addEventListener('click', () => void this.discover());
+    this.el('combine-button').addEventListener(
+      'click',
+      () => void this.command({ type: 'combine' }),
+    );
+    this.el('save-button').addEventListener(
+      'click',
+      () => void this.run(() => this.handlers.save(), 'Journey saved.'),
+    );
+    this.el('load-button').addEventListener(
+      'click',
+      () => void this.run(() => this.handlers.load(), 'Journey restored.'),
+    );
+    this.el('export-button').addEventListener(
+      'click',
+      () => void this.run(() => this.handlers.export(), 'Save exported.'),
+    );
+    this.el<HTMLInputElement>('import-input').addEventListener('change', (event) => {
+      const file = (event.target as HTMLInputElement).files?.[0];
+      if (file) void this.run(() => this.handlers.import(file), 'Journey imported.');
+    });
+    this.el('map-button').addEventListener('click', () => this.openMenu('map-dialog'));
+    this.el('map-world-layer').addEventListener('click', () => {
+      this.mapLayer = 'world';
+      this.drawMap();
+    });
+    this.el('map-local-layer').addEventListener('click', () => {
+      this.mapLayer = 'local';
+      this.drawMap();
+    });
+    this.el('settings-button').addEventListener('click', () => this.openMenu('settings-dialog'));
+    this.el('creature-inspector').addEventListener('change', () => {
+      const value = this.el<HTMLInputElement>('creature-inspector').value;
+      void this.handlers.send({ type: 'inspectCreature', entityId: value ? Number(value) : null });
+    });
+    this.el('combat-settings').addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (!this.frame) return;
+      const value = (id: string) => Number(this.el<HTMLInputElement>(`combat-${id}`).value);
+      const pools = Object.fromEntries(
+        ['player', 'partner', 'villager', 'wild'].map((kind) => [
+          kind,
+          { melee: value(`${kind}-melee`), ranged: value(`${kind}-ranged`) },
+        ]),
+      ) as Pick<
+        import('../domain/combat-director').CombatSettings,
+        'player' | 'partner' | 'villager' | 'wild'
+      >;
+      void this.handlers
+        .send({
+          type: 'configureCombat',
+          settings: {
+            ...pools,
+            reactionDelay: { min: value('reaction-min'), max: value('reaction-max') },
+            grantSpacing: value('spacing'),
+            aggressionBias: value('aggression'),
+          },
+        })
+        .then((result) => {
+          this.el('combat-settings-status').textContent = result.ok
+            ? 'Combat settings applied.'
+            : (result.message ?? 'Invalid settings.');
+        });
+    });
+    this.el('inventory-button').addEventListener('click', () =>
+      this.intent({ type: 'toggle', overlay: 'inventory' }),
+    );
+    this.el('inspection-button').addEventListener('click', () =>
+      this.intent({ type: 'toggle', overlay: 'inspection' }),
+    );
+    this.el('companion-button').addEventListener('click', () =>
+      this.intent({ type: 'toggle', overlay: 'companion' }),
+    );
+    this.el('field-journal-button').addEventListener('click', () =>
+      this.intent({ type: 'toggle', overlay: 'journal' }),
+    );
+    for (const overlay of ['inventory', 'inspection'] as const)
+      this.el(`close-${overlay}`).addEventListener('click', () =>
+        this.intent({ type: 'toggle', overlay }),
+      );
+    for (const button of document.querySelectorAll<HTMLButtonElement>('[data-panel]')) {
+      button.tabIndex = button.getAttribute('aria-selected') === 'true' ? 0 : -1;
+      button.addEventListener('click', () =>
+        this.showPanel(button.dataset.panel as typeof this.panel),
+      );
+      button.addEventListener('keydown', (event) => {
+        if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+        event.preventDefault();
+        event.stopPropagation();
+        const tabs = [...document.querySelectorAll<HTMLButtonElement>('[data-panel]')];
+        const index = tabs.indexOf(button),
+          next =
+            event.key === 'Home'
+              ? 0
+              : event.key === 'End'
+                ? tabs.length - 1
+                : (index + (event.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
+        const target = tabs[next]!;
+        this.showPanel(target.dataset.panel as typeof this.panel);
+        target.focus();
+      });
+    }
+    for (const button of document.querySelectorAll<HTMLButtonElement>('[data-close]'))
+      button.addEventListener('click', () =>
+        this.el<HTMLDialogElement>(button.dataset.close!).close(),
+      );
+    for (const id of ['map-dialog', 'settings-dialog', 'journal-dialog', 'companion-sheet'])
+      this.el<HTMLDialogElement>(id).addEventListener('close', () => {
+        if (id === 'companion-sheet') {
+          this.el('companion-button').setAttribute('aria-expanded', 'false');
+          this.overlayFocus.get('companion')?.focus();
+        }
+        if (
+          !document.querySelector(
+            '#map-dialog[open],#settings-dialog[open],#journal-dialog[open],#companion-sheet[open]',
+          )
+        )
+          void this.command({ type: 'resume', token: 'menu' });
+      });
+    this.el('close-conversation').addEventListener(
+      'click',
+      () => void this.command({ type: 'closeDialogue' }),
+    );
+    this.el('conversation-dialog').addEventListener('cancel', (event) => {
+      event.preventDefault();
+      void this.command({ type: 'closeDialogue' });
+    });
+    this.el('dialogue-form').addEventListener('submit', (event) => {
+      event.preventDefault();
+      const input = this.el<HTMLInputElement>('dialogue-input'),
+        text = input.value.trim();
+      if (text) {
+        void this.command({ type: 'dialogue', text });
+        input.value = '';
+      }
+    });
+    this.el('dialogue-battle').addEventListener('click', () => {
+      const npcId = this.frame?.dialogue?.npcId;
+      if (npcId)
+        void this.command({ type: 'closeDialogue' }).then(() =>
+          this.command({ type: 'battle', npcId }),
+        );
+    });
+    this.el('dialogue-invite').addEventListener('click', () => {
+      const npcId = this.frame?.dialogue?.npcId;
+      if (npcId) void this.command({ type: 'invite', npcId });
+    });
+    this.el('dialogue-gift').addEventListener('click', () => {
+      const npcId = this.frame?.dialogue?.npcId;
+      if (!npcId) return;
+      const slot = this.frame?.inventory[0] ? 0 : this.frame?.inventory[1] ? 1 : null;
+      if (slot === null) {
+        this.notify('Carry an item in your hotbar to offer as a gift.');
+        return;
+      }
+      void this.command({ type: 'giveGift', npcId, slot });
+    });
+    this.el('inventory-panel').addEventListener('keydown', (event) => {
+      if (event.ctrlKey || event.metaKey || event.altKey || event.repeat) return;
+      const target = event.target as HTMLElement;
+      const carried = target.closest<HTMLElement>('[data-carry-slot]');
+      const worn = target.closest<HTMLElement>('[data-gear-slot]');
+      const key = event.key.toLowerCase();
+      let intent: UiIntent | null = null;
+      if (carried && key === 'e')
+        intent = { type: 'equip', slot: Number(carried.dataset.carrySlot) as 0 | 1 };
+      else if (carried && key === 'delete')
+        intent = { type: 'drop', slot: Number(carried.dataset.carrySlot) as 0 | 1 };
+      else if (worn && (key === 'u' || key === 'delete'))
+        intent = {
+          type: 'unequip',
+          slot: worn.dataset.gearSlot as GearSlot,
+          ...(key === 'delete' ? { drop: true } : {}),
+        };
+      if (!intent) return;
+      event.preventDefault();
+      event.stopPropagation();
+      this.intent(intent);
+    });
+    this.el('audio-button').addEventListener(
+      'click',
+      () =>
+        void this.handlers
+          .audio()
+          .then((muted) => {
+            this.el('audio-button').textContent = muted ? 'Enable sound' : 'Mute sound';
+          })
+          .catch((error) => this.notify(String(error))),
+    );
+    for (const id of ['quality', 'reduced-motion', 'debug'])
+      this.el(id).addEventListener('change', () =>
+        this.handlers.settings(
+          this.el<HTMLSelectElement>('quality').value as Quality,
+          this.el<HTMLInputElement>('reduced-motion').checked,
+          this.el<HTMLInputElement>('debug').checked,
+        ),
+      );
+    document.getElementById('app')!.addEventListener('click', (event) => {
+      const button = (event.target as HTMLElement).closest<HTMLButtonElement>('[data-action]');
+      if (!button) return;
+      const action = button.dataset.action!,
+        id = Number(button.dataset.id);
+      if (action === 'partner-focus' || action === 'partner-regroup')
+        void this.command({
+          type: 'partnerCommand',
+          command: action === 'partner-focus' ? 'focus' : 'regroup',
+          ...(action === 'partner-focus' ? { target: id } : {}),
+        });
+      else if (action === 'sleep' || action === 'wake') void this.command({ type: action });
+      else if (action === 'accelerate') void this.command({ type: 'accelerate', factor: 8 });
+      else if (action === 'service')
+        void this.command({
+          type: 'service',
+          action: button.dataset.service as 'eat' | 'drink' | 'wash',
+        });
+      else if (action === 'inspect-human') {
+        this.selectedHuman = id;
+        this.renderPanel();
+      } else if (action === 'talk')
+        void this.command({ type: 'interact', npcId: NPC_PROFILES[id]!.id });
+      else if (action === 'select') {
+        this.selectedCreature = id;
+        this.handlers.select(id);
+        this.showPanel('companion');
+      } else if (action === 'care')
+        void this.command({
+          type: 'care',
+          creature: id,
+          action: button.dataset.care as 'feed' | 'water' | 'pet' | 'bathe' | 'heal',
+        });
+      else if (action === 'tame') void this.command({ type: 'tame', creature: id });
+      else if (action === 'release') void this.command({ type: 'release' });
+      else if (action === 'travel') {
+        this.el<HTMLDialogElement>('map-dialog').close();
+        void this.command({ type: 'resume', token: 'menu' }).then(() =>
+          this.command({ type: 'travel', settlementId: button.dataset.settlement! }),
+        );
+      } else if (action === 'equip') this.intent({ type: 'equip', slot: id as 0 | 1 });
+      else if (action === 'unequip')
+        this.intent({
+          type: 'unequip',
+          slot: button.dataset.slot as GearSlot,
+          ...(button.dataset.drop === 'true' ? { drop: true } : {}),
+        });
+      else if (action === 'use') this.useItem(id as 0 | 1);
+      else if (action === 'companion-medallion')
+        this.intent({ type: 'toggle', overlay: 'companion' });
+      else if (action === 'drop') void this.command({ type: 'drop', slot: id as 0 | 1 });
+      else if (action === 'gather') void this.command({ type: 'harvest' });
+      else if (action === 'reaction')
+        void this.command({
+          type: 'reaction',
+          reaction: button.dataset.reaction as 'fire' | 'freeze' | 'shock',
+        });
+    });
+  }
+  private async discover(): Promise<void> {
+    const status = this.el('setup-status'),
+      button = this.el<HTMLButtonElement>('discover-button');
+    button.disabled = true;
+    status.textContent = 'Looking for local models…';
+    try {
+      const models = await this.handlers.discover(this.el<HTMLInputElement>('endpoint').value);
+      const select = this.el<HTMLSelectElement>('model');
+      const previous = select.value;
+      select.replaceChildren(
+        ...[...models]
+          .sort((a, b) => a.size - b.size)
+          .map((m) => new Option(`${m.name} · ${(m.size / 1e9).toFixed(1)} GB`, m.name)),
+      );
+      if (models.some((m) => m.name === previous)) select.value = previous;
+      status.textContent = models.length
+        ? `${models.length} installed models found. Choose one and begin.`
+        : 'No models installed. Install qwen2.5:3b with Ollama first.';
+    } catch (error) {
+      status.textContent =
+        error instanceof Error
+          ? error.message
+          : 'Could not reach Ollama. Check the server and browser permissions.';
+    } finally {
+      button.disabled = false;
+    }
+  }
+  private async enter(resume: boolean, offline = false): Promise<void> {
+    const begin = this.el<HTMLButtonElement>('enter-button'),
+      resumeButton = this.el<HTMLButtonElement>('resume-button'),
+      status = this.el('setup-status');
+    const offlineBegin = this.el<HTMLButtonElement>('offline-button'),
+      offlineResume = this.el<HTMLButtonElement>('offline-resume-button');
+    begin.disabled = resumeButton.disabled = offlineBegin.disabled = offlineResume.disabled = true;
+    status.textContent = offline
+      ? 'Preparing your world with fallback dialogue...'
+      : 'Checking local AI and preparing the world. A cold model can take a moment...';
+    const authoredToggle = document.getElementById('authored-toggle') as HTMLInputElement | null;
+    const options = {
+      endpoint: this.el<HTMLInputElement>('endpoint').value,
+      model: this.el<HTMLSelectElement>('model').value,
+      backgroundModel: this.el<HTMLInputElement>('background-model').value,
+      backgroundCpu: this.el<HTMLInputElement>('background-cpu').checked,
+      contextTokens: Number(this.el<HTMLInputElement>('context-tokens').value),
+      seed: Number(this.el<HTMLInputElement>('seed').value),
+      origin: Number(this.el<HTMLSelectElement>('origin').value),
+      authored: !!authoredToggle?.checked,
+      resume,
+      offline,
+      image: this.imageSettings(),
+    };
+    try {
+      const warning = await this.handlers.enter(options);
+      try {
+        localStorage.setItem(
+          'hearthwild-connection',
+          JSON.stringify({
+            endpoint: options.endpoint,
+            model: options.model,
+            backgroundModel: options.backgroundModel,
+            backgroundCpu: options.backgroundCpu,
+            contextTokens: options.contextTokens,
+          }),
+        );
+      } catch {
+        /* Optional preference. */
+      }
+      this.el<HTMLDialogElement>('setup-dialog').close();
+      this.el('connection-label').textContent = offline
+        ? 'FALLBACK DIALOGUE - LOCAL AI OFF'
+        : `LOCAL AI · ${options.model}`;
+      this.notify(
+        warning ||
+          (resume
+            ? 'Welcome back. Your little world remembers.'
+            : `Welcome to ${VILLAGES[options.origin]!.name}. Take your time. Look around.`),
+      );
+    } catch (error) {
+      status.textContent = error instanceof Error ? error.message : 'Unable to start the game.';
+    } finally {
+      begin.disabled =
+        resumeButton.disabled =
+        offlineBegin.disabled =
+        offlineResume.disabled =
+          false;
+    }
+  }
+  private async run(action: () => Promise<void>, message: string): Promise<void> {
+    try {
+      await action();
+      this.notify(message);
+    } catch (error) {
+      this.notify(error instanceof Error ? error.message : String(error));
+    }
+  }
+  async command(command: CommandPayload): Promise<CommandResult> {
+    try {
+      const result = await this.handlers.send(command);
+      if (result.message) this.notify(result.message);
+      return result;
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      this.notify(message);
+      return { id: '', ok: false, message };
+    }
+  }
+  notify(message: string): void {
+    if (!message) return;
+    const toast = this.el('toast');
+    toast.textContent = message;
+    toast.hidden = false;
+    if (this.toastTimer) clearTimeout(this.toastTimer);
+    this.toastTimer = setTimeout(() => {
+      toast.hidden = true;
+    }, 6000);
+  }
+  private renderEmpty(): void {
+    this.el('inventory').innerHTML = [0, 1]
+      .map(
+        (i) =>
+          `<div class="hand-slot"><span class="slot-number">0${i + 1} <span>${i === 0 ? 'LEFT' : 'RIGHT'} HAND</span></span><div class="slot-item"><span class="empty-hand">+</span><span>Room for a discovery</span></div></div>`,
+      )
+      .join('');
+    this.el('panel-content').innerHTML =
+      '<div class="journal-intro"><span class="journal-number">01</span><h3>Begin somewhere.</h3><p>There is no hurry. A new path, a new face, a small creature in the grass — every connection starts with a little curiosity.</p></div>';
+  }
+  update(
+    frame: RenderSnapshot,
+    usage: InferenceUsage | null,
+    stats: {
+      fps: number;
+      sprites: number;
+      chunks: number;
+      textureBytes?: number;
+      renderMs?: number;
+      loadMs?: number;
+      framebufferScale?: number;
+      gpu?: string;
+      assetError?: string;
+      prototypeActors?: number;
+    },
+  ): void {
+    if (this.frame?.session !== frame.session) {
+      this.worldMapBackground = null;
+      this.worldMapPlayer = null;
+    }
+    this.frame = frame;
+    this.book.update(frame);
+    this.painting.update(frame);
+    if (frame.scene.id !== this.mapScene) {
+      this.mapScene = frame.scene.id;
+      this.mapLayer = 'local';
+    }
+    if (frame.scene.outside && this.mapBackground) {
+      this.worldMapBackground = this.mapBackground;
+      this.worldMapPlayer = { x: frame.player.x, y: frame.player.y };
+    }
+    this.viewState = hudViewState(frame);
+    this.el('interaction-prompt').textContent = this.viewState.prompt;
+    this.setHtml(
+      'journal-entries',
+      frame.journal.map((text) => `<p>${escapeHtml(text)}</p>`).join('') ||
+        '<p>Your field journal will fill as you explore.</p>',
+    );
+    const settlement = nearestSettlement(frame.player),
+      distance = Math.hypot(settlement.x - frame.player.x, settlement.y - frame.player.y);
+    const i = this.terrain
+      ? Math.floor(frame.player.y) * this.terrain.size + Math.floor(frame.player.x)
+      : 0;
+    const biome = this.terrain?.biome[i] ?? 0;
+    const name = frame.scene.outside
+      ? distance < 25
+        ? settlement.name
+        : BIOME_NAMES[biome]
+      : (frame.scene.name ?? 'Interior');
+    this.el('location-title').innerHTML =
+      `${escapeHtml(name)} <span>${!frame.scene.outside ? 'inside the elemental wilds' : distance < 25 ? ['among the mountain paths', 'and the riverlands', 'where the sea meets sky'][settlement.village] : 'beyond the village paths'}</span>`;
+    this.el('season-label').textContent =
+      `${['Spring', 'Summer', 'Autumn', 'Winter'][frame.season]}, day ${frame.day + 1}`;
+    this.el('player-level').textContent = `LV ${frame.player.level}`;
+    this.el('world-status').innerHTML =
+      `<i></i> ${frame.paused.length ? 'A MOMENT OF STILLNESS' : 'A WORLD IN MOTION'}`;
+    this.el('pause-banner').hidden = !frame.paused.length || !!frame.dialogue;
+    this.el('area-label').textContent =
+      frame.duel === null
+        ? `${BIOME_NAMES[biome]} · ${frame.performance.population} LITTLE LIVES`
+        : 'FRIENDLY PARTNER BATTLE';
+    const last = frame.events.at(-1);
+    this.el('world-event').textContent = last?.text ?? 'The wind moves softly through the reeds.';
+    this.el('performance-mini').textContent = `${Math.round(stats.fps)} FPS`;
+    this.el('debug-stats').textContent =
+      `Tick ${frame.tick} · simulation ${frame.performance.stepMs.toFixed(2)} ms · ${frame.performance.detailed} detailed creatures · ${frame.performance.paths} pending paths · ${stats.sprites} sprites · ${stats.chunks} chunks\nAI: ${usage?.requests ?? 0} requests · ${usage?.queued ?? 0} queued · ${usage?.errors ?? 0} errors · ${Math.round(usage?.lastMs ?? 0)} ms last request`;
+    if (frame.performance.context)
+      this.el('debug-stats').textContent +=
+        `\nContext: ${frame.performance.context.tokens}/${frame.performance.context.budget} tokens ? ${frame.performance.context.compactions} compactions${frame.performance.context.truncated ? ' ? truncated' : ''}`;
+    this.el('debug-stats').textContent +=
+      `\nRender CPU ${stats.renderMs?.toFixed(2) ?? '?'} ms · load ${stats.loadMs?.toFixed(0) ?? '?'} ms · tracked textures ${((stats.textureBytes ?? 0) / 1048576).toFixed(1)} MiB · framebuffer ${stats.framebufferScale ?? 1} · prototype actors ${stats.prototypeActors ?? 0}\nGPU: ${stats.gpu ?? 'unreported'}${stats.assetError ? `\n${stats.assetError}` : ''}`;
+    if (this.el<HTMLInputElement>('debug').checked)
+      this.el('debug-stats').textContent += this.diagnostics(frame);
+    this.el('creature-debug-overlay').hidden = !frame.debugEnabled;
+    this.el('creature-debug-overlay').textContent = (frame.creatureDebug ?? [])
+      .map(
+        (a) =>
+          `${a.id} ${a.intent} -> ${a.target}, token ${a.token}; ${a.scores.map((s) => `${s.intent} ${s.score.toFixed(2)}`).join(', ')}`,
+      )
+      .join('\n');
+    this.el('creature-debug').textContent = frame.debugEnabled
+      ? (frame.creatureDebug ?? [])
+          .map(
+            (a) =>
+              `${a.id}: ${a.intent} -> ${a.target}, token ${a.token}; ${a.scores.map((s) => `${s.intent} ${s.score.toFixed(2)}`).join(', ')}${a.observation ? `\ncrm-obs-1: ${a.observation.map((v) => v.toFixed(2)).join(', ')}` : ''}`,
+          )
+          .join('\n')
+      : '';
+    const human = frame.humanNeeds.find((h) => h.id === 0)!;
+    this.setHtml(
+      'human-needs',
+      `${meter('Food', human.food)}${meter('Water', human.water, 'water')}${meter('Recreation', human.recreation)}${meter('Cleanliness', human.cleanliness, 'water')}${meter('Rest', human.rest, 'warm')}`,
+    );
+    this.el('rest-status').textContent = human.sleeping
+      ? `${human.forcedRest ? 'Exhausted · resting until 50%' : 'Sleeping'} · world at ${frame.timeScale}×`
+      : human.rest < 0.2
+        ? 'You feel tired. Find a safe place to rest.'
+        : `Human · ${human.elements.join(' / ')} · ${human.heightMeters.toFixed(2)} m ? ${human.massKg.toFixed(1)} kg ? ${human.nature.join(', ')}`;
+    this.el<HTMLButtonElement>('sleep-button').disabled = human.sleeping;
+    this.el<HTMLButtonElement>('wake-button').disabled = !human.sleeping || human.forcedRest;
+    this.el<HTMLButtonElement>('accelerate-button').disabled =
+      !human.sleeping || frame.paused.length > 0;
+    this.renderInventory();
+    updateExploration(frame, this.appearance, this.mapBackground);
+    this.renderPanel();
+    this.renderConversation();
+    if (this.el<HTMLDialogElement>('map-dialog').open) this.drawMap();
+    if (this.el<HTMLDialogElement>('companion-sheet').open) this.renderCompanionSheet();
+    refreshMeters();
+  }
+  private renderInventory(): void {
+    const frame = this.frame!;
+    const iconKeys = new Set<string>();
+    for (const item of frame.inventory) {
+      if (item?.id !== 'painting' || !item.artifact) continue;
+      const metadata = frame.artifacts.find((a) => a.id === item.artifact);
+      if (!metadata) continue;
+      const key = `${frame.session}:${item.artifact}:${metadata.revision}`;
+      iconKeys.add(key);
+      if (this.paintingIcons.has(key)) continue;
+      this.paintingIcons.set(key, null);
+      void this.handlers
+        .artifactContent(item.artifact)
+        .then((record) => {
+          if (
+            !this.paintingIcons.has(key) ||
+            this.frame?.session !== frame.session ||
+            record?.kind !== 'painting' ||
+            !record.pixels ||
+            !record.palette
+          )
+            return;
+          const native = document.createElement('canvas'),
+            icon = document.createElement('canvas');
+          native.width = 48;
+          native.height = 32;
+          icon.width = 16;
+          icon.height = 11;
+          native
+            .getContext('2d')!
+            .putImageData(
+              new ImageData(
+                paintingRgba({ pixels: record.pixels, palette: record.palette }),
+                48,
+                32,
+              ),
+              0,
+              0,
+            );
+          const ctx = icon.getContext('2d')!;
+          ctx.imageSmoothingEnabled = false;
+          ctx.drawImage(native, 0, 0, 16, 11);
+          this.paintingIcons.set(key, icon.toDataURL('image/png'));
+          this.renderInventory();
+        })
+        .catch(() => {});
+    }
+    for (const key of this.paintingIcons.keys())
+      if (!iconKeys.has(key)) this.paintingIcons.delete(key);
+    const html = frame.inventory
+      .map(
+        (item, i) =>
+          `<div class="hand-slot ${item ? 'filled' : ''}" data-key="carry:${i}" data-carry-slot="${i}" tabindex="0" role="group" aria-label="Carried slot ${i + 1}: ${item ? escapeHtml(ITEMS[item.id].name) : 'empty'}"><span class="slot-number">0${i + 1} <span>${i === 0 ? 'LEFT' : 'RIGHT'} HAND</span></span><div class="slot-item">${item ? `${inventoryIcon(this.appearance, item.id) || `<span class="item-pixel" style="--item:#${ITEMS[item.id].color.toString(16)}"></span>`}<b>${escapeHtml(ITEMS[item.id].name)}</b>${item.charges !== undefined ? `<small>${item.charges} charges remaining</small>` : ''}` : '<span class="empty-hand">+</span><span>Room for a discovery</span>'}</div>${item ? `<div class="slot-actions"><button data-action="use" data-id="${i}">Use</button>${ITEMS[item.id].garment ? `<button data-action="equip" data-id="${i}" aria-label="Equip ${escapeHtml(ITEMS[item.id].name)}">Equip</button>` : ''}<button data-action="drop" data-id="${i}">Drop</button></div>` : ''}</div>`,
+      )
+      .join('');
+    this.setHtml('inventory', html);
+    for (const [slot, item] of frame.inventory.entries()) {
+      const metadata = item?.artifact && frame.artifacts.find((a) => a.id === item.artifact);
+      if (!item || !metadata) continue;
+      const url = this.paintingIcons.get(`${frame.session}:${item.artifact}:${metadata.revision}`),
+        host = this.el('inventory').querySelector(`[data-carry-slot="${slot}"] .item-pixel`);
+      if (!url || !host) continue;
+      let image = host.querySelector('img');
+      if (!image) {
+        image = document.createElement('img');
+        image.className = 'painting-thumbnail';
+        image.alt = 'Painting thumbnail';
+        image.width = 16;
+        image.height = 11;
+        host.append(image);
+      }
+      if (image.src !== url) image.src = url;
+    }
+    this.setHtml(
+      'equipment',
+      GARMENT_SLOTS.map((slot) => {
+        const item = frame.equipment.worn[slot];
+        const name = item ? ITEMS[item.id].name : 'Empty';
+        return `<div class="equipment-slot" data-key="gear:${slot}" data-gear-slot="${slot}" tabindex="0" role="group" aria-label="Worn ${slot}: ${escapeHtml(name)}"><span class="slot-number">${slot.toUpperCase()}</span><b>${escapeHtml(name)}</b>${item ? `<div class="slot-actions"><button data-key="unequip:${slot}" data-action="unequip" data-slot="${slot}" aria-label="Unequip ${escapeHtml(name)}">Unequip</button><button data-key="drop-worn:${slot}" data-action="unequip" data-slot="${slot}" data-drop="true" aria-label="Drop worn ${escapeHtml(name)}">Drop</button></div>` : ''}</div>`;
+      }).join(''),
+    );
+    this.el('ammunition-status').textContent =
+      `Ammunition: ${frame.equipment.ammo} · finite charges in carried slot 2`;
+    this.el<HTMLButtonElement>('combine-button').disabled =
+      !frame.inventory[0] || !frame.inventory[1] || frame.paused.length > 0;
+  }
+  private diagnostics(frame: RenderSnapshot): string {
+    const closest = <T extends { x: number; y: number }>(items: readonly T[]) =>
+      [...items].sort(
+        (a, b) =>
+          Math.hypot(a.x - frame.player.x, a.y - frame.player.y) -
+          Math.hypot(b.x - frame.player.x, b.y - frame.player.y),
+      )[0];
+    const creature =
+      frame.creatures.find((c) => c.id === this.selectedCreature) ??
+      frame.creatures.find((c) => c.owner === 0) ??
+      closest(frame.creatures);
+    const npc = closest(frame.npcs);
+    const lines = [
+      '\n\nOVERLAY LEGEND',
+      'Cyan: villager paths · green: creature paths',
+      'Gold: goals · red: collision',
+      'Need bars: food / water / recreation / cleanliness / Rest',
+    ];
+    lines.push(
+      `ECOLOGY · ${frame.ecology.deaths} deaths / ${frame.ecology.births} births / ${frame.ecology.pending} pending · ${frame.carrion.length} carrion sources`,
+    );
+    lines.push(
+      'FOOD WEB',
+      ...SPECIES.filter((s) => s.prey?.length).map((s) => `${s.name} → ${s.prey!.join(', ')}`),
+      'LOCAL THREATS',
+      ...frame.threats.map((t) => `${t.actor} → ${t.target} (${t.cause})`),
+    );
+    if (creature)
+      lines.push(
+        `Nature ${creature.nature.join(', ')} · Rest ${percent(creature.rest)}% · sleeping ${creature.sleeping}`,
+        `\nCREATURE ${creature.id} · ${creature.name}`,
+        `Mode ${creature.mode} · goal ${creature.goal.x.toFixed(1)}, ${creature.goal.y.toFixed(1)}`,
+        `Commitment ${Math.max(0, creature.commitUntil - frame.elapsedSeconds).toFixed(1)}s remaining`,
+        `Utility wander .18 / food ${(1 - creature.food).toFixed(2)} / water ${(1 - creature.water).toFixed(2)} / bath ${((1 - creature.cleanliness) * 0.8).toFixed(2)} / social ${((1 - creature.recreation) * 0.6).toFixed(2)}`,
+      );
+    if (npc) {
+      lines.push(
+        `\nVILLAGER ${npc.profileId}`,
+        npc.activity,
+        `Current plan: ${npc.override ? `${npc.override.location} until ${npc.override.until.toFixed(0)}` : 'authored schedule'}`,
+        `Tomorrow: ${npc.tomorrow ? `${npc.tomorrow.location} at ${npc.tomorrow.startHour}` : 'authored schedule'}`,
+      );
+      for (const promise of npc.commitments.slice(-3))
+        lines.push(`Promise ${promise.id}: ${promise.status} · ${promise.location}`);
+      lines.push(
+        '\nMEMORY PROVENANCE',
+        npc.memory.core.self
+          ? `Self: ${npc.memory.core.self.slice(0, 240)}`
+          : 'No core self block yet.',
+      );
+      lines.push(
+        `Memory: ${npc.memoryCounts?.active ?? npc.memory.records.filter((m) => m.invalidAtTick === undefined).length}/400 active; ${npc.memoryCounts?.pending ?? npc.memory.pending.length} deferred writes`,
+      );
+      for (const memory of npc.memory.records.slice(-4))
+        lines.push(
+          `${memory.type} · ${memory.id}\n${memory.text.slice(0, 180)}\nSources: ${memory.source.ids.join(', ').slice(0, 240) || 'direct conversation'}`,
+        );
+    }
+    return lines.join('\n');
+  }
+  showPanel(panel: typeof this.panel): void {
+    this.el('inspection-panel').hidden = false;
+    this.el('inspection-button').setAttribute('aria-expanded', 'true');
+    this.panel = panel;
+    for (const button of document.querySelectorAll<HTMLButtonElement>('[data-panel]')) {
+      button.setAttribute('aria-selected', String(button.dataset.panel === panel));
+      button.tabIndex = button.dataset.panel === panel ? 0 : -1;
+    }
+    this.renderPanel();
+  }
+  selectCreature(id: number): void {
+    this.selectedCreature = id;
+    this.handlers.select(id);
+    this.showPanel('companion');
+  }
+  private renderPanel(): void {
+    const frame = this.frame;
+    if (!frame) return;
+    let html = '';
+    if (this.panel === 'journey') {
+      const checks = [
+        ['gather', 'Something in your hands', 'Press E near a resource to gather it.'],
+        ['craft', 'A little ingenuity', 'Combine flint + hardwood, then add reed fiber.'],
+        [
+          'commitment',
+          'Get to know a neighbor',
+          'Talk to a villager. Ask for a walk or a little help.',
+        ],
+        [
+          'partnership',
+          'A friend for the road',
+          'Offer a creature its favorite food and fresh water.',
+        ],
+        ['victory', 'Find your footing', 'Try a friendly partner battle or a wild encounter.'],
+      ];
+      const seen = new Set(frame.journal);
+      html = `<div class="journal-intro"><span class="journal-number">01</span><div class="eyebrow">YOUR FIRST CHAPTER</div><h3>Put down small roots.</h3><p>A new place becomes home one little discovery at a time.</p></div><div class="journey-steps">${checks.map(([event, title, detail], i) => `<div class="journey-step ${seen.has(event!) ? 'complete' : ''}"><span class="step-index">${seen.has(event!) ? '✓' : `0${i + 1}`}</span><div><h4>${title}</h4><p>${detail}</p></div></div>`).join('')}</div><div class="field-tip"><span>✧</span><p><b>A small field tip</b>Creatures have their own tastes. Inspect one to learn what it eats and where it likes to bathe.</p></div><button class="wide-secondary" data-action="gather">Gather nearby <kbd>E</kbd></button>`;
+    } else if (this.panel === 'companion') {
+      const partner = frame.creatures.find((c) => c.owner === 0);
+      const selected =
+        frame.creatures.find((c) => c.id === this.selectedCreature) ??
+        partner ??
+        [...frame.creatures]
+          .filter((c) => c.owner === -1)
+          .sort(
+            (a, b) =>
+              Math.hypot(a.x - frame.player.x, a.y - frame.player.y) -
+              Math.hypot(b.x - frame.player.x, b.y - frame.player.y),
+          )[0];
+      html = selected
+        ? this.creatureCard(selected)
+        : '<div class="journal-intro"><span class="journal-number">✧</span><h3>Wild little wonders.</h3><p>Head beyond the cottages and click a creature to get to know it. A partnership begins with care.</p></div>';
+      const nearby = [...frame.creatures]
+        .filter((c) => c.owner === -1)
+        .sort(
+          (a, b) =>
+            Math.hypot(a.x - frame.player.x, a.y - frame.player.y) -
+            Math.hypot(b.x - frame.player.x, b.y - frame.player.y),
+        )
+        .slice(0, 6);
+      html += `<h4 class="list-heading">NEARBY IN THE WILD</h4><div class="creature-list">${nearby.map((c) => `<button data-action="select" data-id="${c.id}"><span class="creature-dot" style="background:#${SPECIES.find((s) => s.id === c.species)!.color.toString(16)}"></span><span>${c.name}<small>${c.elements.join(' · ')}</small></span><span>↗</span></button>`).join('') || '<p class="muted">No creatures in sight. Wander a little farther.</p>'}</div>`;
+    } else {
+      const nearby = frame.npcs
+        .map((npc) => ({
+          npc,
+          index: NPC_PROFILES.findIndex((p) => p.id === npc.profileId),
+          distance: Math.hypot(npc.x - frame.player.x, npc.y - frame.player.y),
+        }))
+        .sort((a, b) => a.distance - b.distance)
+        .slice(0, 10);
+      const festivalBanner = frame.festival
+        ? `<div class="festival-banner" role="status"><div class="festival-sparkle">✦ FESTIVAL DAY ✦</div><h4>${escapeHtml(frame.festival.name)}</h4><p>${escapeHtml(frame.festival.description)}</p></div>`
+        : '';
+      html = `${festivalBanner}<div class="journal-intro compact"><div class="eyebrow">FAMILIAR FACES</div><h3>Everyone has a rhythm.</h3><p>Villagers work, wander, share news, and make plans. Stop by and say hello.</p></div><div class="people-list">${nearby
+        .map(({ npc, index, distance }) => {
+          const hearts = npc.hearts ?? calculateVillagerHearts(npc.affinity);
+          return `<div class="person-card" data-key="${escapeHtml(npc.profileId)}"><span class="person-avatar village-${NPC_PROFILES[index]!.village}">${NPC_PROFILES[index]!.name[0]}</span><div><h4>${escapeHtml(NPC_PROFILES[index]!.name)} <small>${npc.partner !== null ? '✧' : ''}</small></h4><p>${escapeHtml(NPC_PROFILES[index]!.role)}</p><small>${escapeHtml(npc.activity)} · ♥ ${hearts}/10</small></div><button class="person-talk" data-action="talk" data-id="${index}" ${distance > 3 ? 'disabled' : ''} aria-label="Talk to ${escapeHtml(NPC_PROFILES[index]!.name)}">${distance <= 3 ? 'Talk ↗' : `${Math.round(distance)}m`}</button></div>`;
+        })
+        .join('')}</div>`;
+    }
+    if (this.panel === 'people') {
+      const human =
+        frame.humanNeeds.find((h) => h.id === this.selectedHuman) ?? frame.humanNeeds[0]!;
+      const name = human.id === 0 ? 'You' : NPC_PROFILES.find((_, i) => i + 1 === human.id)!.name;
+      const villager =
+        human.id > 0
+          ? frame.npcs.find((n) => n.profileId === NPC_PROFILES[human.id - 1]!.id)
+          : null;
+      const villagerHearts = villager
+        ? (villager.hearts ?? calculateVillagerHearts(villager.affinity))
+        : null;
+      const selector = frame.humanNeeds
+        .map(
+          (h) =>
+            `<button data-action="inspect-human" data-id="${h.id}">${h.id === 0 ? 'You' : escapeHtml(NPC_PROFILES[h.id - 1]!.name)}</button>`,
+        )
+        .join('');
+      const tastesList = villager?.discoveredTastes
+        ? Object.entries(villager.discoveredTastes)
+            .map(([id, taste]) => `${ITEMS[id as ItemId]?.name ?? id}: ${taste}`)
+            .join(', ')
+        : '';
+      const tastesHtml = tastesList
+        ? `<p class="villager-tastes"><b>Known tastes:</b> ${escapeHtml(tastesList)}</p>`
+        : '';
+      html =
+        `<details class="human-inspector" open><summary>${escapeHtml(name)}${villagerHearts !== null ? ` · ♥ ${villagerHearts}/10 hearts` : ''} · HP ${Math.ceil(human.hp)} / ${human.maxHp} · ${human.elements.join(' / ')}</summary><p>${human.nature.join(', ')} · ${human.sleeping ? 'Sleeping' : 'Awake'}</p>${tastesHtml}${meter('Food', human.food)}${meter('Water', human.water, 'water')}${meter('Recreation', human.recreation)}${meter('Cleanliness', human.cleanliness, 'water')}${meter('Rest', human.rest, 'warm')}<div class="human-selector">${selector}</div></details>` +
+        html;
+    }
+    this.setHtml('panel-content', html);
+  }
+  private creatureCard(creature: CreatureView): string {
+    const definition = SPECIES.find((s) => s.id === creature.species)!,
+      tamed = creature.owner === 0,
+      portrait = this.appearance?.portrait('species', creature.species);
+    const stats = creature.stats ?? {
+      hp: Math.ceil(creature.hp),
+      attack: creature.attack,
+      defense: creature.defense,
+      attunement: definition.attunement,
+      resonance: definition.resonance,
+      speed: creature.speed,
+    };
+    return `<div class="creature-card"><div class="creature-art creature-art-${creature.species}" style="--creature:#${definition.color.toString(16)}">${portrait ? `<img src="${escapeHtml(appUrl(portrait.hud128))}" alt="${escapeHtml(creature.name)} portrait" width="128" height="128"/>` : `<span class="creature-ear left"></span><span class="creature-ear right"></span><span class="creature-face"><i></i><i></i></span>`}<span class="creature-spark">✧</span></div><div class="creature-title"><div><div class="eyebrow">${tamed ? 'YOUR COMPANION' : creature.owner > 0 ? 'VILLAGER COMPANION' : 'A WILD LITTLE WONDER'}</div><h3>${creature.name}</h3></div><span class="element-tag">${creature.elements.join(' / ')}</span></div><p class="creature-description">${definition.description}</p><p class="creature-diet"><b>Likes</b> ${definition.diet.map((id) => ITEMS[id].name).join(', ')} <span>·</span> <b>Bathes in</b> ${definition.bath}</p>${tamed ? `<div class="creature-stats"><span>LV ${creature.level}</span><span>HP ${Math.ceil(creature.hp)} / ${creature.maxHp}</span><span>ATK ${stats.attack}</span><span>DEF ${stats.defense}</span><span>ELM ${stats.attunement}</span><span>RES ${stats.resonance}</span><span>SPD ${Math.round(stats.speed * 10) / 10}</span></div><p class="creature-nature"><b>Disposition</b> ${escapeHtml(creature.disposition ?? 'Hardy')} · <b>Bond</b> ${creature.bondHearts ?? 0}/10 hearts · <b>Potential</b> ${creature.revealedPotential ?? 0}/6 stars</p>${meter('Food', creature.food)}${meter('Water', creature.water, 'water')}${meter('Recreation', creature.recreation)}${meter('Cleanliness', creature.cleanliness, 'water')}${meter('Rest', creature.rest, 'warm')}${meter('Wildness', creature.wildness, 'warm')}` : `<div class="wild-stats"><span>HP ???</span><span>ATK ???</span><span>DEF ???</span></div>${meter('Trust', creature.trust, 'warm')}`}<p class="creature-mode">${escapeHtml(creature.mode)} · ${escapeHtml(creature.nature.join(', '))} · ${Math.round(Math.hypot(creature.x - this.frame!.player.x, creature.y - this.frame!.player.y))} tiles away</p><div class="care-buttons">${(['feed', 'water', 'pet', 'bathe', 'heal'] as const).map((action) => `<button data-action="care" data-care="${action}" data-id="${creature.id}">${action[0]!.toUpperCase() + action.slice(1)}</button>`).join('')}</div><button class="wide-secondary" data-action="${tamed ? 'release' : 'tame'}" data-id="${creature.id}">${tamed ? 'Release to the wild' : 'Form a partnership'} <span>♡</span></button><button class="secondary" data-action="partner-focus" data-id="${creature.id}">Companion: focus</button><button class="secondary" data-action="partner-regroup">Companion: regroup</button></div>`;
+  }
+  private renderConversation(): void {
+    const frame = this.frame!,
+      dialog = this.el<HTMLDialogElement>('conversation-dialog'),
+      conversation = frame.dialogue;
+    if (!conversation) {
+      if (dialog.open) dialog.close();
+      this.dialogSignature = '';
+      return;
+    }
+    const profile = NPC_PROFILES.find((p) => p.id === conversation.npcId)!;
+    if (!dialog.open) dialog.showModal();
+    this.el('conversation-name').textContent = profile.name;
+    const isBirthdayToday = frame.birthdaysToday?.includes(conversation.npcId);
+    this.el('conversation-role').textContent =
+      `${profile.role} · ${VILLAGES[profile.village]!.name}${isBirthdayToday ? ' · 🎂 Birthday Today!' : ''}`;
+    const npc = frame.npcs.find((n) => n.profileId === conversation.npcId);
+    const hearts = npc ? (npc.hearts ?? calculateVillagerHearts(npc.affinity)) : 0;
+    const heartsHtml = Array.from(
+      { length: 10 },
+      (_, i) =>
+        `<span class="villager-heart ${i < hearts ? 'filled' : 'empty'}">${i < hearts ? '♥' : '♡'}</span>`,
+    ).join('');
+    this.setHtml(
+      'conversation-hearts',
+      `<span class="hearts-display" title="${hearts}/10 hearts (${npc?.affinity ?? 0} affinity)">${heartsHtml} <small>${hearts}/10</small></span>`,
+    );
+    const emotion = latestNpcEmotion(conversation.lines);
+    const portrait = this.appearance?.portrait('npc', profile.id, emotion);
+    this.el('portrait').dataset.emotion = emotion;
+    this.el('portrait').dataset.portraitEmotion = portrait?.resolvedEmotion ?? 'neutral';
+    this.el('portrait').setAttribute(
+      'title',
+      portrait
+        ? `${profile.name} · ${portrait.resolvedEmotion ?? 'neutral'} portrait expression`
+        : `${profile.name} · portrait pending`,
+    );
+    this.el('conversation-emotion').textContent = emotion;
+    this.setHtml(
+      'portrait',
+      portrait
+        ? `<img data-key="portrait:${escapeHtml(profile.id)}" src="${escapeHtml(appUrl(portrait.hud128))}" width="96" height="96" alt="${escapeHtml(profile.name)} portrait"/>`
+        : `<span data-key="portrait-pending:${escapeHtml(profile.id)}" aria-label="${escapeHtml(profile.name)} · portrait pending">${escapeHtml(profile.name[0]!)}</span>`,
+    );
+    const signature = JSON.stringify([
+      conversation.npcId,
+      conversation.lines,
+      conversation.pendingJob,
+      conversation.reading,
+    ]);
+    if (signature !== this.dialogSignature) {
+      const prevLinesCount = this.dialogSignature
+        ? (JSON.parse(this.dialogSignature)[1]?.length ?? 0)
+        : 0;
+      if (conversation.lines.length > prevLinesCount) {
+        const latestLine = conversation.lines[conversation.lines.length - 1];
+        if (latestLine?.speaker === 'npc') {
+          this.handlers.dialogueBlip?.(conversation.npcId);
+        }
+      }
+      this.el('conversation-lines').innerHTML =
+        conversation.lines
+          .map(
+            (line) =>
+              `<div class="dialogue-line ${line.speaker}"><small>${line.speaker === 'player' ? 'YOU' : line.speaker === 'system' ? 'WORLD' : escapeHtml(profile.name.toUpperCase())}</small><p>${escapeHtml(line.text)}</p></div>`,
+          )
+          .join('') +
+        (conversation.pendingJob
+          ? `<div class="thinking"><span></span><span></span><span></span><small>${conversation.reading ? 'Reading… You can ask another question.' : 'Gathering a thought…'}</small></div>`
+          : '');
+      const lines = this.el('conversation-lines');
+      lines.scrollTop = lines.scrollHeight;
+      this.dialogSignature = signature;
+    }
+    this.el<HTMLButtonElement>('send-dialogue').disabled =
+      !!conversation.pendingJob && !conversation.reading;
+    this.el<HTMLInputElement>('dialogue-input').disabled =
+      !!conversation.pendingJob && !conversation.reading;
+    this.el<HTMLButtonElement>('dialogue-battle').hidden = profile.partner === null;
+    this.el<HTMLButtonElement>('dialogue-invite').disabled = conversation.invitePending === true;
+    const giftBtn = this.el<HTMLButtonElement>('dialogue-gift');
+    const hasItem = Boolean(frame.inventory[0] || frame.inventory[1]);
+    const alreadyGifted = npc?.lastGiftDay === frame.day;
+    giftBtn.disabled = !hasItem || alreadyGifted;
+    giftBtn.title = alreadyGifted
+      ? `${profile.name} already received a gift today`
+      : isBirthdayToday
+        ? `Offer a birthday gift to ${profile.name} (4× heart bonus!)`
+        : hasItem
+          ? 'Offer the carried item to this villager'
+          : 'Carry an item in your hotbar to give as a gift';
+    const staged = this.el('staged-note');
+    const offers = conversation.staged.length + (conversation.invitePending ? 1 : 0);
+    staged.hidden = offers === 0;
+    staged.textContent = `${offers} offer(s)${conversation.invitePending ? ', including your visit request,' : ''} will be checked and carried out when you finish talking.`;
+  }
+  private setHtml(id: string, html: string): void {
+    const el = this.el(id);
+    if (el.dataset.rendered === html) return;
+    patchView(el, html);
+    el.dataset.rendered = html;
+  }
+  renderCompanionSheet(): void {
+    const frame = this.frame;
+    if (!frame) return;
+    const partner = frame.creatures.find((c) => c.owner === 0);
+    const body = this.el('companion-sheet-body');
+    if (!partner) {
+      patchView(
+        body,
+        `<div class="companion-empty-state"><span class="companion-spark">✧</span><h3>A friend for the riverlands</h3><p>You have not formed a partnership with a creature yet. Explore the riverlands, offer wild creatures food and care, and build trust to travel together.</p></div>`,
+      );
+      return;
+    }
+
+    const definition = SPECIES.find((s) => s.id === partner.species)!;
+    const portrait = this.appearance?.portrait('species', partner.species);
+    const bondHearts = Math.min(10, Math.max(0, partner.bondHearts ?? 0));
+    const revealedPotential = partner.revealedPotential ?? 0;
+    const disposition = partner.disposition ?? 'Hardy';
+
+    const heartsHtml = Array.from(
+      { length: 10 },
+      (_, i) =>
+        `<span class="bond-heart ${i < bondHearts ? 'filled' : 'empty'}">${i < bondHearts ? '♥' : '♡'}</span>`,
+    ).join('');
+
+    const starsHtml = Array.from(
+      { length: 6 },
+      (_, i) =>
+        `<span class="potential-star ${i < revealedPotential ? 'revealed' : 'latent'}">${i < revealedPotential ? '★' : '☆'}</span>`,
+    ).join('');
+
+    const stats = partner.stats ?? {
+      hp: Math.ceil(partner.hp),
+      attack: partner.attack,
+      defense: partner.defense,
+      attunement: definition.attunement,
+      resonance: definition.resonance,
+      speed: partner.speed,
+    };
+    const baseStats = partner.baseStats ?? {
+      hp: definition.hp,
+      attack: definition.attack,
+      defense: definition.defense,
+      attunement: definition.attunement,
+      resonance: definition.resonance,
+      speed: definition.speed,
+    };
+
+    const statRows = [
+      { id: 'hp', name: 'Vitality', abbrev: 'HP', val: stats.hp, base: baseStats.hp, max: 200 },
+      {
+        id: 'attack',
+        name: 'Might',
+        abbrev: 'ATK',
+        val: stats.attack,
+        base: baseStats.attack,
+        max: 100,
+      },
+      {
+        id: 'defense',
+        name: 'Guard',
+        abbrev: 'DEF',
+        val: stats.defense,
+        base: baseStats.defense,
+        max: 100,
+      },
+      {
+        id: 'attunement',
+        name: 'Attunement',
+        abbrev: 'ELM',
+        val: stats.attunement,
+        base: baseStats.attunement,
+        max: 100,
+      },
+      {
+        id: 'resonance',
+        name: 'Resonance',
+        abbrev: 'RES',
+        val: stats.resonance,
+        base: baseStats.resonance,
+        max: 100,
+      },
+      {
+        id: 'speed',
+        name: 'Swiftness',
+        abbrev: 'SPD',
+        val: Math.round(stats.speed * 10) / 10,
+        base: Math.round(baseStats.speed * 10) / 10,
+        max: 10,
+      },
+    ];
+
+    const statsMarkup = statRows
+      .map((s) => {
+        const pct = Math.min(100, Math.round((s.val / s.max) * 100));
+        return `<div class="stat-row" data-stat="${s.id}"><div class="stat-label-bar"><span class="stat-name"><b>${s.name}</b> <small>(${s.abbrev})</small></span><span class="stat-values">${s.val} <small class="muted">(base ${s.base})</small></span></div><div class="stat-track kit-meter" role="progressbar" aria-label="${s.name}" aria-valuenow="${s.val}" aria-valuemin="0" aria-valuemax="${s.max}"><i class="kit-fill" style="width:${pct}%"></i></div></div>`;
+      })
+      .join('');
+
+    const moves = partner.moves && partner.moves.length > 0 ? partner.moves : ['strike'];
+    const moveCardsHtml = Array.from({ length: 4 }, (_, i) => {
+      const moveId = moves[i];
+      if (moveId) {
+        const moveDef = findMoveDefinition(moveId);
+        return `<div class="move-card" data-element="${moveDef.element}"><div class="move-card-header"><span class="move-name">${escapeHtml(moveDef.name)}</span><span class="element-badge element-${moveDef.element}">${escapeHtml(moveDef.element)}</span></div><div class="move-card-body"><span class="move-power">PWR <b>${moveDef.power}</b></span><span class="move-stamina">STM <b>${moveDef.stamina}</b></span></div></div>`;
+      } else {
+        return `<div class="move-card move-card-empty"><div class="move-empty-title">Slot ${i + 1} Empty</div><small class="muted">${i === 2 ? 'Unlocks at 6 hearts' : i === 3 ? 'Unlocks at 8 hearts' : 'Empty'}</small></div>`;
+      }
+    }).join('');
+
+    const wellbeing =
+      partner.wildness <= 20 && partner.trust >= 80
+        ? 'Well cared for: full strength in battle'
+        : partner.wildness > 50
+          ? 'Restless: needs care and reassurance'
+          : 'Steady companionship';
+
+    const html = `<div class="companion-sheet-layout"><div class="companion-profile-card"><div class="companion-art-frame">${portrait ? `<img src="${escapeHtml(appUrl(portrait.hud128))}" alt="${escapeHtml(partner.name)} portrait" width="128" height="128"/>` : `<div class="companion-fallback-avatar">✧</div>`}</div><div class="companion-identity"><div class="eyebrow">${escapeHtml(definition.name)} · LV ${partner.level}</div><h3 class="companion-display-name">${escapeHtml(partner.name)}</h3><div class="companion-badges">${partner.elements.map((el) => `<span class="element-badge element-${el}">${escapeHtml(el)}</span>`).join('')}<span class="disposition-badge" title="Disposition affects care reactions and stat multipliers">${escapeHtml(disposition)}</span></div><div class="bond-meter-group"><span class="group-label">Bond:</span><div class="bond-hearts" aria-label="Bond: ${bondHearts} out of 10 hearts">${heartsHtml}</div><span class="bond-number">${bondHearts}/10</span></div><div class="potential-meter-group"><span class="group-label">Potential:</span><div class="potential-stars" aria-label="Potential: ${revealedPotential} out of 6 stars discovered">${starsHtml}</div><span class="potential-number">${revealedPotential}/6</span></div></div></div><div class="companion-sheet-sections"><section class="companion-section stats-section"><h4 class="section-title">6-STAT PROGRESSION</h4><div class="stats-grid">${statsMarkup}</div></section><section class="companion-section moves-section"><h4 class="section-title">EQUIPPED MOVES</h4><div class="moves-grid">${moveCardsHtml}</div></section><section class="companion-section needs-section"><h4 class="section-title">WELLBEING & CARE</h4><div class="wellbeing-status" role="status"><span>✧</span> ${wellbeing}</div><div class="companion-needs-bars">${meter('Food', partner.food)}${meter('Water', partner.water, 'water')}${meter('Play', partner.recreation)}${meter('Clean', partner.cleanliness, 'water')}${meter('Rest', partner.rest, 'warm')}</div><div class="care-buttons">${(['feed', 'water', 'pet', 'bathe', 'heal'] as const).map((action) => `<button data-action="care" data-care="${action}" data-id="${partner.id}">${action[0]!.toUpperCase() + action.slice(1)}</button>`).join('')}</div><div class="partner-action-row"><button class="secondary" data-action="partner-focus" data-id="${partner.id}">Companion: focus</button><button class="secondary" data-action="partner-regroup">Companion: regroup</button></div></section></div></div>`;
+
+    patchView(body, html);
+  }
+  openMenu(id: 'map-dialog' | 'settings-dialog' | 'journal-dialog' | 'companion-sheet'): void {
+    if (id === 'settings-dialog')
+      this.el('image-recover').hidden = !this.handlers.imageRecoveryNeeded();
+    if (id === 'settings-dialog' && this.frame) {
+      const settings = this.frame.combatSettings;
+      for (const kind of ['player', 'partner', 'villager', 'wild'] as const)
+        for (const cat of ['melee', 'ranged'] as const)
+          this.el<HTMLInputElement>(`combat-${kind}-${cat}`).value = String(settings[kind][cat]);
+      this.el<HTMLInputElement>('combat-reaction-min').value = String(settings.reactionDelay.min);
+      this.el<HTMLInputElement>('combat-reaction-max').value = String(settings.reactionDelay.max);
+      this.el<HTMLInputElement>('combat-spacing').value = String(settings.grantSpacing);
+      this.el<HTMLInputElement>('combat-aggression').value = String(settings.aggressionBias);
+    }
+    if (id === 'companion-sheet') {
+      this.renderCompanionSheet();
+      this.el('companion-button').setAttribute('aria-expanded', 'true');
+      const active = document.activeElement;
+      this.overlayFocus.set(
+        'companion',
+        active instanceof HTMLElement && active !== document.body
+          ? active
+          : this.el('companion-button'),
+      );
+    }
+    if (!this.frame || this.frame.dialogue) return;
+    if (document.querySelector('dialog[open]')) return;
+    void this.command({ type: 'pause', token: 'menu' });
+    this.el<HTMLDialogElement>(id).showModal();
+    if (id === 'map-dialog') this.drawMap();
+  }
+  setAssets(catalog: AssetCatalog): void {
+    this.appearance = new AppearanceResolver(catalog);
+  }
+  closeOverlay(): boolean {
+    const companion = this.el<HTMLDialogElement>('companion-sheet');
+    if (companion && companion.open) {
+      companion.close();
+      return true;
+    }
+    for (const overlay of ['inventory', 'inspection'] as const)
+      if (!this.el(`${overlay}-panel`).hidden) {
+        this.intent({ type: 'toggle', overlay });
+        return true;
+      }
+    return false;
+  }
+  openInventory(): void {
+    if (this.el('inventory-panel').hidden) this.intent({ type: 'toggle', overlay: 'inventory' });
+  }
+  intent(intent: UiIntent): void {
+    if (intent.type === 'use') {
+      this.useItem(intent.slot);
+      return;
+    }
+    const command = commandForIntent(intent);
+    if (command) {
+      void this.command(command);
+      return;
+    }
+    if (intent.type !== 'toggle' || !this.frame || this.frame.dialogue) return;
+    if (
+      intent.overlay === 'journal' ||
+      intent.overlay === 'map' ||
+      intent.overlay === 'settings' ||
+      intent.overlay === 'companion'
+    ) {
+      const dialogId =
+        intent.overlay === 'map'
+          ? 'map-dialog'
+          : intent.overlay === 'journal'
+            ? 'journal-dialog'
+            : intent.overlay === 'companion'
+              ? 'companion-sheet'
+              : 'settings-dialog';
+      const dialog = this.el<HTMLDialogElement>(dialogId);
+      if (dialog.open) {
+        dialog.close();
+      } else {
+        this.openMenu(
+          dialogId as 'map-dialog' | 'settings-dialog' | 'journal-dialog' | 'companion-sheet',
+        );
+      }
+      return;
+    }
+    const panel = this.el(`${intent.overlay}-panel`);
+    const opening = panel.hidden;
+    panel.hidden = !opening;
+    this.el(`${intent.overlay === 'inventory' ? 'inventory' : 'inspection'}-button`).setAttribute(
+      'aria-expanded',
+      String(opening),
+    );
+    if (opening) {
+      const active = document.activeElement;
+      this.overlayFocus.set(
+        intent.overlay,
+        active instanceof HTMLElement && active !== document.body
+          ? active
+          : this.el(`${intent.overlay}-button`),
+      );
+      panel.querySelector<HTMLElement>('button')?.focus();
+    } else this.overlayFocus.get(intent.overlay)?.focus();
+  }
+  setTerrain(terrain: TerrainView): void {
+    this.terrain = terrain;
+    const canvas = document.createElement('canvas');
+    canvas.width = canvas.height = terrain.size;
+    const ctx = canvas.getContext('2d')!,
+      image = ctx.createImageData(terrain.size, terrain.size);
+    for (let i = 0; i < terrain.biome.length; i++) {
+      const color =
+        terrain.flags[i]! & 2
+          ? 0xd5c798
+          : terrain.fluid[i]
+            ? 0x689d9d
+            : BIOME_COLORS[terrain.biome[i]!]!;
+      image.data[i * 4] = color >> 16;
+      image.data[i * 4 + 1] = (color >> 8) & 255;
+      image.data[i * 4 + 2] = color & 255;
+      image.data[i * 4 + 3] = 255;
+    }
+    ctx.putImageData(image, 0, 0);
+    this.mapBackground = canvas;
+    this.el('settlement-list').innerHTML = SETTLEMENTS.map(
+      (s) =>
+        `<button data-action="travel" data-settlement="${s.id}" class="settlement-button"><span>${s.capital ? '✦' : '◇'}</span><span>${s.name}<small>${s.capital ? 'ELEMENTAL VILLAGE' : 'REMOTE OUTPOST'}</small></span><span>→</span></button>`,
+    ).join('');
+  }
+  private drawMap(): void {
+    const canvas = this.el<HTMLCanvasElement>('world-map'),
+      context = canvas.getContext('2d')!;
+    const frame = this.frame;
+    if (!frame) return;
+    const local = !frame.scene.outside && this.mapLayer === 'local';
+    this.el('map-title').textContent = local
+      ? (frame.scene.name ?? 'Interior')
+      : 'The elemental wilds';
+    this.el('map-local-layer').textContent = frame.scene.outside
+      ? 'Overworld'
+      : (frame.scene.name ?? 'Interior');
+    this.el('map-local-layer').setAttribute(
+      'aria-current',
+      local || frame.scene.outside ? 'location' : 'false',
+    );
+    this.el('map-world-layer').setAttribute('aria-current', !local ? 'location' : 'false');
+    this.el('map-scene-status').textContent = frame.scene.outside
+      ? 'World / Overworld'
+      : `World / ${frame.scene.name ?? 'Interior'}${local ? '' : ' · last observed outdoor context'}`;
+    this.el('settlement-list').hidden = !frame.scene.outside;
+    this.el('map-guidance').textContent = local
+      ? 'Current-scene terrain, walls, props and doorways. Explore on foot; the map does not move you.'
+      : !frame.scene.outside
+        ? this.worldMapBackground
+          ? 'World context from your last outdoor view. Return through a doorway to travel.'
+          : 'World terrain is unavailable until you return outdoors. Settlement markers show authored world locations.'
+        : 'Roads connect three villages and six outposts. At a settlement waystone, travel to any other settlement.';
+    canvas.setAttribute(
+      'aria-label',
+      local ? `Local map of ${frame.scene.name ?? 'Interior'}` : 'Map of villages and outposts',
+    );
+    context.fillStyle = '#233d36';
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    if (local && this.terrain) {
+      const margin = 32;
+      const scale = Math.min(
+        (canvas.width - margin * 2) / frame.scene.width,
+        (canvas.height - margin * 2) / frame.scene.height,
+      );
+      const originX = (canvas.width - frame.scene.width * scale) / 2;
+      const originY = (canvas.height - frame.scene.height * scale) / 2;
+      context.imageSmoothingEnabled = false;
+      for (let y = 0; y < frame.scene.height; y++)
+        for (let x = 0; x < frame.scene.width; x++) {
+          const at = y * this.terrain.size + x;
+          context.fillStyle =
+            this.terrain.flags[at]! & TileFlag.Solid
+              ? '#142b27'
+              : this.terrain.fluid[at]
+                ? '#689d9d'
+                : '#9caa86';
+          context.fillRect(originX + x * scale, originY + y * scale, scale, scale);
+        }
+      for (const prop of frame.scene.props) {
+        context.fillStyle = prop.layer === 'ground' ? '#adbb95' : '#53694f';
+        context.fillRect(originX + prop.x * scale - 3, originY + prop.y * scale - 3, 6, 6);
+      }
+      context.font = '38px Silver';
+      context.textAlign = 'center';
+      for (const portal of frame.scene.portals) {
+        const x = originX + portal.x * scale,
+          y = originY + portal.y * scale;
+        context.fillStyle = portal.allowed ? '#a9dfc9' : '#c18e79';
+        context.fillRect(x - 5, y - 5, 10, 10);
+        context.fillStyle = '#f2ead3';
+        context.fillText(portal.name, x, y - 12);
+      }
+      context.fillStyle = '#fff1be';
+      context.beginPath();
+      context.arc(
+        originX + frame.player.x * scale,
+        originY + frame.player.y * scale,
+        5,
+        0,
+        Math.PI * 2,
+      );
+      context.fill();
+      return;
+    }
+    const background = frame.scene.outside ? this.mapBackground : this.worldMapBackground;
+    if (background) context.drawImage(background, 0, 0, canvas.width, canvas.height);
+    context.font = '38px Silver';
+    context.textAlign = 'center';
+    for (const s of SETTLEMENTS) {
+      context.fillStyle = '#243f36';
+      context.fillRect(s.x - 4, s.y - 4, 8, 8);
+      context.fillStyle = '#f1dc9c';
+      context.fillRect(s.x - 2, s.y - 2, 4, 4);
+      context.strokeStyle = '#334f41';
+      context.lineWidth = 3;
+      context.strokeText(s.name, s.x, s.y - 10);
+      context.fillStyle = '#f2e9c9';
+      context.fillText(s.name, s.x, s.y - 10);
+    }
+    const player = frame.scene.outside ? frame.player : this.worldMapPlayer;
+    if (player) {
+      context.fillStyle = '#fff1be';
+      context.beginPath();
+      context.arc(player.x, player.y, 4, 0, Math.PI * 2);
+      context.fill();
+      context.strokeStyle = '#355046';
+      context.lineWidth = 2;
+      context.stroke();
+      for (const marker of frame.markers) {
+        context.strokeStyle = '#f0d49a';
+        context.strokeRect(marker.x - 3, marker.y - 3, 6, 6);
+      }
+    }
+  }
+  get inputBlocked(): boolean {
+    return !!document.querySelector('dialog[open]');
+  }
+  useItem(slot: 0 | 1): void {
+    const item = this.frame?.inventory[slot];
+    if (item?.id === 'note' || item?.id === 'book') void this.book.open(slot);
+    else if (item?.id === 'canvas' || item?.id === 'painting') void this.painting.open(slot);
+    else void this.command({ type: 'use', slot });
+  }
+  openPainting(): void {
+    const slot =
+      this.frame?.inventory.findIndex((item) => item?.id === 'canvas' || item?.id === 'painting') ??
+      -1;
+    if (slot >= 0) void this.painting.open(slot as 0 | 1);
+    else this.notify('Carry a blank canvas to paint at the easel.');
+  }
+  inspectText(): boolean {
+    const frame = this.frame;
+    if (!frame) return false;
+    const displayed = frame.placements
+      .map((p) => ({ placement: p, prop: frame.scene.props.find((prop) => prop.id === p.propId) }))
+      .filter(
+        ({ placement, prop }) =>
+          placement.sceneId === frame.scene.id &&
+          prop &&
+          Math.hypot(prop.x - frame.player.x, prop.y - frame.player.y) <= 2 &&
+          frame.artifacts.some((a) => a.id === placement.artifactId),
+      )
+      .sort(
+        (a, b) =>
+          Math.hypot(a.prop!.x - frame.player.x, a.prop!.y - frame.player.y) -
+            Math.hypot(b.prop!.x - frame.player.x, b.prop!.y - frame.player.y) ||
+          a.placement.artifactId.localeCompare(b.placement.artifactId),
+      );
+    if (!displayed[0]) return false;
+    const id = displayed[0].placement.artifactId;
+    if (frame.artifacts.find((artifact) => artifact.id === id)?.kind === 'painting')
+      void this.painting.open(null, id);
+    else void this.book.open(null, id);
+    return true;
+  }
+  get currentFrame(): RenderSnapshot | null {
+    return this.frame;
+  }
+  private imageSettings(): ImageSettings {
+    return {
+      endpoint: this.el<HTMLInputElement>('image-endpoint').value.trim(),
+      provider:
+        this.el<HTMLSelectElement>('image-provider').value === 'ollama' ? 'ollama' : 'sdcpp',
+      unload: this.el<HTMLInputElement>('image-unload').checked,
+    };
+  }
+  dispose(): void {
+    this.book.dispose();
+    this.painting.dispose();
+    if (this.toastTimer) clearTimeout(this.toastTimer);
+  }
+}

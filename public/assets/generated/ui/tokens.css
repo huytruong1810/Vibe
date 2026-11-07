@@ -1,0 +1,19 @@
+/* Generated from ui_theme.json and palette.json. */
+:root {
+--ui-panel: #1a243e;
+--ui-panelBevelLight: #2e4066;
+--ui-panelBevelDark: #213156;
+--ui-frameGold: #c9a044;
+--ui-frameGoldLight: #e1bc6f;
+--ui-frameGoldShadow: #a8671b;
+--ui-outline: #2c2937;
+--ui-text: #fbf3e0;
+--ui-textMuted: #f0e5cb;
+--ui-textAccent: #6ec1b2;
+--ui-textDanger: #ec7c64;
+--ui-hp: #c3443c;
+--ui-stamina: #c98b3a;
+--ui-xp: #7cc6bf;
+--ui-need: #2f9d99;
+--ui-focusRing: #f3d9a4;
+}
