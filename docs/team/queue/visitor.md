@@ -133,6 +133,20 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
 - done when: unit tests verify 10-step heart calculations, gift taste evaluations and affinity deltas, and journal taste discovery; `npm run check` passes.
 - evidence: **Changed:** `src/content/villagers.ts`, `src/domain/agents.ts`, `src/domain/contracts.ts`, `src/domain/simulation.ts`, `src/presentation/hud.ts`, `src/presentation/ui/view.ts`, `src/presentation/ui/hud.css`, `tests/life-sim-hearts.test.ts`. **Evidence:** `tests/life-sim-hearts.test.ts` (4/4 passed). Authored distinct lore-grounded gift taste tables (`loved`, `liked`, `neutral`, `disliked`, `hated`) for all 10 Aqualia villagers; mapped affinity substrate (-100..100) into 10 fixed heart steps (0..10) per LIF-2.3; implemented affinity deltas (+8, +4, +2, -4, -8) with 4x birthday scaling and dialogue emotions; added player `giveGift` command enforcing 1 gift per day, inventory removal, taste discovery recording, and dialogue reaction lines; updated HUD dialogue header with 10-heart visual meter and gift offering button, and updated People inspector with heart count and discovered gift tastes. Full `npm run check` passed (55 test suites, 606 tests passed, Vite build passed).
 
+### V20 · `LIF-M3…M5` Villager birthdays, seasonal festivals & heart-event skeletons (LIF-4, LIF-5)
+
+- status: in-progress (visitor)
+- goal: author canonical birthdays across the 28-day year for all 10 Aqualia villagers, wire 4x birthday gift affinity scaling and birthday celebration dialogue, author the 4 seasonal festival definitions (Spring Reedlight Float, Summer Kiln Fair, Autumn Kite Moon, Winter Hearth Night) with Day 7 schedule overrides, and author grounded heart-event skeletons at 2, 4, 6, 8, 10 hearts with expression tags.
+- inputs: `docs/doctrine/07-life-sim.md` (LIF-4, LIF-5), `src/content/villagers.ts`, `src/content/heart-events.ts`, `src/domain/core.ts`, `src/domain/contracts.ts`, `src/domain/simulation.ts`, `src/presentation/hud.ts`.
+- done when: unit tests verify birthday coverage, 4x birthday gift multiplier, festival schedules and overrides on Day 7, and heart event skeleton validation; `npm run check` passes.
+
+### V21 · `AMB-M1…M4` World ambience emitters, foliage wind sway & phase color grading (AMB-1…4)
+
+- status: open (visitor)
+- goal: implement presentation-only ambient particle emitter system (petals, river mist, fireflies, spores, autumn leaves), continuous global wind field driving foliage and reed sway, 4-phase time-of-day color grading (dawn, midday, dusk, night), and prop additive light pools.
+- inputs: `docs/doctrine/08-world-and-ambience.md` (AMB-1…4), `src/presentation/ambience.ts`, `src/presentation/renderer.ts`.
+- done when: unit tests verify ambient particle generation per biome/season/weather, quality settings scaling, wind sway calculation, and phase color grading tints; `npm run check` passes.
+
 ## Now: Acting-Director Art Review & Triage (`TEAM-4.2`)
 
 ### V3 · Verify `B27` staging output and `M25` manifest integration readiness
