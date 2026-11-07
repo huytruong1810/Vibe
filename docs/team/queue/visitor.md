@@ -87,10 +87,11 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
 
 ### V14 · `AGT-M1` / `AGT-M4` Dialogue voice blips & audio ducking (AGT-4.2, Proposal 002-r2)
 
-- status: in-progress (visitor)
+- status: candidate (visitor)
 - goal: implement procedural syllable voice blips for all 10 Aqualia villagers and background audio ducking during conversation per Proposal 002-r2 and doctrine AGT-4.2.
 - inputs: `docs/team/proposals/002-aqualia-voice-casting.md`, `src/presentation/audio.ts`, `src/presentation/hud.ts`, `src/main.ts`.
 - done when: unit tests verify all 10 villager blip configurations, cadence/envelope synthesis, ducking transition, and conversation dialogue integration; `npm run check` passes.
+- evidence: **Changed:** `src/presentation/audio.ts`, `src/presentation/hud.ts`, `src/main.ts`. **Evidence:** `tests/audio-voice.test.ts` (4/4 pass). 10 authored villager profiles matching Proposal 002-r2 (`caelum` 125Hz triangle, `marina` 260Hz sine, `neris` 145Hz saw, `reed` 180Hz square, `willa` 220Hz sine, `oren` 110Hz triangle, `mira` 240Hz triangle, `lark` 165Hz sine, `dara` 200Hz square, `finn` 175Hz triangle), syllable cadence throttling, audio ducking (-60% ambient volume) during `#conversation-dialog`, and `npm run check` (51 test suites, 588 tests) passes.
 
 ## Now: Acting-Director Art Review & Triage (`TEAM-4.2`)
 

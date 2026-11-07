@@ -131,6 +131,7 @@ export class GameBootstrap {
             .catch((error) => this.hud.notify(String(error)));
       },
       audio: () => this.audio.toggle(),
+      dialogueBlip: (npcId) => this.audio.dialogueBlip(npcId),
       select: (id) => this.renderer.select(id),
     });
     this.rendererReady = document.fonts
@@ -192,6 +193,7 @@ export class GameBootstrap {
         if (event && ['gather', 'craft', 'care', 'victory', 'hit'].includes(event.type))
           this.audio.cue(event.type as 'gather' | 'craft' | 'care' | 'victory' | 'hit');
       }
+      this.audio.setDialogueDucking(!!frame.dialogue);
       this.audio.ambience(frame.season);
       // Renderer copied entity coordinates; UI never reads packed data. Return only the disposable copy.
       this.bridge.recycle(frame.packed.buffer as ArrayBuffer);

@@ -68,6 +68,7 @@ export interface HudHandlers {
   import(file: File): Promise<void>;
   settings(quality: Quality, reducedMotion: boolean, debug: boolean): void;
   audio(): Promise<boolean>;
+  dialogueBlip?(npcId: string): void;
   select(id: number | null): void;
 }
 
@@ -959,6 +960,15 @@ export class HudPresenter {
       conversation.reading,
     ]);
     if (signature !== this.dialogSignature) {
+      const prevLinesCount = this.dialogSignature
+        ? (JSON.parse(this.dialogSignature)[1]?.length ?? 0)
+        : 0;
+      if (conversation.lines.length > prevLinesCount) {
+        const latestLine = conversation.lines[conversation.lines.length - 1];
+        if (latestLine?.speaker === 'npc') {
+          this.handlers.dialogueBlip?.(conversation.npcId);
+        }
+      }
       this.el('conversation-lines').innerHTML =
         conversation.lines
           .map(
