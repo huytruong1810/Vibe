@@ -2,6 +2,7 @@ import {
   SPECIES,
   VILLAGES,
   CREATURE_MOVES,
+  learnableMovesForSpecies,
   type CreatureDefinition,
   type SpeciesId,
   type ItemId,
@@ -520,6 +521,10 @@ export class EntityStore {
           ...new Set(targets.map((t) => `Hostile-${t}`)),
         ];
   }
+  displayDisposition(slot: number): string {
+    const t = this.temperament(slot);
+    return t.name.charAt(0).toUpperCase() + t.name.slice(1);
+  }
   snapshot(): EntitySnapshot {
     return {
       count: this.count,
@@ -599,6 +604,20 @@ export class EntityStore {
   setMoves(slot: number, moves: readonly string[]): boolean {
     const max = this.maxMoveSlots(slot);
     if (moves.length > max || moves.length === 0) return false;
+    const def = this.definition(slot);
+    if (def) {
+      const speciesId = def.id as SpeciesId;
+      const learnable = learnableMovesForSpecies(
+        speciesId,
+        this.level[slot] ?? 1,
+        Math.floor(this.bondHearts[slot] ?? 0),
+      );
+      const learnableIds = new Set(learnable.map((m) => m.moveId));
+      learnableIds.add('strike');
+      for (const move of moves) {
+        if (!learnableIds.has(move)) return false;
+      }
+    }
     this.loadouts.set(this.ids[slot]!, moves);
     return true;
   }
