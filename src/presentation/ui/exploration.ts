@@ -88,7 +88,7 @@ export function updateExploration(
     const portrait = appearance?.portrait('species', partner.species);
     patchView(
       companion,
-      `${portrait ? `<img data-key="partner:portrait" src="${escapeHtml(appUrl(portrait.hud96))}" alt="${escapeHtml(partner.name)}" class="companion-portrait"/>` : ''}<span class="partner-intent" data-key="partner:intent" role="img" aria-label="Companion intent: ${intent}" title="${intent}">${intentIcon}</span><div class="companion-body" data-key="partner:body"><div class="companion-title">${escapeHtml(partner.name)} · ${Math.ceil(partner.hp)}/${partner.maxHp}</div><div class="companion-needs">${(
+      `${portrait ? `<button type="button" class="companion-medallion-button" id="companion-medallion" data-action="companion-medallion" aria-label="Open companion inspection sheet"><img data-key="partner:portrait" src="${escapeHtml(appUrl(portrait.hud96))}" alt="${escapeHtml(partner.name)}" class="companion-portrait"/></button>` : ''}<span class="partner-intent" data-key="partner:intent" role="img" aria-label="Companion intent: ${intent}" title="${intent}">${intentIcon}</span><div class="companion-body" data-key="partner:body"><div class="companion-title">${escapeHtml(partner.name)} · ${Math.ceil(partner.hp)}/${partner.maxHp}</div><div class="companion-needs">${(
         [
           ['Food', partner.food],
           ['Water', partner.water],

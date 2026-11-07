@@ -288,6 +288,9 @@ body {
   padding: 4px;
   pointer-events: none;
 }
+.hd-game .companion-medallion-button {
+  pointer-events: auto;
+}
 .hd-game .companion-hud .need {
   display: grid;
   grid-template-columns: 130px 1fr;

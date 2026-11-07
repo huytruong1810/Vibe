@@ -7,10 +7,9 @@ import { EffectDirector } from '../src/presentation/effects';
 describe('CMB-M3 & CMB-M5 Action combat feel: presentation hit-stop and rich hit-cues', () => {
   it('enriches hit presentation cues with element, effectiveness, and critical flags', () => {
     const host = new SimulationHost(42, 1, 0, 'world:hitstop:richcue');
-    const s = host.entities;
     host.player.facingX = 1;
     host.player.facingY = 0;
-    const targetSlot = host.creatures.spawn(0, host.player.x + 1.2, host.player.y);
+    host.creatures.spawn(0, host.player.x + 1.2, host.player.y);
 
     // Start strike attack
     expect(send(host, { type: 'attack', kind: 'strike' }).ok).toBe(true);

@@ -119,10 +119,11 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
 
 ### V18 · `UI-M4` Companion inspection page with 6-stat progression & moves (UI-M4, CRE-3)
 
-- status: in-progress (visitor)
+- status: candidate (visitor)
 - goal: implement companion inspection sheet in the HUD (toggled via 'P' or medallion click) displaying 6-stat meters, bond hearts, potential stars, equipped moves, and disposition description.
 - inputs: `docs/doctrine/04-agent-model.md` (UI-M4), `src/presentation/hud.ts`, `src/presentation/ui/view.ts`.
 - done when: companion sheet opens reliably, accurately displays companion 6-stats, moves, and bond hearts, and maintains accessibility focus traps; `npm run check` passes.
+- evidence: **Changed:** `src/domain/contracts.ts`, `src/domain/entities.ts`, `src/domain/simulation.ts`, `src/presentation/hud.ts`, `src/presentation/ui/layout.ts`, `src/presentation/ui/exploration.ts`, `src/presentation/ui/view.ts`, `src/presentation/ui/state.ts`, `src/presentation/ui/hud.css`, `src/presentation/ui/theme.css`, `src/main.ts`. **Evidence:** `tests/creature-stats.test.ts` (6/6 passed) and Playwright browser suite `tests/browser/companion-sheet.spec.ts` (1/1 passed). Companion inspection sheet modal opens reliably via 'P' key, exploration companion medallion click, and toolbar button; displays 6-stat progression meters, 10-heart bond meter, 6-star potential meter, 4 equipped move cards, and disposition badge; traps focus within dialog and restores focus upon Escape / close. `npm run check` passes (0 hygiene errors, typecheck clean, 54 test suites with 602 tests passed, build clean).
 
 ### V19 · `LIF-M1` & `LIF-M2` Villager 10-step heart presentation & gift taste tables (LIF-2, LIF-3)
 

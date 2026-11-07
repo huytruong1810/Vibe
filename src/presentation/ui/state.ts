@@ -2,7 +2,7 @@ import type { CommandPayload, RenderSnapshot } from '../../domain/contracts';
 import { NPC_PROFILES } from '../../content/definitions';
 import type { GearSlot } from '../../domain/equipment';
 import { FURNITURE_ACTION_LABELS, nearestInteraction } from './interaction';
-export type Overlay = 'inventory' | 'inspection' | 'journal' | 'map' | 'settings';
+export type Overlay = 'inventory' | 'companion' | 'inspection' | 'journal' | 'map' | 'settings';
 export type UiIntent =
   | { readonly type: 'toggle'; readonly overlay: Overlay }
   | { readonly type: 'use'; readonly slot: 0 | 1 }

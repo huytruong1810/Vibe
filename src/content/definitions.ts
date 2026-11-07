@@ -710,6 +710,16 @@ export const SPECIES_LEARNABLE_MOVES: Readonly<Record<SpeciesId, readonly Specie
       stamina: 14,
     },
   ],
+  human: [
+    {
+      moveId: 'strike',
+      name: 'Strike',
+      requiredLevel: 1,
+      element: 'physical',
+      power: 8,
+      stamina: 4,
+    },
+  ],
 };
 
 export function learnableMovesForSpecies(
@@ -719,6 +729,24 @@ export function learnableMovesForSpecies(
 ): readonly SpeciesMoveLearn[] {
   const pool = SPECIES_LEARNABLE_MOVES[speciesId] ?? [];
   return pool.filter((m) => m.requiredLevel <= level && (m.requiredBondHearts ?? 0) <= bondHearts);
+}
+
+export function findMoveDefinition(moveId: string): SpeciesMoveLearn {
+  for (const moves of Object.values(SPECIES_LEARNABLE_MOVES)) {
+    const found = moves.find((m) => m.moveId === moveId);
+    if (found) return found;
+  }
+  return {
+    moveId,
+    name:
+      moveId === 'strike'
+        ? 'Strike'
+        : moveId.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()),
+    requiredLevel: 1,
+    element: 'physical',
+    power: 10,
+    stamina: 4,
+  };
 }
 
 export interface CreatureMoveset {

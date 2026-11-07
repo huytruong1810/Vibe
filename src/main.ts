@@ -555,6 +555,14 @@ export class GameBootstrap {
       const key = event.key.toLowerCase();
       if ([' ', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright'].includes(key))
         event.preventDefault();
+      if (key === 'escape') {
+        if (!this.hud.closeOverlay()) this.hud.openMenu('settings-dialog');
+        return;
+      }
+      if (key === 'p') {
+        this.hud.intent({ type: 'toggle', overlay: 'companion' });
+        return;
+      }
       if (this.hud.inputBlocked || !this.frame || event.repeat) return;
       this.keys.add(key);
       this.updateMovement();
@@ -585,7 +593,6 @@ export class GameBootstrap {
       if (key === 'f' && !this.hud.inspectText())
         this.hud.intent({ type: 'toggle', overlay: 'inspection' });
       if (key === 'l') this.hud.intent({ type: 'toggle', overlay: 'journal' });
-      if (key === 'escape' && !this.hud.closeOverlay()) this.hud.openMenu('settings-dialog');
     });
     window.addEventListener('keyup', (event) => {
       this.keys.delete(event.key.toLowerCase());

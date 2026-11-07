@@ -17,6 +17,7 @@ import { ARTIFACT_LIMITS } from '../content/definitions';
 import type { EquipmentView } from './equipment';
 import type { Artifact, ArtifactView, ArtifactPlacement } from './artifacts';
 import type { ScenePresentation, ProjectilePresentation } from './presentation-contract';
+import type { StatName } from './entities';
 
 const npc = z.enum(NPC_PROFILES.map((n) => n.id) as [NpcId, ...NpcId[]]);
 const slot = z.union([z.literal(0), z.literal(1)]);
@@ -40,7 +41,10 @@ export const CommandPayloadSchema = z.discriminatedUnion('type', [
     .object({
       type: z.literal('paintingTouchUp'),
       slot,
-      pixels: z.string().length(1024).regex(/^[A-Za-z0-9+/]+$/),
+      pixels: z
+        .string()
+        .length(1024)
+        .regex(/^[A-Za-z0-9+/]+$/),
       palette: z
         .array(
           z
@@ -251,6 +255,14 @@ export interface CreatureView {
   readonly mode: string;
   readonly x: number;
   readonly y: number;
+  readonly bondHearts?: number;
+  readonly disposition?: string;
+  readonly moves?: readonly string[];
+  readonly stats?: Readonly<Record<StatName, number>>;
+  readonly baseStats?: Readonly<Record<StatName, number>>;
+  readonly potential?: readonly number[];
+  readonly revealedPotential?: number;
+  readonly conditioning?: readonly number[];
 }
 export interface PerformanceView {
   readonly stepMs: number;

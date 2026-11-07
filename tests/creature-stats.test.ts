@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest';
+import { SimulationHost } from '../src/domain/simulation';
 import { SPECIES } from '../src/content/definitions';
 import {
   TEMPERAMENTS,
@@ -135,5 +136,45 @@ describe('CRE-M1..M6 Creature 6-Stat Progression & Move Loadouts', () => {
     expect(store.maxMoveSlots(slot)).toBe(3);
     store.bondHearts[slot] = 8;
     expect(store.maxMoveSlots(slot)).toBe(4);
+  });
+
+  it('computes 6 effectiveStats and baseStats on EntityStore and exposes in RenderSnapshot (UI-M4)', () => {
+    const store = new EntityStore();
+    const slot = store.spawn(0, 10, 10); // Ignicap
+    store.bondHearts[slot] = 6;
+
+    const base = store.baseStats(slot);
+    expect(base.hp).toBe(64);
+    expect(base.attack).toBe(12);
+    expect(base.defense).toBe(7);
+    expect(base.attunement).toBe(14);
+    expect(base.resonance).toBe(8);
+    expect(base.speed).toBe(2.5);
+
+    const effective = store.effectiveStats(slot);
+    expect(effective.hp).toBeGreaterThan(0);
+    expect(effective.attack).toBeGreaterThan(0);
+    expect(effective.defense).toBeGreaterThan(0);
+    expect(effective.attunement).toBeGreaterThan(0);
+    expect(effective.resonance).toBeGreaterThan(0);
+    expect(effective.speed).toBeGreaterThan(0);
+
+    // Also check via SimulationHost
+    const host = new SimulationHost(42, 1);
+    const companionSlot = host.creatures.spawn(1, host.player.x + 1, host.player.y);
+    host.creatures.owner[companionSlot] = 0; // Owned partner
+    host.creatures.bondHearts[companionSlot] = 5;
+
+    const frame = host.frame();
+    const partner = frame.creatures.find((c) => c.owner === 0);
+    expect(partner).toBeDefined();
+    expect(partner!.bondHearts).toBe(5);
+    expect(partner!.disposition).toBeDefined();
+    expect(partner!.moves).toBeDefined();
+    expect(partner!.stats).toBeDefined();
+    expect(partner!.stats!.hp).toBeGreaterThan(0);
+    expect(partner!.baseStats).toBeDefined();
+    expect(partner!.baseStats!.hp).toBe(72);
+    expect(partner!.revealedPotential).toBe(2);
   });
 });

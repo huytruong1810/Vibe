@@ -13,7 +13,14 @@ import {
 } from './ui/state';
 import { patchView } from './ui/patch';
 import { AppearanceResolver, type AssetCatalog } from './assets/catalog';
-import { ITEMS, NPC_PROFILES, SETTLEMENTS, SPECIES, VILLAGES } from '../content/definitions';
+import {
+  ITEMS,
+  NPC_PROFILES,
+  SETTLEMENTS,
+  SPECIES,
+  VILLAGES,
+  findMoveDefinition,
+} from '../content/definitions';
 import type {
   CommandPayload,
   CommandResult,
@@ -282,6 +289,9 @@ export class HudPresenter {
     this.el('inspection-button').addEventListener('click', () =>
       this.intent({ type: 'toggle', overlay: 'inspection' }),
     );
+    this.el('companion-button').addEventListener('click', () =>
+      this.intent({ type: 'toggle', overlay: 'companion' }),
+    );
     this.el('field-journal-button').addEventListener('click', () =>
       this.intent({ type: 'toggle', overlay: 'journal' }),
     );
@@ -315,10 +325,16 @@ export class HudPresenter {
       button.addEventListener('click', () =>
         this.el<HTMLDialogElement>(button.dataset.close!).close(),
       );
-    for (const id of ['map-dialog', 'settings-dialog', 'journal-dialog'])
+    for (const id of ['map-dialog', 'settings-dialog', 'journal-dialog', 'companion-sheet'])
       this.el<HTMLDialogElement>(id).addEventListener('close', () => {
+        if (id === 'companion-sheet') {
+          this.el('companion-button').setAttribute('aria-expanded', 'false');
+          this.overlayFocus.get('companion')?.focus();
+        }
         if (
-          !document.querySelector('#map-dialog[open],#settings-dialog[open],#journal-dialog[open]')
+          !document.querySelector(
+            '#map-dialog[open],#settings-dialog[open],#journal-dialog[open],#companion-sheet[open]',
+          )
         )
           void this.command({ type: 'resume', token: 'menu' });
       });
@@ -438,6 +454,8 @@ export class HudPresenter {
           ...(button.dataset.drop === 'true' ? { drop: true } : {}),
         });
       else if (action === 'use') this.useItem(id as 0 | 1);
+      else if (action === 'companion-medallion')
+        this.intent({ type: 'toggle', overlay: 'companion' });
       else if (action === 'drop') void this.command({ type: 'drop', slot: id as 0 | 1 });
       else if (action === 'gather') void this.command({ type: 'harvest' });
       else if (action === 'reaction')
@@ -680,6 +698,7 @@ export class HudPresenter {
     this.renderPanel();
     this.renderConversation();
     if (this.el<HTMLDialogElement>('map-dialog').open) this.drawMap();
+    if (this.el<HTMLDialogElement>('companion-sheet').open) this.renderCompanionSheet();
     refreshMeters();
   }
   private renderInventory(): void {
@@ -920,7 +939,15 @@ export class HudPresenter {
     const definition = SPECIES.find((s) => s.id === creature.species)!,
       tamed = creature.owner === 0,
       portrait = this.appearance?.portrait('species', creature.species);
-    return `<div class="creature-card"><div class="creature-art creature-art-${creature.species}" style="--creature:#${definition.color.toString(16)}">${portrait ? `<img src="${escapeHtml(appUrl(portrait.hud128))}" alt="${escapeHtml(creature.name)} portrait" width="128" height="128"/>` : `<span class="creature-ear left"></span><span class="creature-ear right"></span><span class="creature-face"><i></i><i></i></span>`}<span class="creature-spark">✧</span></div><div class="creature-title"><div><div class="eyebrow">${tamed ? 'YOUR COMPANION' : creature.owner > 0 ? 'VILLAGER COMPANION' : 'A WILD LITTLE WONDER'}</div><h3>${creature.name}</h3></div><span class="element-tag">${creature.elements.join(' / ')}</span></div><p class="creature-description">${definition.description}</p><p class="creature-diet"><b>Likes</b> ${definition.diet.map((id) => ITEMS[id].name).join(', ')} <span>·</span> <b>Bathes in</b> ${definition.bath}</p>${tamed ? `<div class="creature-stats"><span>LV ${creature.level}</span><span>HP ${Math.ceil(creature.hp)} / ${creature.maxHp}</span><span>ATK ${creature.attack}</span><span>DEF ${creature.defense}</span></div>${meter('Food', creature.food)}${meter('Water', creature.water, 'water')}${meter('Recreation', creature.recreation)}${meter('Cleanliness', creature.cleanliness, 'water')}${meter('Rest', creature.rest, 'warm')}${meter('Wildness', creature.wildness, 'warm')}` : `<div class="wild-stats"><span>HP ???</span><span>ATK ???</span><span>DEF ???</span></div>${meter('Trust', creature.trust, 'warm')}`}<p class="creature-mode">${escapeHtml(creature.mode)} · ${escapeHtml(creature.nature.join(', '))} · ${Math.round(Math.hypot(creature.x - this.frame!.player.x, creature.y - this.frame!.player.y))} tiles away</p><div class="care-buttons">${(['feed', 'water', 'pet', 'bathe', 'heal'] as const).map((action) => `<button data-action="care" data-care="${action}" data-id="${creature.id}">${action[0]!.toUpperCase() + action.slice(1)}</button>`).join('')}</div><button class="wide-secondary" data-action="${tamed ? 'release' : 'tame'}" data-id="${creature.id}">${tamed ? 'Release to the wild' : 'Form a partnership'} <span>♡</span></button><button class="secondary" data-action="partner-focus" data-id="${creature.id}">Companion: focus</button><button class="secondary" data-action="partner-regroup">Companion: regroup</button></div>`;
+    const stats = creature.stats ?? {
+      hp: Math.ceil(creature.hp),
+      attack: creature.attack,
+      defense: creature.defense,
+      attunement: definition.attunement,
+      resonance: definition.resonance,
+      speed: creature.speed,
+    };
+    return `<div class="creature-card"><div class="creature-art creature-art-${creature.species}" style="--creature:#${definition.color.toString(16)}">${portrait ? `<img src="${escapeHtml(appUrl(portrait.hud128))}" alt="${escapeHtml(creature.name)} portrait" width="128" height="128"/>` : `<span class="creature-ear left"></span><span class="creature-ear right"></span><span class="creature-face"><i></i><i></i></span>`}<span class="creature-spark">✧</span></div><div class="creature-title"><div><div class="eyebrow">${tamed ? 'YOUR COMPANION' : creature.owner > 0 ? 'VILLAGER COMPANION' : 'A WILD LITTLE WONDER'}</div><h3>${creature.name}</h3></div><span class="element-tag">${creature.elements.join(' / ')}</span></div><p class="creature-description">${definition.description}</p><p class="creature-diet"><b>Likes</b> ${definition.diet.map((id) => ITEMS[id].name).join(', ')} <span>·</span> <b>Bathes in</b> ${definition.bath}</p>${tamed ? `<div class="creature-stats"><span>LV ${creature.level}</span><span>HP ${Math.ceil(creature.hp)} / ${creature.maxHp}</span><span>ATK ${stats.attack}</span><span>DEF ${stats.defense}</span><span>ELM ${stats.attunement}</span><span>RES ${stats.resonance}</span><span>SPD ${Math.round(stats.speed * 10) / 10}</span></div><p class="creature-nature"><b>Disposition</b> ${escapeHtml(creature.disposition ?? 'Hardy')} · <b>Bond</b> ${creature.bondHearts ?? 0}/10 hearts · <b>Potential</b> ${creature.revealedPotential ?? 0}/6 stars</p>${meter('Food', creature.food)}${meter('Water', creature.water, 'water')}${meter('Recreation', creature.recreation)}${meter('Cleanliness', creature.cleanliness, 'water')}${meter('Rest', creature.rest, 'warm')}${meter('Wildness', creature.wildness, 'warm')}` : `<div class="wild-stats"><span>HP ???</span><span>ATK ???</span><span>DEF ???</span></div>${meter('Trust', creature.trust, 'warm')}`}<p class="creature-mode">${escapeHtml(creature.mode)} · ${escapeHtml(creature.nature.join(', '))} · ${Math.round(Math.hypot(creature.x - this.frame!.player.x, creature.y - this.frame!.player.y))} tiles away</p><div class="care-buttons">${(['feed', 'water', 'pet', 'bathe', 'heal'] as const).map((action) => `<button data-action="care" data-care="${action}" data-id="${creature.id}">${action[0]!.toUpperCase() + action.slice(1)}</button>`).join('')}</div><button class="wide-secondary" data-action="${tamed ? 'release' : 'tame'}" data-id="${creature.id}">${tamed ? 'Release to the wild' : 'Form a partnership'} <span>♡</span></button><button class="secondary" data-action="partner-focus" data-id="${creature.id}">Companion: focus</button><button class="secondary" data-action="partner-regroup">Companion: regroup</button></div>`;
   }
   private renderConversation(): void {
     const frame = this.frame!,
@@ -1000,7 +1027,128 @@ export class HudPresenter {
     patchView(el, html);
     el.dataset.rendered = html;
   }
-  openMenu(id: 'map-dialog' | 'settings-dialog' | 'journal-dialog'): void {
+  renderCompanionSheet(): void {
+    const frame = this.frame;
+    if (!frame) return;
+    const partner = frame.creatures.find((c) => c.owner === 0);
+    const body = this.el('companion-sheet-body');
+    if (!partner) {
+      patchView(
+        body,
+        `<div class="companion-empty-state"><span class="companion-spark">✧</span><h3>A friend for the riverlands</h3><p>You have not formed a partnership with a creature yet. Explore the riverlands, offer wild creatures food and care, and build trust to travel together.</p></div>`,
+      );
+      return;
+    }
+
+    const definition = SPECIES.find((s) => s.id === partner.species)!;
+    const portrait = this.appearance?.portrait('species', partner.species);
+    const bondHearts = Math.min(10, Math.max(0, partner.bondHearts ?? 0));
+    const revealedPotential = partner.revealedPotential ?? 0;
+    const disposition = partner.disposition ?? 'Hardy';
+
+    const heartsHtml = Array.from(
+      { length: 10 },
+      (_, i) =>
+        `<span class="bond-heart ${i < bondHearts ? 'filled' : 'empty'}">${i < bondHearts ? '♥' : '♡'}</span>`,
+    ).join('');
+
+    const starsHtml = Array.from(
+      { length: 6 },
+      (_, i) =>
+        `<span class="potential-star ${i < revealedPotential ? 'revealed' : 'latent'}">${i < revealedPotential ? '★' : '☆'}</span>`,
+    ).join('');
+
+    const stats = partner.stats ?? {
+      hp: Math.ceil(partner.hp),
+      attack: partner.attack,
+      defense: partner.defense,
+      attunement: definition.attunement,
+      resonance: definition.resonance,
+      speed: partner.speed,
+    };
+    const baseStats = partner.baseStats ?? {
+      hp: definition.hp,
+      attack: definition.attack,
+      defense: definition.defense,
+      attunement: definition.attunement,
+      resonance: definition.resonance,
+      speed: definition.speed,
+    };
+
+    const statRows = [
+      { id: 'hp', name: 'Vitality', abbrev: 'HP', val: stats.hp, base: baseStats.hp, max: 200 },
+      {
+        id: 'attack',
+        name: 'Might',
+        abbrev: 'ATK',
+        val: stats.attack,
+        base: baseStats.attack,
+        max: 100,
+      },
+      {
+        id: 'defense',
+        name: 'Guard',
+        abbrev: 'DEF',
+        val: stats.defense,
+        base: baseStats.defense,
+        max: 100,
+      },
+      {
+        id: 'attunement',
+        name: 'Attunement',
+        abbrev: 'ELM',
+        val: stats.attunement,
+        base: baseStats.attunement,
+        max: 100,
+      },
+      {
+        id: 'resonance',
+        name: 'Resonance',
+        abbrev: 'RES',
+        val: stats.resonance,
+        base: baseStats.resonance,
+        max: 100,
+      },
+      {
+        id: 'speed',
+        name: 'Swiftness',
+        abbrev: 'SPD',
+        val: Math.round(stats.speed * 10) / 10,
+        base: Math.round(baseStats.speed * 10) / 10,
+        max: 10,
+      },
+    ];
+
+    const statsMarkup = statRows
+      .map((s) => {
+        const pct = Math.min(100, Math.round((s.val / s.max) * 100));
+        return `<div class="stat-row" data-stat="${s.id}"><div class="stat-label-bar"><span class="stat-name"><b>${s.name}</b> <small>(${s.abbrev})</small></span><span class="stat-values">${s.val} <small class="muted">(base ${s.base})</small></span></div><div class="stat-track kit-meter" role="progressbar" aria-label="${s.name}" aria-valuenow="${s.val}" aria-valuemin="0" aria-valuemax="${s.max}"><i class="kit-fill" style="width:${pct}%"></i></div></div>`;
+      })
+      .join('');
+
+    const moves = partner.moves && partner.moves.length > 0 ? partner.moves : ['strike'];
+    const moveCardsHtml = Array.from({ length: 4 }, (_, i) => {
+      const moveId = moves[i];
+      if (moveId) {
+        const moveDef = findMoveDefinition(moveId);
+        return `<div class="move-card" data-element="${moveDef.element}"><div class="move-card-header"><span class="move-name">${escapeHtml(moveDef.name)}</span><span class="element-badge element-${moveDef.element}">${escapeHtml(moveDef.element)}</span></div><div class="move-card-body"><span class="move-power">PWR <b>${moveDef.power}</b></span><span class="move-stamina">STM <b>${moveDef.stamina}</b></span></div></div>`;
+      } else {
+        return `<div class="move-card move-card-empty"><div class="move-empty-title">Slot ${i + 1} Empty</div><small class="muted">${i === 2 ? 'Unlocks at 6 hearts' : i === 3 ? 'Unlocks at 8 hearts' : 'Empty'}</small></div>`;
+      }
+    }).join('');
+
+    const wellbeing =
+      partner.wildness <= 20 && partner.trust >= 80
+        ? 'Well cared for: full strength in battle'
+        : partner.wildness > 50
+          ? 'Restless: needs care and reassurance'
+          : 'Steady companionship';
+
+    const html = `<div class="companion-sheet-layout"><div class="companion-profile-card"><div class="companion-art-frame">${portrait ? `<img src="${escapeHtml(appUrl(portrait.hud128))}" alt="${escapeHtml(partner.name)} portrait" width="128" height="128"/>` : `<div class="companion-fallback-avatar">✧</div>`}</div><div class="companion-identity"><div class="eyebrow">${escapeHtml(definition.name)} · LV ${partner.level}</div><h3 class="companion-display-name">${escapeHtml(partner.name)}</h3><div class="companion-badges">${partner.elements.map((el) => `<span class="element-badge element-${el}">${escapeHtml(el)}</span>`).join('')}<span class="disposition-badge" title="Disposition affects care reactions and stat multipliers">${escapeHtml(disposition)}</span></div><div class="bond-meter-group"><span class="group-label">Bond:</span><div class="bond-hearts" aria-label="Bond: ${bondHearts} out of 10 hearts">${heartsHtml}</div><span class="bond-number">${bondHearts}/10</span></div><div class="potential-meter-group"><span class="group-label">Potential:</span><div class="potential-stars" aria-label="Potential: ${revealedPotential} out of 6 stars discovered">${starsHtml}</div><span class="potential-number">${revealedPotential}/6</span></div></div></div><div class="companion-sheet-sections"><section class="companion-section stats-section"><h4 class="section-title">6-STAT PROGRESSION</h4><div class="stats-grid">${statsMarkup}</div></section><section class="companion-section moves-section"><h4 class="section-title">EQUIPPED MOVES</h4><div class="moves-grid">${moveCardsHtml}</div></section><section class="companion-section needs-section"><h4 class="section-title">WELLBEING & CARE</h4><div class="wellbeing-status" role="status"><span>✧</span> ${wellbeing}</div><div class="companion-needs-bars">${meter('Food', partner.food)}${meter('Water', partner.water, 'water')}${meter('Play', partner.recreation)}${meter('Clean', partner.cleanliness, 'water')}${meter('Rest', partner.rest, 'warm')}</div><div class="care-buttons">${(['feed', 'water', 'pet', 'bathe', 'heal'] as const).map((action) => `<button data-action="care" data-care="${action}" data-id="${partner.id}">${action[0]!.toUpperCase() + action.slice(1)}</button>`).join('')}</div><div class="partner-action-row"><button class="secondary" data-action="partner-focus" data-id="${partner.id}">Companion: focus</button><button class="secondary" data-action="partner-regroup">Companion: regroup</button></div></section></div></div>`;
+
+    patchView(body, html);
+  }
+  openMenu(id: 'map-dialog' | 'settings-dialog' | 'journal-dialog' | 'companion-sheet'): void {
     if (id === 'settings-dialog')
       this.el('image-recover').hidden = !this.handlers.imageRecoveryNeeded();
     if (id === 'settings-dialog' && this.frame) {
@@ -1013,6 +1161,17 @@ export class HudPresenter {
       this.el<HTMLInputElement>('combat-spacing').value = String(settings.grantSpacing);
       this.el<HTMLInputElement>('combat-aggression').value = String(settings.aggressionBias);
     }
+    if (id === 'companion-sheet') {
+      this.renderCompanionSheet();
+      this.el('companion-button').setAttribute('aria-expanded', 'true');
+      const active = document.activeElement;
+      this.overlayFocus.set(
+        'companion',
+        active instanceof HTMLElement && active !== document.body
+          ? active
+          : this.el('companion-button'),
+      );
+    }
     if (!this.frame || this.frame.dialogue) return;
     if (document.querySelector('dialog[open]')) return;
     void this.command({ type: 'pause', token: 'menu' });
@@ -1023,6 +1182,11 @@ export class HudPresenter {
     this.appearance = new AppearanceResolver(catalog);
   }
   closeOverlay(): boolean {
+    const companion = this.el<HTMLDialogElement>('companion-sheet');
+    if (companion && companion.open) {
+      companion.close();
+      return true;
+    }
     for (const overlay of ['inventory', 'inspection'] as const)
       if (!this.el(`${overlay}-panel`).hidden) {
         this.intent({ type: 'toggle', overlay });
@@ -1044,10 +1208,28 @@ export class HudPresenter {
       return;
     }
     if (intent.type !== 'toggle' || !this.frame || this.frame.dialogue) return;
-    if (intent.overlay === 'journal' || intent.overlay === 'map' || intent.overlay === 'settings') {
-      this.openMenu(
-        `${intent.overlay === 'map' ? 'map' : intent.overlay === 'journal' ? 'journal' : 'settings'}-dialog`,
-      );
+    if (
+      intent.overlay === 'journal' ||
+      intent.overlay === 'map' ||
+      intent.overlay === 'settings' ||
+      intent.overlay === 'companion'
+    ) {
+      const dialogId =
+        intent.overlay === 'map'
+          ? 'map-dialog'
+          : intent.overlay === 'journal'
+            ? 'journal-dialog'
+            : intent.overlay === 'companion'
+              ? 'companion-sheet'
+              : 'settings-dialog';
+      const dialog = this.el<HTMLDialogElement>(dialogId);
+      if (dialog.open) {
+        dialog.close();
+      } else {
+        this.openMenu(
+          dialogId as 'map-dialog' | 'settings-dialog' | 'journal-dialog' | 'companion-sheet',
+        );
+      }
       return;
     }
     const panel = this.el(`${intent.overlay}-panel`);

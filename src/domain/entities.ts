@@ -591,9 +591,46 @@ export class EntityStore {
     const key = this.temperaments.get(id) ?? 'hardy';
     return TEMPERAMENTS[key] ?? TEMPERAMENTS['hardy']!;
   }
+  setTemperament(slot: number, key: string): void {
+    const id = this.ids[slot]!;
+    this.temperaments.set(id, key);
+  }
   moves(slot: number): readonly string[] {
     const id = this.ids[slot]!;
     return this.loadouts.get(id) ?? ['strike'];
+  }
+  baseStats(slot: number): Record<StatName, number> {
+    const def = this.definition(slot);
+    return {
+      hp: def.hp,
+      attack: def.attack,
+      defense: def.defense,
+      attunement: def.attunement,
+      resonance: def.resonance,
+      speed: def.speed,
+    };
+  }
+  effectiveStats(slot: number): Record<StatName, number> {
+    const def = this.definition(slot);
+    const pot = this.potential(slot);
+    const cond = this.conditioning(slot);
+    const temp = this.temperament(slot);
+    const lvl = this.level[slot] ?? 1;
+    return {
+      hp: calculateEffectiveStat('hp', def.hp, pot[0]!, cond[0]!, lvl, temp),
+      attack: calculateEffectiveStat('attack', def.attack, pot[1]!, cond[1]!, lvl, temp),
+      defense: calculateEffectiveStat('defense', def.defense, pot[2]!, cond[2]!, lvl, temp),
+      attunement: calculateEffectiveStat(
+        'attunement',
+        def.attunement,
+        pot[3]!,
+        cond[3]!,
+        lvl,
+        temp,
+      ),
+      resonance: calculateEffectiveStat('resonance', def.resonance, pot[4]!, cond[4]!, lvl, temp),
+      speed: calculateEffectiveStat('speed', def.speed, pot[5]!, cond[5]!, lvl, temp),
+    };
   }
   maxMoveSlots(slot: number): number {
     const hearts = this.bondHearts[slot] ?? 0;

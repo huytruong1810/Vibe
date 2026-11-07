@@ -93,7 +93,13 @@ import { CONFIG, clamp, distanceSquared, normalize, type WorldPosition } from '.
 import { migrateSave, type GameSave } from './save-schema';
 import { WorldQuery } from './query';
 import { ArtifactStore, type ArtifactPlacement } from './artifacts';
-import { EntityStore, bindBody, NatureRules, SleepSystem } from './entities';
+import {
+  EntityStore,
+  bindBody,
+  NatureRules,
+  SleepSystem,
+  revealedPotentialCount,
+} from './entities';
 import { SurvivalController, EcologyService } from './survival';
 import type { ActorPresentation, PresentationCue } from './presentation-contract';
 import { EquipmentService } from './equipment';
@@ -2517,6 +2523,14 @@ export class SimulationHost {
             mode: CreatureMode[s.mode[i]!] ?? 'Wander',
             x: s.x[i]!,
             y: s.y[i]!,
+            bondHearts: s.bondHearts[i] ?? 0,
+            disposition: s.displayDisposition(i),
+            moves: s.moves(i),
+            stats: s.effectiveStats(i),
+            baseStats: s.baseStats(i),
+            potential: s.potential(i),
+            revealedPotential: revealedPotentialCount(s.bondHearts[i] ?? 0),
+            conditioning: s.conditioning(i),
           });
       }
     const deltas = local.world.deltas().filter((delta) => {

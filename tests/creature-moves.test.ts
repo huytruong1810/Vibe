@@ -3,6 +3,7 @@ import {
   SPECIES_LEARNABLE_MOVES,
   learnableMovesForSpecies,
   CREATURES,
+  type SpeciesId,
 } from '../src/content/definitions';
 import { EntityStore } from '../src/domain/entities';
 
@@ -12,7 +13,7 @@ describe('CRE-M4 & CRE-M5 Species move pools and disposition player-facing renam
     expect(speciesIds.length).toBe(8);
 
     for (const speciesId of speciesIds) {
-      const pool = SPECIES_LEARNABLE_MOVES[speciesId];
+      const pool = SPECIES_LEARNABLE_MOVES[speciesId as SpeciesId];
       expect(pool).toBeDefined();
       expect(pool.length).toBeGreaterThanOrEqual(4);
 
@@ -69,7 +70,7 @@ describe('CRE-M4 & CRE-M5 Species move pools and disposition player-facing renam
   it('exposes displayDisposition matching CRE-M5 player-facing renaming requirement', () => {
     const store = new EntityStore();
     const slot = store.spawn(0, 10, 10);
-    store.temperaments.set(store.ids[slot]!, 'bold');
+    store.setTemperament(slot, 'bold');
 
     // displayDisposition should return formatted name
     expect(store.displayDisposition(slot)).toBe('Bold');
