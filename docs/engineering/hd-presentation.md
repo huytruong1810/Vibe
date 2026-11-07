@@ -544,6 +544,65 @@ fields in the Python publisher or the source manifest. The source manifest remai
 the communicator's integration artifact; the tested 1,848-frame V2 graph in
 `assets-v2.test.ts` is a fixture, not a committed production manifest or approval.
 
+## Multi-canvas human rendering contract (C9c)
+
+Humanoid character frames use tiered canvas sizes according to the spatial requirements
+of each clip class. This avoids allocating oversized bounding boxes across high-frequency
+locomotion and idle frames while accommodating expansive weapon sweeps, casting arcs,
+and falls without sprite clipping or origin drift.
+
+### Canonical human registration tiers
+
+Human frames declare one of three canonical registration pairs on their `RigDefinition`:
+
+1. **`human.locomotion` (Default canvas):**
+   - Canvas: `80×80` px
+   - Ground anchor: `(40, 68)` px
+   - Clips: `idle`, `walk`, `run`, `swim_idle`, `swim_stroke`.
+   - Purpose: Standard locomotion and rest cycles. Minimal wasted transparent texels;
+     fits tightly within atlas packing partitions.
+
+2. **`human.combat`:**
+   - Canvas: `100×100` px
+   - Ground anchor: `(50, 78)` px
+   - Clips: `strike_1` (jab), `strike_2` (sweep), `strike_3` (finisher), `dash`, `guard`,
+     `hurt`, `fall`, `kneel`.
+   - Purpose: Standard combat animations, short weapon thrusts, impact recoils, and
+     guard stances requiring vertical and horizontal clearance for held blades or bows.
+
+3. **`human.wide`:**
+   - Canvas: `144×144` px
+   - Ground anchor: `(72, 112)` px
+   - Clips: `cast`, `sweep_heavy`, `spin`, `celebrate`, `craft`.
+   - Purpose: Extended-range visual effects, wide 2H weapon arcs, sweeping spellcasts,
+     and full-body emotive or crafting actions.
+
+### Pivot alignment and foot-contact stability
+
+All three tiers maintain a ground contact point that anchors the actor's feet at simulation
+world coordinates `(x, y)` across all clip transitions. When an actor transitions between
+`walk` (`80×80`, anchor `40, 68`) and `strike_3` (`100×100`, anchor `50, 78`), the presentation
+renderer aligns the respective canvas anchor directly to the world projection point:
+
+$$\text{ScreenX} = \text{ProjectedX} - \text{AnchorX} + \text{TrimX}$$
+$$\text{ScreenY} = \text{ProjectedY} - \text{AnchorY} + \text{TrimY}$$
+
+This invariant ensures that the actor's feet remain grounded without visual jitter or
+teleportation during attack startup, active swing, and recovery.
+
+### Runtime layer composition invariants
+
+1. **Face sidecar registration:** Any attached face layer (expression sidecar) must declare
+   and match the exact registration dimensions and anchor of its underlying body frame.
+   Mismatched canvas registrations fail catalog schema validation.
+2. **Socket bounds:** Socket coordinates (`socketIds` for `hand_r`, `hand_l`, `head`, `back`)
+   must be non-negative integers strictly bounded within the frame's active canvas dimensions
+   (`0 <= socket.x < canvas.w` and `0 <= socket.y < canvas.h`).
+3. **Held weapon and tool layers:** Weapon and tool sprites are positioned relative to the
+   resolved frame socket anchor point. Weapon frames declare their own local pivot offset
+   (`gripPx`), ensuring registration across all 8 facing angles regardless of whether the
+   body is in `human.locomotion` or `human.combat`.
+
 ## Atlas reproducibility across Windows and Linux (C22)
 
 The asset compiler supplies frame paths in binary descending order to AssetPack's
