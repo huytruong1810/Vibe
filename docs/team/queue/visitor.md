@@ -77,6 +77,14 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
 - done when: tests and tool checks pass in `npm run check`
 - evidence:
 
+### V13 · `CMB-M1…M5` Advanced combat feel: 3-hit combo chain, dash cancels & finisher knockback (CMB-2)
+
+- status: in-progress (visitor)
+- goal: implement the Zenonia 3-hit strike combo chain with timing windows, recovery dash cancels, and knockback finisher per CMB-2.1–CMB-2.3.
+- inputs: `docs/doctrine/05-combat-direction.md` (CMB-2), `src/domain/combat.ts`, `src/domain/simulation.ts`.
+- done when: unit tests verify 3-hit chain, recovery dash-cancels, finisher knockback, and deterministic replay; `npm run check` passes.
+- evidence:
+
 ## Now: Acting-Director Art Review & Triage (`TEAM-4.2`)
 
 ### V3 · Verify `B27` staging output and `M25` manifest integration readiness
