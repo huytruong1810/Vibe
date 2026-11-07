@@ -62,6 +62,16 @@ uv run --project art/source/forge python -B -m unittest discover -s art/source/w
 npx playwright test --project=journeys --output=test-results/visitor-REPLACE-WITH-UNIQUE-ID
 ```
 
+Codex's native run completed 36 journeys, then stalled during the preceding
+browser teardown before the final literacy journey began. That full command was
+interrupted; it is not a full-suite pass. Run the book journey separately with
+`npx playwright test tests/browser/literacy.spec.ts --project=journeys --output=test-results/visitor-book-UNIQUE`.
+The fresh receipt reports its result separately and preserves the interrupted log.
+The isolated book case completed its assertions and diagnostics at 35.4 ms native
+opening, but this Windows Chrome runner also stalled after reporting that pass.
+Codex interrupted its shutdown; neither command has a successful process exit.
+Use the explicit case results, not a claimed green full-browser command.
+
 For root production smoke, build with `VITE_BASE_PATH=/`, then run
 `PLAYWRIGHT_BASE_PATH=/ npm run test:beta -- --output=test-results/visitor-root-UNIQUE`.
 Repeat the build/smoke with both variables set to `/Vibe/`. Use the platform's
@@ -73,11 +83,30 @@ here. With `CI=1`, run the literacy journey with that `--config` and a unique
 `--output`. Its flags force SwiftShader; do not substitute native timings for it.
 
 The current `scripts/soak.ts` constructs a procedural host. The benchmark has
-`BENCHMARK_WORLD=authored`; that does not make the long soak authored. The new
-authored-world simulation test advances600ticks. Keep those three forms of
+`BENCHMARK_WORLD=authored` and first needs `npm run world:build -- --region aqualia`
+to create its ignored import. That does not make the long soak authored. The new
+authored-world simulation test advances 600 ticks. Keep those three forms of
 evidence separate; this preparation grants no authored overnight soak pass.
 
 ## Known gaps and evidence quality
+
+- Fresh full check after the clean-checkout repair: 605/606 tests passed;
+  painting quantization took 10.21 ms against 5 ms. An isolated run also failed
+  at 6.42 ms. The standalone production build passed. Do not call this a green
+  full check.
+- Inspected native browser proofs: [book](review-book.png),
+  [book diagnostics](review-book-browser.json), [painting preview](review-painting.png).
+  The painting endpoint is mocked; these are engineering evidence, not art approval.
+- Exact upstream source `7019b5db` CI
+  [42326444954](https://github.com/huytruong1810/Vibe/actions/runs/42326444954)
+  failed worldforge selftests and the software-rendered book opening journey
+  (101.6 ms against 100 ms). Both production beta jobs passed. Its ecology job
+  was green but **the soak command was skipped**; it proves no soak execution.
+- Fresh procedural HUD captures lack the building sprites visible in the
+  historical captures preserved at `5aa8af4e`. Investigate scene-prop rendering
+  in both world modes; this observation is not a diagnosis or authored-world proof.
+- The engineering formatting warnings were repaired without behavior changes;
+  `docs/team/status-board.md` needs its communicator owner's formatting repair.
 
 - The earlier exact-source receipt is
   [reconciliation validation](reconciliation-validation.json). Its results describe
@@ -96,6 +125,13 @@ evidence separate; this preparation grants no authored overnight soak pass.
 - Canonical map, replayed R3 map, bundled compiled world, approved digest, gameplay
   resource nodes and asset IDs must agree. Do not repair the discrepancy by
   editing LDtk JSON, weakening equality/coverage tests or promoting candidate art.
+  Fresh checks found three identities: replay `ae34ae14…`, canonical map
+  `b55ad9de…`, and bundled source `55d08991…`. The committed bundle has
+  371 placements; fresh region validation produces 331. Worldforge selftests
+  passed 26/27 and failed the replay/canonical equality guard. Authored-world
+  acceptance, authored village proof and authored long-soak qualification remain
+  blocked on owner reconciliation. The unit path fix tests the shipped candidate
+  bundle; it does not establish that the bundle matches the current authored map.
 - Visitor authored much of C7/V13–V19 and painting touch-up. Audit and report it,
   but do not self-approve it. Independent Codex/Claude engineering review remains
   separate from the Visitor's full-game report (TEAM-4.2).
@@ -111,7 +147,8 @@ Read-only audit needs no engineering claim; claim and push a ticket before fixes
 Do not change doctrine, art approval records, manifest or another agent's work as
 part of this review preparation. Stop owned processes before publishing.
 
-The20pre-existing PNGs in `docs/team/comms/codex/tmp/` are retained historical
-evidence at their original paths. Their hashes/provenance are listed in the fresh
-receipt. Source-unknown images are not current-build or authored-world acceptance
-proof. Codex owns their promotion/removal within the TEAM-9.5 seven-day window.
+The 20 pre-existing PNGs in `docs/team/comms/codex/tmp/` were committed at
+`5aa8af4e` before the fresh browser suite could overwrite them. The fresh receipt
+distinguishes those originals from newly captured files at the same paths.
+Source-unknown images are not current-build or authored-world acceptance proof.
+Codex owns their promotion/removal within the TEAM-9.5 seven-day window.

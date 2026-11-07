@@ -189,6 +189,16 @@ and local-generation tickets (C26–C31) sit in their own section.
 
 ### C7 · Authored world in the engine (WLD-M1…M4)
 
+- integration review, 2026-11-06: **blocked on authored source reconciliation**.
+  Fresh region validation passes two levels/331 placements, but the committed
+  runtime bundle has371 placements and sourceDigest55d08991…; current canonical
+  map is b55ad9de…, while pass replay/approved R3 identity is ae34ae14….
+  Worldforge selftests26/27 fail equality. Blender B26 has an open reconciliation
+  follow-up with Visitor; Codex regenerates the bundle only after a valid owner
+  integration receipt. Three simulation tests now read the committed shipping
+  bundle on clean checkouts; their pass does not close this mismatch. The long
+  soak runner remains procedural. See [review receipt](../comms/codex/review-preparation.json).
+
 - status: candidate (visitor; WLD-M2/M3 authored simulation, spawn, 10 Aqualia NPCs, habitat creature seeding, 263 authored props registered to overworld scene, procedural suppression, save migration under opt-in beta toggle, sustained 600-tick soak test on authored map, and BENCHMARK_WORLD=authored support; tests green). Codex reviews/supports without duplicating settlement, spawn or save-provenance changes.
 - evidence: 2026-11-05 studio 74714197, c5104a14, and b8b8fe46. Village/Riverlands R3 approvals bind ae34ae141d48512ab02607d274973751db79a0853fdebb74eaa3c6d982b66d5b. Unit tests pass in tests/authored-world.test.ts (29/29) and tests/simulation.test.ts (14/14, including 600-tick sustained movement soak on authored map).
 - goal: a new game loads the authored LDtk map; procedural world generation is retired.

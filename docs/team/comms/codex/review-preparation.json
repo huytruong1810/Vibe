@@ -1,197 +1,438 @@
-﻿{
-    "purpose":  "Whole-game Visitor review preparation; candidate checkpoint, no approval",
-    "runtimeSource":  "7019b5db9b8f7e4c10c832b6e29b6f9bd841037a",
-    "branch":  "eng/hd-presentation",
-    "preparationSource":  "Commit containing fixture-path repair; pin recorded after commit",
-    "updatedUtc":  "2026-11-07T03:28:45.4154972Z",
-    "changes":  [
-                    "Three authored simulation test paths now use committed runtime bundle; assertions unchanged",
-                    "Review guide and preserved pre-existing own evidence"
-                ],
-    "checks":  [
-                   {
-                       "command":  "VITEST_MAX_WORKERS=4 npm run check",
-                       "log":  "artifacts/review-prep-20261106-7019-check.log",
-                       "result":  "603 passed / 3 failed: ignored compiled world absent"
-                   },
-                   {
-                       "command":  "VITEST_MAX_WORKERS=4 npm run check",
-                       "log":  "artifacts/review-prep-20261106-ready-check.log",
-                       "result":  "605 passed / 1 failed: painting CPU 10.2123ms \u003e 5ms; type/architecture/standard assets passed; build not reached"
-                   },
-                   {
-                       "command":  "npx vitest run tests/painting-budget.test.ts",
-                       "log":  "artifacts/review-prep-20261106-painting-budget.log",
-                       "result":  "FAIL isolated CPU 6.4211ms \u003e 5ms"
-                   }
-               ],
-    "originalLeftovers":  {
-                              "value":  [
-                                            {
-                                                "path":  "docs/team/comms/codex/tmp/bramblefang-packet-gallery.png",
-                                                "bytes":  40864,
-                                                "sha256":  "6b1669aa22f6c316daa876331875be410e542a2eb33e07f01a077fa1dee17db3",
-                                                "lastModifiedUtc":  "2026-11-05T16:59:56.0493173Z",
-                                                "classification":  "pre-existing historical evidence; source revision unverified"
-                                            },
-                                            {
-                                                "path":  "docs/team/comms/codex/tmp/c11b-authored-screen.png",
-                                                "bytes":  70526,
-                                                "sha256":  "b808e67efa83e6488fe834c3474dbc6bd03d32da37a512be15fdf9e266db8ae6",
-                                                "lastModifiedUtc":  "2026-11-05T17:03:02.1992042Z",
-                                                "classification":  "pre-existing historical evidence; source revision unverified"
-                                            },
-                                            {
-                                                "path":  "docs/team/comms/codex/tmp/c11b-authored-village.png",
-                                                "bytes":  731161,
-                                                "sha256":  "3ea6c4eb7b76ad274d2e9ff70fb98df5fb7ec4a614a2b88b45eb700827138c6d",
-                                                "lastModifiedUtc":  "2026-11-05T17:03:02.0961176Z",
-                                                "classification":  "pre-existing historical evidence; source revision unverified"
-                                            },
-                                            {
-                                                "path":  "docs/team/comms/codex/tmp/c11b-live-terrain-1080.png",
-                                                "bytes":  198659,
-                                                "sha256":  "a41d7330aafa627ad316efd7214fe98d9e0800c17807fb980a94a2f85fbe4bd1",
-                                                "lastModifiedUtc":  "2026-11-05T17:03:33.9353798Z",
-                                                "classification":  "pre-existing historical evidence; source revision unverified"
-                                            },
-                                            {
-                                                "path":  "docs/team/comms/codex/tmp/c18-swiftshader.config.ts",
-                                                "bytes":  539,
-                                                "sha256":  "47db1b43098dbf2242ec9f7708f9ffb5fa3789a653dc3e12104aad74b40feb34",
-                                                "lastModifiedUtc":  "2026-11-05T04:44:19.3614242Z",
-                                                "classification":  "pre-existing historical evidence; source revision unverified"
-                                            },
-                                            {
-                                                "path":  "docs/team/comms/codex/tmp/c8b-combat-1080.png",
-                                                "bytes":  362337,
-                                                "sha256":  "91dfbc2b897663a0e45cca2bd4b5df73c3c541aeea43ac48a9b063b8f21c888a",
-                                                "lastModifiedUtc":  "2026-11-05T16:54:34.3019727Z",
-                                                "classification":  "pre-existing historical evidence; source revision unverified"
-                                            },
-                                            {
-                                                "path":  "docs/team/comms/codex/tmp/c8b-companion-1024.png",
-                                                "bytes":  204962,
-                                                "sha256":  "e9391eee48d8fc7a33936e1b79a1aaef047a79981e94c34f66195d495e37dd69",
-                                                "lastModifiedUtc":  "2026-11-05T16:54:27.1738808Z",
-                                                "classification":  "pre-existing historical evidence; source revision unverified"
-                                            },
-                                            {
-                                                "path":  "docs/team/comms/codex/tmp/c8b-companion-1920.png",
-                                                "bytes":  336864,
-                                                "sha256":  "4da75b6722158da7e115b52f22320e6fb5467260f4376ccfd476e28401bdf7df",
-                                                "lastModifiedUtc":  "2026-11-05T16:54:21.1584294Z",
-                                                "classification":  "pre-existing historical evidence; source revision unverified"
-                                            },
-                                            {
-                                                "path":  "docs/team/comms/codex/tmp/c8b-equipment-1024.png",
-                                                "bytes":  110512,
-                                                "sha256":  "dab14e1cdbc4b8b6e46186827fbad090047a3acae2c36dc125d32b83566dbe68",
-                                                "lastModifiedUtc":  "2026-11-05T16:54:28.3935588Z",
-                                                "classification":  "pre-existing historical evidence; source revision unverified"
-                                            },
-                                            {
-                                                "path":  "docs/team/comms/codex/tmp/c8b-equipment-1920.png",
-                                                "bytes":  317545,
-                                                "sha256":  "9a97650704bedd9e130a6219d8d69f2b499e55fb44151a9d708013d33d2e0072",
-                                                "lastModifiedUtc":  "2026-11-05T16:54:24.0530103Z",
-                                                "classification":  "pre-existing historical evidence; source revision unverified"
-                                            },
-                                            {
-                                                "path":  "docs/team/comms/codex/tmp/c8b-exploration-1024.png",
-                                                "bytes":  230600,
-                                                "sha256":  "f9d15b8a3d76507aafe989711fc9f8ce5cf56f4ab5066386f6f201a150120879",
-                                                "lastModifiedUtc":  "2026-11-05T16:54:00.1685062Z",
-                                                "classification":  "pre-existing historical evidence; source revision unverified"
-                                            },
-                                            {
-                                                "path":  "docs/team/comms/codex/tmp/c8b-exploration-1080.png",
-                                                "bytes":  333843,
-                                                "sha256":  "af0428467b0e21b89b19a93e4fd751717e070e75704f56ab20e9134215b8020b",
-                                                "lastModifiedUtc":  "2026-11-05T16:53:59.1863479Z",
-                                                "classification":  "pre-existing historical evidence; source revision unverified"
-                                            },
-                                            {
-                                                "path":  "docs/team/comms/codex/tmp/c8b-meter-0.5.png",
-                                                "bytes":  250,
-                                                "sha256":  "63307f8fbc2eb7722c4c6c36f1133a43d61a5e43dc7dd59b4aee4413c8ba66cd",
-                                                "lastModifiedUtc":  "2026-11-05T16:53:54.6088441Z",
-                                                "classification":  "pre-existing historical evidence; source revision unverified"
-                                            },
-                                            {
-                                                "path":  "docs/team/comms/codex/tmp/c8b-meter-0.png",
-                                                "bytes":  202,
-                                                "sha256":  "2de5b302585d5e4cca2191270a43581285a8cff79f049016b76833d33552b947",
-                                                "lastModifiedUtc":  "2026-11-05T16:53:54.3412569Z",
-                                                "classification":  "pre-existing historical evidence; source revision unverified"
-                                            },
-                                            {
-                                                "path":  "docs/team/comms/codex/tmp/c8b-meter-1.png",
-                                                "bytes":  253,
-                                                "sha256":  "adb74c13c2c92a2a58b8f5c670276c05b61a534c8d08655324a1f3154bf64a46",
-                                                "lastModifiedUtc":  "2026-11-05T16:53:55.0134380Z",
-                                                "classification":  "pre-existing historical evidence; source revision unverified"
-                                            },
-                                            {
-                                                "path":  "docs/team/comms/codex/tmp/c8b-worn-1024.png",
-                                                "bytes":  109958,
-                                                "sha256":  "e82f85ff0fd4605d1ef8646a97bcff38c42d40c63e46ea2ee29989b65cbc9561",
-                                                "lastModifiedUtc":  "2026-11-05T16:54:28.7631959Z",
-                                                "classification":  "pre-existing historical evidence; source revision unverified"
-                                            },
-                                            {
-                                                "path":  "docs/team/comms/codex/tmp/c8b-worn-1920.png",
-                                                "bytes":  318239,
-                                                "sha256":  "12e61a9b4deb2cf687ece213510014c186806b4c218095eab4905d9bb78c630a",
-                                                "lastModifiedUtc":  "2026-11-05T16:54:24.5597382Z",
-                                                "classification":  "pre-existing historical evidence; source revision unverified"
-                                            },
-                                            {
-                                                "path":  "docs/team/comms/codex/tmp/c8-hud-1024.png",
-                                                "bytes":  230084,
-                                                "sha256":  "2a9b21f69acd3cf7aaf7ef1b11a5f508327fad67b76bef70d0eb7811a9b0e752",
-                                                "lastModifiedUtc":  "2026-11-05T17:18:52.1870509Z",
-                                                "classification":  "pre-existing historical evidence; source revision unverified"
-                                            },
-                                            {
-                                                "path":  "docs/team/comms/codex/tmp/c8-hud-1080.png",
-                                                "bytes":  304925,
-                                                "sha256":  "202abb13ca2860c78a3b57000d2aa3b3a5e331daa9becbb9a5310d4c75e6b667",
-                                                "lastModifiedUtc":  "2026-11-05T17:18:47.0316176Z",
-                                                "classification":  "pre-existing historical evidence; source revision unverified"
-                                            },
-                                            {
-                                                "path":  "docs/team/comms/codex/tmp/c8-packet-fixture.png",
-                                                "bytes":  20177,
-                                                "sha256":  "f61966864ff3bd79832666aa63e293cf83e75ae19d6e3acfeb4f045160eed3e2",
-                                                "lastModifiedUtc":  "2026-11-05T16:53:42.3376117Z",
-                                                "classification":  "pre-existing historical evidence; source revision unverified"
-                                            },
-                                            {
-                                                "path":  "docs/team/comms/codex/tmp/rivallie-packet-gallery.png",
-                                                "bytes":  40403,
-                                                "sha256":  "5363cb4731a39b77b33dd9742e180805720f90a738c488fdb6c1300bbef97fa3",
-                                                "lastModifiedUtc":  "2026-11-05T16:59:31.5027413Z",
-                                                "classification":  "pre-existing historical evidence; source revision unverified"
-                                            }
-                                        ],
-                              "Count":  21
-                          },
-    "imageInspection":  "All20 original PNGs inspected; historical source unverified, not current-source acceptance",
-    "pending":  [
-                    "Production build",
-                    "Browser journeys",
-                    "Root and /Vibe/ beta smoke",
-                    "World and packet validation",
-                    "Formatting",
-                    "Unchanged HD gate",
-                    "Exact-source CI"
-                ],
-    "gaps":  [
-                 "Painting CPU budget remains failed; no threshold change",
-                 "Zero approved actors /1519HD gaps",
-                 "Live Machine-A reading/memory/conversation failed; painting latency exceeds30s",
-                 "Long soak is procedural; authored soak not established",
-                 "Visitor must not self-approve own engineering"
-             ]
+{
+  "purpose": "Whole-game Visitor review preparation; candidate checkpoint, no approval",
+  "runtimeSource": "7019b5db9b8f7e4c10c832b6e29b6f9bd841037a",
+  "branch": "eng/hd-presentation",
+  "preparationSource": "5aa8af4ecc592de9e3ae34f0df97fd325870c9e3",
+  "updatedUtc": "2026-11-07T04:01:51.101Z",
+  "changes": [
+    "Three authored simulation test paths now use committed runtime bundle; assertions unchanged",
+    "Review guide and preserved pre-existing own evidence"
+  ],
+  "checks": [
+    {
+      "command": "VITEST_MAX_WORKERS=4 npm run check",
+      "log": "artifacts/review-prep-20261106-7019-check.log",
+      "result": "603 passed / 3 failed: ignored compiled world absent"
+    },
+    {
+      "command": "VITEST_MAX_WORKERS=4 npm run check",
+      "log": "artifacts/review-prep-20261106-ready-check.log",
+      "result": "605 passed / 1 failed: painting CPU 10.2123ms > 5ms; type/architecture/standard assets passed; build not reached"
+    },
+    {
+      "command": "npx vitest run tests/painting-budget.test.ts",
+      "log": "artifacts/review-prep-20261106-painting-budget.log",
+      "result": "FAIL isolated CPU 6.4211ms > 5ms"
+    },
+    {
+      "command": "npm run build",
+      "log": "artifacts/review-prep-20261106-build-root.log",
+      "result": "PASS: typecheck and Vite production root build"
+    },
+    {
+      "command": "node node_modules/@playwright/test/cli.js test --project=journeys --output=test-results/review-prep-20261106-5aa8-native",
+      "source": "5aa8af4ecc592de9e3ae34f0df97fd325870c9e3",
+      "log": "artifacts/review-prep-20261106-5aa8-browser.log",
+      "result": "INCOMPLETE:36 tests passed; runner stalled during previous browser teardown before final literacy journey; interrupted, owned processes stopped",
+      "completedTests": 36,
+      "plannedTests": 37,
+      "notExecuted": [
+        "tests/browser/literacy.spec.ts"
+      ],
+      "exitCode": 1
+    },
+    {
+      "command": "node node_modules/@playwright/test/cli.js test tests/browser/literacy.spec.ts --project=journeys --output=test-results/review-prep-20261106-5aa8-book-isolated",
+      "source": "5aa8af4ecc592de9e3ae34f0df97fd325870c9e3",
+      "log": "artifacts/review-prep-20261106-5aa8-book-isolated.log",
+      "result": "CASE PASS (29.0s):35.4ms native opening,2 mounted pages; command stalled after reporting pass during Windows Chrome shutdown, interrupted; no successful command exit",
+      "exitCode": 1,
+      "assertions": "completed",
+      "shutdown": "interrupted after stall; remaining owned browser stopped"
+    },
+    {
+      "name": "packets",
+      "command": "npm run check:packets",
+      "exitCode": 0,
+      "source": "5aa8af4ecc592de9e3ae34f0df97fd325870c9e3",
+      "result": "PASS:2 packets,616frames/88clips each;1openQA finding each;no gameplay activation",
+      "log": "artifacts/review-prep-20261106-packets.log",
+      "excerpt": "\n> hearthwild@0.1.0 check:packets\n> tsx scripts/check-packets.ts\n\nrivallie: 616 verified frames, 88 facing clips; 1 open QA findings. No gameplay activation.\nbramblefang: 616 verified frames, 88 facing clips; 1 open QA findings. No gameplay activation.\n"
+    },
+    {
+      "name": "world",
+      "command": "npm run check:world -- --region aqualia",
+      "exitCode": 0,
+      "source": "5aa8af4ecc592de9e3ae34f0df97fd325870c9e3",
+      "result": "PASS:2levels,331placements,candidate validation only;shipping bundle mismatch remains",
+      "log": "artifacts/review-prep-20261106-world.log",
+      "excerpt": "\n> hearthwild@0.1.0 check:world\n> tsx scripts/world-build.ts --check --region aqualia\n\nCandidate region: 2 level(s), 331 placements; excluded=none; validated without output\n"
+    },
+    {
+      "name": "world-selftest",
+      "command": "python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/world/tools/worldlib -p worldforge_selftest.py",
+      "exitCode": 1,
+      "source": "5aa8af4ecc592de9e3ae34f0df97fd325870c9e3",
+      "result": "FAIL:26/27; replay ae34ae14 differs from canonical b55ad9de",
+      "log": "artifacts/review-prep-20261106-world-selftest.log",
+      "excerpt": "At line:2 char:382\n+ ... TEXITCODE}; python -m uv run --project art/source/forge python -B -m  ...\n+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : NotSpecified: (...............F...........:String) [], RemoteException\n    + FullyQualifiedErrorId : NativeCommandError\n \n======================================================================\nFAIL: test_repeatable_native_schema_and_roundtrip \n(worldforge_selftest.Authoring.test_repeatable_native_schema_and_roundtrip)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\htruong\\source\\repos\\Vibe\\art\\source\\world\\tools\\worldlib\\worldforge_selftest.py\", line 262, in \ntest_repeatable_native_schema_and_roundtrip\n    self.assertEqual(sha(self.latest_authored), sha(read(PROJECT)))\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'ae34ae141d48512ab02607d274973751db79a0853fdebb74eaa3c6d982b66d5b' != \n'b55ad9de356fe9ef65276e7e282ac99fd43eaee797d3d88ec508ca5349a6d81b'\n- ae34ae141d48512ab02607d274973751db79a0853fdebb74eaa3c6d982b66d5b\n+ b55ad9de356fe9ef65276e7e282ac99fd43eaee797d3d88ec508ca5349a6d81b\n\n\n----------------------------------------------------------------------\nRan 27 tests in 114.829s\n\nFAILED (failures=1)\n"
+    },
+    {
+      "name": "hd",
+      "command": "npm run check:assets:hd",
+      "exitCode": 1,
+      "source": "5aa8af4ecc592de9e3ae34f0df97fd325870c9e3",
+      "result": "FAIL:unchanged HD gate;0approved actors,1519slice gaps",
+      "log": "artifacts/review-prep-20261106-hd.log",
+      "excerpt": "\n> hearthwild@0.1.0 check:assets:hd\n> tsx scripts/assets-check.ts --require-hd\n\nAsset validation passed: 4024 frames; 3 full pages; decoded 47.67 MiB full / 12.21 MiB half. Aqualia declared HD 19/19, complete animation 4, approved 0; full world 0/41 approved; 1519 slice gaps.\nnode.exe : C:\\Users\\htruong\\source\\repos\\Vibe\\scripts\\assets-check.ts:222\nAt line:1 char:1\n+ & \"C:\\Users\\htruong\\AppData\\Local\\Programs\\nodejs/node.exe\" \"C:\\Users ...\n+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : NotSpecified: (C:\\Users\\htruon...ts-check.ts:222:String) [], RemoteException\n    + FullyQualifiedErrorId : NativeCommandError\n \n  throw new Error(\n        ^\n\nError: HD slice incomplete: 1519 requirements, missing identities npc:neris, npc:reed, npc:willa, npc:oren, npc:lark, \nnpc:dara, npc:finn. See docs/art/coverage.json.\n    at <anonymous> (C:\\Users\\htruong\\source\\repos\\Vibe\\scripts\\assets-check.ts:222:9)\n\nNode.js v22.22.3\n"
+    },
+    {
+      "name": "format",
+      "command": "npm run format:check",
+      "exitCode": 1,
+      "source": "5aa8af4ecc592de9e3ae34f0df97fd325870c9e3",
+      "result": "FAIL:status-board.md only; communicator M29 remains open",
+      "log": "artifacts/review-prep-20261106-format-final.log",
+      "excerpt": "\n> hearthwild@0.1.0 format:check\n> prettier --check src tests scripts docs art/source .github README.md *.json *.ts index.html gallery.html\n\nChecking formatting...\nnode.exe : [warn] docs/team/status-board.md\nAt line:1 char:1\n+ & \"C:\\Users\\htruong\\AppData\\Local\\Programs\\nodejs/node.exe\" \"C:\\Users ...\n+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : NotSpecified: ([warn] docs/team/status-board.md:String) [], RemoteException\n    + FullyQualifiedErrorId : NativeCommandError\n \n[warn] Code style issues found in the above file. Run Prettier with --write to fix.\n"
+    }
+  ],
+  "originalLeftovers": [
+    {
+      "path": "docs/team/comms/codex/tmp/bramblefang-packet-gallery.png",
+      "bytes": 40864,
+      "sha256": "6b1669aa22f6c316daa876331875be410e542a2eb33e07f01a077fa1dee17db3",
+      "lastModifiedUtc": "2026-11-05T16:59:56.0493173Z",
+      "classification": "pre-existing historical evidence; source revision unverified"
+    },
+    {
+      "path": "docs/team/comms/codex/tmp/c11b-authored-screen.png",
+      "bytes": 70526,
+      "sha256": "b808e67efa83e6488fe834c3474dbc6bd03d32da37a512be15fdf9e266db8ae6",
+      "lastModifiedUtc": "2026-11-05T17:03:02.1992042Z",
+      "classification": "pre-existing historical evidence; source revision unverified"
+    },
+    {
+      "path": "docs/team/comms/codex/tmp/c11b-authored-village.png",
+      "bytes": 731161,
+      "sha256": "3ea6c4eb7b76ad274d2e9ff70fb98df5fb7ec4a614a2b88b45eb700827138c6d",
+      "lastModifiedUtc": "2026-11-05T17:03:02.0961176Z",
+      "classification": "pre-existing historical evidence; source revision unverified"
+    },
+    {
+      "path": "docs/team/comms/codex/tmp/c11b-live-terrain-1080.png",
+      "bytes": 198659,
+      "sha256": "a41d7330aafa627ad316efd7214fe98d9e0800c17807fb980a94a2f85fbe4bd1",
+      "lastModifiedUtc": "2026-11-05T17:03:33.9353798Z",
+      "classification": "pre-existing historical evidence; source revision unverified"
+    },
+    {
+      "path": "docs/team/comms/codex/tmp/c18-swiftshader.config.ts",
+      "bytes": 539,
+      "sha256": "47db1b43098dbf2242ec9f7708f9ffb5fa3789a653dc3e12104aad74b40feb34",
+      "lastModifiedUtc": "2026-11-05T04:44:19.3614242Z",
+      "classification": "pre-existing historical evidence; source revision unverified"
+    },
+    {
+      "path": "docs/team/comms/codex/tmp/c8b-combat-1080.png",
+      "bytes": 362337,
+      "sha256": "91dfbc2b897663a0e45cca2bd4b5df73c3c541aeea43ac48a9b063b8f21c888a",
+      "lastModifiedUtc": "2026-11-05T16:54:34.3019727Z",
+      "classification": "pre-existing historical evidence; source revision unverified"
+    },
+    {
+      "path": "docs/team/comms/codex/tmp/c8b-companion-1024.png",
+      "bytes": 204962,
+      "sha256": "e9391eee48d8fc7a33936e1b79a1aaef047a79981e94c34f66195d495e37dd69",
+      "lastModifiedUtc": "2026-11-05T16:54:27.1738808Z",
+      "classification": "pre-existing historical evidence; source revision unverified"
+    },
+    {
+      "path": "docs/team/comms/codex/tmp/c8b-companion-1920.png",
+      "bytes": 336864,
+      "sha256": "4da75b6722158da7e115b52f22320e6fb5467260f4376ccfd476e28401bdf7df",
+      "lastModifiedUtc": "2026-11-05T16:54:21.1584294Z",
+      "classification": "pre-existing historical evidence; source revision unverified"
+    },
+    {
+      "path": "docs/team/comms/codex/tmp/c8b-equipment-1024.png",
+      "bytes": 110512,
+      "sha256": "dab14e1cdbc4b8b6e46186827fbad090047a3acae2c36dc125d32b83566dbe68",
+      "lastModifiedUtc": "2026-11-05T16:54:28.3935588Z",
+      "classification": "pre-existing historical evidence; source revision unverified"
+    },
+    {
+      "path": "docs/team/comms/codex/tmp/c8b-equipment-1920.png",
+      "bytes": 317545,
+      "sha256": "9a97650704bedd9e130a6219d8d69f2b499e55fb44151a9d708013d33d2e0072",
+      "lastModifiedUtc": "2026-11-05T16:54:24.0530103Z",
+      "classification": "pre-existing historical evidence; source revision unverified"
+    },
+    {
+      "path": "docs/team/comms/codex/tmp/c8b-exploration-1024.png",
+      "bytes": 230600,
+      "sha256": "f9d15b8a3d76507aafe989711fc9f8ce5cf56f4ab5066386f6f201a150120879",
+      "lastModifiedUtc": "2026-11-05T16:54:00.1685062Z",
+      "classification": "pre-existing historical evidence; source revision unverified"
+    },
+    {
+      "path": "docs/team/comms/codex/tmp/c8b-exploration-1080.png",
+      "bytes": 333843,
+      "sha256": "af0428467b0e21b89b19a93e4fd751717e070e75704f56ab20e9134215b8020b",
+      "lastModifiedUtc": "2026-11-05T16:53:59.1863479Z",
+      "classification": "pre-existing historical evidence; source revision unverified"
+    },
+    {
+      "path": "docs/team/comms/codex/tmp/c8b-meter-0.5.png",
+      "bytes": 250,
+      "sha256": "63307f8fbc2eb7722c4c6c36f1133a43d61a5e43dc7dd59b4aee4413c8ba66cd",
+      "lastModifiedUtc": "2026-11-05T16:53:54.6088441Z",
+      "classification": "pre-existing historical evidence; source revision unverified"
+    },
+    {
+      "path": "docs/team/comms/codex/tmp/c8b-meter-0.png",
+      "bytes": 202,
+      "sha256": "2de5b302585d5e4cca2191270a43581285a8cff79f049016b76833d33552b947",
+      "lastModifiedUtc": "2026-11-05T16:53:54.3412569Z",
+      "classification": "pre-existing historical evidence; source revision unverified"
+    },
+    {
+      "path": "docs/team/comms/codex/tmp/c8b-meter-1.png",
+      "bytes": 253,
+      "sha256": "adb74c13c2c92a2a58b8f5c670276c05b61a534c8d08655324a1f3154bf64a46",
+      "lastModifiedUtc": "2026-11-05T16:53:55.0134380Z",
+      "classification": "pre-existing historical evidence; source revision unverified"
+    },
+    {
+      "path": "docs/team/comms/codex/tmp/c8b-worn-1024.png",
+      "bytes": 109958,
+      "sha256": "e82f85ff0fd4605d1ef8646a97bcff38c42d40c63e46ea2ee29989b65cbc9561",
+      "lastModifiedUtc": "2026-11-05T16:54:28.7631959Z",
+      "classification": "pre-existing historical evidence; source revision unverified"
+    },
+    {
+      "path": "docs/team/comms/codex/tmp/c8b-worn-1920.png",
+      "bytes": 318239,
+      "sha256": "12e61a9b4deb2cf687ece213510014c186806b4c218095eab4905d9bb78c630a",
+      "lastModifiedUtc": "2026-11-05T16:54:24.5597382Z",
+      "classification": "pre-existing historical evidence; source revision unverified"
+    },
+    {
+      "path": "docs/team/comms/codex/tmp/c8-hud-1024.png",
+      "bytes": 230084,
+      "sha256": "2a9b21f69acd3cf7aaf7ef1b11a5f508327fad67b76bef70d0eb7811a9b0e752",
+      "lastModifiedUtc": "2026-11-05T17:18:52.1870509Z",
+      "classification": "pre-existing historical evidence; source revision unverified"
+    },
+    {
+      "path": "docs/team/comms/codex/tmp/c8-hud-1080.png",
+      "bytes": 304925,
+      "sha256": "202abb13ca2860c78a3b57000d2aa3b3a5e331daa9becbb9a5310d4c75e6b667",
+      "lastModifiedUtc": "2026-11-05T17:18:47.0316176Z",
+      "classification": "pre-existing historical evidence; source revision unverified"
+    },
+    {
+      "path": "docs/team/comms/codex/tmp/c8-packet-fixture.png",
+      "bytes": 20177,
+      "sha256": "f61966864ff3bd79832666aa63e293cf83e75ae19d6e3acfeb4f045160eed3e2",
+      "lastModifiedUtc": "2026-11-05T16:53:42.3376117Z",
+      "classification": "pre-existing historical evidence; source revision unverified"
+    },
+    {
+      "path": "docs/team/comms/codex/tmp/rivallie-packet-gallery.png",
+      "bytes": 40403,
+      "sha256": "5363cb4731a39b77b33dd9742e180805720f90a738c488fdb6c1300bbef97fa3",
+      "lastModifiedUtc": "2026-11-05T16:59:31.5027413Z",
+      "classification": "pre-existing historical evidence; source revision unverified"
+    }
+  ],
+  "imageInspection": "All20 original PNGs inspected; historical source unverified, not current-source acceptance",
+  "pending": [
+    "Root and /Vibe/ beta smoke",
+    "Final hygiene/process audit",
+    "Newly published checkpoint CI"
+  ],
+  "gaps": [
+    "Painting CPU budget remains failed; no threshold change",
+    "Zero approved actors /1519HD gaps",
+    "Live Machine-A reading/memory/conversation failed; painting latency exceeds30s",
+    "Long soak is procedural; authored soak not established",
+    "Visitor must not self-approve own engineering",
+    "Current procedural HUD captures show no building sprites where historical captures did; Visitor should investigate both modes",
+    "Full formatting warning remains in communicator-owned status-board.md",
+    "Upstream exact-source CI failed worldforge selftest and C18 software opening101.6ms; soak step skipped",
+    "Full native Playwright command stalled during teardown after36passes; do not report a full-suite pass",
+    "Isolated native book assertions passed; Windows Chrome runner shutdown also stalled and was interrupted",
+    "Shipping authored bundle371placements/source55d08991 differs from canonical b55ad9de/current331placements; reconcile B26 with Visitor/Blender before rebuilding runtime world or claiming authored acceptance"
+  ],
+  "upstreamCI": {
+    "source": "7019b5db9b8f7e4c10c832b6e29b6f9bd841037a",
+    "runId": 42326444954,
+    "url": "https://github.com/huytruong1810/Vibe/actions/runs/42326444954",
+    "conclusion": "failure",
+    "jobs": [
+      {
+        "name": "beta-browser (/Vibe/)",
+        "conclusion": "success",
+        "url": "https://github.com/huytruong1810/Vibe/actions/runs/42326444954/job/128262725846",
+        "failedSteps": [],
+        "soakSteps": []
+      },
+      {
+        "name": "beta-browser (/)",
+        "conclusion": "success",
+        "url": "https://github.com/huytruong1810/Vibe/actions/runs/42326444954/job/128262725981",
+        "failedSteps": [],
+        "soakSteps": []
+      },
+      {
+        "name": "ecology-soak",
+        "conclusion": "success",
+        "url": "https://github.com/huytruong1810/Vibe/actions/runs/42326444954/job/128262725990",
+        "failedSteps": [],
+        "soakSteps": [
+          {
+            "name": "Run npm run soak",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 6,
+            "started_at": "2026-11-07T01:53:53Z",
+            "completed_at": "2026-11-07T01:53:53Z"
+          }
+        ]
+      },
+      {
+        "name": "checks",
+        "conclusion": "failure",
+        "url": "https://github.com/huytruong1810/Vibe/actions/runs/42326444954/job/128262726033",
+        "failedSteps": [
+          "Run python -m uv run --project art/source/forge python -B -m unittest discover -s art/source/world/tools/worldlib -p worldforge_selftest.py"
+        ],
+        "soakSteps": []
+      },
+      {
+        "name": "browser-journeys (1)",
+        "conclusion": "success",
+        "url": "https://github.com/huytruong1810/Vibe/actions/runs/42326444954/job/128262726054",
+        "failedSteps": [],
+        "soakSteps": []
+      },
+      {
+        "name": "browser-journeys (2)",
+        "conclusion": "failure",
+        "url": "https://github.com/huytruong1810/Vibe/actions/runs/42326444954/job/128262726158",
+        "failedSteps": [
+          "Run npm run test:browser -- --shard=2/2"
+        ],
+        "soakSteps": []
+      },
+      {
+        "name": "verify",
+        "conclusion": "failure",
+        "url": "https://github.com/huytruong1810/Vibe/actions/runs/42326444954/job/128266305494",
+        "failedSteps": [
+          "Require CPU checks and browser journeys"
+        ],
+        "soakSteps": []
+      }
+    ],
+    "annotations": [
+      {
+        "path": "tests/browser/literacy.spec.ts",
+        "line": 278,
+        "title": "[journeys] › tests/browser/literacy.spec.ts:27:1 › C18 writes three pages",
+        "message": "  1) [journeys] › tests/browser/literacy.spec.ts:27:1 › C18 writes three pages, seals and reopens a read-only spread \n    Error: expect(received).toBeLessThanOrEqual(expected)\n\n    Expected: <= 100\n    Received:    101.59999999997672\n\n      276 |     const { openingMs } = diagnostics;\n      277 |     expect(openingMs).not.toBeNull();\n    > 278 |     expect(openingMs).toBeLessThanOrEqual(100);\n          |                       ^\n      279 |     expect(errors).toEqual([]);\n      280 |     expect(diagnostics.measurements).toHaveLength(5);\n      281 |     expect(\n        at /home/runner/work/Vibe/Vibe/tests/browser/literacy.spec.ts:278:23"
+      },
+      {
+        "path": ".github",
+        "line": 35,
+        "title": "C18 book opening diagnostics",
+        "message": "{\"format\":2,\"journeyPhase\":\"assert opening measurements\",\"bootstrap\":{\"setupStatus\":\"Preparing your world with fallback dialogue...\",\"loadMs\":1599,\"assetError\":\"\",\"gpu\":\"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\"},\"openingMs\":101.59999999997672,\"phaseTimingsMs\":{\"pause\":60.199999999953434,\"content\":30.099999999976717,\"render\":0.30000000004656613,\"show-modal\":11},\"mountedPages\":2,\"pageLabel\":\"1–2 / 48\",\"pageErrors\":[],\"requests\":[{\"id\":\"world:bf8287ec-00a3-43d2-a265-2ebd20ea3dac:42:c38\",\"type\":\"command\",\"waitMs\":59.9,\"serviceMs\":0.1,\"recent\":[[\"periodic-work\",-101.1,11.7],[\"publish-frame\",-98.4,9],[\"post-frame\",-94.3,4.9]]},{\"id\":\"artifact:39\",\"type\":\"artifactContent\",\"waitMs\":29.9,\"serviceMs\":0.9,\"recent\":[[\"publish-frame\",-59.3,5],[\"command-publish\",-59.3,5],[\"host-frame\",-59.3,4.2]]}],\"main\":[[\"frame-handler\",67.2,10],[\"hud-update\",68,9],[\"frame-handler\",16.2,8.2],[\"renderer-tick\",1.7,7.7],[\"hud-update\",16.7,7.7],[\"frame-handler\",42,6.6],[\"renderer-tick\",50.1,6.2],[\"hud-update\",42.7,5.8]],\"cpu\":{\"windowMs\":101.6,\"main\":[[\"CrRendererMain:ThreadControllerImpl::RunTask:\",-11,24.3,13.3],[\"CrRendererMain:ProxyMain::BeginMainFrame:\",-11,24.3,13.3],[\"CrRendererMain:HandlePostMessage:\",90,12,11.6],[\"CrRendererMain:v8.callFunction:\",90.1,11.9,11.5],[\"CrRendererMain:FunctionCall:WorkerBridge.worker.onmessage\",66.1,11.1,11.1],[\"CrRendererMain:FireAnimationFrame:\",1.8,7.7,7.7]],\"other\":[[\"ThreadPoolForegroundWorker:ThreadPool_RunTask:\",1.6,63.7,63.7],[\"CrGpuMain:ThreadControllerImpl::RunTask:\",43.1,14.6,14.6],[\"CrGpuMain:Scheduler::RunTask:\",43.2,14.6,14.6],[\"CrGpuMain:GpuChannel::ExecuteDeferredRequest:\",43.2,14.6,14.6]]}}"
+      }
+    ]
+  },
+  "environment": {
+    "platform": "win32",
+    "node": "v22.22.3",
+    "nativeBrowser": "Windows Chrome (Playwright channel chrome)",
+    "python": "uv-managed project environment",
+    "note": "No competing validation workload during browser timings; full Vitest used4workers"
+  },
+  "sourceHashes": [
+    {
+      "path": "tests/simulation.test.ts",
+      "sha256": "8574109c7a3159530477691f88cb862ae7ffb87275178a5aa5bbfa2a843961ee"
+    },
+    {
+      "path": "src/domain/artifact-writing.ts",
+      "sha256": "f54c92fe5c3783b99ce035d32d74b6d12c516b11cf3db507ba5405e6a5ff969e"
+    },
+    {
+      "path": "src/presentation/ui/painting-editor.ts",
+      "sha256": "e57b559879e13caad149a2a73ddc476cf92e0c24e8f96c1feb33f553fd192514"
+    },
+    {
+      "path": "public/assets/generated/aqualia-region.json",
+      "sha256": "ffe54c2428181f1399e68414351be9c40f5a6a9ee5644d38007cd8b8ded452cd"
+    },
+    {
+      "path": "art/source/world/hearthwild.ldtk",
+      "sha256": "b55ad9de356fe9ef65276e7e282ac99fd43eaee797d3d88ec508ca5349a6d81b"
+    }
+  ],
+  "fullCheckSource": "7019b5db plus authored test-path repair, before whitespace-only cleanup of two src files",
+  "atlasReview": {
+    "pages": [
+      {
+        "id": "bundle-0",
+        "width": 2040,
+        "height": 2042,
+        "canvasSha256": "f0d6ab9a824d1e84069766daab601a948643f0948ee972b4e32d9ac063e225fc"
+      },
+      {
+        "id": "bundle-1",
+        "width": 2040,
+        "height": 2042,
+        "canvasSha256": "c00ba5a3f0d4cef773c65a6329631c9ca05a0edf01bf59c215ba3e1b77b30143"
+      },
+      {
+        "id": "bundle-2",
+        "width": 2040,
+        "height": 2042,
+        "canvasSha256": "29866f921daa7b328393e041a3e5821aa1335dc413a14e92ef812e5d50a1217d"
+      }
+    ],
+    "frames": 4024,
+    "fullBytes": 49988160,
+    "halfBytes": 12801184,
+    "residentMiB": 47.67,
+    "pageCacheLimitMiB": 128
+  },
+  "nativeBook": {
+    "diagnostics": "docs/team/comms/codex/review-book-browser.json",
+    "image": "docs/team/comms/codex/review-book.png",
+    "openingMs": 35.40000009536743,
+    "budgetMs": 100,
+    "mountedPages": 2,
+    "gpu": "Intel Iris Xe /ANGLE D3D11",
+    "journeyPhase": "complete",
+    "note": "Fresh isolated native case; not software acceptance and not a clean CLI exit"
+  },
+  "worldBundle": {
+    "path": "public/assets/generated/aqualia-region.json",
+    "scope": "region",
+    "status": "candidate",
+    "levels": 2,
+    "placements": 371,
+    "provenance": {
+      "contractDigest": "be0e5fbdad1eb356f2f26391172791fb62a4f900fca11c33285727a1107ed923",
+      "importerDigest": "e8e23231c72f0a0b7eed8357fcc2b4aa056d6f7f8237ee30c5c0bf3a343fd4fc",
+      "planDigest": "b7ddc5c78cabc62a384010129efb0f7a301151b64008e68e7beec8fffcab1560",
+      "sourceDigest": "55d089911bb729aa7a44fa5e809792f0ff1ec0a8e83339755c1a080083d22ff1"
+    },
+    "currentSourceCanonicalDigest": "b55ad9de356fe9ef65276e7e282ac99fd43eaee797d3d88ec508ca5349a6d81b",
+    "sourceMatches": false,
+    "note": "Canonical serialization matches scripts/lib/world-compiler.ts; canonical and raw map hashes both b55ad9de. Bundled sourceDigest55d08991 does not match. Validation does not establish pass replay or approval scope.",
+    "freshValidationPlacements": 331
+  },
+  "artifactBuild": "No art or atlas source changed; no atlas rebuild performed. Standard asset validation passed; unchanged HD gate failed. Shipped authored world bundle preserved with mismatch recorded."
 }

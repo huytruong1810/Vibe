@@ -1,0 +1,600 @@
+{
+  "bootstrap": {
+    "setupStatus": "Preparing your world with fallback dialogue...",
+    "loadMs": 1359.4000000953674,
+    "assetError": "",
+    "gpu": "ANGLE (Intel, Intel(R) Iris(R) Xe Graphics (0x0000A7A1) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "hasFrame": true,
+    "io": [
+      [
+        "worker in:restored",
+        14444
+      ],
+      [
+        "worker in:result",
+        14492
+      ],
+      [
+        "worker out:persistCheckpoint",
+        14501
+      ],
+      [
+        "worker in:result",
+        14501
+      ],
+      [
+        "worker in:result",
+        14508
+      ],
+      [
+        "worker in:checkpointSaved",
+        14834
+      ],
+      [
+        "worker out:resume",
+        15166
+      ],
+      [
+        "worker in:result",
+        15168
+      ],
+      [
+        "worker out:pause",
+        15633
+      ],
+      [
+        "worker in:result",
+        15694
+      ],
+      [
+        "worker out:artifactWrite",
+        16517
+      ],
+      [
+        "worker out:artifactContent",
+        16530
+      ],
+      [
+        "worker in:result",
+        16530
+      ],
+      [
+        "worker out:artifactPageAdd",
+        16544
+      ],
+      [
+        "worker in:artifactContent",
+        16544
+      ],
+      [
+        "worker out:artifactContent",
+        16547
+      ],
+      [
+        "worker in:result",
+        16548
+      ],
+      [
+        "worker in:artifactContent",
+        16564
+      ],
+      [
+        "worker out:artifactWrite",
+        16882
+      ],
+      [
+        "worker out:artifactContent",
+        16892
+      ],
+      [
+        "worker in:result",
+        16892
+      ],
+      [
+        "worker out:artifactPageAdd",
+        16900
+      ],
+      [
+        "worker in:artifactContent",
+        16900
+      ],
+      [
+        "worker out:artifactContent",
+        16902
+      ],
+      [
+        "worker in:result",
+        16902
+      ],
+      [
+        "worker in:artifactContent",
+        16920
+      ],
+      [
+        "worker out:artifactWrite",
+        17138
+      ],
+      [
+        "worker out:artifactContent",
+        17141
+      ],
+      [
+        "worker in:result",
+        17141
+      ],
+      [
+        "worker in:artifactContent",
+        17158
+      ],
+      [
+        "worker out:artifactSeal",
+        17300
+      ],
+      [
+        "worker out:artifactContent",
+        17308
+      ],
+      [
+        "worker in:result",
+        17308
+      ],
+      [
+        "worker in:artifactContent",
+        17321
+      ],
+      [
+        "worker out:resume",
+        17526
+      ],
+      [
+        "worker in:result",
+        17529
+      ],
+      [
+        "worker out:pause",
+        17725
+      ],
+      [
+        "worker out:artifactContent",
+        17729
+      ],
+      [
+        "worker in:result",
+        17729
+      ],
+      [
+        "worker in:artifactContent",
+        17752
+      ],
+      [
+        "worker out:move",
+        17895
+      ],
+      [
+        "worker in:result",
+        17907
+      ],
+      [
+        "worker out:resume",
+        18528
+      ],
+      [
+        "worker in:result",
+        18533
+      ],
+      [
+        "worker out:pause",
+        18720
+      ],
+      [
+        "worker in:result",
+        18736
+      ],
+      [
+        "worker out:checkpoint",
+        18816
+      ],
+      [
+        "worker in:checkpoint",
+        19398
+      ],
+      [
+        "worker out:restore",
+        22745
+      ],
+      [
+        "worker out:pause",
+        24000
+      ],
+      [
+        "worker out:configureContext",
+        24000
+      ],
+      [
+        "worker out:configurePainting",
+        24000
+      ],
+      [
+        "worker in:restored",
+        24001
+      ],
+      [
+        "worker in:result",
+        24029
+      ],
+      [
+        "worker out:persistCheckpoint",
+        24042
+      ],
+      [
+        "worker in:result",
+        24042
+      ],
+      [
+        "worker in:result",
+        24048
+      ],
+      [
+        "worker in:checkpointSaved",
+        24361
+      ],
+      [
+        "worker out:resume",
+        24843
+      ],
+      [
+        "worker in:result",
+        24844
+      ],
+      [
+        "worker out:pause",
+        26146
+      ],
+      [
+        "worker out:artifactContent",
+        26151
+      ],
+      [
+        "worker in:result",
+        26151
+      ],
+      [
+        "worker in:artifactContent",
+        26181
+      ]
+    ]
+  },
+  "workerWaits": {
+    "start": 26145.5,
+    "end": 26181.200000047684,
+    "requests": [
+      {
+        "id": "world:244726a1-e13c-4112-b8fc-ae773b3fb5f0:42:c38",
+        "type": "command",
+        "dispatched": 26145.700000047684,
+        "received": 26150,
+        "worker": {
+          "requestId": "world:244726a1-e13c-4112-b8fc-ae773b3fb5f0:42:c38",
+          "received": 24455.5,
+          "serviceEnd": 24455.700000047684,
+          "reply": 24455.700000047684,
+          "recent": [
+            {
+              "name": "clock-consume",
+              "start": 24303.599999904633,
+              "end": 24376.599999904633
+            },
+            {
+              "name": "periodic-work",
+              "start": 24303.599999904633,
+              "end": 24376.599999904633
+            },
+            {
+              "name": "clock-consume",
+              "start": 24377.200000047684,
+              "end": 24396.099999904633
+            },
+            {
+              "name": "host-frame",
+              "start": 24396.099999904633,
+              "end": 24409.099999904633
+            },
+            {
+              "name": "post-frame",
+              "start": 24409.099999904633,
+              "end": 24412.099999904633
+            },
+            {
+              "name": "publish-frame",
+              "start": 24396.099999904633,
+              "end": 24412.099999904633
+            },
+            {
+              "name": "periodic-work",
+              "start": 24377.200000047684,
+              "end": 24412.099999904633
+            },
+            {
+              "name": "clock-consume",
+              "start": 24412.200000047684,
+              "end": 24425.400000095367
+            },
+            {
+              "name": "periodic-work",
+              "start": 24412.200000047684,
+              "end": 24425.400000095367
+            },
+            {
+              "name": "clock-consume",
+              "start": 24425.700000047684,
+              "end": 24425.700000047684
+            },
+            {
+              "name": "periodic-work",
+              "start": 24425.700000047684,
+              "end": 24425.700000047684
+            },
+            {
+              "name": "clock-consume",
+              "start": 24431.599999904633,
+              "end": 24452.299999952316
+            },
+            {
+              "name": "periodic-work",
+              "start": 24431.599999904633,
+              "end": 24452.400000095367
+            },
+            {
+              "name": "clock-consume",
+              "start": 24452.599999904633,
+              "end": 24452.599999904633
+            },
+            {
+              "name": "periodic-work",
+              "start": 24452.599999904633,
+              "end": 24452.599999904633
+            },
+            {
+              "name": "host-submit",
+              "start": 24455.5,
+              "end": 24455.700000047684
+            }
+          ]
+        },
+        "resolved": 26150.099999904633
+      },
+      {
+        "id": "artifact:39",
+        "type": "artifactContent",
+        "dispatched": 26150.5,
+        "received": 26168.799999952316,
+        "worker": {
+          "requestId": "artifact:39",
+          "received": 24465.200000047684,
+          "serviceEnd": 24466.700000047684,
+          "reply": 24466.700000047684,
+          "recent": [
+            {
+              "name": "periodic-work",
+              "start": 24377.200000047684,
+              "end": 24412.099999904633
+            },
+            {
+              "name": "clock-consume",
+              "start": 24412.200000047684,
+              "end": 24425.400000095367
+            },
+            {
+              "name": "periodic-work",
+              "start": 24412.200000047684,
+              "end": 24425.400000095367
+            },
+            {
+              "name": "clock-consume",
+              "start": 24425.700000047684,
+              "end": 24425.700000047684
+            },
+            {
+              "name": "periodic-work",
+              "start": 24425.700000047684,
+              "end": 24425.700000047684
+            },
+            {
+              "name": "clock-consume",
+              "start": 24431.599999904633,
+              "end": 24452.299999952316
+            },
+            {
+              "name": "periodic-work",
+              "start": 24431.599999904633,
+              "end": 24452.400000095367
+            },
+            {
+              "name": "clock-consume",
+              "start": 24452.599999904633,
+              "end": 24452.599999904633
+            },
+            {
+              "name": "periodic-work",
+              "start": 24452.599999904633,
+              "end": 24452.599999904633
+            },
+            {
+              "name": "host-submit",
+              "start": 24455.5,
+              "end": 24455.700000047684
+            },
+            {
+              "name": "post-result",
+              "start": 24455.700000047684,
+              "end": 24455.900000095367
+            },
+            {
+              "name": "host-frame",
+              "start": 24455.900000095367,
+              "end": 24463.099999904633
+            },
+            {
+              "name": "post-frame",
+              "start": 24463.099999904633,
+              "end": 24465.099999904633
+            },
+            {
+              "name": "publish-frame",
+              "start": 24455.900000095367,
+              "end": 24465.099999904633
+            },
+            {
+              "name": "command-publish",
+              "start": 24455.900000095367,
+              "end": 24465.099999904633
+            },
+            {
+              "name": "host-artifact-content",
+              "start": 24465.200000047684,
+              "end": 24466.700000047684
+            }
+          ]
+        },
+        "resolved": 26168.799999952316
+      }
+    ],
+    "main": [
+      {
+        "name": "renderer-tick",
+        "start": 26147,
+        "end": 26148.299999952316
+      },
+      {
+        "name": "renderer-tick",
+        "start": 26155.700000047684,
+        "end": 26160.299999952316
+      },
+      {
+        "name": "renderer-apply",
+        "start": 26162.900000095367,
+        "end": 26163.400000095367
+      },
+      {
+        "name": "hud-update",
+        "start": 26163.5,
+        "end": 26167
+      },
+      {
+        "name": "frame-handler",
+        "start": 26162.900000095367,
+        "end": 26167.099999904633
+      }
+    ]
+  },
+  "viewport": {
+    "width": 1920,
+    "height": 1080
+  },
+  "maximumPages": 48,
+  "mountedPages": 2,
+  "pageLabel": "1–2 / 48",
+  "openingMs": 35.40000009536743,
+  "phaseTimingsMs": {
+    "pause": 4.700000047683716,
+    "content": 18.700000047683716,
+    "render": 0.8999998569488525,
+    "show-modal": 11.100000143051147
+  },
+  "measurements": [
+    {
+      "name": "hearthwild:book-open:pause",
+      "startTime": 26145.5,
+      "duration": 4.700000047683716
+    },
+    {
+      "name": "hearthwild:book-open",
+      "startTime": 26145.5,
+      "duration": 35.40000009536743
+    },
+    {
+      "name": "hearthwild:book-open:content",
+      "startTime": 26150.200000047684,
+      "duration": 18.700000047683716
+    },
+    {
+      "name": "hearthwild:book-open:render",
+      "startTime": 26168.900000095367,
+      "duration": 0.8999998569488525
+    },
+    {
+      "name": "hearthwild:book-open:show-modal",
+      "startTime": 26169.799999952316,
+      "duration": 11.100000143051147
+    }
+  ],
+  "journeyPhase": "complete",
+  "cpuSummary": {
+    "windowMs": 35.4,
+    "main": [
+      [
+        "CrRendererMain:ThreadControllerImpl::RunTask:",
+        22.4,
+        13.5,
+        13
+      ],
+      [
+        "CrRendererMain:HandlePostMessage:",
+        22.5,
+        13.5,
+        12.9
+      ],
+      [
+        "CrRendererMain:v8.callFunction:",
+        22.6,
+        13.3,
+        12.8
+      ],
+      [
+        "CrRendererMain:UpdateLayoutTree:",
+        24.8,
+        7.5,
+        7.5
+      ],
+      [
+        "CrRendererMain:FunctionCall:WorkerBridge.worker.onmessage",
+        16.2,
+        5.5,
+        5.5
+      ],
+      [
+        "CrRendererMain:ProxyMain::BeginMainFrame:",
+        10,
+        5.3,
+        5.3
+      ]
+    ],
+    "other": [
+      [
+        "ThreadPoolForegroundWorker:ThreadPool_RunTask:",
+        -77.7,
+        117.3,
+        35.4
+      ],
+      [
+        "DevToolsPipeHandlerWriteThread:ThreadControllerImpl::RunTask:",
+        9.4,
+        24.8,
+        24.8
+      ],
+      [
+        "GpuVSyncThread:ThreadControllerImpl::RunTask:",
+        9.7,
+        16.8,
+        16.8
+      ],
+      [
+        "CrGpuMain:ThreadControllerImpl::RunTask:",
+        10.2,
+        10.8,
+        10.8
+      ]
+    ]
+  },
+  "pageErrors": []
+}

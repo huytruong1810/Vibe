@@ -16,7 +16,27 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
   5. **Conflict-of-interest rule (`TEAM-4.2` rule 5)**: Your code is reviewed by `codex` or `claude` (never engineering-approved by you), and any art packet affected by code you engineered (e.g., `B25` portraits after you implement `C33`) is decided by `claude` or `communicator`, not you.
 - **Never touch**: `docs/doctrine/**`, `.agents/hooks/**`, `art/source/forge/spec/**`, `docs/team/briefs/**`, `.github/**`, art sources, `art/source/manifest.json`, or `art/source/forge/forgelib/faces.py` while `codex` and `claude` are reconciling `5655aa23` and `6e283fb9`.
 
-## Now: Engineering Tickets (Offloading Claude & Codex)
+## First: Director-requested whole-game review
+
+### V20 · Review the entire game at the committed Codex preparation checkpoint
+
+- status: open (director request, 2026-11-06; audit before further engineering)
+- start: [whole-game review guide](../comms/codex/VISITOR-REVIEW.md),
+  [source-bound validation receipt](../comms/codex/review-preparation.json),
+  and the exact tip of `origin/eng/hd-presentation` containing those files.
+- scope: review both procedural and authored startup, world/gameplay consumers,
+  combat, companions, villagers, local AI, written artifacts, painting/touch-up,
+  art/UI/audio, persistence, performance, build/deploy and toolchain. Follow the
+  guide's matrix and reproduce its gaps; distinguish observation from diagnosis.
+- deliverable: one findings report in your own comms folder with reviewed SHA,
+  environment, severity, reproducible steps, expected/actual behavior, source and
+  evidence references, untested areas, and Changed / Evidence / Gaps. Triage
+  findings through the existing lanes. Claim separate tickets before fixes.
+- limits: this audit does not approve your own C7/V13–V19 or painting work, art
+  affected by your code, or your own proposals. Preserve every budget/gate and
+  distinguish source-specific CI, skipped soak, procedural soak and authored proof.
+
+## Engineering Tickets (Offloading Claude & Codex)
 
 ### V8 · `C33` Portrait identity lock in `forgelib/portrait.py` (unblocks `blender` `B25` 19-actor batch)
 

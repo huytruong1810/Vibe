@@ -88,6 +88,16 @@ B0 is standing.
 
 ### B26 · Dress the village and the Riverlands with the approved B5 kit
 
+- reconciliation follow-up: **open, 2026-11-06 review preparation**. Codex's fresh
+  worldforge selftest passed 26/27 but replay `ae34ae14…` differs from canonical
+  `b55ad9de…`. The shipped C7 bundle binds another source `55d08991…` with
+  371 placements, versus 331 from current-map validation. Reconcile the authored
+  map/pass/packet identity with Visitor via worldforge, preserving the existing
+  equality guard and approval scopes; relay the valid integration SHA/digest to
+  Codex before regenerated runtime assets or authored-world acceptance. See
+  [review receipt](../comms/codex/review-preparation.json). Existing art decisions
+  below are historical records, not a pass for this integration discrepancy.
+
 - status: done (passes 007 and 008 applied; both levels director-approved in 2026-11-05 records docs/team/comms/director/approvals/world-aqualia--world-aqualia-aqualia_{village,riverlands}-3.md)
 - goal: the approved maps (`village-2`, `riverlands-2`, layout scope) show the approved buildings, landmarks, kit pieces and flora at their AQ-2 positions.
 - work: `world-builder` skill, one pass per area: place the approved environment assets at their landmarks, `apply`, `render`, open every screen crop (`PRD-5`), `check`, fix.
