@@ -143,10 +143,11 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
 
 ### V21 · `AMB-M1…M4` World ambience emitters, foliage wind sway & phase color grading (AMB-1…4)
 
-- status: in-progress (visitor)
+- status: candidate (visitor)
 - goal: implement presentation-only ambient particle emitter system (petals, river mist, fireflies, spores, autumn leaves), continuous global wind field driving foliage and reed sway, 4-phase time-of-day color grading (dawn, midday, dusk, night), and prop additive light pools.
 - inputs: `docs/doctrine/08-world-and-ambience.md` (AMB-1…4), `src/presentation/ambience.ts`, `src/presentation/renderer.ts`.
 - done when: unit tests verify ambient particle generation per biome/season/weather, quality settings scaling, wind sway calculation, and phase color grading tints; `npm run check` passes.
+- evidence: **Changed:** `src/presentation/ambience.ts`, `src/presentation/renderer.ts`, `tests/ambience.test.ts`. **Evidence:** `tests/ambience.test.ts` (4/4 passed). Implemented `AmbientEmitterSystem` emitting seasonal and diurnal particles (petals, leaves, fireflies, mist, spores) with low/medium/high budget scaling and reduced motion checks; implemented `calculateFoliageSway` driving canopy, reed, and crop sway offsets from continuous wind vector and time; implemented `evaluateColorGrading` providing smooth 4-phase color tint transitions across the 24h clock (dawn rosy, midday neutral, dusk golden amber, night cool indigo) with weather rain/storm adaptation; implemented `findPropLightSources` lighting outdoor props (hearths, lanterns, waystones, bell posts) in settlements at dusk/night. Full `npm run check` passed (57 test suites, 614 tests passed, Vite build passed).
 
 ## Now: Acting-Director Art Review & Triage (`TEAM-4.2`)
 

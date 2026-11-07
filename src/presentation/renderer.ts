@@ -64,6 +64,12 @@ import { EffectDirector, visibleProjectiles, effectSeed } from './effects';
 import { actorInScene, sceneCamera } from './scene-view';
 import { WorldPaintings } from './paintings';
 import type { Artifact } from '../domain/artifacts';
+import {
+  AmbientEmitterSystem,
+  calculateFoliageSway,
+  evaluateColorGrading,
+  findPropLightSources,
+} from './ambience';
 
 export type { Quality } from './quality';
 export { CameraController } from './projection';
@@ -127,6 +133,8 @@ interface AuthoredEffect {
 /** Shared bounded particles evaluated from simulation time. No entity ticker or simulation mutation. */
 export class WeatherRenderer {
   readonly graphics = new Graphics();
+  private readonly ambience = new AmbientEmitterSystem();
+
   render(frame: RenderSnapshot, seconds: number, quality: Quality, reducedMotion: boolean): void {
     const g = this.graphics;
     g.clear();
@@ -147,9 +155,15 @@ export class WeatherRenderer {
         alpha: rain ? 0.35 : 0.65,
       });
     }
+
+    // AMB-M1 Ambient particles (petals, leaves, fireflies, mist, spores)
+    const ambientParticles = this.ambience.sample(frame, seconds, quality, reducedMotion);
+    for (const p of ambientParticles) {
+      g.circle(p.x, p.y, p.radius).fill({ color: p.color, alpha: p.alpha });
+    }
   }
 }
-/** Eight persistent light sprites avoid allocation during each rendering frame. */
+/** Persistent light sprites avoid allocation during each rendering frame. */
 export class LightingRenderer {
   readonly darkness = new Graphics();
   readonly lights = new Container();
@@ -158,14 +172,26 @@ export class LightingRenderer {
     private readonly art: PixelArt,
     private readonly projection: WorldProjection,
   ) {}
-  render(frame: RenderSnapshot, camera: Pick<CameraController, 'x' | 'y'>, quality: Quality): void {
-    const night = clamp((Math.cos((frame.hour / 24) * Math.PI * 2) + 0.1) * 0.45, 0, 0.48);
+  render(
+    frame: RenderSnapshot,
+    camera: Pick<CameraController, 'x' | 'y'>,
+    quality: Quality,
+    placedProps?: readonly {
+      id: string;
+      contentId?: string;
+      propId?: string;
+      x: number;
+      y: number;
+    }[],
+  ): void {
+    const grading = evaluateColorGrading(frame.hour, frame.weather.kind);
     this.darkness
       .clear()
       .rect(0, 0, PROFILE.width, PROFILE.height)
-      .fill({ color: 0x102f3a, alpha: night });
+      .fill({ color: grading.color, alpha: grading.alpha });
+
     if (!this.initialized) {
-      for (let i = 0; i < 8; i++) {
+      for (let i = 0; i < 16; i++) {
         const sprite = new Sprite(this.art.light());
         sprite.anchor.set(0.5);
         sprite.scale.set(LEGACY_SCALE);
@@ -174,23 +200,45 @@ export class LightingRenderer {
       }
       this.initialized = true;
     }
-    const near =
-      quality === 'low' || night < 0.04
-        ? []
-        : SETTLEMENTS.filter((s) => {
-            const p = this.projection.screen(s.x, s.y, 0, camera);
-            return (
-              p.x > -200 && p.x < PROFILE.width + 200 && p.y > -200 && p.y < PROFILE.height + 200
-            );
-          }).slice(0, quality === 'high' ? 8 : 3);
-    for (let i = 0; i < this.lights.children.length; i++) {
-      const light = this.lights.children[i] as Sprite,
-        s = near[i];
-      light.visible = !!s;
-      if (s) {
+
+    const night = grading.alpha;
+    const lightPositions: { x: number; y: number; alpha: number; scale: number }[] = [];
+
+    if (quality !== 'low' && night >= 0.04) {
+      for (const s of SETTLEMENTS) {
         const p = this.projection.screen(s.x, s.y, 0, camera);
-        light.position.set(p.x, p.y);
-        light.alpha = night;
+        if (p.x > -200 && p.x < PROFILE.width + 200 && p.y > -200 && p.y < PROFILE.height + 200) {
+          lightPositions.push({ x: p.x, y: p.y, alpha: night, scale: LEGACY_SCALE * 1.5 });
+        }
+      }
+
+      if (placedProps) {
+        const propSources = findPropLightSources(placedProps);
+        for (const src of propSources) {
+          const p = this.projection.screen(src.x, src.y, 0, camera);
+          if (p.x > -100 && p.x < PROFILE.width + 100 && p.y > -100 && p.y < PROFILE.height + 100) {
+            lightPositions.push({
+              x: p.x,
+              y: p.y,
+              alpha: Math.min(1.0, night * src.intensity),
+              scale: LEGACY_SCALE * (src.radius / 16),
+            });
+          }
+        }
+      }
+    }
+
+    const maxLights = quality === 'high' ? 16 : 8;
+    for (let i = 0; i < this.lights.children.length; i++) {
+      const light = this.lights.children[i] as Sprite;
+      const target = lightPositions[i];
+      if (target && i < maxLights) {
+        light.visible = true;
+        light.position.set(target.x, target.y);
+        light.alpha = target.alpha;
+        light.scale.set(target.scale);
+      } else {
+        light.visible = false;
       }
     }
   }
@@ -1217,7 +1265,7 @@ export class WorldRenderer {
         const sprite = new Sprite(source.texture);
         sprite.anchor.set(source.frame?.anchor.x ?? 0.5, source.frame?.anchor.y ?? 1);
         sprite.scale.set(source.scale);
-        view = { sprite, canopy, foliage: id.startsWith('tree:') };
+        view = { sprite, canopy, foliage: id.startsWith('tree:') || id.startsWith('r:') };
         this.props.set(id, view);
         (id.startsWith('canopy:') ? this.foreground : this.objects).addChild(sprite);
       }
@@ -1890,10 +1938,16 @@ export class WorldRenderer {
         const s = p.sprite,
           left = s.x - s.anchor.x * s.width,
           top = s.y - s.anchor.y * s.height;
-        s.skew.x =
+        const sway =
           p.foliage && !this.reducedMotion && effectQuality !== 'low'
-            ? Math.sin(presentation.seconds * 0.6 + s.x / TILE) * 0.008
+            ? calculateFoliageSway(
+                s.x / TILE,
+                s.y / TILE,
+                presentation.seconds,
+                frame.weather.wind ?? 0.3,
+              )
             : 0;
+        s.skew.x = sway * 0.008;
         s.alpha =
           p.canopy &&
           (s.parent === this.foreground || player.body.zIndex < s.zIndex) &&
@@ -2007,7 +2061,7 @@ export class WorldRenderer {
     }
     this.lighting.lights.visible = this.scene.outside;
     if (this.scene.outside) {
-      this.lighting.render(frame, this.renderCamera, effectQuality);
+      this.lighting.render(frame, this.renderCamera, effectQuality, frame.scene.props);
       this.weather.render(frame, presentation.seconds, effectQuality, this.reducedMotion);
     } else {
       this.weather.graphics.clear();
