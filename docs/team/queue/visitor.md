@@ -127,7 +127,7 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
 
 ### V19 · `LIF-M1` & `LIF-M2` Villager 10-step heart presentation & gift taste tables (LIF-2, LIF-3)
 
-- status: open
+- status: in-progress (visitor)
 - goal: map villager affinity substrate to 10-step heart presentation in dialogue headers and inspection overlays, and author canonical gift taste tables (loved, liked, neutral, disliked, hated) for all 10 Aqualia villagers.
 - inputs: `docs/doctrine/07-life-sim.md` (LIF-2, LIF-3), `src/content/villagers.ts`, `src/domain/agents.ts`, `src/presentation/hud.ts`.
 - done when: unit tests verify 10-step heart calculations, gift taste evaluations and affinity deltas, and journal taste discovery; `npm run check` passes.
