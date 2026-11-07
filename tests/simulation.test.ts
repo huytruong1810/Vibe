@@ -167,7 +167,7 @@ describe('authored world beta toggle (C7 WLD-M2/M3)', () => {
   it('constructs a simulation from the authored world with map-placed NPCs and creatures', async () => {
     const { readFile } = await import('node:fs/promises');
     const compiled = JSON.parse(
-      await readFile('art/source/world/work/import/aqualia-region.json', 'utf8'),
+      await readFile('public/assets/generated/aqualia-region.json', 'utf8'),
     );
     const host = new SimulationHost(42, 1, 24, 'world:authored', {
       worldSource: 'authored',
@@ -203,7 +203,7 @@ describe('authored world beta toggle (C7 WLD-M2/M3)', () => {
   it('round-trips an authored-world save and preserves worldSource', async () => {
     const { readFile } = await import('node:fs/promises');
     const compiled = JSON.parse(
-      await readFile('art/source/world/work/import/aqualia-region.json', 'utf8'),
+      await readFile('public/assets/generated/aqualia-region.json', 'utf8'),
     );
     const host = new SimulationHost(42, 1, 24, 'world:rt', {
       worldSource: 'authored',
@@ -236,7 +236,7 @@ describe('authored world beta toggle (C7 WLD-M2/M3)', () => {
   it('keeps world state finite and capacity bounded under sustained movement on the authored map', async () => {
     const { readFile } = await import('node:fs/promises');
     const compiled = JSON.parse(
-      await readFile('art/source/world/work/import/aqualia-region.json', 'utf8'),
+      await readFile('public/assets/generated/aqualia-region.json', 'utf8'),
     );
     const host = new SimulationHost(83, 1, 100, 'world:authored:soak', {
       worldSource: 'authored',

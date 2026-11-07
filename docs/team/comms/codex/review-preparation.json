@@ -1,0 +1,197 @@
+﻿{
+    "purpose":  "Whole-game Visitor review preparation; candidate checkpoint, no approval",
+    "runtimeSource":  "7019b5db9b8f7e4c10c832b6e29b6f9bd841037a",
+    "branch":  "eng/hd-presentation",
+    "preparationSource":  "Commit containing fixture-path repair; pin recorded after commit",
+    "updatedUtc":  "2026-11-07T03:28:45.4154972Z",
+    "changes":  [
+                    "Three authored simulation test paths now use committed runtime bundle; assertions unchanged",
+                    "Review guide and preserved pre-existing own evidence"
+                ],
+    "checks":  [
+                   {
+                       "command":  "VITEST_MAX_WORKERS=4 npm run check",
+                       "log":  "artifacts/review-prep-20261106-7019-check.log",
+                       "result":  "603 passed / 3 failed: ignored compiled world absent"
+                   },
+                   {
+                       "command":  "VITEST_MAX_WORKERS=4 npm run check",
+                       "log":  "artifacts/review-prep-20261106-ready-check.log",
+                       "result":  "605 passed / 1 failed: painting CPU 10.2123ms \u003e 5ms; type/architecture/standard assets passed; build not reached"
+                   },
+                   {
+                       "command":  "npx vitest run tests/painting-budget.test.ts",
+                       "log":  "artifacts/review-prep-20261106-painting-budget.log",
+                       "result":  "FAIL isolated CPU 6.4211ms \u003e 5ms"
+                   }
+               ],
+    "originalLeftovers":  {
+                              "value":  [
+                                            {
+                                                "path":  "docs/team/comms/codex/tmp/bramblefang-packet-gallery.png",
+                                                "bytes":  40864,
+                                                "sha256":  "6b1669aa22f6c316daa876331875be410e542a2eb33e07f01a077fa1dee17db3",
+                                                "lastModifiedUtc":  "2026-11-05T16:59:56.0493173Z",
+                                                "classification":  "pre-existing historical evidence; source revision unverified"
+                                            },
+                                            {
+                                                "path":  "docs/team/comms/codex/tmp/c11b-authored-screen.png",
+                                                "bytes":  70526,
+                                                "sha256":  "b808e67efa83e6488fe834c3474dbc6bd03d32da37a512be15fdf9e266db8ae6",
+                                                "lastModifiedUtc":  "2026-11-05T17:03:02.1992042Z",
+                                                "classification":  "pre-existing historical evidence; source revision unverified"
+                                            },
+                                            {
+                                                "path":  "docs/team/comms/codex/tmp/c11b-authored-village.png",
+                                                "bytes":  731161,
+                                                "sha256":  "3ea6c4eb7b76ad274d2e9ff70fb98df5fb7ec4a614a2b88b45eb700827138c6d",
+                                                "lastModifiedUtc":  "2026-11-05T17:03:02.0961176Z",
+                                                "classification":  "pre-existing historical evidence; source revision unverified"
+                                            },
+                                            {
+                                                "path":  "docs/team/comms/codex/tmp/c11b-live-terrain-1080.png",
+                                                "bytes":  198659,
+                                                "sha256":  "a41d7330aafa627ad316efd7214fe98d9e0800c17807fb980a94a2f85fbe4bd1",
+                                                "lastModifiedUtc":  "2026-11-05T17:03:33.9353798Z",
+                                                "classification":  "pre-existing historical evidence; source revision unverified"
+                                            },
+                                            {
+                                                "path":  "docs/team/comms/codex/tmp/c18-swiftshader.config.ts",
+                                                "bytes":  539,
+                                                "sha256":  "47db1b43098dbf2242ec9f7708f9ffb5fa3789a653dc3e12104aad74b40feb34",
+                                                "lastModifiedUtc":  "2026-11-05T04:44:19.3614242Z",
+                                                "classification":  "pre-existing historical evidence; source revision unverified"
+                                            },
+                                            {
+                                                "path":  "docs/team/comms/codex/tmp/c8b-combat-1080.png",
+                                                "bytes":  362337,
+                                                "sha256":  "91dfbc2b897663a0e45cca2bd4b5df73c3c541aeea43ac48a9b063b8f21c888a",
+                                                "lastModifiedUtc":  "2026-11-05T16:54:34.3019727Z",
+                                                "classification":  "pre-existing historical evidence; source revision unverified"
+                                            },
+                                            {
+                                                "path":  "docs/team/comms/codex/tmp/c8b-companion-1024.png",
+                                                "bytes":  204962,
+                                                "sha256":  "e9391eee48d8fc7a33936e1b79a1aaef047a79981e94c34f66195d495e37dd69",
+                                                "lastModifiedUtc":  "2026-11-05T16:54:27.1738808Z",
+                                                "classification":  "pre-existing historical evidence; source revision unverified"
+                                            },
+                                            {
+                                                "path":  "docs/team/comms/codex/tmp/c8b-companion-1920.png",
+                                                "bytes":  336864,
+                                                "sha256":  "4da75b6722158da7e115b52f22320e6fb5467260f4376ccfd476e28401bdf7df",
+                                                "lastModifiedUtc":  "2026-11-05T16:54:21.1584294Z",
+                                                "classification":  "pre-existing historical evidence; source revision unverified"
+                                            },
+                                            {
+                                                "path":  "docs/team/comms/codex/tmp/c8b-equipment-1024.png",
+                                                "bytes":  110512,
+                                                "sha256":  "dab14e1cdbc4b8b6e46186827fbad090047a3acae2c36dc125d32b83566dbe68",
+                                                "lastModifiedUtc":  "2026-11-05T16:54:28.3935588Z",
+                                                "classification":  "pre-existing historical evidence; source revision unverified"
+                                            },
+                                            {
+                                                "path":  "docs/team/comms/codex/tmp/c8b-equipment-1920.png",
+                                                "bytes":  317545,
+                                                "sha256":  "9a97650704bedd9e130a6219d8d69f2b499e55fb44151a9d708013d33d2e0072",
+                                                "lastModifiedUtc":  "2026-11-05T16:54:24.0530103Z",
+                                                "classification":  "pre-existing historical evidence; source revision unverified"
+                                            },
+                                            {
+                                                "path":  "docs/team/comms/codex/tmp/c8b-exploration-1024.png",
+                                                "bytes":  230600,
+                                                "sha256":  "f9d15b8a3d76507aafe989711fc9f8ce5cf56f4ab5066386f6f201a150120879",
+                                                "lastModifiedUtc":  "2026-11-05T16:54:00.1685062Z",
+                                                "classification":  "pre-existing historical evidence; source revision unverified"
+                                            },
+                                            {
+                                                "path":  "docs/team/comms/codex/tmp/c8b-exploration-1080.png",
+                                                "bytes":  333843,
+                                                "sha256":  "af0428467b0e21b89b19a93e4fd751717e070e75704f56ab20e9134215b8020b",
+                                                "lastModifiedUtc":  "2026-11-05T16:53:59.1863479Z",
+                                                "classification":  "pre-existing historical evidence; source revision unverified"
+                                            },
+                                            {
+                                                "path":  "docs/team/comms/codex/tmp/c8b-meter-0.5.png",
+                                                "bytes":  250,
+                                                "sha256":  "63307f8fbc2eb7722c4c6c36f1133a43d61a5e43dc7dd59b4aee4413c8ba66cd",
+                                                "lastModifiedUtc":  "2026-11-05T16:53:54.6088441Z",
+                                                "classification":  "pre-existing historical evidence; source revision unverified"
+                                            },
+                                            {
+                                                "path":  "docs/team/comms/codex/tmp/c8b-meter-0.png",
+                                                "bytes":  202,
+                                                "sha256":  "2de5b302585d5e4cca2191270a43581285a8cff79f049016b76833d33552b947",
+                                                "lastModifiedUtc":  "2026-11-05T16:53:54.3412569Z",
+                                                "classification":  "pre-existing historical evidence; source revision unverified"
+                                            },
+                                            {
+                                                "path":  "docs/team/comms/codex/tmp/c8b-meter-1.png",
+                                                "bytes":  253,
+                                                "sha256":  "adb74c13c2c92a2a58b8f5c670276c05b61a534c8d08655324a1f3154bf64a46",
+                                                "lastModifiedUtc":  "2026-11-05T16:53:55.0134380Z",
+                                                "classification":  "pre-existing historical evidence; source revision unverified"
+                                            },
+                                            {
+                                                "path":  "docs/team/comms/codex/tmp/c8b-worn-1024.png",
+                                                "bytes":  109958,
+                                                "sha256":  "e82f85ff0fd4605d1ef8646a97bcff38c42d40c63e46ea2ee29989b65cbc9561",
+                                                "lastModifiedUtc":  "2026-11-05T16:54:28.7631959Z",
+                                                "classification":  "pre-existing historical evidence; source revision unverified"
+                                            },
+                                            {
+                                                "path":  "docs/team/comms/codex/tmp/c8b-worn-1920.png",
+                                                "bytes":  318239,
+                                                "sha256":  "12e61a9b4deb2cf687ece213510014c186806b4c218095eab4905d9bb78c630a",
+                                                "lastModifiedUtc":  "2026-11-05T16:54:24.5597382Z",
+                                                "classification":  "pre-existing historical evidence; source revision unverified"
+                                            },
+                                            {
+                                                "path":  "docs/team/comms/codex/tmp/c8-hud-1024.png",
+                                                "bytes":  230084,
+                                                "sha256":  "2a9b21f69acd3cf7aaf7ef1b11a5f508327fad67b76bef70d0eb7811a9b0e752",
+                                                "lastModifiedUtc":  "2026-11-05T17:18:52.1870509Z",
+                                                "classification":  "pre-existing historical evidence; source revision unverified"
+                                            },
+                                            {
+                                                "path":  "docs/team/comms/codex/tmp/c8-hud-1080.png",
+                                                "bytes":  304925,
+                                                "sha256":  "202abb13ca2860c78a3b57000d2aa3b3a5e331daa9becbb9a5310d4c75e6b667",
+                                                "lastModifiedUtc":  "2026-11-05T17:18:47.0316176Z",
+                                                "classification":  "pre-existing historical evidence; source revision unverified"
+                                            },
+                                            {
+                                                "path":  "docs/team/comms/codex/tmp/c8-packet-fixture.png",
+                                                "bytes":  20177,
+                                                "sha256":  "f61966864ff3bd79832666aa63e293cf83e75ae19d6e3acfeb4f045160eed3e2",
+                                                "lastModifiedUtc":  "2026-11-05T16:53:42.3376117Z",
+                                                "classification":  "pre-existing historical evidence; source revision unverified"
+                                            },
+                                            {
+                                                "path":  "docs/team/comms/codex/tmp/rivallie-packet-gallery.png",
+                                                "bytes":  40403,
+                                                "sha256":  "5363cb4731a39b77b33dd9742e180805720f90a738c488fdb6c1300bbef97fa3",
+                                                "lastModifiedUtc":  "2026-11-05T16:59:31.5027413Z",
+                                                "classification":  "pre-existing historical evidence; source revision unverified"
+                                            }
+                                        ],
+                              "Count":  21
+                          },
+    "imageInspection":  "All20 original PNGs inspected; historical source unverified, not current-source acceptance",
+    "pending":  [
+                    "Production build",
+                    "Browser journeys",
+                    "Root and /Vibe/ beta smoke",
+                    "World and packet validation",
+                    "Formatting",
+                    "Unchanged HD gate",
+                    "Exact-source CI"
+                ],
+    "gaps":  [
+                 "Painting CPU budget remains failed; no threshold change",
+                 "Zero approved actors /1519HD gaps",
+                 "Live Machine-A reading/memory/conversation failed; painting latency exceeds30s",
+                 "Long soak is procedural; authored soak not established",
+                 "Visitor must not self-approve own engineering"
+             ]
+}

@@ -83,16 +83,24 @@ export class PaintingEditor {
   }
 
   private bindEvents(): void {
-    this.dialog.querySelector('#painting-editor-close')!.addEventListener('click', () => this.close());
-    this.dialog.querySelector('#painting-editor-cancel')!.addEventListener('click', () => this.close());
+    this.dialog
+      .querySelector('#painting-editor-close')!
+      .addEventListener('click', () => this.close());
+    this.dialog
+      .querySelector('#painting-editor-cancel')!
+      .addEventListener('click', () => this.close());
     this.dialog.addEventListener('cancel', (e) => {
       e.preventDefault();
       this.close();
     });
 
-    this.dialog.querySelector('#tool-pencil')!.addEventListener('click', () => this.setTool('pencil'));
+    this.dialog
+      .querySelector('#tool-pencil')!
+      .addEventListener('click', () => this.setTool('pencil'));
     this.dialog.querySelector('#tool-fill')!.addEventListener('click', () => this.setTool('fill'));
-    this.dialog.querySelector('#tool-dropper')!.addEventListener('click', () => this.setTool('dropper'));
+    this.dialog
+      .querySelector('#tool-dropper')!
+      .addEventListener('click', () => this.setTool('dropper'));
 
     this.undoBtn.addEventListener('click', () => this.undo());
     this.redoBtn.addEventListener('click', () => this.redo());
@@ -211,8 +219,7 @@ export class PaintingEditor {
     const rect = this.canvas.getBoundingClientRect();
     const clientX = e.clientX - rect.left;
     const clientY = e.clientY - rect.top;
-    if (clientX < 0 || clientY < 0 || clientX >= rect.width || clientY >= rect.height)
-      return null;
+    if (clientX < 0 || clientY < 0 || clientX >= rect.width || clientY >= rect.height) return null;
     const x = Math.floor((clientX / rect.width) * 48);
     const y = Math.floor((clientY / rect.height) * 32);
     return { x: Math.max(0, Math.min(47, x)), y: Math.max(0, Math.min(31, y)) };

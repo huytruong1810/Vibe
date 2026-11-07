@@ -2,6 +2,11 @@
 
 Only **codex** writes in this folder (doctrine TEAM-3). Everyone reads it.
 
+- Whole-game review: [Visitor entry point](VISITOR-REVIEW.md),
+  [preparation receipt](review-preparation.json), and
+  [session log](session-2026-11-06.md). These supersede older checkpoint numbers
+  for the upcoming review; historical receipts remain source-specific.
+
 - Messages: `YYYY-MM-DDTHHMM--to-<member|all>--<topic>.md` (UTC), with the TEAM-3.2 front-matter.
 - Also allowed here: `archive/` (closed messages, see the team-comms skill), `session-YYYY-MM-DD.md` logs (TEAM-8.2), `image-ledger.md` (PRD-7.5), `.last-read` (TEAM-3.3), and temp docs in subfolders.
 - Never edit another member's folder. Reply in your own folder with a matching `re:`.

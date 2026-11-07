@@ -1,5 +1,20 @@
 # Codex handoff: next session, 2026-11-05
 
+## Whole-game review preparation — 2026-11-06
+
+Director requested all leftover work committed for Visitor's whole-game review.
+Eng was fast-forwarded through studio **7019b5db** (C7 and V13–V19 candidates).
+Start with [Visitor review guide](VISITOR-REVIEW.md) and the living
+[preparation receipt](review-preparation.json). Earlier implementation checkpoints
+below remain historical. No art/game approval is inferred from this preparation.
+
+Three authored-world tests now read the committed shipping world bundle rather
+than a gitignored import absent from clean checkouts. All three pass. The first
+full check after this repair passed605/606 tests; painting quantization failed
+at10.21ms/5ms, with isolated confirmation6.42ms/5ms. Preserve those failures.
+The previously untracked Codex screenshot evidence/config is versioned at its
+original paths with historical provenance explicitly recorded in the receipt.
+
 ## Current implementation checkpoint (supersedes the saved ordering below)
 
 Huy requested implementation of the resume plan. Studio74714197 was normally
