@@ -84,7 +84,13 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
 - inputs: `docs/doctrine/05-combat-direction.md` (CMB-2), `src/domain/combat.ts`, `src/domain/simulation.ts`.
 - done when: unit tests verify 3-hit chain, recovery dash-cancels, finisher knockback, and deterministic replay; `npm run check` passes.
 - evidence: **Changed:** `src/domain/combat.ts`, `src/domain/simulation.ts`, `src/domain/save-schema.ts`. **Evidence:** `tests/combat-combo.test.ts` (4/4 pass). Hit 1 jab (`windup: 4, active: 2, recovery: 9, power: 10, stamina: 4, range: 2.2`), Hit 2 sweep (`windup: 4, active: 2, recovery: 8, power: 14, stamina: 5, range: 2.3`), Hit 3 finisher (`windup: 6, active: 3, recovery: 11, power: 20, stamina: 7, range: 2.5, impulse x2.5`). Dash cancels hits 1 & 2 recovery, blocked during windup/active and finisher. `npm run check` (50 test suites, 584 tests) passes.
-- evidence:
+
+### V14 · `AGT-M1` / `AGT-M4` Dialogue voice blips & audio ducking (AGT-4.2, Proposal 002-r2)
+
+- status: in-progress (visitor)
+- goal: implement procedural syllable voice blips for all 10 Aqualia villagers and background audio ducking during conversation per Proposal 002-r2 and doctrine AGT-4.2.
+- inputs: `docs/team/proposals/002-aqualia-voice-casting.md`, `src/presentation/audio.ts`, `src/presentation/hud.ts`, `src/main.ts`.
+- done when: unit tests verify all 10 villager blip configurations, cadence/envelope synthesis, ducking transition, and conversation dialogue integration; `npm run check` passes.
 
 ## Now: Acting-Director Art Review & Triage (`TEAM-4.2`)
 
