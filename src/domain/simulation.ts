@@ -20,7 +20,13 @@ import {
   ContentRegistry,
   type ItemId,
 } from '../content/definitions';
-import { evaluateGiftTaste, giftAffinityDelta, giftReactionEmotion } from '../content/villagers';
+import {
+  evaluateGiftTaste,
+  giftAffinityDelta,
+  giftReactionEmotion,
+  isVillagerBirthday,
+  getFestivalForDay,
+} from '../content/villagers';
 import {
   AgentActionValidator,
   DialogueResponseSchema,
@@ -1253,8 +1259,14 @@ export class SimulationHost {
           message = 'Choose an inventory slot with an item.';
           break;
         }
+        const currentSeasonDay = (this.calendar.day % CONFIG.seasonDays) + 1;
+        const isBirthday = isVillagerBirthday(
+          npc.profileId,
+          this.calendar.season,
+          currentSeasonDay,
+        );
         const taste = evaluateGiftTaste(npc.profileId, item.id as ItemId);
-        const delta = giftAffinityDelta(taste, false);
+        const delta = giftAffinityDelta(taste, isBirthday);
         npc.affinity = Math.max(-100, Math.min(100, npc.affinity + delta));
         npc.lastGiftDay = this.calendar.day;
         if (!npc.discoveredTastes) npc.discoveredTastes = {};
@@ -1263,25 +1275,29 @@ export class SimulationHost {
         this.inventory.remove(c.slot);
 
         const villagerName = NPC_PROFILES.find((p) => p.id === npc.profileId)?.name ?? 'Villager';
-        const emotion = giftReactionEmotion(taste);
+        const emotion = isBirthday ? 'warm' : giftReactionEmotion(taste);
         let reactionText = '';
-        switch (taste) {
-          case 'loved':
-            reactionText = `${villagerName} glows with genuine delight upon receiving the ${item.id}. "This is wonderful! Thank you so much!"`;
-            break;
-          case 'liked':
-            reactionText = `${villagerName} smiles warmly at the ${item.id}. "Thank you, this will come in handy."`;
-            break;
-          case 'disliked':
-            reactionText = `${villagerName} looks puzzled by the ${item.id}. "Oh... thank you, I suppose."`;
-            break;
-          case 'hated':
-            reactionText = `${villagerName} frowns and steps back from the ${item.id}. "Why would you give me this?"`;
-            break;
-          case 'neutral':
-          default:
-            reactionText = `${villagerName} politely accepts the ${item.id}. "Thank you for thinking of me."`;
-            break;
+        if (isBirthday) {
+          reactionText = `${villagerName}’s eyes widen with joyful surprise upon seeing the ${item.id}. "You remembered my birthday! This is such a wonderful gift, thank you so much!"`;
+        } else {
+          switch (taste) {
+            case 'loved':
+              reactionText = `${villagerName} glows with genuine delight upon receiving the ${item.id}. "This is wonderful! Thank you so much!"`;
+              break;
+            case 'liked':
+              reactionText = `${villagerName} smiles warmly at the ${item.id}. "Thank you, this will come in handy."`;
+              break;
+            case 'disliked':
+              reactionText = `${villagerName} looks puzzled by the ${item.id}. "Oh... thank you, I suppose."`;
+              break;
+            case 'hated':
+              reactionText = `${villagerName} frowns and steps back from the ${item.id}. "Why would you give me this?"`;
+              break;
+            case 'neutral':
+            default:
+              reactionText = `${villagerName} politely accepts the ${item.id}. "Thank you for thinking of me."`;
+              break;
+          }
         }
 
         if (this.dialogue && this.dialogue.npcId === npc.profileId) {
@@ -2845,6 +2861,21 @@ export class SimulationHost {
       hour: this.calendar.hour,
       calendar: this.calendar.label,
       season: this.calendar.season,
+      festival: (() => {
+        const seasonDay = (this.calendar.day % CONFIG.seasonDays) + 1;
+        const fest = getFestivalForDay(this.calendar.season, seasonDay);
+        return fest
+          ? {
+              id: fest.id,
+              name: fest.name,
+              description: fest.description,
+              village: fest.village,
+            }
+          : null;
+      })(),
+      birthdaysToday: NPC_PROFILES.map((p) => p.id).filter((id) =>
+        isVillagerBirthday(id, this.calendar.season, (this.calendar.day % CONFIG.seasonDays) + 1),
+      ),
       paused: this.pauses.reasons,
       weather: new SeasonSystem().weather(this.calendar),
       journal: [...this.journal],
@@ -2858,9 +2889,14 @@ export class SimulationHost {
       creatures: visible,
       npcs: this.npcs
         .filter((n) => this.entities.scene[this.entities.require(n.entityId)] === activeScene)
-        .map((n) =>
-          structuredClone({
+        .map((n) => {
+          const seasonDay = (this.calendar.day % CONFIG.seasonDays) + 1;
+          const fest = getFestivalForDay(this.calendar.season, seasonDay);
+          const isFestivalParticipating =
+            fest && (fest.village === 'all' || fest.village === 'village:aqualia');
+          return structuredClone({
             ...n,
+            activity: isFestivalParticipating ? `Celebrating ${fest.name}` : n.activity,
             hearts: calculateVillagerHearts(n.affinity),
             memory: { ...n.memory, records: n.memory.records.slice(-12), pending: [] },
             memoryCounts: {
@@ -2868,8 +2904,8 @@ export class SimulationHost {
               pending: n.memory.pending.length,
             },
             heard: [],
-          }),
-        ),
+          });
+        }),
       events: [...this.events.values()].slice(-18),
       drops: local.resources.drops.slice(),
       markers: this.markers.filter((m) => (m.scene ?? 0) === activeScene),

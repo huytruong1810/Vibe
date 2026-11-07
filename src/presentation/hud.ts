@@ -929,7 +929,10 @@ export class HudPresenter {
         }))
         .sort((a, b) => a.distance - b.distance)
         .slice(0, 10);
-      html = `<div class="journal-intro compact"><div class="eyebrow">FAMILIAR FACES</div><h3>Everyone has a rhythm.</h3><p>Villagers work, wander, share news, and make plans. Stop by and say hello.</p></div><div class="people-list">${nearby
+      const festivalBanner = frame.festival
+        ? `<div class="festival-banner" role="status"><div class="festival-sparkle">✦ FESTIVAL DAY ✦</div><h4>${escapeHtml(frame.festival.name)}</h4><p>${escapeHtml(frame.festival.description)}</p></div>`
+        : '';
+      html = `${festivalBanner}<div class="journal-intro compact"><div class="eyebrow">FAMILIAR FACES</div><h3>Everyone has a rhythm.</h3><p>Villagers work, wander, share news, and make plans. Stop by and say hello.</p></div><div class="people-list">${nearby
         .map(({ npc, index, distance }) => {
           const hearts = npc.hearts ?? calculateVillagerHearts(npc.affinity);
           return `<div class="person-card" data-key="${escapeHtml(npc.profileId)}"><span class="person-avatar village-${NPC_PROFILES[index]!.village}">${NPC_PROFILES[index]!.name[0]}</span><div><h4>${escapeHtml(NPC_PROFILES[index]!.name)} <small>${npc.partner !== null ? '✧' : ''}</small></h4><p>${escapeHtml(NPC_PROFILES[index]!.role)}</p><small>${escapeHtml(npc.activity)} · ♥ ${hearts}/10</small></div><button class="person-talk" data-action="talk" data-id="${index}" ${distance > 3 ? 'disabled' : ''} aria-label="Talk to ${escapeHtml(NPC_PROFILES[index]!.name)}">${distance <= 3 ? 'Talk ↗' : `${Math.round(distance)}m`}</button></div>`;
@@ -993,8 +996,9 @@ export class HudPresenter {
     const profile = NPC_PROFILES.find((p) => p.id === conversation.npcId)!;
     if (!dialog.open) dialog.showModal();
     this.el('conversation-name').textContent = profile.name;
+    const isBirthdayToday = frame.birthdaysToday?.includes(conversation.npcId);
     this.el('conversation-role').textContent =
-      `${profile.role} · ${VILLAGES[profile.village]!.name}`;
+      `${profile.role} · ${VILLAGES[profile.village]!.name}${isBirthdayToday ? ' · 🎂 Birthday Today!' : ''}`;
     const npc = frame.npcs.find((n) => n.profileId === conversation.npcId);
     const hearts = npc ? (npc.hearts ?? calculateVillagerHearts(npc.affinity)) : 0;
     const heartsHtml = Array.from(
@@ -1065,9 +1069,11 @@ export class HudPresenter {
     giftBtn.disabled = !hasItem || alreadyGifted;
     giftBtn.title = alreadyGifted
       ? `${profile.name} already received a gift today`
-      : hasItem
-        ? 'Offer the carried item to this villager'
-        : 'Carry an item in your hotbar to give as a gift';
+      : isBirthdayToday
+        ? `Offer a birthday gift to ${profile.name} (4× heart bonus!)`
+        : hasItem
+          ? 'Offer the carried item to this villager'
+          : 'Carry an item in your hotbar to give as a gift';
     const staged = this.el('staged-note');
     const offers = conversation.staged.length + (conversation.invitePending ? 1 : 0);
     staged.hidden = offers === 0;
