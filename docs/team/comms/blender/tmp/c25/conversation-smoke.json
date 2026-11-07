@@ -1,0 +1,9 @@
+{
+  "recordedAt": "2026-11-07T01:12:23.471Z",
+  "model": "gemma4-abliterated:e4b",
+  "passed": false,
+  "capabilityPassed": true,
+  "capabilityMs": 33387.697556,
+  "elapsedMs": 107358.17,
+  "error": "Unterminated string in JSON at position 292 (line 5 column 253)"
+}

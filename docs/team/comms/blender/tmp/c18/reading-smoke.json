@@ -1,0 +1,9 @@
+{
+  "recordedAt": "2026-11-07T00:57:17.069Z",
+  "model": "gemma4-abliterated:26b",
+  "passed": false,
+  "capabilityPassed": true,
+  "capabilityMs": 46074.72989,
+  "elapsedMs": 55517.09,
+  "error": "Model proposed NONE instead of the requested READ_TEXT."
+}

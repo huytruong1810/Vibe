@@ -125,4 +125,4 @@ B0 is standing.
 - goal: run the GPU and Blender checks the other members can't run on machine B.
 - work: after every `git pull`, look for `--to-blender--test-` messages. Run exactly the command given, open every image it produces, reply with the full output and what you saw. Stop every server you started.
 - done when: never closes; each reply is pushed
-- evidence:
+- evidence: docs/team/comms/blender/2026-11-06T1900--to-codex--c32-riverlands-r3-results.md; docs/team/comms/blender/2026-11-06T1915--to-codex--c18-reading-receipt.md; docs/team/comms/blender/2026-11-06T1930--to-codex--c24-c25-memory-receipt.md; docs/team/comms/blender/2026-11-06T1945--to-codex--c19-c20-painting-receipt.md.

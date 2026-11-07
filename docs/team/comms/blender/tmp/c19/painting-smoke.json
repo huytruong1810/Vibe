@@ -1,0 +1,1536 @@
+{
+  "passed": false,
+  "transportPassed": true,
+  "within30Seconds": false,
+  "model": "gemma4-abliterated:26b",
+  "imageModel": "z_image_turbo-Q4_K",
+  "times": {
+    "unloadMs": 67.90385499999684,
+    "generationMs": 50758.11757199999,
+    "nodeDecodeMs": 44.12951800000155,
+    "coldNodeQuantizeMs": 23.643955999985337,
+    "reloadMs": 70481.85075000001,
+    "pipelineIncludingReloadMs": 121384.720425
+  },
+  "painting": {
+    "pixels": "7u7u7u7u5mZmZmiIiIiDMzMzMzMzMz7u7u7u7u7u7u5mZmYzMzMzMzMzMzMzM+7u7u7u7u7u7u7uZmZmMzMzMzMzMzMz7u7u7u7u7u7u7u7u7uJmZmYmNmY+7u7u7u7unu7u7u7u7u7u7u7uLu7u7uLu7u7u7u7unu7u7u7u7u7u7u7u7u7u7u7u7u7u7u7umZnu7u7u7u7u7u7u7u7u7u7u7u7u7u7umZmZ7u7u7u7u7u7u7u7u7u7u7u7u7u7umZmZme7u7u7u7u7u7u7u7u7u7u7u7u7umZmZmZme7u7u7u7u7u7u7u7u7u7u7u7umZmZmZmZme7u7u7u7u7u7u7u7u7u7u7p/5mZmZmZmZmZnu7u7u7u7u7u7u7u6ZmZ////mZmZmZmZmZmZ7u7u6ZnpmZmZmZmZ///////5mZmZmZmZmZmZmZmZmZmZmZmZ3d////////mZmZmZmZmZmZmZmZmZmZmf3d3//////////5mZmZmZmZmZmZmf////Vd3d3///////////////////////////VV3d3d//////////////////////////VVXd3d3/////////3///////////////VVVV3d3f//////3/Fd/////////////9VVVVXd3d3///XMvMRen/3//////////dURFRVVHBFV1VxERERBxE3d/VVVVd0RwVd6d3qnd3d3d6d3d3d3d3t6und3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3cABwAAd3d3d3d3d3d3d3d3d3d3d3d3d3cHcHBwd3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3B3d3d3d3d3d3d3d3d3d3d3d3d3cHcHd3BwAHdwAAAAd3d3d3d3d3d3d3d3B3d3d3AAAHB3AAAAd3B3d3d3d3B3d3d3AAd3d3cABwcHB3cAAAB3dwAAAAAAB3cHAHd3d3cAAABwd3dwcAd3AAAAAAAABwcA",
+    "palette": [
+      "#191928",
+      "#786f86",
+      "#bcb1c1",
+      "#d4baa8",
+      "#4e515a",
+      "#82858f",
+      "#b5b9c6",
+      "#432622",
+      "#c6bfcb",
+      "#9b9ea9",
+      "#482826",
+      "#3b404a",
+      "#646670",
+      "#8f8b85",
+      "#b3afa7",
+      "#9295a0"
+    ]
+  },
+  "note": "Machine-A live transport/Node quantizer smoke. Inspect all images. Browser worker/preview latency, cancellation under dialogue and weight hashes require separate receipts.",
+  "recordedAt": "2026-11-07T01:30:28.151Z",
+  "endpoint": "http://127.0.0.1:8080",
+  "files": [
+    {
+      "path": "docs/team/comms/blender/tmp/c19/painting-raw.png",
+      "sha256": "b4d06ed4023f171032072b77cd5e1ade497e7576e62405b279d98a74c00d0f92"
+    },
+    {
+      "path": "docs/team/comms/blender/tmp/c19/painting-native.png",
+      "sha256": "f4cf5decfef9ecdf41d8eee6b347642a3bf2abd82d76a0627dd34f875656af7c"
+    },
+    {
+      "path": "docs/team/comms/blender/tmp/c19/painting-preview.png",
+      "sha256": "2a8a6b0486e8f319bdfd85b336a210587c72f2bb3b01d9347608682158a974b1"
+    }
+  ],
+  "vram": [
+    {
+      "elapsedMs": 588.8209429999999,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 194, 16303"
+    },
+    {
+      "elapsedMs": 1074.796161,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 1591.7555790000001,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 2082.901869,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 379, 16303"
+    },
+    {
+      "elapsedMs": 2569.848599,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 3074.892224,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 3572.0627539999996,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 4084.3798020000004,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 4577.523249,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 5081.790886,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 5571.030352,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 6067.958273,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 6584.300101,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 7068.808251,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 7597.510603,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 8061.378249,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 8572.186665000001,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 9078.973773999998,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 9614.43623,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 10071.202973,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 10581.858128,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 11086.683171,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 11615.242631000001,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 12119.647103,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 12608.195969,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 13115.436140999998,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 13634.055810999998,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 14111.569656,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 14640.638171999999,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 15140.522501,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 15633.285552000001,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 16190.715969,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 16637.102606,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 17135.852993,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 17647.436798000002,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 18124.914453,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 18684.66175,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 19199.564316,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 19705.191119,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 20204.190259000003,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 20682.516886,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 21121.47291,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 21628.790293000002,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 22120.403241,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 22637.964748000002,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 23128.327984,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 23661.087214,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 24174.581494000002,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 24642.962592,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 25131.242878,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 25807.724118000002,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 26140.227181000002,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 26639.350531,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 27129.94141,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 27644.803766,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 28140.326488000002,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 28693.431773,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 5251, 16303"
+    },
+    {
+      "elapsedMs": 29152.001692,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 29654.121014,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 30429.971046000002,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 30844.858751,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 31297.239092,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 31820.931143,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 32413.921789,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 32860.514567,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 33250.880178,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 33728.778561,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 34232.280439,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 34836.914364000004,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 35290.702701,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 35674.647202,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 36216.522223,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 36656.047553000004,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 37218.100758,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 37696.897503,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 38195.248628,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 38733.825403,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 39257.849044,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 39663.315836,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 40242.971851,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 40645.617965,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 41144.120593,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 41723.765095,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 42239.577212000004,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 42717.151712,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 43300.771033000005,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 43943.456087,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 44295.530238,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 44927.639800000004,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 45309.006497,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 46013.554342,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 46184.750067,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 46990.635853,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 47176.662185,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 48122.031885000004,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 48842.419148,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 49707.544221000004,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 50381.122583000004,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 50777.647046,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 51408.934590000004,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 51901.606891,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 52406.167468,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 52956.381585,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 53333.853902,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 53890.361306,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 54410.360228,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 54903.466353,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 55421.273204,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 55851.150264,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 56406.996764,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 56842.794661,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 57568.961059,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 57847.51736,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 58425.545242,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 58816.026234000004,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12419, 16303"
+    },
+    {
+      "elapsedMs": 59502.101029,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12879, 16303"
+    },
+    {
+      "elapsedMs": 59899.17998,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 13225, 16303"
+    },
+    {
+      "elapsedMs": 60360.610985,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 13227, 16303"
+    },
+    {
+      "elapsedMs": 60900.679388000004,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 13247, 16303"
+    },
+    {
+      "elapsedMs": 61279.587342,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 13247, 16303"
+    },
+    {
+      "elapsedMs": 61918.924585,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 13247, 16303"
+    },
+    {
+      "elapsedMs": 62654.305984,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 13247, 16303"
+    },
+    {
+      "elapsedMs": 63973.800347000004,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14387, 16303"
+    },
+    {
+      "elapsedMs": 64622.113095,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14387, 16303"
+    },
+    {
+      "elapsedMs": 64774.953386,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14387, 16303"
+    },
+    {
+      "elapsedMs": 65352.24396000001,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14387, 16303"
+    },
+    {
+      "elapsedMs": 65803.041835,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14387, 16303"
+    },
+    {
+      "elapsedMs": 66464.692426,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14387, 16303"
+    },
+    {
+      "elapsedMs": 67120.608579,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14387, 16303"
+    },
+    {
+      "elapsedMs": 67302.962909,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14387, 16303"
+    },
+    {
+      "elapsedMs": 67784.734971,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14387, 16303"
+    },
+    {
+      "elapsedMs": 68275.279463,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14387, 16303"
+    },
+    {
+      "elapsedMs": 68889.067546,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14387, 16303"
+    },
+    {
+      "elapsedMs": 69348.801958,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14387, 16303"
+    },
+    {
+      "elapsedMs": 69911.744734,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14387, 16303"
+    },
+    {
+      "elapsedMs": 70437.401084,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14387, 16303"
+    },
+    {
+      "elapsedMs": 70941.839414,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14387, 16303"
+    },
+    {
+      "elapsedMs": 71358.582418,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14387, 16303"
+    },
+    {
+      "elapsedMs": 71926.577418,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14539, 16303"
+    },
+    {
+      "elapsedMs": 72493.258819,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14539, 16303"
+    },
+    {
+      "elapsedMs": 73110.898432,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14539, 16303"
+    },
+    {
+      "elapsedMs": 73396.339947,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14541, 16303"
+    },
+    {
+      "elapsedMs": 73923.963757,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14545, 16303"
+    },
+    {
+      "elapsedMs": 75033.991988,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14545, 16303"
+    },
+    {
+      "elapsedMs": 75886.99071700001,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14545, 16303"
+    },
+    {
+      "elapsedMs": 76418.882122,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14545, 16303"
+    },
+    {
+      "elapsedMs": 76774.661481,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14545, 16303"
+    },
+    {
+      "elapsedMs": 77463.360541,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14547, 16303"
+    },
+    {
+      "elapsedMs": 77946.876728,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14547, 16303"
+    },
+    {
+      "elapsedMs": 78432.519302,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14547, 16303"
+    },
+    {
+      "elapsedMs": 78910.932097,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14547, 16303"
+    },
+    {
+      "elapsedMs": 79404.642425,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14547, 16303"
+    },
+    {
+      "elapsedMs": 79838.64304,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14547, 16303"
+    },
+    {
+      "elapsedMs": 80318.777122,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14547, 16303"
+    },
+    {
+      "elapsedMs": 80761.024365,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14547, 16303"
+    },
+    {
+      "elapsedMs": 81261.540265,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 194, 16303"
+    },
+    {
+      "elapsedMs": 81745.432533,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 194, 16303"
+    },
+    {
+      "elapsedMs": 82279.353158,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 194, 16303"
+    },
+    {
+      "elapsedMs": 82789.348232,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 194, 16303"
+    },
+    {
+      "elapsedMs": 83397.138229,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 205, 16303"
+    },
+    {
+      "elapsedMs": 83871.967608,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 84327.67647600001,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 387, 16303"
+    },
+    {
+      "elapsedMs": 84763.348385,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 194, 16303"
+    },
+    {
+      "elapsedMs": 85371.517957,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 194, 16303"
+    },
+    {
+      "elapsedMs": 85769.13428500001,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 194, 16303"
+    },
+    {
+      "elapsedMs": 86283.335639,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 194, 16303"
+    },
+    {
+      "elapsedMs": 86812.583321,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 194, 16303"
+    },
+    {
+      "elapsedMs": 87256.589912,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 194, 16303"
+    },
+    {
+      "elapsedMs": 87774.322448,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 194, 16303"
+    },
+    {
+      "elapsedMs": 88262.553971,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 194, 16303"
+    },
+    {
+      "elapsedMs": 88737.807472,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 194, 16303"
+    },
+    {
+      "elapsedMs": 89283.55272,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 194, 16303"
+    },
+    {
+      "elapsedMs": 89753.221049,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 194, 16303"
+    },
+    {
+      "elapsedMs": 90315.331128,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 194, 16303"
+    },
+    {
+      "elapsedMs": 90791.296006,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 194, 16303"
+    },
+    {
+      "elapsedMs": 91255.383282,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 194, 16303"
+    },
+    {
+      "elapsedMs": 91735.465049,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 194, 16303"
+    },
+    {
+      "elapsedMs": 92226.94190600001,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 194, 16303"
+    },
+    {
+      "elapsedMs": 92781.369333,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 194, 16303"
+    },
+    {
+      "elapsedMs": 93313.290471,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 194, 16303"
+    },
+    {
+      "elapsedMs": 93756.004071,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 194, 16303"
+    },
+    {
+      "elapsedMs": 94230.82204,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 194, 16303"
+    },
+    {
+      "elapsedMs": 94743.736508,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 194, 16303"
+    },
+    {
+      "elapsedMs": 95230.583707,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 194, 16303"
+    },
+    {
+      "elapsedMs": 95731.243206,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 194, 16303"
+    },
+    {
+      "elapsedMs": 96289.656844,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 194, 16303"
+    },
+    {
+      "elapsedMs": 96737.839934,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 194, 16303"
+    },
+    {
+      "elapsedMs": 97244.323344,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 194, 16303"
+    },
+    {
+      "elapsedMs": 97719.416884,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 194, 16303"
+    },
+    {
+      "elapsedMs": 98230.432449,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 194, 16303"
+    },
+    {
+      "elapsedMs": 98741.004063,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 194, 16303"
+    },
+    {
+      "elapsedMs": 108514.32147,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 194, 16303"
+    },
+    {
+      "elapsedMs": 109104.250254,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 194, 16303"
+    },
+    {
+      "elapsedMs": 109721.380732,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 1188, 16303"
+    },
+    {
+      "elapsedMs": 110076.784052,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 2970, 16303"
+    },
+    {
+      "elapsedMs": 110562.685277,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 7688, 16303"
+    },
+    {
+      "elapsedMs": 111088.419774,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 7732, 16303"
+    },
+    {
+      "elapsedMs": 111587.727331,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 260, 16303"
+    },
+    {
+      "elapsedMs": 112074.061399,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 260, 16303"
+    },
+    {
+      "elapsedMs": 112562.543945,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 260, 16303"
+    },
+    {
+      "elapsedMs": 113055.84835100001,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 260, 16303"
+    },
+    {
+      "elapsedMs": 113565.123788,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 260, 16303"
+    },
+    {
+      "elapsedMs": 114078.884275,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 260, 16303"
+    },
+    {
+      "elapsedMs": 114576.345598,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 260, 16303"
+    },
+    {
+      "elapsedMs": 115151.243355,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 260, 16303"
+    },
+    {
+      "elapsedMs": 115553.910731,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 260, 16303"
+    },
+    {
+      "elapsedMs": 116167.976564,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 260, 16303"
+    },
+    {
+      "elapsedMs": 116708.245725,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 260, 16303"
+    },
+    {
+      "elapsedMs": 117184.947376,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 260, 16303"
+    },
+    {
+      "elapsedMs": 117693.258434,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 260, 16303"
+    },
+    {
+      "elapsedMs": 118078.894445,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 260, 16303"
+    },
+    {
+      "elapsedMs": 118556.87848300001,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 260, 16303"
+    },
+    {
+      "elapsedMs": 119092.549788,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 260, 16303"
+    },
+    {
+      "elapsedMs": 119661.03264,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 260, 16303"
+    },
+    {
+      "elapsedMs": 120210.144115,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 260, 16303"
+    },
+    {
+      "elapsedMs": 120666.869661,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 260, 16303"
+    },
+    {
+      "elapsedMs": 124659.192034,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 260, 16303"
+    },
+    {
+      "elapsedMs": 125765.562798,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 1156, 16303"
+    },
+    {
+      "elapsedMs": 126035.85356,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 2040, 16303"
+    },
+    {
+      "elapsedMs": 126519.74779,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 4090, 16303"
+    },
+    {
+      "elapsedMs": 127051.370249,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 4090, 16303"
+    },
+    {
+      "elapsedMs": 127519.511002,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 4090, 16303"
+    },
+    {
+      "elapsedMs": 128007.739498,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 4090, 16303"
+    },
+    {
+      "elapsedMs": 128532.829148,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 4094, 16303"
+    },
+    {
+      "elapsedMs": 129011.722507,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 4100, 16303"
+    },
+    {
+      "elapsedMs": 129507.996426,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 4100, 16303"
+    },
+    {
+      "elapsedMs": 130032.152635,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 4100, 16303"
+    },
+    {
+      "elapsedMs": 130540.82490899999,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 854, 16303"
+    },
+    {
+      "elapsedMs": 131146.702871,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 350, 16303"
+    },
+    {
+      "elapsedMs": 131515.426058,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 350, 16303"
+    },
+    {
+      "elapsedMs": 132022.528533,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 358, 16303"
+    },
+    {
+      "elapsedMs": 132532.36984,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 133028.522524,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 371, 16303"
+    },
+    {
+      "elapsedMs": 133526.536913,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 358, 16303"
+    },
+    {
+      "elapsedMs": 134000.613324,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 134519.86338,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 135036.988744,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 135527.78917,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 136015.509264,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 136522.784108,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 137063.025507,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 137568.974548,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 138011.142495,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 138517.291761,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 139019.30504,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 139617.313973,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 140025.358699,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 140656.801958,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 141064.539467,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 141531.142575,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 142152.779692,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 142556.662045,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 143137.358819,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 143569.040098,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 144137.861744,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 144595.084268,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 145102.96034700001,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 145619.54573800002,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 146123.960683,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 146612.460947,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 147125.705082,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 147608.304913,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 148129.010257,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 148597.309042,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 149166.908617,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 149697.480824,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 150215.341843,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 150765.821578,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 151198.4953,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 151745.74375,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 152141.506295,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 152677.037311,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 153193.027121,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 153612.207533,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 154096.794629,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 154569.030836,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 155043.479391,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 155570.749734,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 156229.667239,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 156752.813507,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 157130.89075,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 157895.834177,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 158149.369624,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 158580.718446,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 159275.697359,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 159805.337291,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 160183.552842,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 160659.876395,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 161205.758528,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 161790.23684,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 162279.828916,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 162748.548545,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 163042.414674,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 163704.277685,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 164211.920584,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 164644.840941,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 165203.497239,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 165718.53225,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 166115.752404,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 166648.509707,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 167171.24321000002,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 167698.503719,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 168058.977377,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 168659.233226,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 169401.622313,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 169551.010176,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 170060.711553,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 170578.080282,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 171270.713399,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 171607.393191,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 172074.729476,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 172591.823813,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 173109.40974,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 173606.197567,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 174103.562836,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 174576.840901,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 175137.365184,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 175565.499075,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 176083.895048,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 543, 16303"
+    },
+    {
+      "elapsedMs": 176608.525355,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 5087, 16303"
+    },
+    {
+      "elapsedMs": 177063.3219,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12575, 16303"
+    },
+    {
+      "elapsedMs": 177571.360456,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12575, 16303"
+    },
+    {
+      "elapsedMs": 178051.300485,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12575, 16303"
+    },
+    {
+      "elapsedMs": 178608.333849,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12575, 16303"
+    },
+    {
+      "elapsedMs": 179645.055712,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12575, 16303"
+    },
+    {
+      "elapsedMs": 180117.831146,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12575, 16303"
+    },
+    {
+      "elapsedMs": 180603.512981,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12575, 16303"
+    },
+    {
+      "elapsedMs": 181079.652722,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12575, 16303"
+    },
+    {
+      "elapsedMs": 181576.091258,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12575, 16303"
+    },
+    {
+      "elapsedMs": 182073.543441,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12575, 16303"
+    },
+    {
+      "elapsedMs": 182593.230442,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12575, 16303"
+    },
+    {
+      "elapsedMs": 183082.472014,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12575, 16303"
+    },
+    {
+      "elapsedMs": 183589.808587,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12575, 16303"
+    },
+    {
+      "elapsedMs": 184082.746677,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12575, 16303"
+    },
+    {
+      "elapsedMs": 184577.464492,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12575, 16303"
+    },
+    {
+      "elapsedMs": 185124.478019,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12575, 16303"
+    },
+    {
+      "elapsedMs": 185596.537761,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12575, 16303"
+    },
+    {
+      "elapsedMs": 186086.626306,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12575, 16303"
+    },
+    {
+      "elapsedMs": 186570.472629,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12575, 16303"
+    },
+    {
+      "elapsedMs": 187097.703602,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12575, 16303"
+    },
+    {
+      "elapsedMs": 187590.774088,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12575, 16303"
+    },
+    {
+      "elapsedMs": 188067.17713,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12575, 16303"
+    },
+    {
+      "elapsedMs": 188566.378258,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12575, 16303"
+    },
+    {
+      "elapsedMs": 189138.141409,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12575, 16303"
+    },
+    {
+      "elapsedMs": 189573.626349,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 12735, 16303"
+    },
+    {
+      "elapsedMs": 190072.013041,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 13403, 16303"
+    },
+    {
+      "elapsedMs": 190791.253019,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 13403, 16303"
+    },
+    {
+      "elapsedMs": 191228.333973,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 13403, 16303"
+    },
+    {
+      "elapsedMs": 191654.788726,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 13403, 16303"
+    },
+    {
+      "elapsedMs": 192135.527018,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 13403, 16303"
+    },
+    {
+      "elapsedMs": 192647.281663,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14543, 16303"
+    },
+    {
+      "elapsedMs": 193061.886603,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14543, 16303"
+    },
+    {
+      "elapsedMs": 193570.651465,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14543, 16303"
+    },
+    {
+      "elapsedMs": 194198.939437,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14695, 16303"
+    },
+    {
+      "elapsedMs": 194930.79732,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14697, 16303"
+    },
+    {
+      "elapsedMs": 195162.601112,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14697, 16303"
+    },
+    {
+      "elapsedMs": 195703.074489,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14697, 16303"
+    },
+    {
+      "elapsedMs": 196119.921882,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14703, 16303"
+    },
+    {
+      "elapsedMs": 196745.96003,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14703, 16303"
+    },
+    {
+      "elapsedMs": 197196.830062,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14703, 16303"
+    },
+    {
+      "elapsedMs": 197822.219443,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14703, 16303"
+    },
+    {
+      "elapsedMs": 198276.231562,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14703, 16303"
+    },
+    {
+      "elapsedMs": 198809.08089800001,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14703, 16303"
+    },
+    {
+      "elapsedMs": 199157.799374,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14703, 16303"
+    },
+    {
+      "elapsedMs": 199738.712687,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14703, 16303"
+    },
+    {
+      "elapsedMs": 200275.289125,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14703, 16303"
+    },
+    {
+      "elapsedMs": 200777.374373,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14703, 16303"
+    },
+    {
+      "elapsedMs": 201194.714031,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14703, 16303"
+    },
+    {
+      "elapsedMs": 201850.6082,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14703, 16303"
+    },
+    {
+      "elapsedMs": 202025.332569,
+      "csv": "NVIDIA GeForce RTX 5080 Laptop GPU, 610.78, 14703, 16303"
+    }
+  ],
+  "imagesInspected": false
+}

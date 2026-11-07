@@ -1,0 +1,9 @@
+{
+  "recordedAt": "2026-11-07T01:10:12.179Z",
+  "model": "gemma4-abliterated:26b",
+  "passed": false,
+  "capabilityPassed": true,
+  "capabilityMs": 2489.540097,
+  "elapsedMs": 289952.02,
+  "error": "The operation was aborted due to timeout"
+}
