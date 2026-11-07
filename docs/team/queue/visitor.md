@@ -149,6 +149,22 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
 - done when: unit tests verify ambient particle generation per biome/season/weather, quality settings scaling, wind sway calculation, and phase color grading tints; `npm run check` passes.
 - evidence: **Changed:** `src/presentation/ambience.ts`, `src/presentation/renderer.ts`, `tests/ambience.test.ts`. **Evidence:** `tests/ambience.test.ts` (4/4 passed). Implemented `AmbientEmitterSystem` emitting seasonal and diurnal particles (petals, leaves, fireflies, mist, spores) with low/medium/high budget scaling and reduced motion checks; implemented `calculateFoliageSway` driving canopy, reed, and crop sway offsets from continuous wind vector and time; implemented `evaluateColorGrading` providing smooth 4-phase color tint transitions across the 24h clock (dawn rosy, midday neutral, dusk golden amber, night cool indigo) with weather rain/storm adaptation; implemented `findPropLightSources` lighting outdoor props (hearths, lanterns, waystones, bell posts) in settlements at dusk/night. Full `npm run check` passed (57 test suites, 614 tests passed, Vite build passed).
 
+### V22 · `AMB-M5` Surface-material footsteps & biome ambience audio beds (AMB-5, AUD-6)
+
+- status: in-progress (visitor)
+- goal: implement surface material resolution under moving actors (boardwalk/wood, grass, stone, water wading, mud, sand, dirt), procedural WebAudio footstep synthesis with cadence throttling, and continuous diurnal biome ambience audio beds with weather modulation.
+- inputs: `docs/doctrine/08-world-and-ambience.md` (AMB-5, AMB-M5), `docs/doctrine/12-audio-direction.md` (AUD-6), `src/domain/world.ts`, `src/presentation/audio.ts`, `src/main.ts`.
+- done when: unit tests verify surface material resolution, footstep synthesis parameters, cadence throttling, and biome ambience diurnal frequency filtering; `npm run check` passes.
+- evidence:
+
+### V23 · `CMB-M6` Parametric pixel particle VFX system (CMB-9, ART-6.4, ART-12)
+
+- status: in-progress (visitor)
+- goal: implement parametric pixel particle VFX system driven by per-move recipes on the integer art grid, expressing elemental shape language (water circles, fire triangles, wind crescents, earth loam bursts, physical sparks) and respecting telegraph masks.
+- inputs: `docs/doctrine/05-combat-direction.md` (CMB-9, CMB-M6), `docs/doctrine/03-art-bible.md` (ART-6.4, ART-12), `src/presentation/effects.ts`, `src/presentation/renderer.ts`.
+- done when: unit tests verify deterministic recipe generation, shape language mapping, integer art grid snapping, telegraph masking compliance, and quality scaling; `npm run check` passes.
+- evidence:
+
 ## Now: Acting-Director Art Review & Triage (`TEAM-4.2`)
 
 ### V3 · Verify `B27` staging output and `M25` manifest integration readiness
