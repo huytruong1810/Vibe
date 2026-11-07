@@ -111,7 +111,7 @@ For full context from the previous Argon session, read [2026-11-05T0515--to-visi
 
 ### V17 · `CRE-M4` & `CRE-M5` Species move pools & disposition player-facing rename (CRE-4, CRE-5)
 
-- status: open
+- status: in-progress (visitor)
 - goal: author canonical learnable move pools for all 8 species unlocking by level and bond heart milestones, wire move equipping validation, and rename player-facing "Nature" to "Disposition" per doctrine CRE-5.
 - inputs: `docs/doctrine/06-creatures-and-progression.md` (CRE-4, CRE-5), `src/content/definitions.ts`, `src/domain/entities.ts`.
 - done when: unit tests verify species learnable move unlocks, slot assignment validation, and disposition labeling; `npm run check` passes.
