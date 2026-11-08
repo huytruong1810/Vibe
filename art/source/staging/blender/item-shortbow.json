@@ -1,0 +1,1660 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/item-shortbow--2026-11-04-item-shortbow.md",
+  "approvalSha256": "0866ab797518a83b7997851afd076f9eb106f1587dede327a13ae1f152a4044f",
+  "asset": "item:shortbow",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset item:shortbow",
+    "id": "forge-item-shortbow",
+    "inputs": [
+      {
+        "path": "blender/models/published/item-shortbow/a13e309d38ced412c2303c06c01c06d4237f241e6012e2720073233887bdca09/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/item-shortbow/a13e309d38ced412c2303c06c01c06d4237f241e6012e2720073233887bdca09/forge/blender/item_orient.py",
+        "role": "script",
+        "sha256": "8a27e1389c7bf96b9a6e47aa80a7e7d3af1caf5310cdad402bd81c17a1238599"
+      },
+      {
+        "path": "blender/models/published/item-shortbow/a13e309d38ced412c2303c06c01c06d4237f241e6012e2720073233887bdca09/forge/forge.py",
+        "role": "script",
+        "sha256": "72344e74be14dd4324bbc2a158d9c160ff2dfbdfc1325d5166dc5baa5fb6b531"
+      },
+      {
+        "path": "blender/models/published/item-shortbow/a13e309d38ced412c2303c06c01c06d4237f241e6012e2720073233887bdca09/forge/forgelib/item_orient.py",
+        "role": "script",
+        "sha256": "ed949856992b519c0af5631cb748405adae566fee90bc5bb4e9f999f912e476d"
+      },
+      {
+        "path": "blender/models/published/item-shortbow/a13e309d38ced412c2303c06c01c06d4237f241e6012e2720073233887bdca09/forge/forgelib/item_render.py",
+        "role": "script",
+        "sha256": "3290c864b563263170efcc626acce2a1dc88141d320d9cf186f5bc48b3e6f2d0"
+      },
+      {
+        "path": "blender/models/published/item-shortbow/a13e309d38ced412c2303c06c01c06d4237f241e6012e2720073233887bdca09/forge/forgelib/items.py",
+        "role": "script",
+        "sha256": "22221017285c31c893c28260a13caf407e646913c63e32ad723c8671f1a9d84c"
+      },
+      {
+        "path": "blender/models/published/item-shortbow/a13e309d38ced412c2303c06c01c06d4237f241e6012e2720073233887bdca09/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/item-shortbow/a13e309d38ced412c2303c06c01c06d4237f241e6012e2720073233887bdca09/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "2963b6c95098f03aadf7fffe21507c8b3aa6b4fb4d13e657a9b7921e761ba629"
+      },
+      {
+        "path": "blender/models/published/item-shortbow/a13e309d38ced412c2303c06c01c06d4237f241e6012e2720073233887bdca09/forge/recipes/item-shortbow.json",
+        "role": "pose-config",
+        "sha256": "8be2c58395fddcdd82fd1fe9688ce9c71cc814fb7b161a747a26a70a248c5390"
+      },
+      {
+        "path": "blender/models/published/item-shortbow/a13e309d38ced412c2303c06c01c06d4237f241e6012e2720073233887bdca09/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/item-shortbow/a13e309d38ced412c2303c06c01c06d4237f241e6012e2720073233887bdca09/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/item-shortbow/a13e309d38ced412c2303c06c01c06d4237f241e6012e2720073233887bdca09/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/item-shortbow/a13e309d38ced412c2303c06c01c06d4237f241e6012e2720073233887bdca09/forge/work/item-shortbow/item_model.blend",
+        "role": "model",
+        "sha256": "880f2d4c8d26a50e0ec5e51612f817d394fa0ae0b93a24394747476a8a7526c5"
+      },
+      {
+        "path": "blender/models/published/item-shortbow/a13e309d38ced412c2303c06c01c06d4237f241e6012e2720073233887bdca09/forge/work/item-shortbow/orient.json",
+        "role": "pose-config",
+        "sha256": "83131f98fc92041a9745e2907f10828399a2dc8786900d80649cb303b1bc0410"
+      },
+      {
+        "path": "blender/models/published/item-shortbow/a13e309d38ced412c2303c06c01c06d4237f241e6012e2720073233887bdca09/forge/work/item-shortbow/orient_params.json",
+        "role": "pose-config",
+        "sha256": "e86e1f7f78e3af268a0144d28ed8f8d0d3beb877e6e1e7943e4f5a551a6604f6"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_0/s_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-shortbow-held-s-0",
+      "sha256": "78cfd254493021a05fba54cdc44b7180d274eb1855d4b2862efa53bc6cb4521b",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_1/s_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-shortbow-held-s-1",
+      "sha256": "658df05e6f614db4ba850ac809f9c7b21a5ec9d64a9b98993c285c0ea39d28b5",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_2/s_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-shortbow-held-s-2",
+      "sha256": "5c81e09a1498a9317868dae50f937be00b99e4b3f1793d44695057a0cca4e25c",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_3/s_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-shortbow-held-s-3",
+      "sha256": "a887893abf305176d329b4938f5c8957727d665911deee6397dd5225742e6974",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_4/s_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-shortbow-held-s-4",
+      "sha256": "5adb96eb58d422d745dfa78f9d6cd14d8009320e26d08f7b0d1e891dbf028f87",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_5/s_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-shortbow-held-s-5",
+      "sha256": "fe4b2c582b7e837408ea74a615dca58008a71c558b48a1c38c300ffb3b5d4de5",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_6/s_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-shortbow-held-s-6",
+      "sha256": "dd2e1fceb1d3fb7b1bfb434003ff1b099eb9024898b06962509649581e5592f5",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_7/s_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-shortbow-held-s-7",
+      "sha256": "36e360a44be1e9fa74a68147a64c8c16c2e535121c93a8677a92af724333660a",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_0/se_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-shortbow-held-se-0",
+      "sha256": "f208e551595a09cb4b260ed608d736c4bc66a4eedc44a8c1ba496a12426305f9",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_1/se_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-shortbow-held-se-1",
+      "sha256": "f6e63b800baf2654f5db1cdb2d5974b8854f4bf65ed2e70340ae00cd570dc748",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_2/se_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-shortbow-held-se-2",
+      "sha256": "fbe8c717280b341e359ad85b7cfeec86b199150569915c36202ca1d03dfc668d",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_3/se_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-shortbow-held-se-3",
+      "sha256": "b118864c2b0dc5e3e52d7bbb495677304628dc8940eb6578771bba0bbe3b1650",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_4/se_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-shortbow-held-se-4",
+      "sha256": "4cfd25d6591786bcfd609e43b32bc7a17248ac49b51cab579092983c365a8528",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_5/se_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-shortbow-held-se-5",
+      "sha256": "7e9494cd022da37ebd7916be0525ef6c2dd97d609c0f311526b6c8de142a1c16",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_6/se_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-shortbow-held-se-6",
+      "sha256": "b11b0fd0394616de9e72e62f34cbd7f3f33b565f70ebbe117318fc6c61539cfa",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_7/se_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-shortbow-held-se-7",
+      "sha256": "300e99e871ea768a8bc46b742df40e7f8c066c257c55344366f98f83cf269f00",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_0/e_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-shortbow-held-e-0",
+      "sha256": "9301d5ddebd8812cc5cf6574d2067ffd3f35612c6a08a717a389e91984d17a22",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_1/e_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-shortbow-held-e-1",
+      "sha256": "bfdf1566d5388e0f2026650ae01b754681be185349f3dc1d54765f63a3a12915",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_2/e_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-shortbow-held-e-2",
+      "sha256": "de8c3cb78cc9a1b8ae671099abeba594317e4d16e48d279c5bd1e609603a353d",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_3/e_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-shortbow-held-e-3",
+      "sha256": "1a8aff9c40805b403a616801188fbff3a256693767e57b4d46ec11eeed2bf7a5",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_4/e_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-shortbow-held-e-4",
+      "sha256": "8f64a8b2025569a377d654b03836f4eb1ce9e2febef6af27ea7a27d4163150e1",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_5/e_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-shortbow-held-e-5",
+      "sha256": "65427cee561f3767314c853f8b9bc2ef20b1edea7a02b76272fd66f1c679ceab",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_6/e_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-shortbow-held-e-6",
+      "sha256": "782469dff378e53e3b2130c0616f780184611342532dfaf95cf134b3890e4c6a",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_7/e_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-shortbow-held-e-7",
+      "sha256": "cb460a1041293110f5bf5055c46025bc4e13122cbb9b58a135aea7193e2228bd",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_0/ne_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-shortbow-held-ne-0",
+      "sha256": "1814e284f47117ae81d2959cab658742924d39ee46e49b13970f90c6365dae27",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_1/ne_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-shortbow-held-ne-1",
+      "sha256": "ca8790bd79de4b60124f00711aab909ca6493799ec2aa3f2c0b612c8889f0a78",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_2/ne_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-shortbow-held-ne-2",
+      "sha256": "6d53c898449e7ee44eadfc28882cc1a4d3512062485a751cae1fd0d539da31be",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_3/ne_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-shortbow-held-ne-3",
+      "sha256": "85984a610e01237cc0a73e9476f14645a268f24a1d2c5c10d5ad719a25b1c35f",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_4/ne_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-shortbow-held-ne-4",
+      "sha256": "c8bfe6d47689f120958b7defc0502d53dd7364d5a53bd6a1d38edc353fdf02d8",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_5/ne_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-shortbow-held-ne-5",
+      "sha256": "dbd9e2dbdc2c4215fb15821d8110fbee2a8a0f93ea99f5b14add6e7ce3261d8c",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_6/ne_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-shortbow-held-ne-6",
+      "sha256": "c99823a728778e18d7fda6505d37755699d93ab2b9e8de0b7bab683f232aecd9",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_7/ne_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-shortbow-held-ne-7",
+      "sha256": "5f548b141721d4dc72a874c0246792708e46446011eeacca2460de64c4822d2c",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_0/n_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-shortbow-held-n-0",
+      "sha256": "ea51373b37d1d7e53331755f07e6f8e8ba0d811b1f0b08e037ba52c4132ebf46",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_1/n_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-shortbow-held-n-1",
+      "sha256": "b6a8ba978cdf1d59d24901b4cd66a8832412bfd2fb466d92f8a90fdbed6151ba",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_2/n_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-shortbow-held-n-2",
+      "sha256": "c2956b9415daa1993d7f37e144df6d31a6466f4bef42514c632747e8d9ca543d",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_3/n_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-shortbow-held-n-3",
+      "sha256": "704972ce19a4b4f129991082afd261d6edf9e01648707183431e5282c5968b70",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_4/n_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-shortbow-held-n-4",
+      "sha256": "e45b82e62f02c705ae77762b553d54b92ec7168c952f9005689ac96f06144ba5",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_5/n_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-shortbow-held-n-5",
+      "sha256": "45b54cbd8f93b0111acc2c2b74cfa139731256da13fd6e0d8f4d7598e9efef92",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_6/n_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-shortbow-held-n-6",
+      "sha256": "316fd2dee9af2df6d300f0dbf95c139a4dcfec095fad833fa54bad9496b30dd7",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_7/n_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-shortbow-held-n-7",
+      "sha256": "67b9a69aa4b29f4371c1154c1c49062333953b1fe7718a8b329c0b7de4d16798",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_0/nw_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-shortbow-held-nw-0",
+      "sha256": "775b49b2a0231b90d84d3f51cdee7c605b6d6c1319fd48da3ff592e94cfa5f27",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_1/nw_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-shortbow-held-nw-1",
+      "sha256": "b252a8aee0f2d758162bc44a2b56543ee31de45c352ddee1534ec398e5a1adbf",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_2/nw_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-shortbow-held-nw-2",
+      "sha256": "c629a7a7afc758ceb3547ede98cb74b4861cc8a8687720a780ce7c56f95cea3a",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_3/nw_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-shortbow-held-nw-3",
+      "sha256": "7d6587b458873a0eeb8598d35a2d0679b0fb9308678df86e1f911595fb30997e",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_4/nw_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-shortbow-held-nw-4",
+      "sha256": "e47b8128068906b07980cdb77623b463d4810bf9da22f910560cf9076778a414",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_5/nw_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-shortbow-held-nw-5",
+      "sha256": "f53538138f5841acfd0b60462e72ca9b118193c3c423ad0910b8b2c1c94e7eb7",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_6/nw_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-shortbow-held-nw-6",
+      "sha256": "1a0a29c337beaba2f1c34caf51b44d4f812bd6a9dc8c8abeb05a842114544c90",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_7/nw_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-shortbow-held-nw-7",
+      "sha256": "e6094c996121c88af09e8ed6766c28e35ba9a91c74461c3052d47ed347906e43",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_0/w_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-shortbow-held-w-0",
+      "sha256": "818f72fd1cbd67694d09df8b7d38270694366cf1dcbfc5d4f180d3b9d0816c5d",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_1/w_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-shortbow-held-w-1",
+      "sha256": "c93019ec6e2bf331fd6f91d9e7e0798bbcee976d784a6048f3ccb20e6890c74c",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_2/w_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-shortbow-held-w-2",
+      "sha256": "4163ffbde7808b9b9e7b30386660493d908f6c52f75637da7a5c7ef2bebb290e",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_3/w_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-shortbow-held-w-3",
+      "sha256": "13717d8889676e987782486a501a6b92c0d2129f0c66d5271bf41a25b1e3739f",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_4/w_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-shortbow-held-w-4",
+      "sha256": "57efd8ade3fdc5e92787e355222218bf30fb9130ea1bac704aba659966ec73b3",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_5/w_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-shortbow-held-w-5",
+      "sha256": "6a602b4803a3ec97677db0236bca28efbefa1944a467b97f550b6dccd4efc261",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_6/w_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-shortbow-held-w-6",
+      "sha256": "7cfc5d2121fe4c13ba374609447a70d5ee73e23d478b5bdbbceecb2518f003f6",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_7/w_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-shortbow-held-w-7",
+      "sha256": "d6b3ea3cba032c1ea32e61e770fa8028488b3eedf807d790af55de8fa268bcfa",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_0/sw_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-shortbow-held-sw-0",
+      "sha256": "25f9a8e5a4b888ca95434440ba5e6b256d1cd94f6403446f5e0e9291780740ff",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_1/sw_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-shortbow-held-sw-1",
+      "sha256": "fea5e5bbcd1e981e60549b9d4de49aa76fe5f4fdf044eda84967fe9f07a9d4cb",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_2/sw_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-shortbow-held-sw-2",
+      "sha256": "4f8f2b56947cd5df53b936ff2917fd0cad1d83b1e51b35e32bb89abdee531860",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_3/sw_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-shortbow-held-sw-3",
+      "sha256": "a87db1022e43715df4a2064b4b7b42467490799df2a6f6faa30fa6617d5ee2a5",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_4/sw_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-shortbow-held-sw-4",
+      "sha256": "d5b821086270c30225057a4f610a1b0c255257bfed745f4be0c1047d52402926",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_5/sw_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-shortbow-held-sw-5",
+      "sha256": "1dfa3f0e91d42ca35c9429dac1e90857e74b3e4539b2e0814f674eeaac258490",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_6/sw_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-shortbow-held-sw-6",
+      "sha256": "e14bc11e33ad5b9490f14bba1dbfb5e7bbf05cbd25b6597be87c3a6e03b9cfb1",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/held_7/sw_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-shortbow-held-sw-7",
+      "sha256": "2d5f756a9bd12d7b41b65185f2998dc87b1a06a6da08ed076eece79d9be1b8ff",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-shortbow/f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720/pix/export/icon/se_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-shortbow-icon",
+      "sha256": "c15f221a9230cf453fd5cb0821c89971b7d94b5ff2e4f59ecf55e158f4ce89c9",
+      "socket": null,
+      "sockets": {},
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "icon"
+    }
+  ],
+  "gripConvention": "clockwise-screen-from-up-after-facing-yaw",
+  "packet": "art/review/2026-11-04-item-shortbow",
+  "packetDigest": "f84c55d6f06067dccbb5a2d9893e351d8b621ad8a48f1a05732d90bb7c33c720",
+  "packetSha256": "68d62bd766872ba2926850fca2ddfb4366bbac6dc23005ec49106f8981ad3e0b",
+  "schemaVersion": 1,
+  "scope": [
+    "held-item",
+    "icon"
+  ],
+  "socket": "Socket_Hand.R"
+}

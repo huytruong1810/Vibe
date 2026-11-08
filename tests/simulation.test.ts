@@ -21,7 +21,7 @@ describe('integrated simulation lifecycle', () => {
   });
   it('freezes the complete world during dialogue and commits gifts only after closing', () => {
     const host = new SimulationHost(42, 1, 24, 'world:dialogue'),
-      npc = host.npcs[10]!;
+      npc = host.npcs[0]!;
     host.player.x = npc.x;
     host.player.y = npc.y;
     expect(send(host, { type: 'interact', npcId: npc.profileId }).ok).toBe(true);
@@ -75,7 +75,7 @@ describe('integrated simulation lifecycle', () => {
   });
   it('cancels outstanding dialogue replies after close and preserves a hidden-tab pause', () => {
     const host = new SimulationHost(42, 1, 0),
-      npc = host.npcs[10]!;
+      npc = host.npcs[0]!;
     host.player.x = npc.x;
     host.player.y = npc.y;
     send(host, { type: 'interact', npcId: npc.profileId });
@@ -92,7 +92,7 @@ describe('integrated simulation lifecycle', () => {
   });
   it('uses deterministic fallback on an inference outage during play', () => {
     const host = new SimulationHost(42, 1, 0),
-      npc = host.npcs[10]!;
+      npc = host.npcs[0]!;
     host.player.x = npc.x;
     host.player.y = npc.y;
     send(host, { type: 'interact', npcId: npc.profileId });
@@ -105,7 +105,7 @@ describe('integrated simulation lifecycle', () => {
   });
   it('waits for all pause owners before committing physical conversation effects', () => {
     const host = new SimulationHost(42, 1, 0),
-      npc = host.npcs[10]!;
+      npc = host.npcs[0]!;
     host.player.x = npc.x;
     host.player.y = npc.y;
     send(host, { type: 'interact', npcId: npc.profileId });
@@ -157,7 +157,7 @@ describe('integrated simulation lifecycle', () => {
     host.advance(600);
     host.creatures.validate();
     expect(host.tiers.detailed.length).toBeLessThanOrEqual(128);
-    expect(host.npcs).toHaveLength(30);
+    expect(host.npcs).toHaveLength(10);
     expect(host.navigation.pending).toBeLessThanOrEqual(200);
     expect(migrateSave(host.snapshot()).tick).toBe(600);
   });
@@ -220,17 +220,17 @@ describe('authored world beta toggle (C7 WLD-M2/M3)', () => {
     expect(restored.snapshot()).toEqual(save);
   });
 
-  it('defaults to procedural when no worldSource option is given', () => {
+  it('defaults to authored world when no worldSource option is given', () => {
     const host = new SimulationHost(42, 1, 0);
-    expect(host.worldSource).toBe('procedural');
-    expect(host.npcs).toHaveLength(30);
+    expect(host.worldSource).toBe('authored');
+    expect(host.npcs).toHaveLength(10);
   });
 
-  it('old saves migrate with worldSource procedural', () => {
+  it('saves migrate with worldSource authored', () => {
     const host = new SimulationHost(42, 1, 0);
     const save = host.snapshot();
     const migrated = migrateSave(save);
-    expect(migrated.worldSource).toBe('procedural');
+    expect(migrated.worldSource).toBe('authored');
   });
 
   it('keeps world state finite and capacity bounded under sustained movement on the authored map', async () => {

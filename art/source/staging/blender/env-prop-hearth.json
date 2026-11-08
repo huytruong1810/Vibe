@@ -1,0 +1,147 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/env-prop-hearth--2026-11-04-env-prop-hearth.md",
+  "approvalSha256": "a5ca86690f31624ea36a26a322907a5b8a47a71a886ddc7ed9bbf14fe936babb",
+  "asset": "env:prop-hearth",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset env:prop-hearth",
+    "id": "forge-env-prop-hearth",
+    "inputs": [
+      {
+        "path": "blender/models/published/env-prop-hearth/185e1c620f4d29e820eee4d0430d18b8c561ebf866d9932d9442ec92a472357a/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/env-prop-hearth/185e1c620f4d29e820eee4d0430d18b8c561ebf866d9932d9442ec92a472357a/forge/blender/env_layout.py",
+        "role": "script",
+        "sha256": "b2fa291498b97eb55fc8450d37b55208b1d22550aa81a70b6c8c06d9cc08388b"
+      },
+      {
+        "path": "blender/models/published/env-prop-hearth/185e1c620f4d29e820eee4d0430d18b8c561ebf866d9932d9442ec92a472357a/forge/forge.py",
+        "role": "script",
+        "sha256": "7ba07e846a522d199a522a011cfb1f87d35b47233bcb33aaeb9cb27e09644319"
+      },
+      {
+        "path": "blender/models/published/env-prop-hearth/185e1c620f4d29e820eee4d0430d18b8c561ebf866d9932d9442ec92a472357a/forge/forgelib/environment.py",
+        "role": "script",
+        "sha256": "4b3443c051f8076ebdc9abd18152831dfbfe74c0053e7c4622ef3d7f483e397c"
+      },
+      {
+        "path": "blender/models/published/env-prop-hearth/185e1c620f4d29e820eee4d0430d18b8c561ebf866d9932d9442ec92a472357a/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/env-prop-hearth/185e1c620f4d29e820eee4d0430d18b8c561ebf866d9932d9442ec92a472357a/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "7c2e7b1994f6c5f8cb4c00bb8bf92f8078a8e7aa1ce405f18f5541e9aaf8452e"
+      },
+      {
+        "path": "blender/models/published/env-prop-hearth/185e1c620f4d29e820eee4d0430d18b8c561ebf866d9932d9442ec92a472357a/forge/recipes/env-prop-hearth.json",
+        "role": "pose-config",
+        "sha256": "c1e4c2b1a2b7d38c352cf5b536d940188f5ef74f0e183669d14a8e8bd810d516"
+      },
+      {
+        "path": "blender/models/published/env-prop-hearth/185e1c620f4d29e820eee4d0430d18b8c561ebf866d9932d9442ec92a472357a/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/env-prop-hearth/185e1c620f4d29e820eee4d0430d18b8c561ebf866d9932d9442ec92a472357a/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/env-prop-hearth/185e1c620f4d29e820eee4d0430d18b8c561ebf866d9932d9442ec92a472357a/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/env-prop-hearth/185e1c620f4d29e820eee4d0430d18b8c561ebf866d9932d9442ec92a472357a/forge/work/env-prop-hearth/layout.json",
+        "role": "pose-config",
+        "sha256": "18a6723a8826d9367ae49ae7dc76eebd3e909ee4dd23ac161b9ab0c664f19666"
+      },
+      {
+        "path": "blender/models/published/env-prop-hearth/185e1c620f4d29e820eee4d0430d18b8c561ebf866d9932d9442ec92a472357a/forge/work/env-prop-hearth/layout/base.blend",
+        "role": "model",
+        "sha256": "f1cbc21869b605ecdb1dc6ce9e72c5f1092a79ec248324b5eb73750c05ffc7da"
+      },
+      {
+        "path": "blender/models/published/env-prop-hearth/185e1c620f4d29e820eee4d0430d18b8c561ebf866d9932d9442ec92a472357a/forge/work/env-prop-hearth/layout/roof.blend",
+        "role": "model",
+        "sha256": "6b7b77ef529c938e8f7b1831f41c01aca5e36a610af5c56a3fc4ef23b303bc0c"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "footprint": [
+    2,
+    2
+  ],
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 96,
+        "y": 206
+      },
+      "file": "exports/env-prop-hearth/c239e690966ac412bf64fd1c17b3a935ad33a612e43f395dba6e1aa7942d5c68/frames/shadow.png",
+      "id": "env-prop-hearth-shadow",
+      "layer": "shadow",
+      "sha256": "a7410324b88caf5d35837a202a206a802724867c2e23e3a9700d5efbdac5668c",
+      "sourceSize": {
+        "h": 216,
+        "w": 192
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 96,
+        "y": 206
+      },
+      "file": "exports/env-prop-hearth/c239e690966ac412bf64fd1c17b3a935ad33a612e43f395dba6e1aa7942d5c68/frames/base.png",
+      "id": "env-prop-hearth-base",
+      "layer": "base",
+      "sha256": "a38c3becafa9d8c68faeb452f78c7b840118fa8873e4b486fb9d4363c40e3eac",
+      "sourceSize": {
+        "h": 216,
+        "w": 192
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 96,
+        "y": 206
+      },
+      "file": "exports/env-prop-hearth/c239e690966ac412bf64fd1c17b3a935ad33a612e43f395dba6e1aa7942d5c68/frames/roof.png",
+      "id": "env-prop-hearth-roof",
+      "layer": "roof",
+      "sha256": "cac9ffdf7f76889222518742516f0b9832bd365ec0297d62c4bb5606d29cc78d",
+      "sourceSize": {
+        "h": 216,
+        "w": 192
+      }
+    }
+  ],
+  "lightPools": [
+    {
+      "radiusTiles": 3,
+      "x": 0,
+      "y": 0
+    }
+  ],
+  "packet": "art/review/2026-11-03-env-prop-hearth",
+  "packetDigest": "c239e690966ac412bf64fd1c17b3a935ad33a612e43f395dba6e1aa7942d5c68",
+  "packetSha256": "86c9a8d3199cc2a263b200e2009d48bd830a5acd6b55933dcc07346494435a8d",
+  "schemaVersion": 1,
+  "scope": [
+    "shadow",
+    "base",
+    "roof"
+  ]
+}

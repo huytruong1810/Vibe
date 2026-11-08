@@ -325,6 +325,7 @@ export class HitDetectionSystem {
 }
 export interface CombatEvent {
   readonly impact?: number;
+  readonly damage?: number;
   readonly type: 'hit' | 'victory' | 'rescue' | 'assault' | 'hunt';
   readonly text: string;
   readonly target: number | null;
@@ -875,6 +876,7 @@ export class CombatSystem {
       type: 'hit',
       actor,
       target,
+      damage,
       impact: isFinisher ? Math.max(1.5, impulse) : impulse,
       text: `${defend.name} took ${damage} damage.`,
       element,

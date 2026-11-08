@@ -1,0 +1,48 @@
+{
+  "asset": "steamshell",
+  "kind": "creature",
+  "heightArtPx": 36,
+  "ramps": {
+    "shell": "basalt",
+    "skin": "timber",
+    "belly": "sand",
+    "steam": "water"
+  },
+  "rig": {
+    "yawDeg": 180.8
+  },
+  "faceOffsetPx": [0, 5],
+  "gen3d": {
+    "seed": 1234,
+    "steps": 50,
+    "views": [
+      "front",
+      "left",
+      "back"
+    ]
+  },
+  "notes": "Shelled creature (steamshell). Shelled-v1 rig template with turtle-like posture, basalt carapace with steam vents, timber skin, and water steam puffs. creature.large canvas (80x72, anchor 40,56).",
+  "texture": {
+    "views": [
+      "front",
+      "left",
+      "back"
+    ]
+  },
+  "concept": {
+    "template": "creature-v1",
+    "fields": {
+      "species": "Steamshell",
+      "element": "fire and water",
+      "size": "large",
+      "stance": "standing on all four paws with its body horizontal, never sitting or standing upright",
+      "description": "a gentle grazer with little steam clouds venting above its volcanic shell",
+      "anatomy": "heavy domed volcanic basalt shell with twin steam exhaust vents along the upper carapace, four thick elephantine legs with flat padded toes, a blunt tortoise head with patient dark eyes, gentle neck extended forward, short thick tail",
+      "colours": "dark basalt volcanic rock shell, warm timber-brown textured skin, pale sand underbelly, soft cyan-white steam puffs venting from shell"
+    },
+    "references": [
+      "public/assets/portraits/creatures/portrait_steamshell_128.png"
+    ],
+    "poseGuide": "art/source/style/pose-guides/shelled.png"
+  }
+}

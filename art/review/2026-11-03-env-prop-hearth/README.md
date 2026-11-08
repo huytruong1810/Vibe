@@ -1,0 +1,8 @@
+# env:prop-hearth: environment review packet (status: candidate)
+
+- Contact sheet: `contact.png` (composed on grey, composed on grass, then each layer alone; 3x)
+- Layers: `frames/<layer>.png` at 2x (shadow, base, roof); one shared canvas and anchor (footprint south-edge centre)
+- Footprint [2, 2] tiles; light pools [{'x': 0, 'y': 0, 'radiusTiles': 3}]
+- QA: `qa_report.json`
+
+Approval record: `docs/team/comms/director/approvals/env-prop-hearth--2026-11-03-env-prop-hearth.md` (scope: [shadow, base, roof]).

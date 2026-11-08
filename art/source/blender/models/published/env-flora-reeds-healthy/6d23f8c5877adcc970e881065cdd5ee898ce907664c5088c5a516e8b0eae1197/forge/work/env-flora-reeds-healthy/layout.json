@@ -1,0 +1,45 @@
+{
+  "asset": "env:flora-reeds-healthy",
+  "stage": "layout",
+  "inputsDigest": "3834cef8e10ab12ac349c9baa4cd3458467e4211fc549a10a3410ad3a1451afe",
+  "inputs": [
+    "art/source/forge/work/env-flora-reeds-healthy/texture.blend",
+    "art/source/forge/work/env-flora-reeds-healthy/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-flora-reeds-healthy/layout/base.blend": "828be0d404636c263244207be8beb6071af3ac0cb9c90903addacad223352ee0",
+    "art/source/forge/work/env-flora-reeds-healthy/layout_preview.png": "c864c3ba7fd7916eb136f3922254e6cf974d8f1a1bbf5a82082bc1058a8e8d4c"
+  },
+  "extra": {
+    "scale": 0.077738,
+    "heightUnits": 1.3269,
+    "contactDepthTiles": 1.078,
+    "footprint": [
+      1,
+      1
+    ],
+    "canvas": {
+      "size": [
+        64,
+        70
+      ],
+      "anchor": [
+        32,
+        65
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -0.5,
+      0.0
+    ],
+    "layers": [
+      "base"
+    ],
+    "faces": {
+      "base": 13999
+    }
+  },
+  "at": "2026-11-05T07:24:21Z"
+}

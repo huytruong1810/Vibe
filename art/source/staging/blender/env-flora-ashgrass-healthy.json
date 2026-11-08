@@ -1,0 +1,121 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/env-flora-ashgrass-healthy--2026-11-05-env-flora-ashgrass-healthy.md",
+  "approvalSha256": "3c1d700a78ca85a34e38d8fd0b803e103ef241103ed03b81a6120d4d60fbf6c6",
+  "asset": "env:flora-ashgrass-healthy",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset env:flora-ashgrass-healthy",
+    "id": "forge-env-flora-ashgrass-healthy",
+    "inputs": [
+      {
+        "path": "blender/models/published/env-flora-ashgrass-healthy/249c5cbf387abe2d18d4d62f2ffc6f8115b07964da3d838c02ad45ecf858856d/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/env-flora-ashgrass-healthy/249c5cbf387abe2d18d4d62f2ffc6f8115b07964da3d838c02ad45ecf858856d/forge/blender/env_layout.py",
+        "role": "script",
+        "sha256": "b2fa291498b97eb55fc8450d37b55208b1d22550aa81a70b6c8c06d9cc08388b"
+      },
+      {
+        "path": "blender/models/published/env-flora-ashgrass-healthy/249c5cbf387abe2d18d4d62f2ffc6f8115b07964da3d838c02ad45ecf858856d/forge/forge.py",
+        "role": "script",
+        "sha256": "72344e74be14dd4324bbc2a158d9c160ff2dfbdfc1325d5166dc5baa5fb6b531"
+      },
+      {
+        "path": "blender/models/published/env-flora-ashgrass-healthy/249c5cbf387abe2d18d4d62f2ffc6f8115b07964da3d838c02ad45ecf858856d/forge/forgelib/environment.py",
+        "role": "script",
+        "sha256": "4b3443c051f8076ebdc9abd18152831dfbfe74c0053e7c4622ef3d7f483e397c"
+      },
+      {
+        "path": "blender/models/published/env-flora-ashgrass-healthy/249c5cbf387abe2d18d4d62f2ffc6f8115b07964da3d838c02ad45ecf858856d/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/env-flora-ashgrass-healthy/249c5cbf387abe2d18d4d62f2ffc6f8115b07964da3d838c02ad45ecf858856d/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "2963b6c95098f03aadf7fffe21507c8b3aa6b4fb4d13e657a9b7921e761ba629"
+      },
+      {
+        "path": "blender/models/published/env-flora-ashgrass-healthy/249c5cbf387abe2d18d4d62f2ffc6f8115b07964da3d838c02ad45ecf858856d/forge/recipes/env-flora-ashgrass-healthy.json",
+        "role": "pose-config",
+        "sha256": "889b720ba7d4df292df81db6317f7e7503fb7d34cd3f4716af48490e202ed185"
+      },
+      {
+        "path": "blender/models/published/env-flora-ashgrass-healthy/249c5cbf387abe2d18d4d62f2ffc6f8115b07964da3d838c02ad45ecf858856d/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/env-flora-ashgrass-healthy/249c5cbf387abe2d18d4d62f2ffc6f8115b07964da3d838c02ad45ecf858856d/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/env-flora-ashgrass-healthy/249c5cbf387abe2d18d4d62f2ffc6f8115b07964da3d838c02ad45ecf858856d/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/env-flora-ashgrass-healthy/249c5cbf387abe2d18d4d62f2ffc6f8115b07964da3d838c02ad45ecf858856d/forge/work/env-flora-ashgrass-healthy/layout.json",
+        "role": "pose-config",
+        "sha256": "6270f627e634bd014488a63ce24f279e00ebac15bdb137ca07b038f305cc23eb"
+      },
+      {
+        "path": "blender/models/published/env-flora-ashgrass-healthy/249c5cbf387abe2d18d4d62f2ffc6f8115b07964da3d838c02ad45ecf858856d/forge/work/env-flora-ashgrass-healthy/layout/base.blend",
+        "role": "model",
+        "sha256": "d79da08c85663253676ab8c7dfdabc829f773e75db694dca7c3e2bc9004c152a"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "footprint": [
+    1,
+    1
+  ],
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 64,
+        "y": 110
+      },
+      "file": "exports/env-flora-ashgrass-healthy/007925da76ddc4d98293d49be8ad5471188249093b46fade39ff71732871f87e/frames/shadow.png",
+      "id": "env-flora-ashgrass-healthy-shadow",
+      "layer": "shadow",
+      "sha256": "54f38d1c878abffd217b36cd61fc6a06eee14d797c07113fba95a6bf13ffda96",
+      "sourceSize": {
+        "h": 116,
+        "w": 128
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 64,
+        "y": 110
+      },
+      "file": "exports/env-flora-ashgrass-healthy/007925da76ddc4d98293d49be8ad5471188249093b46fade39ff71732871f87e/frames/base.png",
+      "id": "env-flora-ashgrass-healthy-base",
+      "layer": "base",
+      "sha256": "87735c60febff538d1bb745b08f8e1922ec96e21e0c12190d8b2a6d33fae690e",
+      "sourceSize": {
+        "h": 116,
+        "w": 128
+      }
+    }
+  ],
+  "lightPools": [],
+  "packet": "art/review/2026-11-05-env-flora-ashgrass-healthy",
+  "packetDigest": "007925da76ddc4d98293d49be8ad5471188249093b46fade39ff71732871f87e",
+  "packetSha256": "472893eebae679b76eba212607a707320dbf098dd0772a93a017a30d2b3642a1",
+  "schemaVersion": 1,
+  "scope": [
+    "shadow",
+    "base"
+  ]
+}

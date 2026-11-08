@@ -1,0 +1,63 @@
+{
+  "format": "RGBA32",
+  "description": "High-AAA dialogue and HUD portraits with transparent alpha",
+  "creatures": {
+    "bramblefang": {
+      "master": "/assets/portraits/creatures/portrait_bramblefang_cutout.png",
+      "hud_128": "/assets/portraits/creatures/portrait_bramblefang_128.png",
+      "hud_96": "/assets/portraits/creatures/portrait_bramblefang_96.png"
+    },
+    "cindermoth": {
+      "master": "/assets/portraits/creatures/portrait_cindermoth_cutout.png",
+      "hud_128": "/assets/portraits/creatures/portrait_cindermoth_128.png",
+      "hud_96": "/assets/portraits/creatures/portrait_cindermoth_96.png"
+    },
+    "ignicap": {
+      "master": "/assets/portraits/creatures/portrait_ignicap_cutout.png",
+      "hud_128": "/assets/portraits/creatures/portrait_ignicap_128.png",
+      "hud_96": "/assets/portraits/creatures/portrait_ignicap_96.png"
+    },
+    "marshstalker": {
+      "master": "/assets/portraits/creatures/portrait_marshstalker_cutout.png",
+      "hud_128": "/assets/portraits/creatures/portrait_marshstalker_128.png",
+      "hud_96": "/assets/portraits/creatures/portrait_marshstalker_96.png"
+    },
+    "mireling": {
+      "master": "/assets/portraits/creatures/portrait_mireling_cutout.png",
+      "hud_128": "/assets/portraits/creatures/portrait_mireling_128.png",
+      "hud_96": "/assets/portraits/creatures/portrait_mireling_96.png"
+    },
+    "rivallie": {
+      "master": "/assets/portraits/creatures/portrait_rivallie_cutout.png",
+      "hud_128": "/assets/portraits/creatures/portrait_rivallie_128.png",
+      "hud_96": "/assets/portraits/creatures/portrait_rivallie_96.png"
+    },
+    "steamshell": {
+      "master": "/assets/portraits/creatures/portrait_steamshell_cutout.png",
+      "hud_128": "/assets/portraits/creatures/portrait_steamshell_128.png",
+      "hud_96": "/assets/portraits/creatures/portrait_steamshell_96.png"
+    },
+    "zephyrit": {
+      "master": "/assets/portraits/creatures/portrait_zephyrit_cutout.png",
+      "hud_128": "/assets/portraits/creatures/portrait_zephyrit_128.png",
+      "hud_96": "/assets/portraits/creatures/portrait_zephyrit_96.png"
+    }
+  },
+  "characters": {
+    "npc_caelum": {
+      "master": "/assets/portraits/characters/portrait_npc_caelum_cutout.png",
+      "hud_128": "/assets/portraits/characters/portrait_npc_caelum_128.png",
+      "hud_96": "/assets/portraits/characters/portrait_npc_caelum_96.png"
+    },
+    "npc_zephyr": {
+      "master": "/assets/portraits/characters/portrait_npc_zephyr_cutout.png",
+      "hud_128": "/assets/portraits/characters/portrait_npc_zephyr_128.png",
+      "hud_96": "/assets/portraits/characters/portrait_npc_zephyr_96.png"
+    },
+    "player_pyrador": {
+      "master": "/assets/portraits/characters/portrait_player_pyrador_cutout.png",
+      "hud_128": "/assets/portraits/characters/portrait_player_pyrador_128.png",
+      "hud_96": "/assets/portraits/characters/portrait_player_pyrador_96.png"
+    }
+  }
+}

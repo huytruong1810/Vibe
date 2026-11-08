@@ -1,0 +1,38 @@
+{
+  "asset": "env:flora-nectar-harvested",
+  "kind": "environment",
+  "ramps": {
+    "petals": "blossom",
+    "core": "gold",
+    "stems": "reed",
+    "leaves": "foliage",
+    "foliage": "sand"
+  },
+  "gen3d": {
+    "seed": 1006,
+    "steps": 50,
+    "views": [
+      "front",
+      "left"
+    ]
+  },
+  "environment": {
+    "footprint": [
+      1,
+      2
+    ],
+    "split": null,
+    "contactShadow": true
+  },
+  "concept": {
+    "template": "building-v1",
+    "fields": {
+      "building": "cluster of vibrant nectar blossoms with flared bell-shaped pink petals and glowing yellow centers (harvested state)",
+      "region": "Aqualia warm springs",
+      "description": "a patch of sweet flowering nectar blossoms visited by pollinators in harvested condition",
+      "materials": "delicate pink blossom petals, glowing gold stamens, pale reed stems, lush green foliage leaves (harvested)"
+    },
+    "references": []
+  },
+  "notes": "Gatherable flora nectar in harvested state (B24). 1x1 tile footprint."
+}

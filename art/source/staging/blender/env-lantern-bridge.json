@@ -1,0 +1,121 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/env-lantern-bridge--2026-11-05-env-lantern-bridge.md",
+  "approvalSha256": "29342cfe45058ceab2601b7f918955b136dc8200787a49cbf374bcf93df607f8",
+  "asset": "env:lantern-bridge",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset env:lantern-bridge",
+    "id": "forge-env-lantern-bridge",
+    "inputs": [
+      {
+        "path": "blender/models/published/env-lantern-bridge/164849ab5e356213c538f2e0da698ee3ab5f9887a2bb576a7a5951349b37e23e/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/env-lantern-bridge/164849ab5e356213c538f2e0da698ee3ab5f9887a2bb576a7a5951349b37e23e/forge/blender/env_layout.py",
+        "role": "script",
+        "sha256": "b2fa291498b97eb55fc8450d37b55208b1d22550aa81a70b6c8c06d9cc08388b"
+      },
+      {
+        "path": "blender/models/published/env-lantern-bridge/164849ab5e356213c538f2e0da698ee3ab5f9887a2bb576a7a5951349b37e23e/forge/forge.py",
+        "role": "script",
+        "sha256": "72344e74be14dd4324bbc2a158d9c160ff2dfbdfc1325d5166dc5baa5fb6b531"
+      },
+      {
+        "path": "blender/models/published/env-lantern-bridge/164849ab5e356213c538f2e0da698ee3ab5f9887a2bb576a7a5951349b37e23e/forge/forgelib/environment.py",
+        "role": "script",
+        "sha256": "4b3443c051f8076ebdc9abd18152831dfbfe74c0053e7c4622ef3d7f483e397c"
+      },
+      {
+        "path": "blender/models/published/env-lantern-bridge/164849ab5e356213c538f2e0da698ee3ab5f9887a2bb576a7a5951349b37e23e/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/env-lantern-bridge/164849ab5e356213c538f2e0da698ee3ab5f9887a2bb576a7a5951349b37e23e/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "2963b6c95098f03aadf7fffe21507c8b3aa6b4fb4d13e657a9b7921e761ba629"
+      },
+      {
+        "path": "blender/models/published/env-lantern-bridge/164849ab5e356213c538f2e0da698ee3ab5f9887a2bb576a7a5951349b37e23e/forge/recipes/env-lantern-bridge.json",
+        "role": "pose-config",
+        "sha256": "82e170d22d85494a8a681ea11a2e95e9798d320d79fe985f4bec0e9400acf35c"
+      },
+      {
+        "path": "blender/models/published/env-lantern-bridge/164849ab5e356213c538f2e0da698ee3ab5f9887a2bb576a7a5951349b37e23e/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/env-lantern-bridge/164849ab5e356213c538f2e0da698ee3ab5f9887a2bb576a7a5951349b37e23e/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/env-lantern-bridge/164849ab5e356213c538f2e0da698ee3ab5f9887a2bb576a7a5951349b37e23e/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/env-lantern-bridge/164849ab5e356213c538f2e0da698ee3ab5f9887a2bb576a7a5951349b37e23e/forge/work/env-lantern-bridge/layout.json",
+        "role": "pose-config",
+        "sha256": "855eb9e7ccb5595e4e0b98ad54b08f6b3a8c93b2b66362453973cc31b7acb38d"
+      },
+      {
+        "path": "blender/models/published/env-lantern-bridge/164849ab5e356213c538f2e0da698ee3ab5f9887a2bb576a7a5951349b37e23e/forge/work/env-lantern-bridge/layout/base.blend",
+        "role": "model",
+        "sha256": "9b80046ec0cf81608026e29e22e72a9119f1e25d9620d25bb6ef2cf53b54cbe5"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "footprint": [
+    3,
+    3
+  ],
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 128,
+        "y": 288
+      },
+      "file": "exports/env-lantern-bridge/4a40eec8c77995fdc95c68a6b9b0d8de4f3bed4694e035fc8def8ac7d007065e/frames/shadow.png",
+      "id": "env-lantern-bridge-shadow",
+      "layer": "shadow",
+      "sha256": "206a1ccbcc9810fd02ba543548d1e48b6d0d027247d51d284cb411d34a9bd771",
+      "sourceSize": {
+        "h": 296,
+        "w": 256
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 128,
+        "y": 288
+      },
+      "file": "exports/env-lantern-bridge/4a40eec8c77995fdc95c68a6b9b0d8de4f3bed4694e035fc8def8ac7d007065e/frames/base.png",
+      "id": "env-lantern-bridge-base",
+      "layer": "base",
+      "sha256": "febfa6faaa56537ab76192f14997440068883af073679b7673dddbcf04ea9b36",
+      "sourceSize": {
+        "h": 296,
+        "w": 256
+      }
+    }
+  ],
+  "lightPools": [],
+  "packet": "art/review/2026-11-05-env-lantern-bridge",
+  "packetDigest": "4a40eec8c77995fdc95c68a6b9b0d8de4f3bed4694e035fc8def8ac7d007065e",
+  "packetSha256": "7ad2f0268cb3fc9110592663fa6901d0ffb18d28aed2d63d5779ca663eb55b10",
+  "schemaVersion": 1,
+  "scope": [
+    "shadow",
+    "base"
+  ]
+}

@@ -180,8 +180,8 @@ test('occupied kit slots preserve focus; companion needs and battle HUD remain r
   const save = await checkpoint(page),
     player = save.entities.records.find((e) => e.id === 0)!;
   Object.assign(player, {
-    x: 264.5,
-    y: 285.5,
+    x: 66.5,
+    y: 60.5,
     hp: 50,
     stamina: 62.5,
     food: 0.5,
@@ -193,10 +193,10 @@ test('occupied kit slots preserve focus; companion needs and battle HUD remain r
   )!;
   Object.assign(partner, {
     owner: 0,
-    x: 265.5,
-    y: 285.5,
-    targetX: 265.5,
-    targetY: 285.5,
+    x: 67.5,
+    y: 60.5,
+    targetX: 67.5,
+    targetY: 60.5,
     trust: 0.9,
     wildness: 0,
     food: 0.5,
@@ -211,12 +211,12 @@ test('occupied kit slots preserve focus; companion needs and battle HUD remain r
   const npc = save.npcs.find((n) => n.partner !== null)!;
   const opponent = save.entities.records.find((e) => e.id === npc.partner)!;
   const villager = save.entities.records.find((e) => e.id === npc.entityId)!;
-  Object.assign(villager, { x: 263.5, y: 285.5 });
+  Object.assign(villager, { x: 65.5, y: 60.5 });
   Object.assign(opponent, {
-    x: 263.5,
-    y: 286.5,
-    targetX: 263.5,
-    targetY: 286.5,
+    x: 65.5,
+    y: 61.5,
+    targetX: 65.5,
+    targetY: 61.5,
     food: 1,
     water: 1,
     rest: 1,
@@ -292,8 +292,10 @@ test('occupied kit slots preserve focus; companion needs and battle HUD remain r
   await page.setViewportSize({ width: 1920, height: 1080 });
   await restore(page, save);
   const result = await page.evaluate(
-    async (npcId) =>
-      (window as unknown as { __hearthwild: Api }).__hearthwild.command({ type: 'battle', npcId }),
+    async (npcId) => {
+      const api = (window as unknown as { __hearthwild: any }).__hearthwild;
+      return api.command({ type: 'battle', npcId });
+    },
     npc.profileId,
   );
   expect(result.ok, result.message).toBe(true);

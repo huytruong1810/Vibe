@@ -66,8 +66,14 @@ test('companion inspection sheet opens via P key, medallion click, and toolbar b
   const save = await page.evaluate(() => (window as any).__hearthwild.checkpoint());
   const player = save.entities.records.find((e: any) => e.id === 0);
   expect(player).toBeDefined();
-  const creature = save.entities.records.find((e: any) => e.species < 8 && e.id !== 0);
+  const creature =
+    save.entities.records.find((e: any) => e.species < 8 && e.owner === -1) ??
+    save.entities.records.find((e: any) => e.species < 8 && e.id !== 0);
   expect(creature).toBeDefined();
+  if (creature.owner > 0) {
+    const previousOwner = save.npcs.find((n: any) => n.entityId === creature.owner);
+    if (previousOwner) previousOwner.partner = null;
+  }
   creature.owner = 0;
   creature.bondHearts = 6;
   creature.moves = ['strike', 'river_pulse'];

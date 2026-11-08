@@ -1,0 +1,45 @@
+{
+  "asset": "env:reed-clump",
+  "stage": "layout",
+  "inputsDigest": "e254f158222f6def00889270ed32e963732b6760f9c99faa0871519d90bc1824",
+  "inputs": [
+    "art/source/forge/work/env-reed-clump/texture.blend",
+    "art/source/forge/work/env-reed-clump/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-reed-clump/layout/base.blend": "a22d22f695277ad0bad6a1bed67b8471eb34d378b6543938a61a2b647c0dc77f",
+    "art/source/forge/work/env-reed-clump/layout_preview.png": "853b914d8f77b2a206bd9de99f1957c48b46a501a80d26b459c1d984fc26437e"
+  },
+  "extra": {
+    "scale": 0.083938,
+    "heightUnits": 1.4533,
+    "contactDepthTiles": 0.878,
+    "footprint": [
+      1,
+      1
+    ],
+    "canvas": {
+      "size": [
+        64,
+        70
+      ],
+      "anchor": [
+        32,
+        66
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -0.5,
+      0.0
+    ],
+    "layers": [
+      "base"
+    ],
+    "faces": {
+      "base": 14000
+    }
+  },
+  "at": "2026-11-05T10:52:28Z"
+}

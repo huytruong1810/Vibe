@@ -1,0 +1,85 @@
+# Tile set aqualia-terrain, revision 1
+
+- status: candidate (QA); approval binds to `sourceDigest` aba7b781aa3271661bb7cc425f3d43201166ba86289f170ac3d99aef1e7edf0e (PRD-9)
+- recipe: `art/source/tiles/sets/aqualia-terrain/set.json` (sha 88525be5b65e)
+- tiles: 71 at 2x in `tiles/`; `atlas.png` + `atlas.json` for LDtk
+- look at: `contact.png` (singles at 4x, 3x3 repeat, variant field, masks over ground), `field.png` (in context at display scale), `level.png` (authored map crop)
+
+## Soft findings
+
+- dirt.actorContrast (ART-7.3): lightness gap to actor body tones {'teal.mid': 0.004, 'foliage.mid': 0.042, 'basalt.mid': 0.176, 'skin-warm.mid': 0.1, 'timber.mid': 0.122}; below 0.12: ['foliage.mid', 'skin-warm.mid', 'teal.mid']
+- grass.actorContrast (ART-7.3): lightness gap to actor body tones {'teal.mid': 0.152, 'foliage.mid': 0.114, 'basalt.mid': 0.02, 'skin-warm.mid': 0.257, 'timber.mid': 0.035}; below 0.12: ['basalt.mid', 'foliage.mid', 'timber.mid']
+- reedbed.actorContrast (ART-7.3): lightness gap to actor body tones {'teal.mid': 0.15, 'foliage.mid': 0.112, 'basalt.mid': 0.022, 'skin-warm.mid': 0.255, 'timber.mid': 0.033}; below 0.12: ['basalt.mid', 'foliage.mid', 'timber.mid']
+- sand.actorContrast (ART-7.3): lightness gap to actor body tones {'teal.mid': 0.183, 'foliage.mid': 0.221, 'basalt.mid': 0.355, 'skin-warm.mid': 0.079, 'timber.mid': 0.301}; below 0.12: ['skin-warm.mid']
+- stone.actorContrast (ART-7.3): lightness gap to actor body tones {'teal.mid': 0.123, 'foliage.mid': 0.085, 'basalt.mid': 0.049, 'skin-warm.mid': 0.227, 'timber.mid': 0.006}; below 0.12: ['basalt.mid', 'foliage.mid', 'timber.mid']
+
+## Runtime ids
+
+- `ground_boardwalk` <- `tiles/boardwalk.png`
+- `ground_boardwalk_v1` <- `tiles/boardwalk_v1.png`
+- `ground_boardwalk_v2` <- `tiles/boardwalk_v2.png`
+- `cliff_grass` <- `tiles/cliff.png`
+- `ground_dirt` <- `tiles/dirt.png`
+- `path_dirt_mask_1` <- `tiles/dirt_path_edge_mask_1.png`
+- `path_dirt_mask_10` <- `tiles/dirt_path_edge_mask_10.png`
+- `path_dirt_mask_11` <- `tiles/dirt_path_edge_mask_11.png`
+- `path_dirt_mask_12` <- `tiles/dirt_path_edge_mask_12.png`
+- `path_dirt_mask_13` <- `tiles/dirt_path_edge_mask_13.png`
+- `path_dirt_mask_14` <- `tiles/dirt_path_edge_mask_14.png`
+- `path_dirt_mask_2` <- `tiles/dirt_path_edge_mask_2.png`
+- `path_dirt_mask_3` <- `tiles/dirt_path_edge_mask_3.png`
+- `path_dirt_mask_4` <- `tiles/dirt_path_edge_mask_4.png`
+- `path_dirt_mask_5` <- `tiles/dirt_path_edge_mask_5.png`
+- `path_dirt_mask_6` <- `tiles/dirt_path_edge_mask_6.png`
+- `path_dirt_mask_7` <- `tiles/dirt_path_edge_mask_7.png`
+- `path_dirt_mask_8` <- `tiles/dirt_path_edge_mask_8.png`
+- `path_dirt_mask_9` <- `tiles/dirt_path_edge_mask_9.png`
+- `ground_dirt_v1` <- `tiles/dirt_v1.png`
+- `ground_dirt_v2` <- `tiles/dirt_v2.png`
+- `ground_freshwater` <- `tiles/freshwater.png`
+- `shore_freshwater_mask_1` <- `tiles/freshwater_shore_mask_1.png`
+- `shore_freshwater_mask_10` <- `tiles/freshwater_shore_mask_10.png`
+- `shore_freshwater_mask_11` <- `tiles/freshwater_shore_mask_11.png`
+- `shore_freshwater_mask_12` <- `tiles/freshwater_shore_mask_12.png`
+- `shore_freshwater_mask_13` <- `tiles/freshwater_shore_mask_13.png`
+- `shore_freshwater_mask_14` <- `tiles/freshwater_shore_mask_14.png`
+- `shore_freshwater_mask_2` <- `tiles/freshwater_shore_mask_2.png`
+- `shore_freshwater_mask_3` <- `tiles/freshwater_shore_mask_3.png`
+- `shore_freshwater_mask_4` <- `tiles/freshwater_shore_mask_4.png`
+- `shore_freshwater_mask_5` <- `tiles/freshwater_shore_mask_5.png`
+- `shore_freshwater_mask_6` <- `tiles/freshwater_shore_mask_6.png`
+- `shore_freshwater_mask_7` <- `tiles/freshwater_shore_mask_7.png`
+- `shore_freshwater_mask_8` <- `tiles/freshwater_shore_mask_8.png`
+- `shore_freshwater_mask_9` <- `tiles/freshwater_shore_mask_9.png`
+- `ground_freshwater_v1` <- `tiles/freshwater_v1.png`
+- `ground_freshwater_v2` <- `tiles/freshwater_v2.png`
+- `ground_grass` <- `tiles/grass.png`
+- `ground_grass_v1` <- `tiles/grass_v1.png`
+- `ground_grass_v2` <- `tiles/grass_v2.png`
+- `ground_grass_v3` <- `tiles/grass_v3.png`
+- `ground_mud` <- `tiles/mud.png`
+- `ground_mud_v1` <- `tiles/mud_v1.png`
+- `ground_mud_v2` <- `tiles/mud_v2.png`
+- `ground_reedbed` <- `tiles/reedbed.png`
+- `ground_reedbed_v1` <- `tiles/reedbed_v1.png`
+- `ground_reedbed_v2` <- `tiles/reedbed_v2.png`
+- `ground_sand` <- `tiles/sand.png`
+- `ground_sand_v1` <- `tiles/sand_v1.png`
+- `ground_sand_v2` <- `tiles/sand_v2.png`
+- `ground_stone` <- `tiles/stone.png`
+- `path_stone_mask_1` <- `tiles/stone_path_edge_mask_1.png`
+- `path_stone_mask_10` <- `tiles/stone_path_edge_mask_10.png`
+- `path_stone_mask_11` <- `tiles/stone_path_edge_mask_11.png`
+- `path_stone_mask_12` <- `tiles/stone_path_edge_mask_12.png`
+- `path_stone_mask_13` <- `tiles/stone_path_edge_mask_13.png`
+- `path_stone_mask_14` <- `tiles/stone_path_edge_mask_14.png`
+- `path_stone_mask_2` <- `tiles/stone_path_edge_mask_2.png`
+- `path_stone_mask_3` <- `tiles/stone_path_edge_mask_3.png`
+- `path_stone_mask_4` <- `tiles/stone_path_edge_mask_4.png`
+- `path_stone_mask_5` <- `tiles/stone_path_edge_mask_5.png`
+- `path_stone_mask_6` <- `tiles/stone_path_edge_mask_6.png`
+- `path_stone_mask_7` <- `tiles/stone_path_edge_mask_7.png`
+- `path_stone_mask_8` <- `tiles/stone_path_edge_mask_8.png`
+- `path_stone_mask_9` <- `tiles/stone_path_edge_mask_9.png`
+- `ground_stone_v1` <- `tiles/stone_v1.png`
+- `ground_stone_v2` <- `tiles/stone_v2.png`

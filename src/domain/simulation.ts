@@ -87,8 +87,6 @@ import {
   ResourceStore,
 } from './resources';
 import {
-  SettlementPlanner,
-  WorldGenerator,
   SurfaceRules,
   type ChunkStore,
   nearestSettlement,
@@ -127,17 +125,47 @@ interface SceneSystems {
   reactions: EnvironmentalReactionSystem;
 }
 
-export type WorldSource = 'procedural' | 'authored';
+let defaultCompiledWorld: unknown = undefined;
+export function setDefaultCompiledWorld(world: unknown): void {
+  defaultCompiledWorld = world;
+}
+export function getDefaultCompiledWorld(): unknown {
+  return (
+    defaultCompiledWorld ??
+    (typeof globalThis !== 'undefined'
+      ? (globalThis as unknown as { __HEARTHWILD_COMPILED_WORLD__?: unknown })
+          .__HEARTHWILD_COMPILED_WORLD__
+      : undefined)
+  );
+}
+
+export type WorldSource = 'authored';
 
 export interface SimulationOptions {
   readonly worldSource?: WorldSource;
   readonly compiledWorld?: unknown;
 }
 
+const SPECIES_RIG_MAP: Readonly<Record<string, string>> = {
+  ignicap: 'mushroom-biped-v1',
+  rivallie: 'quadruped-v1',
+  zephyrit: 'winged-v1',
+  mireling: 'quadruped-v1',
+  cindermoth: 'winged-v1',
+  steamshell: 'shelled-v1',
+  bramblefang: 'quadruped-v1',
+  marshstalker: 'quadruped-v1',
+};
+
 export class SimulationHost {
   readonly world: ChunkStore;
-  readonly worldSource: WorldSource;
-  private readonly authoredData: LoadedAuthoredWorld | null = null;
+  readonly worldSource: WorldSource = 'authored';
+  private readonly authoredData: LoadedAuthoredWorld;
+  private readonly locationsProvider: {
+    locations(
+      index: number,
+    ): Record<'home' | 'work' | 'square' | 'shrine' | 'outpost', WorldPosition>;
+  };
   readonly calendar = new WorldCalendar();
   readonly pauses = new PauseController();
   readonly dispatcher: CommandDispatcher;
@@ -171,7 +199,7 @@ export class SimulationHost {
   readonly spatial = new SpatialIndex();
   readonly tiers = new SimulationTierManager();
   readonly player: PlayerState;
-  readonly npcs: NpcState[];
+  npcs: NpcState[];
   readonly combat: CombatSystem;
   readonly memories = new MemoryRepository();
   readonly markers: Marker[] = [];
@@ -236,18 +264,13 @@ export class SimulationHost {
     options: SimulationOptions = {},
   ) {
     new ContentRegistry().validate();
-    this.worldSource = options.worldSource ?? 'procedural';
-    if (this.worldSource === 'authored') {
-      if (!options.compiledWorld) throw new Error('Authored world requires compiledWorld data');
-      this.authoredData = new AuthoredWorldLoader().load(options.compiledWorld);
-      this.world = this.authoredData.world;
-      // For authored worlds, origin is always Aqualia (index 1)
-      origin = 1;
-    } else {
-      if (!Number.isInteger(origin) || origin < 0 || origin > 2)
-        throw new Error('Invalid world origin or seed');
-      this.world = new WorldGenerator().generate(seed);
-    }
+    this.worldSource = 'authored';
+    const compiled = options.compiledWorld ?? getDefaultCompiledWorld();
+    if (!compiled) throw new Error('Authored world requires compiledWorld data');
+    this.authoredData = new AuthoredWorldLoader().load(compiled, seed);
+    this.world = this.authoredData.world;
+    origin = 1;
+
     if (!Number.isInteger(seed)) throw new Error('Invalid world origin or seed');
     if (!Number.isInteger(population) || population < 0 || population > CONFIG.creatureCapacity)
       throw new Error('Invalid population');
@@ -257,9 +280,7 @@ export class SimulationHost {
     this.combatRandom = root.fork('combat');
 
     // --- Player spawn ---
-    const playerSpawn = this.authoredData
-      ? this.findAuthoredSpawn()
-      : { x: VILLAGES[origin]!.x + 0.5, y: VILLAGES[origin]!.y + 2.5 };
+    const playerSpawn = this.findAuthoredSpawn();
     this.entities.spawnHuman(0, origin, playerSpawn.x, playerSpawn.y);
     this.player = bindBody(
       {
@@ -285,37 +306,16 @@ export class SimulationHost {
     this.navigation = new NavigationService(this.world);
     this.resources = new ResourceStore(this.world);
     this.locator = new ResourceLocator(this.resources);
-    this.scenes = new SceneRegistry(this.world, this.resources, this.authoredData?.props);
+    this.scenes = new SceneRegistry(this.world, this.resources, this.authoredData.props);
     this.scenes.bindOverworldNavigation(this.navigation);
     this.population = new PopulationDirector(this.world, this.ecologyRandom, this.locator);
-    if (this.authoredData) {
-      // Authored world: spawn creatures at map-placed habitats
-      this.seedCreaturesFromHabitats(population);
-    } else {
-      this.population.seed(
-        this.creatures,
-        Math.max(
-          0,
-          population - NPC_PROFILES.filter((p) => p.partner).length - (population > 0 ? 6 : 0),
-        ),
-      );
-      // Visible first encounters make the complete care loop discoverable at every origin.
-      for (let v = 0; v < VILLAGES.length; v++)
-        for (let s = 0; s < 2; s++) {
-          if (population > 0)
-            this.creatures.spawn(
-              (v + s) % SPECIES.length,
-              VILLAGES[v]!.x + 5 + s * 2,
-              VILLAGES[v]!.y + 4,
-            );
-        }
-    }
-    const locationsProvider = this.authoredData
-      ? new AuthoredSettlementPlanner(this.authoredData.definition)
-      : new SettlementPlanner();
+    const partnerCount = NPC_PROFILES.slice(10, 20).filter((p) => p.partner).length;
+    this.seedCreaturesFromHabitats(Math.max(0, population - (population > 0 ? partnerCount : 0)));
+    const locationsProvider = new AuthoredSettlementPlanner(this.authoredData.definition);
+    this.locationsProvider = locationsProvider;
     this.npcs = new NpcProfileRegistry().create(
       locationsProvider,
-      this.authoredData ? 1 : undefined,
+      1,
     );
     for (let i = 0; i < this.npcs.length; i++) {
       const npc = this.npcs[i]!;
@@ -1638,12 +1638,12 @@ export class SimulationHost {
   private noticePainting(id: string, scene: number, prop: { x: number; y: number }): void {
     const a = this.artifacts.get(id);
     if (a?.kind !== 'painting' || !a.caption) return;
-    const now = Date.now();
+    const now = this.calendar.elapsedSeconds;
     for (const npc of this.npcs) {
       if (
         npc.scene !== scene ||
         distanceSquared(npc, prop) > 12 ** 2 ||
-        now - (this.paintingNotices.get(npc.profileId) ?? -Infinity) < 600_000
+        now - (this.paintingNotices.get(npc.profileId) ?? -Infinity) < 600
       )
         continue;
       this.paintingNotices.set(npc.profileId, now);
@@ -1882,8 +1882,8 @@ export class SimulationHost {
         if (receipt.ok) npc.revision++;
         return receipt;
       }
-      const index = this.npcs.indexOf(npc),
-        point = new SettlementPlanner().locations(index)[parsed.data.location];
+      const index = NPC_PROFILES.findIndex((p) => p.id === npc.profileId),
+        point = this.locationsProvider.locations(index)[parsed.data.location];
       if (!SurfaceRules.walkable(this.world, point.x, point.y))
         return { ok: false, message: 'Personal plan destination is blocked.' };
       // Authored sleeping hours and urgent following commitments take precedence.
@@ -2008,6 +2008,7 @@ export class SimulationHost {
           npcs: this.npcs,
           player: this.player,
           markers: this.markers,
+          locations: this.locationsProvider,
           sourceIds: npc.memory.records
             .filter((m) => validMemory(m) && m.source.kind === 'session')
             .slice(-4)
@@ -2242,6 +2243,7 @@ export class SimulationHost {
           target: event.target,
           kind: event.type === 'hit' ? 'hit' : 'defeat',
           strength: event.impact,
+          damage: event.damage,
           scene: s.scene[s.require(event.target ?? event.actor ?? 0)]!,
           element: event.element,
           effectiveness: event.effectiveness,
@@ -2403,9 +2405,7 @@ export class SimulationHost {
     for (let i = 0; i < ticks; i++) this.step();
   }
   private rescue(): void {
-    const v = this.authoredData
-      ? this.findAuthoredSpawn()
-      : { x: VILLAGES[this.player.origin]!.x + 0.5, y: VILLAGES[this.player.origin]!.y + 2.5 };
+    const v = this.findAuthoredSpawn();
     this.player.x = v.x;
     this.player.y = v.y;
     this.player.hp = this.player.maxHp;
@@ -2432,11 +2432,6 @@ export class SimulationHost {
   }
 
   private findAuthoredSpawn(): WorldPosition {
-    if (!this.authoredData)
-      return {
-        x: VILLAGES[this.player?.origin ?? 1]!.x + 0.5,
-        y: VILLAGES[this.player?.origin ?? 1]!.y + 2.5,
-      };
     const spawnEntity = this.authoredData.definition.entities.find((e) => e.kind === 'PlayerSpawn');
     if (spawnEntity) {
       return { x: spawnEntity.x + 0.5, y: spawnEntity.y + 0.5 };
@@ -2486,6 +2481,10 @@ export class SimulationHost {
       flags: world.flags.slice(),
       resource: world.resource.slice(),
       quantity: world.quantity.slice(),
+      surface: this.authoredData.presentation.surface.slice(),
+      surfaceNames: this.authoredData.definition.legends.surface,
+      ground: this.authoredData.presentation.ground.slice(),
+      groundNames: this.authoredData.definition.legends.ground,
       buildings: world.buildings.map((b) => ({ ...b })),
     };
   }
@@ -2533,16 +2532,17 @@ export class SimulationHost {
       this.player.facingY,
     );
     for (let i = 0; i < this.npcs.length; i++) {
-      const n = this.npcs[i]!;
+      const n = this.npcs[i]!,
+        profile = NPC_PROFILES[n.entityId - 1] ?? NPC_PROFILES[i]!;
       pack(
         n.entityId,
         1,
         n.x,
         n.y,
-        VILLAGES[NPC_PROFILES[i]!.village]!.color,
+        VILLAGES[profile.village]!.color,
         this.entities.hp[this.entities.require(n.entityId)]! /
           this.entities.maxHp(this.entities.require(n.entityId)),
-        NPC_PROFILES[i]!.village,
+        profile.village,
         0,
         0,
         n.facingX,
@@ -2723,7 +2723,9 @@ export class SimulationHost {
         activityInstanceId: recent ? `${id}:${recent.pose}:${recent.until}` : undefined,
         activityVariant: npc ? NPC_PROFILES.find((p) => p.id === npc.profileId)?.role : undefined,
         sceneId: this.scenes.id(activeScene),
-        rigId: s.isHuman(slot) ? 'human_standard_v1' : s.definition(slot).id,
+        rigId: s.isHuman(slot)
+          ? 'ual2-humanoid'
+          : (SPECIES_RIG_MAP[s.definition(slot).id] ?? s.definition(slot).id),
         appearanceRevision: JSON.stringify(this.equipment.view(id).worn)
           .split('')
           .reduce((hash, c) => (Math.imul(hash, 31) + c.charCodeAt(0)) >>> 0, 0),
@@ -3017,8 +3019,15 @@ export class SimulationHost {
     this.literacy.restore(save.literacy);
     this.equipment.restore(save.equipment);
     this.entities.restore(save.entities);
-    for (let i = 0; i < this.npcs.length; i++)
-      Object.assign(this.npcs[i]!, structuredClone(save.npcs[i]));
+    const restoredNpcs = save.npcs.map((savedNpc) => {
+      const npc = structuredClone(savedNpc);
+      const slot = this.entities.slot(npc.entityId);
+      if (slot !== undefined) {
+        bindBody(npc, this.entities, npc.entityId);
+      }
+      return npc as unknown as NpcState;
+    });
+    this.npcs.splice(0, this.npcs.length, ...restoredNpcs);
     this.resources.supplies.splice(
       0,
       this.resources.supplies.length,

@@ -280,7 +280,11 @@ export class ScheduleExecutor {
   /** Read-only semantic activity for presentation. Never parse generated prose. */
   presentation(npc: NpcState, index: number, calendar: WorldCalendar): 'idle' | 'work' | 'social' {
     if (npc.followingUntil > calendar.elapsedSeconds) return 'idle';
-    const entries = NPC_PROFILES[index]!.week[calendar.weekday]!;
+    const profileIndex =
+      NPC_PROFILES[index]?.id === npc.profileId
+        ? index
+        : NPC_PROFILES.findIndex((p) => p.id === npc.profileId);
+    const entries = NPC_PROFILES[profileIndex]!.week[calendar.weekday]!;
     let active = entries[0]!;
     for (const entry of entries) if (entry.hour <= calendar.hour) active = entry;
     const location =
@@ -292,7 +296,7 @@ export class ScheduleExecutor {
             calendar.hour < npc.tomorrow.startHour + npc.tomorrow.durationHours
           ? npc.tomorrow.location
           : active.location;
-    const point = this.locations.locations(index)[location];
+    const point = this.locations.locations(profileIndex)[location];
     if (Math.hypot(npc.x - point.x, npc.y - point.y) > 1.1) return 'idle';
     return location === 'work'
       ? 'work'
@@ -329,11 +333,15 @@ export class ScheduleExecutor {
     player: WorldPosition,
   ): { point: WorldPosition; activity: string } {
     const now = calendar.elapsedSeconds;
+    const profileIndex =
+      NPC_PROFILES[index]?.id === npc.profileId
+        ? index
+        : NPC_PROFILES.findIndex((p) => p.id === npc.profileId);
     if (npc.followingUntil > now)
       return { point: { x: player.x + 1, y: player.y + 1 }, activity: 'Walking with you' };
     if (npc.override && npc.override.until > now)
       return {
-        point: this.locations.locations(index)[npc.override.location],
+        point: this.locations.locations(profileIndex)[npc.override.location],
         activity: npc.override.activity,
       };
     npc.override = null;
@@ -344,15 +352,18 @@ export class ScheduleExecutor {
       calendar.hour < npc.tomorrow.startHour + npc.tomorrow.durationHours
     ) {
       return {
-        point: this.locations.locations(index)[npc.tomorrow.location],
+        point: this.locations.locations(profileIndex)[npc.tomorrow.location],
         activity: 'Following a personal plan',
       };
     }
     if (npc.tomorrow && calendar.day > npc.tomorrow.day) npc.tomorrow = null;
-    const entries = NPC_PROFILES[index]!.week[calendar.weekday]!;
+    const entries = NPC_PROFILES[profileIndex]!.week[calendar.weekday]!;
     let active: ScheduleEntry = entries[0]!;
     for (const entry of entries) if (entry.hour <= calendar.hour) active = entry;
-    return { point: this.locations.locations(index)[active.location], activity: active.activity };
+    return {
+      point: this.locations.locations(profileIndex)[active.location],
+      activity: active.activity,
+    };
   }
   advance(
     npc: NpcState,
@@ -462,8 +473,8 @@ export class SocialEncounterSystem {
               !b.heard.includes(m.source.ids[0]!),
           )
           .sort((x, y) => y.importance - x.importance)[0];
-        const nameA = NPC_PROFILES[i]!.name,
-          nameB = NPC_PROFILES[j]!.name;
+        const nameA = (NPC_PROFILES.find((p) => p.id === a.profileId) ?? NPC_PROFILES[i]!).name,
+          nameB = (NPC_PROFILES.find((p) => p.id === b.profileId) ?? NPC_PROFILES[j]!).name;
         const text = topic
           ? `${nameA} told ${nameB}: ${topic.text}`
           : `${nameA} and ${nameB} shared news of the village.`;
@@ -510,6 +521,11 @@ export interface AgentValidationContext {
   readonly player: WorldPosition;
   readonly markers: Marker[];
   readonly sourceIds?: readonly string[];
+  readonly locations?: {
+    locations(
+      index: number,
+    ): Record<'home' | 'work' | 'square' | 'shrine' | 'outpost', WorldPosition>;
+  };
 }
 export class AgentActionValidator {
   validate(npc: NpcState, action: AgentAction, context: AgentValidationContext): string | null {
@@ -537,7 +553,8 @@ export class AgentActionValidator {
       return 'Personal plans must finish before the sleeping schedule.';
     if (action.type === 'MOVE_TO_LOCATION' || action.type === 'SCHEDULE_OVERRIDE') {
       const index = NPC_PROFILES.findIndex((p) => p.id === npc.profileId),
-        location = new SettlementPlanner().locations(index)[action.location];
+        planner = context.locations ?? new SettlementPlanner(),
+        location = planner.locations(index)[action.location];
       if (!SurfaceRules.walkable(context.world, location.x, location.y))
         return 'That destination is blocked.';
     }

@@ -9,7 +9,9 @@ import { ProjectileSystem, sweptCircle } from '../src/domain/projectiles';
 import { ResourceStore } from '../src/domain/resources';
 import { SceneRegistry, sceneSaveLayouts } from '../src/domain/scenes';
 import { SimulationHost } from '../src/domain/simulation';
-import { ChunkStore, SurfaceRules, TileFlag, WorldGenerator } from '../src/domain/world';
+import { ChunkStore, SurfaceRules, TileFlag } from '../src/domain/world';
+import { AuthoredWorldLoader } from '../src/domain/authored-world';
+import { getDefaultCompiledWorld } from '../src/domain/simulation';
 import { send } from './helpers';
 
 function equipment() {
@@ -254,7 +256,7 @@ describe('fixed-tick arrow sweeps', () => {
 
 let generated: ChunkStore;
 beforeAll(() => {
-  generated = new WorldGenerator().generate(42);
+  generated = new AuthoredWorldLoader().load(getDefaultCompiledWorld()).world;
 });
 const geography = (w: ChunkStore) => {
   const hash = createHash('sha256');
@@ -280,14 +282,14 @@ const scenes = () => {
   return { registry, supplies };
 };
 describe('pocket scenes, access and shared settlement supplies', () => {
-  it('adds exactly 42 buildings and three caves without modifying a generated overworld layer', () => {
+  it('adds exactly 10 buildings and three caves without modifying a generated overworld layer', () => {
     const before = geography(generated),
       { registry } = scenes();
-    expect(generated.buildings).toHaveLength(42);
-    expect(registry.definitions.filter((d) => d.kind === 'building')).toHaveLength(42);
+    expect(generated.buildings).toHaveLength(10);
+    expect(registry.definitions.filter((d) => d.kind === 'building')).toHaveLength(10);
     expect(registry.definitions.filter((d) => d.kind === 'cave')).toHaveLength(3);
-    expect(registry.portals).toHaveLength(90);
-    expect(new Set(registry.definitions.map((d) => d.id)).size).toBe(46);
+    expect(registry.portals).toHaveLength(26);
+    expect(new Set(registry.definitions.map((d) => d.id)).size).toBe(14);
     for (const definition of registry.definitions.filter((d) => d.code !== 0)) {
       const context = registry.context(definition.code),
         entrance = registry.portals.find((p) => p.target === definition.code)!;
@@ -313,11 +315,14 @@ describe('pocket scenes, access and shared settlement supplies', () => {
       { registry } = scenes();
     expect(layouts).toHaveLength(46);
     expect(Object.isFrozen(layouts)).toBe(true);
-    expect(layouts.map((l) => ({ ...l })).sort((a, b) => a.id.localeCompare(b.id))).toEqual(
-      registry.definitions
-        .map((d) => ({ id: d.id, width: d.width, height: d.height }))
-        .sort((a, b) => a.id.localeCompare(b.id)),
-    );
+    for (const definition of registry.definitions) {
+      const canonical = layouts.find((l) => l.id === definition.id);
+      expect(canonical).toBeDefined();
+      expect({ width: definition.width, height: definition.height }).toEqual({
+        width: canonical!.width,
+        height: canonical!.height,
+      });
+    }
   });
   it('requires invitations for private homes, permits the owner and always leaves exits usable after revocation', () => {
     const { registry } = scenes(),

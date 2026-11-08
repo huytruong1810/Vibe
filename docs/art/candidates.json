@@ -1,0 +1,1339 @@
+[
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:ground_grass",
+    "digest": "4f6412c83a1a3a3bb7d23d5be1d61b4fd4b7608d30cd9fbf21fb594e2ce7fb24",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:ground_dirt",
+    "digest": "ddbcd0925aab45863bf352aa2e8cbe98e3e641e6bc5540e662d512b984910455",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:ground_sand",
+    "digest": "d6e8591d1e65289b19cccb1bfbcdfc7c54369a5210f4b6f8dbea0544b371f5fa",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:ground_freshwater",
+    "digest": "eb1db375c12b03fbf6da4e0f653ff02ad308d81bc05c46eccff676373c330467",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:shore_freshwater_mask_1",
+    "digest": "cb04eeb6ed80c498220df225d23fd55cae640a461f63cacbbd35069b2481587c",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:shore_freshwater_mask_2",
+    "digest": "c398ce8124634da5ad57160420adf2b80c7fa021d799bf6eb6d1a7c19f66e19f",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:shore_freshwater_mask_3",
+    "digest": "a85cae1d9333ae0354b0dc82c986b88f765079ff95ea0fc88d8fd9cf6ca1c70a",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:shore_freshwater_mask_4",
+    "digest": "98bec2278836dd55d0230f54c13b7fed44f341ac72f94c9c842f7b13384cd3a1",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:shore_freshwater_mask_5",
+    "digest": "d987b61f62d16ea227d42b074193e8b26bcf8a44aaa14e404c49178fd3d8c8a7",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:shore_freshwater_mask_6",
+    "digest": "f0f6f88159420a5efb20e7e1fa35a4dbad6d50538ef41b3946039fd5651984d0",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:shore_freshwater_mask_7",
+    "digest": "9c8d871bcfbdccf8b05c7e7d6dfe8737f6aa7168ffbef1c7f48e57d0b5d41b25",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:shore_freshwater_mask_8",
+    "digest": "b47e281323f5b73a8a33d85565fbf424f373e119178581d9faf18e6772ebcc26",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:shore_freshwater_mask_9",
+    "digest": "87dc29107bd57635a2c784739fee2faa4a5e5b134f680b368f38317405e9a20c",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:shore_freshwater_mask_10",
+    "digest": "688ea9afb370b2acebe175e1949d78bade5664b389637874e25eb9c6ad32c0f1",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:shore_freshwater_mask_11",
+    "digest": "6691e340d48251ed1f47e2181ca384a039f8e8e0008482b016b248b798ad8f2d",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:shore_freshwater_mask_12",
+    "digest": "ea1d869c66ffc60fc670a674d7d714fd9a55d454adb51180f91e35aa78c8a5c4",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:shore_freshwater_mask_13",
+    "digest": "580d9825ad273708fdd36adecc47b43afaf6830717064b0341859a17109f96dd",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:shore_freshwater_mask_14",
+    "digest": "2c47db8fca7789cfe1a3ef24899f5ceca722873ab58418e8c79826c2537b7eaf",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:cliff_grass",
+    "digest": "bd2687d86bed5991f7a2f8635f0ffa478ef10ef0ece7f2cf71f6fce25fc724f2",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:ramp_grass",
+    "digest": "5d89ab6eddaf76a648d9ac27fd1cd5633e5df8e53da209e42441fc2b5587ca44",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:tree_oak",
+    "digest": "287934597e977d7dd22cc498ffe7128f43310ac5dae4483963ec0478f9ee400c",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:canopy_oak",
+    "digest": "a5e74bb3bbe0c51334d384e538dcea90e0be65f9c79ab8b20183b2fdeec7b5a5",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:house_aqualia",
+    "digest": "50670c07c780fd2a0577512051504552a40069d4fd2534dcc71786e485bfc769",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:landmark_well",
+    "digest": "251ff3ba97525b96158d8ab57c06ba231f199cca977f373e85b6a46b533178b9",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:landmark_waystone",
+    "digest": "09e62504051460c1a282aebeb2956056e2801f72aa9ff204be4c827e15f659f3",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:prop_hearth",
+    "digest": "61568767f601a424d89ffe6fc58a650695a7a1cfb80bf9a0c6e2e10178d8b95f",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:flora_berries_healthy",
+    "digest": "d8c13b32d643ac792133877e4aee522d37a8527aa597af18fcdc539ea6b7cb72",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:flora_berries_harvested",
+    "digest": "c0be9b9bda8de470b3f6b4526a35c06053f69aeb2826089b3d868745e20a17a1",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:flora_berries_burnt",
+    "digest": "b73a7a3536d212f36191299e416d437561df3d5f5342cf0b097f231970ee009a",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:flora_reeds_healthy",
+    "digest": "0fb2f85071069b295e25cfae977aa218e076409fb5b50fa23208253f9619eac0",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:flora_reeds_harvested",
+    "digest": "7a9e389792e30e6b919a7e2c7fe41b27cc0fa499da3d30e70a470c26a68d5392",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:flora_reeds_burnt",
+    "digest": "573645897a88e8e7630e91b06569b89e1555baef66506f40eb9fa23ba4124f5e",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:flora_wheat_healthy",
+    "digest": "5db057d420df543b19d22bc6fc2e08ca22363facc1d584926b24167ab85cd389",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:flora_wheat_harvested",
+    "digest": "75c35b4f0930602b60c18c14e9f52251f5c6cdf618adc050e7b791a1d9245aba",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:flora_wheat_burnt",
+    "digest": "a8a218e5f4ed12649b2d0a9c34d71026c487ecc25a8f5961b2ab4fcc0d84314d",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:flora_nectar_healthy",
+    "digest": "e5d661862a14fe2bb342b6136cb76e394e1b7185c8a03843f3953f675379ffdc",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:flora_nectar_harvested",
+    "digest": "3f6752c8138cf4691773d5ca36f0c1e1aaeb1ff21d1fb8312f389824a18108e7",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:flora_nectar_burnt",
+    "digest": "6a621f2ecfe7d4b589c6347674ec8a387cacf061bd765201e9299103dcc8e6ae",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:flora_ashgrass_healthy",
+    "digest": "82a88bd24e730947d9f5f42a7cdeaf151c4f1b3dfb69108372a8ee493285c1cd",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:flora_ashgrass_harvested",
+    "digest": "686ea66c7df2c3abfa58ec8a51f0fd52559214c9ebf962cf2441cc0d8ec22f7b",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:flora_ashgrass_burnt",
+    "digest": "28a9da3e9c408a828fe23004aef6fa5c1d1500b1cafe094f26ece5fc19ba5d5d",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:flora_fungi_healthy",
+    "digest": "216392192b388666bba71bc284244692d4c638cd55b7c8ad4baf94f2ceaad844",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:flora_fungi_harvested",
+    "digest": "5ab882cdacbf2ab341eea6bcacc3ccada80ebcc3abe07bc0fa19e162a5eccad6",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:flora_fungi_burnt",
+    "digest": "84730adec8dba6cb8d2fd0524543447c150a52745bae09e41d587b4e87e8777a",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "origin:aqualia",
+    "digest": "c56c8f418c33137ab31330bb3b6d52595c6a74cbbe5c8812509249cfcade1c3a",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "origin:pyrador",
+    "digest": "7743125c82f7fbe655d1975bff4b98bf3d4839d49b778aba5e8edf339d2fcdda",
+    "approvalMatches": false,
+    "runtimeStage": "candidate"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "origin:zephyria",
+    "digest": "e609773ec9e8fef692f585ffa193b96ed74ddac8c042b2bfb2cea2aa7b40e604",
+    "approvalMatches": false,
+    "runtimeStage": "candidate"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "species:ignicap",
+    "digest": "ebbc05a192afeb5854e15d615176de86c3ac7301965efa56304d5c44a946663e",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "species:zephyrit",
+    "digest": "5baef3aa0e0c8278508298750dd44223429e8d35a1ec866f023164eee8670432",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "species:mireling",
+    "digest": "101232a5be74a8006f9cb062c8c7383e3f670d242fc6511c3914cd538e9f6b2d",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "species:cindermoth",
+    "digest": "1be3c1b41715d24adbea9a8bd358f0e9af7134eb434ecfc5df27eaf662612d6c",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "species:steamshell",
+    "digest": "ff588b5a2757c488427febdbc28f76ade44b47f9d2b18c734e62d5943d27db73",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "npc:npc:vulkan",
+    "digest": "908a44d36b1af59585c51a9df72eddac15affe6aca4b0d881fed26b4a76ad2c5",
+    "approvalMatches": false,
+    "runtimeStage": "candidate"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "npc:npc:emberlyn",
+    "digest": "b22d7553761e9c17bcdd5dea9ec04ba621c6bc607f6576c91d80647ff6916a4c",
+    "approvalMatches": false,
+    "runtimeStage": "candidate"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "npc:npc:soren",
+    "digest": "addb4cc4f69b8ebfe1275af580f9394253de55364e55afd0675bead9a88a306a",
+    "approvalMatches": false,
+    "runtimeStage": "candidate"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "npc:npc:tala",
+    "digest": "9a296f9092e5c20bb92243b0c43fa323bef04d074e800538062b8e3a6ffbd607",
+    "approvalMatches": false,
+    "runtimeStage": "candidate"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "npc:npc:bram",
+    "digest": "f0f3082a13a4430ab035bb15b5d0297d4d8e970fa67d26c801dc9861e15f9ef7",
+    "approvalMatches": false,
+    "runtimeStage": "candidate"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "npc:npc:iona",
+    "digest": "730ea76b49bc371498c20ec87158e64ba7cb87e9eea475b693102304dbbb3ebc",
+    "approvalMatches": false,
+    "runtimeStage": "candidate"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "npc:npc:flint",
+    "digest": "c5d05957689258b3526e1818b098f977190809d8e90ef8ed83ce4354452224b4",
+    "approvalMatches": false,
+    "runtimeStage": "candidate"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "npc:npc:cora",
+    "digest": "c70f574bae9710e781c2f0b51d05e64fc4fc9678eaf7820adfd4ac223f0adb41",
+    "approvalMatches": false,
+    "runtimeStage": "candidate"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "npc:npc:aster",
+    "digest": "be27ba3377356538bbd5f9cfc81ea5a0d3d876645a3d6edb4f5a23810f114d12",
+    "approvalMatches": false,
+    "runtimeStage": "candidate"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "npc:npc:runa",
+    "digest": "dfb1ce502fc0c13c0132d7b912ab9ca1413aa8d45571192432e79fb427b2ec7a",
+    "approvalMatches": false,
+    "runtimeStage": "candidate"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "npc:npc:caelum",
+    "digest": "d8f47287bf0f4ff18c1a2c8db4b512cd1092f8fc91a33d2c37d201fb6ea84104",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "npc:npc:marina",
+    "digest": "c5dc22166c80c789ee4411bb7c7e70c8f43ae0e70b7b615f258acc24fda0a3f1",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "npc:npc:neris",
+    "digest": "92b1af7e3924def6c1364b80ea6d56811c08ad16801f2abf40d220c5cf2eae68",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "npc:npc:reed",
+    "digest": "bd1e053369df3901407aa8feed9aa5b1797384a0b0e61330c39bec70648b3617",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "npc:npc:willa",
+    "digest": "669d665ee11674a20c5988a9d0e2c1a9ecbced48f81cbe289f8c21c108a02b3f",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "npc:npc:oren",
+    "digest": "a83faefab4a241cfa523f70fa142132714c11b0400a7bc28a10e6e404740409a",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "npc:npc:mira",
+    "digest": "dca819c456ee7d37bb195fb3e01b3844801ab656686023a078064bcb522b901a",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "npc:npc:lark",
+    "digest": "12996eea4e97e9d5a41466d0474599d421af09880acb787f2da210891157725a",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "npc:npc:dara",
+    "digest": "cb8401a492d6ceee4ae9a7ca829e7f01d904fefd9018e347766ff3fba9093839",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "npc:npc:finn",
+    "digest": "3ab0c2bc302ed28860a171515a1bf4555076fd405c339ca1637d7bbe6997d8ee",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "npc:npc:zephyr",
+    "digest": "0e00828415e9c57be829cf5968f33773d47a731013d0245a2c66db333fda0731",
+    "approvalMatches": false,
+    "runtimeStage": "candidate"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "npc:npc:kaelen",
+    "digest": "0d0f206d16262b80b41691fd1d9a105ab8ae0a9901b583be6b0635274709228b",
+    "approvalMatches": false,
+    "runtimeStage": "candidate"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "npc:npc:sable",
+    "digest": "4e4715c9d0d8ba008cce436d190f8a0676030c0d082975b260f8a42d0199b427",
+    "approvalMatches": false,
+    "runtimeStage": "candidate"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "npc:npc:niko",
+    "digest": "c8c2627ee17300ffd9c3a7ef03348d4da6a5d5f6a6b199b3963673363182a4be",
+    "approvalMatches": false,
+    "runtimeStage": "candidate"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "npc:npc:pippa",
+    "digest": "707a57a6a5688eebd3547013cca562104168abdf8a3462eb0234cbc2364523fd",
+    "approvalMatches": false,
+    "runtimeStage": "candidate"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "npc:npc:ellis",
+    "digest": "309eee567f2abbf4897c483924e99b297379d800751303ddef94a7867ebb3bd5",
+    "approvalMatches": false,
+    "runtimeStage": "candidate"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "npc:npc:jun",
+    "digest": "aac28ad6c281b81a692e8d87ed6d6c507c11624273de2bb3ccb4783e6daefc82",
+    "approvalMatches": false,
+    "runtimeStage": "candidate"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "npc:npc:faye",
+    "digest": "2ab7ab4702ad109501e57570cf5c2cb75e595e6836efdcc3a8e9c7c6178571e6",
+    "approvalMatches": false,
+    "runtimeStage": "candidate"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "npc:npc:rowan",
+    "digest": "8f938cedbff16b61e9966cb4dbbf20cb294ac7d3d8a270d9570f4f78b839fb82",
+    "approvalMatches": false,
+    "runtimeStage": "candidate"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "npc:npc:sol",
+    "digest": "f815c456b2e66aaf6a901d8438d7a3ec5b573f4e166c1ab97be007eb6158e53c",
+    "approvalMatches": false,
+    "runtimeStage": "candidate"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "species:rivallie",
+    "digest": "5fc1fc3e64a8a5d1a3d947720c980628887dfdd888a8fb1d994318ceeab5ea03",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "species:bramblefang",
+    "digest": "bb67b97eaf624b4e5a3817df3193c1a3ca4195483f7618e0869dd17bcac42b09",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "species:marshstalker",
+    "digest": "75276dea5d0615175fdb49820c637e20dc81c0f5eff0ef6dfca425501ba4dc2c",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "layer:rivallie:faces",
+    "digest": "0b4e15ef8025f15ab90c7445b86c2ed80ae8a7cf2f5d80b259c178a1e137aebf",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "layer:rivallie:body",
+    "digest": "e554d7a211643350c495b2d2beda2ae59fc8d1609ead6d6636a50973ace315b8",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "item:arrow-bundle",
+    "digest": "d9f606ec6549bcebe57c0d6c0e14b29d92b240dbda1e933a2b5c9dc9072cfeda",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "item:ashgrass",
+    "digest": "dd49d800c4e4b5503887347c35f5ff26efbb1a973db8fd26a1e8369977443c1d",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "item:berries",
+    "digest": "f877809c43f5a88d7a8aaf95fe4184b673d51cd9deb99890890b88e7bc89ab85",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "item:fiber",
+    "digest": "0bfec8f257c08ddb943f2bf2fc05090e497b21943b86d5a357ebc5b93096e972",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "item:flint",
+    "digest": "cad290a8e3db6ef091615d3b610297c5be64a7aeea4ebd33094d3dfca8d8e4c5",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "item:fungi",
+    "digest": "29591c79dd42efd1a81d831b4c65ec664acad6d2306779993f0fe36bcd2bcb3c",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "item:pyrador-hood",
+    "digest": "8201ad7b655cdb909506ad7c4ab660e003a7fb284ab4f190419a04bbd2e0652a",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "item:pyrador-coat",
+    "digest": "3d192e6a3cb62583392379fe46d876555429eb39a434114eb1cd4f199757f3b9",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "item:pyrador-gloves",
+    "digest": "b5d8d83266e2c06a0780661d00567839010d521b8785783f6cfd847e214fe5c8",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "item:pyrador-trousers",
+    "digest": "4f8c4bff5b18d0697bc5089313fec2b6947b6c1f915522c2b3f8b01b2d9946a3",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "item:pyrador-boots",
+    "digest": "cb66cd0dc5fbc23a941f3a50528c364b5d9062c254720adf75f0cbd952c96956",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "item:pyrador-cape",
+    "digest": "1f2730742c3936050dcd46209d1387ba1fe600a1957e91ce1584ce0cbdcd3a5b",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "item:aqualia-hat",
+    "digest": "9ab831ad35a84ff409d1ad20b00ca1a6f95c43d8e3549a139180a77f48faeebf",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "item:aqualia-poncho",
+    "digest": "62226a5016615fcaf6579d51a3561db868bbd718aaa90db18dfe56244e561538",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "item:aqualia-gloves",
+    "digest": "4c9f2cc7fec98a3a795a072e7ff7185a534ca5ff56a605db3779c06336d24b3a",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "item:aqualia-trousers",
+    "digest": "f5fd18343947be3bd1d8ac84fff90ef78e95a942463bd1fa697c949a7bfd75f0",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "item:aqualia-boots",
+    "digest": "ff20fc8b1d6bf276633913092cfb8d34e39c387f913cfa7b4101e34bbe13c90b",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "item:aqualia-cape",
+    "digest": "97d996b04b96e617968e24e47754112bade953cdfced46ac1bf85474e89a8a74",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "item:zephyria-cap",
+    "digest": "68236f97a0bd8770421d1cb7f35723c8d66540ff41873085fa86d2d974cccf1e",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "item:zephyria-tunic",
+    "digest": "0082f8635c8e753bfe515d660158755e1241ea1556449d04cfc9b654b7d71327",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "item:zephyria-gloves",
+    "digest": "c9c85b3f832059786bbf2cb4cc2a9026a81175622bf459e1f7d06aad7cff977f",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "item:zephyria-trousers",
+    "digest": "f9e3e8a4215e81c910d9c8cf6d2ae25af9d37a41a93c5f19a60585f457466ec8",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "item:zephyria-shoes",
+    "digest": "232497343f475ffcde06303fae8ba45a6b68de0a9f9f7d9b3437551956c37cd5",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "item:zephyria-cloak",
+    "digest": "26577196ed779f1f4328d4ffb4922da51e56dd6d78082e7ab47cf1d2de217559",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "item:meal",
+    "digest": "45a57437df5a57982f1a6634fa07a3767cbb39613f8c6a8462686f71bed80427",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "item:meat",
+    "digest": "858e905a5d9735ce8dbac582b1f0decdcd03f89f5dda7ba661a01d3f8b67071c",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "item:nectar",
+    "digest": "60442ee8fe96d1fb401f9944d7c5afa2d962c09d180480e100b559eeb5305846",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "item:ore",
+    "digest": "adc4c051009115da0516f3a85777b056cb660603b556f8c1772cc64d0f2243dc",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "item:poultice",
+    "digest": "1683a7daaf1f50fdf62b9ca45b45b9aaf57089f7b64731deb6f7d16eab89d304",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "item:reeds",
+    "digest": "17a0c3bceeeb2e49750ed2659821ba07f386e82dac3fdc139523730308f94d35",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "item:stick",
+    "digest": "40f46d162347138510ac6155553a99b4c5cc2f0e32f9764ee86a1242e8a9e4cf",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "item:tool-head",
+    "digest": "71e866337956fb61c838726ed497230f7071c4927aa6c8e4b62583258830a90a",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "item:water",
+    "digest": "f8be17b2d4a248f30d334212fb77ec572f26e5de127b2ce97a23a40bca7153af",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "item:wheat",
+    "digest": "c3518c3205bac25b1ced08722adca852171f4c2eeaeaa436ced01dafd14363aa",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:boardwalk",
+    "digest": "13e25d9d1f94451ff1e6fcc1136d83454f9e42037d30a2a66699a4c58abd2472",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:reed_clump",
+    "digest": "32faf13d441be8c6a7be6b7c0cd6232a72f821997b3821a33b1af08c3a6ea248",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:lantern_post",
+    "digest": "dc62d80f531f23078d3ffafc380a0c361c75f54c5167ffef68592a3bb65e69d5",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:bell_post",
+    "digest": "2852c5439b379715419f1164da9cad05f2677e6837d4458d94cac2056c14c88a",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:mill_waterwheel",
+    "digest": "ee0ba7155aec17e5356da4278ecba2df2d7bb960a1256d3aa4342a0be3a36649",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:crates_barrels",
+    "digest": "1d32cf243a6b86d9a21c6d0fb8c7c95f18fce97b02ba875ecbb599290eba41d0",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:willow_footbridge",
+    "digest": "ab815f3c37dac0b24c46f248a89d25ac8cfdb257e473b9560aebab9e44b3ec2a",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:stilt_hut",
+    "digest": "c4f89447e383aa51e06c98b25087c443774f7430b83b79168bb4703bc3df1dcf",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:studio_lark",
+    "digest": "17fe409f326268aeaf2818db167f2c5449d997e132b1767d8c7811347187cdb2",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:gauge_tower",
+    "digest": "d95a5b2bae87d71be280882a6294267770a4b7b0330c7e8035a03cde27513cf7",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:divers_pool",
+    "digest": "b94c87fddd5126083c40acc33816336873c4b9b9e79847e2e2de6a153f25d653",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:notice_board",
+    "digest": "b95ab6b9f6b389b417bc5eaf7a042dd9385ca102598c99cb1b0e18baa4f66a60",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:lantern_bridge",
+    "digest": "18dad62fbdfe2dbca91fb04eef3786e65eb2af53e5a8d1081d8b10b95c504014",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:fungi_ring",
+    "digest": "51c2821a8bcdeea0f15b5f96e5671fb6df4224335a9f625814a95a2afb74fcd6",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:ferry_landing",
+    "digest": "f4c515576595c23a0af21ead278aeea0b5fde2259039df72901fe7c97f0739e9",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:sluice_gate",
+    "digest": "62c05b22e62fc57ff5f16223da985e82408b162ccf6738aa38c7350ab8d2445e",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:shrine_spring",
+    "digest": "97935913f468cc316e55426005cf2facc9b6b4a00d64815fac7a7eb93b900e63",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:kite_oak",
+    "digest": "04f00a7e7cfca8f925824ff0ef3c4015f287bf24419f0ea614e4fc9f5aa4ee37",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:ground_boardwalk",
+    "digest": "70c635e1f7857486a526e46913802ba4524ece783c5dd6f5f090c5109fa87958",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:ground_boardwalk_v1",
+    "digest": "645f8994bb80893a3c561ec3307ac032a2b1f250380b7a5871640a2fdc6adcf0",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:ground_boardwalk_v2",
+    "digest": "8aed2d5663dd5a5cd8bc28a8d20a1959291e297c8f8a8d4bd7f1c5b517f91aa2",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:path_dirt_mask_1",
+    "digest": "aa0c65683002951bb860fdfad303a6329ac97e772803cd0ec83a996ba2f73e7e",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:path_dirt_mask_10",
+    "digest": "8ee29243730761611c8d285d29eeca9aff636ae706e219d8d050baa8c5792308",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:path_dirt_mask_11",
+    "digest": "e4d9eafa8c04f6f3fcb8f491d0e9828c9822ec6fab34021312df306e3f43a219",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:path_dirt_mask_12",
+    "digest": "41171d1f166e363edfd3e5cf0cc226e2ea0a11c934bb8012d601b47e44ae26d3",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:path_dirt_mask_13",
+    "digest": "c7a1cab55757ca1902b3e40a276716b1dac538b5c8c91d20f5228aa1bf9e08ad",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:path_dirt_mask_14",
+    "digest": "604d1a6030edcd77e78d78228bff2f0108ad199f008d54776f96c6493f8ddf9e",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:path_dirt_mask_2",
+    "digest": "d3d0472516444455ae76c1206870431f005fb2374a57df1a59e3f23c5c73a9a3",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:path_dirt_mask_3",
+    "digest": "c504b2b29c67ed2efe1ee0f5c571c2b499f089ec5575d0fe4249e330d2c633f1",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:path_dirt_mask_4",
+    "digest": "3597e215e8312670e1959ec173a8961807e54be7658b82030c61d16e55c9b475",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:path_dirt_mask_5",
+    "digest": "262ab245c7e1d9d08b231679877ba81d37a2cc19f77128c2f527778b24f4fc83",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:path_dirt_mask_6",
+    "digest": "6ac2fbf663d9aa2e3d269d51b023fa68a1393dbc4dabeab9f653b7c435743f30",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:path_dirt_mask_7",
+    "digest": "f10b284a1db0795d4a4d62a7038ebd70db09ae27f846d584a14daa795e722373",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:path_dirt_mask_8",
+    "digest": "dc719857eb6bcbab3a9848866e26f11d64ea0e38f01dbbb95158efbd4ffcb724",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:path_dirt_mask_9",
+    "digest": "201bfa7cd6906685379d940c734f036750cd15b0d37203b11001928625f4f7b8",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:ground_dirt_v1",
+    "digest": "b0e1470afc8c019e1557beb80534ad6cddea31b778147d5a2199ff20f286db3b",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:ground_dirt_v2",
+    "digest": "4ee4d1f7539df230606e620510d987a74cd90ff1f89678f31d8a142fbb90309d",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:ground_freshwater_v1",
+    "digest": "d6e708aacace1efdcc588178e45ad06ee4b499edfa46343cb84e1218b2f93cc8",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:ground_freshwater_v2",
+    "digest": "396952e63d30603c6948252b7c4cf64fb500e929c5c544eec3edb861149b48f0",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:ground_grass_v1",
+    "digest": "cf323489d4e7e6de971ab79c94af20498bfda5d9d6f09ada05c1b5e615879d0b",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:ground_grass_v2",
+    "digest": "41cb40051df5c92eb5283e7844abf6c11e7739059220a664b0bd072544acc425",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:ground_grass_v3",
+    "digest": "41b877caeca77655fa6c8874ca243971f682efa708a6c108ca4bc49902fa483c",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:ground_mud",
+    "digest": "1c7a507dcfcb8c71b766340f048314520a02ef132e1dea487a3fa22e5a3f4702",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:ground_mud_v1",
+    "digest": "4712157f1b78f73bad31dbe35cc633f668b3e466092ab5dd5b9118e77e66dcd4",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:ground_mud_v2",
+    "digest": "617b402d4e8cca1c34ea94ad8699eaccdcbb4f028b48c07d440a93417d4588a7",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:ground_reedbed",
+    "digest": "3ca8633df724cbb5cf0999e303d652ace8022e1a14e2bc2da5d96b6d846dd6ab",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:ground_reedbed_v1",
+    "digest": "b3eabe71d3ace32ddb5a4324ac4d014e371a48dd9ed93a787107a57dbb399fb8",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:ground_reedbed_v2",
+    "digest": "69da14ab61d909ab26c63d2cb34116efc9336bf99a186d84dd9397b13223b08a",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:ground_sand_v1",
+    "digest": "2c05ae68f04628d9d819733fd5c16fa9bf3c3ea18819e0fd1407135b503976d6",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:ground_sand_v2",
+    "digest": "cd73c88e49f3ee2cf90980e5e4049ab0ebfbc71f2f037f40842708c20a4632d8",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:ground_stone",
+    "digest": "496a68ebd99887208b27b5e974b7023e8523bfcb73fdea114ce0ba55d6a79517",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:path_stone_mask_1",
+    "digest": "b0e1970ec0e36b3d31be22dc47735db160d57ead24a3ff2f91227e63f0ab2c23",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:path_stone_mask_10",
+    "digest": "084c1d2878fdafceed754a778be123f3f52e30ed1949cc6602c13a4e20e33eb2",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:path_stone_mask_11",
+    "digest": "2fac7e9d59cd8fdda9f73ae519a50324494286c098e5d5fc459172b7db1c9d6c",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:path_stone_mask_12",
+    "digest": "190d29cea0e9166d8d2b7745ad777fef0f9376bcdc1d0766cd015aea2e586709",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:path_stone_mask_13",
+    "digest": "273aec66e8312863628bde874fe089755089363482b36cd70e7d9f266f36fef1",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:path_stone_mask_14",
+    "digest": "debb229f5233b1cb9992e976734e2e76d9f9e3af3f9bbf7a937ae8f512eb4795",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:path_stone_mask_2",
+    "digest": "781d6e60419882873165a0eee2e5ae74265ae8a913929cbbe122c1c4dbe5f914",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:path_stone_mask_3",
+    "digest": "08eb58d3c09f3a36956b55d14f5141a1637102105145eaf1f71fabddc9927c56",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:path_stone_mask_4",
+    "digest": "b105f3c7b3f170facffd403d10ba1d220a726b64195fc187d559f9468a000170",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:path_stone_mask_5",
+    "digest": "6185ed3a6444d60bf7e024cbfca2482e8a7d6c306b3872edf00d12a39a7b2fcd",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:path_stone_mask_6",
+    "digest": "4d3a710584ade5f73c092f7b8d7c2f1cb097a014e4fb421637089162701df243",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:path_stone_mask_7",
+    "digest": "6ec04b31ba37d0021b6b0071f8c999f16d318eb1b4eade179f5ad7f650d8d211",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:path_stone_mask_8",
+    "digest": "c8e1e248f0feb06d38b9a4a6c0cec5e8eb1425ad3bff79890a12405b730d6d00",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:path_stone_mask_9",
+    "digest": "64cd81cebb92509b938a4cfc7f749ef380ea21feebfb0ff994a3216714ab6c6e",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:ground_stone_v1",
+    "digest": "19d0a3f46200e92f9968c0e1f17a036b32a508c31f3eb56fb7ed10bb3804c92e",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "appearance",
+    "subjectId": "environment:ground_stone_v2",
+    "digest": "75a6c461d54a9726463227a774a52ee81e9b92aac36532c699775ffca4e5b93c",
+    "approvalMatches": false,
+    "runtimeStage": "legacy-adapter"
+  },
+  {
+    "subjectKind": "layer-set",
+    "subjectId": "layer-set:rivallie:body",
+    "digest": "58448102569b5922a7594be242de909f6af4c9e5baaa19cc741f271bee124a35",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "layer-set",
+    "subjectId": "layer-set:rivallie:faces",
+    "digest": "743f6ea1eee68c6bc22777eb8147e67ab82666aa03e21c36e43eecf18736f031",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  },
+  {
+    "subjectKind": "recipe",
+    "subjectId": "recipe:rivallie:faces",
+    "digest": "f666b1427fdac4563bfd0c275c4004e9e5f5a03aefb5faad279556d4e4b1eb98",
+    "approvalMatches": true,
+    "runtimeStage": "approved"
+  }
+]

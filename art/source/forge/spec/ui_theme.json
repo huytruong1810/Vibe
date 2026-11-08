@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "doctrine": ["UI-1", "UI-2", "UI-7", "L9"],
+  "font": {
+    "family": "Silver",
+    "file": "art/source/ui/fonts/Silver.ttf",
+    "license": "CC BY 4.0, credit Poppy Works",
+    "emPx": 19,
+    "capHeightPx": 9,
+    "xHeightPx": 6,
+    "lineHeightPx": 21,
+    "renderSizesArtPx": [19],
+    "displayScale": 2,
+    "antialias": false,
+    "note": "One family for every string in the game (UI-7). Render at 19 art px (38 display px at 2x); never fractional sizes, never smoothed."
+  },
+  "colorTokens": {
+    "panel": "navy.deep",
+    "panelBevelLight": "navy.mid",
+    "panelBevelDark": "navy.shadow",
+    "frameGold": "gold.mid",
+    "frameGoldLight": "gold.light",
+    "frameGoldShadow": "gold.shadow",
+    "outline": "outline-neutral.deep",
+    "text": "cream.highlight",
+    "textMuted": "cream.light",
+    "textAccent": "teal.light",
+    "textDanger": "crimson.light",
+    "hp": "crimson",
+    "stamina": "ochre",
+    "xp": "glass",
+    "need": "teal",
+    "focusRing": "gold.highlight"
+  },
+  "rarity": {
+    "common": "copper",
+    "fine": "iron",
+    "rare": "teal",
+    "epic": "plum",
+    "mythic": "ember"
+  },
+  "frames": {
+    "ornate": {
+      "file": "art/source/ui/kit/frame_ornate.png",
+      "sliceArtPx": 12,
+      "use": "menus, dialogue"
+    },
+    "standard": {
+      "file": "art/source/ui/kit/frame_standard.png",
+      "sliceArtPx": 8,
+      "use": "HUD clusters, portraits"
+    },
+    "thin": {
+      "file": "art/source/ui/kit/frame_thin.png",
+      "sliceArtPx": 3,
+      "use": "tooltips, toasts, name plates"
+    }
+  },
+  "layout": {
+    "safeMarginArtPx": 6,
+    "hudDimDuringCombat": 0.6
+  }
+}

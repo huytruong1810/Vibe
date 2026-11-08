@@ -1,0 +1,26 @@
+{
+  "asset": "env:flora-wheat",
+  "kind": "environment",
+  "ramps": {
+    "heads": "gold",
+    "stalks": "sand",
+    "stems": "timber"
+  },
+  "gen3d": { "seed": 1234, "steps": 50, "views": ["front", "left"] },
+  "environment": {
+    "footprint": [1, 1],
+    "split": null,
+    "contactShadow": true
+  },
+  "concept": {
+    "template": "building-v1",
+    "fields": {
+      "building": "cluster of wild flood-tolerant river wheat with golden bowed heads and dry bearded awns",
+      "region": "Aqualia floodplain fields",
+      "description": "a small stand of wild harvestable wheat",
+      "materials": "heavy ripe gold grain ears, dry golden-sand straw stalks, warm timber root base"
+    },
+    "references": []
+  },
+  "notes": "Gatherable flora healthy base (B24). 1x1 tile footprint."
+}

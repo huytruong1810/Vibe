@@ -1,0 +1,1660 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/item-hunting-spear--2026-11-04-item-hunting-spear.md",
+  "approvalSha256": "19cbff1c99863339a1e8cfdda86582bbde7c213f48dc9b0f8d1e28b09a0883a0",
+  "asset": "item:hunting-spear",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset item:hunting-spear",
+    "id": "forge-item-hunting-spear",
+    "inputs": [
+      {
+        "path": "blender/models/published/item-hunting-spear/d80adb5e28bb7c050ff3dc2536d0ef20d5f963e4b9fcddcaeee1d5fffe3d66f8/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/item-hunting-spear/d80adb5e28bb7c050ff3dc2536d0ef20d5f963e4b9fcddcaeee1d5fffe3d66f8/forge/blender/item_orient.py",
+        "role": "script",
+        "sha256": "a68d9fcfc9cae6f56c882c76e9e294d3c24bd02fb7826d9da3eaa086b7de362f"
+      },
+      {
+        "path": "blender/models/published/item-hunting-spear/d80adb5e28bb7c050ff3dc2536d0ef20d5f963e4b9fcddcaeee1d5fffe3d66f8/forge/forge.py",
+        "role": "script",
+        "sha256": "7ba07e846a522d199a522a011cfb1f87d35b47233bcb33aaeb9cb27e09644319"
+      },
+      {
+        "path": "blender/models/published/item-hunting-spear/d80adb5e28bb7c050ff3dc2536d0ef20d5f963e4b9fcddcaeee1d5fffe3d66f8/forge/forgelib/item_orient.py",
+        "role": "script",
+        "sha256": "03534083c34c47428d83b477a4e98678e6e547ef21b9a65b751d508a0e164600"
+      },
+      {
+        "path": "blender/models/published/item-hunting-spear/d80adb5e28bb7c050ff3dc2536d0ef20d5f963e4b9fcddcaeee1d5fffe3d66f8/forge/forgelib/item_render.py",
+        "role": "script",
+        "sha256": "3290c864b563263170efcc626acce2a1dc88141d320d9cf186f5bc48b3e6f2d0"
+      },
+      {
+        "path": "blender/models/published/item-hunting-spear/d80adb5e28bb7c050ff3dc2536d0ef20d5f963e4b9fcddcaeee1d5fffe3d66f8/forge/forgelib/items.py",
+        "role": "script",
+        "sha256": "22221017285c31c893c28260a13caf407e646913c63e32ad723c8671f1a9d84c"
+      },
+      {
+        "path": "blender/models/published/item-hunting-spear/d80adb5e28bb7c050ff3dc2536d0ef20d5f963e4b9fcddcaeee1d5fffe3d66f8/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/item-hunting-spear/d80adb5e28bb7c050ff3dc2536d0ef20d5f963e4b9fcddcaeee1d5fffe3d66f8/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "7c2e7b1994f6c5f8cb4c00bb8bf92f8078a8e7aa1ce405f18f5541e9aaf8452e"
+      },
+      {
+        "path": "blender/models/published/item-hunting-spear/d80adb5e28bb7c050ff3dc2536d0ef20d5f963e4b9fcddcaeee1d5fffe3d66f8/forge/recipes/item-hunting-spear.json",
+        "role": "pose-config",
+        "sha256": "fb5ed1e9ec7bfec481ccfda5ad1fa90ae1cec988fc39d111af24707a7106ddaf"
+      },
+      {
+        "path": "blender/models/published/item-hunting-spear/d80adb5e28bb7c050ff3dc2536d0ef20d5f963e4b9fcddcaeee1d5fffe3d66f8/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/item-hunting-spear/d80adb5e28bb7c050ff3dc2536d0ef20d5f963e4b9fcddcaeee1d5fffe3d66f8/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/item-hunting-spear/d80adb5e28bb7c050ff3dc2536d0ef20d5f963e4b9fcddcaeee1d5fffe3d66f8/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/item-hunting-spear/d80adb5e28bb7c050ff3dc2536d0ef20d5f963e4b9fcddcaeee1d5fffe3d66f8/forge/work/item-hunting-spear/item_model.blend",
+        "role": "model",
+        "sha256": "0010b09224ec184687e93d2abbb12971fb92b80bf0c3fd688db51090eab1bd82"
+      },
+      {
+        "path": "blender/models/published/item-hunting-spear/d80adb5e28bb7c050ff3dc2536d0ef20d5f963e4b9fcddcaeee1d5fffe3d66f8/forge/work/item-hunting-spear/orient.json",
+        "role": "pose-config",
+        "sha256": "cc0018e0122407936094fabe2384780a38da345562ee91923fb5fd13f722ea10"
+      },
+      {
+        "path": "blender/models/published/item-hunting-spear/d80adb5e28bb7c050ff3dc2536d0ef20d5f963e4b9fcddcaeee1d5fffe3d66f8/forge/work/item-hunting-spear/orient_params.json",
+        "role": "pose-config",
+        "sha256": "79fecabad505e67a4887785e811e1dd452e037936afa803468d7a53df944f1da"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_0/s_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-hunting-spear-held-s-0",
+      "sha256": "07e4eab61594fe0b9acc76e1c62fcb6bea0142d1a7ac484b4bcf95ddbd959739",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_1/s_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-hunting-spear-held-s-1",
+      "sha256": "27ed3c333af9ad3e7171fd69bbdc7bed3a1d81f988827d26f5bc87e026965270",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_2/s_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-hunting-spear-held-s-2",
+      "sha256": "4eb1a55ba7ffa3f1345220c59d577551b1d5bcd7d2470d0a5731ca0d419cdb21",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_3/s_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-hunting-spear-held-s-3",
+      "sha256": "834a61e562d43dc4b80d801a041f809a3beadced16eaef76fe4ddb82da019539",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_4/s_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-hunting-spear-held-s-4",
+      "sha256": "1e49924181653fd61e4a4794a4fbbdd40646cc044d1af23d1ff06edf9957e302",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_5/s_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-hunting-spear-held-s-5",
+      "sha256": "3f071342fd36f80da2f4f80fc49a3da7cdc3320d07c25f6874e5eb2db05ccddb",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_6/s_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-hunting-spear-held-s-6",
+      "sha256": "ad5b2f604253e3bcc72d47d8c772070da2f62bb1f193a038815e2d67a784caee",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_7/s_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-hunting-spear-held-s-7",
+      "sha256": "c7b6de6b4e8ccf6a59471f91c78bc14b69e316c440d3d034c73f2ee7a578d28a",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_0/se_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-hunting-spear-held-se-0",
+      "sha256": "2854184e854243a0054215bc01dc563c0002c129c0342e776d39e0566ba24f8f",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_1/se_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-hunting-spear-held-se-1",
+      "sha256": "28beaed086710659df977554d875cb99d6ec46d18d6a6e9685323bad52fed90e",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_2/se_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-hunting-spear-held-se-2",
+      "sha256": "070b0d1a1f89ca324ebf4a20294bb5291dee9a603c80ebf905e7138c5dcc30d9",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_3/se_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-hunting-spear-held-se-3",
+      "sha256": "e9281deffa18dcc94377b5addf204ef5343ddd12ce08d5d580a80260b0bfcdd9",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_4/se_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-hunting-spear-held-se-4",
+      "sha256": "b58f21d367f1e456cbe12e2ccb0387675310c8ed5c9996ed987ae28e6031b1cc",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_5/se_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-hunting-spear-held-se-5",
+      "sha256": "ab7bab1c7422d5cb319fa5f1c6b63321188eeedfcccd929b2f4c6d5e14144716",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_6/se_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-hunting-spear-held-se-6",
+      "sha256": "b5e1fdbfe40e8f3a5c8576f65dbe89fb9312660330413224e4a1f6f807e43edf",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_7/se_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-hunting-spear-held-se-7",
+      "sha256": "bda6da665f8c816995dfa9e92f628aa3778d79804b0cece7730c5506ae3e9372",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_0/e_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-hunting-spear-held-e-0",
+      "sha256": "4ca9c60d47a759ec65609ea493e873a82f0b5f09dfbc481a1fc9005e3144f66f",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_1/e_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-hunting-spear-held-e-1",
+      "sha256": "aa0cd006ebdfa1a0aa7e3a0274a886a0d34b5443c9f122b4a3f00cffbdaf2c03",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_2/e_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-hunting-spear-held-e-2",
+      "sha256": "d12db65b4095aff5696c06662cf34455c4072266d1b68322972e709e4417658f",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_3/e_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-hunting-spear-held-e-3",
+      "sha256": "01677ad1b95918fe28284744da0f5b373b499f1e3b8d7bf643621af5c1d642f3",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_4/e_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-hunting-spear-held-e-4",
+      "sha256": "133abb0c4d0f52a50785aee3522846913e182981759e9be59c4059b3b90faea5",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_5/e_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-hunting-spear-held-e-5",
+      "sha256": "1093fd7399c53cb0979125daae72c213f82e223788942a60941440a60c694279",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_6/e_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-hunting-spear-held-e-6",
+      "sha256": "7e9dbae904139c50e3815d482fe6b157d1e6450a2d0555203ad62c4c2f5a55b9",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_7/e_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-hunting-spear-held-e-7",
+      "sha256": "ae8ccd03e13b0e84204a7227e576e4f976ce30824d21f7e46efba210981e87d8",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_0/ne_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-hunting-spear-held-ne-0",
+      "sha256": "950a6e41a1a726249ca1f3b6b71e0435ad85136c0a45d38dedc14bc328fbecb0",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_1/ne_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-hunting-spear-held-ne-1",
+      "sha256": "b2ecda6da76e64ca8e549fe6aae3cc42ab29ba431f23dc3602691b850d16bada",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_2/ne_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-hunting-spear-held-ne-2",
+      "sha256": "4eaf783584c17152d9a0c5e238cb2f5956dddab2858884ec4d327bfea1ad0f35",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_3/ne_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-hunting-spear-held-ne-3",
+      "sha256": "53b60d443f5614bd727fa6847455fbc84e92b657dcc89bf20b92465e6956c655",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_4/ne_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-hunting-spear-held-ne-4",
+      "sha256": "5df8880a94ee4190a82715cc008afa183d5fdb90f4e89835c344b37e40051c36",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_5/ne_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-hunting-spear-held-ne-5",
+      "sha256": "94233de23388a9f4687a3eb5be242ac32da6d4886a14615f892cde267bdc4556",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_6/ne_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-hunting-spear-held-ne-6",
+      "sha256": "94899306104c5b432be4d7b5d1357d36a1c514ababc86bf762af80a130756247",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_7/ne_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-hunting-spear-held-ne-7",
+      "sha256": "f7cfdf66f3dbbaa87b852ac1dd6ba5cc069ccd15cc267471c3ba386c564af0bc",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_0/n_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-hunting-spear-held-n-0",
+      "sha256": "4d38699366263696d9e9c05bdfaeab4a98be59461075431fab34a33e240e0d03",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_1/n_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-hunting-spear-held-n-1",
+      "sha256": "d1386310340c68627203445a824bfba5be372b1e688daef38aa7169cc81f7063",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_2/n_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-hunting-spear-held-n-2",
+      "sha256": "995de374dedad6690c240b419499f6124f86b379c8e6373b43340cc76fc77fdc",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_3/n_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-hunting-spear-held-n-3",
+      "sha256": "d26df73a1b8e06ea452853f929cfd97f452db9871f85241f362ff4ea518e791d",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_4/n_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-hunting-spear-held-n-4",
+      "sha256": "c6e1682890136ab664f6e51e5fbd2fb6aee9fcb133fdbad53d5c402f2650b9d8",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_5/n_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-hunting-spear-held-n-5",
+      "sha256": "013bab8f2c3c6b4c5a97c1e23ac5a99116a0e10b199c55f0746eaaeefbc76d4f",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_6/n_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-hunting-spear-held-n-6",
+      "sha256": "23e80646eafbdd1a1b5ecc7ca01050033075cf6c303eb798c59ae5782e414498",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_7/n_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-hunting-spear-held-n-7",
+      "sha256": "327ad5748c7e48d9d0fee4b85db342fa66d34e568b179821fd0f5cfc6802ffec",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_0/nw_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-hunting-spear-held-nw-0",
+      "sha256": "7c2f6f66bbd7ecad2c8419f3e4b4f7ae9299eb3c0486626b5667951ec82721e6",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_1/nw_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-hunting-spear-held-nw-1",
+      "sha256": "0ca89e5ad342d95d340d212edeecc97e2e9b9df92194c9c4d18be81e104860b1",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_2/nw_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-hunting-spear-held-nw-2",
+      "sha256": "78b17db5cdb6554cfec099b77f4ecb2e62b942d7486fb34aff48a7a03e9aeb66",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_3/nw_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-hunting-spear-held-nw-3",
+      "sha256": "da00d42b9bb8d7f07fc79f30cc4511225aa85976520bf5513bf72ef1b0d382eb",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_4/nw_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-hunting-spear-held-nw-4",
+      "sha256": "54ed44048443374b0d8d379f54f5762ad4eefcb0f958d5dfbf46494c75d2b03c",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_5/nw_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-hunting-spear-held-nw-5",
+      "sha256": "89a2ceb0c11ad29d532bf3b75f2fcf978cae9dd1600c8cef1eec7680ae6866ee",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_6/nw_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-hunting-spear-held-nw-6",
+      "sha256": "38840a1229e16dcb687b5a48ffbd256baab19a9e076e7e455249032648367b36",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_7/nw_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-hunting-spear-held-nw-7",
+      "sha256": "56ab8dc27fec836280c40cafd0306aabe7880e544e9965c3492594b2abef5568",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_0/w_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-hunting-spear-held-w-0",
+      "sha256": "33aef9f5c36174e5301ffaaf8d0ad5660a23c2795882fef2f1e507eb378a485a",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_1/w_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-hunting-spear-held-w-1",
+      "sha256": "87dec5ebee6477ebd3f7ab2335a70b900d6061644ba9d69745b8d067e7d08498",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_2/w_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-hunting-spear-held-w-2",
+      "sha256": "1ad4472886149bd95dedc34eeda262baa3f3cef4de8259e3c11890685fe99a44",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_3/w_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-hunting-spear-held-w-3",
+      "sha256": "af4419535bd60831805204e4097086f15ba7a1be18bbff55422a6d81cf0c4ea5",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_4/w_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-hunting-spear-held-w-4",
+      "sha256": "f607208717436e12a012b8e84594cfa631da252d5560c3d9d9e18a16ba091464",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_5/w_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-hunting-spear-held-w-5",
+      "sha256": "8880d7adff0cf1c0400f2862426e61511d172e49b0cd3ab1d6b01d667cb7788f",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_6/w_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-hunting-spear-held-w-6",
+      "sha256": "f512c87c6b5d8c9d964a585ad3d69b713946d2b5c053ab7ca4f4a3fa608a83dc",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_7/w_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-hunting-spear-held-w-7",
+      "sha256": "841e8f683992d93f343783f97e065de285cc9f0f323adcb19090f443f7a295cd",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_0/sw_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-hunting-spear-held-sw-0",
+      "sha256": "08c43a667a2b216e8b1b2b5b8442c4802b177b061049e71307e25f7f6ffdfac0",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_1/sw_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-hunting-spear-held-sw-1",
+      "sha256": "82366315b87c0ad11788e72fa0e3637d6ee12bc73a093a7a740f3af21aaa7eb4",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_2/sw_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-hunting-spear-held-sw-2",
+      "sha256": "f44e2ca4485b99b0a53c391923fdafd8c566df255cf991d11fb06ff5c0057f35",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_3/sw_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-hunting-spear-held-sw-3",
+      "sha256": "8bfc8d98be95b37f1d686e1ee982e6bbfd4d6cdb39530d1346b2c04dc40de832",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_4/sw_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-hunting-spear-held-sw-4",
+      "sha256": "8660824c52a0b480d8552afb1a35ff6d84d32879f820599d81c1d21dcef7915a",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_5/sw_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-hunting-spear-held-sw-5",
+      "sha256": "3a545e060e8e22333d53149fdf60a9eb13b10f9ab9c2f683b2ae52584811a3f8",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_6/sw_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-hunting-spear-held-sw-6",
+      "sha256": "7cbd7b21229bea8c4f41505fb680d4416342cc697b25808791b8d319d35b8067",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/held_7/sw_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-hunting-spear-held-sw-7",
+      "sha256": "be2fe123d98742a8371eba7a4ada32373bcd2f40f490e3013c40ac23ca642e19",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-hunting-spear/4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7/pix/export/icon/se_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-hunting-spear-icon",
+      "sha256": "412bdc7edcf03c36504fe43424cbfb090daed558b13914376fbd1275aa7068b6",
+      "socket": null,
+      "sockets": {},
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "icon"
+    }
+  ],
+  "gripConvention": "clockwise-screen-from-up-after-facing-yaw",
+  "packet": "art/review/2026-11-04-item-hunting-spear",
+  "packetDigest": "4cc13c2a75434a90eda90f8a13b352db65d0ec7d70c8702b92e5510a31b548b7",
+  "packetSha256": "980fa8b3c67430d300d916e2f8ef813897293f78d677036784b0c0f08c411bce",
+  "schemaVersion": 1,
+  "scope": [
+    "held-item",
+    "icon"
+  ],
+  "socket": "Socket_Hand.R"
+}

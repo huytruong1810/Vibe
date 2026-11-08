@@ -19,7 +19,7 @@ describe('scene-aware authoritative simulation', () => {
   it('does not replay an old-scene impact on the same actor after entering a room', () => {
     const host = new SimulationHost(42, 1, 0),
       s = host.entities,
-      npc = host.npcs[10]!,
+      npc = host.npcs[0]!,
       slot = s.require(npc.entityId);
     s.x[slot] = host.player.x + 1;
     s.y[slot] = host.player.y;
@@ -112,7 +112,7 @@ describe('scene-aware authoritative simulation', () => {
   });
   it('stages invitations until dialogue closes and rejects an obsolete scene command', () => {
     const host = new SimulationHost(42, 1, 0),
-      npc = host.npcs[11]!;
+      npc = host.npcs.find((n) => host.scenes.portals.some((p) => p.owner === n.entityId))!;
     host.player.x = npc.x;
     host.player.y = npc.y;
     const home = host.scenes.home(npc.entityId)!,

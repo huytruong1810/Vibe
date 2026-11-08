@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "rigId": "ual2-humanoid",
+  "kind": "humanoid",
+  "doctrine": [
+    "L3",
+    "L6",
+    "PRD-3.1",
+    "ART-6"
+  ],
+  "note": "Human template: the clean 65-bone UAL2 skeleton from UAL2_Standard.glb, fitted to an A-pose mesh (head to -Y, south) by landmarks. Bone frames are rotated rigidly, so UAL2/UAL1 actions retarget by rest-relative rotation. Protected spec: change under DOC-5.",
+  "source": {
+    "glb": "vendor/ual/ual2/Universal Animation Library 2 [Standard]/Unreal-Godot/UAL2_Standard.glb",
+    "armature": "Armature",
+    "mesh": "Mannequin"
+  },
+  "nonDeform": [
+    "index_01_l",
+    "index_02_l",
+    "index_03_l",
+    "index_04_l",
+    "middle_01_l",
+    "middle_02_l",
+    "middle_03_l",
+    "middle_04_l",
+    "pinky_01_l",
+    "pinky_02_l",
+    "pinky_03_l",
+    "pinky_04_l",
+    "ring_01_l",
+    "ring_02_l",
+    "ring_03_l",
+    "ring_04_l",
+    "thumb_01_l",
+    "thumb_02_l",
+    "thumb_03_l",
+    "thumb_04_l",
+    "index_01_r",
+    "index_02_r",
+    "index_03_r",
+    "index_04_r",
+    "middle_01_r",
+    "middle_02_r",
+    "middle_03_r",
+    "middle_04_r",
+    "pinky_01_r",
+    "pinky_02_r",
+    "pinky_03_r",
+    "pinky_04_r",
+    "ring_01_r",
+    "ring_02_r",
+    "ring_03_r",
+    "ring_04_r",
+    "thumb_01_r",
+    "thumb_02_r",
+    "thumb_03_r",
+    "thumb_04_r",
+    "ball_leaf_l",
+    "ball_leaf_r",
+    "root"
+  ],
+  "sockets": [
+    {
+      "name": "Socket_Head",
+      "parent": "Head",
+      "at": "face"
+    },
+    {
+      "name": "Socket_Hand.L",
+      "parent": "hand_l",
+      "at": "palm_l"
+    },
+    {
+      "name": "Socket_Hand.R",
+      "parent": "hand_r",
+      "at": "palm_r"
+    },
+    {
+      "name": "Socket_Back",
+      "parent": "spine_03",
+      "at": "back"
+    }
+  ],
+  "landmarks": {
+    "note": "Detected on the A-pose mesh from horizontal slices (fractions of height H). handFraction = hand length as a fraction of shoulder-to-fingertip. Recipe rig.landmarks overrides any of: crown, head_base, neck_base, pelvis, spine_01..03, clavicle_l/r, shoulder_l/r, elbow_l/r, wrist_l/r, hand_end_l/r, palm_l/r, hip_l/r, knee_l/r, ankle_l/r, ball_l/r, toe_l/r, face, back.",
+    "sliceFraction": 0.01,
+    "neckSearch": [
+      0.6,
+      0.9
+    ],
+    "armSearch": [
+      0.35,
+      0.85
+    ],
+    "ankleHeight": 0.05,
+    "handFraction": 0.22,
+    "toeForward": 0.06
+  },
+  "weights": {
+    "proxyVoxelFraction": 0.012,
+    "maxInfluences": 4,
+    "fallback": "nearest bone segment"
+  },
+  "previewPoses": [
+    "arms_up",
+    "stride",
+    "crouch",
+    "head_turn"
+  ],
+  "pelvisTravelMaxH": 0.1,
+  "pelvisTravelNote": "Horizontal pelvis travel taken from a source action is clamped to this fraction of body height, so lunges and rolls stay on the canvas while the root stays on the anchor (L2)."
+}

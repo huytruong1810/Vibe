@@ -1,0 +1,121 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/env-sluice-gate--2026-11-05-env-sluice-gate.md",
+  "approvalSha256": "87124ab9134d0b8c660195e9bf96ba64ecb0d96bee925c9b301cd543e323f413",
+  "asset": "env:sluice-gate",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset env:sluice-gate",
+    "id": "forge-env-sluice-gate",
+    "inputs": [
+      {
+        "path": "blender/models/published/env-sluice-gate/db235acb7dc791e21a92f0cbdfb1facd5538d17e48421b211109befbf80a3afa/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/env-sluice-gate/db235acb7dc791e21a92f0cbdfb1facd5538d17e48421b211109befbf80a3afa/forge/blender/env_layout.py",
+        "role": "script",
+        "sha256": "b2fa291498b97eb55fc8450d37b55208b1d22550aa81a70b6c8c06d9cc08388b"
+      },
+      {
+        "path": "blender/models/published/env-sluice-gate/db235acb7dc791e21a92f0cbdfb1facd5538d17e48421b211109befbf80a3afa/forge/forge.py",
+        "role": "script",
+        "sha256": "72344e74be14dd4324bbc2a158d9c160ff2dfbdfc1325d5166dc5baa5fb6b531"
+      },
+      {
+        "path": "blender/models/published/env-sluice-gate/db235acb7dc791e21a92f0cbdfb1facd5538d17e48421b211109befbf80a3afa/forge/forgelib/environment.py",
+        "role": "script",
+        "sha256": "4b3443c051f8076ebdc9abd18152831dfbfe74c0053e7c4622ef3d7f483e397c"
+      },
+      {
+        "path": "blender/models/published/env-sluice-gate/db235acb7dc791e21a92f0cbdfb1facd5538d17e48421b211109befbf80a3afa/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/env-sluice-gate/db235acb7dc791e21a92f0cbdfb1facd5538d17e48421b211109befbf80a3afa/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "2963b6c95098f03aadf7fffe21507c8b3aa6b4fb4d13e657a9b7921e761ba629"
+      },
+      {
+        "path": "blender/models/published/env-sluice-gate/db235acb7dc791e21a92f0cbdfb1facd5538d17e48421b211109befbf80a3afa/forge/recipes/env-sluice-gate.json",
+        "role": "pose-config",
+        "sha256": "7e441a1b7cb6f250996464444c78d5dad3777ff19b538267d8044b147752f57d"
+      },
+      {
+        "path": "blender/models/published/env-sluice-gate/db235acb7dc791e21a92f0cbdfb1facd5538d17e48421b211109befbf80a3afa/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/env-sluice-gate/db235acb7dc791e21a92f0cbdfb1facd5538d17e48421b211109befbf80a3afa/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/env-sluice-gate/db235acb7dc791e21a92f0cbdfb1facd5538d17e48421b211109befbf80a3afa/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/env-sluice-gate/db235acb7dc791e21a92f0cbdfb1facd5538d17e48421b211109befbf80a3afa/forge/work/env-sluice-gate/layout.json",
+        "role": "pose-config",
+        "sha256": "4568e4f4df9e8e1fd7038c71fa6c11738675aae92f8cc8710b49a72eee1a3413"
+      },
+      {
+        "path": "blender/models/published/env-sluice-gate/db235acb7dc791e21a92f0cbdfb1facd5538d17e48421b211109befbf80a3afa/forge/work/env-sluice-gate/layout/base.blend",
+        "role": "model",
+        "sha256": "9094984585b953099b2dda1eb94833c5b46425650de4c2aae6f8cdfbb8ce7d0b"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "footprint": [
+    2,
+    2
+  ],
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 96,
+        "y": 230
+      },
+      "file": "exports/env-sluice-gate/a88365d1857b859db92e8db4f9b781b0cc911b095eebc85288091a97af4b76f9/frames/shadow.png",
+      "id": "env-sluice-gate-shadow",
+      "layer": "shadow",
+      "sha256": "897c95874205222f814b4b87dd88498fe4e615b5af4a0d3523e036ada7483c0f",
+      "sourceSize": {
+        "h": 236,
+        "w": 192
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 96,
+        "y": 230
+      },
+      "file": "exports/env-sluice-gate/a88365d1857b859db92e8db4f9b781b0cc911b095eebc85288091a97af4b76f9/frames/base.png",
+      "id": "env-sluice-gate-base",
+      "layer": "base",
+      "sha256": "d4a5a16e32667f33b79e3c185d04e44c1736caec184c989c137d13e405a6d82a",
+      "sourceSize": {
+        "h": 236,
+        "w": 192
+      }
+    }
+  ],
+  "lightPools": [],
+  "packet": "art/review/2026-11-05-env-sluice-gate",
+  "packetDigest": "a88365d1857b859db92e8db4f9b781b0cc911b095eebc85288091a97af4b76f9",
+  "packetSha256": "156078e72c14b75010d8fe393508da49af1038ecb5f4f4cfc53c32e879af70da",
+  "schemaVersion": 1,
+  "scope": [
+    "shadow",
+    "base"
+  ]
+}

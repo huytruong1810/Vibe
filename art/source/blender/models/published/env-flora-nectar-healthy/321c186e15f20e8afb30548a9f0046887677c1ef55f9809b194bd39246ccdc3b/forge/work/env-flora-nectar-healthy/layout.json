@@ -1,0 +1,45 @@
+{
+  "asset": "env:flora-nectar-healthy",
+  "stage": "layout",
+  "inputsDigest": "f57be9258a35f0b02833abc10958f95c5772c0a0fffae35237d24f137e248364",
+  "inputs": [
+    "art/source/forge/work/env-flora-nectar-healthy/texture.blend",
+    "art/source/forge/work/env-flora-nectar-healthy/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-flora-nectar-healthy/layout/base.blend": "d438d3603171f8436cae33b6896a6880df127408731d7fac7c1fb8b9c052e8e3",
+    "art/source/forge/work/env-flora-nectar-healthy/layout_preview.png": "cb2116b884db7b325dde5d05276349dc0357bbde9987d0a779cf1b60ab3ff706"
+  },
+  "extra": {
+    "scale": 0.096225,
+    "heightUnits": 1.7009,
+    "contactDepthTiles": 0.858,
+    "footprint": [
+      1,
+      1
+    ],
+    "canvas": {
+      "size": [
+        64,
+        72
+      ],
+      "anchor": [
+        32,
+        68
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -0.5,
+      0.0
+    ],
+    "layers": [
+      "base"
+    ],
+    "faces": {
+      "base": 13998
+    }
+  },
+  "at": "2026-11-05T08:03:32Z"
+}

@@ -6,6 +6,10 @@ import { assetCoverage } from '../src/presentation/assets/coverage';
 import { ITEMS, NPC_PROFILES, SPECIES, VILLAGES } from '../src/content/definitions';
 
 const root = resolve('public');
+const topAssets = await readdir(join(root, 'assets'));
+for (const legacyDir of ['sprites', 'spritesheets'])
+  if (topAssets.includes(legacyDir))
+    throw new Error(`Legacy uncataloged asset directory must be purged: public/assets/${legacyDir}`);
 async function file(url: string): Promise<string> {
   const parts = url.replace(/^\//, '').split('/');
   let path = root;

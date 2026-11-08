@@ -1,0 +1,48 @@
+{
+  "asset": "env:kite-oak",
+  "stage": "layout",
+  "inputsDigest": "b38c619c638aff61292a84646f6d0b26d282e7732db56e8b6b3c4367a3ddacef",
+  "inputs": [
+    "art/source/forge/work/env-kite-oak/texture.blend",
+    "art/source/forge/work/env-kite-oak/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-kite-oak/layout/base.blend": "4e639372483b618035abda44c3feab56f492bdba2bd07a62c485d80d9be9b11a",
+    "art/source/forge/work/env-kite-oak/layout/canopy.blend": "2b26dd0499bd921cbd0c774d21ee77bac977c3dc06cef2fa8fdf0feef46c9b12",
+    "art/source/forge/work/env-kite-oak/layout_preview.png": "2567a2379f15eada12e5d910b68cf6071dfe520f618359666c5a1bc93cfa4f17"
+  },
+  "extra": {
+    "scale": 0.206839,
+    "heightUnits": 3.449,
+    "contactDepthTiles": 1.957,
+    "footprint": [
+      2,
+      2
+    ],
+    "canvas": {
+      "size": [
+        128,
+        156
+      ],
+      "anchor": [
+        64,
+        151
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -1.0,
+      0.0
+    ],
+    "layers": [
+      "base",
+      "canopy"
+    ],
+    "faces": {
+      "base": 670,
+      "canopy": 13328
+    }
+  },
+  "at": "2026-11-05T10:09:32Z"
+}

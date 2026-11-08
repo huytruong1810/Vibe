@@ -1,0 +1,105 @@
+{
+ "asset": "env:mill-waterwheel",
+ "footprint": [
+  3,
+  3
+ ],
+ "frames": [
+  {
+   "anchorPx": {
+    "x": 128,
+    "y": 302
+   },
+   "file": "frames/shadow.png",
+   "id": "env-mill-waterwheel-shadow",
+   "layer": "shadow",
+   "sha256": "04356a257442cb67931a632d9cefd863c58fecb28553128758c80be462f3e5a2",
+   "sourceSize": {
+    "h": 320,
+    "w": 256
+   }
+  },
+  {
+   "anchorPx": {
+    "x": 128,
+    "y": 302
+   },
+   "file": "frames/base.png",
+   "id": "env-mill-waterwheel-base",
+   "layer": "base",
+   "sha256": "de1d3c2d21e6a0c507e45c19fef397ddc2b85b07b857120412e4b31ee3908e96",
+   "sourceSize": {
+    "h": 320,
+    "w": 256
+   }
+  },
+  {
+   "anchorPx": {
+    "x": 128,
+    "y": 302
+   },
+   "file": "frames/roof.png",
+   "id": "env-mill-waterwheel-roof",
+   "layer": "roof",
+   "sha256": "7c7440023efdc4353de3c59c9385f52d3ec6660c47227fdc521aa40acefbc71e",
+   "sourceSize": {
+    "h": 320,
+    "w": 256
+   }
+  }
+ ],
+ "kind": "environment-review",
+ "lightPools": [],
+ "qa": [
+  {
+   "check": "footprint",
+   "detail": "ground contact 3.32 tiles deep vs declared 3 (width is scaled to fit)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-11.4"
+  },
+  {
+   "check": "canvas",
+   "detail": "128x160, width multiple of 32",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec canvases.environment"
+  },
+  {
+   "check": "margins",
+   "detail": "smallest transparent margin 3px",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec marginsArtPixels"
+  },
+  {
+   "check": "paletteMembership",
+   "detail": "0 off-palette colours",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.1"
+  },
+  {
+   "check": "colorCount",
+   "detail": "13 colours (environment limit 32)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.4"
+  },
+  {
+   "check": "blocks",
+   "detail": "exports are exact 2x blocks",
+   "hard": true,
+   "pass": true,
+   "rule": "L1"
+  }
+ ],
+ "schemaVersion": 1,
+ "scope": [
+  "shadow",
+  "base",
+  "roof"
+ ],
+ "sourceDigest": "5c38cb359923b83b6790f5b8a401b8bfc451102569176e145f783804b95a0087",
+ "status": "candidate"
+}

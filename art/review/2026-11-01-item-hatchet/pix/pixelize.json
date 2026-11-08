@@ -1,0 +1,587 @@
+{
+ "held_0/e_0": {
+  "labels": {
+   "blade": 16,
+   "haft": 0,
+   "grip": 28,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_0/n_0": {
+  "labels": {
+   "blade": 7,
+   "haft": 0,
+   "grip": 23,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_0/ne_0": {
+  "labels": {
+   "blade": 19,
+   "haft": 0,
+   "grip": 19,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_0/nw_0": {
+  "labels": {
+   "blade": 8,
+   "haft": 0,
+   "grip": 31,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_0/s_0": {
+  "labels": {
+   "blade": 6,
+   "haft": 0,
+   "grip": 21,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_0/se_0": {
+  "labels": {
+   "blade": 12,
+   "haft": 0,
+   "grip": 28,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_0/sw_0": {
+  "labels": {
+   "blade": 8,
+   "haft": 0,
+   "grip": 29,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_0/w_0": {
+  "labels": {
+   "blade": 10,
+   "haft": 0,
+   "grip": 34,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/e_0": {
+  "labels": {
+   "blade": 20,
+   "haft": 0,
+   "grip": 23,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/n_0": {
+  "labels": {
+   "blade": 8,
+   "haft": 0,
+   "grip": 23,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/ne_0": {
+  "labels": {
+   "blade": 17,
+   "haft": 0,
+   "grip": 23,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/nw_0": {
+  "labels": {
+   "blade": 0,
+   "haft": 0,
+   "grip": 37,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/s_0": {
+  "labels": {
+   "blade": 0,
+   "haft": 0,
+   "grip": 31,
+   "lashing": 0
+  },
+  "interiorLinePx": 4
+ },
+ "held_1/se_0": {
+  "labels": {
+   "blade": 0,
+   "haft": 0,
+   "grip": 38,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/sw_0": {
+  "labels": {
+   "blade": 5,
+   "haft": 0,
+   "grip": 33,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_1/w_0": {
+  "labels": {
+   "blade": 15,
+   "haft": 0,
+   "grip": 30,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/e_0": {
+  "labels": {
+   "blade": 16,
+   "haft": 0,
+   "grip": 28,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/n_0": {
+  "labels": {
+   "blade": 7,
+   "haft": 0,
+   "grip": 23,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/ne_0": {
+  "labels": {
+   "blade": 19,
+   "haft": 0,
+   "grip": 19,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/nw_0": {
+  "labels": {
+   "blade": 8,
+   "haft": 0,
+   "grip": 31,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/s_0": {
+  "labels": {
+   "blade": 6,
+   "haft": 0,
+   "grip": 21,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/se_0": {
+  "labels": {
+   "blade": 12,
+   "haft": 0,
+   "grip": 28,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/sw_0": {
+  "labels": {
+   "blade": 8,
+   "haft": 0,
+   "grip": 29,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_2/w_0": {
+  "labels": {
+   "blade": 10,
+   "haft": 0,
+   "grip": 34,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/e_0": {
+  "labels": {
+   "blade": 20,
+   "haft": 0,
+   "grip": 23,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/n_0": {
+  "labels": {
+   "blade": 8,
+   "haft": 0,
+   "grip": 23,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/ne_0": {
+  "labels": {
+   "blade": 17,
+   "haft": 0,
+   "grip": 23,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/nw_0": {
+  "labels": {
+   "blade": 0,
+   "haft": 0,
+   "grip": 37,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/s_0": {
+  "labels": {
+   "blade": 0,
+   "haft": 0,
+   "grip": 31,
+   "lashing": 0
+  },
+  "interiorLinePx": 4
+ },
+ "held_3/se_0": {
+  "labels": {
+   "blade": 0,
+   "haft": 0,
+   "grip": 38,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/sw_0": {
+  "labels": {
+   "blade": 5,
+   "haft": 0,
+   "grip": 33,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_3/w_0": {
+  "labels": {
+   "blade": 15,
+   "haft": 0,
+   "grip": 30,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/e_0": {
+  "labels": {
+   "blade": 16,
+   "haft": 0,
+   "grip": 28,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/n_0": {
+  "labels": {
+   "blade": 7,
+   "haft": 0,
+   "grip": 23,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/ne_0": {
+  "labels": {
+   "blade": 19,
+   "haft": 0,
+   "grip": 19,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/nw_0": {
+  "labels": {
+   "blade": 8,
+   "haft": 0,
+   "grip": 31,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/s_0": {
+  "labels": {
+   "blade": 6,
+   "haft": 0,
+   "grip": 21,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/se_0": {
+  "labels": {
+   "blade": 12,
+   "haft": 0,
+   "grip": 28,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/sw_0": {
+  "labels": {
+   "blade": 4,
+   "haft": 0,
+   "grip": 33,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_4/w_0": {
+  "labels": {
+   "blade": 10,
+   "haft": 0,
+   "grip": 34,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/e_0": {
+  "labels": {
+   "blade": 20,
+   "haft": 0,
+   "grip": 23,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/n_0": {
+  "labels": {
+   "blade": 8,
+   "haft": 0,
+   "grip": 23,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/ne_0": {
+  "labels": {
+   "blade": 17,
+   "haft": 0,
+   "grip": 23,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/nw_0": {
+  "labels": {
+   "blade": 0,
+   "haft": 0,
+   "grip": 37,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/s_0": {
+  "labels": {
+   "blade": 0,
+   "haft": 0,
+   "grip": 31,
+   "lashing": 0
+  },
+  "interiorLinePx": 4
+ },
+ "held_5/se_0": {
+  "labels": {
+   "blade": 0,
+   "haft": 0,
+   "grip": 38,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/sw_0": {
+  "labels": {
+   "blade": 5,
+   "haft": 0,
+   "grip": 33,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_5/w_0": {
+  "labels": {
+   "blade": 15,
+   "haft": 0,
+   "grip": 30,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/e_0": {
+  "labels": {
+   "blade": 16,
+   "haft": 0,
+   "grip": 28,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/n_0": {
+  "labels": {
+   "blade": 7,
+   "haft": 0,
+   "grip": 23,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/ne_0": {
+  "labels": {
+   "blade": 19,
+   "haft": 0,
+   "grip": 19,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/nw_0": {
+  "labels": {
+   "blade": 8,
+   "haft": 0,
+   "grip": 31,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/s_0": {
+  "labels": {
+   "blade": 6,
+   "haft": 0,
+   "grip": 21,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/se_0": {
+  "labels": {
+   "blade": 12,
+   "haft": 0,
+   "grip": 28,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/sw_0": {
+  "labels": {
+   "blade": 8,
+   "haft": 0,
+   "grip": 29,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_6/w_0": {
+  "labels": {
+   "blade": 10,
+   "haft": 0,
+   "grip": 34,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/e_0": {
+  "labels": {
+   "blade": 20,
+   "haft": 0,
+   "grip": 23,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/n_0": {
+  "labels": {
+   "blade": 8,
+   "haft": 0,
+   "grip": 23,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/ne_0": {
+  "labels": {
+   "blade": 17,
+   "haft": 0,
+   "grip": 23,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/nw_0": {
+  "labels": {
+   "blade": 0,
+   "haft": 0,
+   "grip": 37,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/s_0": {
+  "labels": {
+   "blade": 0,
+   "haft": 0,
+   "grip": 31,
+   "lashing": 0
+  },
+  "interiorLinePx": 4
+ },
+ "held_7/se_0": {
+  "labels": {
+   "blade": 0,
+   "haft": 0,
+   "grip": 38,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/sw_0": {
+  "labels": {
+   "blade": 5,
+   "haft": 0,
+   "grip": 33,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "held_7/w_0": {
+  "labels": {
+   "blade": 15,
+   "haft": 0,
+   "grip": 30,
+   "lashing": 0
+  },
+  "interiorLinePx": 0
+ },
+ "icon/se_0": {
+  "labels": {
+   "blade": 40,
+   "haft": 0,
+   "grip": 78,
+   "lashing": 0
+  },
+  "interiorLinePx": 2
+ }
+}

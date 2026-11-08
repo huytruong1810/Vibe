@@ -1,0 +1,121 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/env-wall-hook--2026-11-05-env-wall-hook.md",
+  "approvalSha256": "1740f3f91789094715451e7080603d90544dcd222194582b536b853fff19def0",
+  "asset": "env:wall-hook",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset env:wall-hook",
+    "id": "forge-env-wall-hook",
+    "inputs": [
+      {
+        "path": "blender/models/published/env-wall-hook/99441f3149c05bcf6f4a1581cd725bca388cf9c1b66db9941da45cae9e4567c9/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/env-wall-hook/99441f3149c05bcf6f4a1581cd725bca388cf9c1b66db9941da45cae9e4567c9/forge/blender/env_layout.py",
+        "role": "script",
+        "sha256": "b2fa291498b97eb55fc8450d37b55208b1d22550aa81a70b6c8c06d9cc08388b"
+      },
+      {
+        "path": "blender/models/published/env-wall-hook/99441f3149c05bcf6f4a1581cd725bca388cf9c1b66db9941da45cae9e4567c9/forge/forge.py",
+        "role": "script",
+        "sha256": "72344e74be14dd4324bbc2a158d9c160ff2dfbdfc1325d5166dc5baa5fb6b531"
+      },
+      {
+        "path": "blender/models/published/env-wall-hook/99441f3149c05bcf6f4a1581cd725bca388cf9c1b66db9941da45cae9e4567c9/forge/forgelib/environment.py",
+        "role": "script",
+        "sha256": "4b3443c051f8076ebdc9abd18152831dfbfe74c0053e7c4622ef3d7f483e397c"
+      },
+      {
+        "path": "blender/models/published/env-wall-hook/99441f3149c05bcf6f4a1581cd725bca388cf9c1b66db9941da45cae9e4567c9/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/env-wall-hook/99441f3149c05bcf6f4a1581cd725bca388cf9c1b66db9941da45cae9e4567c9/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "2963b6c95098f03aadf7fffe21507c8b3aa6b4fb4d13e657a9b7921e761ba629"
+      },
+      {
+        "path": "blender/models/published/env-wall-hook/99441f3149c05bcf6f4a1581cd725bca388cf9c1b66db9941da45cae9e4567c9/forge/recipes/env-wall-hook.json",
+        "role": "pose-config",
+        "sha256": "b1702dcd1dafc8610f7cdbea95554ba40ac6ba7ebd09a90bf086694cf1e71994"
+      },
+      {
+        "path": "blender/models/published/env-wall-hook/99441f3149c05bcf6f4a1581cd725bca388cf9c1b66db9941da45cae9e4567c9/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/env-wall-hook/99441f3149c05bcf6f4a1581cd725bca388cf9c1b66db9941da45cae9e4567c9/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/env-wall-hook/99441f3149c05bcf6f4a1581cd725bca388cf9c1b66db9941da45cae9e4567c9/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/env-wall-hook/99441f3149c05bcf6f4a1581cd725bca388cf9c1b66db9941da45cae9e4567c9/forge/work/env-wall-hook/layout.json",
+        "role": "pose-config",
+        "sha256": "e1568818aebc6aacd2f986ff06c90c49ed0686f6b8af31c0f912c23e2301e823"
+      },
+      {
+        "path": "blender/models/published/env-wall-hook/99441f3149c05bcf6f4a1581cd725bca388cf9c1b66db9941da45cae9e4567c9/forge/work/env-wall-hook/layout/base.blend",
+        "role": "model",
+        "sha256": "8b71f52795424c392eb913788cd25bafb9a7edcfca5308f7bfee9ee5b682c0ea"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "footprint": [
+    1,
+    1
+  ],
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 64,
+        "y": 158
+      },
+      "file": "exports/env-wall-hook/22a5319df60313b5f04051382d1120514c082cbc1383455ffc52b251979c874f/frames/shadow.png",
+      "id": "env-wall-hook-shadow",
+      "layer": "shadow",
+      "sha256": "4af901947995271a10d66947405914bc2b236eebee73dd58daf9a31dd63e4b46",
+      "sourceSize": {
+        "h": 172,
+        "w": 128
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 64,
+        "y": 158
+      },
+      "file": "exports/env-wall-hook/22a5319df60313b5f04051382d1120514c082cbc1383455ffc52b251979c874f/frames/base.png",
+      "id": "env-wall-hook-base",
+      "layer": "base",
+      "sha256": "270cffeea3566f294e96d1a99cf0131dae5f7804f02c7f699f37f2d8ec6b2bb1",
+      "sourceSize": {
+        "h": 172,
+        "w": 128
+      }
+    }
+  ],
+  "lightPools": [],
+  "packet": "art/review/2026-11-05-env-wall-hook",
+  "packetDigest": "22a5319df60313b5f04051382d1120514c082cbc1383455ffc52b251979c874f",
+  "packetSha256": "65ee0971ae39f796a158e047ee7318b54b6b8ef5fd3f55e4003ae61601ae8d96",
+  "schemaVersion": 1,
+  "scope": [
+    "shadow",
+    "base"
+  ]
+}

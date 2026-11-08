@@ -1,0 +1,37 @@
+{
+  "asset": "rivallie",
+  "kind": "creature",
+  "bodyType": "quadruped",
+  "identitySources": [
+    "public/assets/portraits/creatures/portrait_rivallie_128.png",
+    "art/source/masters/rivallie_turnaround_master.jpg"
+  ],
+  "views": {
+    "front": "front.png",
+    "left": "left.png",
+    "back": "back.png"
+  },
+  "ramps": {
+    "body": "teal",
+    "belly": "cream",
+    "fins": "glass",
+    "eyes": "hair-ink",
+    "nose": "outline-neutral"
+  },
+  "generations": 3,
+  "ledger": "docs/team/comms/blender/image-ledger.md#rivallie",
+  "generator": {
+    "model": "klein9b",
+    "repo": "black-forest-labs/FLUX.2-klein-9B",
+    "revision": "92196c8e11f7b6cf2b7493e037d8c5345c559216",
+    "licence": "FLUX Non-Commercial v2.1",
+    "seed": 901,
+    "template": "creature-v1",
+    "prompt": "THE FIRST REFERENCE IMAGE IS A GREY CLAY POSE GUIDE: MATCH ITS POSE, VIEW ANGLES, VIEW ORDER AND LAYOUT EXACTLY, BUT TAKE NO COLOURS, SURFACE DETAIL OR SPECIES DESIGN FROM IT. Creature model sheet of Rivallie, a water-element small to medium creature: a playful river spirit that gathers wherever the reeds grow. Anatomy: rounded otter-like body and short muzzle, small round ears, cream belly and throat, a crest of translucent aqua fins along the back, a broad flat paddle tail, short legs with webbed paws. Colours: teal body, cream belly and chest, glowing glass-aqua fins, dark friendly eyes. THREE VIEWS IN A ROW OF THE SAME CREATURE IN THE SAME POSE AT THE SAME SCALE, WIDELY SPACED: FRONT VIEW, LEFT SIDE VIEW, BACK VIEW. IN EVERY VIEW THE CREATURE IS standing on all four paws with its body horizontal like an otter walking on land, never sitting or standing upright, ALL LIMBS VISIBLE AND SEPARATED FROM THE BODY, TAIL EXTENDED AWAY FROM THE BODY, MOUTH CLOSED. ORTHOGRAPHIC VIEW, NO PERSPECTIVE, EVEN SOFT LIGHTING FROM THE UPPER LEFT, NO CAST SHADOWS. PLAIN FLAT LIGHT GREY BACKGROUND, NO TEXT, NO LABELS. Clean painterly 3D-friendly concept art for a cosy fantasy adventure game: smooth soft shading, clear flat colour regions, rounded friendly shapes with chunky readable silhouettes, warm storybook palette, gentle rim of light on edges, no outlines, no pixel art, no texture noise.",
+    "references": [
+      "art/source/style/pose-guides/quadruped.png"
+    ],
+    "styleSha256": "7bed02b4e1fab588e55b9db78d7981b867872d988e16a1645c4425df22e7b0f5",
+    "at": "2026-11-02T23:58:58Z"
+  }
+}

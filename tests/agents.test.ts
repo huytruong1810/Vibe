@@ -7,8 +7,10 @@ import {
   PlanService,
   NpcProfileRegistry,
   PerceptionSystem,
+  ScheduleExecutor,
   SocialEncounterSystem,
 } from '../src/domain/agents';
+import { NavigationService } from '../src/domain/navigation';
 import { NPC_PROFILES } from '../src/content/definitions';
 import { WorldCalendar } from '../src/domain/core';
 import { ResourceLocator, ResourceStore } from '../src/domain/resources';
@@ -199,5 +201,48 @@ describe('agent grounding and memory', () => {
     );
     calendar.advance(1440);
     expect(validator.execute(npc, { type: 'DROP_GIFT', itemId: 'water' }, context).ok).toBe(true);
+  });
+  it('resolves authored-world villager locations by profileId even when NPC array is village-filtered', () => {
+    const world = flatWorld(),
+      resources = new ResourceStore(world),
+      calendar = new WorldCalendar(),
+      validator = new AgentActionValidator(),
+      locations = {
+        locations: (profileIndex: number) => ({
+          home: { x: 1 + (profileIndex % 11), y: 4 },
+          work: { x: 2 + (profileIndex % 11), y: 4 },
+          square: { x: 3 + (profileIndex % 11), y: 4 },
+          shrine: { x: 4 + (profileIndex % 11), y: 4 },
+          outpost: { x: 5 + (profileIndex % 11), y: 4 },
+        }),
+      };
+    const aqualiaNpcs = new NpcProfileRegistry().create(locations, 1);
+    const caelum = aqualiaNpcs[0]!;
+    caelum.x = 12;
+    caelum.y = 4;
+    const schedules = new ScheduleExecutor(
+      world,
+      new NavigationService(world),
+      undefined,
+      () => 1,
+      locations,
+    );
+    const dest = schedules.destination(caelum, 0, calendar, { x: 12, y: 4 });
+    expect(dest.point).toEqual({ x: 12, y: 4 });
+    const receipt = validator.execute(
+      caelum,
+      { type: 'MOVE_TO_LOCATION', location: 'shrine', durationSeconds: 60 },
+      {
+        world,
+        resources,
+        locator: new ResourceLocator(resources),
+        calendar,
+        npcs: aqualiaNpcs,
+        player: { x: 12, y: 4 },
+        markers: [],
+        locations,
+      },
+    );
+    expect(receipt.ok).toBe(true);
   });
 });

@@ -1,0 +1,66 @@
+{
+  "asset": "item:ferry-pole",
+  "stage": "orient",
+  "inputsDigest": "7429d87684cf3bfc02fcfaf5b983a19fac1e8d6f6c82dadd73e60ea19f6b1449",
+  "inputs": [
+    "art/source/forge/work/item-ferry-pole/texture.blend",
+    "art/source/forge/work/item-ferry-pole/orient_params.json",
+    "art/source/forge/blender/item_orient.py",
+    "art/source/forge/forgelib/item_orient.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/item-ferry-pole/item_model.blend": "e217738fd84d03288c57e5463b483a6bf8b9a4f6badc777ac967448abab32ab5",
+    "art/source/forge/work/item-ferry-pole/orient_preview.png": "ebddcc703c09bf3f10cf144906e8cd6403c3072c3d387a005ecd2ce242060c79"
+  },
+  "extra": {
+    "matrix": [
+      [
+        -0.042336,
+        1.610864,
+        0.000344,
+        0.000217
+      ],
+      [
+        1.610864,
+        0.042336,
+        0.000855,
+        -0.000342
+      ],
+      [
+        0.000845,
+        0.000366,
+        -1.61142,
+        0.412491
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "grip": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "iconPivot": [
+      0.00023,
+      -0.000364,
+      0.0375
+    ],
+    "reachArtPx": 13.244,
+    "lengthArtPx": 24,
+    "haftWidthArtPx": 1.76,
+    "headFlipped": false,
+    "forwardFlipped": false,
+    "dimensions": [
+      0.08448,
+      0.086986,
+      0.75
+    ],
+    "inflateArtPx": 0.682,
+    "iconScale": 1.24
+  },
+  "at": "2026-11-04T04:46:21Z"
+}

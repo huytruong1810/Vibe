@@ -1,0 +1,44 @@
+{
+  "asset": "ignicap",
+  "kind": "creature",
+  "heightArtPx": 24,
+  "ramps": {
+    "cap": "ember",
+    "stem": "linen",
+    "gills": "ochre",
+    "boots": "basalt"
+  },
+  "faceOffsetPx": [0, 5],
+  "gen3d": {
+    "seed": 1234,
+    "steps": 50,
+    "views": [
+      "front",
+      "left",
+      "back"
+    ]
+  },
+  "notes": "Mushroom-biped creature (ignicap). Mushroom-biped-v1 rig template with upright 2-legged stance, ember cap, linen stem body, ochre glowing gills, basalt feet. creature.small canvas (40x44, anchor 20,34).",
+  "texture": {
+    "views": [
+      "front",
+      "left",
+      "back"
+    ]
+  },
+  "concept": {
+    "template": "creature-biped-v1",
+    "fields": {
+      "species": "Ignicap",
+      "element": "fire",
+      "size": "small",
+      "description": "a warm-hearted wanderer with a smoldering mushroom cap that sheds embers",
+      "anatomy": "small upright bipedal mushroom creature, large rounded smoldering mushroom cap atop its head with warm glowing gills beneath the rim, stubby torso, two short arms hanging free of the body with rounded three-fingered hands, two sturdy little legs standing side by side with a visible gap between them, blunt rounded feet",
+      "colours": "rich ember orange-red cap with pale cream spots, pale linen-beige stem torso and arms, glowing warm ochre gills under cap, dark basalt-grey little feet"
+    },
+    "references": [
+      "public/assets/portraits/creatures/portrait_ignicap_128.png"
+    ],
+    "poseGuide": "art/source/style/pose-guides/mushroom-biped.png"
+  }
+}

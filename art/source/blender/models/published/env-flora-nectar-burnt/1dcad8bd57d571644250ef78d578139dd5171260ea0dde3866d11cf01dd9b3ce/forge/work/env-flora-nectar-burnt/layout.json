@@ -1,0 +1,45 @@
+{
+  "asset": "env:flora-nectar-burnt",
+  "stage": "layout",
+  "inputsDigest": "d22ae50c0ed3ab2c53d3753985c53597432a8ad0d0bc7f50ed342972b0591a3b",
+  "inputs": [
+    "art/source/forge/work/env-flora-nectar-burnt/texture.blend",
+    "art/source/forge/work/env-flora-nectar-burnt/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-flora-nectar-burnt/layout/base.blend": "a0cc704afcc39c9aa29fccb76f6325c8d8f11add241a0d6c2b3371f9148750e8",
+    "art/source/forge/work/env-flora-nectar-burnt/layout_preview.png": "a88898c7f52781727d55f579227afb08d86c7d2546beb33266e622a3d65de72c"
+  },
+  "extra": {
+    "scale": 0.089318,
+    "heightUnits": 1.5649,
+    "contactDepthTiles": 0.946,
+    "footprint": [
+      1,
+      1
+    ],
+    "canvas": {
+      "size": [
+        64,
+        66
+      ],
+      "anchor": [
+        32,
+        62
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -0.5,
+      0.0
+    ],
+    "layers": [
+      "base"
+    ],
+    "faces": {
+      "base": 14000
+    }
+  },
+  "at": "2026-11-05T08:16:07Z"
+}

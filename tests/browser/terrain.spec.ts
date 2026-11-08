@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('procedural and authored Aqualia worlds load baked public/assets with zero pageerrors, console.errors, or 404s', async ({
+test('authored Aqualia world loads baked public/assets with zero pageerrors, console.errors, or 404s', async ({
   page,
 }) => {
   test.setTimeout(120000);
@@ -17,7 +17,6 @@ test('procedural and authored Aqualia worlds load baked public/assets with zero 
   await page.setViewportSize({ width: 1920, height: 1080 });
 
   await page.goto('/?test=1');
-  await page.locator('#authored-toggle').check();
   await page.getByRole('button', { name: 'Play without local AI' }).click();
   await expect(page.locator('#setup-dialog')).not.toBeVisible({ timeout: 30000 });
   await expect

@@ -1,0 +1,45 @@
+{
+  "asset": "env:flora-reeds-burnt",
+  "stage": "layout",
+  "inputsDigest": "fd4cdf52242be9ede8989fa719657e779562deb88aa80b0d11ca376898b8cfd9",
+  "inputs": [
+    "art/source/forge/work/env-flora-reeds-burnt/texture.blend",
+    "art/source/forge/work/env-flora-reeds-burnt/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-flora-reeds-burnt/layout/base.blend": "96b5ab81cf0c95ccf3e65e90276517920e8a64257e9272d4edc217cb03276bc4",
+    "art/source/forge/work/env-flora-reeds-burnt/layout_preview.png": "87114b0629ed7e8d82abfcc4ddad36efccf9b7ab9fe5b5b79b686522d19e776d"
+  },
+  "extra": {
+    "scale": 0.090591,
+    "heightUnits": 1.4461,
+    "contactDepthTiles": 0.995,
+    "footprint": [
+      1,
+      1
+    ],
+    "canvas": {
+      "size": [
+        64,
+        74
+      ],
+      "anchor": [
+        32,
+        71
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -0.5,
+      0.0
+    ],
+    "layers": [
+      "base"
+    ],
+    "faces": {
+      "base": 13999
+    }
+  },
+  "at": "2026-11-05T07:37:28Z"
+}

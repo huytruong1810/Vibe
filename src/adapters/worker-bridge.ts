@@ -50,6 +50,7 @@ export class WorkerBridge {
   >();
   private session = '';
   private serial = 0;
+  private compiledWorld: unknown;
   private start: {
     resolve: () => void;
     reject: (error: Error) => void;
@@ -167,19 +168,20 @@ export class WorkerBridge {
   initialize(
     seed: number,
     origin: number,
-    options?: { worldSource?: 'procedural' | 'authored'; compiledWorld?: unknown },
+    options?: { worldSource?: 'authored'; compiledWorld?: unknown },
   ): Promise<void> {
+    if (options?.compiledWorld !== undefined) this.compiledWorld = options.compiledWorld;
     return new Promise((resolve, reject) => {
       const timeout = setTimeout(() => {
         this.start = null;
-        reject(new Error('World generation timed out'));
+        reject(new Error('World initialization timed out'));
       }, 20_000);
       this.start = { resolve, reject, timeout };
       this.post({
         type: 'initialize',
         seed,
         origin,
-        worldSource: options?.worldSource,
+        worldSource: options?.worldSource ?? 'authored',
         compiledWorld: options?.compiledWorld,
       });
     });
@@ -211,9 +213,16 @@ export class WorkerBridge {
       paintingPurpose,
     });
   }
-  restore(snapshot: GameSave): Promise<void> {
+  restore(snapshot: GameSave, compiledWorld?: unknown): Promise<void> {
+    if (compiledWorld !== undefined) this.compiledWorld = compiledWorld;
     const requestId = `restore:${++this.serial}`;
-    return this.request(requestId, { type: 'restore', requestId, snapshot: migrateSave(snapshot) });
+    const migrated = migrateSave(snapshot);
+    return this.request(requestId, {
+      type: 'restore',
+      requestId,
+      snapshot: migrated,
+      compiledWorld: compiledWorld ?? this.compiledWorld,
+    });
   }
   /** Routine saves never clone the full world through the UI thread. */
   persistCheckpoint(): Promise<void> {

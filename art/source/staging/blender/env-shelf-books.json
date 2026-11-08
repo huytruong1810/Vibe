@@ -1,0 +1,121 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/env-shelf-books--2026-11-05-env-shelf-books.md",
+  "approvalSha256": "69e638aee959a6c7cd4bb709d4aadccad3b3c1a09a8285e9919b495b91906e1c",
+  "asset": "env:shelf-books",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset env:shelf-books",
+    "id": "forge-env-shelf-books",
+    "inputs": [
+      {
+        "path": "blender/models/published/env-shelf-books/a76c128e9ee431130350313ddb980f3127841e2053331dbdd1f608312676f76f/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/env-shelf-books/a76c128e9ee431130350313ddb980f3127841e2053331dbdd1f608312676f76f/forge/blender/env_layout.py",
+        "role": "script",
+        "sha256": "b2fa291498b97eb55fc8450d37b55208b1d22550aa81a70b6c8c06d9cc08388b"
+      },
+      {
+        "path": "blender/models/published/env-shelf-books/a76c128e9ee431130350313ddb980f3127841e2053331dbdd1f608312676f76f/forge/forge.py",
+        "role": "script",
+        "sha256": "72344e74be14dd4324bbc2a158d9c160ff2dfbdfc1325d5166dc5baa5fb6b531"
+      },
+      {
+        "path": "blender/models/published/env-shelf-books/a76c128e9ee431130350313ddb980f3127841e2053331dbdd1f608312676f76f/forge/forgelib/environment.py",
+        "role": "script",
+        "sha256": "4b3443c051f8076ebdc9abd18152831dfbfe74c0053e7c4622ef3d7f483e397c"
+      },
+      {
+        "path": "blender/models/published/env-shelf-books/a76c128e9ee431130350313ddb980f3127841e2053331dbdd1f608312676f76f/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/env-shelf-books/a76c128e9ee431130350313ddb980f3127841e2053331dbdd1f608312676f76f/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "2963b6c95098f03aadf7fffe21507c8b3aa6b4fb4d13e657a9b7921e761ba629"
+      },
+      {
+        "path": "blender/models/published/env-shelf-books/a76c128e9ee431130350313ddb980f3127841e2053331dbdd1f608312676f76f/forge/recipes/env-shelf-books.json",
+        "role": "pose-config",
+        "sha256": "58ef2597b6fb9373005baf1f4de188f21381d5539c1e73fa85aafc207d9d6ddc"
+      },
+      {
+        "path": "blender/models/published/env-shelf-books/a76c128e9ee431130350313ddb980f3127841e2053331dbdd1f608312676f76f/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/env-shelf-books/a76c128e9ee431130350313ddb980f3127841e2053331dbdd1f608312676f76f/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/env-shelf-books/a76c128e9ee431130350313ddb980f3127841e2053331dbdd1f608312676f76f/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/env-shelf-books/a76c128e9ee431130350313ddb980f3127841e2053331dbdd1f608312676f76f/forge/work/env-shelf-books/layout.json",
+        "role": "pose-config",
+        "sha256": "233c78e3e678d310ed0793d1231975c749c3d01cdc60874233915c392bf833bf"
+      },
+      {
+        "path": "blender/models/published/env-shelf-books/a76c128e9ee431130350313ddb980f3127841e2053331dbdd1f608312676f76f/forge/work/env-shelf-books/layout/base.blend",
+        "role": "model",
+        "sha256": "90d5479148822dbb221e3617eea84e6d4a5539e9fab5f4db8c3c7e6f3670e11f"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "footprint": [
+    2,
+    1
+  ],
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 128,
+        "y": 256
+      },
+      "file": "exports/env-shelf-books/709e7e223756da0d2a1c4889955abf7634d5f07dbb94d0fbe79f9f79c756633a/frames/shadow.png",
+      "id": "env-shelf-books-shadow",
+      "layer": "shadow",
+      "sha256": "a10a18ab5fe161cde39692ee77c45f36c96f004d7ba86375ba26aa0e2d4e8fa9",
+      "sourceSize": {
+        "h": 264,
+        "w": 256
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 128,
+        "y": 256
+      },
+      "file": "exports/env-shelf-books/709e7e223756da0d2a1c4889955abf7634d5f07dbb94d0fbe79f9f79c756633a/frames/base.png",
+      "id": "env-shelf-books-base",
+      "layer": "base",
+      "sha256": "693bd866a595ef8372251675ee14a7b8f66f27ed84de5117cc9d29fbd03621f4",
+      "sourceSize": {
+        "h": 264,
+        "w": 256
+      }
+    }
+  ],
+  "lightPools": [],
+  "packet": "art/review/2026-11-05-env-shelf-books",
+  "packetDigest": "709e7e223756da0d2a1c4889955abf7634d5f07dbb94d0fbe79f9f79c756633a",
+  "packetSha256": "a1f0ecc297ac0de6d1f133805dd13276a570922959d2514fc382f26fc3d44934",
+  "schemaVersion": 1,
+  "scope": [
+    "shadow",
+    "base"
+  ]
+}

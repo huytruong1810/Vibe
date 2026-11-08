@@ -1,0 +1,45 @@
+{
+  "asset": "env:flora-berries-burnt",
+  "stage": "layout",
+  "inputsDigest": "414528cedde2a2efc27844a50712babd8dfbf317a0ad58209d684077ba6a6c88",
+  "inputs": [
+    "art/source/forge/work/env-flora-berries-burnt/texture.blend",
+    "art/source/forge/work/env-flora-berries-burnt/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-flora-berries-burnt/layout/base.blend": "a02c1c5f83b1eb5d0b34f88f55748afc7a8c60d72597dc89531454daa268164e",
+    "art/source/forge/work/env-flora-berries-burnt/layout_preview.png": "59b5755d3a30bfe70b6154f64db0af872b89956855c3007c2e224ed28bf22e30"
+  },
+  "extra": {
+    "scale": 0.121391,
+    "heightUnits": 2.0652,
+    "contactDepthTiles": 0.988,
+    "footprint": [
+      1,
+      1
+    ],
+    "canvas": {
+      "size": [
+        96,
+        94
+      ],
+      "anchor": [
+        48,
+        89
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -0.5,
+      0.0
+    ],
+    "layers": [
+      "base"
+    ],
+    "faces": {
+      "base": 13999
+    }
+  },
+  "at": "2026-11-05T07:17:48Z"
+}

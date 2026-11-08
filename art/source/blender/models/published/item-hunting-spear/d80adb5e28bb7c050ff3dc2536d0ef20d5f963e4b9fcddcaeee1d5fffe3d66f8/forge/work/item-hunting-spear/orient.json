@@ -1,0 +1,66 @@
+{
+  "asset": "item:hunting-spear",
+  "stage": "orient",
+  "inputsDigest": "f833176da7e60fdc6d74f99f7157a2d8488abe6f43bcde9bc1f6eb70bc5f4176",
+  "inputs": [
+    "art/source/forge/work/item-hunting-spear/texture.blend",
+    "art/source/forge/work/item-hunting-spear/orient_params.json",
+    "art/source/forge/blender/item_orient.py",
+    "art/source/forge/forgelib/item_orient.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/item-hunting-spear/item_model.blend": "0010b09224ec184687e93d2abbb12971fb92b80bf0c3fd688db51090eab1bd82",
+    "art/source/forge/work/item-hunting-spear/orient_preview.png": "294272c50973d253b7c491947dd81c83d433daeab8cef2e8774b159d4aea39e1"
+  },
+  "extra": {
+    "matrix": [
+      [
+        0.001752,
+        -1.467823,
+        0.000257,
+        0.000622
+      ],
+      [
+        1.46782,
+        0.001751,
+        -0.003123,
+        -4.4e-05
+      ],
+      [
+        0.003122,
+        0.000261,
+        1.467821,
+        -0.302497
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "grip": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "iconPivot": [
+      0.000761,
+      -0.001645,
+      0.04125
+    ],
+    "reachArtPx": 12.32,
+    "lengthArtPx": 22,
+    "haftWidthArtPx": 1.127,
+    "headFlipped": false,
+    "forwardFlipped": false,
+    "dimensions": [
+      0.039058,
+      0.133608,
+      0.6875
+    ],
+    "inflateArtPx": 0.999,
+    "iconScale": 1.21
+  },
+  "at": "2026-11-04T05:12:24Z"
+}

@@ -421,7 +421,7 @@ describe('typed persistent memory', () => {
   it('extracts once per closed session, supports close during another pause, and recalls across conversations', () => {
     const h = new SimulationHost(42, 1, 0);
     try {
-      const npc = h.npcs[10]!;
+      const npc = h.npcs[0]!;
       h.player.x = npc.x;
       h.player.y = npc.y;
       send(h, { type: 'interact', npcId: npc.profileId });

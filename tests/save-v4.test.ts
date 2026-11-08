@@ -12,7 +12,7 @@ describe('v4 ownership and scene validation', () => {
   });
   it('rejects resource storage in NPC combat-only loadouts', () => {
     const save = structuredClone(baseline);
-    save.equipment.loadouts.find((l) => l.entityId === 1)!.combat = [
+    save.equipment.loadouts.find((l) => l.entityId !== 0)!.combat = [
       { id: 'berries', instance: `item:${++save.inventorySerial}` },
       null,
     ];
@@ -21,7 +21,7 @@ describe('v4 ownership and scene validation', () => {
   it('rejects unknown bindings and local positions outside the canonical interior', () => {
     const save = structuredClone(baseline);
     save.scenes.bindings[1]!.id = 'invented-room';
-    expect(() => migrateSave(save)).toThrow(/canonical scene/);
+    expect(() => migrateSave(save)).toThrow(/canonical scene|known scenes/);
     const outside = structuredClone(baseline),
       body = outside.entities.records.find((r) => r.id === 0)!;
     body.scene = outside.scenes.bindings.find((b) => b.id.includes(':home:0'))!.code;

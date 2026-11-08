@@ -1,0 +1,121 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/env-flora-wheat-burnt--2026-11-05-env-flora-wheat-burnt.md",
+  "approvalSha256": "7f127b2b716d67747d26afe414f1a02501d197bd42913a0f4a03290445ae11f5",
+  "asset": "env:flora-wheat-burnt",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset env:flora-wheat-burnt",
+    "id": "forge-env-flora-wheat-burnt",
+    "inputs": [
+      {
+        "path": "blender/models/published/env-flora-wheat-burnt/a415d282233cc9a7debe50a20ae114488ab9a028138aaffc87a8e6c1fe824f18/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/env-flora-wheat-burnt/a415d282233cc9a7debe50a20ae114488ab9a028138aaffc87a8e6c1fe824f18/forge/blender/env_layout.py",
+        "role": "script",
+        "sha256": "b2fa291498b97eb55fc8450d37b55208b1d22550aa81a70b6c8c06d9cc08388b"
+      },
+      {
+        "path": "blender/models/published/env-flora-wheat-burnt/a415d282233cc9a7debe50a20ae114488ab9a028138aaffc87a8e6c1fe824f18/forge/forge.py",
+        "role": "script",
+        "sha256": "72344e74be14dd4324bbc2a158d9c160ff2dfbdfc1325d5166dc5baa5fb6b531"
+      },
+      {
+        "path": "blender/models/published/env-flora-wheat-burnt/a415d282233cc9a7debe50a20ae114488ab9a028138aaffc87a8e6c1fe824f18/forge/forgelib/environment.py",
+        "role": "script",
+        "sha256": "4b3443c051f8076ebdc9abd18152831dfbfe74c0053e7c4622ef3d7f483e397c"
+      },
+      {
+        "path": "blender/models/published/env-flora-wheat-burnt/a415d282233cc9a7debe50a20ae114488ab9a028138aaffc87a8e6c1fe824f18/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/env-flora-wheat-burnt/a415d282233cc9a7debe50a20ae114488ab9a028138aaffc87a8e6c1fe824f18/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "2963b6c95098f03aadf7fffe21507c8b3aa6b4fb4d13e657a9b7921e761ba629"
+      },
+      {
+        "path": "blender/models/published/env-flora-wheat-burnt/a415d282233cc9a7debe50a20ae114488ab9a028138aaffc87a8e6c1fe824f18/forge/recipes/env-flora-wheat-burnt.json",
+        "role": "pose-config",
+        "sha256": "69ae802ed16b5023f8179e6a67fafe1f59f91c77e32a342c43806f17c605dc15"
+      },
+      {
+        "path": "blender/models/published/env-flora-wheat-burnt/a415d282233cc9a7debe50a20ae114488ab9a028138aaffc87a8e6c1fe824f18/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/env-flora-wheat-burnt/a415d282233cc9a7debe50a20ae114488ab9a028138aaffc87a8e6c1fe824f18/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/env-flora-wheat-burnt/a415d282233cc9a7debe50a20ae114488ab9a028138aaffc87a8e6c1fe824f18/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/env-flora-wheat-burnt/a415d282233cc9a7debe50a20ae114488ab9a028138aaffc87a8e6c1fe824f18/forge/work/env-flora-wheat-burnt/layout.json",
+        "role": "pose-config",
+        "sha256": "2fee267b838377a6948f0ee86036ab12ff51d8c92af6fe8c352f45fe50c7e0a6"
+      },
+      {
+        "path": "blender/models/published/env-flora-wheat-burnt/a415d282233cc9a7debe50a20ae114488ab9a028138aaffc87a8e6c1fe824f18/forge/work/env-flora-wheat-burnt/layout/base.blend",
+        "role": "model",
+        "sha256": "28f94a517a9447d491cc7a2b5f85c01eb2e86099a137b83066976b3742709b44"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "footprint": [
+    1,
+    1
+  ],
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 64,
+        "y": 136
+      },
+      "file": "exports/env-flora-wheat-burnt/5c4bdc05b872a42839dac446855e76773ed4ccaedfdef5ab6f729ed115a4bf31/frames/shadow.png",
+      "id": "env-flora-wheat-burnt-shadow",
+      "layer": "shadow",
+      "sha256": "cf6c4f15d08cc39266bb4af33751c9026bd9aaf914a19a59991d24890b6fa6e0",
+      "sourceSize": {
+        "h": 144,
+        "w": 128
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 64,
+        "y": 136
+      },
+      "file": "exports/env-flora-wheat-burnt/5c4bdc05b872a42839dac446855e76773ed4ccaedfdef5ab6f729ed115a4bf31/frames/base.png",
+      "id": "env-flora-wheat-burnt-base",
+      "layer": "base",
+      "sha256": "2bfac48039ec70f8017571a97fcc555e10e435dbef61088037f259018d0087e3",
+      "sourceSize": {
+        "h": 144,
+        "w": 128
+      }
+    }
+  ],
+  "lightPools": [],
+  "packet": "art/review/2026-11-05-env-flora-wheat-burnt",
+  "packetDigest": "5c4bdc05b872a42839dac446855e76773ed4ccaedfdef5ab6f729ed115a4bf31",
+  "packetSha256": "885052f930ecd579cf53dcf1e4e2fe268d44916bc32261cef6d3b635d8b45efc",
+  "schemaVersion": 1,
+  "scope": [
+    "shadow",
+    "base"
+  ]
+}

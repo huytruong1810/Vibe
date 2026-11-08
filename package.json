@@ -6,6 +6,10 @@
   "description": "A worker-driven pixel world with agentic villagers and deterministic creature ecology.",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
+    "harness": "tsx scripts/asset-harness.ts",
+    "art:integrate": "tsx scripts/art-integrate.ts",
+    "assets:build": "tsx scripts/assets-build.ts",
+    "world:build": "tsx scripts/world-build.ts",
     "typecheck": "tsc --noEmit",
     "build": "npm run typecheck && vite build",
     "preview": "vite preview --host 127.0.0.1",

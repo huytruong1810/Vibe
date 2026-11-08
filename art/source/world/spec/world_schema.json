@@ -1,0 +1,429 @@
+{
+  "schemaVersion": 1,
+  "doctrine": ["L1", "L8", "WLD-2", "WLD-4.4", "WLD-4.5", "AMB-1", "AMB-3", "AMB-5"],
+  "note": "The single map contract (WLD-4.4). worldforge, the engine importer (WLD-M1) and CI validation (WLD-M4) read this file; nothing else defines map semantics. Protected: change it only under DOC-5. Semantics and ChunkStore mapping are in README.md.",
+  "ldtk": {
+    "version": "1.5.3",
+    "jsonSchema": "vendor/ldtk-1.5.3.schema.json",
+    "jsonSchemaSha256": "b96ca8a106d12c5bf8aa42da223a4ceb02e93dcfbb0d1b49fbbaeb9959264bda",
+    "project": "art/source/world/hearthwild.ldtk",
+    "worldLayout": "Free",
+    "externalLevels": false,
+    "gridSizeArtPx": 32
+  },
+  "screen": {
+    "tiles": [30, 17],
+    "note": "One 1920x1080 reference viewport = 960x540 art px = 30 x 16.9 tiles of 32 art px (L1). Plans and checks use a 30x17 screen grid anchored at the level origin."
+  },
+  "levelFields": {
+    "region": { "type": "enum", "values": ["aqualia"], "required": true },
+    "biome": {
+      "type": "enum",
+      "values": ["riverlands", "meadows", "forest", "mountains", "beach", "volcano", "swamp"],
+      "required": true,
+      "note": "Default biome for every tile; the optional biome layer overrides it per tile. Order matches the engine Biome enum (0..6)."
+    },
+    "ambience": { "type": "enum", "ref": "ambienceSets", "required": true },
+    "music": { "type": "enum", "ref": "musicTracks", "required": true }
+  },
+  "layers": [
+    {
+      "id": "ground",
+      "type": "IntGrid",
+      "required": true,
+      "fullCoverage": true,
+      "note": "Top-down material (ART-2.4). Every tile has a value. The engine autotiles from it (WLD-4.5).",
+      "values": [
+        { "value": 1, "id": "grass", "color": "#6f9a4f", "surface": "grass" },
+        { "value": 2, "id": "dirt", "color": "#a07850", "surface": "dirt" },
+        { "value": 3, "id": "sand", "color": "#d8c48a", "surface": "sand" },
+        { "value": 4, "id": "stone", "color": "#8d9396", "surface": "stone" },
+        { "value": 5, "id": "mud", "color": "#6b5a44", "surface": "mud" },
+        { "value": 6, "id": "reedbed", "color": "#8fa865", "surface": "grass" }
+      ]
+    },
+    {
+      "id": "biome",
+      "type": "IntGrid",
+      "required": false,
+      "note": "Optional per-tile biome override (for example a swamp pocket inside riverlands). Empty = level biome.",
+      "values": [
+        { "value": 1, "id": "riverlands", "color": "#7fb5a0" },
+        { "value": 2, "id": "meadows", "color": "#b7c86a" },
+        { "value": 3, "id": "forest", "color": "#4f7a46" },
+        { "value": 4, "id": "mountains", "color": "#8a8580" },
+        { "value": 5, "id": "beach", "color": "#e3d39a" },
+        { "value": 6, "id": "volcano", "color": "#8a4a3a" },
+        { "value": 7, "id": "swamp", "color": "#5d6b45" }
+      ]
+    },
+    {
+      "id": "elevation",
+      "type": "IntGrid",
+      "required": true,
+      "note": "Empty = elevation 0. One step = 8 art px of vertical face (L1, ART-2.4). Cliff faces are drawn wherever elevation drops without a ramp.",
+      "values": [
+        { "value": 1, "id": "e1", "color": "#c9b38a", "elevation": 1 },
+        { "value": 2, "id": "e2", "color": "#9c8463", "elevation": 2 }
+      ]
+    },
+    {
+      "id": "water",
+      "type": "IntGrid",
+      "required": true,
+      "note": "Empty = dry. Water lies over ground; the ground value under water sets the bed tint. Shoreline foam and masks come from the water/dry boundary (AMB-2.2).",
+      "values": [
+        {
+          "value": 1,
+          "id": "fresh_shallow",
+          "color": "#7cc4c8",
+          "fluid": "freshwater",
+          "depth": "shallow",
+          "surface": "shallow_water"
+        },
+        {
+          "value": 2,
+          "id": "fresh_deep",
+          "color": "#3f8fa6",
+          "fluid": "freshwater",
+          "depth": "deep",
+          "surface": "deep_water"
+        },
+        {
+          "value": 3,
+          "id": "salt_shallow",
+          "color": "#86c9d9",
+          "fluid": "saltwater",
+          "depth": "shallow",
+          "surface": "shallow_water"
+        },
+        {
+          "value": 4,
+          "id": "salt_deep",
+          "color": "#2f6f96",
+          "fluid": "saltwater",
+          "depth": "deep",
+          "surface": "deep_water"
+        }
+      ]
+    },
+    {
+      "id": "paths",
+      "type": "IntGrid",
+      "required": true,
+      "note": "Walkable routes drawn over ground or water. Every path tile sets the Road flag. Boardwalk and bridge may sit over water; they make the tile walkable on foot (no wading).",
+      "values": [
+        { "value": 1, "id": "dirt_path", "color": "#b89466", "surface": "dirt" },
+        { "value": 2, "id": "stone_path", "color": "#b0b4b2", "surface": "stone" },
+        {
+          "value": 3,
+          "id": "boardwalk",
+          "color": "#9a6b3f",
+          "surface": "boardwalk",
+          "overWater": true
+        },
+        {
+          "value": 4,
+          "id": "bridge",
+          "color": "#7d5530",
+          "surface": "boardwalk",
+          "overWater": true
+        }
+      ]
+    },
+    {
+      "id": "collision",
+      "type": "IntGrid",
+      "required": true,
+      "note": "The only source of blocking and ramps (WLD-2.3, ART-11.4). Building footprints, cliffs edges and tree trunks are painted here; art never implies collision.",
+      "values": [
+        { "value": 1, "id": "solid", "color": "#2b2b33", "flag": "Solid" },
+        { "value": 2, "id": "ramp", "color": "#e0b450", "flag": "Ramp" },
+        { "value": 3, "id": "protected", "color": "#c05050", "flag": "Protected" }
+      ]
+    },
+    {
+      "id": "decoration",
+      "type": "Entities",
+      "required": true,
+      "note": "Placed sprites with no gameplay semantics: props, flora, set dressing. Collision for large props must also be painted on the collision layer.",
+      "entities": ["Decor"]
+    },
+    {
+      "id": "entities",
+      "type": "Entities",
+      "required": true,
+      "note": "Gameplay entities (WLD-2.2, WLD-M2).",
+      "entities": [
+        "PlayerSpawn",
+        "Settlement",
+        "Building",
+        "Entrance",
+        "VillagerAnchor",
+        "Service",
+        "ResourceNode",
+        "Habitat",
+        "AmbienceEmitter",
+        "LightSource",
+        "MusicZone",
+        "Landmark",
+        "StorySpot",
+        "FestivalRoute",
+        "Waystone"
+      ]
+    }
+  ],
+  "layerOrder": [
+    "entities",
+    "decoration",
+    "collision",
+    "paths",
+    "water",
+    "elevation",
+    "biome",
+    "ground"
+  ],
+  "entities": {
+    "PlayerSpawn": {
+      "size": "point",
+      "maxPerLevel": 1,
+      "fields": {
+        "id": { "type": "string", "required": true, "note": "new-game | <level>:<name>" }
+      }
+    },
+    "Settlement": {
+      "size": "area",
+      "fields": {
+        "id": { "type": "string", "required": true, "pattern": "^settlement:[a-z0-9-]+$" },
+        "name": { "type": "string", "required": true },
+        "capital": { "type": "bool", "required": true }
+      }
+    },
+    "Building": {
+      "size": "area",
+      "note": "Area = collision footprint in tiles; it must also be painted solid on the collision layer except for the door tile.",
+      "fields": {
+        "sceneId": {
+          "type": "string",
+          "required": true,
+          "pattern": "^settlement:[a-z0-9-]+:[a-z]+:[0-9]+$"
+        },
+        "kind": {
+          "type": "enum",
+          "values": [
+            "home",
+            "shop",
+            "shelter",
+            "workshop",
+            "mill",
+            "ferry-house",
+            "shrine",
+            "storehouse"
+          ],
+          "required": true
+        },
+        "settlement": { "type": "string", "required": true, "pattern": "^settlement:[a-z0-9-]+$" },
+        "owner": { "type": "npcId", "required": false },
+        "door": {
+          "type": "point",
+          "required": true,
+          "note": "Walkable tile in front of the door, outside the footprint."
+        },
+        "asset": {
+          "type": "string",
+          "required": false,
+          "note": "env:<id> sprite once it exists; placeholder art otherwise."
+        }
+      }
+    },
+    "Entrance": {
+      "size": "point",
+      "fields": {
+        "sceneId": { "type": "string", "required": true },
+        "kind": { "type": "enum", "values": ["interior", "cave"], "required": true }
+      }
+    },
+    "VillagerAnchor": {
+      "size": "point",
+      "fields": {
+        "npcId": { "type": "npcId", "required": true },
+        "role": {
+          "type": "enum",
+          "values": ["home", "work", "square", "shrine", "outpost"],
+          "required": true
+        }
+      }
+    },
+    "Service": {
+      "size": "point",
+      "fields": {
+        "kind": {
+          "type": "enum",
+          "values": ["well", "hearth", "shop", "ferry", "board", "bed", "storage", "crafting"],
+          "required": true
+        },
+        "npcId": { "type": "npcId", "required": false }
+      }
+    },
+    "ResourceNode": {
+      "size": "point",
+      "fields": {
+        "resourceId": { "type": "itemId", "required": true },
+        "quantity": { "type": "int", "required": false, "min": 1, "max": 99 }
+      }
+    },
+    "Habitat": {
+      "size": "area",
+      "fields": {
+        "species": { "type": "array<speciesId>", "required": true, "minItems": 1 },
+        "density": { "type": "enum", "values": ["sparse", "common", "dense"], "required": true },
+        "phases": {
+          "type": "array<enum>",
+          "values": ["dawn", "day", "dusk", "night"],
+          "required": false,
+          "note": "Empty = all phases."
+        }
+      }
+    },
+    "AmbienceEmitter": {
+      "size": "area",
+      "fields": {
+        "set": { "type": "enum", "ref": "ambienceEmitters", "required": true },
+        "phases": {
+          "type": "array<enum>",
+          "values": ["dawn", "day", "dusk", "night"],
+          "required": false
+        }
+      }
+    },
+    "LightSource": {
+      "size": "point",
+      "fields": {
+        "kind": {
+          "type": "enum",
+          "values": ["lantern", "window", "fire", "fungi", "shrine"],
+          "required": true
+        },
+        "radiusTiles": { "type": "float", "required": true, "min": 0.5, "max": 6 },
+        "phases": { "type": "array<enum>", "values": ["dawn", "dusk", "night"], "required": true }
+      }
+    },
+    "MusicZone": {
+      "size": "area",
+      "fields": { "track": { "type": "enum", "ref": "musicTracks", "required": true } }
+    },
+    "Landmark": {
+      "size": "point",
+      "note": "Must match a landmark id in the region plan, within its tolerance (WLD-4.3).",
+      "fields": {
+        "id": { "type": "string", "required": true, "pattern": "^[a-z0-9-]+$" },
+        "name": { "type": "string", "required": true }
+      }
+    },
+    "StorySpot": {
+      "size": "point",
+      "note": "A composed view (AGT-3.1, AGT-6.1). The 12x7-tile window centred on it must contain its subject.",
+      "fields": {
+        "id": { "type": "string", "required": true, "pattern": "^[a-z0-9-]+$" },
+        "subject": { "type": "string", "required": true, "note": "Landmark id the view frames." }
+      }
+    },
+    "FestivalRoute": {
+      "size": "point",
+      "fields": {
+        "festival": { "type": "enum", "values": ["reedlight-float"], "required": true },
+        "points": {
+          "type": "array<point>",
+          "required": true,
+          "minItems": 2,
+          "note": "Every point must be on water (lantern boats) or path."
+        }
+      }
+    },
+    "Waystone": {
+      "size": "point",
+      "fields": { "id": { "type": "string", "required": true, "pattern": "^[a-z0-9-]+$" } }
+    },
+    "Decor": {
+      "size": "point",
+      "fields": {
+        "asset": { "type": "string", "required": true, "note": "env:<id> or flora id." },
+        "blocks": {
+          "type": "bool",
+          "required": true,
+          "note": "true requires a solid collision tile under the footprint."
+        }
+      }
+    }
+  },
+  "enums": {
+    "npcId": {
+      "aqualia": [
+        "npc:caelum",
+        "npc:marina",
+        "npc:neris",
+        "npc:reed",
+        "npc:willa",
+        "npc:oren",
+        "npc:mira",
+        "npc:lark",
+        "npc:dara",
+        "npc:finn"
+      ],
+      "note": "Ids from src/content/definitions.ts (npc:<lowercase name>). Other regions are added when they are authored."
+    },
+    "speciesId": [
+      "rivallie",
+      "mireling",
+      "marshstalker",
+      "steamshell",
+      "zephyrit",
+      "cindermoth",
+      "bramblefang",
+      "ignicap"
+    ],
+    "itemId": {
+      "ref": "src/content/definitions.ts itemIds",
+      "note": "Resource nodes use ItemIds (berries, reeds, wheat, flint, stick, fiber, water, ore, ...)."
+    },
+    "ambienceSets": ["aqualia-canals", "riverlands", "wetlands"],
+    "ambienceEmitters": [
+      "dragonflies",
+      "fish-ripples",
+      "willow-leaves",
+      "water-sparkle",
+      "lily-pads",
+      "laundry",
+      "fireflies",
+      "lantern-flicker",
+      "moon-glints",
+      "frogs",
+      "reed-sway",
+      "butterflies",
+      "rivallie-splashes",
+      "glowing-fungi",
+      "mist-bands"
+    ],
+    "musicTracks": [
+      "aqualia-day",
+      "aqualia-night",
+      "riverlands-day",
+      "riverlands-night",
+      "festival-reedlight"
+    ]
+  },
+  "derived": {
+    "surfacePriority": ["paths", "water", "ground"],
+    "surfaces": [
+      "grass",
+      "dirt",
+      "sand",
+      "stone",
+      "mud",
+      "boardwalk",
+      "shallow_water",
+      "deep_water"
+    ],
+    "note": "Footstep surface (AMB-5) = the first layer in surfacePriority with a value on the tile."
+  }
+}

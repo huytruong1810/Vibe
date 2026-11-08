@@ -1,0 +1,113 @@
+{
+  "version": 1,
+  "id": "aqualia-village-details-002",
+  "region": "aqualia",
+  "level": "aqualia_village",
+  "baseDigest": "de1163c0eff2cb52063e286f30b166ca071cdab4f26f5c99e5e74aacfd1fcc66",
+  "operations": [
+    {
+      "op": "place",
+      "id": "village-music",
+      "entity": "MusicZone",
+      "at": [0, 0],
+      "size": [90, 68],
+      "fields": { "track": "aqualia-day" }
+    },
+    {
+      "op": "place",
+      "id": "waystone",
+      "entity": "Waystone",
+      "at": [21, 43],
+      "fields": { "id": "aqualia-waystone" }
+    },
+    {
+      "op": "place",
+      "id": "festival",
+      "entity": "FestivalRoute",
+      "at": [50, 14],
+      "fields": {
+        "festival": "reedlight-float",
+        "points": [
+          { "cx": 50, "cy": 14 },
+          { "cx": 45, "cy": 20 },
+          { "cx": 44, "cy": 30 },
+          { "cx": 36, "cy": 33 },
+          { "cx": 35, "cy": 41 },
+          { "cx": 36, "cy": 48 },
+          { "cx": 44, "cy": 51 },
+          { "cx": 44, "cy": 56 },
+          { "cx": 50, "cy": 60 },
+          { "cx": 60, "cy": 62 },
+          { "cx": 70, "cy": 63 }
+        ]
+      }
+    },
+    {
+      "op": "place",
+      "id": "hearth-visual",
+      "entity": "Decor",
+      "at": [44, 41],
+      "fields": { "asset": "env:prop_hearth", "blocks": false }
+    },
+    {
+      "op": "place",
+      "id": "well-visual",
+      "entity": "Decor",
+      "at": [47, 38],
+      "fields": { "asset": "env:landmark_well", "blocks": false }
+    },
+    {
+      "op": "place",
+      "id": "waystone-visual",
+      "entity": "Decor",
+      "at": [21, 43],
+      "fields": { "asset": "env:landmark_waystone", "blocks": false }
+    },
+    {
+      "op": "place",
+      "id": "north-lantern",
+      "entity": "LightSource",
+      "at": [44, 33],
+      "fields": { "kind": "lantern", "radiusTiles": 2, "phases": ["dawn", "dusk", "night"] }
+    },
+    {
+      "op": "place",
+      "id": "south-lantern",
+      "entity": "LightSource",
+      "at": [44, 49],
+      "fields": { "kind": "lantern", "radiusTiles": 2, "phases": ["dawn", "dusk", "night"] }
+    },
+    {
+      "op": "place",
+      "id": "east-lantern",
+      "entity": "LightSource",
+      "at": [53, 41],
+      "fields": { "kind": "lantern", "radiusTiles": 2, "phases": ["dawn", "dusk", "night"] }
+    },
+    {
+      "op": "place",
+      "id": "west-lantern",
+      "entity": "LightSource",
+      "at": [35, 41],
+      "fields": { "kind": "lantern", "radiusTiles": 2, "phases": ["dawn", "dusk", "night"] }
+    },
+    {
+      "op": "scatter",
+      "id": "weavers-trees",
+      "shape": { "kind": "rect", "rect": [1, 18, 24, 30] },
+      "seed": 42,
+      "density": 0.018,
+      "spacing": 5,
+      "asset": "env:tree_oak"
+    },
+    {
+      "op": "scatter",
+      "id": "wetland-trees",
+      "shape": { "kind": "rect", "rect": [1, 51, 24, 16] },
+      "seed": 73,
+      "density": 0.016,
+      "spacing": 5,
+      "asset": "env:tree_oak"
+    }
+  ]
+}

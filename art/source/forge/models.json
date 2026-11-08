@@ -1,0 +1,61 @@
+{
+  "rule": "Machine A keeps only the most capable model per tool. A candidate is 'trial' only while its bake-off runs; the bake-off ends by deleting the losers' weights, venvs, setup.sh and runner entries and updating this file in the same commit. forge.py doctor fails on any weights or venv on disk that this file doesn't list. Remove weights only with `HF_HOME=<cache>/.. hf cache rm model/<repo> -y` (the hub keeps one shared blob store, so never rm a models-- folder by hand). Never run `hf cache prune`: every model here is pinned to a commit with no `main` ref, so prune treats the kept models as detached revisions and deletes them (it deleted klein 9B on 2026-11-02). Delete a loser's venv and vendored code with it.",
+  "tools": {
+    "imagegen": {
+      "purpose": "reference sheets, portraits, swatches, and icons on machine A. Uses Z-Image Turbo via sd-server with Apache-2.0 / permissive open weights.",
+      "cache": "art/source/forge/imagegen/models/hf/hub",
+      "default": "z-image",
+      "models": {
+        "z-image": {
+          "repo": "Tongyi-MAAS/Z-Image-Turbo",
+          "revision": "local-q4k",
+          "licence": "Apache-2.0",
+          "status": "default",
+          "sdServerBin": "/home/andyj1810/.local/src/stable-diffusion.cpp/build/bin/sd-server",
+          "diffusionModel": "/home/andyj1810/.models/z-image/z_image_turbo-Q4_K.gguf",
+          "llmModel": "/home/andyj1810/.models/z-image/qwen_3_4b.safetensors",
+          "vaeModel": "/home/andyj1810/.models/z-image/ae.safetensors",
+          "port": 8080
+        },
+        "klein9b": {
+          "repo": "black-forest-labs/FLUX.2-klein-9B",
+          "revision": "92196c8e11f7b6cf2b7493e037d8c5345c559216",
+          "licence": "FLUX Non-Commercial v2.1",
+          "status": "fallback",
+          "quant": "transformer 4-bit NF4, text encoder 8-bit"
+        }
+      }
+    },
+    "gen3d": {
+      "purpose": "reference views to mesh.glb (L5, L12)",
+      "cache": "art/source/forge/gen3d/models/hf/hub",
+      "default": "hunyuan-2mv",
+      "models": {
+        "hunyuan-2mv": {
+          "repo": "tencent/Hunyuan3D-2mv",
+          "revision": "3a761b539b29fe4ff64714813aa9560fd66f5de0",
+          "licence": "Tencent Hunyuan Community",
+          "status": "default",
+          "venv": "art/source/forge/gen3d/.venv",
+          "code": "art/source/forge/gen3d/vendor/Hunyuan3D-2"
+        }
+      }
+    },
+    "villager-llm": {
+      "purpose": "villager dialogue (26b) and conversation compaction (e4b), AGT-1.2; served by Ollama, recipe in docs/operations/operations.md",
+      "default": "gemma4-abliterated:e4b",
+      "models": {
+        "gemma4-abliterated:26b": {
+          "licence": "Gemma",
+          "status": "default",
+          "role": "richer dialogue"
+        },
+        "gemma4-abliterated:e4b": {
+          "licence": "Gemma",
+          "status": "default",
+          "role": "responsive play, compaction"
+        }
+      }
+    }
+  }
+}

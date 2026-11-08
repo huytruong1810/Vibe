@@ -1,0 +1,48 @@
+{
+ "asset": "env:fungi-ring",
+ "status": "candidate",
+ "checks": [
+  {
+   "check": "footprint",
+   "rule": "ART-11.4",
+   "hard": true,
+   "pass": true,
+   "detail": "ground contact 2.02 tiles deep vs declared 2 (width is scaled to fit)"
+  },
+  {
+   "check": "canvas",
+   "rule": "render_spec canvases.environment",
+   "hard": true,
+   "pass": true,
+   "detail": "96x94, width multiple of 32"
+  },
+  {
+   "check": "margins",
+   "rule": "render_spec marginsArtPixels",
+   "hard": true,
+   "pass": true,
+   "detail": "smallest transparent margin 2px"
+  },
+  {
+   "check": "paletteMembership",
+   "rule": "ART-4.1",
+   "hard": true,
+   "pass": true,
+   "detail": "0 off-palette colours"
+  },
+  {
+   "check": "colorCount",
+   "rule": "ART-4.4",
+   "hard": true,
+   "pass": true,
+   "detail": "9 colours (environment limit 32)"
+  },
+  {
+   "check": "blocks",
+   "rule": "L1",
+   "hard": true,
+   "pass": true,
+   "detail": "exports are exact 2x blocks"
+  }
+ ]
+}

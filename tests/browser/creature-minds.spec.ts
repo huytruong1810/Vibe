@@ -1,7 +1,9 @@
 import { test, expect, type Page } from '@playwright/test';
 import { mkdir, writeFile } from 'node:fs/promises';
 import type { GameSave } from '../../src/domain/save-schema';
-import { WorldGenerator, SurfaceRules } from '../../src/domain/world';
+import { SurfaceRules } from '../../src/domain/world';
+import { AuthoredWorldLoader } from '../../src/domain/authored-world';
+import { readFileSync } from 'node:fs';
 import { SPECIES } from '../../src/content/definitions';
 
 async function captureBeat(
@@ -101,7 +103,9 @@ for (const [name, species, count] of [
     await page.getByRole('button', { name: 'Settings', exact: true }).click();
     const save: GameSave = await page.evaluate(() => (window as any).__hearthwild.checkpoint());
     const p = save.entities.records.find((r) => r.id === 0)!,
-      world = new WorldGenerator().generate(save.seed);
+      world = new AuthoredWorldLoader().load(
+        JSON.parse(readFileSync('public/assets/generated/aqualia-region.json', 'utf8')),
+      ).world;
     const sites: { x: number; y: number }[] = [];
     for (let y = -2; y <= 2; y++)
       for (let x = 3; x <= 5; x++)

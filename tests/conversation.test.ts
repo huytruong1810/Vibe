@@ -196,7 +196,7 @@ describe('conversation context', () => {
   it('continues 35 exchanges with full memory and bounds frame transcript transport', () => {
     const host = new SimulationHost(42, 1, 0);
     try {
-      const npc = host.npcs[10]!;
+      const npc = host.npcs[0]!;
       npc.memory.records = Array.from({ length: CONFIG.memoryLimit }, (_, i) => ({
         id: `retained:${i}`,
         createdTick: 0,

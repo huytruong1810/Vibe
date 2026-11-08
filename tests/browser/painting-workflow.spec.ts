@@ -3,7 +3,8 @@ import { readFile, mkdir } from 'node:fs/promises';
 import { migrateSave, type GameSave } from '../../src/domain/save-schema';
 import { SceneRegistry } from '../../src/domain/scenes';
 import { ResourceStore } from '../../src/domain/resources';
-import { WorldGenerator } from '../../src/domain/world';
+import { AuthoredWorldLoader } from '../../src/domain/authored-world';
+import { readFileSync } from 'node:fs';
 
 test('C20 paints, keeps, restores and hangs a palette painting on a hook', async ({ page }) => {
   await page.setViewportSize({ width: 1920, height: 1080 });
@@ -102,16 +103,20 @@ test('C20 paints, keeps, restores and hangs a palette painting on a hook', async
   await expect(page.locator('#painting-dialog')).toBeVisible();
   await expect(page.locator('#painting-keep')).toBeHidden();
   await page.locator('#painting-close').click();
-  const world = new WorldGenerator().generate(kept.seed),
+  const world = new AuthoredWorldLoader().load(
+      JSON.parse(readFileSync('public/assets/generated/aqualia-region.json', 'utf8')),
+    ).world,
     registry = new SceneRegistry(world, new ResourceStore(world));
   const home = registry.definitions.find(
       (scene) =>
-        scene.owner === null &&
         scene.village === 1 &&
         scene.props.some((prop) => prop.display?.accepts.includes('painting')),
     )!,
     hook = home.props.find((prop) => prop.display?.accepts.includes('painting'))!;
   registry.context(home.code);
+  if (home.owner !== null && !kept.scenes.invitations.some((i) => i.owner === home.owner)) {
+    kept.scenes.invitations.push({ owner: home.owner, untilDay: 7 });
+  }
   if (!kept.scenes.states.some((state) => state.id === home.id))
     kept.scenes.states.push(
       JSON.parse(JSON.stringify(registry.snapshot().states.find((state) => state.id === home.id)!)),

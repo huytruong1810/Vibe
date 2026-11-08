@@ -144,7 +144,7 @@ export interface LoadedAuthoredWorld {
 
 /** No random generation: all occupied tiles and actors originate in authored data. */
 export class AuthoredWorldLoader {
-  load(input: unknown): LoadedAuthoredWorld {
+  load(input: unknown, seed = 0): LoadedAuthoredWorld {
     const data = CompiledWorldSchema.parse(input);
     const coverage = new Uint8Array(data.size ** 2);
     const ids = new Set<string>();
@@ -163,7 +163,7 @@ export class AuthoredWorldLoader {
           coverage[i] = 1;
         }
     }
-    const world = new ChunkStore(data.size, 0, coverage);
+    const world = new ChunkStore(data.size, seed, coverage);
     world.flags.fill(TileFlag.Solid);
     const presentation = Object.fromEntries(
       ['ground', 'water', 'paths', 'surface', 'waterDepth', 'deck'].map((k) => [

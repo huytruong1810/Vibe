@@ -1,0 +1,276 @@
+{
+  "schemaVersion": 1,
+  "kind": "icons",
+  "status": "candidate",
+  "asset": "icons:items",
+  "canvas": "icon.item",
+  "iconPx": 32,
+  "icons": [
+    {
+      "id": "icon:item:arrow-bundle",
+      "item": "arrow-bundle",
+      "file": "arrow-bundle.png",
+      "sha256": "9624b98b20f7fb1b75efeb842214f730ae47eb0e2335bcae9eb47dd11ed10259",
+      "ramps": [
+        "wood",
+        "stone",
+        "sail",
+        "timber"
+      ],
+      "size": {
+        "w": 32,
+        "h": 32
+      }
+    },
+    {
+      "id": "icon:item:ashgrass",
+      "item": "ashgrass",
+      "file": "ashgrass.png",
+      "sha256": "ebda4c086ed5119c8c1eb3e4e89bebb464b58a910319af696dfa45b91cdf7bda",
+      "ramps": [
+        "sand",
+        "ochre",
+        "basalt"
+      ],
+      "size": {
+        "w": 32,
+        "h": 32
+      }
+    },
+    {
+      "id": "icon:item:berries",
+      "item": "berries",
+      "file": "berries.png",
+      "sha256": "44026f0289cc3ea47984edfb2e49d8bb89c80a31ef5951f45be7d79884c1893b",
+      "ramps": [
+        "ember",
+        "sage",
+        "timber"
+      ],
+      "size": {
+        "w": 32,
+        "h": 32
+      }
+    },
+    {
+      "id": "icon:item:fiber",
+      "item": "fiber",
+      "file": "fiber.png",
+      "sha256": "7d014b85f4f2d4ebfb11f1435f188276cb14de79cc2bb9cf019e192289976a12",
+      "ramps": [
+        "reed",
+        "linen",
+        "sail"
+      ],
+      "size": {
+        "w": 32,
+        "h": 32
+      }
+    },
+    {
+      "id": "icon:item:flint",
+      "item": "flint",
+      "file": "flint.png",
+      "sha256": "40db4eaf9921080fbbc953389157f4ecd556bf723d69b8e8d82e44c59c202878",
+      "ramps": [
+        "basalt",
+        "stone",
+        "outline-neutral"
+      ],
+      "size": {
+        "w": 32,
+        "h": 32
+      }
+    },
+    {
+      "id": "icon:item:fungi",
+      "item": "fungi",
+      "file": "fungi.png",
+      "sha256": "1aee60f5755e0e17e71a657aa723ac5909dde7053dc5497094ed7877238bab5d",
+      "ramps": [
+        "plum",
+        "linen",
+        "moss"
+      ],
+      "size": {
+        "w": 32,
+        "h": 32
+      }
+    },
+    {
+      "id": "icon:item:garment",
+      "item": "garment",
+      "file": "garment.png",
+      "sha256": "b90001735db6603d958e87ada7d41854a3f5450addbde733204edfb87d3c7cf8",
+      "ramps": [
+        "linen",
+        "teal",
+        "leather"
+      ],
+      "size": {
+        "w": 32,
+        "h": 32
+      }
+    },
+    {
+      "id": "icon:item:meal",
+      "item": "meal",
+      "file": "meal.png",
+      "sha256": "acffae76ffccd09347b80c5b56b5f70ec5019b06c7e694ce36c207279fa91fe1",
+      "ramps": [
+        "ember",
+        "ochre",
+        "timber",
+        "gold"
+      ],
+      "size": {
+        "w": 32,
+        "h": 32
+      }
+    },
+    {
+      "id": "icon:item:meat",
+      "item": "meat",
+      "file": "meat.png",
+      "sha256": "b248682fa5468ff051d9541ac3857169afbb396eb9aaa05e58ac68649f01af4c",
+      "ramps": [
+        "crimson",
+        "ember",
+        "linen"
+      ],
+      "size": {
+        "w": 32,
+        "h": 32
+      }
+    },
+    {
+      "id": "icon:item:nectar",
+      "item": "nectar",
+      "file": "nectar.png",
+      "sha256": "5a51a6f3cea7707fce2a499999d4a6a65ba80468ae641808cee5d0d2f76e8c23",
+      "ramps": [
+        "blossom",
+        "gold",
+        "sage"
+      ],
+      "size": {
+        "w": 32,
+        "h": 32
+      }
+    },
+    {
+      "id": "icon:item:ore",
+      "item": "ore",
+      "file": "ore.png",
+      "sha256": "a1f55663265365713453dedb41b96b067e0ad2d419660cbff8d471cd073634e2",
+      "ramps": [
+        "copper",
+        "basalt",
+        "stone"
+      ],
+      "size": {
+        "w": 32,
+        "h": 32
+      }
+    },
+    {
+      "id": "icon:item:poultice",
+      "item": "poultice",
+      "file": "poultice.png",
+      "sha256": "1d88428441988fb9321bac10ac2047634cabb366f7c36b2f960b17a1102cb2e9",
+      "ramps": [
+        "sage",
+        "moss",
+        "linen",
+        "timber"
+      ],
+      "size": {
+        "w": 32,
+        "h": 32
+      }
+    },
+    {
+      "id": "icon:item:reeds",
+      "item": "reeds",
+      "file": "reeds.png",
+      "sha256": "7eb7e61db3a151ccf3a7f70776527092efb0d17e52fbfeec3647a7d2f657caab",
+      "ramps": [
+        "reed",
+        "sage",
+        "timber"
+      ],
+      "size": {
+        "w": 32,
+        "h": 32
+      }
+    },
+    {
+      "id": "icon:item:stick",
+      "item": "stick",
+      "file": "stick.png",
+      "sha256": "633c3cee49b6eb9335758407bf3f73a73d3f043bc448302520ccbe213985e230",
+      "ramps": [
+        "wood",
+        "timber"
+      ],
+      "size": {
+        "w": 32,
+        "h": 32
+      }
+    },
+    {
+      "id": "icon:item:tool-head",
+      "item": "tool-head",
+      "file": "tool-head.png",
+      "sha256": "ea6da9bb6cd79ea1b15bc47a93efde32d3c33cdf028ec61f9f46a8d71f152906",
+      "ramps": [
+        "stone",
+        "basalt"
+      ],
+      "size": {
+        "w": 32,
+        "h": 32
+      }
+    },
+    {
+      "id": "icon:item:water",
+      "item": "water",
+      "file": "water.png",
+      "sha256": "9376f4a4906fa2e9ba5751fbc7221f4d6e832a59d16eaf0d5b6331850dde5a54",
+      "ramps": [
+        "water",
+        "glass",
+        "sand",
+        "wood"
+      ],
+      "size": {
+        "w": 32,
+        "h": 32
+      }
+    },
+    {
+      "id": "icon:item:wheat",
+      "item": "wheat",
+      "file": "wheat.png",
+      "sha256": "dd6b693f827fd499938e9c36844d4296b2adf0380e5f5b56b016efb3afd7ec9f",
+      "ramps": [
+        "ochre",
+        "sand",
+        "timber"
+      ],
+      "size": {
+        "w": 32,
+        "h": 32
+      }
+    }
+  ],
+  "qa": [
+    {
+      "check": "icon.check",
+      "pass": true,
+      "hard": true,
+      "detail": "17/17 icons pass 32x32 size, margin >= 2 px, palette lock, 0 partial alpha, 0 orphans"
+    }
+  ],
+  "sourceDigest": "773b5166b2aa226d1283ef50410989414055822e26fade7601be56749b54e158"
+}

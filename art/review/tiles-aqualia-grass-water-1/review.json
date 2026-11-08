@@ -1,0 +1,572 @@
+{
+  "schemaVersion": 1,
+  "kind": "tileset",
+  "status": "candidate",
+  "asset": "tiles-aqualia-grass-water",
+  "set": "aqualia-grass-water",
+  "region": "aqualia",
+  "sourceDigest": "24e5df184266c285cf040b627a849348f59da222875405575906fd78dda37043",
+  "tilePx": 32,
+  "exportScale": 2,
+  "tiles": [
+    {
+      "file": "tiles/cliff.png",
+      "role": "strip",
+      "material": "cliff",
+      "variant": 0,
+      "runtimeId": "cliff_grass",
+      "refs": [
+        "stone.deep",
+        "stone.shadow",
+        "stone.mid",
+        "moss.mid"
+      ],
+      "sha256": "ba15b6888b04c0a24b9d18fe9094e0c335040d2882a54ed7bb0c94cbe7e8fba0",
+      "scale": 2
+    },
+    {
+      "file": "tiles/freshwater.png",
+      "role": "material",
+      "material": "freshwater",
+      "variant": 0,
+      "runtimeId": "ground_freshwater",
+      "refs": [
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight"
+      ],
+      "sha256": "7bb6822f2b1cd0c86effc9c694abb7fcf85fa2a9b96f00529290271a5f4c693f",
+      "scale": 2
+    },
+    {
+      "file": "tiles/freshwater_shore_mask_1.png",
+      "role": "overlay",
+      "overlay": "freshwater_shore",
+      "material": "freshwater",
+      "mask": 1,
+      "runtimeId": "shore_freshwater_mask_1",
+      "refs": [
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight",
+        "timber.deep"
+      ],
+      "sha256": "6a3545d2d5bdcef60d400be62becd08af09e6d37e8544b2e7ae05caa72e2cf06",
+      "scale": 2
+    },
+    {
+      "file": "tiles/freshwater_shore_mask_10.png",
+      "role": "overlay",
+      "overlay": "freshwater_shore",
+      "material": "freshwater",
+      "mask": 10,
+      "runtimeId": "shore_freshwater_mask_10",
+      "refs": [
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight",
+        "timber.deep"
+      ],
+      "sha256": "40a16720420a1026a4b503cadddc60152a8feb2001c4d5437262a08028673c86",
+      "scale": 2
+    },
+    {
+      "file": "tiles/freshwater_shore_mask_11.png",
+      "role": "overlay",
+      "overlay": "freshwater_shore",
+      "material": "freshwater",
+      "mask": 11,
+      "runtimeId": "shore_freshwater_mask_11",
+      "refs": [
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight",
+        "timber.deep"
+      ],
+      "sha256": "e7046f901f454e091dafb973fbb0344c53831beae23eab24b05614e98b00b808",
+      "scale": 2
+    },
+    {
+      "file": "tiles/freshwater_shore_mask_12.png",
+      "role": "overlay",
+      "overlay": "freshwater_shore",
+      "material": "freshwater",
+      "mask": 12,
+      "runtimeId": "shore_freshwater_mask_12",
+      "refs": [
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight",
+        "timber.deep"
+      ],
+      "sha256": "eb2921ff3ea76de34ddaf54e043469dbc1ff282b27f2dd3c9f107232d47c9473",
+      "scale": 2
+    },
+    {
+      "file": "tiles/freshwater_shore_mask_13.png",
+      "role": "overlay",
+      "overlay": "freshwater_shore",
+      "material": "freshwater",
+      "mask": 13,
+      "runtimeId": "shore_freshwater_mask_13",
+      "refs": [
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight",
+        "timber.deep"
+      ],
+      "sha256": "fe36ce55873e34441d9fb1ccbe01cd938681414e99bdd9e286a32367ca02647a",
+      "scale": 2
+    },
+    {
+      "file": "tiles/freshwater_shore_mask_14.png",
+      "role": "overlay",
+      "overlay": "freshwater_shore",
+      "material": "freshwater",
+      "mask": 14,
+      "runtimeId": "shore_freshwater_mask_14",
+      "refs": [
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight",
+        "timber.deep"
+      ],
+      "sha256": "1c622a30c06ff4f0cad4ba4fa20e49ebec8774cb395155566bbfc21c3bee3e4d",
+      "scale": 2
+    },
+    {
+      "file": "tiles/freshwater_shore_mask_15.png",
+      "role": "overlay",
+      "overlay": "freshwater_shore",
+      "material": "freshwater",
+      "mask": 15,
+      "runtimeId": null,
+      "refs": [
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight",
+        "timber.deep"
+      ],
+      "sha256": "7bb6822f2b1cd0c86effc9c694abb7fcf85fa2a9b96f00529290271a5f4c693f",
+      "scale": 2
+    },
+    {
+      "file": "tiles/freshwater_shore_mask_2.png",
+      "role": "overlay",
+      "overlay": "freshwater_shore",
+      "material": "freshwater",
+      "mask": 2,
+      "runtimeId": "shore_freshwater_mask_2",
+      "refs": [
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight",
+        "timber.deep"
+      ],
+      "sha256": "0c54989915ecf3e11ef16100bc74167186b6367ed401f557eaa3e43abf796ed5",
+      "scale": 2
+    },
+    {
+      "file": "tiles/freshwater_shore_mask_3.png",
+      "role": "overlay",
+      "overlay": "freshwater_shore",
+      "material": "freshwater",
+      "mask": 3,
+      "runtimeId": "shore_freshwater_mask_3",
+      "refs": [
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight",
+        "timber.deep"
+      ],
+      "sha256": "22860ce7d60f9d57ae21c0c185d1e59bf3c21395767fab39f33190ae1bac4410",
+      "scale": 2
+    },
+    {
+      "file": "tiles/freshwater_shore_mask_4.png",
+      "role": "overlay",
+      "overlay": "freshwater_shore",
+      "material": "freshwater",
+      "mask": 4,
+      "runtimeId": "shore_freshwater_mask_4",
+      "refs": [
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight",
+        "timber.deep"
+      ],
+      "sha256": "b4c1d2c3ebdddcf303732cd9a95464ac9baa38b813daa42b26d50f5b2a5babcd",
+      "scale": 2
+    },
+    {
+      "file": "tiles/freshwater_shore_mask_5.png",
+      "role": "overlay",
+      "overlay": "freshwater_shore",
+      "material": "freshwater",
+      "mask": 5,
+      "runtimeId": "shore_freshwater_mask_5",
+      "refs": [
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight",
+        "timber.deep"
+      ],
+      "sha256": "a57417e6dee008589b186cc396d6a720cc8e96f68fec88da40553d81dca5f949",
+      "scale": 2
+    },
+    {
+      "file": "tiles/freshwater_shore_mask_6.png",
+      "role": "overlay",
+      "overlay": "freshwater_shore",
+      "material": "freshwater",
+      "mask": 6,
+      "runtimeId": "shore_freshwater_mask_6",
+      "refs": [
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight",
+        "timber.deep"
+      ],
+      "sha256": "2ad4848bd76cc6c3c80e52ca63f75740e5a1c393af9856bdae3fdc355f3e9fd3",
+      "scale": 2
+    },
+    {
+      "file": "tiles/freshwater_shore_mask_7.png",
+      "role": "overlay",
+      "overlay": "freshwater_shore",
+      "material": "freshwater",
+      "mask": 7,
+      "runtimeId": "shore_freshwater_mask_7",
+      "refs": [
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight",
+        "timber.deep"
+      ],
+      "sha256": "71277bf230006963ecfdc695c08fb64fae116407833750ab58493a0f73cc0f1a",
+      "scale": 2
+    },
+    {
+      "file": "tiles/freshwater_shore_mask_8.png",
+      "role": "overlay",
+      "overlay": "freshwater_shore",
+      "material": "freshwater",
+      "mask": 8,
+      "runtimeId": "shore_freshwater_mask_8",
+      "refs": [
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight",
+        "timber.deep"
+      ],
+      "sha256": "dc0c9903a70d5b28934b6ab460eb1a5379825614844de1fe2705cc7d6d219bda",
+      "scale": 2
+    },
+    {
+      "file": "tiles/freshwater_shore_mask_9.png",
+      "role": "overlay",
+      "overlay": "freshwater_shore",
+      "material": "freshwater",
+      "mask": 9,
+      "runtimeId": "shore_freshwater_mask_9",
+      "refs": [
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight",
+        "timber.deep"
+      ],
+      "sha256": "79c5a60e2378b152f7bbcef661bb82bb6eec7f948de1d8acca132a8383251277",
+      "scale": 2
+    },
+    {
+      "file": "tiles/freshwater_v1.png",
+      "role": "material",
+      "material": "freshwater",
+      "variant": 1,
+      "runtimeId": "ground_freshwater_v1",
+      "refs": [
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight"
+      ],
+      "sha256": "c937067faaf8f8af93cd8297793270e1615e212b108d9c35f84cfb8b6d962953",
+      "scale": 2
+    },
+    {
+      "file": "tiles/freshwater_v2.png",
+      "role": "material",
+      "material": "freshwater",
+      "variant": 2,
+      "runtimeId": "ground_freshwater_v2",
+      "refs": [
+        "water.shadow",
+        "water.mid",
+        "water.light",
+        "water.highlight"
+      ],
+      "sha256": "c6f89d149bceeff847c0c5c7efbcb13538f005f31201a2936f18d9df47602000",
+      "scale": 2
+    },
+    {
+      "file": "tiles/grass.png",
+      "role": "material",
+      "material": "grass",
+      "variant": 0,
+      "runtimeId": "ground_grass",
+      "refs": [
+        "foliage-deep.shadow",
+        "foliage-deep.mid",
+        "moss.mid",
+        "reed.mid"
+      ],
+      "sha256": "5baee9faf4961260dfec0005ad50aaebab217b340c04af294f92e81271f717e8",
+      "scale": 2
+    },
+    {
+      "file": "tiles/grass_v1.png",
+      "role": "material",
+      "material": "grass",
+      "variant": 1,
+      "runtimeId": "ground_grass_v1",
+      "refs": [
+        "foliage-deep.shadow",
+        "foliage-deep.mid",
+        "moss.mid",
+        "reed.mid"
+      ],
+      "sha256": "95e0b5fc52e48bbcb4aaa7fac52556080fdff4cdfdc942b4e1d65c7458efc4ff",
+      "scale": 2
+    },
+    {
+      "file": "tiles/grass_v2.png",
+      "role": "material",
+      "material": "grass",
+      "variant": 2,
+      "runtimeId": "ground_grass_v2",
+      "refs": [
+        "foliage-deep.shadow",
+        "foliage-deep.mid",
+        "moss.mid",
+        "reed.mid"
+      ],
+      "sha256": "616611d768c81a18d665852020f8a8f7e2fd3d6c0a5f81efcde28e8a69ff66a9",
+      "scale": 2
+    },
+    {
+      "file": "tiles/grass_v3.png",
+      "role": "material",
+      "material": "grass",
+      "variant": 3,
+      "runtimeId": "ground_grass_v3",
+      "refs": [
+        "foliage-deep.shadow",
+        "foliage-deep.mid",
+        "moss.mid",
+        "reed.mid"
+      ],
+      "sha256": "8fc892cb44b1c0a80040153c05a92ab333b9feaa83284dd497b107bd40633da3",
+      "scale": 2
+    }
+  ],
+  "qa": [
+    {
+      "check": "grass.palette",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 pixels outside ['foliage-deep.shadow', 'foliage-deep.mid', 'moss.mid', 'reed.mid']"
+    },
+    {
+      "check": "grass.valueCount",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "4 values (limit 4)"
+    },
+    {
+      "check": "grass.seamless",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst seam step / roughest interior line 1.00 (limit 1.35; every variant beside every other)"
+    },
+    {
+      "check": "grass.variantBorders",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "3 variants; 0 border pixels differ from the base"
+    },
+    {
+      "check": "grass.orphans",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst isolated-pixel fraction 0.003 (limit 0.01)"
+    },
+    {
+      "check": "grass.lowFrequency",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "largest tile-scale lighting wave 0.010 (limit 0.02); a higher value shows as a grid when tiled; raise flatten or use an evenly lit swatch"
+    },
+    {
+      "check": "grass.proportions",
+      "rule": "recipe",
+      "pass": true,
+      "hard": false,
+      "detail": "value shares [0.11, 0.74, 0.11, 0.04] vs recipe [0.12, 0.7, 0.13, 0.05]"
+    },
+    {
+      "check": "freshwater.palette",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 pixels outside ['water.shadow', 'water.mid', 'water.light', 'water.highlight']"
+    },
+    {
+      "check": "freshwater.valueCount",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "4 values (limit 4)"
+    },
+    {
+      "check": "freshwater.seamless",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst seam step / roughest interior line 0.65 (limit 1.35; every variant beside every other)"
+    },
+    {
+      "check": "freshwater.variantBorders",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "2 variants; 0 border pixels differ from the base"
+    },
+    {
+      "check": "freshwater.orphans",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst isolated-pixel fraction 0.001 (limit 0.01)"
+    },
+    {
+      "check": "freshwater.lowFrequency",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "largest tile-scale lighting wave 0.014 (limit 0.02); a higher value shows as a grid when tiled; raise flatten or use an evenly lit swatch"
+    },
+    {
+      "check": "freshwater.proportions",
+      "rule": "recipe",
+      "pass": true,
+      "hard": false,
+      "detail": "value shares [0.23, 0.5, 0.18, 0.08] vs recipe [0.22, 0.5, 0.2, 0.08]"
+    },
+    {
+      "check": "cliff.palette",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 pixels outside ['stone.deep', 'stone.shadow', 'stone.mid', 'moss.mid']"
+    },
+    {
+      "check": "cliff.valueCount",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "4 values (limit 4)"
+    },
+    {
+      "check": "cliff.seamless",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst seam step / roughest interior line 0.96 (limit 1.35; every variant beside every other)"
+    },
+    {
+      "check": "cliff.variantBorders",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 variants; 0 border pixels differ from the base"
+    },
+    {
+      "check": "cliff.orphans",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst isolated-pixel fraction 0.000 (limit 0.01)"
+    },
+    {
+      "check": "grass.actorContrast",
+      "rule": "ART-7.3",
+      "pass": false,
+      "hard": false,
+      "detail": "lightness gap to actor body tones {'teal.mid': 0.152, 'foliage.mid': 0.114, 'basalt.mid': 0.02, 'skin-warm.mid': 0.257, 'timber.mid': 0.035}; below 0.12: ['basalt.mid', 'foliage.mid', 'timber.mid']"
+    },
+    {
+      "check": "pair.grass-freshwater",
+      "rule": "WLD-3.3",
+      "pass": true,
+      "hard": false,
+      "detail": "median lightness gap 0.214 (want >= 0.06)"
+    },
+    {
+      "check": "freshwater_shore.palette",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 opaque pixels outside ['water.shadow', 'water.mid', 'water.light', 'water.highlight', 'timber.deep']"
+    },
+    {
+      "check": "freshwater_shore.hardAlpha",
+      "rule": "ART-1",
+      "pass": true,
+      "hard": true,
+      "detail": "0 semi-transparent pixels"
+    },
+    {
+      "check": "freshwater_shore.bodyMatch",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "0 body pixels differ from freshwater.png (the full tile must match the body)"
+    },
+    {
+      "check": "freshwater_shore.cornerBits",
+      "rule": "autotiler.ts",
+      "pass": true,
+      "hard": true,
+      "detail": "corners disagreeing with their mask bit: none"
+    },
+    {
+      "check": "freshwater_shore.edgeContinuity",
+      "rule": "ART-11.2",
+      "pass": true,
+      "hard": true,
+      "detail": "worst shared-edge excess 0 px at 11/2 over the tiles' own neighbouring lines (limit 1; every legal neighbour pair, transparent/edge band/inside compared)"
+    }
+  ]
+}

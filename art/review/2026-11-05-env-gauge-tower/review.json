@@ -1,0 +1,105 @@
+{
+ "asset": "env:gauge-tower",
+ "footprint": [
+  2,
+  2
+ ],
+ "frames": [
+  {
+   "anchorPx": {
+    "x": 96,
+    "y": 340
+   },
+   "file": "frames/shadow.png",
+   "id": "env-gauge-tower-shadow",
+   "layer": "shadow",
+   "sha256": "c26076f21da2fc04d09064e8ebcda6e992777da3a3b57ef5114eb3c18b8fcb4e",
+   "sourceSize": {
+    "h": 348,
+    "w": 192
+   }
+  },
+  {
+   "anchorPx": {
+    "x": 96,
+    "y": 340
+   },
+   "file": "frames/base.png",
+   "id": "env-gauge-tower-base",
+   "layer": "base",
+   "sha256": "0463b5411bd6d3b2615a970fcb5261d50ed1683ba2b8bb58cd62c2e750d7647b",
+   "sourceSize": {
+    "h": 348,
+    "w": 192
+   }
+  },
+  {
+   "anchorPx": {
+    "x": 96,
+    "y": 340
+   },
+   "file": "frames/roof.png",
+   "id": "env-gauge-tower-roof",
+   "layer": "roof",
+   "sha256": "88a378357560a370f8cca6ab172f985060fdacb8401d26ec4b1b7c1f4272e35e",
+   "sourceSize": {
+    "h": 348,
+    "w": 192
+   }
+  }
+ ],
+ "kind": "environment-review",
+ "lightPools": [],
+ "qa": [
+  {
+   "check": "footprint",
+   "detail": "ground contact 1.96 tiles deep vs declared 2 (width is scaled to fit)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-11.4"
+  },
+  {
+   "check": "canvas",
+   "detail": "96x174, width multiple of 32",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec canvases.environment"
+  },
+  {
+   "check": "margins",
+   "detail": "smallest transparent margin 2px",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec marginsArtPixels"
+  },
+  {
+   "check": "paletteMembership",
+   "detail": "0 off-palette colours",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.1"
+  },
+  {
+   "check": "colorCount",
+   "detail": "14 colours (environment limit 32)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.4"
+  },
+  {
+   "check": "blocks",
+   "detail": "exports are exact 2x blocks",
+   "hard": true,
+   "pass": true,
+   "rule": "L1"
+  }
+ ],
+ "schemaVersion": 1,
+ "scope": [
+  "shadow",
+  "base",
+  "roof"
+ ],
+ "sourceDigest": "11b0ca3aaba5f8a2d4f8b1bdee97462cec7e504e22f0c74f359d7aa65fd49722",
+ "status": "candidate"
+}

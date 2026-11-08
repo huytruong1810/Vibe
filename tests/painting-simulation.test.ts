@@ -3,7 +3,6 @@ import { SimulationHost } from '../src/domain/simulation';
 import { migrateSave } from '../src/domain/save-schema';
 import { paintingRgba } from '../src/domain/painting-pixels';
 import { send } from './helpers';
-import { NPC_PROFILES } from '../src/content/definitions';
 const result = {
   pixels: 'A'.repeat(1024),
   palette: ['#ece0c2'],
@@ -85,8 +84,7 @@ it('reserves a home hook, restores NPC work, keeps quotas and stores caption not
   const host = new SimulationHost(42, 1, 0),
     restored = new SimulationHost(42, 1, 0);
   try {
-    const index = NPC_PROFILES.findIndex((p) => p.name === 'Lark'),
-      npc = host.npcs[index]!;
+    const npc = host.npcs.find((n) => n.profileId === 'npc:lark')!;
     const home = host.scenes.home(npc.entityId)!;
     npc.memory.records.push({
       id: 'painting-source',
@@ -122,7 +120,7 @@ it('reserves a home hook, restores NPC work, keeps quotas and stores caption not
     });
     expect(host.artifactContent(pending.id)).toBeNull();
     restored.restore(migrateSave(host.snapshot()));
-    const painter = restored.npcs[index]!;
+    const painter = restored.npcs.find((n) => n.profileId === 'npc:lark')!;
     expect(
       send(
         restored,

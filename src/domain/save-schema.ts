@@ -14,7 +14,9 @@ import { TwoSlotInventory } from './inventory';
 import { SceneRegistry, sceneSaveLayouts, artifactDisplaySpec } from './scenes';
 import { ArtifactIdSchema, ArtifactRecordsSchema } from './artifacts';
 import { ResourceStore } from './resources';
-import { WorldGenerator } from './world';
+import { ChunkStore } from './world';
+import { AuthoredWorldLoader } from './authored-world';
+import { getDefaultCompiledWorld } from './simulation';
 import { CONFIG } from './values';
 import { PHYSIQUES } from './physique';
 import { SPECIES } from '../content/definitions';
@@ -168,7 +170,7 @@ export const GameSaveSchema = z
       )
       .max(512),
     contentVersion: z.literal(3),
-    worldSource: z.enum(['procedural', 'authored']).default('procedural'),
+    worldSource: z.literal('authored').default('authored'),
     entities: legacy.entities.extend({
       records: z
         .array(
@@ -211,13 +213,6 @@ export const GameSaveSchema = z
   .strict()
   .superRefine((save, ctx) => {
     const fail = (message: string): void => ctx.addIssue({ code: 'custom', message });
-    // Retain the established entity/ecology/social invariants across the additive schema change.
-    if (save.worldSource !== 'authored') {
-      const old = GameSaveV3Schema.safeParse(v3Projection(save));
-      if (!old.success)
-        for (const issue of old.error.issues)
-          ctx.addIssue({ code: 'custom', path: issue.path, message: issue.message });
-    }
     validateV4(save, fail);
     validateMindState(save.combat.minds, save.entities.records, save.tick, fail);
     const artifacts = new Map(save.artifacts.map((a) => [a.id, a]));
@@ -300,81 +295,16 @@ export const GameSaveSchema = z
   });
 export type GameSave = z.infer<typeof GameSaveSchema>;
 
-function v3Attack(value: GameSave['player']['attack']): GameSaveV3['player']['attack'] {
-  return value ? { kind: value.kind, startedAt: value.startedAt, hit: value.hit } : null;
-}
-function v3Projection(save: GameSave): unknown {
-  const {
-    equipment: _equipment,
-    scenes: _scenes,
-    worldSource: _worldSource,
-    artifacts: _artifacts,
-    placements: _placements,
-    artifactSequence: _sequence,
-    literacy: _literacy,
-    ...base
-  } = save;
-  const { guarding: _guarding, ...player } = save.player;
-  const {
-    projectiles: _projectiles,
-    director: _director,
-    minds: _minds,
-    failedHunts: _failedHunts,
-    ...combat
-  } = save.combat;
-  const oldItem = (value: GameSave['inventory'][number]) => {
-    if (!value) return null;
-    const { charges: _charges, artifact: _artifact, ...old } = value;
-    return old;
-  };
-  return {
-    ...base,
-    version: 3,
-    npcs: save.npcs.map((n) => ({
-      ...n,
-      memory: {
-        revision: n.memory.revision,
-        serial: n.memory.serial,
-        summary: '',
-        records: [],
-        lastReflection: n.memory.lastReflection,
-      },
-    })),
-    contentVersion: 2,
-    player: { ...player, attack: v3Attack(player.attack) },
-    entities: {
-      ...save.entities,
-      records: save.entities.records.map(
-        ({
-          scene: _scene,
-          heightMeters: _height,
-          bondHearts: _bond,
-          massKg: _mass,
-          recoilX: _rx,
-          recoilY: _ry,
-          temperament: _temp,
-          potential: _pot,
-          conditioning: _cond,
-          moves: _moves,
-          ...record
-        }) => record,
-      ),
-    },
-    inventory: [oldItem(save.inventory[0]), oldItem(save.inventory[1])],
-    drops: save.drops.map(
-      ({ scene: _scene, instance: _instance, charges: _charges, artifact: _artifact, ...value }) =>
-        value,
-    ),
-    carrion: save.carrion.map(({ scene: _scene, ...value }) => value),
-    supplies: save.supplies.map(({ scene: _scene, ...value }) => value),
-    events: save.events.map(({ scene: _scene, ...value }) => value),
-    markers: save.markers.map(({ scene: _scene, ...value }) => value),
-    combat: { ...combat, attacks: save.combat.attacks.map(([id, value]) => [id, v3Attack(value)]) },
-  };
-}
-
 function validateV4(save: GameSave, fail: (message: string) => void): void {
   const records = new Map(save.entities.records.map((r) => [r.id, r]));
+  if (save.entities.records.filter((r) => r.owner === 0).length > 1) fail('Multiple player partnerships');
+  for (const r of save.entities.records) {
+    if (r.species === 8) {
+      if (r.owner !== -1) fail('Human entity cannot have an owner');
+    } else {
+      if (r.slot >= save.entities.count || r.id < 100) fail('Entity kind/slot/identity mismatch');
+    }
+  }
   const d = save.combat.director,
     heldActors = new Set<number>(),
     waitingActors = new Set<number>(),
@@ -434,13 +364,8 @@ function validateV4(save: GameSave, fail: (message: string) => void): void {
     bindings.get(0) !== 'overworld'
   )
     fail('Duplicate or invalid scene bindings');
-  if (save.worldSource === 'authored') {
-    if ([...bindings.values()].some((id) => !layouts.has(id)))
-      fail('Saved scene bindings must cover known scenes');
-  } else {
-    if (bindings.size !== layouts.size || [...bindings.values()].some((id) => !layouts.has(id)))
-      fail('Saved scene bindings must cover the canonical scene registry');
-  }
+  if ([...bindings.values()].some((id) => !layouts.has(id)))
+    fail('Saved scene bindings must cover known scenes');
   const inside = (point: { x: number; y: number }, code: number): boolean => {
     const layout = layouts.get(bindings.get(code) ?? '');
     return (
@@ -486,7 +411,7 @@ function validateV4(save: GameSave, fail: (message: string) => void): void {
   save.literacy.forEach((state) => state.hands.forEach(checkItem));
   save.placements.forEach((p) => checkItem(p.item));
   const loadouts = new Map(save.equipment.loadouts.map((l) => [l.entityId, l]));
-  const expectedHumans = save.worldSource === 'authored' ? save.npcs.length + 1 : 31;
+  const expectedHumans = save.npcs.length + 1;
   if (
     loadouts.size !== expectedHumans ||
     [...loadouts.keys()].some((id) => records.get(id)?.species !== 8)
@@ -663,8 +588,10 @@ export function migrateSave(input: unknown): GameSave {
     );
     const service = new EquipmentService(inventory);
     service.initialize(old.player.origin);
-    const world = new WorldGenerator().generate(old.seed);
-    const registry = new SceneRegistry(world, new ResourceStore(world));
+    const compiled = getDefaultCompiledWorld();
+    const authored = compiled ? new AuthoredWorldLoader().load(compiled) : undefined;
+    const world = authored?.world ?? new ChunkStore(CONFIG.worldSize, old.seed);
+    const registry = new SceneRegistry(world, new ResourceStore(world), authored?.props);
     const upgradeAttack = (value: GameSaveV3['player']['attack'], actor: number) =>
       value
         ? { ...value, moveId: value.kind, instanceId: `action:${actor}:${value.startedAt}` }
@@ -673,7 +600,7 @@ export function migrateSave(input: unknown): GameSave {
       ...old,
       version: 4,
       contentVersion: 3,
-      worldSource: 'procedural',
+      worldSource: 'authored',
       entities: {
         ...old.entities,
         records: old.entities.records.map((record) => ({ ...record, scene: 0 })),
@@ -730,7 +657,8 @@ export function migrateSave(input: unknown): GameSave {
       npcs: candidate.npcs.map((value, i) => {
         const n = value as Record<string, unknown>;
         const oldMemory = legacy.npcs.element.shape.memory.parse(n.memory);
-        return { ...n, memory: migrateMemory(NPC_PROFILES[i]!, oldMemory) };
+        const profile = NPC_PROFILES.find((p) => p.id === n.profileId) ?? NPC_PROFILES[i]!;
+        return { ...n, memory: migrateMemory(profile, oldMemory) };
       }),
     };
   }

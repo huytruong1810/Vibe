@@ -72,15 +72,15 @@ describe('unified bodies and stable identities', () => {
     structuredClone(frame, { transfer: [frame.packed.buffer] });
     expect(host.entities.id(slot)).toBe(id);
   });
-  it('creates 1,031 living entities with approximately four percent predators', () => {
+  it('creates 1,011 living entities placed from authored habitat zones', () => {
     const host = new SimulationHost(42, 1, 1000);
-    expect(host.entities.livingCount).toBe(1031);
+    expect(host.entities.livingCount).toBe(1011);
     expect(host.entities.wildlifeCount).toBe(1000);
     expect(
       [...host.entities.slots()].filter(
         (i) => host.entities.species[i] === 6 || host.entities.species[i] === 7,
       ),
-    ).toHaveLength(40);
+    ).toHaveLength(125);
   });
 });
 
@@ -191,6 +191,8 @@ describe('physiology and latched sleep', () => {
     expect(h.entities.food[p]).toBeCloseTo(0.55);
     const pantry = h.resources.supply(h.player)!,
       before = pantry.stock.berries!;
+    h.player.x = pantry.x;
+    h.player.y = pantry.y;
     expect(send(h, { type: 'service', action: 'eat' }).ok).toBe(true);
     expect(pantry.stock.berries).toBe(before - 1);
     expect(send(h, { type: 'service', action: 'drink' }).ok).toBe(true);
@@ -405,7 +407,7 @@ describe('nature, social attacks and predation', () => {
   });
   it('remembers bounded nonlethal villager assaults, retaliates and disallows dialogue escape', () => {
     const h = new SimulationHost(42, 1, 24),
-      npc = h.npcs[10]!,
+      npc = h.npcs[0]!,
       body = h.entities.require(npc.entityId);
     npc.x = h.player.x + 1;
     npc.y = h.player.y;
@@ -513,7 +515,7 @@ describe('save v4 compatibility', () => {
     const save = migrateSave(legacy),
       bad = structuredClone(save);
     bad.entities.records[1]!.id = bad.entities.records[0]!.id;
-    expect(() => migrateSave(bad)).toThrow(/Duplicate/);
+    expect(() => migrateSave(bad)).toThrow(/duplicate/i);
     const lost = structuredClone(save);
     lost.inventory[0] = { id: 'meal', instance: 'item:9' };
     expect(() => migrateSave(lost)).toThrow(/provenance/);

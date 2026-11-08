@@ -12,19 +12,14 @@ import { EntityStore, bindBody } from '../src/domain/entities';
 
 const samples = Number(process.env.BENCHMARK_TICKS ?? 3000);
 const started = performance.now();
-let host: SimulationHost;
-if (process.env.BENCHMARK_WORLD === 'authored') {
-  const { readFile } = await import('node:fs/promises');
-  const compiled = JSON.parse(
-    await readFile('public/assets/generated/aqualia-region.json', 'utf8'),
-  );
-  host = new SimulationHost(42, 1, 1000, 'world:benchmark', {
-    worldSource: 'authored',
-    compiledWorld: compiled,
-  });
-} else {
-  host = new SimulationHost(42, 1, 1000, 'world:benchmark');
-}
+const { readFile } = await import('node:fs/promises');
+const compiled = JSON.parse(
+  await readFile('public/assets/generated/aqualia-region.json', 'utf8'),
+);
+const host = new SimulationHost(42, 1, 1000, 'world:benchmark', {
+  worldSource: 'authored',
+  compiledWorld: compiled,
+});
 const generationMs = performance.now() - started;
 host.advance(300);
 const step: number[] = [],

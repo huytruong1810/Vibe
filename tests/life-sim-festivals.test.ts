@@ -66,6 +66,8 @@ describe('LIF-M3, LIF-M4, LIF-M5 Villager Birthdays, Festivals & Heart Events', 
     host.inventory.set(0, { id: 'water', instance: 'item:test:water' });
 
     // Interact and offer gift
+    host.player.x = npc.x;
+    host.player.y = npc.y;
     expect(send(host, { type: 'interact', npcId }).ok).toBe(true);
     const result = send(host, { type: 'giveGift', npcId, slot: 0 });
     expect(result.ok).toBe(true);

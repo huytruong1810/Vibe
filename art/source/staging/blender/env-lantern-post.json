@@ -1,0 +1,121 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/env-lantern-post--2026-11-05-env-lantern-post.md",
+  "approvalSha256": "29e1cc32cd98ee66d514926d2e43a5c0e74e0c80db087bf33b4e67aafb83cae2",
+  "asset": "env:lantern-post",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset env:lantern-post",
+    "id": "forge-env-lantern-post",
+    "inputs": [
+      {
+        "path": "blender/models/published/env-lantern-post/7c4dff70f335e9fdb85b52aaa2ced7675f7a4f6814ba05360d5d314f7a87bde3/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/env-lantern-post/7c4dff70f335e9fdb85b52aaa2ced7675f7a4f6814ba05360d5d314f7a87bde3/forge/blender/env_layout.py",
+        "role": "script",
+        "sha256": "b2fa291498b97eb55fc8450d37b55208b1d22550aa81a70b6c8c06d9cc08388b"
+      },
+      {
+        "path": "blender/models/published/env-lantern-post/7c4dff70f335e9fdb85b52aaa2ced7675f7a4f6814ba05360d5d314f7a87bde3/forge/forge.py",
+        "role": "script",
+        "sha256": "72344e74be14dd4324bbc2a158d9c160ff2dfbdfc1325d5166dc5baa5fb6b531"
+      },
+      {
+        "path": "blender/models/published/env-lantern-post/7c4dff70f335e9fdb85b52aaa2ced7675f7a4f6814ba05360d5d314f7a87bde3/forge/forgelib/environment.py",
+        "role": "script",
+        "sha256": "4b3443c051f8076ebdc9abd18152831dfbfe74c0053e7c4622ef3d7f483e397c"
+      },
+      {
+        "path": "blender/models/published/env-lantern-post/7c4dff70f335e9fdb85b52aaa2ced7675f7a4f6814ba05360d5d314f7a87bde3/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/env-lantern-post/7c4dff70f335e9fdb85b52aaa2ced7675f7a4f6814ba05360d5d314f7a87bde3/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "2963b6c95098f03aadf7fffe21507c8b3aa6b4fb4d13e657a9b7921e761ba629"
+      },
+      {
+        "path": "blender/models/published/env-lantern-post/7c4dff70f335e9fdb85b52aaa2ced7675f7a4f6814ba05360d5d314f7a87bde3/forge/recipes/env-lantern-post.json",
+        "role": "pose-config",
+        "sha256": "cb4a4ac0842c1a2ee551c1683f50b1a7b5021bdb6a3774e9f502328196af2c00"
+      },
+      {
+        "path": "blender/models/published/env-lantern-post/7c4dff70f335e9fdb85b52aaa2ced7675f7a4f6814ba05360d5d314f7a87bde3/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/env-lantern-post/7c4dff70f335e9fdb85b52aaa2ced7675f7a4f6814ba05360d5d314f7a87bde3/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/env-lantern-post/7c4dff70f335e9fdb85b52aaa2ced7675f7a4f6814ba05360d5d314f7a87bde3/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/env-lantern-post/7c4dff70f335e9fdb85b52aaa2ced7675f7a4f6814ba05360d5d314f7a87bde3/forge/work/env-lantern-post/layout.json",
+        "role": "pose-config",
+        "sha256": "969e9cb4cac159f50a169901497413f6933989d82763f3c0c813fcd83fad0ff0"
+      },
+      {
+        "path": "blender/models/published/env-lantern-post/7c4dff70f335e9fdb85b52aaa2ced7675f7a4f6814ba05360d5d314f7a87bde3/forge/work/env-lantern-post/layout/base.blend",
+        "role": "model",
+        "sha256": "f5e5f6e932603ef9170133caf669c82595f6bf228ba6a21623fe9833244c00cb"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "footprint": [
+    1,
+    1
+  ],
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 96,
+        "y": 356
+      },
+      "file": "exports/env-lantern-post/006ba66df9e79e8658456ab0f82c03db43c58b53508c0ca412d65e255ac4d164/frames/shadow.png",
+      "id": "env-lantern-post-shadow",
+      "layer": "shadow",
+      "sha256": "a7c16760a6bc3bb2ceeb2714311ad8cccea2cea4a2f77a756ac2c8af1f155222",
+      "sourceSize": {
+        "h": 364,
+        "w": 192
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 96,
+        "y": 356
+      },
+      "file": "exports/env-lantern-post/006ba66df9e79e8658456ab0f82c03db43c58b53508c0ca412d65e255ac4d164/frames/base.png",
+      "id": "env-lantern-post-base",
+      "layer": "base",
+      "sha256": "185b762ad72f5568a83276a740771d08059237dfec6b21a2df8ea4630c95c1d4",
+      "sourceSize": {
+        "h": 364,
+        "w": 192
+      }
+    }
+  ],
+  "lightPools": [],
+  "packet": "art/review/2026-11-05-env-lantern-post",
+  "packetDigest": "006ba66df9e79e8658456ab0f82c03db43c58b53508c0ca412d65e255ac4d164",
+  "packetSha256": "7b49e84157d22eb12d446b26059755da7c6c7e6a04b600aef27ff35653b3e2a4",
+  "schemaVersion": 1,
+  "scope": [
+    "shadow",
+    "base"
+  ]
+}

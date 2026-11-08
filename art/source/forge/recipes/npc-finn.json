@@ -1,0 +1,29 @@
+{
+  "asset": "npc:finn",
+  "kind": "human",
+  "heightArtPx": 40,
+  "ramps": {
+    "skin": "skin-warm",
+    "hair": "hair-brown",
+    "shirt": "teal",
+    "neckerchief": "sky",
+    "leather": "leather"
+  },
+  "gen3d": { "seed": 1234, "steps": 50, "views": ["front", "back"] },
+  "concept": {
+    "template": "human-apose-v1",
+    "fields": {
+      "name": "Finn",
+      "age": "23",
+      "role": "canal apprentice",
+      "home": "Aqualia canal locks",
+      "personality": "eager, thoughtful, modest, easily embarrassed by praise",
+      "appearance": "standard youthful canal apprentice build, warm freckled skin, tousled chestnut-brown hair, expressive hazel-green eyes, wearing a teal work shirt with popped collar, light sky-blue neckerchief tied neatly at neck, brown leather work suspenders and tool harness, rolled-up work trousers, and sturdy brown leather boots. Proportions are 5 heads tall in clean stylized A-pose"
+    },
+    "poseGuide": "art/source/style/pose-guides/human.png",
+    "references": [
+      "public/assets/portraits/characters/portrait_npc_finn_128.png"
+    ]
+  },
+  "notes": "Aqualia canal apprentice (B21). Standard build, 5 heads tall, guided by human.png."
+}

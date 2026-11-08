@@ -1,0 +1,2149 @@
+{
+  "baseDigest": "6211d67cd102b0c475261727f1ec16f410e6ad44b9454557be010e4889a3b737",
+  "id": "aqualia-riverlands-layout-003",
+  "level": "aqualia_riverlands",
+  "operations": [
+    {
+      "layer": "ground",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          0,
+          0,
+          120,
+          68
+        ]
+      },
+      "value": 1
+    },
+    {
+      "layer": "biome",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          0,
+          50,
+          120,
+          18
+        ]
+      },
+      "value": 7
+    },
+    {
+      "layer": "ground",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          0,
+          24,
+          40,
+          8
+        ]
+      },
+      "value": 6
+    },
+    {
+      "layer": "ground",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          60,
+          38,
+          30,
+          8
+        ]
+      },
+      "value": 6
+    },
+    {
+      "layer": "ground",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          20,
+          52,
+          80,
+          14
+        ]
+      },
+      "value": 5
+    },
+    {
+      "layer": "ground",
+      "op": "paint",
+      "shape": {
+        "center": [
+          12,
+          24
+        ],
+        "kind": "circle",
+        "radius": 5
+      },
+      "value": 3
+    },
+    {
+      "layer": "ground",
+      "op": "paint",
+      "shape": {
+        "center": [
+          74,
+          44
+        ],
+        "kind": "circle",
+        "radius": 6
+      },
+      "value": 3
+    },
+    {
+      "layer": "ground",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          68,
+          4,
+          16,
+          8
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "elevation",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          60,
+          0,
+          36,
+          16
+        ]
+      },
+      "value": 1
+    },
+    {
+      "layer": "collision",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          65,
+          15,
+          3,
+          2
+        ]
+      },
+      "value": 2
+    },
+    {
+      "layer": "water",
+      "op": "paint",
+      "shape": {
+        "kind": "spline",
+        "points": [
+          [
+            120,
+            18
+          ],
+          [
+            104,
+            20
+          ],
+          [
+            92,
+            27
+          ],
+          [
+            78,
+            30
+          ],
+          [
+            70,
+            36
+          ],
+          [
+            62,
+            42
+          ],
+          [
+            52,
+            43
+          ],
+          [
+            46,
+            37
+          ],
+          [
+            44,
+            30
+          ],
+          [
+            36,
+            26
+          ],
+          [
+            22,
+            28
+          ],
+          [
+            10,
+            27
+          ],
+          [
+            0,
+            27
+          ]
+        ],
+        "width": 5
+      },
+      "value": 1
+    },
+    {
+      "layer": "water",
+      "op": "paint",
+      "shape": {
+        "kind": "spline",
+        "points": [
+          [
+            120,
+            18
+          ],
+          [
+            104,
+            20
+          ],
+          [
+            92,
+            27
+          ],
+          [
+            78,
+            30
+          ],
+          [
+            70,
+            36
+          ],
+          [
+            62,
+            42
+          ],
+          [
+            52,
+            43
+          ],
+          [
+            46,
+            37
+          ],
+          [
+            44,
+            30
+          ],
+          [
+            36,
+            26
+          ],
+          [
+            22,
+            28
+          ],
+          [
+            10,
+            27
+          ],
+          [
+            0,
+            27
+          ]
+        ],
+        "width": 2
+      },
+      "value": 2
+    },
+    {
+      "layer": "water",
+      "op": "paint",
+      "shape": {
+        "center": [
+          76,
+          7
+        ],
+        "kind": "circle",
+        "radius": 3
+      },
+      "value": 1
+    },
+    {
+      "layer": "water",
+      "op": "paint",
+      "shape": {
+        "center": [
+          104,
+          42
+        ],
+        "kind": "circle",
+        "radius": 3
+      },
+      "value": 1
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "spline",
+        "points": [
+          [
+            0,
+            8
+          ],
+          [
+            18,
+            12
+          ],
+          [
+            40,
+            14
+          ],
+          [
+            62,
+            20
+          ],
+          [
+            76,
+            31
+          ],
+          [
+            86,
+            40
+          ],
+          [
+            96,
+            52
+          ],
+          [
+            110,
+            61
+          ],
+          [
+            120,
+            66
+          ]
+        ],
+        "width": 2
+      },
+      "value": 1
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "spline",
+        "points": [
+          [
+            62,
+            20
+          ],
+          [
+            66,
+            15
+          ],
+          [
+            76,
+            9
+          ]
+        ],
+        "width": 2
+      },
+      "value": 2
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "spline",
+        "points": [
+          [
+            0,
+            60
+          ],
+          [
+            5,
+            44
+          ],
+          [
+            20,
+            36
+          ],
+          [
+            40,
+            34
+          ],
+          [
+            55,
+            40
+          ]
+        ],
+        "width": 2
+      },
+      "value": 1
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "spline",
+        "points": [
+          [
+            20,
+            36
+          ],
+          [
+            30,
+            52
+          ],
+          [
+            44,
+            60
+          ],
+          [
+            60,
+            58
+          ],
+          [
+            74,
+            60
+          ],
+          [
+            86,
+            54
+          ],
+          [
+            96,
+            52
+          ]
+        ],
+        "width": 2
+      },
+      "value": 3
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "spline",
+        "points": [
+          [
+            86,
+            40
+          ],
+          [
+            100,
+            30
+          ],
+          [
+            106,
+            14
+          ],
+          [
+            110,
+            0
+          ]
+        ],
+        "width": 2
+      },
+      "value": 1
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          0,
+          52,
+          1,
+          7
+        ]
+      },
+      "value": 0
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          0,
+          59,
+          1,
+          2
+        ]
+      },
+      "value": 1
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          75,
+          8,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          76,
+          8,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          74,
+          9,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          75,
+          9,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          76,
+          9,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          104,
+          17,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          105,
+          17,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          103,
+          18,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          104,
+          18,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          103,
+          19,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          104,
+          19,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          102,
+          20,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          103,
+          20,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          104,
+          20,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          102,
+          21,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          103,
+          21,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          102,
+          22,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          103,
+          22,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          101,
+          23,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          102,
+          23,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          74,
+          29,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          75,
+          29,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          74,
+          30,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          75,
+          30,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          76,
+          30,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          75,
+          31,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          76,
+          31,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          77,
+          31,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          76,
+          32,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          77,
+          32,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          78,
+          32,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          77,
+          33,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          43,
+          34,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          43,
+          35,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          44,
+          35,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          45,
+          35,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          44,
+          36,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          45,
+          36,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          46,
+          36,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          47,
+          36,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          48,
+          36,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          46,
+          37,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          47,
+          37,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          48,
+          37,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          49,
+          37,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          49,
+          38,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          50,
+          38,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          51,
+          39,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          54,
+          40,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [
+          55,
+          40,
+          1,
+          1
+        ]
+      },
+      "value": 4
+    },
+    {
+      "at": [
+        4,
+        8
+      ],
+      "entity": "Landmark",
+      "fields": {
+        "id": "weir-waystone",
+        "name": "Weir waystone"
+      },
+      "id": "landmark/weir-waystone",
+      "op": "place"
+    },
+    {
+      "at": [
+        44,
+        8
+      ],
+      "entity": "Landmark",
+      "fields": {
+        "id": "kite-oak",
+        "name": "Kite Oak"
+      },
+      "id": "landmark/kite-oak",
+      "op": "place"
+    },
+    {
+      "at": [
+        76,
+        7
+      ],
+      "entity": "Landmark",
+      "fields": {
+        "id": "warm-spring",
+        "name": "Warm spring"
+      },
+      "id": "landmark/warm-spring",
+      "op": "place"
+    },
+    {
+      "at": [
+        106,
+        14
+      ],
+      "entity": "Landmark",
+      "fields": {
+        "id": "stepping-stones",
+        "name": "Reedwater stepping stones"
+      },
+      "id": "landmark/stepping-stones",
+      "op": "place"
+    },
+    {
+      "at": [
+        12,
+        24
+      ],
+      "entity": "Landmark",
+      "fields": {
+        "id": "confluence-sandbar",
+        "name": "Confluence sandbar"
+      },
+      "id": "landmark/confluence-sandbar",
+      "op": "place"
+    },
+    {
+      "at": [
+        40,
+        22
+      ],
+      "entity": "Landmark",
+      "fields": {
+        "id": "survey-hide",
+        "name": "Mira's survey hide"
+      },
+      "id": "landmark/survey-hide",
+      "op": "place"
+    },
+    {
+      "at": [
+        76,
+        31
+      ],
+      "entity": "Landmark",
+      "fields": {
+        "id": "willow-footbridge",
+        "name": "Willow footbridge"
+      },
+      "id": "landmark/willow-footbridge",
+      "op": "place"
+    },
+    {
+      "at": [
+        106,
+        26
+      ],
+      "entity": "Landmark",
+      "fields": {
+        "id": "heron-rock",
+        "name": "Heron rock"
+      },
+      "id": "landmark/heron-rock",
+      "op": "place"
+    },
+    {
+      "at": [
+        5,
+        44
+      ],
+      "entity": "Landmark",
+      "fields": {
+        "id": "ferry-bell",
+        "name": "Ferry bell post"
+      },
+      "id": "landmark/ferry-bell",
+      "op": "place"
+    },
+    {
+      "at": [
+        55,
+        44
+      ],
+      "entity": "Landmark",
+      "fields": {
+        "id": "larks-bend",
+        "name": "Lark's Bend"
+      },
+      "id": "landmark/larks-bend",
+      "op": "place"
+    },
+    {
+      "at": [
+        74,
+        44
+      ],
+      "entity": "Landmark",
+      "fields": {
+        "id": "nesting-banks",
+        "name": "Rivallie nesting banks"
+      },
+      "id": "landmark/nesting-banks",
+      "op": "place"
+    },
+    {
+      "at": [
+        104,
+        42
+      ],
+      "entity": "Landmark",
+      "fields": {
+        "id": "drowned-tree",
+        "name": "Drowned tree"
+      },
+      "id": "landmark/drowned-tree",
+      "op": "place"
+    },
+    {
+      "at": [
+        8,
+        59
+      ],
+      "entity": "Landmark",
+      "fields": {
+        "id": "old-boathouse",
+        "name": "Old boathouse"
+      },
+      "id": "landmark/old-boathouse",
+      "op": "place"
+    },
+    {
+      "at": [
+        44,
+        60
+      ],
+      "entity": "Landmark",
+      "fields": {
+        "id": "fungi-ring",
+        "name": "Fungi ring"
+      },
+      "id": "landmark/fungi-ring",
+      "op": "place"
+    },
+    {
+      "at": [
+        74,
+        60
+      ],
+      "entity": "Landmark",
+      "fields": {
+        "id": "sunken-gauge",
+        "name": "Sunken gauge post"
+      },
+      "id": "landmark/sunken-gauge",
+      "op": "place"
+    },
+    {
+      "at": [
+        113,
+        63
+      ],
+      "entity": "Landmark",
+      "fields": {
+        "id": "tidecross-stones",
+        "name": "Tidecross road stones"
+      },
+      "id": "landmark/tidecross-stones",
+      "op": "place"
+    },
+    {
+      "at": [
+        55,
+        47
+      ],
+      "entity": "StorySpot",
+      "fields": {
+        "id": "larks-bend-view",
+        "subject": "larks-bend"
+      },
+      "id": "story/larks-bend-view",
+      "op": "place"
+    },
+    {
+      "at": [
+        72,
+        41
+      ],
+      "entity": "StorySpot",
+      "fields": {
+        "id": "nesting-watch",
+        "subject": "nesting-banks"
+      },
+      "id": "story/nesting-watch",
+      "op": "place"
+    },
+    {
+      "at": [
+        74,
+        10
+      ],
+      "entity": "StorySpot",
+      "fields": {
+        "id": "spring-steam",
+        "subject": "warm-spring"
+      },
+      "id": "story/spring-steam",
+      "op": "place"
+    },
+    {
+      "at": [
+        44,
+        63
+      ],
+      "entity": "StorySpot",
+      "fields": {
+        "id": "fungi-night",
+        "subject": "fungi-ring"
+      },
+      "id": "story/fungi-night",
+      "op": "place"
+    },
+    {
+      "at": [
+        64,
+        36
+      ],
+      "entity": "Habitat",
+      "fields": {
+        "density": "dense",
+        "phases": [],
+        "species": [
+          "rivallie"
+        ]
+      },
+      "id": "habitat/riverlands-0",
+      "op": "place",
+      "size": [
+        24,
+        14
+      ]
+    },
+    {
+      "at": [
+        0,
+        20
+      ],
+      "entity": "Habitat",
+      "fields": {
+        "density": "common",
+        "phases": [],
+        "species": [
+          "rivallie"
+        ]
+      },
+      "id": "habitat/riverlands-1",
+      "op": "place",
+      "size": [
+        64,
+        14
+      ]
+    },
+    {
+      "at": [
+        62,
+        0
+      ],
+      "entity": "Habitat",
+      "fields": {
+        "density": "common",
+        "phases": [],
+        "species": [
+          "steamshell"
+        ]
+      },
+      "id": "habitat/riverlands-2",
+      "op": "place",
+      "size": [
+        34,
+        16
+      ]
+    },
+    {
+      "at": [
+        24,
+        0
+      ],
+      "entity": "Habitat",
+      "fields": {
+        "density": "common",
+        "phases": [],
+        "species": [
+          "zephyrit"
+        ]
+      },
+      "id": "habitat/riverlands-3",
+      "op": "place",
+      "size": [
+        36,
+        20
+      ]
+    },
+    {
+      "at": [
+        28,
+        52
+      ],
+      "entity": "Habitat",
+      "fields": {
+        "density": "common",
+        "phases": [],
+        "species": [
+          "mireling"
+        ]
+      },
+      "id": "habitat/riverlands-4",
+      "op": "place",
+      "size": [
+        32,
+        16
+      ]
+    },
+    {
+      "at": [
+        60,
+        52
+      ],
+      "entity": "Habitat",
+      "fields": {
+        "density": "sparse",
+        "phases": [
+          "dusk",
+          "night"
+        ],
+        "species": [
+          "marshstalker"
+        ]
+      },
+      "id": "habitat/riverlands-5",
+      "op": "place",
+      "size": [
+        44,
+        16
+      ]
+    },
+    {
+      "at": [
+        0,
+        20
+      ],
+      "entity": "AmbienceEmitter",
+      "fields": {
+        "phases": [],
+        "set": "reed-sway"
+      },
+      "id": "ambience/riverlands-0",
+      "op": "place",
+      "size": [
+        96,
+        30
+      ]
+    },
+    {
+      "at": [
+        0,
+        0
+      ],
+      "entity": "AmbienceEmitter",
+      "fields": {
+        "phases": [
+          "day"
+        ],
+        "set": "butterflies"
+      },
+      "id": "ambience/riverlands-1",
+      "op": "place",
+      "size": [
+        60,
+        20
+      ]
+    },
+    {
+      "at": [
+        40,
+        30
+      ],
+      "entity": "AmbienceEmitter",
+      "fields": {
+        "phases": [
+          "dawn",
+          "day"
+        ],
+        "set": "rivallie-splashes"
+      },
+      "id": "ambience/riverlands-2",
+      "op": "place",
+      "size": [
+        50,
+        20
+      ]
+    },
+    {
+      "at": [
+        28,
+        52
+      ],
+      "entity": "AmbienceEmitter",
+      "fields": {
+        "phases": [
+          "dusk",
+          "night"
+        ],
+        "set": "glowing-fungi"
+      },
+      "id": "ambience/riverlands-3",
+      "op": "place",
+      "size": [
+        32,
+        16
+      ]
+    },
+    {
+      "at": [
+        0,
+        50
+      ],
+      "entity": "AmbienceEmitter",
+      "fields": {
+        "phases": [
+          "dawn",
+          "night"
+        ],
+        "set": "mist-bands"
+      },
+      "id": "ambience/riverlands-4",
+      "op": "place",
+      "size": [
+        120,
+        18
+      ]
+    },
+    {
+      "at": [
+        0,
+        20
+      ],
+      "entity": "AmbienceEmitter",
+      "fields": {
+        "phases": [
+          "dusk",
+          "night"
+        ],
+        "set": "fireflies"
+      },
+      "id": "ambience/riverlands-5",
+      "op": "place",
+      "size": [
+        120,
+        48
+      ]
+    },
+    {
+      "at": [
+        0,
+        0
+      ],
+      "entity": "MusicZone",
+      "fields": {
+        "track": "riverlands-day"
+      },
+      "id": "riverlands-music",
+      "op": "place",
+      "size": [
+        120,
+        68
+      ]
+    },
+    {
+      "at": [
+        4,
+        8
+      ],
+      "entity": "Waystone",
+      "fields": {
+        "id": "weir-waystone"
+      },
+      "id": "waystone/weir-waystone",
+      "op": "place"
+    },
+    {
+      "at": [
+        113,
+        63
+      ],
+      "entity": "Waystone",
+      "fields": {
+        "id": "tidecross-stones"
+      },
+      "id": "waystone/tidecross-stones",
+      "op": "place"
+    },
+    {
+      "at": [
+        4,
+        8
+      ],
+      "entity": "Decor",
+      "fields": {
+        "asset": "env:landmark_waystone",
+        "blocks": false
+      },
+      "id": "decor/weir-waystone",
+      "op": "place"
+    },
+    {
+      "at": [
+        44,
+        8
+      ],
+      "entity": "Decor",
+      "fields": {
+        "asset": "env:tree_oak",
+        "blocks": false
+      },
+      "id": "decor/kite-oak",
+      "op": "place"
+    },
+    {
+      "at": [
+        76,
+        7
+      ],
+      "entity": "Decor",
+      "fields": {
+        "asset": "env:rock_boulder_rich",
+        "blocks": false
+      },
+      "id": "decor/warm-spring",
+      "op": "place"
+    },
+    {
+      "at": [
+        106,
+        14
+      ],
+      "entity": "Decor",
+      "fields": {
+        "asset": "env:rock_pebbles",
+        "blocks": false
+      },
+      "id": "decor/stepping-stones",
+      "op": "place"
+    },
+    {
+      "at": [
+        12,
+        24
+      ],
+      "entity": "Decor",
+      "fields": {
+        "asset": "env:flora_reeds_healthy",
+        "blocks": false
+      },
+      "id": "decor/confluence-sandbar",
+      "op": "place"
+    },
+    {
+      "at": [
+        40,
+        22
+      ],
+      "entity": "Decor",
+      "fields": {
+        "asset": "env:flora_reeds_healthy",
+        "blocks": false
+      },
+      "id": "decor/survey-hide",
+      "op": "place"
+    },
+    {
+      "at": [
+        76,
+        31
+      ],
+      "entity": "Decor",
+      "fields": {
+        "asset": "env:tree_oak",
+        "blocks": false
+      },
+      "id": "decor/willow-footbridge",
+      "op": "place"
+    },
+    {
+      "at": [
+        106,
+        26
+      ],
+      "entity": "Decor",
+      "fields": {
+        "asset": "env:rock_boulder_rich",
+        "blocks": false
+      },
+      "id": "decor/heron-rock",
+      "op": "place"
+    },
+    {
+      "at": [
+        5,
+        44
+      ],
+      "entity": "Decor",
+      "fields": {
+        "asset": "env:landmark_waystone",
+        "blocks": false
+      },
+      "id": "decor/ferry-bell",
+      "op": "place"
+    },
+    {
+      "at": [
+        55,
+        44
+      ],
+      "entity": "Decor",
+      "fields": {
+        "asset": "env:tree_oak",
+        "blocks": false
+      },
+      "id": "decor/larks-bend",
+      "op": "place"
+    },
+    {
+      "at": [
+        74,
+        44
+      ],
+      "entity": "Decor",
+      "fields": {
+        "asset": "env:flora_reeds_healthy",
+        "blocks": false
+      },
+      "id": "decor/nesting-banks",
+      "op": "place"
+    },
+    {
+      "at": [
+        104,
+        42
+      ],
+      "entity": "Decor",
+      "fields": {
+        "asset": "env:tree_oak",
+        "blocks": false
+      },
+      "id": "decor/drowned-tree",
+      "op": "place"
+    },
+    {
+      "at": [
+        8,
+        59
+      ],
+      "entity": "Decor",
+      "fields": {
+        "asset": "env:house_aqualia",
+        "blocks": false
+      },
+      "id": "decor/old-boathouse",
+      "op": "place"
+    },
+    {
+      "at": [
+        44,
+        60
+      ],
+      "entity": "Decor",
+      "fields": {
+        "asset": "env:flora_fungi_healthy",
+        "blocks": false
+      },
+      "id": "decor/fungi-ring",
+      "op": "place"
+    },
+    {
+      "at": [
+        74,
+        60
+      ],
+      "entity": "Decor",
+      "fields": {
+        "asset": "env:landmark_waystone",
+        "blocks": false
+      },
+      "id": "decor/sunken-gauge",
+      "op": "place"
+    },
+    {
+      "at": [
+        113,
+        63
+      ],
+      "entity": "Decor",
+      "fields": {
+        "asset": "env:landmark_waystone",
+        "blocks": false
+      },
+      "id": "decor/tidecross-stones",
+      "op": "place"
+    },
+    {
+      "at": [
+        2,
+        2
+      ],
+      "entity": "Decor",
+      "fields": {
+        "asset": "placeholder:foreground:canopy",
+        "blocks": false
+      },
+      "id": "foreground/0/0",
+      "op": "place"
+    },
+    {
+      "at": [
+        32,
+        2
+      ],
+      "entity": "Decor",
+      "fields": {
+        "asset": "placeholder:foreground:canopy",
+        "blocks": false
+      },
+      "id": "foreground/1/0",
+      "op": "place"
+    },
+    {
+      "at": [
+        62,
+        2
+      ],
+      "entity": "Decor",
+      "fields": {
+        "asset": "placeholder:foreground:canopy",
+        "blocks": false
+      },
+      "id": "foreground/2/0",
+      "op": "place"
+    },
+    {
+      "at": [
+        92,
+        2
+      ],
+      "entity": "Decor",
+      "fields": {
+        "asset": "placeholder:foreground:canopy",
+        "blocks": false
+      },
+      "id": "foreground/3/0",
+      "op": "place"
+    },
+    {
+      "at": [
+        2,
+        19
+      ],
+      "entity": "Decor",
+      "fields": {
+        "asset": "placeholder:foreground:canopy",
+        "blocks": false
+      },
+      "id": "foreground/0/1",
+      "op": "place"
+    },
+    {
+      "at": [
+        32,
+        19
+      ],
+      "entity": "Decor",
+      "fields": {
+        "asset": "placeholder:foreground:canopy",
+        "blocks": false
+      },
+      "id": "foreground/1/1",
+      "op": "place"
+    },
+    {
+      "at": [
+        62,
+        19
+      ],
+      "entity": "Decor",
+      "fields": {
+        "asset": "placeholder:foreground:canopy",
+        "blocks": false
+      },
+      "id": "foreground/2/1",
+      "op": "place"
+    },
+    {
+      "at": [
+        92,
+        19
+      ],
+      "entity": "Decor",
+      "fields": {
+        "asset": "placeholder:foreground:canopy",
+        "blocks": false
+      },
+      "id": "foreground/3/1",
+      "op": "place"
+    },
+    {
+      "at": [
+        2,
+        36
+      ],
+      "entity": "Decor",
+      "fields": {
+        "asset": "placeholder:foreground:canopy",
+        "blocks": false
+      },
+      "id": "foreground/0/2",
+      "op": "place"
+    },
+    {
+      "at": [
+        32,
+        36
+      ],
+      "entity": "Decor",
+      "fields": {
+        "asset": "placeholder:foreground:canopy",
+        "blocks": false
+      },
+      "id": "foreground/1/2",
+      "op": "place"
+    },
+    {
+      "at": [
+        62,
+        36
+      ],
+      "entity": "Decor",
+      "fields": {
+        "asset": "placeholder:foreground:canopy",
+        "blocks": false
+      },
+      "id": "foreground/2/2",
+      "op": "place"
+    },
+    {
+      "at": [
+        92,
+        36
+      ],
+      "entity": "Decor",
+      "fields": {
+        "asset": "placeholder:foreground:canopy",
+        "blocks": false
+      },
+      "id": "foreground/3/2",
+      "op": "place"
+    },
+    {
+      "at": [
+        2,
+        53
+      ],
+      "entity": "Decor",
+      "fields": {
+        "asset": "placeholder:foreground:canopy",
+        "blocks": false
+      },
+      "id": "foreground/0/3",
+      "op": "place"
+    },
+    {
+      "at": [
+        32,
+        53
+      ],
+      "entity": "Decor",
+      "fields": {
+        "asset": "placeholder:foreground:canopy",
+        "blocks": false
+      },
+      "id": "foreground/1/3",
+      "op": "place"
+    },
+    {
+      "at": [
+        62,
+        53
+      ],
+      "entity": "Decor",
+      "fields": {
+        "asset": "placeholder:foreground:canopy",
+        "blocks": false
+      },
+      "id": "foreground/2/3",
+      "op": "place"
+    },
+    {
+      "at": [
+        92,
+        53
+      ],
+      "entity": "Decor",
+      "fields": {
+        "asset": "placeholder:foreground:canopy",
+        "blocks": false
+      },
+      "id": "foreground/3/3",
+      "op": "place"
+    }
+  ],
+  "region": "aqualia",
+  "version": 1
+}

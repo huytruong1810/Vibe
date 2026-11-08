@@ -1,0 +1,45 @@
+{
+  "asset": "env:flora-reeds-harvested",
+  "stage": "layout",
+  "inputsDigest": "39fd4500034ff417c28817ec6813d5f534169666594e563407f1dfa065bb0da5",
+  "inputs": [
+    "art/source/forge/work/env-flora-reeds-harvested/texture.blend",
+    "art/source/forge/work/env-flora-reeds-harvested/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-flora-reeds-harvested/layout/base.blend": "7da1adc3633959b0a3fb697618bf1ed4a1e2fcd83d433df1de9a7087c0691c4b",
+    "art/source/forge/work/env-flora-reeds-harvested/layout_preview.png": "6900fa3e0234a8bcb83991d8457efd2ea7195ac7a6b20d1b40381cb4055b9c28"
+  },
+  "extra": {
+    "scale": 0.086319,
+    "heightUnits": 1.3962,
+    "contactDepthTiles": 1.09,
+    "footprint": [
+      1,
+      1
+    ],
+    "canvas": {
+      "size": [
+        64,
+        70
+      ],
+      "anchor": [
+        32,
+        66
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -0.5,
+      0.0
+    ],
+    "layers": [
+      "base"
+    ],
+    "faces": {
+      "base": 14000
+    }
+  },
+  "at": "2026-11-05T07:30:41Z"
+}

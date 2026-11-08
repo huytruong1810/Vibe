@@ -1,0 +1,38 @@
+{
+  "dependenciesDigest": "87bf25c8b3de40f4862dfb9eedc1e32ea36faf4878b4b44ea7a8e56be3c926b7",
+  "files": {
+    "README.md": "dede355f05a010990bd2f9ba440d298d0985b21d0dabccfec563416576848d69",
+    "before-overview.png": "8575c7602caedbbfa66facd56af4b2935c93db7e362a86c2bc7a9afb03b2f824",
+    "overview.png": "63525aebe726e9d1fc9ef703ca8b4f7dc4c4cdc790b6fb2324413116f0c69e13",
+    "passes/001-village.json": "c2d00c0c317979cbe5e2914d8946cd1a3432fac7377934a3934a95c1c9470001",
+    "passes/002-village-details.json": "3b9d419c95ec91e0fdcf5f8f86ec58d75fbbc6dff4962493175a19accda4a143",
+    "passes/003-riverlands-layout.json": "02d66059d9349d7b809f8553671aaff73465453e77a3affb4f8d87f906d29bc6",
+    "passes/004-riverlands-water-roads.json": "760a6c9ffbf71ac8d3b52c82aaec409ba3cae4937301d34a63d33163a64b6a92",
+    "passes/005-riverlands-zones.json": "421b52d6764ed8f311d4d5d68c36554849b4aebd516badd5393e5eb84d135c4a",
+    "passes/006-riverlands-screen-decor.json": "0b6956537020672694b8ecc0958d6bc580bd7a6c6878617dcace79c5d0b5e1f0",
+    "passes/007-village-dressing.json": "7e3c76706b324ba9632de8fa89ed9b33ba2a5846801feba055ef7e7edca19f80",
+    "passes/008-riverlands-dressing.json": "ed13abebeea20423be08857c70861ffe2e82382f9d3286a596cc1f7a3e5a8d30",
+    "qa_report.json": "5630fecbe81aa8726e999d24ebd6694d6dd07e2116edcbd161ac1025594e5260",
+    "render.json": "5de672e55c0c7983fb6707a953adeec88f68acf052ce5da1265a28cad2147cd8",
+    "screen-0-0.png": "2fd965babbaea2a3f83fdf32762a7c9e5ecd26b3413cd1f4212db1718e37cbd4",
+    "screen-0-1.png": "8b1a463465ee9f2b4f40e91484c84a7b4a83aecdc20e3f3154ce1fcd21c6f9e0",
+    "screen-0-2.png": "367606235d09614cdd58e3d448f795a62f14d17cb2bc4723b06ee3ec06beb5c8",
+    "screen-0-3.png": "772cfe986d1a47966bc193463f1729f49827f4a45f5db0fa16c750602b5abec9",
+    "screen-1-0.png": "46ff31adb23a9b17f6d10e49906c0f2b9aba76c73bfd746b06646d3c2f150a75",
+    "screen-1-1.png": "94d53caefdaa05f17b7b0395f3acd952c64de7bf92eaf17f4b74a9d27a8d78e2",
+    "screen-1-2.png": "c9458b2637da131d29ce4a4a1aa72baa8716f0a7209c2ffcb523544836596ac2",
+    "screen-1-3.png": "0a1c71994246aa3f825ddadea8dc835b8c86afb4bb32cab3f452333ebcb98b89",
+    "screen-2-0.png": "1cff87b91a958eafca55ad21e36b99d42db9955d308fc35ba0464b2094076762",
+    "screen-2-1.png": "cbbe4ca14165eebef54d7dae4f3557d8b06ba904053d5e29283698b293d0d0f8",
+    "screen-2-2.png": "4653f38563a28adfc30128e015fcb9fbe72386af79bb0ffbee8a645abce3e98d",
+    "screen-2-3.png": "98cb6522103629fd11c8c10072d9f3a8dc0a1267db09cbfdb8400be662d0db05"
+  },
+  "level": "aqualia_village",
+  "schemaVersion": 2,
+  "source": {
+    "path": "art/source/world/hearthwild.ldtk",
+    "sha256": "ae34ae141d48512ab02607d274973751db79a0853fdebb74eaa3c6d982b66d5b"
+  },
+  "sourceDigest": "ae34ae141d48512ab02607d274973751db79a0853fdebb74eaa3c6d982b66d5b",
+  "status": "candidate"
+}

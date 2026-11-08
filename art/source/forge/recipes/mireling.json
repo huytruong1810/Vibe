@@ -1,0 +1,60 @@
+{
+  "asset": "mireling",
+  "kind": "creature",
+  "heightArtPx": 26,
+  "supersample": 4,
+  "features": {
+    "flowers": {
+      "minSamples": 1,
+      "on": ["moss", "shell", "edge"],
+      "near": ["Socket_Back"],
+      "radiusPx": 8,
+      "maxPx": 4
+    }
+  },
+  "ramps": {
+    "shell": "basalt",
+    "moss": "moss",
+    "skin": "leather",
+    "flowers": "blossom"
+  },
+  "rampShift": {
+    "shell": -2
+  },
+  "rig": {
+    "yawDeg": -6.7
+  },
+  "gen3d": {
+    "seed": 1234,
+    "steps": 50,
+    "views": [
+      "front",
+      "left",
+      "back"
+    ]
+  },
+  "notes": "3-view quadruped reference sheet (communicator ticket M10/M11). Tortoise with basalt carapace, moss garden, leather skin, and blossom water lilies. creature.medium canvas (56x56, anchor 28,41).",
+  "texture": {
+    "views": [
+      "front",
+      "left",
+      "back"
+    ]
+  },
+  "concept": {
+    "template": "creature-v1",
+    "fields": {
+      "species": "Mireling",
+      "element": "water and wind",
+      "size": "medium",
+      "stance": "standing on all four paws with its body horizontal, never sitting or standing upright",
+      "description": "a mossy wetland creature that shelters small plants upon its back",
+      "anatomy": "broad low-domed tortoise-like shell carved like basalt stone, four sturdy wrinkled legs with stubby toes, a blunt friendly head with dark round eyes, lush green moss growing across the carapace with small pink water lily blossoms blooming on top, short stubby tail",
+      "colours": "dark slate basalt shell, deep green moss patch, pale reed underbelly, warm leather skin, pink blossom flower petals"
+    },
+    "references": [
+      "public/assets/portraits/creatures/portrait_mireling_128.png"
+    ],
+    "poseGuide": "art/source/style/pose-guides/quadruped.png"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "species": {
+    "ignicap": "ignicap",
+    "rivallie": "rivallie",
+    "zephyrit": "zephyrit",
+    "mireling": "mireling",
+    "cindermoth": "cindermoth",
+    "steamshell": "steamshell",
+    "bramblefang": "bramblefang",
+    "marshstalker": "marshstalker"
+  },
+  "npc": {
+    "npc:vulkan": "npc_vulkan",
+    "npc:emberlyn": "npc_emberlyn",
+    "npc:soren": "npc_soren",
+    "npc:tala": "npc_tala",
+    "npc:bram": "npc_bram",
+    "npc:iona": "npc_iona",
+    "npc:flint": "npc_flint",
+    "npc:cora": "npc_cora",
+    "npc:aster": "npc_aster",
+    "npc:caelum": "npc_caelum",
+    "npc:marina": "npc_marina",
+    "npc:mira": "npc_mira",
+    "npc:zephyr": "npc_zephyr",
+    "npc:kaelen": "npc_kaelen"
+  },
+  "origin": {
+    "pyrador": "player_pyrador",
+    "aqualia": "player_aqualia",
+    "zephyria": "player_zephyria"
+  },
+  "item": {
+    "berries": "item_berries",
+    "reeds": "item_reeds",
+    "wheat": "item_wheat",
+    "nectar": "item_nectar",
+    "ashgrass": "item_ashgrass",
+    "fungi": "item_fungi",
+    "flint": "item_flint",
+    "stick": "item_stick",
+    "fiber": "item_fiber",
+    "tool-head": "item_tool-head",
+    "hatchet": "item_hatchet",
+    "poultice": "item_poultice",
+    "water": "item_water",
+    "ore": "item_ore",
+    "meat": "item_meat",
+    "meal": "item_meal"
+  }
+}

@@ -1,0 +1,141 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/env-stilt-hut--2026-11-05-env-stilt-hut.md",
+  "approvalSha256": "2bcca8285313c844fa871bc01fba997191553f2a1ca515c6b746b149005b000b",
+  "asset": "env:stilt-hut",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset env:stilt-hut",
+    "id": "forge-env-stilt-hut",
+    "inputs": [
+      {
+        "path": "blender/models/published/env-stilt-hut/b1d5b6b1d1968b35cbee37e1fd5dba801f44fc62b7b7c5972987520f54d10fde/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/env-stilt-hut/b1d5b6b1d1968b35cbee37e1fd5dba801f44fc62b7b7c5972987520f54d10fde/forge/blender/env_layout.py",
+        "role": "script",
+        "sha256": "b2fa291498b97eb55fc8450d37b55208b1d22550aa81a70b6c8c06d9cc08388b"
+      },
+      {
+        "path": "blender/models/published/env-stilt-hut/b1d5b6b1d1968b35cbee37e1fd5dba801f44fc62b7b7c5972987520f54d10fde/forge/forge.py",
+        "role": "script",
+        "sha256": "72344e74be14dd4324bbc2a158d9c160ff2dfbdfc1325d5166dc5baa5fb6b531"
+      },
+      {
+        "path": "blender/models/published/env-stilt-hut/b1d5b6b1d1968b35cbee37e1fd5dba801f44fc62b7b7c5972987520f54d10fde/forge/forgelib/environment.py",
+        "role": "script",
+        "sha256": "4b3443c051f8076ebdc9abd18152831dfbfe74c0053e7c4622ef3d7f483e397c"
+      },
+      {
+        "path": "blender/models/published/env-stilt-hut/b1d5b6b1d1968b35cbee37e1fd5dba801f44fc62b7b7c5972987520f54d10fde/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/env-stilt-hut/b1d5b6b1d1968b35cbee37e1fd5dba801f44fc62b7b7c5972987520f54d10fde/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "2963b6c95098f03aadf7fffe21507c8b3aa6b4fb4d13e657a9b7921e761ba629"
+      },
+      {
+        "path": "blender/models/published/env-stilt-hut/b1d5b6b1d1968b35cbee37e1fd5dba801f44fc62b7b7c5972987520f54d10fde/forge/recipes/env-stilt-hut.json",
+        "role": "pose-config",
+        "sha256": "7e3c34f9bf3e53118801eaf52e60337fa21755166b3f9469a82b8299a730fd73"
+      },
+      {
+        "path": "blender/models/published/env-stilt-hut/b1d5b6b1d1968b35cbee37e1fd5dba801f44fc62b7b7c5972987520f54d10fde/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/env-stilt-hut/b1d5b6b1d1968b35cbee37e1fd5dba801f44fc62b7b7c5972987520f54d10fde/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/env-stilt-hut/b1d5b6b1d1968b35cbee37e1fd5dba801f44fc62b7b7c5972987520f54d10fde/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/env-stilt-hut/b1d5b6b1d1968b35cbee37e1fd5dba801f44fc62b7b7c5972987520f54d10fde/forge/work/env-stilt-hut/layout.json",
+        "role": "pose-config",
+        "sha256": "99c5ffc82d0afcc63bf0e80dc4ed1cb599cbdbee9b3ac3062754e42fb550e7b6"
+      },
+      {
+        "path": "blender/models/published/env-stilt-hut/b1d5b6b1d1968b35cbee37e1fd5dba801f44fc62b7b7c5972987520f54d10fde/forge/work/env-stilt-hut/layout/base.blend",
+        "role": "model",
+        "sha256": "7bd3109dd9564ed1e942f08ff1a307961edc130797b0025e7a3fd48f67fe43c1"
+      },
+      {
+        "path": "blender/models/published/env-stilt-hut/b1d5b6b1d1968b35cbee37e1fd5dba801f44fc62b7b7c5972987520f54d10fde/forge/work/env-stilt-hut/layout/roof.blend",
+        "role": "model",
+        "sha256": "1a7fffb5ff9a3d853f21a9e70772077a2f056ee5b95b84c8078bdf9f28d869d6"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "footprint": [
+    2,
+    2
+  ],
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 128,
+        "y": 246
+      },
+      "file": "exports/env-stilt-hut/e2c90f488e79d76ce5b75914b132641781e4d8a61ac0ae2b1017d3bcb5fc5806/frames/shadow.png",
+      "id": "env-stilt-hut-shadow",
+      "layer": "shadow",
+      "sha256": "b123d11bb96e98270668a50c5e1a2e761b763a7d941200d2eb8badf039b88d28",
+      "sourceSize": {
+        "h": 256,
+        "w": 256
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 128,
+        "y": 246
+      },
+      "file": "exports/env-stilt-hut/e2c90f488e79d76ce5b75914b132641781e4d8a61ac0ae2b1017d3bcb5fc5806/frames/base.png",
+      "id": "env-stilt-hut-base",
+      "layer": "base",
+      "sha256": "d4c5fee8037aebc3544ae91f3aab0455e98f2a9348674329ee301627153e36e0",
+      "sourceSize": {
+        "h": 256,
+        "w": 256
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 128,
+        "y": 246
+      },
+      "file": "exports/env-stilt-hut/e2c90f488e79d76ce5b75914b132641781e4d8a61ac0ae2b1017d3bcb5fc5806/frames/roof.png",
+      "id": "env-stilt-hut-roof",
+      "layer": "roof",
+      "sha256": "f1c8a61108122254ed57ccf4d62375e764d16929733fd232e3ca4f70999c5ac4",
+      "sourceSize": {
+        "h": 256,
+        "w": 256
+      }
+    }
+  ],
+  "lightPools": [],
+  "packet": "art/review/2026-11-05-env-stilt-hut",
+  "packetDigest": "e2c90f488e79d76ce5b75914b132641781e4d8a61ac0ae2b1017d3bcb5fc5806",
+  "packetSha256": "20718f2e7b77dba97796bd2feb9132da2ce7edfffbecc6f73e6a235495b7452d",
+  "schemaVersion": 1,
+  "scope": [
+    "shadow",
+    "base",
+    "roof"
+  ]
+}

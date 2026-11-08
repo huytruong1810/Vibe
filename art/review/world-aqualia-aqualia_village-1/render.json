@@ -1,0 +1,30 @@
+{
+  "dependenciesDigest": "f9d697bc58009d9b2b77c65d5ab922b15c262bbd6be7ad02ae587404601e441b",
+  "images": {
+    "overview.png": "eb5dc4826ae9e32fb6c1855275b9c441104b1840894527fe72643b47f26e2861",
+    "screen-0-0.png": "1a5bc9d4064bc33f3fe37caf6e8fcb544a830f5f365267d43d5c1bd8a973bbc4",
+    "screen-0-1.png": "ceba6d52989659e9bb7bc820feb70daadf5ce7dcaed3d1f108f207dfeaec9407",
+    "screen-0-2.png": "4062d7f7f1dab9b9c4aee8f36f7303b4ef274195e633ca66414e1635eea3975b",
+    "screen-0-3.png": "84e18dbafffe8bf230310752cc748b25cb2c39931aa84180a8087f15fae0c9f3",
+    "screen-1-0.png": "7ecaaa4f8801b3220d00cbcc07699a9fe7bde79b99a7f009e4b2f91d81d62182",
+    "screen-1-1.png": "518e66025fa90da3b78b1778a8427b0c23011299598c4d68f03910aa35109bfc",
+    "screen-1-2.png": "af208cb2fee56ca14e052817945945c6738c1cf5c7cb679def9c7da990bada27",
+    "screen-1-3.png": "df973b58d31fc0264ad1a719733ab20f17a6cf086ff303c9400d0487beebd4d1",
+    "screen-2-0.png": "c5b99e0e597c0dbd0438d2b608ef9db7b06ef82f2089c03354509fe91a14b9a1",
+    "screen-2-1.png": "1e0577891bf16f18adf86556012ce13d000f464fce43212d4002d585bcebda85",
+    "screen-2-2.png": "d92277e72b37daab275906fa141341f15b9bfd8f687b8251933b7ea67068a795",
+    "screen-2-3.png": "0891727184270d2eee98b8ec56fda19e356bd908a7855227385e8b8975372350"
+  },
+  "level": "aqualia_village",
+  "limitations": [
+    "17 tiles are 544 art pixels; bottom four pixels are outside the 540-pixel viewport",
+    "Draft Riverlands excluded",
+    "Preview art and FG placeholders are not visual approval"
+  ],
+  "planDigest": "b7ddc5c78cabc62a384010129efb0f7a301151b64008e68e7beec8fffcab1560",
+  "projectDigest": "6211d67cd102b0c475261727f1ec16f410e6ad44b9454557be010e4889a3b737",
+  "screenPixels": [
+    960,
+    540
+  ]
+}

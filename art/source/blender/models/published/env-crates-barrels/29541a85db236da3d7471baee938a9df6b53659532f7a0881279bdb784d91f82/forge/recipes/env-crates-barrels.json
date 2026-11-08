@@ -1,0 +1,37 @@
+{
+  "asset": "env:crates-barrels",
+  "kind": "environment",
+  "ramps": {
+    "walls": "timber",
+    "roof": "teal",
+    "trim": "wood",
+    "metal": "copper"
+  },
+  "gen3d": {
+    "seed": 2014,
+    "steps": 50,
+    "views": [
+      "front",
+      "left"
+    ]
+  },
+  "environment": {
+    "footprint": [
+      1,
+      1
+    ],
+    "split": null,
+    "contactShadow": true
+  },
+  "concept": {
+    "template": "building-v1",
+    "fields": {
+      "building": "dockside cargo clutter stacks",
+      "region": "Aqualia Village & Riverlands",
+      "description": "cluster of wooden cargo barrels and rope-bound shipping crates",
+      "materials": "oak barrels with iron hoops, pine crates"
+    },
+    "references": []
+  },
+  "notes": "AQ-2 Landmark/Kit prop (B5). 1x1 footprint."
+}

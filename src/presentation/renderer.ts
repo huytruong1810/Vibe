@@ -293,6 +293,10 @@ export class WorldRenderer {
   private readonly effectDirector = new EffectDirector();
   private readonly actionEffects = new Set<string>();
   private readonly authoredEffects = new Map<string, AuthoredEffect>();
+  private readonly damagePopups = new Map<
+    number,
+    { text: Text; sceneId: string; startedAt: number; origin: { x: number; y: number } }
+  >();
   private terrain: TerrainView | null = null;
   private terrainArt = new TerrainArtIndex([]);
   private frame: RenderSnapshot | null = null;
@@ -337,13 +341,6 @@ export class WorldRenderer {
   private preparedAtSceneId = '';
   private preparedSession = '';
   private prepareRequest: AbortController | null = null;
-  private readonly labelStyle = new TextStyle({
-    fontFamily: 'Silver',
-    fontSize: 38,
-    fill: 0xf1e9c9,
-    stroke: { color: 0x355047, width: 5 },
-    align: 'center',
-  });
   get catalog(): AssetCatalog | null {
     return this.assets.catalog;
   }
@@ -538,6 +535,10 @@ export class WorldRenderer {
       const appearance = this.resolver.resolve('item', drop.item);
       if (appearance?.frameId) requestedFrames.add(appearance.frameId);
     }
+    for (const id of itemIds) {
+      const appearance = this.resolver.resolve('item', id);
+      if (appearance?.frameId) requestedFrames.add(appearance.frameId);
+    }
     for (const actor of actors) {
       const appearance = this.resolver.resolve(actor.appearanceKind, actor.appearanceId);
       if (!appearance) continue;
@@ -706,6 +707,8 @@ export class WorldRenderer {
     this.actionEffects.clear();
     for (const effect of this.authoredEffects.values()) effect.sprite.destroy();
     this.authoredEffects.clear();
+    for (const popup of this.damagePopups.values()) popup.text.destroy();
+    this.damagePopups.clear();
   }
   apply(frame: RenderSnapshot): void {
     if (this.preparedLease && this.preparedSession !== frame.session) {
@@ -756,10 +759,11 @@ export class WorldRenderer {
       const actor = actors.get(cue.target ?? cue.actor);
       if (!actor || !actorInScene(actor, this.scene.id)) continue;
       if (cue.kind === 'hit') {
-        if (Math.hypot(actor.x - frame.player.x, actor.y - frame.player.y) < 6)
-          this.shake.add(cue.tick, (cue.strength ?? 1) * (actor.id === 0 ? 2 : 0.7), cue.sequence);
-        const hitStopFrames =
-          cue.critical || (cue.strength ?? 1) >= 1.5 ? 3 : (cue.strength ?? 1) >= 1.0 ? 2 : 0;
+        const strength = cue.strength ?? 1;
+        const finisherOrCrit = Boolean(cue.critical || strength >= 1.35);
+        if (finisherOrCrit && Math.hypot(actor.x - frame.player.x, actor.y - frame.player.y) < 6)
+          this.shake.add(cue.tick, strength * (actor.id === 0 ? 2 : 0.7), cue.sequence);
+        const hitStopFrames = finisherOrCrit ? 4 : strength >= 1.1 ? 3 : 2;
         if (hitStopFrames > 0 && !this.reducedMotion) {
           const targetSprite = this.entities.get(cue.target ?? actor.id);
           if (targetSprite) {
@@ -771,6 +775,41 @@ export class WorldRenderer {
             attackerSprite.hitStopUntil = cue.tick + hitStopFrames;
             attackerSprite.hitStopTick = cue.tick;
           }
+        }
+        if (!this.damagePopups.has(cue.sequence)) {
+          if (this.damagePopups.size >= 24) {
+            const oldestKey = this.damagePopups.keys().next().value;
+            if (oldestKey !== undefined) {
+              this.damagePopups.get(oldestKey)?.text.destroy();
+              this.damagePopups.delete(oldestKey);
+            }
+          }
+          const amount = Math.max(1, Math.round(cue.damage ?? strength * 8));
+          const fill =
+            cue.critical || cue.effectiveness === 'effective'
+              ? 0xf3c45a
+              : cue.effectiveness === 'resisted'
+                ? 0x9da8b6
+                : 0xf6f0dc;
+          const text = new Text({
+            text: cue.critical ? `${amount}!` : `${amount}`,
+            style: new TextStyle({
+              fontFamily: 'Silver',
+              fontSize: 38,
+              fill,
+              stroke: { color: 0x17233b, width: 2 },
+              align: 'center',
+            }),
+          });
+          text.anchor.set(0.5, 1);
+          text.visible = false;
+          this.vfxLayer.addChild(text);
+          this.damagePopups.set(cue.sequence, {
+            text,
+            sceneId: this.scene.id,
+            startedAt: cue.tick,
+            origin: this.projection.world(actor.x, actor.y, actor.elevation),
+          });
         }
       }
       this.emitEffect(
@@ -935,8 +974,13 @@ export class WorldRenderer {
       frame = appearance?.frameId && this.frames.get(appearance.frameId);
     const texture = frame && this.assets.texture(frame.id);
     if (texture) texture.source.scaleMode = 'nearest';
+    let scale = appearance?.quality === 'hd' ? 1 : LEGACY_SCALE;
+    if (frame && id.startsWith('flora_')) {
+      const maxDim = Math.max(frame.sourceSize.w, frame.sourceSize.h);
+      if (maxDim > TILE) scale = Math.min(scale, (TILE * 0.85) / maxDim);
+    }
     return texture && frame
-      ? { texture, frame, scale: appearance?.quality === 'hd' ? 1 : LEGACY_SCALE }
+      ? { texture, frame, scale }
       : { texture: fallback, scale: LEGACY_SCALE };
   }
   private environmentAppearance(id: string): AssetAppearance | undefined {
@@ -976,9 +1020,11 @@ export class WorldRenderer {
               ? 'ground_dirt'
               : t.biome[i] === Biome.Beach
                 ? 'ground_sand'
-                : [Biome.Riverlands, Biome.Meadows, Biome.Forest].includes(t.biome[i]!)
-                  ? 'ground_grass'
-                  : undefined;
+                : t.biome[i] === Biome.Swamp
+                  ? 'ground_mud'
+                  : t.biome[i] === Biome.Mountains
+                    ? 'ground_stone'
+                    : 'ground_grass';
         const material = baseMaterial && this.terrainArt.material(baseMaterial, x, y);
         const groundArt = material && this.drawCatalogTexture(g, material, px, py, TILE, TILE);
         if (!groundArt)
@@ -1274,16 +1320,17 @@ export class WorldRenderer {
       fallback: Texture,
       binding?: { kind: 'environment' | 'item'; id: string },
       canopy = false,
+      scaleOverride?: number,
     ): void => {
       wanted.add(id);
       let view = this.props.get(id);
       if (!view) {
         const source = binding
           ? this.textureFor(binding.kind, binding.id, fallback)
-          : { texture: fallback, scale: LEGACY_SCALE };
+          : { texture: fallback, scale: scaleOverride ?? LEGACY_SCALE };
         const sprite = new Sprite(source.texture);
         sprite.anchor.set(source.frame?.anchor.x ?? 0.5, source.frame?.anchor.y ?? 1);
-        sprite.scale.set(source.scale);
+        sprite.scale.set(scaleOverride ?? source.scale);
         view = { sprite, canopy, foliage: id.startsWith('tree:') || id.startsWith('r:') };
         this.props.set(id, view);
         (id.startsWith('canopy:') ? this.foreground : this.objects).addChild(sprite);
@@ -1303,6 +1350,7 @@ export class WorldRenderer {
           quantity = t.quantity[i]!;
         if (resource) {
           const plant = plants[resource - 1];
+          const itemId = itemIds[resource - 1];
           prop(
             `r:${i}`,
             x + 0.5,
@@ -1313,14 +1361,9 @@ export class WorldRenderer {
                   kind: 'environment',
                   id: `flora_${plant}_${t.flags[i]! & TileFlag.Burning ? 'burnt' : quantity ? 'healthy' : 'harvested'}`,
                 }
-              : resource === 7
-                ? { kind: 'environment', id: 'rock_pebbles' }
-                : resource === 14
-                  ? {
-                      kind: 'environment',
-                      id: quantity ? 'rock_copper_rich' : 'rock_copper_depleted',
-                    }
-                  : undefined,
+              : itemId
+                ? { kind: 'item', id: itemId }
+                : undefined,
           );
         }
         const height = t.elevation[i]! - (t.elevation[i + t.size] ?? t.elevation[i]!);
@@ -1369,77 +1412,6 @@ export class WorldRenderer {
             );
         }
       }
-    const authoredOverworldProps = hasAuthoredOverworldProps(this.scene.props);
-    if (!authoredOverworldProps) {
-      for (const b of t.buildings)
-        if (Math.abs(b.x - centerX) < 22 && Math.abs(b.y - centerY) < 18)
-          prop(
-            b.id,
-            b.x + 0.5,
-            b.y + 1.2,
-            this.art.house(b.village),
-            { kind: 'environment', id: HOUSE_ART[b.village]! },
-            true,
-          );
-      for (const s of SETTLEMENTS)
-        if (Math.abs(s.x - centerX) < 36 && Math.abs(s.y - centerY) < 30) {
-          prop(`${s.id}:stone`, s.x - 2.5, s.y + 1, this.art.landmark('waystone'), {
-            kind: 'environment',
-            id: 'landmark_waystone',
-          });
-          prop(`${s.id}:well`, s.x + 4.5, s.y - 2, this.art.landmark('well'), {
-            kind: 'environment',
-            id: 'landmark_well',
-          });
-          const hearth = this.resolver?.resolve('environment', 'prop_hearth');
-          if (hearth?.frameId && this.assets.texture(hearth.frameId)) {
-            const offset = [
-              [-4, 3],
-              [4, 3],
-              [-5, -3],
-              [5, -3],
-            ].find(([dx, dy]) => {
-              const i = (s.y + dy!) * t.size + s.x + dx!;
-              return (
-                !t.fluid[i] && !(t.flags[i]! & (TileFlag.Road | TileFlag.Solid)) && !t.resource[i]
-              );
-            });
-            if (offset)
-              prop(
-                `${s.id}:hearth`,
-                s.x + offset[0]! + 0.5,
-                s.y + offset[1]! + 1,
-                this.art.landmark('well'),
-                { kind: 'environment', id: 'prop_hearth' },
-              );
-          }
-          for (const [i, [dx, dy]] of [
-            [-6, -3],
-            [6, -3],
-            [-6, 5],
-            [6, 5],
-          ].entries())
-            prop(`${s.id}:flowers:${i}`, s.x + dx!, s.y + dy!, this.art.landmark('flowers'));
-          for (const dx of [-2, 2])
-            prop(`${s.id}:lamp:${dx}`, s.x + dx, s.y - 2, this.art.landmark('lantern'), {
-              kind: 'environment',
-              id: 'landmark_lantern',
-            });
-          if (s.capital)
-            for (let dx = -14; dx <= 14; dx += 2)
-              if (!(t.flags[(s.y + 12) * t.size + s.x + dx]! & TileFlag.Road))
-                prop(
-                  `${s.id}:fence:${dx}`,
-                  s.x + dx + 0.5,
-                  s.y + 12.9,
-                  this.art.landmark('fence'),
-                  {
-                    kind: 'environment',
-                    id: 'landmark_fence',
-                  },
-                );
-        }
-    }
     for (const corpse of frame.carrion)
       if (Math.abs(corpse.x - centerX) < 20 && Math.abs(corpse.y - centerY) < 15)
         prop(
@@ -1470,15 +1442,6 @@ export class WorldRenderer {
         this.props.delete(id);
       }
     for (const child of this.labels.removeChildren()) child.destroy();
-    if (!authoredOverworldProps)
-      for (const s of SETTLEMENTS)
-        if (Math.abs(s.x - centerX) < 26 && Math.abs(s.y - centerY) < 20) {
-          const label = new Text({ text: s.name.toUpperCase(), style: this.labelStyle });
-          label.anchor.set(0.5, 1);
-          const p = this.projection.world(s.x, s.y - 13);
-          label.position.set(p.x, p.y);
-          this.labels.addChild(label);
-        }
   }
   private updateLocalProps(scene: ScenePresentation): void {
     const key = `${scene.id}:${scene.props.map((p) => `${p.id}:${p.variant ?? ''}`).join(',')}`;
@@ -1606,8 +1569,17 @@ export class WorldRenderer {
       e.body.scale.y *= 0.9;
       if (!this.reducedMotion) e.body.x += Math.floor(tick) % 2 ? 2 : -2;
     }
+    const hitAge = tick - (e.hitUntil - 5);
     e.body.rotation = 0;
-    e.body.tint = hit || reactionActive ? 0xffc7aa : 0xffffff;
+    e.body.tint = hit
+      ? hitAge < 1
+        ? 0xffffff
+        : hitAge < 3
+          ? 0xff6b5a
+          : 0xffc7aa
+      : reactionActive
+        ? 0xffc7aa
+        : 0xffffff;
     e.body.alpha = e.hp <= 0 ? 0.55 : 1;
   }
   private composeActor(
@@ -1794,6 +1766,25 @@ export class WorldRenderer {
     return false;
   }
   private renderEffects(tick: number, quality: Quality, cx: number, cy: number): void {
+    for (const [seq, popup] of this.damagePopups) {
+      const age = tick - popup.startedAt;
+      if (popup.sceneId !== this.scene.id || age > 18) {
+        popup.text.destroy();
+        this.damagePopups.delete(seq);
+        continue;
+      }
+      if (age < 0) {
+        popup.text.visible = false;
+        continue;
+      }
+      const progress = age / 18;
+      const rise = this.reducedMotion ? 56 : 48 + Math.round(progress * 28);
+      const px = Math.round(popup.origin.x - cx);
+      const py = Math.round(popup.origin.y - cy - rise);
+      popup.text.position.set(px, py);
+      popup.text.alpha = Math.min(1, Math.max(0, 1 - Math.max(0, progress - 0.45) / 0.55));
+      popup.text.visible = !this.telegraphBlocked(px, py, 36);
+    }
     for (const [id, effect] of this.authoredEffects) {
       const age = tick - effect.startedAt,
         definition = effect.definition;
@@ -2124,11 +2115,16 @@ export class WorldRenderer {
         Math.max(label.width, label.height),
       );
     for (const portal of this.scene.portals) {
+      if (
+        !this.debugEnabled &&
+        Math.hypot(portal.x - frame.player.x, portal.y - frame.player.y) > 1.5
+      )
+        continue;
       const p = this.projection.screen(portal.x, portal.y, 0, { x: cx, y: cy });
       if (p.x < 0 || p.y < 0 || p.x > PROFILE.width || p.y > PROFILE.height) continue;
       this.indicators
         .rect(p.x - 20, p.y - 52, 40, 52)
-        .stroke({ color: portal.allowed ? 0xe8d59c : 0xb7796b, width: 3, alpha: 0.8 });
+        .stroke({ color: portal.allowed ? 0xe8d59c : 0xb7796b, width: 2, alpha: 0.7 });
     }
     this.lighting.lights.visible = this.scene.outside;
     if (this.scene.outside) {
@@ -2293,6 +2289,8 @@ export class WorldRenderer {
     this.composites.clear();
     for (const effect of this.authoredEffects.values()) effect.sprite.destroy();
     this.authoredEffects.clear();
+    for (const popup of this.damagePopups.values()) popup.text.destroy();
+    this.damagePopups.clear();
     this.clearClippedTextures();
     void this.assets.dispose().catch(() => undefined);
     if (this.initialized) this.app.destroy(true, { children: true });

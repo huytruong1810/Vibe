@@ -1,0 +1,45 @@
+{
+  "asset": "env:wall-hook",
+  "stage": "layout",
+  "inputsDigest": "9b11519721e632b65d3e15ce8cd3b67b2dfe2b0d3d8a068bee550480296d7220",
+  "inputs": [
+    "art/source/forge/work/env-wall-hook/texture.blend",
+    "art/source/forge/work/env-wall-hook/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-wall-hook/layout/base.blend": "8b71f52795424c392eb913788cd25bafb9a7edcfca5308f7bfee9ee5b682c0ea",
+    "art/source/forge/work/env-wall-hook/layout_preview.png": "5a3650b2f722b6d44b88f5eecaf1c69a579e8b276d2d4b099a56eace78834cd4"
+  },
+  "extra": {
+    "scale": 0.131305,
+    "heightUnits": 2.1789,
+    "contactDepthTiles": 1.25,
+    "footprint": [
+      1,
+      1
+    ],
+    "canvas": {
+      "size": [
+        64,
+        86
+      ],
+      "anchor": [
+        32,
+        79
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -0.5,
+      0.0
+    ],
+    "layers": [
+      "base"
+    ],
+    "faces": {
+      "base": 14000
+    }
+  },
+  "at": "2026-11-05T10:58:00Z"
+}

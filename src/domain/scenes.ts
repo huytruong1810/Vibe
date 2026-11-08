@@ -199,7 +199,7 @@ export class SceneRegistry {
     for (let village = 0; village < 3; village++) {
       const code = this.definitions.length,
         center = VILLAGES[village]!;
-      const entry = this.roadEntrance(center);
+      const entry = this.roadEntrance(center, village);
       this.definitions.push({
         id: `cave:${center.name.toLowerCase()}`,
         code,
@@ -224,16 +224,28 @@ export class SceneRegistry {
   bindOverworldNavigation(navigation: NavigationService): void {
     this.contexts.set(0, { world: this.overworld, resources: this.supplies, navigation });
   }
-  private roadEntrance(center: WorldPosition): WorldPosition {
-    for (let radius = 20; radius < 80; radius++)
+  private roadEntrance(center: WorldPosition, villageIndex = 0): WorldPosition {
+    const villageBuildings = this.overworld.buildings.filter((b) => b.village === villageIndex);
+    const anchor =
+      villageBuildings.length > 0
+        ? {
+            x: Math.round(
+              villageBuildings.reduce((sum, b) => sum + b.x, 0) / villageBuildings.length,
+            ),
+            y: Math.round(
+              villageBuildings.reduce((sum, b) => sum + b.y, 0) / villageBuildings.length,
+            ),
+          }
+        : center;
+    for (let radius = 1; radius < 120; radius++)
       for (const [dx, dy] of [
         [radius, 0],
         [-radius, 0],
         [0, radius],
         [0, -radius],
       ]) {
-        const x = center.x + dx! + 0.5,
-          y = center.y + dy! + 0.5;
+        const x = anchor.x + dx! + 0.5,
+          y = anchor.y + dy! + 0.5;
         if (
           this.overworld.contains(x, y) &&
           this.overworld.flags[this.overworld.index(x, y)]! & TileFlag.Road &&
@@ -241,7 +253,17 @@ export class SceneRegistry {
         )
           return { x, y };
       }
-    return { x: center.x + 0.5, y: center.y + 3.5 };
+    for (let y = 1; y < this.overworld.size - 1; y++) {
+      for (let x = 1; x < this.overworld.size - 1; x++) {
+        if (
+          this.overworld.flags[this.overworld.index(x, y)]! & TileFlag.Road &&
+          SurfaceRules.walkable(this.overworld, x + 0.5, y + 0.5)
+        ) {
+          return { x: x + 0.5, y: y + 0.5 };
+        }
+      }
+    }
+    return { x: anchor.x + 0.5, y: anchor.y + 3.5 };
   }
   private addPair(
     code: number,

@@ -1,0 +1,121 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/env-flora-nectar-healthy--2026-11-05-env-flora-nectar-healthy.md",
+  "approvalSha256": "810c7b0e9f6c72ed698abc8c28e7feae4f99dbf98df1ad668e1ff0a5e092673c",
+  "asset": "env:flora-nectar-healthy",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset env:flora-nectar-healthy",
+    "id": "forge-env-flora-nectar-healthy",
+    "inputs": [
+      {
+        "path": "blender/models/published/env-flora-nectar-healthy/321c186e15f20e8afb30548a9f0046887677c1ef55f9809b194bd39246ccdc3b/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/env-flora-nectar-healthy/321c186e15f20e8afb30548a9f0046887677c1ef55f9809b194bd39246ccdc3b/forge/blender/env_layout.py",
+        "role": "script",
+        "sha256": "b2fa291498b97eb55fc8450d37b55208b1d22550aa81a70b6c8c06d9cc08388b"
+      },
+      {
+        "path": "blender/models/published/env-flora-nectar-healthy/321c186e15f20e8afb30548a9f0046887677c1ef55f9809b194bd39246ccdc3b/forge/forge.py",
+        "role": "script",
+        "sha256": "72344e74be14dd4324bbc2a158d9c160ff2dfbdfc1325d5166dc5baa5fb6b531"
+      },
+      {
+        "path": "blender/models/published/env-flora-nectar-healthy/321c186e15f20e8afb30548a9f0046887677c1ef55f9809b194bd39246ccdc3b/forge/forgelib/environment.py",
+        "role": "script",
+        "sha256": "4b3443c051f8076ebdc9abd18152831dfbfe74c0053e7c4622ef3d7f483e397c"
+      },
+      {
+        "path": "blender/models/published/env-flora-nectar-healthy/321c186e15f20e8afb30548a9f0046887677c1ef55f9809b194bd39246ccdc3b/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/env-flora-nectar-healthy/321c186e15f20e8afb30548a9f0046887677c1ef55f9809b194bd39246ccdc3b/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "2963b6c95098f03aadf7fffe21507c8b3aa6b4fb4d13e657a9b7921e761ba629"
+      },
+      {
+        "path": "blender/models/published/env-flora-nectar-healthy/321c186e15f20e8afb30548a9f0046887677c1ef55f9809b194bd39246ccdc3b/forge/recipes/env-flora-nectar-healthy.json",
+        "role": "pose-config",
+        "sha256": "1593c4de80221ccdc8f63795e16d92afb330c2d1c4ae1e87808c927a5eaecc9c"
+      },
+      {
+        "path": "blender/models/published/env-flora-nectar-healthy/321c186e15f20e8afb30548a9f0046887677c1ef55f9809b194bd39246ccdc3b/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/env-flora-nectar-healthy/321c186e15f20e8afb30548a9f0046887677c1ef55f9809b194bd39246ccdc3b/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/env-flora-nectar-healthy/321c186e15f20e8afb30548a9f0046887677c1ef55f9809b194bd39246ccdc3b/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/env-flora-nectar-healthy/321c186e15f20e8afb30548a9f0046887677c1ef55f9809b194bd39246ccdc3b/forge/work/env-flora-nectar-healthy/layout.json",
+        "role": "pose-config",
+        "sha256": "127843cb4ce17dbac0d38556c54955068b6cfa9370d53106cd1e5cdcff578280"
+      },
+      {
+        "path": "blender/models/published/env-flora-nectar-healthy/321c186e15f20e8afb30548a9f0046887677c1ef55f9809b194bd39246ccdc3b/forge/work/env-flora-nectar-healthy/layout/base.blend",
+        "role": "model",
+        "sha256": "d438d3603171f8436cae33b6896a6880df127408731d7fac7c1fb8b9c052e8e3"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "footprint": [
+    1,
+    1
+  ],
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 64,
+        "y": 136
+      },
+      "file": "exports/env-flora-nectar-healthy/db5b7ea2335cc40249f1eabd2b9008c47da815652c3430f23d8a42c97aea69e0/frames/shadow.png",
+      "id": "env-flora-nectar-healthy-shadow",
+      "layer": "shadow",
+      "sha256": "cf6c4f15d08cc39266bb4af33751c9026bd9aaf914a19a59991d24890b6fa6e0",
+      "sourceSize": {
+        "h": 144,
+        "w": 128
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 64,
+        "y": 136
+      },
+      "file": "exports/env-flora-nectar-healthy/db5b7ea2335cc40249f1eabd2b9008c47da815652c3430f23d8a42c97aea69e0/frames/base.png",
+      "id": "env-flora-nectar-healthy-base",
+      "layer": "base",
+      "sha256": "03fdeb48dd3b90b640fc3244b7977070cbb00df4f39e065420910f4dcb270828",
+      "sourceSize": {
+        "h": 144,
+        "w": 128
+      }
+    }
+  ],
+  "lightPools": [],
+  "packet": "art/review/2026-11-05-env-flora-nectar-healthy",
+  "packetDigest": "db5b7ea2335cc40249f1eabd2b9008c47da815652c3430f23d8a42c97aea69e0",
+  "packetSha256": "fa9a94b603ad2944d63151fc5c3d16860d213194dcd09d4ab5a37a80222f0d42",
+  "schemaVersion": 1,
+  "scope": [
+    "shadow",
+    "base"
+  ]
+}

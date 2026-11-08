@@ -1,6 +1,8 @@
 import { test, expect, type Page } from '@playwright/test';
 import type { GameSave } from '../../src/domain/save-schema';
-import { WorldGenerator, SurfaceRules, PLAYER_TRAVERSAL } from '../../src/domain/world';
+import { SurfaceRules, PLAYER_TRAVERSAL } from '../../src/domain/world';
+import { AuthoredWorldLoader } from '../../src/domain/authored-world';
+import { readFileSync } from 'node:fs';
 import { NavigationService } from '../../src/domain/navigation';
 
 const body = (save: GameSave, id = 0) => save.entities.records.find((e) => e.id === id)!;
@@ -132,6 +134,21 @@ async function checkpoint(page: Page): Promise<GameSave> {
   );
 }
 
+async function importScenario(page: Page, save: GameSave): Promise<void> {
+  await page.getByRole('button', { name: 'Settings', exact: true }).click();
+  const beforeImportSession3 = await worldSession(page);
+  await page.locator('#import-input').setInputFiles({
+    name: 'entity-scenario.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(JSON.stringify(save)),
+  });
+  await expect(page.locator('#toast')).toContainText('imported', { timeout: 15_000 });
+  await expect
+    .poll(async () => worldSession(page), { timeout: 15_000 })
+    .not.toBe(beforeImportSession3);
+  await closeSettings(page);
+}
+
 test('full world, movement, grounded dialogue, save and resume', async ({ page }) => {
   const errors: string[] = [];
   page.on('pageerror', (error) => errors.push(error.message));
@@ -141,9 +158,11 @@ test('full world, movement, grounded dialogue, save and resume', async ({ page }
   });
   await enter(page);
   const initial = await checkpoint(page);
-  expect(initial.npcs).toHaveLength(30);
+  expect(initial.npcs).toHaveLength(10);
   expect(initial.entities.records.filter((e) => e.species !== 8).length).toBe(1000);
-  const terrain = new WorldGenerator().generate(initial.seed),
+  const terrain = new AuthoredWorldLoader().load(
+      JSON.parse(readFileSync('public/assets/generated/aqualia-region.json', 'utf8')),
+    ).world,
     guide = new NavigationService(terrain);
   await inspection(page);
   await page.getByRole('tab', { name: 'Villagers' }).click();
@@ -261,15 +280,24 @@ test('full world, movement, grounded dialogue, save and resume', async ({ page }
       (await checkpoint(page)).npcs.some((n) => n.memory.core.player.includes('marsh lavender')),
     )
     .toBe(true);
-  const rememberedNpc = (await checkpoint(page)).npcs.find((n) =>
+  const rememberedSave = await checkpoint(page);
+  const rememberedNpc = rememberedSave.npcs.find((n) =>
     n.memory.core.player.includes('marsh lavender'),
   )!;
+  const rememberedNpcBody = body(rememberedSave, rememberedNpc.entityId);
+  Object.assign(body(rememberedSave), {
+    x: rememberedNpcBody.x,
+    y: rememberedNpcBody.y,
+  });
+  await importScenario(page, rememberedSave);
   await page.evaluate(async (npcId) => {
     const api = (
-      window as unknown as { __hearthwild: { command(c: object): Promise<{ ok: boolean }> } }
+      window as unknown as {
+        __hearthwild: { command(c: object): Promise<{ ok: boolean; message?: string }> };
+      }
     ).__hearthwild;
-    if (!(await api.command({ type: 'interact', npcId })).ok)
-      throw Error('Second conversation did not open');
+    const res = await api.command({ type: 'interact', npcId });
+    if (!res.ok) throw Error(`Second conversation did not open: ${res.message}`);
     await api.command({ type: 'dialogue', text: 'What plant do I like?' });
   }, rememberedNpc.profileId);
   await expect(page.locator('#conversation-dialog')).toContainText('You like marsh lavender.');
@@ -458,20 +486,6 @@ test('creature care, crafting, elemental combat and recovery through a validated
   expect(defeat.carrion.some((c) => c.sourceId === enemy)).toBe(true);
 });
 
-async function importScenario(page: Page, save: GameSave): Promise<void> {
-  await page.getByRole('button', { name: 'Settings', exact: true }).click();
-  const beforeImportSession3 = await worldSession(page);
-  await page.locator('#import-input').setInputFiles({
-    name: 'entity-scenario.json',
-    mimeType: 'application/json',
-    buffer: Buffer.from(JSON.stringify(save)),
-  });
-
-  await expect.poll(() => worldSession(page), { timeout: 30_000 }).not.toBe(beforeImportSession3);
-  await expect(page.locator('#toast')).toContainText('imported');
-  await closeSettings(page);
-}
-
 test('human food, accelerated sleep, emergency waking, retaliation and predation', async ({
   page,
 }) => {
@@ -484,8 +498,8 @@ test('human food, accelerated sleep, emergency waking, retaliation and predation
   const initial = await checkpoint(page),
     p = body(initial);
   Object.assign(p, {
-    x: 264.5,
-    y: 284.5,
+    x: 45.5,
+    y: 37.5,
     food: 0.2,
     water: 0.5,
     rest: 0.3,
@@ -564,24 +578,24 @@ test('human food, accelerated sleep, emergency waking, retaliation and predation
 
   // Restore a safe scenario, then let the shared tactical system resolve a wildlife hunt.
   const hunt = structuredClone(initial),
-    hunter = hunt.entities.records.find((e) => e.species === 6)!,
-    prey = hunt.entities.records.find((e) => e.species === 2 && e.owner === -1)!;
+    hunter = hunt.entities.records.find((e) => e.species === 7 || e.species === 6)!,
+    prey = hunt.entities.records.find((e) => e.species === 3 && e.owner === -1)!;
   Object.assign(body(hunt), { food: 1, water: 1, rest: 1 });
   Object.assign(hunter, {
-    x: 266.5,
-    y: 285.5,
-    targetX: 267,
-    targetY: 285.5,
+    x: 47.5,
+    y: 37.5,
+    targetX: 48,
+    targetY: 37.5,
     food: 0.2,
     water: 1,
     rest: 1,
     commitUntil: hunt.elapsedSeconds + 100,
   });
   Object.assign(prey, {
-    x: 267,
-    y: 285.5,
-    targetX: 267,
-    targetY: 285.5,
+    x: 48,
+    y: 37.5,
+    targetX: 48,
+    targetY: 37.5,
     hp: 1,
     food: 1,
     water: 1,

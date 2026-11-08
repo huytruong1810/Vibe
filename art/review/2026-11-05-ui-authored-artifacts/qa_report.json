@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "status": "candidate",
+  "qa": [
+    {
+      "check": "paletteMembership",
+      "rule": "ART-4.1",
+      "pass": true,
+      "detail": "0 off-palette colors",
+      "hard": true
+    },
+    {
+      "check": "itemIcons",
+      "rule": "AGT-8",
+      "pass": true,
+      "detail": "6 32-px icons staged",
+      "hard": true
+    },
+    {
+      "check": "uiFrames",
+      "rule": "UI-1",
+      "pass": true,
+      "detail": "8 UI kit elements generated",
+      "hard": true
+    }
+  ]
+}

@@ -1,7 +1,9 @@
 import { test, expect } from '@playwright/test';
 import type { GameSave } from '../../src/domain/save-schema';
 import type { RenderSnapshot } from '../../src/domain/contracts';
-import { WorldGenerator, SurfaceRules } from '../../src/domain/world';
+import { SurfaceRules } from '../../src/domain/world';
+import { AuthoredWorldLoader } from '../../src/domain/authored-world';
+import { readFileSync } from 'node:fs';
 import { SPECIES } from '../../src/content/definitions';
 import { mkdir, writeFile } from 'node:fs/promises';
 
@@ -17,7 +19,9 @@ test('20 hostile Bramblefang have staggered tokens, readable windups and saved s
   await expect(page.locator('#setup-dialog')).not.toBeVisible({ timeout: 30000 });
   await page.getByRole('button', { name: 'Settings', exact: true }).click();
   const save: GameSave = await page.evaluate(async () => (window as any).__hearthwild.checkpoint());
-  const world = new WorldGenerator().generate(save.seed);
+  const world = new AuthoredWorldLoader().load(
+    JSON.parse(readFileSync('public/assets/generated/aqualia-region.json', 'utf8')),
+  ).world;
   const p = save.entities.records.find((r) => r.id === 0)!;
   const hostiles = save.entities.records
     .filter((r) => r.species < 8 && r.owner === -1)
@@ -85,6 +89,7 @@ test('20 hostile Bramblefang have staggered tokens, readable windups and saved s
       };
       const samples: { tick: number; active: number; starts: number[] }[] = [];
       const starts = new Set<number>();
+      let observedWindup = false;
       // Pack preparation can outlast a fixed window in the crowded 20-actor fixture.
       // Always observe at least 420 ticks; allow up to 900 to collect four starts.
       const minimumEnd = api.frame().tick + 420,
@@ -97,6 +102,13 @@ test('20 hostile Bramblefang have staggered tokens, readable windups and saved s
         previous = frame.tick;
         const actions = frame.actors.filter((a) => ids.includes(a.id) && a.action);
         for (const a of actions) starts.add(a.action!.startedAt);
+        if (
+          frame.actors.some(
+            (a: any) => a.telegraph?.predator && a.telegraph.phase === 'windup',
+          )
+        ) {
+          observedWindup = true;
+        }
         samples.push({
           tick: frame.tick,
           active: actions.filter((a) => frame.tick < a.action!.recoveryAt).length,
@@ -106,6 +118,7 @@ test('20 hostile Bramblefang have staggered tokens, readable windups and saved s
       return {
         samples,
         starts: [...starts].sort((a, b) => a - b),
+        observedWindup,
         checkpoint: await api.checkpoint(),
       };
     },
@@ -116,15 +129,14 @@ test('20 hostile Bramblefang have staggered tokens, readable windups and saved s
   expect(proof.starts.length).toBeGreaterThan(3);
   for (let n = 1; n < proof.starts.length; n++)
     expect(proof.starts[n]! - proof.starts[n - 1]!).toBeGreaterThanOrEqual(8);
-  await expect
-    .poll(() =>
-      page.evaluate(() =>
+  expect(
+    proof.observedWindup ||
+      (await page.evaluate(() =>
         (window as any).__hearthwild
           .frame()
           .actors.some((a: any) => a.telegraph?.predator && a.telegraph.phase === 'windup'),
-      ),
-    )
-    .toBe(true);
+      )),
+  ).toBe(true);
   await page.screenshot({ path: 'artifacts/c14-pack-1080p.png' });
   await page.getByRole('button', { name: 'Settings', exact: true }).click();
   await page.locator('#combat-spacing').fill('12');

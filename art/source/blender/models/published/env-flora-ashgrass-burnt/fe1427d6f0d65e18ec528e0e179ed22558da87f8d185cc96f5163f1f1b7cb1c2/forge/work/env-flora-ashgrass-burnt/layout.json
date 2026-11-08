@@ -1,0 +1,45 @@
+{
+  "asset": "env:flora-ashgrass-burnt",
+  "stage": "layout",
+  "inputsDigest": "d05379e4c9b77ce607da6b128dad7267490d513d530c0aa0254dfefb75f03dec",
+  "inputs": [
+    "art/source/forge/work/env-flora-ashgrass-burnt/texture.blend",
+    "art/source/forge/work/env-flora-ashgrass-burnt/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-flora-ashgrass-burnt/layout/base.blend": "53be2a30569da9e3a6454759356b2b299488f7415a168d62829398aa60b1297f",
+    "art/source/forge/work/env-flora-ashgrass-burnt/layout_preview.png": "8f2403b1ba57e694085e8bab63e1661c7665e4c37c7965942c7ef8d78033f506"
+  },
+  "extra": {
+    "scale": 0.068369,
+    "heightUnits": 1.2083,
+    "contactDepthTiles": 0.972,
+    "footprint": [
+      1,
+      1
+    ],
+    "canvas": {
+      "size": [
+        64,
+        60
+      ],
+      "anchor": [
+        32,
+        56
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -0.5,
+      0.0
+    ],
+    "layers": [
+      "base"
+    ],
+    "faces": {
+      "base": 14000
+    }
+  },
+  "at": "2026-11-05T08:36:28Z"
+}

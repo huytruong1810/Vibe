@@ -112,6 +112,8 @@ describe('LIF-M1 & LIF-M2 Villager 10-step Hearts & Gift Taste Tables', () => {
     host.inventory.set(0, { id: 'water', instance: 'item:test:water' });
 
     // Start conversation with Caelum
+    host.player.x = npc.x;
+    host.player.y = npc.y;
     expect(send(host, { type: 'interact', npcId }).ok).toBe(true);
 
     // Give gift from slot 0

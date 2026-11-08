@@ -55,8 +55,10 @@ function stagedCreatures(): SourceManifestV2 {
   const framesById = new Map(catalog.frames.map((f) => [f.id, f]));
   for (const asset of ['rivallie', 'bramblefang', 'marshstalker']) {
     const appearanceId = `species:${asset}`;
-    const app = catalog.appearances.find((a) => a.id === appearanceId)!;
-    const clips = catalog.clips.filter((c) => c.appearanceId === appearanceId);
+    const allAppearances = [...catalog.appearances, ...(catalog.reviewAppearances ?? [])];
+    const allClips = [...catalog.clips, ...(catalog.reviewClips ?? [])];
+    const app = allAppearances.find((a) => a.id === appearanceId)!;
+    const clips = allClips.filter((c) => c.appearanceId === appearanceId);
     const frameIds = new Set(clips.flatMap((c) => c.frameIds));
     for (const id of frameIds) {
       const frame = framesById.get(id)!;

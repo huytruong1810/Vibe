@@ -1,0 +1,2303 @@
+{
+  "baseDigest": "6f9c536dded413abc1d94282ef0abe47e7197b6a336cd7c6e80246318531cac0",
+  "id": "aqualia-village-golden-001",
+  "level": "aqualia_village",
+  "operations": [
+    {
+      "layer": "ground",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [0, 0, 90, 68]
+      },
+      "value": 1
+    },
+    {
+      "layer": "elevation",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [0, 0, 26, 17]
+      },
+      "value": 1
+    },
+    {
+      "layer": "elevation",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [0, 0, 26, 5]
+      },
+      "value": 2
+    },
+    {
+      "layer": "water",
+      "op": "paint",
+      "shape": {
+        "kind": "spline",
+        "points": [
+          [73, 0],
+          [72, 12],
+          [75, 24],
+          [76, 34],
+          [73, 46],
+          [73, 58],
+          [75, 67]
+        ],
+        "width": 9
+      },
+      "value": 1
+    },
+    {
+      "layer": "water",
+      "op": "paint",
+      "shape": {
+        "kind": "spline",
+        "points": [
+          [73, 0],
+          [72, 12],
+          [75, 24],
+          [76, 34],
+          [73, 46],
+          [73, 58],
+          [75, 67]
+        ],
+        "width": 5
+      },
+      "value": 2
+    },
+    {
+      "layer": "water",
+      "op": "paint",
+      "shape": {
+        "kind": "spline",
+        "points": [
+          [90, 27],
+          [84, 28],
+          [78, 28]
+        ],
+        "width": 5
+      },
+      "value": 1
+    },
+    {
+      "layer": "water",
+      "op": "paint",
+      "shape": {
+        "kind": "spline",
+        "points": [
+          [90, 27],
+          [84, 28],
+          [78, 28]
+        ],
+        "width": 2
+      },
+      "value": 2
+    },
+    {
+      "layer": "water",
+      "op": "paint",
+      "shape": {
+        "kind": "spline",
+        "points": [
+          [69, 13],
+          [60, 13],
+          [50, 14],
+          [45, 20],
+          [44, 30]
+        ],
+        "width": 3
+      },
+      "value": 1
+    },
+    {
+      "layer": "water",
+      "op": "paint",
+      "shape": {
+        "kind": "spline",
+        "points": [
+          [44, 30],
+          [36, 33],
+          [35, 41],
+          [36, 48],
+          [44, 51]
+        ],
+        "width": 3
+      },
+      "value": 1
+    },
+    {
+      "layer": "water",
+      "op": "paint",
+      "shape": {
+        "kind": "spline",
+        "points": [
+          [44, 30],
+          [52, 33],
+          [53, 41],
+          [52, 48],
+          [44, 51]
+        ],
+        "width": 3
+      },
+      "value": 1
+    },
+    {
+      "layer": "water",
+      "op": "paint",
+      "shape": {
+        "kind": "spline",
+        "points": [
+          [44, 51],
+          [44, 56],
+          [50, 60],
+          [60, 62],
+          [70, 63]
+        ],
+        "width": 3
+      },
+      "value": 1
+    },
+    {
+      "layer": "water",
+      "op": "paint",
+      "shape": {
+        "kind": "spline",
+        "points": [
+          [50, 14],
+          [38, 15],
+          [27, 18],
+          [19, 26],
+          [17, 34],
+          [19, 46],
+          [16, 54],
+          [12, 60]
+        ],
+        "width": 3
+      },
+      "value": 1
+    },
+    {
+      "layer": "water",
+      "op": "paint",
+      "shape": {
+        "center": [44, 41],
+        "kind": "circle",
+        "radius": 5
+      },
+      "value": 0
+    },
+    {
+      "layer": "ground",
+      "op": "paint",
+      "shape": {
+        "center": [44, 41],
+        "kind": "circle",
+        "radius": 5
+      },
+      "value": 2
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "spline",
+        "points": [
+          [66, 60],
+          [60, 57],
+          [52, 55],
+          [47, 53],
+          [44, 49]
+        ],
+        "width": 2
+      },
+      "value": 3
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "spline",
+        "points": [
+          [44, 33],
+          [44, 25],
+          [46, 17],
+          [50, 11],
+          [58, 8],
+          [66, 8]
+        ],
+        "width": 2
+      },
+      "value": 2
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "spline",
+        "points": [
+          [66, 8],
+          [82, 8],
+          [90, 8]
+        ],
+        "width": 2
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "spline",
+        "points": [
+          [35, 41],
+          [28, 40],
+          [21, 43],
+          [12, 40],
+          [11, 30],
+          [14, 23],
+          [20, 16],
+          [16, 10],
+          [8, 5]
+        ],
+        "width": 2
+      },
+      "value": 1
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "spline",
+        "points": [
+          [21, 43],
+          [17, 51],
+          [13, 58],
+          [6, 64],
+          [2, 67]
+        ],
+        "width": 2
+      },
+      "value": 3
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "spline",
+        "points": [
+          [53, 41],
+          [62, 40],
+          [70, 42],
+          [64, 32],
+          [63, 23],
+          [66, 15]
+        ],
+        "width": 2
+      },
+      "value": 3
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "spline",
+        "points": [
+          [82, 8],
+          [85, 20],
+          [86, 34],
+          [85, 48],
+          [84, 59],
+          [90, 60]
+        ],
+        "width": 2
+      },
+      "value": 1
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "spline",
+        "points": [
+          [35, 41],
+          [53, 41]
+        ],
+        "width": 2
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "spline",
+        "points": [
+          [44, 33],
+          [44, 49]
+        ],
+        "width": 2
+      },
+      "value": 4
+    },
+    {
+      "layer": "collision",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [20, 16, 1, 1]
+      },
+      "value": 2
+    },
+    {
+      "layer": "collision",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [8, 5, 1, 1]
+      },
+      "value": 2
+    },
+    {
+      "layer": "collision",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [7, 5, 1, 1]
+      },
+      "value": 2
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [47, 13, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [48, 13, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [49, 13, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [46, 14, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [47, 14, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [48, 14, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [46, 15, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [47, 15, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [46, 16, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [47, 16, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [45, 17, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [46, 17, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [45, 18, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [46, 18, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [44, 19, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [45, 19, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [44, 20, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [45, 20, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [44, 21, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [45, 21, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [44, 22, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [45, 22, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [43, 23, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [44, 23, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [43, 24, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [44, 24, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [43, 25, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [44, 25, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [84, 25, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [85, 25, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [43, 26, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [44, 26, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [84, 26, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [85, 26, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [43, 27, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [44, 27, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [85, 27, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [86, 27, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [43, 28, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [44, 28, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [85, 28, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [86, 28, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [43, 29, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [44, 29, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [85, 29, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [86, 29, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [43, 30, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [44, 30, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [43, 31, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [44, 31, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [17, 41, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [18, 41, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [19, 41, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [17, 42, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [18, 42, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [19, 42, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "layer": "paths",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [19, 43, 1, 1]
+      },
+      "value": 4
+    },
+    {
+      "at": [0, 0],
+      "entity": "Settlement",
+      "fields": {
+        "capital": true,
+        "id": "settlement:aqualia",
+        "name": "Aqualia"
+      },
+      "id": "settlement",
+      "op": "place",
+      "size": [90, 68]
+    },
+    {
+      "at": [66, 60],
+      "entity": "PlayerSpawn",
+      "fields": {
+        "id": "new-game"
+      },
+      "id": "spawn",
+      "op": "place"
+    },
+    {
+      "layer": "collision",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [40, 7, 3, 2]
+      },
+      "value": 1
+    },
+    {
+      "at": [40, 7],
+      "entity": "Building",
+      "fields": {
+        "asset": "env:house_aqualia",
+        "door": {
+          "cx": 41,
+          "cy": 9
+        },
+        "kind": "home",
+        "owner": "npc:caelum",
+        "sceneId": "settlement:aqualia:home:0",
+        "settlement": "settlement:aqualia"
+      },
+      "id": "settlement:aqualia:home:0",
+      "op": "place",
+      "size": [3, 2]
+    },
+    {
+      "at": [41, 9],
+      "entity": "Entrance",
+      "fields": {
+        "kind": "interior",
+        "sceneId": "settlement:aqualia:home:0"
+      },
+      "id": "entrance/settlement:aqualia:home:0",
+      "op": "place"
+    },
+    {
+      "layer": "collision",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [11, 20, 3, 2]
+      },
+      "value": 1
+    },
+    {
+      "at": [11, 20],
+      "entity": "Building",
+      "fields": {
+        "asset": "env:house_aqualia",
+        "door": {
+          "cx": 12,
+          "cy": 22
+        },
+        "kind": "home",
+        "owner": "npc:marina",
+        "sceneId": "settlement:aqualia:home:1",
+        "settlement": "settlement:aqualia"
+      },
+      "id": "settlement:aqualia:home:1",
+      "op": "place",
+      "size": [3, 2]
+    },
+    {
+      "at": [12, 22],
+      "entity": "Entrance",
+      "fields": {
+        "kind": "interior",
+        "sceneId": "settlement:aqualia:home:1"
+      },
+      "id": "entrance/settlement:aqualia:home:1",
+      "op": "place"
+    },
+    {
+      "layer": "collision",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [62, 54, 4, 3]
+      },
+      "value": 1
+    },
+    {
+      "at": [62, 54],
+      "entity": "Building",
+      "fields": {
+        "asset": "env:house_aqualia",
+        "door": {
+          "cx": 64,
+          "cy": 57
+        },
+        "kind": "ferry-house",
+        "owner": "npc:neris",
+        "sceneId": "settlement:aqualia:home:2",
+        "settlement": "settlement:aqualia"
+      },
+      "id": "settlement:aqualia:home:2",
+      "op": "place",
+      "size": [4, 3]
+    },
+    {
+      "at": [64, 57],
+      "entity": "Entrance",
+      "fields": {
+        "kind": "interior",
+        "sceneId": "settlement:aqualia:home:2"
+      },
+      "id": "entrance/settlement:aqualia:home:2",
+      "op": "place"
+    },
+    {
+      "layer": "collision",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [7, 40, 3, 2]
+      },
+      "value": 1
+    },
+    {
+      "at": [7, 40],
+      "entity": "Building",
+      "fields": {
+        "asset": "env:house_aqualia",
+        "door": {
+          "cx": 8,
+          "cy": 42
+        },
+        "kind": "home",
+        "owner": "npc:reed",
+        "sceneId": "settlement:aqualia:home:3",
+        "settlement": "settlement:aqualia"
+      },
+      "id": "settlement:aqualia:home:3",
+      "op": "place",
+      "size": [3, 2]
+    },
+    {
+      "at": [8, 42],
+      "entity": "Entrance",
+      "fields": {
+        "kind": "interior",
+        "sceneId": "settlement:aqualia:home:3"
+      },
+      "id": "entrance/settlement:aqualia:home:3",
+      "op": "place"
+    },
+    {
+      "layer": "collision",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [15, 56, 3, 2]
+      },
+      "value": 1
+    },
+    {
+      "at": [15, 56],
+      "entity": "Building",
+      "fields": {
+        "asset": "env:house_aqualia",
+        "door": {
+          "cx": 16,
+          "cy": 58
+        },
+        "kind": "home",
+        "owner": "npc:willa",
+        "sceneId": "settlement:aqualia:home:4",
+        "settlement": "settlement:aqualia"
+      },
+      "id": "settlement:aqualia:home:4",
+      "op": "place",
+      "size": [3, 2]
+    },
+    {
+      "at": [16, 58],
+      "entity": "Entrance",
+      "fields": {
+        "kind": "interior",
+        "sceneId": "settlement:aqualia:home:4"
+      },
+      "id": "entrance/settlement:aqualia:home:4",
+      "op": "place"
+    },
+    {
+      "layer": "collision",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [60, 3, 5, 4]
+      },
+      "value": 1
+    },
+    {
+      "at": [60, 3],
+      "entity": "Building",
+      "fields": {
+        "asset": "env:house_aqualia",
+        "door": {
+          "cx": 62,
+          "cy": 7
+        },
+        "kind": "mill",
+        "owner": "npc:oren",
+        "sceneId": "settlement:aqualia:home:5",
+        "settlement": "settlement:aqualia"
+      },
+      "id": "settlement:aqualia:home:5",
+      "op": "place",
+      "size": [5, 4]
+    },
+    {
+      "at": [62, 7],
+      "entity": "Entrance",
+      "fields": {
+        "kind": "interior",
+        "sceneId": "settlement:aqualia:home:5"
+      },
+      "id": "entrance/settlement:aqualia:home:5",
+      "op": "place"
+    },
+    {
+      "layer": "collision",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [61, 36, 3, 2]
+      },
+      "value": 1
+    },
+    {
+      "at": [61, 36],
+      "entity": "Building",
+      "fields": {
+        "asset": "env:house_aqualia",
+        "door": {
+          "cx": 62,
+          "cy": 38
+        },
+        "kind": "home",
+        "owner": "npc:mira",
+        "sceneId": "settlement:aqualia:home:6",
+        "settlement": "settlement:aqualia"
+      },
+      "id": "settlement:aqualia:home:6",
+      "op": "place",
+      "size": [3, 2]
+    },
+    {
+      "at": [62, 38],
+      "entity": "Entrance",
+      "fields": {
+        "kind": "interior",
+        "sceneId": "settlement:aqualia:home:6"
+      },
+      "id": "entrance/settlement:aqualia:home:6",
+      "op": "place"
+    },
+    {
+      "layer": "collision",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [61, 21, 3, 2]
+      },
+      "value": 1
+    },
+    {
+      "at": [61, 21],
+      "entity": "Building",
+      "fields": {
+        "asset": "env:house_aqualia",
+        "door": {
+          "cx": 62,
+          "cy": 23
+        },
+        "kind": "home",
+        "owner": "npc:lark",
+        "sceneId": "settlement:aqualia:home:7",
+        "settlement": "settlement:aqualia"
+      },
+      "id": "settlement:aqualia:home:7",
+      "op": "place",
+      "size": [3, 2]
+    },
+    {
+      "at": [62, 23],
+      "entity": "Entrance",
+      "fields": {
+        "kind": "interior",
+        "sceneId": "settlement:aqualia:home:7"
+      },
+      "id": "entrance/settlement:aqualia:home:7",
+      "op": "place"
+    },
+    {
+      "layer": "collision",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [19, 40, 3, 2]
+      },
+      "value": 1
+    },
+    {
+      "at": [19, 40],
+      "entity": "Building",
+      "fields": {
+        "asset": "env:house_aqualia",
+        "door": {
+          "cx": 20,
+          "cy": 42
+        },
+        "kind": "home",
+        "owner": "npc:dara",
+        "sceneId": "settlement:aqualia:home:8",
+        "settlement": "settlement:aqualia"
+      },
+      "id": "settlement:aqualia:home:8",
+      "op": "place",
+      "size": [3, 2]
+    },
+    {
+      "at": [20, 42],
+      "entity": "Entrance",
+      "fields": {
+        "kind": "interior",
+        "sceneId": "settlement:aqualia:home:8"
+      },
+      "id": "entrance/settlement:aqualia:home:8",
+      "op": "place"
+    },
+    {
+      "layer": "collision",
+      "op": "paint",
+      "shape": {
+        "kind": "rect",
+        "rect": [53, 20, 3, 2]
+      },
+      "value": 1
+    },
+    {
+      "at": [53, 20],
+      "entity": "Building",
+      "fields": {
+        "asset": "env:house_aqualia",
+        "door": {
+          "cx": 54,
+          "cy": 22
+        },
+        "kind": "home",
+        "owner": "npc:finn",
+        "sceneId": "settlement:aqualia:home:9",
+        "settlement": "settlement:aqualia"
+      },
+      "id": "settlement:aqualia:home:9",
+      "op": "place",
+      "size": [3, 2]
+    },
+    {
+      "at": [54, 22],
+      "entity": "Entrance",
+      "fields": {
+        "kind": "interior",
+        "sceneId": "settlement:aqualia:home:9"
+      },
+      "id": "entrance/settlement:aqualia:home:9",
+      "op": "place"
+    },
+    {
+      "at": [15, 9],
+      "entity": "Landmark",
+      "fields": {
+        "id": "spring-shrine",
+        "name": "Spring Shrine"
+      },
+      "id": "landmark/spring-shrine",
+      "op": "place"
+    },
+    {
+      "at": [7, 4],
+      "entity": "Landmark",
+      "fields": {
+        "id": "cave-mouth",
+        "name": "Aqualia cave mouth"
+      },
+      "id": "landmark/cave-mouth",
+      "op": "place"
+    },
+    {
+      "at": [48, 9],
+      "entity": "Landmark",
+      "fields": {
+        "id": "gauge-tower",
+        "name": "Caelum's gauge tower"
+      },
+      "id": "landmark/gauge-tower",
+      "op": "place"
+    },
+    {
+      "at": [63, 6],
+      "entity": "Landmark",
+      "fields": {
+        "id": "mill",
+        "name": "Oren's mill and waterwheel"
+      },
+      "id": "landmark/mill",
+      "op": "place"
+    },
+    {
+      "at": [67, 13],
+      "entity": "Landmark",
+      "fields": {
+        "id": "sluice-gate",
+        "name": "Finn's sluice gate"
+      },
+      "id": "landmark/sluice-gate",
+      "op": "place"
+    },
+    {
+      "at": [75, 8],
+      "entity": "Landmark",
+      "fields": {
+        "id": "weir-walk",
+        "name": "Weir walk"
+      },
+      "id": "landmark/weir-walk",
+      "op": "place"
+    },
+    {
+      "at": [14, 23],
+      "entity": "Landmark",
+      "fields": {
+        "id": "weavers-row",
+        "name": "Weavers' Row"
+      },
+      "id": "landmark/weavers-row",
+      "op": "place"
+    },
+    {
+      "at": [44, 25],
+      "entity": "Landmark",
+      "fields": {
+        "id": "lantern-bridge",
+        "name": "Lantern Bridge"
+      },
+      "id": "landmark/lantern-bridge",
+      "op": "place"
+    },
+    {
+      "at": [63, 23],
+      "entity": "Landmark",
+      "fields": {
+        "id": "larks-studio",
+        "name": "Lark's studio"
+      },
+      "id": "landmark/larks-studio",
+      "op": "place"
+    },
+    {
+      "at": [84, 28],
+      "entity": "Landmark",
+      "fields": {
+        "id": "reedwater-confluence",
+        "name": "Reedwater confluence"
+      },
+      "id": "landmark/reedwater-confluence",
+      "op": "place"
+    },
+    {
+      "at": [21, 43],
+      "entity": "Landmark",
+      "fields": {
+        "id": "courier-post",
+        "name": "Dara's courier post"
+      },
+      "id": "landmark/courier-post",
+      "op": "place"
+    },
+    {
+      "at": [25, 40],
+      "entity": "Landmark",
+      "fields": {
+        "id": "village-waystone",
+        "name": "Village waystone"
+      },
+      "id": "landmark/village-waystone",
+      "op": "place"
+    },
+    {
+      "at": [7, 45],
+      "entity": "Landmark",
+      "fields": {
+        "id": "grain-plots",
+        "name": "Reed's grain plots"
+      },
+      "id": "landmark/grain-plots",
+      "op": "place"
+    },
+    {
+      "at": [44, 41],
+      "entity": "Landmark",
+      "fields": {
+        "id": "hearth",
+        "name": "Hearth Island fire"
+      },
+      "id": "landmark/hearth",
+      "op": "place"
+    },
+    {
+      "at": [70, 42],
+      "entity": "Landmark",
+      "fields": {
+        "id": "fishing-pier",
+        "name": "Fishing pier"
+      },
+      "id": "landmark/fishing-pier",
+      "op": "place"
+    },
+    {
+      "at": [13, 58],
+      "entity": "Landmark",
+      "fields": {
+        "id": "herb-wetland",
+        "name": "Willa's stilt hut and herb beds"
+      },
+      "id": "landmark/herb-wetland",
+      "op": "place"
+    },
+    {
+      "at": [44, 58],
+      "entity": "Landmark",
+      "fields": {
+        "id": "divers-pool",
+        "name": "Diver's Pool"
+      },
+      "id": "landmark/divers-pool",
+      "op": "place"
+    },
+    {
+      "at": [68, 59],
+      "entity": "Landmark",
+      "fields": {
+        "id": "ferry-landing",
+        "name": "Ferry landing"
+      },
+      "id": "landmark/ferry-landing",
+      "op": "place"
+    },
+    {
+      "at": [84, 59],
+      "entity": "Landmark",
+      "fields": {
+        "id": "ferry-east-dock",
+        "name": "East ferry dock"
+      },
+      "id": "landmark/ferry-east-dock",
+      "op": "place"
+    },
+    {
+      "at": [64, 58],
+      "entity": "StorySpot",
+      "fields": {
+        "id": "dawn-arrival",
+        "subject": "ferry-landing"
+      },
+      "id": "story/dawn-arrival",
+      "op": "place"
+    },
+    {
+      "at": [44, 43],
+      "entity": "StorySpot",
+      "fields": {
+        "id": "hearth-circle",
+        "subject": "hearth"
+      },
+      "id": "story/hearth-circle",
+      "op": "place"
+    },
+    {
+      "at": [44, 55],
+      "entity": "StorySpot",
+      "fields": {
+        "id": "reedlight-view",
+        "subject": "divers-pool"
+      },
+      "id": "story/reedlight-view",
+      "op": "place"
+    },
+    {
+      "at": [61, 8],
+      "entity": "StorySpot",
+      "fields": {
+        "id": "mill-at-dawn",
+        "subject": "mill"
+      },
+      "id": "story/mill-at-dawn",
+      "op": "place"
+    },
+    {
+      "at": [18, 11],
+      "entity": "StorySpot",
+      "fields": {
+        "id": "shrine-overlook",
+        "subject": "spring-shrine"
+      },
+      "id": "story/shrine-overlook",
+      "op": "place"
+    },
+    {
+      "at": [80, 61],
+      "entity": "StorySpot",
+      "fields": {
+        "id": "ferry-at-dusk",
+        "subject": "ferry-east-dock"
+      },
+      "id": "story/ferry-at-dusk",
+      "op": "place"
+    },
+    {
+      "at": [41, 9],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:caelum",
+        "role": "home"
+      },
+      "id": "npc:caelum/home",
+      "op": "place"
+    },
+    {
+      "at": [48, 9],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:caelum",
+        "role": "work"
+      },
+      "id": "npc:caelum/work",
+      "op": "place"
+    },
+    {
+      "at": [44, 41],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:caelum",
+        "role": "square"
+      },
+      "id": "npc:caelum/square",
+      "op": "place"
+    },
+    {
+      "at": [15, 9],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:caelum",
+        "role": "shrine"
+      },
+      "id": "npc:caelum/shrine",
+      "op": "place"
+    },
+    {
+      "at": [21, 43],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:caelum",
+        "role": "outpost"
+      },
+      "id": "npc:caelum/outpost",
+      "op": "place"
+    },
+    {
+      "at": [12, 22],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:marina",
+        "role": "home"
+      },
+      "id": "npc:marina/home",
+      "op": "place"
+    },
+    {
+      "at": [14, 23],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:marina",
+        "role": "work"
+      },
+      "id": "npc:marina/work",
+      "op": "place"
+    },
+    {
+      "at": [44, 41],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:marina",
+        "role": "square"
+      },
+      "id": "npc:marina/square",
+      "op": "place"
+    },
+    {
+      "at": [15, 9],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:marina",
+        "role": "shrine"
+      },
+      "id": "npc:marina/shrine",
+      "op": "place"
+    },
+    {
+      "at": [21, 43],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:marina",
+        "role": "outpost"
+      },
+      "id": "npc:marina/outpost",
+      "op": "place"
+    },
+    {
+      "at": [64, 57],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:neris",
+        "role": "home"
+      },
+      "id": "npc:neris/home",
+      "op": "place"
+    },
+    {
+      "at": [68, 59],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:neris",
+        "role": "work"
+      },
+      "id": "npc:neris/work",
+      "op": "place"
+    },
+    {
+      "at": [44, 41],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:neris",
+        "role": "square"
+      },
+      "id": "npc:neris/square",
+      "op": "place"
+    },
+    {
+      "at": [15, 9],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:neris",
+        "role": "shrine"
+      },
+      "id": "npc:neris/shrine",
+      "op": "place"
+    },
+    {
+      "at": [21, 43],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:neris",
+        "role": "outpost"
+      },
+      "id": "npc:neris/outpost",
+      "op": "place"
+    },
+    {
+      "at": [8, 42],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:reed",
+        "role": "home"
+      },
+      "id": "npc:reed/home",
+      "op": "place"
+    },
+    {
+      "at": [7, 45],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:reed",
+        "role": "work"
+      },
+      "id": "npc:reed/work",
+      "op": "place"
+    },
+    {
+      "at": [44, 41],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:reed",
+        "role": "square"
+      },
+      "id": "npc:reed/square",
+      "op": "place"
+    },
+    {
+      "at": [15, 9],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:reed",
+        "role": "shrine"
+      },
+      "id": "npc:reed/shrine",
+      "op": "place"
+    },
+    {
+      "at": [21, 43],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:reed",
+        "role": "outpost"
+      },
+      "id": "npc:reed/outpost",
+      "op": "place"
+    },
+    {
+      "at": [16, 58],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:willa",
+        "role": "home"
+      },
+      "id": "npc:willa/home",
+      "op": "place"
+    },
+    {
+      "at": [13, 58],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:willa",
+        "role": "work"
+      },
+      "id": "npc:willa/work",
+      "op": "place"
+    },
+    {
+      "at": [44, 41],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:willa",
+        "role": "square"
+      },
+      "id": "npc:willa/square",
+      "op": "place"
+    },
+    {
+      "at": [15, 9],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:willa",
+        "role": "shrine"
+      },
+      "id": "npc:willa/shrine",
+      "op": "place"
+    },
+    {
+      "at": [21, 43],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:willa",
+        "role": "outpost"
+      },
+      "id": "npc:willa/outpost",
+      "op": "place"
+    },
+    {
+      "at": [62, 7],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:oren",
+        "role": "home"
+      },
+      "id": "npc:oren/home",
+      "op": "place"
+    },
+    {
+      "at": [63, 7],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:oren",
+        "role": "work"
+      },
+      "id": "npc:oren/work",
+      "op": "place"
+    },
+    {
+      "at": [44, 41],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:oren",
+        "role": "square"
+      },
+      "id": "npc:oren/square",
+      "op": "place"
+    },
+    {
+      "at": [15, 9],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:oren",
+        "role": "shrine"
+      },
+      "id": "npc:oren/shrine",
+      "op": "place"
+    },
+    {
+      "at": [21, 43],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:oren",
+        "role": "outpost"
+      },
+      "id": "npc:oren/outpost",
+      "op": "place"
+    },
+    {
+      "at": [62, 38],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:mira",
+        "role": "home"
+      },
+      "id": "npc:mira/home",
+      "op": "place"
+    },
+    {
+      "at": [70, 42],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:mira",
+        "role": "work"
+      },
+      "id": "npc:mira/work",
+      "op": "place"
+    },
+    {
+      "at": [44, 41],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:mira",
+        "role": "square"
+      },
+      "id": "npc:mira/square",
+      "op": "place"
+    },
+    {
+      "at": [15, 9],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:mira",
+        "role": "shrine"
+      },
+      "id": "npc:mira/shrine",
+      "op": "place"
+    },
+    {
+      "at": [21, 43],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:mira",
+        "role": "outpost"
+      },
+      "id": "npc:mira/outpost",
+      "op": "place"
+    },
+    {
+      "at": [62, 23],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:lark",
+        "role": "home"
+      },
+      "id": "npc:lark/home",
+      "op": "place"
+    },
+    {
+      "at": [63, 23],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:lark",
+        "role": "work"
+      },
+      "id": "npc:lark/work",
+      "op": "place"
+    },
+    {
+      "at": [44, 41],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:lark",
+        "role": "square"
+      },
+      "id": "npc:lark/square",
+      "op": "place"
+    },
+    {
+      "at": [15, 9],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:lark",
+        "role": "shrine"
+      },
+      "id": "npc:lark/shrine",
+      "op": "place"
+    },
+    {
+      "at": [21, 43],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:lark",
+        "role": "outpost"
+      },
+      "id": "npc:lark/outpost",
+      "op": "place"
+    },
+    {
+      "at": [20, 42],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:dara",
+        "role": "home"
+      },
+      "id": "npc:dara/home",
+      "op": "place"
+    },
+    {
+      "at": [21, 43],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:dara",
+        "role": "work"
+      },
+      "id": "npc:dara/work",
+      "op": "place"
+    },
+    {
+      "at": [44, 41],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:dara",
+        "role": "square"
+      },
+      "id": "npc:dara/square",
+      "op": "place"
+    },
+    {
+      "at": [15, 9],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:dara",
+        "role": "shrine"
+      },
+      "id": "npc:dara/shrine",
+      "op": "place"
+    },
+    {
+      "at": [21, 43],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:dara",
+        "role": "outpost"
+      },
+      "id": "npc:dara/outpost",
+      "op": "place"
+    },
+    {
+      "at": [54, 22],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:finn",
+        "role": "home"
+      },
+      "id": "npc:finn/home",
+      "op": "place"
+    },
+    {
+      "at": [66, 14],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:finn",
+        "role": "work"
+      },
+      "id": "npc:finn/work",
+      "op": "place"
+    },
+    {
+      "at": [44, 41],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:finn",
+        "role": "square"
+      },
+      "id": "npc:finn/square",
+      "op": "place"
+    },
+    {
+      "at": [15, 9],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:finn",
+        "role": "shrine"
+      },
+      "id": "npc:finn/shrine",
+      "op": "place"
+    },
+    {
+      "at": [21, 43],
+      "entity": "VillagerAnchor",
+      "fields": {
+        "npcId": "npc:finn",
+        "role": "outpost"
+      },
+      "id": "npc:finn/outpost",
+      "op": "place"
+    },
+    {
+      "at": [44, 41],
+      "entity": "Service",
+      "fields": {
+        "kind": "hearth"
+      },
+      "id": "service/0",
+      "op": "place"
+    },
+    {
+      "at": [47, 38],
+      "entity": "Service",
+      "fields": {
+        "kind": "well"
+      },
+      "id": "service/1",
+      "op": "place"
+    },
+    {
+      "at": [41, 38],
+      "entity": "Service",
+      "fields": {
+        "kind": "board"
+      },
+      "id": "service/2",
+      "op": "place"
+    },
+    {
+      "at": [68, 59],
+      "entity": "Service",
+      "fields": {
+        "kind": "ferry"
+      },
+      "id": "service/3",
+      "op": "place"
+    },
+    {
+      "at": [62, 8],
+      "entity": "Service",
+      "fields": {
+        "kind": "crafting"
+      },
+      "id": "service/4",
+      "op": "place"
+    },
+    {
+      "at": [7, 4],
+      "entity": "Entrance",
+      "fields": {
+        "kind": "cave",
+        "sceneId": "cave:aqualia"
+      },
+      "id": "cave/cave-mouth",
+      "op": "place"
+    },
+    {
+      "at": [66, 24],
+      "entity": "Habitat",
+      "fields": {
+        "density": "sparse",
+        "phases": [],
+        "species": ["rivallie"]
+      },
+      "id": "habitat/0",
+      "op": "place",
+      "size": [15, 30]
+    },
+    {
+      "at": [0, 52],
+      "entity": "Habitat",
+      "fields": {
+        "density": "sparse",
+        "phases": [],
+        "species": ["mireling"]
+      },
+      "id": "habitat/1",
+      "op": "place",
+      "size": [26, 16]
+    },
+    {
+      "at": [4, 18],
+      "entity": "AmbienceEmitter",
+      "fields": {
+        "phases": [],
+        "set": "laundry"
+      },
+      "id": "ambience/0",
+      "op": "place",
+      "size": [22, 10]
+    },
+    {
+      "at": [36, 52],
+      "entity": "AmbienceEmitter",
+      "fields": {
+        "phases": [],
+        "set": "lily-pads"
+      },
+      "id": "ambience/1",
+      "op": "place",
+      "size": [18, 10]
+    },
+    {
+      "at": [66, 0],
+      "entity": "AmbienceEmitter",
+      "fields": {
+        "phases": [],
+        "set": "fish-ripples"
+      },
+      "id": "ambience/2",
+      "op": "place",
+      "size": [15, 68]
+    },
+    {
+      "at": [0, 50],
+      "entity": "AmbienceEmitter",
+      "fields": {
+        "phases": [],
+        "set": "dragonflies"
+      },
+      "id": "ambience/3",
+      "op": "place",
+      "size": [34, 18]
+    },
+    {
+      "at": [30, 28],
+      "entity": "AmbienceEmitter",
+      "fields": {
+        "phases": [],
+        "set": "willow-leaves"
+      },
+      "id": "ambience/4",
+      "op": "place",
+      "size": [30, 24]
+    },
+    {
+      "at": [0, 50],
+      "entity": "AmbienceEmitter",
+      "fields": {
+        "phases": ["night"],
+        "set": "frogs"
+      },
+      "id": "ambience/5",
+      "op": "place",
+      "size": [34, 18]
+    },
+    {
+      "at": [0, 0],
+      "entity": "AmbienceEmitter",
+      "fields": {
+        "phases": ["dusk", "night"],
+        "set": "fireflies"
+      },
+      "id": "ambience/6",
+      "op": "place",
+      "size": [90, 68]
+    },
+    {
+      "at": [2, 2],
+      "entity": "Decor",
+      "fields": {
+        "asset": "placeholder:foreground:canopy",
+        "blocks": false
+      },
+      "id": "foreground/2/2",
+      "op": "place"
+    },
+    {
+      "at": [32, 2],
+      "entity": "Decor",
+      "fields": {
+        "asset": "placeholder:foreground:canopy",
+        "blocks": false
+      },
+      "id": "foreground/32/2",
+      "op": "place"
+    },
+    {
+      "at": [62, 2],
+      "entity": "Decor",
+      "fields": {
+        "asset": "placeholder:foreground:canopy",
+        "blocks": false
+      },
+      "id": "foreground/62/2",
+      "op": "place"
+    },
+    {
+      "at": [2, 19],
+      "entity": "Decor",
+      "fields": {
+        "asset": "placeholder:foreground:canopy",
+        "blocks": false
+      },
+      "id": "foreground/2/19",
+      "op": "place"
+    },
+    {
+      "at": [32, 19],
+      "entity": "Decor",
+      "fields": {
+        "asset": "placeholder:foreground:canopy",
+        "blocks": false
+      },
+      "id": "foreground/32/19",
+      "op": "place"
+    },
+    {
+      "at": [62, 19],
+      "entity": "Decor",
+      "fields": {
+        "asset": "placeholder:foreground:canopy",
+        "blocks": false
+      },
+      "id": "foreground/62/19",
+      "op": "place"
+    },
+    {
+      "at": [2, 36],
+      "entity": "Decor",
+      "fields": {
+        "asset": "placeholder:foreground:canopy",
+        "blocks": false
+      },
+      "id": "foreground/2/36",
+      "op": "place"
+    },
+    {
+      "at": [32, 36],
+      "entity": "Decor",
+      "fields": {
+        "asset": "placeholder:foreground:canopy",
+        "blocks": false
+      },
+      "id": "foreground/32/36",
+      "op": "place"
+    },
+    {
+      "at": [62, 36],
+      "entity": "Decor",
+      "fields": {
+        "asset": "placeholder:foreground:canopy",
+        "blocks": false
+      },
+      "id": "foreground/62/36",
+      "op": "place"
+    },
+    {
+      "at": [2, 53],
+      "entity": "Decor",
+      "fields": {
+        "asset": "placeholder:foreground:canopy",
+        "blocks": false
+      },
+      "id": "foreground/2/53",
+      "op": "place"
+    },
+    {
+      "at": [32, 53],
+      "entity": "Decor",
+      "fields": {
+        "asset": "placeholder:foreground:canopy",
+        "blocks": false
+      },
+      "id": "foreground/32/53",
+      "op": "place"
+    },
+    {
+      "at": [62, 53],
+      "entity": "Decor",
+      "fields": {
+        "asset": "placeholder:foreground:canopy",
+        "blocks": false
+      },
+      "id": "foreground/62/53",
+      "op": "place"
+    }
+  ],
+  "region": "aqualia",
+  "version": 1
+}

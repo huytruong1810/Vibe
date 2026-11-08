@@ -1,0 +1,56 @@
+{
+  "asset": "bramblefang",
+  "kind": "creature",
+  "heightArtPx": 42,
+  "supersample": 4,
+  "rampShift": {
+    "pelt": -1
+  },
+  "features": {
+    "fangs": {
+      "minSamples": 1,
+      "on": ["pelt", "edge"],
+      "near": ["Socket_Mouth"],
+      "radiusPx": 4,
+      "maxPx": 2
+    }
+  },
+  "ramps": {
+    "pelt": "basalt",
+    "mane": "ember",
+    "fangs": "cream"
+  },
+  "gen3d": {
+    "seed": 1234,
+    "steps": 50,
+    "views": [
+      "front",
+      "left",
+      "back"
+    ]
+  },
+  "notes": "3-view quadruped reference sheet (communicator ticket M10). All 3 views share single standing all-fours pose with charcoal-slate basalt pelt, blazing ember mane, cream saber fangs. creature.large canvas (80x72, anchor 40,56).",
+  "texture": {
+    "views": [
+      "front",
+      "left",
+      "back"
+    ]
+  },
+  "concept": {
+    "template": "creature-v1",
+    "fields": {
+      "species": "Bramblefang",
+      "element": "fire and wind",
+      "size": "large",
+      "stance": "standing on all four paws with its body horizontal, never sitting or standing upright",
+      "description": "an ember-maned predator that stalks grassland margins and thorny thickets",
+      "anatomy": "muscular feline predator body, four sturdy legs with sheathed claws, a thick mane of flaming embers around neck and shoulders, two prominent curved saber fangs extending downward from upper jaw, a long feline tail, alert pointed ears",
+      "colours": "dark charcoal basalt pelt, blazing orange-red ember mane, pale ivory fangs, amber gold eyes"
+    },
+    "references": [
+      "public/assets/portraits/creatures/portrait_bramblefang_128.png"
+    ],
+    "poseGuide": "art/source/style/pose-guides/quadruped.png"
+  }
+}

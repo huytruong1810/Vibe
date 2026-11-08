@@ -1,0 +1,121 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/env-reed-clump--2026-11-05-env-reed-clump.md",
+  "approvalSha256": "2b807c45b33ef3cc58ae0309eb43b086ba98335f85919b09efa234e7cde0ccdc",
+  "asset": "env:reed-clump",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset env:reed-clump",
+    "id": "forge-env-reed-clump",
+    "inputs": [
+      {
+        "path": "blender/models/published/env-reed-clump/d0ade235c89235b3c45b655ad85b77db4ec1feb41673a099b1b19db063ea790b/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/env-reed-clump/d0ade235c89235b3c45b655ad85b77db4ec1feb41673a099b1b19db063ea790b/forge/blender/env_layout.py",
+        "role": "script",
+        "sha256": "b2fa291498b97eb55fc8450d37b55208b1d22550aa81a70b6c8c06d9cc08388b"
+      },
+      {
+        "path": "blender/models/published/env-reed-clump/d0ade235c89235b3c45b655ad85b77db4ec1feb41673a099b1b19db063ea790b/forge/forge.py",
+        "role": "script",
+        "sha256": "72344e74be14dd4324bbc2a158d9c160ff2dfbdfc1325d5166dc5baa5fb6b531"
+      },
+      {
+        "path": "blender/models/published/env-reed-clump/d0ade235c89235b3c45b655ad85b77db4ec1feb41673a099b1b19db063ea790b/forge/forgelib/environment.py",
+        "role": "script",
+        "sha256": "4b3443c051f8076ebdc9abd18152831dfbfe74c0053e7c4622ef3d7f483e397c"
+      },
+      {
+        "path": "blender/models/published/env-reed-clump/d0ade235c89235b3c45b655ad85b77db4ec1feb41673a099b1b19db063ea790b/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/env-reed-clump/d0ade235c89235b3c45b655ad85b77db4ec1feb41673a099b1b19db063ea790b/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "2963b6c95098f03aadf7fffe21507c8b3aa6b4fb4d13e657a9b7921e761ba629"
+      },
+      {
+        "path": "blender/models/published/env-reed-clump/d0ade235c89235b3c45b655ad85b77db4ec1feb41673a099b1b19db063ea790b/forge/recipes/env-reed-clump.json",
+        "role": "pose-config",
+        "sha256": "f75e2417e308d73da0df18fdd9ad1c6bd4feb91b92871312e932f96acd3b35f1"
+      },
+      {
+        "path": "blender/models/published/env-reed-clump/d0ade235c89235b3c45b655ad85b77db4ec1feb41673a099b1b19db063ea790b/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/env-reed-clump/d0ade235c89235b3c45b655ad85b77db4ec1feb41673a099b1b19db063ea790b/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/env-reed-clump/d0ade235c89235b3c45b655ad85b77db4ec1feb41673a099b1b19db063ea790b/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/env-reed-clump/d0ade235c89235b3c45b655ad85b77db4ec1feb41673a099b1b19db063ea790b/forge/work/env-reed-clump/layout.json",
+        "role": "pose-config",
+        "sha256": "e266a66f88fb75336f4fdabda1e5d235c598e0f5125a9d0adf1861a9c6a2f2af"
+      },
+      {
+        "path": "blender/models/published/env-reed-clump/d0ade235c89235b3c45b655ad85b77db4ec1feb41673a099b1b19db063ea790b/forge/work/env-reed-clump/layout/base.blend",
+        "role": "model",
+        "sha256": "a22d22f695277ad0bad6a1bed67b8471eb34d378b6543938a61a2b647c0dc77f"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "footprint": [
+    1,
+    1
+  ],
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 64,
+        "y": 132
+      },
+      "file": "exports/env-reed-clump/e8d97ad4dc7161b59f64e40a61f80e4107b5023f7bd2212da7e030ce0e21feee/frames/shadow.png",
+      "id": "env-reed-clump-shadow",
+      "layer": "shadow",
+      "sha256": "f22dc5b753f4ac6ddff21fec14e3a0d34ce9b8c5deb0aeaa154a21fe90e42bfa",
+      "sourceSize": {
+        "h": 140,
+        "w": 128
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 64,
+        "y": 132
+      },
+      "file": "exports/env-reed-clump/e8d97ad4dc7161b59f64e40a61f80e4107b5023f7bd2212da7e030ce0e21feee/frames/base.png",
+      "id": "env-reed-clump-base",
+      "layer": "base",
+      "sha256": "565df1cbcb7f2c9e43c1b8a86b5121a314c734a6f5f9d7bdaf5b29c90258e577",
+      "sourceSize": {
+        "h": 140,
+        "w": 128
+      }
+    }
+  ],
+  "lightPools": [],
+  "packet": "art/review/2026-11-05-env-reed-clump",
+  "packetDigest": "e8d97ad4dc7161b59f64e40a61f80e4107b5023f7bd2212da7e030ce0e21feee",
+  "packetSha256": "09487054840e9cf20726b1a7d4137b03d3eeb3261b5b18ac90a9911f7f2df4c5",
+  "schemaVersion": 1,
+  "scope": [
+    "shadow",
+    "base"
+  ]
+}

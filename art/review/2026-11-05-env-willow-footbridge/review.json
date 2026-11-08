@@ -1,0 +1,90 @@
+{
+ "asset": "env:willow-footbridge",
+ "footprint": [
+  1,
+  1
+ ],
+ "frames": [
+  {
+   "anchorPx": {
+    "x": 64,
+    "y": 116
+   },
+   "file": "frames/shadow.png",
+   "id": "env-willow-footbridge-shadow",
+   "layer": "shadow",
+   "sha256": "31dcc15c46151e48214e20aec9a558e5eb6b6edc2b06873c2072f78deb61585f",
+   "sourceSize": {
+    "h": 132,
+    "w": 128
+   }
+  },
+  {
+   "anchorPx": {
+    "x": 64,
+    "y": 116
+   },
+   "file": "frames/base.png",
+   "id": "env-willow-footbridge-base",
+   "layer": "base",
+   "sha256": "9e04df150eab4956935585efbed2c2fe15111d539f2072cf7a952fb1a38394b4",
+   "sourceSize": {
+    "h": 132,
+    "w": 128
+   }
+  }
+ ],
+ "kind": "environment-review",
+ "lightPools": [],
+ "qa": [
+  {
+   "check": "footprint",
+   "detail": "ground contact 1.24 tiles deep vs declared 1 (width is scaled to fit)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-11.4"
+  },
+  {
+   "check": "canvas",
+   "detail": "64x66, width multiple of 32",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec canvases.environment"
+  },
+  {
+   "check": "margins",
+   "detail": "smallest transparent margin 2px",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec marginsArtPixels"
+  },
+  {
+   "check": "paletteMembership",
+   "detail": "0 off-palette colours",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.1"
+  },
+  {
+   "check": "colorCount",
+   "detail": "14 colours (environment limit 32)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.4"
+  },
+  {
+   "check": "blocks",
+   "detail": "exports are exact 2x blocks",
+   "hard": true,
+   "pass": true,
+   "rule": "L1"
+  }
+ ],
+ "schemaVersion": 1,
+ "scope": [
+  "shadow",
+  "base"
+ ],
+ "sourceDigest": "4ad7cf5438f9f4f0873a9676d707680bbdca33b35d908b4e0d176f8c9e784d95",
+ "status": "candidate"
+}

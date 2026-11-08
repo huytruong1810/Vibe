@@ -75,6 +75,8 @@ const publish = (type: 'ready' | 'frame' | 'restored', requestId = ''): void => 
       terrain.flags.buffer,
       terrain.resource.buffer,
       terrain.quantity.buffer,
+      ...(terrain.surface ? [terrain.surface.buffer] : []),
+      ...(terrain.ground ? [terrain.ground.buffer] : []),
     ]);
   }
   record('publish-frame', started);
@@ -105,7 +107,7 @@ worker.onmessage = (message: MessageEvent<ToWorker>): void => {
         host?.dispose();
         buffers.length = 0;
         host = new SimulationHost(data.seed, data.origin, data.population, undefined, {
-          worldSource: data.worldSource,
+          worldSource: 'authored',
           compiledWorld: data.compiledWorld,
         });
         previous = performance.now();
@@ -157,7 +159,7 @@ worker.onmessage = (message: MessageEvent<ToWorker>): void => {
       case 'restore': {
         const save = migrateSave(data.snapshot);
         const restored = new SimulationHost(save.seed, save.player.origin, 0, undefined, {
-          worldSource: save.worldSource,
+          worldSource: 'authored',
           compiledWorld: data.compiledWorld,
         });
         restored.restore(save);

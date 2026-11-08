@@ -1,0 +1,12 @@
+{
+  "template": "human",
+  "conceptTemplate": "human-apose-v1",
+  "views": ["front", "back"],
+  "size": [1664, 1408],
+  "source": "art/source/forge/work/selftest-human/texture.blend",
+  "sourceSha256": "49fc471859adb4e40363ed5ad59c6fcecea925df5ca338e63562c6b3ba95cdcb",
+  "script": "art/source/forge/blender/pose_guide.py",
+  "blender": "4.2.3",
+  "command": "uv run --project art/source/forge python art/source/forge/forge.py pose-guide --template human",
+  "at": "2026-11-02T22:41:17Z"
+}

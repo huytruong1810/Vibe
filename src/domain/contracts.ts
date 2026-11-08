@@ -399,7 +399,7 @@ export type ToWorker = (
       seed: number;
       origin: number;
       population?: number;
-      worldSource?: 'procedural' | 'authored';
+      worldSource?: 'authored';
       compiledWorld?: unknown;
     }
   | { type: 'command'; envelope: WorldCommand }

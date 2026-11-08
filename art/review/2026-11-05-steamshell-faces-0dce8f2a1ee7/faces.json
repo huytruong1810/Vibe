@@ -1,0 +1,1907 @@
+{
+  "schemaVersion": 1,
+  "asset": "steamshell",
+  "scope": [
+    "faces"
+  ],
+  "status": "draft",
+  "bodyPacketDigest": "377b976f9b6a14de80f3faaab3c93edb9c815b2167759844f7a0c6c2554d94ae",
+  "bodyManifestSha256": "8ba5f66352c4a5f40785bffce82a5098a884d4409627d778c18a0cc8e8531290",
+  "frames": [
+    {
+      "expression": "neutral",
+      "facing": "s",
+      "file": "neutral/s.png",
+      "sha256": "560d804fc63684b599d62c9260571fdfac73adf76539263574b599129695f559",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "neutral",
+      "facing": "se",
+      "file": "neutral/se.png",
+      "sha256": "0d88f53fd7563b77735a3faa479c1b08d81e83802c3abcd9e47c412e1ea3adc6",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "neutral",
+      "facing": "sw",
+      "file": "neutral/sw.png",
+      "sha256": "9b3709856a10d20ba3a229e61487552eb83df8e1f7190b79b9db24845fb7f64f",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "neutral",
+      "facing": "e",
+      "file": "neutral/e.png",
+      "sha256": "c7f2bcc83dcd8b665c3254d4b4b91735077c7869e67c5e3a850ba8f3cd27c776",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "neutral",
+      "facing": "w",
+      "file": "neutral/w.png",
+      "sha256": "9a9860408460555c6ddb218afe05cbc19c43e86938f82d58d9d0c58469329fe1",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "warm",
+      "facing": "s",
+      "file": "warm/s.png",
+      "sha256": "9e55be0232387e28cd7b1377b1ba80489a3418f2ad6eed3551e0fbf008a9ad81",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "warm",
+      "facing": "se",
+      "file": "warm/se.png",
+      "sha256": "438537b456ae9b0c8e0a776bdd1f963e452c459a8fef1aa69d8eda44b81c9603",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "warm",
+      "facing": "sw",
+      "file": "warm/sw.png",
+      "sha256": "085275716ed3073e52099f7422bb91a97205b13713a9d5275b3cebcc85ca9948",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "warm",
+      "facing": "e",
+      "file": "warm/e.png",
+      "sha256": "1d0def96ce3dfa6e33ec0ab911ffb9eff8c477d096951e1f1a6fc34e24ddc6d6",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "warm",
+      "facing": "w",
+      "file": "warm/w.png",
+      "sha256": "45dce88e09ca630bacebd61fe2c62b92387391a0bf4312bae205d988a5ec105d",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "fearful",
+      "facing": "s",
+      "file": "fearful/s.png",
+      "sha256": "bbddac7cb8bd7aaf7e73ed30dc26eeb05b09c881aa41f1680796d10a1d303cfa",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "fearful",
+      "facing": "se",
+      "file": "fearful/se.png",
+      "sha256": "33003e938992223c692b629913f64a36a27925e7fbdfd2726afd2c6bc960a2ff",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "fearful",
+      "facing": "sw",
+      "file": "fearful/sw.png",
+      "sha256": "d6f71205f258937b77b624a38c4cc474860ebd0bc74437c0e641d3db8bf24462",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "fearful",
+      "facing": "e",
+      "file": "fearful/e.png",
+      "sha256": "657ee6a88fe6cf902f8ecf22647c1ba0195b440d8ad835fe071519ec9ab48555",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "fearful",
+      "facing": "w",
+      "file": "fearful/w.png",
+      "sha256": "083c0bf21e11120f26b967be6f9528bcfc7274cf56a2a86bbd9cd453f442b510",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "hurt",
+      "facing": "s",
+      "file": "hurt/s.png",
+      "sha256": "f0ad143c98ee7aa876bc78b8aa1b82fd9fe17d160d87ae7e4b970617f6c9a10d",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "hurt",
+      "facing": "se",
+      "file": "hurt/se.png",
+      "sha256": "d5251b97c30df82763f0076abe8854cd28311b20e2f62861b6df1bb09d630c34",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "hurt",
+      "facing": "sw",
+      "file": "hurt/sw.png",
+      "sha256": "3e5db620325a5b0499d9b523b512c69fedf99d82ff83ad1387972e334a0b5052",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "hurt",
+      "facing": "e",
+      "file": "hurt/e.png",
+      "sha256": "fe38be4205ef96bbe98d552d6db4050fd376a2be42cf4a8e674caaf116ee8247",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "hurt",
+      "facing": "w",
+      "file": "hurt/w.png",
+      "sha256": "cec7ccda16e39aafa6c09b2d44a522150ed34759f279150d95ad607cbdd4d8ad",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "sleep",
+      "facing": "s",
+      "file": "sleep/s.png",
+      "sha256": "a0fc9f0157cd1a29e52655a18f7c3fa6ff472974c33f6d7ca83a56205e1a3de0",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "sleep",
+      "facing": "se",
+      "file": "sleep/se.png",
+      "sha256": "c86f256c2ff0969055a4bbc11dd5dbaffd0d9489d9a43834a328f999cc8ec386",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "sleep",
+      "facing": "sw",
+      "file": "sleep/sw.png",
+      "sha256": "dc61f833d84bd445d727b68a50fdbf4761f07edbd50e42c2793e6135b9c08e02",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "sleep",
+      "facing": "e",
+      "file": "sleep/e.png",
+      "sha256": "84210f48847e9cf2fd56a1832a583bcff578236df381d0a8bb9f5f7dd45710fe",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    },
+    {
+      "expression": "sleep",
+      "facing": "w",
+      "file": "sleep/w.png",
+      "sha256": "b8dfb7fd7a3a2f34c957965bcb1c3ea6e7d6423f68ffd917050323c69800c633",
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "socket": "Socket_Head"
+    }
+  ],
+  "qa": [
+    {
+      "check": "faceAnchor",
+      "rule": "ART-8.1/ART-8.2",
+      "hard": true,
+      "pass": true,
+      "detail": "1805 registrations; "
+    },
+    {
+      "check": "faceCoverage",
+      "rule": "ART-8.2",
+      "hard": true,
+      "pass": false,
+      "detail": "47 of 408 forward frames hide the face (limit 10%); idle hidden: 6"
+    },
+    {
+      "check": "faceDistinct",
+      "rule": "ART-8.3",
+      "hard": true,
+      "pass": true,
+      "detail": "every expression differs from neutral in every facing"
+    }
+  ],
+  "registration": {
+    "unit": "frame px from Socket_Head; null hides the face on that frame",
+    "frames": {
+      "steamshell:bathe:e:0": [
+        -4,
+        6
+      ],
+      "steamshell:bathe:e:1": [
+        -4,
+        10
+      ],
+      "steamshell:bathe:e:2": null,
+      "steamshell:bathe:e:3": [
+        -4,
+        10
+      ],
+      "steamshell:bathe:e:4": null,
+      "steamshell:bathe:e:5": [
+        -4,
+        6
+      ],
+      "steamshell:bathe:s:0": [
+        0,
+        10
+      ],
+      "steamshell:bathe:s:1": [
+        0,
+        10
+      ],
+      "steamshell:bathe:s:2": [
+        0,
+        10
+      ],
+      "steamshell:bathe:s:3": [
+        0,
+        10
+      ],
+      "steamshell:bathe:s:4": [
+        0,
+        10
+      ],
+      "steamshell:bathe:s:5": [
+        0,
+        10
+      ],
+      "steamshell:bathe:w:0": [
+        2,
+        6
+      ],
+      "steamshell:bathe:w:1": [
+        4,
+        4
+      ],
+      "steamshell:bathe:w:2": [
+        4,
+        10
+      ],
+      "steamshell:bathe:w:3": null,
+      "steamshell:bathe:w:4": [
+        4,
+        8
+      ],
+      "steamshell:bathe:w:5": [
+        2,
+        6
+      ],
+      "steamshell:downed:e:0": [
+        0,
+        12
+      ],
+      "steamshell:downed:e:1": [
+        0,
+        10
+      ],
+      "steamshell:downed:e:2": [
+        0,
+        10
+      ],
+      "steamshell:downed:e:3": [
+        0,
+        10
+      ],
+      "steamshell:downed:e:4": [
+        0,
+        10
+      ],
+      "steamshell:downed:e:5": [
+        0,
+        10
+      ],
+      "steamshell:downed:s:0": [
+        0,
+        10
+      ],
+      "steamshell:downed:s:1": [
+        0,
+        10
+      ],
+      "steamshell:downed:s:2": [
+        0,
+        8
+      ],
+      "steamshell:downed:s:3": [
+        0,
+        8
+      ],
+      "steamshell:downed:s:4": [
+        0,
+        10
+      ],
+      "steamshell:downed:s:5": [
+        0,
+        8
+      ],
+      "steamshell:downed:w:0": [
+        0,
+        10
+      ],
+      "steamshell:downed:w:1": [
+        2,
+        10
+      ],
+      "steamshell:downed:w:2": [
+        0,
+        6
+      ],
+      "steamshell:downed:w:3": [
+        0,
+        6
+      ],
+      "steamshell:downed:w:4": [
+        2,
+        8
+      ],
+      "steamshell:downed:w:5": [
+        0,
+        6
+      ],
+      "steamshell:drink:e:0": [
+        -2,
+        16
+      ],
+      "steamshell:drink:e:1": [
+        -2,
+        14
+      ],
+      "steamshell:drink:e:2": [
+        -2,
+        16
+      ],
+      "steamshell:drink:e:3": [
+        -2,
+        16
+      ],
+      "steamshell:drink:e:4": [
+        -2,
+        14
+      ],
+      "steamshell:drink:e:5": [
+        -2,
+        16
+      ],
+      "steamshell:drink:s:0": [
+        0,
+        10
+      ],
+      "steamshell:drink:s:1": [
+        0,
+        10
+      ],
+      "steamshell:drink:s:2": [
+        0,
+        10
+      ],
+      "steamshell:drink:s:3": [
+        0,
+        10
+      ],
+      "steamshell:drink:s:4": [
+        0,
+        10
+      ],
+      "steamshell:drink:s:5": [
+        0,
+        10
+      ],
+      "steamshell:drink:w:0": [
+        4,
+        10
+      ],
+      "steamshell:drink:w:1": [
+        4,
+        10
+      ],
+      "steamshell:drink:w:2": [
+        4,
+        10
+      ],
+      "steamshell:drink:w:3": [
+        4,
+        10
+      ],
+      "steamshell:drink:w:4": [
+        4,
+        10
+      ],
+      "steamshell:drink:w:5": [
+        4,
+        10
+      ],
+      "steamshell:eat:e:0": null,
+      "steamshell:eat:e:1": null,
+      "steamshell:eat:e:2": null,
+      "steamshell:eat:e:3": null,
+      "steamshell:eat:e:4": null,
+      "steamshell:eat:e:5": null,
+      "steamshell:eat:s:0": [
+        0,
+        10
+      ],
+      "steamshell:eat:s:1": [
+        0,
+        10
+      ],
+      "steamshell:eat:s:2": [
+        0,
+        10
+      ],
+      "steamshell:eat:s:3": [
+        0,
+        10
+      ],
+      "steamshell:eat:s:4": [
+        0,
+        10
+      ],
+      "steamshell:eat:s:5": [
+        0,
+        10
+      ],
+      "steamshell:eat:w:0": [
+        4,
+        6
+      ],
+      "steamshell:eat:w:1": null,
+      "steamshell:eat:w:2": [
+        4,
+        6
+      ],
+      "steamshell:eat:w:3": null,
+      "steamshell:eat:w:4": [
+        4,
+        6
+      ],
+      "steamshell:eat:w:5": null,
+      "steamshell:element:e:0": null,
+      "steamshell:element:e:1": [
+        -2,
+        16
+      ],
+      "steamshell:element:e:2": [
+        0,
+        8
+      ],
+      "steamshell:element:e:3": [
+        0,
+        8
+      ],
+      "steamshell:element:e:4": [
+        0,
+        8
+      ],
+      "steamshell:element:e:5": [
+        -4,
+        8
+      ],
+      "steamshell:element:e:6": [
+        -4,
+        8
+      ],
+      "steamshell:element:e:7": null,
+      "steamshell:element:e:8": null,
+      "steamshell:element:e:9": null,
+      "steamshell:element:e:10": null,
+      "steamshell:element:e:11": null,
+      "steamshell:element:s:0": [
+        0,
+        10
+      ],
+      "steamshell:element:s:1": [
+        0,
+        10
+      ],
+      "steamshell:element:s:2": [
+        0,
+        10
+      ],
+      "steamshell:element:s:3": [
+        0,
+        10
+      ],
+      "steamshell:element:s:4": [
+        0,
+        10
+      ],
+      "steamshell:element:s:5": [
+        0,
+        10
+      ],
+      "steamshell:element:s:6": [
+        0,
+        10
+      ],
+      "steamshell:element:s:7": [
+        0,
+        10
+      ],
+      "steamshell:element:s:8": [
+        0,
+        10
+      ],
+      "steamshell:element:s:9": [
+        0,
+        10
+      ],
+      "steamshell:element:s:10": [
+        0,
+        10
+      ],
+      "steamshell:element:s:11": [
+        0,
+        10
+      ],
+      "steamshell:element:se:0": [
+        0,
+        12
+      ],
+      "steamshell:element:se:1": [
+        0,
+        12
+      ],
+      "steamshell:element:se:2": [
+        -2,
+        8
+      ],
+      "steamshell:element:se:3": [
+        0,
+        10
+      ],
+      "steamshell:element:se:4": [
+        0,
+        10
+      ],
+      "steamshell:element:se:5": [
+        0,
+        10
+      ],
+      "steamshell:element:se:6": [
+        0,
+        10
+      ],
+      "steamshell:element:se:7": [
+        0,
+        10
+      ],
+      "steamshell:element:se:8": [
+        0,
+        12
+      ],
+      "steamshell:element:se:9": [
+        0,
+        12
+      ],
+      "steamshell:element:se:10": [
+        0,
+        12
+      ],
+      "steamshell:element:se:11": [
+        0,
+        12
+      ],
+      "steamshell:element:sw:0": [
+        0,
+        10
+      ],
+      "steamshell:element:sw:1": [
+        0,
+        10
+      ],
+      "steamshell:element:sw:2": [
+        0,
+        8
+      ],
+      "steamshell:element:sw:3": [
+        0,
+        10
+      ],
+      "steamshell:element:sw:4": [
+        0,
+        10
+      ],
+      "steamshell:element:sw:5": [
+        0,
+        10
+      ],
+      "steamshell:element:sw:6": [
+        0,
+        10
+      ],
+      "steamshell:element:sw:7": [
+        0,
+        10
+      ],
+      "steamshell:element:sw:8": [
+        0,
+        10
+      ],
+      "steamshell:element:sw:9": [
+        0,
+        10
+      ],
+      "steamshell:element:sw:10": [
+        0,
+        10
+      ],
+      "steamshell:element:sw:11": [
+        0,
+        10
+      ],
+      "steamshell:element:w:0": [
+        4,
+        6
+      ],
+      "steamshell:element:w:1": [
+        4,
+        10
+      ],
+      "steamshell:element:w:2": [
+        0,
+        8
+      ],
+      "steamshell:element:w:3": [
+        0,
+        8
+      ],
+      "steamshell:element:w:4": [
+        0,
+        8
+      ],
+      "steamshell:element:w:5": [
+        4,
+        8
+      ],
+      "steamshell:element:w:6": [
+        4,
+        8
+      ],
+      "steamshell:element:w:7": null,
+      "steamshell:element:w:8": [
+        4,
+        6
+      ],
+      "steamshell:element:w:9": [
+        4,
+        8
+      ],
+      "steamshell:element:w:10": null,
+      "steamshell:element:w:11": [
+        4,
+        6
+      ],
+      "steamshell:guard:e:0": [
+        0,
+        4
+      ],
+      "steamshell:guard:e:1": [
+        0,
+        4
+      ],
+      "steamshell:guard:e:2": [
+        0,
+        4
+      ],
+      "steamshell:guard:e:3": [
+        0,
+        4
+      ],
+      "steamshell:guard:s:0": [
+        0,
+        6
+      ],
+      "steamshell:guard:s:1": [
+        0,
+        6
+      ],
+      "steamshell:guard:s:2": [
+        0,
+        6
+      ],
+      "steamshell:guard:s:3": [
+        0,
+        6
+      ],
+      "steamshell:guard:se:0": [
+        0,
+        6
+      ],
+      "steamshell:guard:se:1": [
+        0,
+        6
+      ],
+      "steamshell:guard:se:2": [
+        0,
+        6
+      ],
+      "steamshell:guard:se:3": [
+        0,
+        6
+      ],
+      "steamshell:guard:sw:0": [
+        0,
+        6
+      ],
+      "steamshell:guard:sw:1": [
+        0,
+        6
+      ],
+      "steamshell:guard:sw:2": [
+        0,
+        6
+      ],
+      "steamshell:guard:sw:3": [
+        0,
+        6
+      ],
+      "steamshell:guard:w:0": [
+        0,
+        4
+      ],
+      "steamshell:guard:w:1": [
+        0,
+        4
+      ],
+      "steamshell:guard:w:2": [
+        0,
+        4
+      ],
+      "steamshell:guard:w:3": [
+        0,
+        4
+      ],
+      "steamshell:hit:e:0": [
+        0,
+        14
+      ],
+      "steamshell:hit:e:1": [
+        -4,
+        10
+      ],
+      "steamshell:hit:e:2": [
+        -4,
+        6
+      ],
+      "steamshell:hit:e:3": null,
+      "steamshell:hit:s:0": [
+        0,
+        10
+      ],
+      "steamshell:hit:s:1": [
+        0,
+        10
+      ],
+      "steamshell:hit:s:2": [
+        0,
+        10
+      ],
+      "steamshell:hit:s:3": [
+        0,
+        10
+      ],
+      "steamshell:hit:se:0": [
+        0,
+        10
+      ],
+      "steamshell:hit:se:1": [
+        0,
+        10
+      ],
+      "steamshell:hit:se:2": [
+        0,
+        12
+      ],
+      "steamshell:hit:se:3": [
+        0,
+        12
+      ],
+      "steamshell:hit:sw:0": [
+        0,
+        10
+      ],
+      "steamshell:hit:sw:1": [
+        0,
+        10
+      ],
+      "steamshell:hit:sw:2": [
+        0,
+        10
+      ],
+      "steamshell:hit:sw:3": [
+        0,
+        10
+      ],
+      "steamshell:hit:w:0": [
+        0,
+        12
+      ],
+      "steamshell:hit:w:1": [
+        2,
+        10
+      ],
+      "steamshell:hit:w:2": [
+        2,
+        6
+      ],
+      "steamshell:hit:w:3": [
+        4,
+        6
+      ],
+      "steamshell:idle:e:0": null,
+      "steamshell:idle:e:1": null,
+      "steamshell:idle:e:2": null,
+      "steamshell:idle:e:3": null,
+      "steamshell:idle:e:4": null,
+      "steamshell:idle:e:5": null,
+      "steamshell:idle:s:0": [
+        0,
+        10
+      ],
+      "steamshell:idle:s:1": [
+        0,
+        10
+      ],
+      "steamshell:idle:s:2": [
+        0,
+        10
+      ],
+      "steamshell:idle:s:3": [
+        0,
+        10
+      ],
+      "steamshell:idle:s:4": [
+        0,
+        10
+      ],
+      "steamshell:idle:s:5": [
+        0,
+        10
+      ],
+      "steamshell:idle:se:0": [
+        0,
+        12
+      ],
+      "steamshell:idle:se:1": [
+        0,
+        12
+      ],
+      "steamshell:idle:se:2": [
+        0,
+        12
+      ],
+      "steamshell:idle:se:3": [
+        0,
+        12
+      ],
+      "steamshell:idle:se:4": [
+        0,
+        12
+      ],
+      "steamshell:idle:se:5": [
+        0,
+        12
+      ],
+      "steamshell:idle:sw:0": [
+        0,
+        10
+      ],
+      "steamshell:idle:sw:1": [
+        0,
+        10
+      ],
+      "steamshell:idle:sw:2": [
+        0,
+        10
+      ],
+      "steamshell:idle:sw:3": [
+        0,
+        10
+      ],
+      "steamshell:idle:sw:4": [
+        0,
+        10
+      ],
+      "steamshell:idle:sw:5": [
+        0,
+        10
+      ],
+      "steamshell:idle:w:0": [
+        4,
+        6
+      ],
+      "steamshell:idle:w:1": [
+        4,
+        6
+      ],
+      "steamshell:idle:w:2": [
+        4,
+        6
+      ],
+      "steamshell:idle:w:3": [
+        4,
+        6
+      ],
+      "steamshell:idle:w:4": [
+        4,
+        6
+      ],
+      "steamshell:idle:w:5": [
+        4,
+        6
+      ],
+      "steamshell:recovery:e:0": [
+        0,
+        10
+      ],
+      "steamshell:recovery:e:1": [
+        0,
+        10
+      ],
+      "steamshell:recovery:e:2": [
+        0,
+        10
+      ],
+      "steamshell:recovery:e:3": [
+        -4,
+        18
+      ],
+      "steamshell:recovery:e:4": null,
+      "steamshell:recovery:e:5": null,
+      "steamshell:recovery:s:0": [
+        0,
+        10
+      ],
+      "steamshell:recovery:s:1": [
+        0,
+        10
+      ],
+      "steamshell:recovery:s:2": [
+        0,
+        10
+      ],
+      "steamshell:recovery:s:3": [
+        0,
+        10
+      ],
+      "steamshell:recovery:s:4": [
+        0,
+        10
+      ],
+      "steamshell:recovery:s:5": [
+        0,
+        10
+      ],
+      "steamshell:recovery:w:0": [
+        0,
+        10
+      ],
+      "steamshell:recovery:w:1": [
+        0,
+        10
+      ],
+      "steamshell:recovery:w:2": [
+        0,
+        10
+      ],
+      "steamshell:recovery:w:3": [
+        4,
+        8
+      ],
+      "steamshell:recovery:w:4": [
+        4,
+        6
+      ],
+      "steamshell:recovery:w:5": [
+        4,
+        6
+      ],
+      "steamshell:run:e:0": null,
+      "steamshell:run:e:1": null,
+      "steamshell:run:e:2": [
+        -4,
+        8
+      ],
+      "steamshell:run:e:3": null,
+      "steamshell:run:e:4": null,
+      "steamshell:run:e:5": [
+        0,
+        18
+      ],
+      "steamshell:run:e:6": [
+        -4,
+        10
+      ],
+      "steamshell:run:e:7": [
+        -4,
+        6
+      ],
+      "steamshell:run:s:0": [
+        0,
+        10
+      ],
+      "steamshell:run:s:1": [
+        0,
+        10
+      ],
+      "steamshell:run:s:2": [
+        0,
+        10
+      ],
+      "steamshell:run:s:3": [
+        0,
+        10
+      ],
+      "steamshell:run:s:4": [
+        0,
+        10
+      ],
+      "steamshell:run:s:5": [
+        0,
+        10
+      ],
+      "steamshell:run:s:6": [
+        0,
+        10
+      ],
+      "steamshell:run:s:7": [
+        0,
+        10
+      ],
+      "steamshell:run:se:0": [
+        0,
+        10
+      ],
+      "steamshell:run:se:1": [
+        0,
+        10
+      ],
+      "steamshell:run:se:2": [
+        -2,
+        10
+      ],
+      "steamshell:run:se:3": [
+        -2,
+        10
+      ],
+      "steamshell:run:se:4": [
+        -2,
+        8
+      ],
+      "steamshell:run:se:5": [
+        0,
+        12
+      ],
+      "steamshell:run:se:6": [
+        0,
+        10
+      ],
+      "steamshell:run:se:7": [
+        0,
+        10
+      ],
+      "steamshell:run:sw:0": [
+        2,
+        8
+      ],
+      "steamshell:run:sw:1": [
+        0,
+        10
+      ],
+      "steamshell:run:sw:2": [
+        0,
+        10
+      ],
+      "steamshell:run:sw:3": [
+        0,
+        10
+      ],
+      "steamshell:run:sw:4": [
+        0,
+        10
+      ],
+      "steamshell:run:sw:5": [
+        0,
+        10
+      ],
+      "steamshell:run:sw:6": [
+        0,
+        10
+      ],
+      "steamshell:run:sw:7": [
+        2,
+        8
+      ],
+      "steamshell:run:w:0": [
+        4,
+        6
+      ],
+      "steamshell:run:w:1": [
+        4,
+        6
+      ],
+      "steamshell:run:w:2": [
+        2,
+        8
+      ],
+      "steamshell:run:w:3": [
+        2,
+        6
+      ],
+      "steamshell:run:w:4": [
+        4,
+        6
+      ],
+      "steamshell:run:w:5": [
+        4,
+        6
+      ],
+      "steamshell:run:w:6": [
+        4,
+        6
+      ],
+      "steamshell:run:w:7": [
+        4,
+        6
+      ],
+      "steamshell:sleep:e:0": [
+        0,
+        4
+      ],
+      "steamshell:sleep:e:1": [
+        0,
+        4
+      ],
+      "steamshell:sleep:e:2": [
+        0,
+        4
+      ],
+      "steamshell:sleep:e:3": [
+        0,
+        4
+      ],
+      "steamshell:sleep:s:0": [
+        0,
+        6
+      ],
+      "steamshell:sleep:s:1": [
+        0,
+        6
+      ],
+      "steamshell:sleep:s:2": [
+        0,
+        6
+      ],
+      "steamshell:sleep:s:3": [
+        0,
+        6
+      ],
+      "steamshell:sleep:w:0": [
+        0,
+        4
+      ],
+      "steamshell:sleep:w:1": [
+        0,
+        4
+      ],
+      "steamshell:sleep:w:2": [
+        0,
+        4
+      ],
+      "steamshell:sleep:w:3": [
+        0,
+        4
+      ],
+      "steamshell:social:e:0": [
+        -4,
+        8
+      ],
+      "steamshell:social:e:1": null,
+      "steamshell:social:e:2": [
+        -4,
+        8
+      ],
+      "steamshell:social:e:3": null,
+      "steamshell:social:e:4": [
+        -4,
+        8
+      ],
+      "steamshell:social:e:5": [
+        -4,
+        8
+      ],
+      "steamshell:social:s:0": [
+        0,
+        10
+      ],
+      "steamshell:social:s:1": [
+        0,
+        10
+      ],
+      "steamshell:social:s:2": [
+        0,
+        10
+      ],
+      "steamshell:social:s:3": [
+        0,
+        10
+      ],
+      "steamshell:social:s:4": [
+        0,
+        10
+      ],
+      "steamshell:social:s:5": [
+        0,
+        10
+      ],
+      "steamshell:social:w:0": [
+        4,
+        8
+      ],
+      "steamshell:social:w:1": null,
+      "steamshell:social:w:2": [
+        4,
+        8
+      ],
+      "steamshell:social:w:3": null,
+      "steamshell:social:w:4": [
+        4,
+        8
+      ],
+      "steamshell:social:w:5": [
+        4,
+        8
+      ],
+      "steamshell:strike:e:0": null,
+      "steamshell:strike:e:1": [
+        -4,
+        6
+      ],
+      "steamshell:strike:e:2": [
+        0,
+        18
+      ],
+      "steamshell:strike:e:3": [
+        -2,
+        8
+      ],
+      "steamshell:strike:e:4": [
+        -2,
+        8
+      ],
+      "steamshell:strike:e:5": [
+        -2,
+        8
+      ],
+      "steamshell:strike:e:6": [
+        -4,
+        8
+      ],
+      "steamshell:strike:e:7": [
+        -4,
+        8
+      ],
+      "steamshell:strike:e:8": [
+        -4,
+        6
+      ],
+      "steamshell:strike:e:9": [
+        -4,
+        6
+      ],
+      "steamshell:strike:e:10": null,
+      "steamshell:strike:e:11": null,
+      "steamshell:strike:s:0": [
+        0,
+        10
+      ],
+      "steamshell:strike:s:1": [
+        0,
+        10
+      ],
+      "steamshell:strike:s:2": [
+        0,
+        10
+      ],
+      "steamshell:strike:s:3": [
+        0,
+        10
+      ],
+      "steamshell:strike:s:4": [
+        0,
+        10
+      ],
+      "steamshell:strike:s:5": [
+        0,
+        10
+      ],
+      "steamshell:strike:s:6": [
+        0,
+        10
+      ],
+      "steamshell:strike:s:7": [
+        0,
+        10
+      ],
+      "steamshell:strike:s:8": [
+        0,
+        10
+      ],
+      "steamshell:strike:s:9": [
+        0,
+        10
+      ],
+      "steamshell:strike:s:10": [
+        0,
+        10
+      ],
+      "steamshell:strike:s:11": [
+        0,
+        10
+      ],
+      "steamshell:strike:se:0": [
+        0,
+        12
+      ],
+      "steamshell:strike:se:1": [
+        -2,
+        10
+      ],
+      "steamshell:strike:se:2": [
+        0,
+        10
+      ],
+      "steamshell:strike:se:3": [
+        0,
+        10
+      ],
+      "steamshell:strike:se:4": [
+        0,
+        10
+      ],
+      "steamshell:strike:se:5": [
+        0,
+        10
+      ],
+      "steamshell:strike:se:6": [
+        0,
+        10
+      ],
+      "steamshell:strike:se:7": [
+        0,
+        10
+      ],
+      "steamshell:strike:se:8": [
+        0,
+        10
+      ],
+      "steamshell:strike:se:9": [
+        0,
+        10
+      ],
+      "steamshell:strike:se:10": [
+        0,
+        12
+      ],
+      "steamshell:strike:se:11": [
+        0,
+        12
+      ],
+      "steamshell:strike:sw:0": [
+        0,
+        10
+      ],
+      "steamshell:strike:sw:1": [
+        0,
+        10
+      ],
+      "steamshell:strike:sw:2": [
+        0,
+        10
+      ],
+      "steamshell:strike:sw:3": [
+        0,
+        10
+      ],
+      "steamshell:strike:sw:4": [
+        0,
+        10
+      ],
+      "steamshell:strike:sw:5": [
+        0,
+        10
+      ],
+      "steamshell:strike:sw:6": [
+        0,
+        10
+      ],
+      "steamshell:strike:sw:7": [
+        0,
+        10
+      ],
+      "steamshell:strike:sw:8": [
+        0,
+        10
+      ],
+      "steamshell:strike:sw:9": [
+        0,
+        10
+      ],
+      "steamshell:strike:sw:10": [
+        0,
+        10
+      ],
+      "steamshell:strike:sw:11": [
+        0,
+        10
+      ],
+      "steamshell:strike:w:0": [
+        4,
+        6
+      ],
+      "steamshell:strike:w:1": [
+        2,
+        6
+      ],
+      "steamshell:strike:w:2": [
+        4,
+        10
+      ],
+      "steamshell:strike:w:3": [
+        0,
+        6
+      ],
+      "steamshell:strike:w:4": [
+        0,
+        6
+      ],
+      "steamshell:strike:w:5": [
+        0,
+        6
+      ],
+      "steamshell:strike:w:6": [
+        2,
+        6
+      ],
+      "steamshell:strike:w:7": [
+        2,
+        6
+      ],
+      "steamshell:strike:w:8": [
+        4,
+        6
+      ],
+      "steamshell:strike:w:9": [
+        2,
+        6
+      ],
+      "steamshell:strike:w:10": [
+        4,
+        6
+      ],
+      "steamshell:strike:w:11": [
+        4,
+        6
+      ],
+      "steamshell:walk:e:0": [
+        -2,
+        18
+      ],
+      "steamshell:walk:e:1": null,
+      "steamshell:walk:e:2": [
+        -4,
+        6
+      ],
+      "steamshell:walk:e:3": [
+        -4,
+        6
+      ],
+      "steamshell:walk:e:4": null,
+      "steamshell:walk:e:5": null,
+      "steamshell:walk:e:6": [
+        -4,
+        10
+      ],
+      "steamshell:walk:e:7": [
+        -4,
+        6
+      ],
+      "steamshell:walk:s:0": [
+        0,
+        10
+      ],
+      "steamshell:walk:s:1": [
+        0,
+        10
+      ],
+      "steamshell:walk:s:2": [
+        0,
+        10
+      ],
+      "steamshell:walk:s:3": [
+        0,
+        10
+      ],
+      "steamshell:walk:s:4": [
+        0,
+        10
+      ],
+      "steamshell:walk:s:5": [
+        0,
+        10
+      ],
+      "steamshell:walk:s:6": [
+        0,
+        10
+      ],
+      "steamshell:walk:s:7": [
+        0,
+        10
+      ],
+      "steamshell:walk:se:0": [
+        0,
+        12
+      ],
+      "steamshell:walk:se:1": [
+        0,
+        12
+      ],
+      "steamshell:walk:se:2": [
+        0,
+        12
+      ],
+      "steamshell:walk:se:3": [
+        -2,
+        10
+      ],
+      "steamshell:walk:se:4": [
+        -2,
+        12
+      ],
+      "steamshell:walk:se:5": [
+        -4,
+        10
+      ],
+      "steamshell:walk:se:6": [
+        0,
+        10
+      ],
+      "steamshell:walk:se:7": [
+        0,
+        10
+      ],
+      "steamshell:walk:sw:0": [
+        2,
+        10
+      ],
+      "steamshell:walk:sw:1": [
+        0,
+        12
+      ],
+      "steamshell:walk:sw:2": [
+        0,
+        10
+      ],
+      "steamshell:walk:sw:3": [
+        0,
+        10
+      ],
+      "steamshell:walk:sw:4": [
+        0,
+        10
+      ],
+      "steamshell:walk:sw:5": [
+        0,
+        10
+      ],
+      "steamshell:walk:sw:6": [
+        0,
+        10
+      ],
+      "steamshell:walk:sw:7": [
+        0,
+        10
+      ],
+      "steamshell:walk:w:0": null,
+      "steamshell:walk:w:1": [
+        4,
+        4
+      ],
+      "steamshell:walk:w:2": [
+        4,
+        10
+      ],
+      "steamshell:walk:w:3": [
+        2,
+        6
+      ],
+      "steamshell:walk:w:4": [
+        4,
+        8
+      ],
+      "steamshell:walk:w:5": [
+        4,
+        6
+      ],
+      "steamshell:walk:w:6": [
+        4,
+        6
+      ],
+      "steamshell:walk:w:7": [
+        4,
+        6
+      ],
+      "steamshell:work:e:0": [
+        -4,
+        10
+      ],
+      "steamshell:work:e:1": null,
+      "steamshell:work:e:2": [
+        -4,
+        10
+      ],
+      "steamshell:work:e:3": null,
+      "steamshell:work:e:4": [
+        -4,
+        10
+      ],
+      "steamshell:work:e:5": null,
+      "steamshell:work:s:0": [
+        0,
+        10
+      ],
+      "steamshell:work:s:1": [
+        0,
+        10
+      ],
+      "steamshell:work:s:2": [
+        0,
+        10
+      ],
+      "steamshell:work:s:3": [
+        0,
+        10
+      ],
+      "steamshell:work:s:4": [
+        0,
+        10
+      ],
+      "steamshell:work:s:5": [
+        0,
+        10
+      ],
+      "steamshell:work:w:0": [
+        4,
+        4
+      ],
+      "steamshell:work:w:1": [
+        0,
+        10
+      ],
+      "steamshell:work:w:2": [
+        4,
+        4
+      ],
+      "steamshell:work:w:3": [
+        0,
+        10
+      ],
+      "steamshell:work:w:4": [
+        4,
+        4
+      ],
+      "steamshell:work:w:5": [
+        0,
+        10
+      ]
+    }
+  },
+  "sourceDigest": "51449d2008e5c64798a4e1fc5d32cc44a72216cdfd98e3795be7ca5892921567"
+}

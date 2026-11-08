@@ -1,0 +1,45 @@
+{
+  "asset": "env:flora-fungi-harvested",
+  "stage": "layout",
+  "inputsDigest": "723ba948dc915d7b1b765f91dd30f86ddad38697aa8457dbd01a8b5cbf3ed402",
+  "inputs": [
+    "art/source/forge/work/env-flora-fungi-harvested/texture.blend",
+    "art/source/forge/work/env-flora-fungi-harvested/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-flora-fungi-harvested/layout/base.blend": "c0fae82ef1f395385a0b1d347359709c497af6ba48f64af8af23904e64d76773",
+    "art/source/forge/work/env-flora-fungi-harvested/layout_preview.png": "38e8012c194a516c07c39c7d9ffe2f9fa95366e870566565cf5d7a3290acedd4"
+  },
+  "extra": {
+    "scale": 0.110319,
+    "heightUnits": 1.9754,
+    "contactDepthTiles": 1.084,
+    "footprint": [
+      1,
+      1
+    ],
+    "canvas": {
+      "size": [
+        64,
+        84
+      ],
+      "anchor": [
+        32,
+        80
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -0.5,
+      0.0
+    ],
+    "layers": [
+      "base"
+    ],
+    "faces": {
+      "base": 14000
+    }
+  },
+  "at": "2026-11-05T08:50:31Z"
+}

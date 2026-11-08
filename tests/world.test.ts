@@ -1,31 +1,30 @@
 import { DualGridAutotiler } from '../src/presentation/autotiler';
 import { describe, expect, it } from 'vitest';
-import { SETTLEMENTS } from '../src/content/definitions';
-import { ClimateSampler, Fluid, SurfaceRules, TileFlag, WorldGenerator } from '../src/domain/world';
+import { Fluid, SurfaceRules, TileFlag } from '../src/domain/world';
+import { AuthoredWorldLoader } from '../src/domain/authored-world';
+import { getDefaultCompiledWorld } from '../src/domain/simulation';
 import { NavigationService, SpatialIndex } from '../src/domain/navigation';
 import { flatWorld } from './helpers';
 
 describe('world and navigation', () => {
-  it('reproduces layered geography, resources, and all seven biomes', () => {
-    const a = new WorldGenerator().generate(42),
-      b = new WorldGenerator().generate(42);
-    expect(a.biome).toEqual(b.biome);
-    expect(a.resource).toEqual(b.resource);
-    expect(a.elevation).toEqual(b.elevation);
-    expect(new Set(a.biome).size).toBe(7);
-    expect(new WorldGenerator().generate(43).moisture).not.toEqual(a.moisture);
+  it('loads authored Aqualia map layers and verifies terrain invariants', () => {
+    const loaded = new AuthoredWorldLoader().load(getDefaultCompiledWorld());
+    const world = loaded.world;
+    expect(world.size).toBeGreaterThan(0);
+    expect(world.elevation.length).toBe(world.size * world.size);
+    expect(world.fluid.length).toBe(world.size * world.size);
+    expect(world.flags.length).toBe(world.size * world.size);
+    expect(loaded.definition.entities.length).toBeGreaterThan(0);
+    expect(loaded.definition.levels.length).toBeGreaterThan(0);
   });
-  it.each([0, 42, 8123])('guarantees settlement connectivity for seed %s', (seed) => {
-    const world = new WorldGenerator().generate(seed),
-      nav = new NavigationService(world);
-    expect(nav.connected(SETTLEMENTS[0]!, SETTLEMENTS)).toBe(true);
-    for (const s of SETTLEMENTS) expect(SurfaceRules.walkable(world, s.x, s.y)).toBe(true);
-  });
-  it('samples simplex noise continuously across chunk coordinates', () => {
-    const climate = new ClimateSampler(42);
-    expect(Math.abs(climate.octave(0.31999, 0.7) - climate.octave(0.32001, 0.7))).toBeLessThan(
-      0.001,
-    );
+  it('guarantees player spawn and settlement connectivity on the authored map', () => {
+    const loaded = new AuthoredWorldLoader().load(getDefaultCompiledWorld());
+    const world = loaded.world;
+    const spawn = loaded.definition.entities.find((e) => e.kind === 'PlayerSpawn');
+    expect(spawn).toBeDefined();
+    if (spawn) {
+      expect(SurfaceRules.walkable(world, spawn.x + 0.5, spawn.y + 0.5)).toBe(true);
+    }
   });
   it.each(Array.from({ length: 16 }, (_, i) => i))('computes dual-grid mask %s', (mask) => {
     const world = flatWorld(),

@@ -1,0 +1,350 @@
+{
+  "schemaVersion": 1,
+  "set": "aqualia-terrain",
+  "packet": "art/review/tiles-aqualia-terrain-1",
+  "packetDigest": "aba7b781aa3271661bb7cc425f3d43201166ba86289f170ac3d99aef1e7edf0e",
+  "approval": "docs/team/comms/director/approvals/tiles-aqualia-terrain--2026-11-04-tiles-aqualia-terrain.md",
+  "exports": [
+    {
+      "runtimeId": "ground_boardwalk",
+      "path": "art/source/exports/environment/ground_boardwalk.png",
+      "sha256": "6aff9cd426a6e0df6a55662ef6b3dbb69febaae07cd1dec2e58c322151612d0d"
+    },
+    {
+      "runtimeId": "ground_boardwalk_v1",
+      "path": "art/source/exports/environment/ground_boardwalk_v1.png",
+      "sha256": "1e36069887ab20398e2efea6001316e3655e7b7ddd83ef549302fe4dd2e1f877"
+    },
+    {
+      "runtimeId": "ground_boardwalk_v2",
+      "path": "art/source/exports/environment/ground_boardwalk_v2.png",
+      "sha256": "ae4750e0ccd9d2e51e31ca0b08c0107633fc6ddea5cde63446afad1d7ebe02c4"
+    },
+    {
+      "runtimeId": "cliff_grass",
+      "path": "art/source/exports/environment/cliff_grass.png",
+      "sha256": "4bc1a764f93351da3549e78cfe12af3ec64935bbf7d4576ce57ce2a6f16fa4ea"
+    },
+    {
+      "runtimeId": "ground_dirt",
+      "path": "art/source/exports/environment/ground_dirt.png",
+      "sha256": "c023c88ac5768a4d99eb4799c4b798ee3c55e15f0dfdf292220b3b4ad0098519"
+    },
+    {
+      "runtimeId": "path_dirt_mask_1",
+      "path": "art/source/exports/environment/path_dirt_mask_1.png",
+      "sha256": "eaec6a25880e3243c2319cb0ad301ea3e87e030a32cc6ad3a5aee57adc83fdcc"
+    },
+    {
+      "runtimeId": "path_dirt_mask_10",
+      "path": "art/source/exports/environment/path_dirt_mask_10.png",
+      "sha256": "0d42c96292835441c9e2b08ddf9ac511091cb3f463e90435faa6712a44950001"
+    },
+    {
+      "runtimeId": "path_dirt_mask_11",
+      "path": "art/source/exports/environment/path_dirt_mask_11.png",
+      "sha256": "89d51675ea439338cc0b350e8e093e841ed6bad362740ca88fb1967ab377a77d"
+    },
+    {
+      "runtimeId": "path_dirt_mask_12",
+      "path": "art/source/exports/environment/path_dirt_mask_12.png",
+      "sha256": "4931c33d9e55f5131695ea130843f8e1edca48b6ff4fbc368c966d750d859573"
+    },
+    {
+      "runtimeId": "path_dirt_mask_13",
+      "path": "art/source/exports/environment/path_dirt_mask_13.png",
+      "sha256": "8334b4cb0f0219599abffb2621c6f479f45284fa720484c58c6923b3a7cecd33"
+    },
+    {
+      "runtimeId": "path_dirt_mask_14",
+      "path": "art/source/exports/environment/path_dirt_mask_14.png",
+      "sha256": "4c9277c44448108b6986a4bb130f2874be27641df81a6e86a058e9464018fc64"
+    },
+    {
+      "runtimeId": "path_dirt_mask_2",
+      "path": "art/source/exports/environment/path_dirt_mask_2.png",
+      "sha256": "d090e38bdfbfb23fa57f93196746ef79fa72f56b44f06ec295d8457a18809c3a"
+    },
+    {
+      "runtimeId": "path_dirt_mask_3",
+      "path": "art/source/exports/environment/path_dirt_mask_3.png",
+      "sha256": "a655f2f49fef132cc9168834ace5010b4857c7123f1220c6a75190ada3db2638"
+    },
+    {
+      "runtimeId": "path_dirt_mask_4",
+      "path": "art/source/exports/environment/path_dirt_mask_4.png",
+      "sha256": "00167cde001d028ae3cf64f5618e06951119b68255978d38b5a8ac320c6beb0d"
+    },
+    {
+      "runtimeId": "path_dirt_mask_5",
+      "path": "art/source/exports/environment/path_dirt_mask_5.png",
+      "sha256": "0be4a3df95c6a2c1d79e934923d80e899e875458f94f709759bb2dc6437c8c0b"
+    },
+    {
+      "runtimeId": "path_dirt_mask_6",
+      "path": "art/source/exports/environment/path_dirt_mask_6.png",
+      "sha256": "c659eda074a292f0a7f5a9bb3dc3e19ddbd215c0bd2870827fb4555b854552f3"
+    },
+    {
+      "runtimeId": "path_dirt_mask_7",
+      "path": "art/source/exports/environment/path_dirt_mask_7.png",
+      "sha256": "50fdecb768a72de636b1bb6bcabf835cb78438555105676ada2e7a839dc2183b"
+    },
+    {
+      "runtimeId": "path_dirt_mask_8",
+      "path": "art/source/exports/environment/path_dirt_mask_8.png",
+      "sha256": "45bf64322cc74619a40dfd69628a506cddaa97b41768d2e5c9652047bbf51324"
+    },
+    {
+      "runtimeId": "path_dirt_mask_9",
+      "path": "art/source/exports/environment/path_dirt_mask_9.png",
+      "sha256": "e0ba5e36446100933f9fa414bbf6e39b3c433c4a03c589d0a399f0c49e513a10"
+    },
+    {
+      "runtimeId": "ground_dirt_v1",
+      "path": "art/source/exports/environment/ground_dirt_v1.png",
+      "sha256": "2670df3e9f60016c99347581495f2e4e1955022eeb9f305991d62af59d693caa"
+    },
+    {
+      "runtimeId": "ground_dirt_v2",
+      "path": "art/source/exports/environment/ground_dirt_v2.png",
+      "sha256": "a7b1e82659e2ff473f924d6508f6fd8be4bf57692689292aa5dd20d099a81174"
+    },
+    {
+      "runtimeId": "ground_freshwater",
+      "path": "art/source/exports/environment/ground_freshwater.png",
+      "sha256": "7bb6822f2b1cd0c86effc9c694abb7fcf85fa2a9b96f00529290271a5f4c693f"
+    },
+    {
+      "runtimeId": "shore_freshwater_mask_1",
+      "path": "art/source/exports/environment/shore_freshwater_mask_1.png",
+      "sha256": "6a3545d2d5bdcef60d400be62becd08af09e6d37e8544b2e7ae05caa72e2cf06"
+    },
+    {
+      "runtimeId": "shore_freshwater_mask_10",
+      "path": "art/source/exports/environment/shore_freshwater_mask_10.png",
+      "sha256": "40a16720420a1026a4b503cadddc60152a8feb2001c4d5437262a08028673c86"
+    },
+    {
+      "runtimeId": "shore_freshwater_mask_11",
+      "path": "art/source/exports/environment/shore_freshwater_mask_11.png",
+      "sha256": "e7046f901f454e091dafb973fbb0344c53831beae23eab24b05614e98b00b808"
+    },
+    {
+      "runtimeId": "shore_freshwater_mask_12",
+      "path": "art/source/exports/environment/shore_freshwater_mask_12.png",
+      "sha256": "eb2921ff3ea76de34ddaf54e043469dbc1ff282b27f2dd3c9f107232d47c9473"
+    },
+    {
+      "runtimeId": "shore_freshwater_mask_13",
+      "path": "art/source/exports/environment/shore_freshwater_mask_13.png",
+      "sha256": "fe36ce55873e34441d9fb1ccbe01cd938681414e99bdd9e286a32367ca02647a"
+    },
+    {
+      "runtimeId": "shore_freshwater_mask_14",
+      "path": "art/source/exports/environment/shore_freshwater_mask_14.png",
+      "sha256": "1c622a30c06ff4f0cad4ba4fa20e49ebec8774cb395155566bbfc21c3bee3e4d"
+    },
+    {
+      "runtimeId": "shore_freshwater_mask_2",
+      "path": "art/source/exports/environment/shore_freshwater_mask_2.png",
+      "sha256": "0c54989915ecf3e11ef16100bc74167186b6367ed401f557eaa3e43abf796ed5"
+    },
+    {
+      "runtimeId": "shore_freshwater_mask_3",
+      "path": "art/source/exports/environment/shore_freshwater_mask_3.png",
+      "sha256": "22860ce7d60f9d57ae21c0c185d1e59bf3c21395767fab39f33190ae1bac4410"
+    },
+    {
+      "runtimeId": "shore_freshwater_mask_4",
+      "path": "art/source/exports/environment/shore_freshwater_mask_4.png",
+      "sha256": "b4c1d2c3ebdddcf303732cd9a95464ac9baa38b813daa42b26d50f5b2a5babcd"
+    },
+    {
+      "runtimeId": "shore_freshwater_mask_5",
+      "path": "art/source/exports/environment/shore_freshwater_mask_5.png",
+      "sha256": "a57417e6dee008589b186cc396d6a720cc8e96f68fec88da40553d81dca5f949"
+    },
+    {
+      "runtimeId": "shore_freshwater_mask_6",
+      "path": "art/source/exports/environment/shore_freshwater_mask_6.png",
+      "sha256": "2ad4848bd76cc6c3c80e52ca63f75740e5a1c393af9856bdae3fdc355f3e9fd3"
+    },
+    {
+      "runtimeId": "shore_freshwater_mask_7",
+      "path": "art/source/exports/environment/shore_freshwater_mask_7.png",
+      "sha256": "71277bf230006963ecfdc695c08fb64fae116407833750ab58493a0f73cc0f1a"
+    },
+    {
+      "runtimeId": "shore_freshwater_mask_8",
+      "path": "art/source/exports/environment/shore_freshwater_mask_8.png",
+      "sha256": "dc0c9903a70d5b28934b6ab460eb1a5379825614844de1fe2705cc7d6d219bda"
+    },
+    {
+      "runtimeId": "shore_freshwater_mask_9",
+      "path": "art/source/exports/environment/shore_freshwater_mask_9.png",
+      "sha256": "79c5a60e2378b152f7bbcef661bb82bb6eec7f948de1d8acca132a8383251277"
+    },
+    {
+      "runtimeId": "ground_freshwater_v1",
+      "path": "art/source/exports/environment/ground_freshwater_v1.png",
+      "sha256": "c937067faaf8f8af93cd8297793270e1615e212b108d9c35f84cfb8b6d962953"
+    },
+    {
+      "runtimeId": "ground_freshwater_v2",
+      "path": "art/source/exports/environment/ground_freshwater_v2.png",
+      "sha256": "c6f89d149bceeff847c0c5c7efbcb13538f005f31201a2936f18d9df47602000"
+    },
+    {
+      "runtimeId": "ground_grass",
+      "path": "art/source/exports/environment/ground_grass.png",
+      "sha256": "c48f1d96fe7bc1421e4100888585790f36cfb7cfef04d8ea5dde20511c05c713"
+    },
+    {
+      "runtimeId": "ground_grass_v1",
+      "path": "art/source/exports/environment/ground_grass_v1.png",
+      "sha256": "7768896a7d81ae0626a93b234a4b16cf24149c889484f858bc84729b77a99a9b"
+    },
+    {
+      "runtimeId": "ground_grass_v2",
+      "path": "art/source/exports/environment/ground_grass_v2.png",
+      "sha256": "4b58131ca9f604c952cfddb220906c0994059af5a062d39fed1c33f2b2805dba"
+    },
+    {
+      "runtimeId": "ground_grass_v3",
+      "path": "art/source/exports/environment/ground_grass_v3.png",
+      "sha256": "59cce553ae839b95c02e24e7bbe7a11d80014b6174c2d3deabf126be73903168"
+    },
+    {
+      "runtimeId": "ground_mud",
+      "path": "art/source/exports/environment/ground_mud.png",
+      "sha256": "8d9fdd264d9c24ad80a0d56d01fc43e1434e58f8ddac32616e0e494fad579047"
+    },
+    {
+      "runtimeId": "ground_mud_v1",
+      "path": "art/source/exports/environment/ground_mud_v1.png",
+      "sha256": "6820831780811faf98f9ac99b320ac908bcb964fc5cfbcc634506db4bd9a6ac7"
+    },
+    {
+      "runtimeId": "ground_mud_v2",
+      "path": "art/source/exports/environment/ground_mud_v2.png",
+      "sha256": "8b36d8b3ade19c9beb666a672ff7f4bfc63ac52284dd864228a69363da711908"
+    },
+    {
+      "runtimeId": "ground_reedbed",
+      "path": "art/source/exports/environment/ground_reedbed.png",
+      "sha256": "5edbc197bc14596dd0935ca5de1ea83b910c72c26d5084837cfebc945ccf29b1"
+    },
+    {
+      "runtimeId": "ground_reedbed_v1",
+      "path": "art/source/exports/environment/ground_reedbed_v1.png",
+      "sha256": "4fb4069228ccb7558a77c754e1366a5531dba10bf002034df49827c1d41a7541"
+    },
+    {
+      "runtimeId": "ground_reedbed_v2",
+      "path": "art/source/exports/environment/ground_reedbed_v2.png",
+      "sha256": "f88def158bfbc136ad1527862c70eade480aa8d3cb9424d01bd2f19b6ed05798"
+    },
+    {
+      "runtimeId": "ground_sand",
+      "path": "art/source/exports/environment/ground_sand.png",
+      "sha256": "461ee421974281d61cb270b1a0472b29ab2f9bafd6e4ccc6cc8402904373b34f"
+    },
+    {
+      "runtimeId": "ground_sand_v1",
+      "path": "art/source/exports/environment/ground_sand_v1.png",
+      "sha256": "9e67f9c7c83e0cac31d0b8356a0a0725e482540a7667838ac5af75b95f7c4369"
+    },
+    {
+      "runtimeId": "ground_sand_v2",
+      "path": "art/source/exports/environment/ground_sand_v2.png",
+      "sha256": "fb4a6289bf0f103633306cb85c571673abd7e1df9763965b81956555ab98f0b7"
+    },
+    {
+      "runtimeId": "ground_stone",
+      "path": "art/source/exports/environment/ground_stone.png",
+      "sha256": "ac1eca7dec9805b3ad90f447768670a768b84488ebe8b41c85d3be45ebc7a5d7"
+    },
+    {
+      "runtimeId": "path_stone_mask_1",
+      "path": "art/source/exports/environment/path_stone_mask_1.png",
+      "sha256": "75e8f4fd6e4b072e9d2f9ecee8d8c4b8bd34315bccc6e25091df0702bfde23e0"
+    },
+    {
+      "runtimeId": "path_stone_mask_10",
+      "path": "art/source/exports/environment/path_stone_mask_10.png",
+      "sha256": "205c22ed4cfbf43acfcf265fa6a7e3b5a1d0a4bd8937b0ce7ddec2b80a641fb9"
+    },
+    {
+      "runtimeId": "path_stone_mask_11",
+      "path": "art/source/exports/environment/path_stone_mask_11.png",
+      "sha256": "af64a2cf82aec306b372a1d9ab8f3bb901d00eb0d3519510f0688cc3c8733a13"
+    },
+    {
+      "runtimeId": "path_stone_mask_12",
+      "path": "art/source/exports/environment/path_stone_mask_12.png",
+      "sha256": "2df03e0b1410e635436f01d5f82f66d7beb3fb8add61bef60ca34ce88e247e0d"
+    },
+    {
+      "runtimeId": "path_stone_mask_13",
+      "path": "art/source/exports/environment/path_stone_mask_13.png",
+      "sha256": "81c8bddb8d007c0a4cd6a932d7a12f99689ede39526a29050ce9593db8127336"
+    },
+    {
+      "runtimeId": "path_stone_mask_14",
+      "path": "art/source/exports/environment/path_stone_mask_14.png",
+      "sha256": "41692fb5d33dd59c7548a3426794d99758304ad47687aaac925d6e57b198026b"
+    },
+    {
+      "runtimeId": "path_stone_mask_2",
+      "path": "art/source/exports/environment/path_stone_mask_2.png",
+      "sha256": "3b4cbcacb81b2faf2c8e7e0c51b46fa863cbfeb8020c3ecf6a09336d2aeb50eb"
+    },
+    {
+      "runtimeId": "path_stone_mask_3",
+      "path": "art/source/exports/environment/path_stone_mask_3.png",
+      "sha256": "883d62ec35b024fe3270a9de7c0484b2e01afea7f50b6cb4bdeef3087dc0ee9b"
+    },
+    {
+      "runtimeId": "path_stone_mask_4",
+      "path": "art/source/exports/environment/path_stone_mask_4.png",
+      "sha256": "66c38decf9ccf57979f1b9dda50ed53eaa36bbb35d81f6b90417897f4d29ac26"
+    },
+    {
+      "runtimeId": "path_stone_mask_5",
+      "path": "art/source/exports/environment/path_stone_mask_5.png",
+      "sha256": "0aa2cbba844a3909c414a4d03ac9325614f91b52878e3012011f334b165a20d1"
+    },
+    {
+      "runtimeId": "path_stone_mask_6",
+      "path": "art/source/exports/environment/path_stone_mask_6.png",
+      "sha256": "2acc99a95ecdfe50f2b392c339f3c975ffb8f17d9371dc08d4e9bf408d770a52"
+    },
+    {
+      "runtimeId": "path_stone_mask_7",
+      "path": "art/source/exports/environment/path_stone_mask_7.png",
+      "sha256": "b57f989e6abd57bdfce2d00ca9da54de280ae386dd3b531913e259b3e35ac50d"
+    },
+    {
+      "runtimeId": "path_stone_mask_8",
+      "path": "art/source/exports/environment/path_stone_mask_8.png",
+      "sha256": "3272f6d16b40eb88f42e1c9b2270dd8b7471aa42244cb7430a6136d298014aca"
+    },
+    {
+      "runtimeId": "path_stone_mask_9",
+      "path": "art/source/exports/environment/path_stone_mask_9.png",
+      "sha256": "e922f83b55c3eb6e6ed641911cf299ace91646b493936b407ef42719674427b4"
+    },
+    {
+      "runtimeId": "ground_stone_v1",
+      "path": "art/source/exports/environment/ground_stone_v1.png",
+      "sha256": "f384c4200e701b0954e03292848a9e09d372afc32decbdcd4c3df787c317ac2a"
+    },
+    {
+      "runtimeId": "ground_stone_v2",
+      "path": "art/source/exports/environment/ground_stone_v2.png",
+      "sha256": "db0399e2254783630470f6069eea68a2e9347b4da025513c9ed391e11e6f6608"
+    }
+  ],
+  "awaitingManifest": []
+}

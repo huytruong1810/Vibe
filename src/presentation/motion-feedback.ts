@@ -20,7 +20,7 @@ export class CameraShake {
       y += Math.cos(age * 3.7 + i.seed) * amplitude * 0.65;
     }
     return {
-      x: Math.round(Math.max(-6, Math.min(6, x))),
+      x: Math.round(Math.max(-4, Math.min(4, x))),
       y: Math.round(Math.max(-4, Math.min(4, y))),
     };
   }

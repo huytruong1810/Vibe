@@ -1,0 +1,585 @@
+{
+  "schemaVersion": 1,
+  "records": [
+    {
+      "id": "species-rivallie-body",
+      "subjectKind": "appearance",
+      "subjectId": "species:rivallie",
+      "sourceDigest": "5fc1fc3e64a8a5d1a3d947720c980628887dfdd888a8fb1d994318ceeab5ea03",
+      "decision": "approved",
+      "approvedBy": "director (recorded in docs/team/comms/director/approvals)",
+      "approvedAt": "2026-11-05T00:00:00Z",
+      "notes": "Body and clips only. Record docs/team/comms/director/approvals/rivallie--2026-11-05-rivallie.md binds forge packet d0c7f83d07b91fe33fc91db3f4aab95ae5067726052a7fed5743d542bd3f8673; all 616 manifest frames verified byte-identical to the staged export by npm run art:integrate."
+    },
+    {
+      "id": "species-bramblefang-body",
+      "subjectKind": "appearance",
+      "subjectId": "species:bramblefang",
+      "sourceDigest": "bb67b97eaf624b4e5a3817df3193c1a3ca4195483f7618e0869dd17bcac42b09",
+      "decision": "approved",
+      "approvedBy": "director (recorded in docs/team/comms/director/approvals)",
+      "approvedAt": "2026-11-05T00:00:00Z",
+      "notes": "Body and clips only. Record docs/team/comms/director/approvals/bramblefang--2026-11-05-bramblefang.md binds forge packet 046f3d9e9d990754081aaedb88d5bbc56076ccbebe6cf9e765dfc33c5843f485; all 616 manifest frames verified byte-identical to the staged export by npm run art:integrate."
+    },
+    {
+      "id": "species-cindermoth-body",
+      "subjectKind": "appearance",
+      "subjectId": "species:cindermoth",
+      "sourceDigest": "1be3c1b41715d24adbea9a8bd358f0e9af7134eb434ecfc5df27eaf662612d6c",
+      "decision": "approved",
+      "approvedBy": "director (recorded in docs/team/comms/director/approvals)",
+      "approvedAt": "2026-11-04T00:00:00Z",
+      "notes": "Body and clips only. Record docs/team/comms/director/approvals/cindermoth--2026-11-04-cindermoth.md binds forge packet fcb972ff37ed4488f0d8cdcb4e606035a540f404ac54e6b643a9d872f2a1a383; all 616 manifest frames verified byte-identical to the staged export by npm run art:integrate."
+    },
+    {
+      "id": "species-ignicap-body",
+      "subjectKind": "appearance",
+      "subjectId": "species:ignicap",
+      "sourceDigest": "ebbc05a192afeb5854e15d615176de86c3ac7301965efa56304d5c44a946663e",
+      "decision": "approved",
+      "approvedBy": "director (recorded in docs/team/comms/director/approvals)",
+      "approvedAt": "2026-11-04T00:00:00Z",
+      "notes": "Body and clips only. Record docs/team/comms/director/approvals/ignicap--2026-11-04-ignicap.md binds forge packet a1ed8f0516bd69fa092cad3e8634f683d3b81110162c2718873d2dc14c3de4f2; all 616 manifest frames verified byte-identical to the staged export by npm run art:integrate."
+    },
+    {
+      "id": "species-marshstalker-body",
+      "subjectKind": "appearance",
+      "subjectId": "species:marshstalker",
+      "sourceDigest": "75276dea5d0615175fdb49820c637e20dc81c0f5eff0ef6dfca425501ba4dc2c",
+      "decision": "approved",
+      "approvedBy": "director (recorded in docs/team/comms/director/approvals)",
+      "approvedAt": "2026-11-05T00:00:00Z",
+      "notes": "Body and clips only. Record docs/team/comms/director/approvals/marshstalker--2026-11-05-marshstalker.md binds forge packet aae5ff53bda3a7451fb7a1d9e1703244e47425a1f34ac54c1bf8fb4838c25ed0; all 616 manifest frames verified byte-identical to the staged export by npm run art:integrate."
+    },
+    {
+      "id": "species-mireling-body",
+      "subjectKind": "appearance",
+      "subjectId": "species:mireling",
+      "sourceDigest": "101232a5be74a8006f9cb062c8c7383e3f670d242fc6511c3914cd538e9f6b2d",
+      "decision": "approved",
+      "approvedBy": "director (recorded in docs/team/comms/director/approvals)",
+      "approvedAt": "2026-11-05T00:00:00Z",
+      "notes": "Body and clips only. Record docs/team/comms/director/approvals/mireling--2026-11-05-mireling.md binds forge packet b4a930b71bd34ee41b43f17602f82c06d2c6b87bc56a64e234cb98d4f45b699a; all 616 manifest frames verified byte-identical to the staged export by npm run art:integrate."
+    },
+    {
+      "id": "species-steamshell-body",
+      "subjectKind": "appearance",
+      "subjectId": "species:steamshell",
+      "sourceDigest": "ff588b5a2757c488427febdbc28f76ade44b47f9d2b18c734e62d5943d27db73",
+      "decision": "approved",
+      "approvedBy": "director (recorded in docs/team/comms/director/approvals)",
+      "approvedAt": "2026-11-05T00:00:00Z",
+      "notes": "Body and clips only. Record docs/team/comms/director/approvals/steamshell--2026-11-05-steamshell.md binds forge packet 377b976f9b6a14de80f3faaab3c93edb9c815b2167759844f7a0c6c2554d94ae; all 616 manifest frames verified byte-identical to the staged export by npm run art:integrate."
+    },
+    {
+      "id": "species-zephyrit-body",
+      "subjectKind": "appearance",
+      "subjectId": "species:zephyrit",
+      "sourceDigest": "5baef3aa0e0c8278508298750dd44223429e8d35a1ec866f023164eee8670432",
+      "decision": "approved",
+      "approvedBy": "director (recorded in docs/team/comms/director/approvals)",
+      "approvedAt": "2026-11-04T00:00:00Z",
+      "notes": "Body and clips only. Record docs/team/comms/director/approvals/zephyrit--2026-11-04-zephyrit.md binds forge packet 5cf0c6947a17bbd6d15325123b792c87632bdc1c77d8b0ee905f0fb2a0add848; all 616 manifest frames verified byte-identical to the staged export by npm run art:integrate."
+    },
+    {
+      "id": "npc-npc:marina-body",
+      "subjectKind": "appearance",
+      "subjectId": "npc:npc:marina",
+      "sourceDigest": "c5dc22166c80c789ee4411bb7c7e70c8f43ae0e70b7b615f258acc24fda0a3f1",
+      "decision": "approved",
+      "approvedBy": "director (recorded in docs/team/comms/director/approvals)",
+      "approvedAt": "2026-11-04T00:00:00Z",
+      "notes": "Body and clips only. Record docs/team/comms/director/approvals/npc-marina--2026-11-04-npc-marina.md binds forge packet 8cac69662aca5ced3dd5e35f1945c4ae323099d42c3a560aa1c8caf0220cd984; all 904 manifest frames verified byte-identical to the staged export by npm run art:integrate."
+    },
+    {
+      "id": "origin-aqualia-body",
+      "subjectKind": "appearance",
+      "subjectId": "origin:aqualia",
+      "sourceDigest": "c56c8f418c33137ab31330bb3b6d52595c6a74cbbe5c8812509249cfcade1c3a",
+      "decision": "approved",
+      "approvedBy": "director (recorded in docs/team/comms/director/approvals)",
+      "approvedAt": "2026-11-02T00:00:00Z",
+      "notes": "Body and clips only. Record docs/team/comms/director/approvals/player-aqualia--2026-11-03-player-aqualia.md binds forge packet d4446c6655c7c452f393272ef52944388c35963588240c9da796887baff95fcf; all 952 manifest frames verified byte-identical to the staged export by npm run art:integrate."
+    },
+    {
+      "id": "npc-npc:caelum-body",
+      "subjectKind": "appearance",
+      "subjectId": "npc:npc:caelum",
+      "sourceDigest": "d8f47287bf0f4ff18c1a2c8db4b512cd1092f8fc91a33d2c37d201fb6ea84104",
+      "decision": "approved",
+      "approvedBy": "director (recorded in docs/team/comms/director/approvals)",
+      "approvedAt": "2026-11-04T00:00:00Z",
+      "notes": "Body and clips only. Record docs/team/comms/director/approvals/npc-caelum--2026-11-04-npc-caelum.md binds forge packet 4b93b666744ff09f0e0a36260db3f4510621ec099e22549c4b34f67ba18949d2; all 904 manifest frames verified byte-identical to the staged export by npm run art:integrate."
+    },
+    {
+      "id": "npc-npc:dara-body",
+      "subjectKind": "appearance",
+      "subjectId": "npc:npc:dara",
+      "sourceDigest": "cb8401a492d6ceee4ae9a7ca829e7f01d904fefd9018e347766ff3fba9093839",
+      "decision": "approved",
+      "approvedBy": "director (recorded in docs/team/comms/director/approvals)",
+      "approvedAt": "2026-11-04T00:00:00Z",
+      "notes": "Body and clips only. Record docs/team/comms/director/approvals/npc-dara--2026-11-04-npc-dara.md binds forge packet 8f5589a568c1ae6a987785a1cc632223d2b300d57f80d8c11976d23486f9a2c9; all 904 manifest frames verified byte-identical to the staged export by npm run art:integrate."
+    },
+    {
+      "id": "npc-npc:finn-body",
+      "subjectKind": "appearance",
+      "subjectId": "npc:npc:finn",
+      "sourceDigest": "3ab0c2bc302ed28860a171515a1bf4555076fd405c339ca1637d7bbe6997d8ee",
+      "decision": "approved",
+      "approvedBy": "director (recorded in docs/team/comms/director/approvals)",
+      "approvedAt": "2026-11-04T00:00:00Z",
+      "notes": "Body and clips only. Record docs/team/comms/director/approvals/npc-finn--2026-11-04-npc-finn.md binds forge packet a96db3852d21e6f7a5b29ef51015f579bd24c34b3d0d9e0fe0e79aad385384dc; all 904 manifest frames verified byte-identical to the staged export by npm run art:integrate."
+    },
+    {
+      "id": "npc-npc:lark-body",
+      "subjectKind": "appearance",
+      "subjectId": "npc:npc:lark",
+      "sourceDigest": "12996eea4e97e9d5a41466d0474599d421af09880acb787f2da210891157725a",
+      "decision": "approved",
+      "approvedBy": "director (recorded in docs/team/comms/director/approvals)",
+      "approvedAt": "2026-11-04T00:00:00Z",
+      "notes": "Body and clips only. Record docs/team/comms/director/approvals/npc-lark--2026-11-04-npc-lark.md binds forge packet 3d73d91f37bd29bed5af5b0856ae61fa5a23daac5d02bc8f62d7e8e54e8e10e1; all 904 manifest frames verified byte-identical to the staged export by npm run art:integrate."
+    },
+    {
+      "id": "npc-npc:mira-body",
+      "subjectKind": "appearance",
+      "subjectId": "npc:npc:mira",
+      "sourceDigest": "dca819c456ee7d37bb195fb3e01b3844801ab656686023a078064bcb522b901a",
+      "decision": "approved",
+      "approvedBy": "director (recorded in docs/team/comms/director/approvals)",
+      "approvedAt": "2026-11-04T00:00:00Z",
+      "notes": "Body and clips only. Record docs/team/comms/director/approvals/npc-mira--2026-11-04-npc-mira.md binds forge packet abea5010ada30ddf18fdeeff8a619d80fcf5862282b456cb18fc6bab591ddb4b; all 904 manifest frames verified byte-identical to the staged export by npm run art:integrate."
+    },
+    {
+      "id": "npc-npc:neris-body",
+      "subjectKind": "appearance",
+      "subjectId": "npc:npc:neris",
+      "sourceDigest": "92b1af7e3924def6c1364b80ea6d56811c08ad16801f2abf40d220c5cf2eae68",
+      "decision": "approved",
+      "approvedBy": "director (recorded in docs/team/comms/director/approvals)",
+      "approvedAt": "2026-11-04T00:00:00Z",
+      "notes": "Body and clips only. Record docs/team/comms/director/approvals/npc-neris--2026-11-04-npc-neris.md binds forge packet 4262b8bf2f1bd6a1424a124f4365325cb10875729fb37bb347874da75d96cab2; all 904 manifest frames verified byte-identical to the staged export by npm run art:integrate."
+    },
+    {
+      "id": "npc-npc:oren-body",
+      "subjectKind": "appearance",
+      "subjectId": "npc:npc:oren",
+      "sourceDigest": "a83faefab4a241cfa523f70fa142132714c11b0400a7bc28a10e6e404740409a",
+      "decision": "approved",
+      "approvedBy": "director (recorded in docs/team/comms/director/approvals)",
+      "approvedAt": "2026-11-05T00:00:00Z",
+      "notes": "Body and clips only. Record docs/team/comms/director/approvals/npc-oren--2026-11-05-npc-oren.md binds forge packet 1f8793f95c223ddfac6b6c030d15150b7b16babcb677679431f61bd8bd0d7f2a; all 904 manifest frames verified byte-identical to the staged export by npm run art:integrate."
+    },
+    {
+      "id": "npc-npc:reed-body",
+      "subjectKind": "appearance",
+      "subjectId": "npc:npc:reed",
+      "sourceDigest": "bd1e053369df3901407aa8feed9aa5b1797384a0b0e61330c39bec70648b3617",
+      "decision": "approved",
+      "approvedBy": "director (recorded in docs/team/comms/director/approvals)",
+      "approvedAt": "2026-11-05T00:00:00Z",
+      "notes": "Body and clips only. Record docs/team/comms/director/approvals/npc-reed--2026-11-05-npc-reed.md binds forge packet 8cd4a3cc6bd086f128ee0e011ec504fd137e7096de656dc11f88ef3b6649670c; all 904 manifest frames verified byte-identical to the staged export by npm run art:integrate."
+    },
+    {
+      "id": "npc-npc:willa-body",
+      "subjectKind": "appearance",
+      "subjectId": "npc:npc:willa",
+      "sourceDigest": "669d665ee11674a20c5988a9d0e2c1a9ecbced48f81cbe289f8c21c108a02b3f",
+      "decision": "approved",
+      "approvedBy": "director (recorded in docs/team/comms/director/approvals)",
+      "approvedAt": "2026-11-04T00:00:00Z",
+      "notes": "Body and clips only. Record docs/team/comms/director/approvals/npc-willa--2026-11-04-npc-willa.md binds forge packet e0c558c009bef75581a0b23475a88b80ca52dde83d7bba3ca9474a0aad776393; all 904 manifest frames verified byte-identical to the staged export by npm run art:integrate."
+    },
+    {
+      "id": "layer-rivallie-body",
+      "subjectKind": "appearance",
+      "subjectId": "layer:rivallie:body",
+      "sourceDigest": "e554d7a211643350c495b2d2beda2ae59fc8d1609ead6d6636a50973ace315b8",
+      "decision": "approved",
+      "approvedBy": "director (recorded in docs/team/comms/director/approvals)",
+      "approvedAt": "2026-11-05T00:00:00Z",
+      "notes": "Rivallie body layer approved under docs/team/comms/director/approvals/rivallie--2026-11-05-rivallie.md"
+    },
+    {
+      "id": "layer-rivallie-faces",
+      "subjectKind": "appearance",
+      "subjectId": "layer:rivallie:faces",
+      "sourceDigest": "0b4e15ef8025f15ab90c7445b86c2ed80ae8a7cf2f5d80b259c178a1e137aebf",
+      "decision": "approved",
+      "approvedBy": "director (recorded in docs/team/comms/director/approvals)",
+      "approvedAt": "2026-11-05T00:00:00Z",
+      "notes": "Rivallie face layer approved under docs/team/comms/director/approvals/rivallie--2026-11-05-rivallie-faces-298b0b5ff39e.md"
+    },
+    {
+      "id": "layer-set-rivallie-body",
+      "subjectKind": "layer-set",
+      "subjectId": "layer-set:rivallie:body",
+      "sourceDigest": "58448102569b5922a7594be242de909f6af4c9e5baaa19cc741f271bee124a35",
+      "decision": "approved",
+      "approvedBy": "director (recorded in docs/team/comms/director/approvals)",
+      "approvedAt": "2026-11-05T00:00:00Z",
+      "notes": "Rivallie body layer-set approved"
+    },
+    {
+      "id": "layer-set-rivallie-faces",
+      "subjectKind": "layer-set",
+      "subjectId": "layer-set:rivallie:faces",
+      "sourceDigest": "743f6ea1eee68c6bc22777eb8147e67ab82666aa03e21c36e43eecf18736f031",
+      "decision": "approved",
+      "approvedBy": "director (recorded in docs/team/comms/director/approvals)",
+      "approvedAt": "2026-11-05T00:00:00Z",
+      "notes": "Rivallie face layer-set approved"
+    },
+    {
+      "id": "recipe-rivallie-faces",
+      "subjectKind": "recipe",
+      "subjectId": "recipe:rivallie:faces",
+      "sourceDigest": "f666b1427fdac4563bfd0c275c4004e9e5f5a03aefb5faad279556d4e4b1eb98",
+      "decision": "approved",
+      "approvedBy": "director (recorded in docs/team/comms/director/approvals)",
+      "approvedAt": "2026-11-05T00:00:00Z",
+      "notes": "Rivallie face composite recipe approved"
+    },
+    {
+      "id": "item-arrow-bundle",
+      "subjectKind": "appearance",
+      "subjectId": "item:arrow-bundle",
+      "sourceDigest": "d9f606ec6549bcebe57c0d6c0e14b29d92b240dbda1e933a2b5c9dc9072cfeda",
+      "decision": "approved",
+      "approvedBy": "director (intake icons)",
+      "approvedAt": "2026-11-07T00:00:00Z",
+      "notes": "Approved intake item icon for arrow-bundle"
+    },
+    {
+      "id": "item-ashgrass",
+      "subjectKind": "appearance",
+      "subjectId": "item:ashgrass",
+      "sourceDigest": "dd49d800c4e4b5503887347c35f5ff26efbb1a973db8fd26a1e8369977443c1d",
+      "decision": "approved",
+      "approvedBy": "director (intake icons)",
+      "approvedAt": "2026-11-07T00:00:00Z",
+      "notes": "Approved intake item icon for ashgrass"
+    },
+    {
+      "id": "item-berries",
+      "subjectKind": "appearance",
+      "subjectId": "item:berries",
+      "sourceDigest": "f877809c43f5a88d7a8aaf95fe4184b673d51cd9deb99890890b88e7bc89ab85",
+      "decision": "approved",
+      "approvedBy": "director (intake icons)",
+      "approvedAt": "2026-11-07T00:00:00Z",
+      "notes": "Approved intake item icon for berries"
+    },
+    {
+      "id": "item-fiber",
+      "subjectKind": "appearance",
+      "subjectId": "item:fiber",
+      "sourceDigest": "0bfec8f257c08ddb943f2bf2fc05090e497b21943b86d5a357ebc5b93096e972",
+      "decision": "approved",
+      "approvedBy": "director (intake icons)",
+      "approvedAt": "2026-11-07T00:00:00Z",
+      "notes": "Approved intake item icon for fiber"
+    },
+    {
+      "id": "item-flint",
+      "subjectKind": "appearance",
+      "subjectId": "item:flint",
+      "sourceDigest": "cad290a8e3db6ef091615d3b610297c5be64a7aeea4ebd33094d3dfca8d8e4c5",
+      "decision": "approved",
+      "approvedBy": "director (intake icons)",
+      "approvedAt": "2026-11-07T00:00:00Z",
+      "notes": "Approved intake item icon for flint"
+    },
+    {
+      "id": "item-fungi",
+      "subjectKind": "appearance",
+      "subjectId": "item:fungi",
+      "sourceDigest": "29591c79dd42efd1a81d831b4c65ec664acad6d2306779993f0fe36bcd2bcb3c",
+      "decision": "approved",
+      "approvedBy": "director (intake icons)",
+      "approvedAt": "2026-11-07T00:00:00Z",
+      "notes": "Approved intake item icon for fungi"
+    },
+    {
+      "id": "item-pyrador-hood",
+      "subjectKind": "appearance",
+      "subjectId": "item:pyrador-hood",
+      "sourceDigest": "8201ad7b655cdb909506ad7c4ab660e003a7fb284ab4f190419a04bbd2e0652a",
+      "decision": "approved",
+      "approvedBy": "director (intake icons)",
+      "approvedAt": "2026-11-07T00:00:00Z",
+      "notes": "Approved intake item icon for pyrador-hood"
+    },
+    {
+      "id": "item-pyrador-coat",
+      "subjectKind": "appearance",
+      "subjectId": "item:pyrador-coat",
+      "sourceDigest": "3d192e6a3cb62583392379fe46d876555429eb39a434114eb1cd4f199757f3b9",
+      "decision": "approved",
+      "approvedBy": "director (intake icons)",
+      "approvedAt": "2026-11-07T00:00:00Z",
+      "notes": "Approved intake item icon for pyrador-coat"
+    },
+    {
+      "id": "item-pyrador-gloves",
+      "subjectKind": "appearance",
+      "subjectId": "item:pyrador-gloves",
+      "sourceDigest": "b5d8d83266e2c06a0780661d00567839010d521b8785783f6cfd847e214fe5c8",
+      "decision": "approved",
+      "approvedBy": "director (intake icons)",
+      "approvedAt": "2026-11-07T00:00:00Z",
+      "notes": "Approved intake item icon for pyrador-gloves"
+    },
+    {
+      "id": "item-pyrador-trousers",
+      "subjectKind": "appearance",
+      "subjectId": "item:pyrador-trousers",
+      "sourceDigest": "4f8c4bff5b18d0697bc5089313fec2b6947b6c1f915522c2b3f8b01b2d9946a3",
+      "decision": "approved",
+      "approvedBy": "director (intake icons)",
+      "approvedAt": "2026-11-07T00:00:00Z",
+      "notes": "Approved intake item icon for pyrador-trousers"
+    },
+    {
+      "id": "item-pyrador-boots",
+      "subjectKind": "appearance",
+      "subjectId": "item:pyrador-boots",
+      "sourceDigest": "cb66cd0dc5fbc23a941f3a50528c364b5d9062c254720adf75f0cbd952c96956",
+      "decision": "approved",
+      "approvedBy": "director (intake icons)",
+      "approvedAt": "2026-11-07T00:00:00Z",
+      "notes": "Approved intake item icon for pyrador-boots"
+    },
+    {
+      "id": "item-pyrador-cape",
+      "subjectKind": "appearance",
+      "subjectId": "item:pyrador-cape",
+      "sourceDigest": "1f2730742c3936050dcd46209d1387ba1fe600a1957e91ce1584ce0cbdcd3a5b",
+      "decision": "approved",
+      "approvedBy": "director (intake icons)",
+      "approvedAt": "2026-11-07T00:00:00Z",
+      "notes": "Approved intake item icon for pyrador-cape"
+    },
+    {
+      "id": "item-aqualia-hat",
+      "subjectKind": "appearance",
+      "subjectId": "item:aqualia-hat",
+      "sourceDigest": "9ab831ad35a84ff409d1ad20b00ca1a6f95c43d8e3549a139180a77f48faeebf",
+      "decision": "approved",
+      "approvedBy": "director (intake icons)",
+      "approvedAt": "2026-11-07T00:00:00Z",
+      "notes": "Approved intake item icon for aqualia-hat"
+    },
+    {
+      "id": "item-aqualia-poncho",
+      "subjectKind": "appearance",
+      "subjectId": "item:aqualia-poncho",
+      "sourceDigest": "62226a5016615fcaf6579d51a3561db868bbd718aaa90db18dfe56244e561538",
+      "decision": "approved",
+      "approvedBy": "director (intake icons)",
+      "approvedAt": "2026-11-07T00:00:00Z",
+      "notes": "Approved intake item icon for aqualia-poncho"
+    },
+    {
+      "id": "item-aqualia-gloves",
+      "subjectKind": "appearance",
+      "subjectId": "item:aqualia-gloves",
+      "sourceDigest": "4c9f2cc7fec98a3a795a072e7ff7185a534ca5ff56a605db3779c06336d24b3a",
+      "decision": "approved",
+      "approvedBy": "director (intake icons)",
+      "approvedAt": "2026-11-07T00:00:00Z",
+      "notes": "Approved intake item icon for aqualia-gloves"
+    },
+    {
+      "id": "item-aqualia-trousers",
+      "subjectKind": "appearance",
+      "subjectId": "item:aqualia-trousers",
+      "sourceDigest": "f5fd18343947be3bd1d8ac84fff90ef78e95a942463bd1fa697c949a7bfd75f0",
+      "decision": "approved",
+      "approvedBy": "director (intake icons)",
+      "approvedAt": "2026-11-07T00:00:00Z",
+      "notes": "Approved intake item icon for aqualia-trousers"
+    },
+    {
+      "id": "item-aqualia-boots",
+      "subjectKind": "appearance",
+      "subjectId": "item:aqualia-boots",
+      "sourceDigest": "ff20fc8b1d6bf276633913092cfb8d34e39c387f913cfa7b4101e34bbe13c90b",
+      "decision": "approved",
+      "approvedBy": "director (intake icons)",
+      "approvedAt": "2026-11-07T00:00:00Z",
+      "notes": "Approved intake item icon for aqualia-boots"
+    },
+    {
+      "id": "item-aqualia-cape",
+      "subjectKind": "appearance",
+      "subjectId": "item:aqualia-cape",
+      "sourceDigest": "97d996b04b96e617968e24e47754112bade953cdfced46ac1bf85474e89a8a74",
+      "decision": "approved",
+      "approvedBy": "director (intake icons)",
+      "approvedAt": "2026-11-07T00:00:00Z",
+      "notes": "Approved intake item icon for aqualia-cape"
+    },
+    {
+      "id": "item-zephyria-cap",
+      "subjectKind": "appearance",
+      "subjectId": "item:zephyria-cap",
+      "sourceDigest": "68236f97a0bd8770421d1cb7f35723c8d66540ff41873085fa86d2d974cccf1e",
+      "decision": "approved",
+      "approvedBy": "director (intake icons)",
+      "approvedAt": "2026-11-07T00:00:00Z",
+      "notes": "Approved intake item icon for zephyria-cap"
+    },
+    {
+      "id": "item-zephyria-tunic",
+      "subjectKind": "appearance",
+      "subjectId": "item:zephyria-tunic",
+      "sourceDigest": "0082f8635c8e753bfe515d660158755e1241ea1556449d04cfc9b654b7d71327",
+      "decision": "approved",
+      "approvedBy": "director (intake icons)",
+      "approvedAt": "2026-11-07T00:00:00Z",
+      "notes": "Approved intake item icon for zephyria-tunic"
+    },
+    {
+      "id": "item-zephyria-gloves",
+      "subjectKind": "appearance",
+      "subjectId": "item:zephyria-gloves",
+      "sourceDigest": "c9c85b3f832059786bbf2cb4cc2a9026a81175622bf459e1f7d06aad7cff977f",
+      "decision": "approved",
+      "approvedBy": "director (intake icons)",
+      "approvedAt": "2026-11-07T00:00:00Z",
+      "notes": "Approved intake item icon for zephyria-gloves"
+    },
+    {
+      "id": "item-zephyria-trousers",
+      "subjectKind": "appearance",
+      "subjectId": "item:zephyria-trousers",
+      "sourceDigest": "f9e3e8a4215e81c910d9c8cf6d2ae25af9d37a41a93c5f19a60585f457466ec8",
+      "decision": "approved",
+      "approvedBy": "director (intake icons)",
+      "approvedAt": "2026-11-07T00:00:00Z",
+      "notes": "Approved intake item icon for zephyria-trousers"
+    },
+    {
+      "id": "item-zephyria-shoes",
+      "subjectKind": "appearance",
+      "subjectId": "item:zephyria-shoes",
+      "sourceDigest": "232497343f475ffcde06303fae8ba45a6b68de0a9f9f7d9b3437551956c37cd5",
+      "decision": "approved",
+      "approvedBy": "director (intake icons)",
+      "approvedAt": "2026-11-07T00:00:00Z",
+      "notes": "Approved intake item icon for zephyria-shoes"
+    },
+    {
+      "id": "item-zephyria-cloak",
+      "subjectKind": "appearance",
+      "subjectId": "item:zephyria-cloak",
+      "sourceDigest": "26577196ed779f1f4328d4ffb4922da51e56dd6d78082e7ab47cf1d2de217559",
+      "decision": "approved",
+      "approvedBy": "director (intake icons)",
+      "approvedAt": "2026-11-07T00:00:00Z",
+      "notes": "Approved intake item icon for zephyria-cloak"
+    },
+    {
+      "id": "item-meal",
+      "subjectKind": "appearance",
+      "subjectId": "item:meal",
+      "sourceDigest": "45a57437df5a57982f1a6634fa07a3767cbb39613f8c6a8462686f71bed80427",
+      "decision": "approved",
+      "approvedBy": "director (intake icons)",
+      "approvedAt": "2026-11-07T00:00:00Z",
+      "notes": "Approved intake item icon for meal"
+    },
+    {
+      "id": "item-meat",
+      "subjectKind": "appearance",
+      "subjectId": "item:meat",
+      "sourceDigest": "858e905a5d9735ce8dbac582b1f0decdcd03f89f5dda7ba661a01d3f8b67071c",
+      "decision": "approved",
+      "approvedBy": "director (intake icons)",
+      "approvedAt": "2026-11-07T00:00:00Z",
+      "notes": "Approved intake item icon for meat"
+    },
+    {
+      "id": "item-nectar",
+      "subjectKind": "appearance",
+      "subjectId": "item:nectar",
+      "sourceDigest": "60442ee8fe96d1fb401f9944d7c5afa2d962c09d180480e100b559eeb5305846",
+      "decision": "approved",
+      "approvedBy": "director (intake icons)",
+      "approvedAt": "2026-11-07T00:00:00Z",
+      "notes": "Approved intake item icon for nectar"
+    },
+    {
+      "id": "item-ore",
+      "subjectKind": "appearance",
+      "subjectId": "item:ore",
+      "sourceDigest": "adc4c051009115da0516f3a85777b056cb660603b556f8c1772cc64d0f2243dc",
+      "decision": "approved",
+      "approvedBy": "director (intake icons)",
+      "approvedAt": "2026-11-07T00:00:00Z",
+      "notes": "Approved intake item icon for ore"
+    },
+    {
+      "id": "item-poultice",
+      "subjectKind": "appearance",
+      "subjectId": "item:poultice",
+      "sourceDigest": "1683a7daaf1f50fdf62b9ca45b45b9aaf57089f7b64731deb6f7d16eab89d304",
+      "decision": "approved",
+      "approvedBy": "director (intake icons)",
+      "approvedAt": "2026-11-07T00:00:00Z",
+      "notes": "Approved intake item icon for poultice"
+    },
+    {
+      "id": "item-reeds",
+      "subjectKind": "appearance",
+      "subjectId": "item:reeds",
+      "sourceDigest": "17a0c3bceeeb2e49750ed2659821ba07f386e82dac3fdc139523730308f94d35",
+      "decision": "approved",
+      "approvedBy": "director (intake icons)",
+      "approvedAt": "2026-11-07T00:00:00Z",
+      "notes": "Approved intake item icon for reeds"
+    },
+    {
+      "id": "item-stick",
+      "subjectKind": "appearance",
+      "subjectId": "item:stick",
+      "sourceDigest": "40f46d162347138510ac6155553a99b4c5cc2f0e32f9764ee86a1242e8a9e4cf",
+      "decision": "approved",
+      "approvedBy": "director (intake icons)",
+      "approvedAt": "2026-11-07T00:00:00Z",
+      "notes": "Approved intake item icon for stick"
+    },
+    {
+      "id": "item-tool-head",
+      "subjectKind": "appearance",
+      "subjectId": "item:tool-head",
+      "sourceDigest": "71e866337956fb61c838726ed497230f7071c4927aa6c8e4b62583258830a90a",
+      "decision": "approved",
+      "approvedBy": "director (intake icons)",
+      "approvedAt": "2026-11-07T00:00:00Z",
+      "notes": "Approved intake item icon for tool-head"
+    },
+    {
+      "id": "item-water",
+      "subjectKind": "appearance",
+      "subjectId": "item:water",
+      "sourceDigest": "f8be17b2d4a248f30d334212fb77ec572f26e5de127b2ce97a23a40bca7153af",
+      "decision": "approved",
+      "approvedBy": "director (intake icons)",
+      "approvedAt": "2026-11-07T00:00:00Z",
+      "notes": "Approved intake item icon for water"
+    },
+    {
+      "id": "item-wheat",
+      "subjectKind": "appearance",
+      "subjectId": "item:wheat",
+      "sourceDigest": "c3518c3205bac25b1ced08722adca852171f4c2eeaeaa436ced01dafd14363aa",
+      "decision": "approved",
+      "approvedBy": "director (intake icons)",
+      "approvedAt": "2026-11-07T00:00:00Z",
+      "notes": "Approved intake item icon for wheat"
+    }
+  ]
+}

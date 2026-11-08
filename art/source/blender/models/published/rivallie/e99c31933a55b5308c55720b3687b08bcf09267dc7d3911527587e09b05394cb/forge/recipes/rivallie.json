@@ -1,0 +1,51 @@
+{
+  "asset": "rivallie",
+  "kind": "creature",
+  "heightArtPx": 25,
+  "supersample": 4,
+  "features": {
+    "fins": {
+      "minSamples": 1,
+      "on": ["body", "edge"],
+      "near": ["Socket_Back"],
+      "radiusPx": 8,
+      "maxPx": 4
+    }
+  },
+  "ramps": {
+    "body": "teal",
+    "belly": "cream",
+    "fins": "glass"
+  },
+  "gen3d": {
+    "seed": 1234,
+    "steps": 50,
+    "views": [
+      "front",
+      "left",
+      "back"
+    ]
+  },
+  "notes": "Single-pose all-fours reference sheet (communicator ticket M2). Views front, left, back all share the quadruped pose with cream underbelly and throat visible. heightArtPx tuned to 25px (lowered from 31px) so the elongated otter body and rearing clips maintain >= 2px transparent margins within the 56x56 creature.medium canvas (anchor 28,41).",
+  "texture": {
+    "views": [
+      "front",
+      "left",
+      "back"
+    ]
+  },
+  "concept": {
+    "template": "creature-v1",
+    "fields": {
+      "species": "Rivallie",
+      "element": "water",
+      "size": "small to medium",
+      "stance": "standing on all four paws with its body horizontal like an otter walking on land, never sitting or standing upright",
+      "description": "a playful river spirit that gathers wherever the reeds grow",
+      "anatomy": "rounded otter-like body and short muzzle, small round ears, cream belly and throat, a crest of translucent aqua fins along the back, a broad flat paddle tail, short legs with webbed paws",
+      "colours": "teal body, cream belly and chest, glowing glass-aqua fins, dark friendly eyes"
+    },
+    "references": [],
+    "poseGuide": "art/source/style/pose-guides/quadruped.png"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "asset": "env:divers-pool",
+  "stage": "layout",
+  "inputsDigest": "5616f347d0afcdcf8b64adba7393666d858d2424fe419ed1b1c9d5a463023f35",
+  "inputs": [
+    "art/source/forge/work/env-divers-pool/texture.blend",
+    "art/source/forge/work/env-divers-pool/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-divers-pool/layout/base.blend": "775ea93dfbf8510f68f1eb605a35b1d4b06a113cd10c949b29e13076d0e211e6",
+    "art/source/forge/work/env-divers-pool/layout_preview.png": "eea7eaa2735340b4351b0fd7d0c98477a74382034e71de8fb9dcc6c59f65e054"
+  },
+  "extra": {
+    "scale": 0.117968,
+    "heightUnits": 1.9374,
+    "contactDepthTiles": 2.009,
+    "footprint": [
+      2,
+      2
+    ],
+    "canvas": {
+      "size": [
+        96,
+        108
+      ],
+      "anchor": [
+        48,
+        104
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -1.0,
+      0.0
+    ],
+    "layers": [
+      "base"
+    ],
+    "faces": {
+      "base": 14000
+    }
+  },
+  "at": "2026-11-05T09:16:48Z"
+}

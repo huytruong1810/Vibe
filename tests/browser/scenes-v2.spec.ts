@@ -3,7 +3,8 @@ import type { GameSave } from '../../src/domain/save-schema';
 import type { RenderSnapshot } from '../../src/domain/contracts';
 import { SceneRegistry } from '../../src/domain/scenes';
 import { ResourceStore } from '../../src/domain/resources';
-import { WorldGenerator } from '../../src/domain/world';
+import { AuthoredWorldLoader } from '../../src/domain/authored-world';
+import { readFileSync } from 'node:fs';
 
 type Api = { checkpoint(): Promise<GameSave>; frame(): RenderSnapshot };
 async function snapshot(page: Page): Promise<GameSave> {
@@ -63,7 +64,9 @@ test('an interior preserves identity, physique, local map and an accessible exit
   await page.getByRole('button', { name: 'Connect & begin journey' }).click();
   await expect(page.locator('#setup-dialog')).not.toBeVisible({ timeout: 30000 });
   const save = await snapshot(page),
-    world = new WorldGenerator().generate(save.seed),
+    world = new AuthoredWorldLoader().load(
+      JSON.parse(readFileSync('public/assets/generated/aqualia-region.json', 'utf8')),
+    ).world,
     registry = new SceneRegistry(world, new ResourceStore(world));
   const portal = registry.portals.find(
     (p) => p.source === 0 && p.owner === null && p.id.includes('aqualia:home:0'),

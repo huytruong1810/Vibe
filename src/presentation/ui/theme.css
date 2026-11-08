@@ -94,6 +94,7 @@ body {
   pointer-events: none;
 }
 .hd-game .toast {
+  top: 276px;
   width: auto;
   max-width: min(700px, calc(100vw - 40px));
 }
@@ -113,9 +114,14 @@ body {
   box-shadow: none;
   width: min(700px, calc(100vw - 40px));
   top: 100px;
-  bottom: 100px;
+  bottom: 92px;
+  max-height: calc(100dvh - 192px);
   padding: 16px;
   overflow: auto;
+}
+.hd-game .equipment-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
 }
 .hd-game
   :is(
@@ -710,11 +716,11 @@ body {
   width: 32px;
 }
 .hd-game .masthead {
-  left: 50%;
-  top: 64px;
-  right: auto;
+  left: auto;
+  top: 220px;
+  right: 16px;
   bottom: auto;
-  transform: translateX(-50%);
+  transform: none;
 }
 @media (max-width: 1200px) {
   .hd-game .time-map {
@@ -722,8 +728,9 @@ body {
     align-items: flex-end;
   }
   .hd-game .masthead {
-    left: calc(50% + 90px);
-    top: 12px;
+    left: auto;
+    right: 16px;
+    top: 220px;
   }
 }
 

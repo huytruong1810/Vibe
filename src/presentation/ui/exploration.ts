@@ -85,10 +85,16 @@ export function updateExploration(
       callPack: '\u2667',
       follow: '\u2197',
     }[intent];
-    const portrait = appearance?.portrait('species', partner.species);
+    const portrait = appearance?.portrait('species', partner.species) ?? {
+      hud96: `/assets/portraits/creatures/portrait_${partner.species}_96.png`,
+      hud128: `/assets/portraits/creatures/portrait_${partner.species}_128.png`,
+    };
+    const medallionImg = portrait
+      ? `<img data-key="partner:portrait" src="${escapeHtml(appUrl(portrait.hud96))}" alt="${escapeHtml(partner.name)}" class="companion-portrait"/>`
+      : `<span class="companion-portrait-placeholder">${escapeHtml(partner.name.slice(0, 2))}</span>`;
     patchView(
       companion,
-      `${portrait ? `<button type="button" class="companion-medallion-button" id="companion-medallion" data-action="companion-medallion" aria-label="Open companion inspection sheet"><img data-key="partner:portrait" src="${escapeHtml(appUrl(portrait.hud96))}" alt="${escapeHtml(partner.name)}" class="companion-portrait"/></button>` : ''}<span class="partner-intent" data-key="partner:intent" role="img" aria-label="Companion intent: ${intent}" title="${intent}">${intentIcon}</span><div class="companion-body" data-key="partner:body"><div class="companion-title">${escapeHtml(partner.name)} · ${Math.ceil(partner.hp)}/${partner.maxHp}</div><div class="companion-needs">${(
+      `<button type="button" class="companion-medallion-button" id="companion-medallion" data-action="companion-medallion" aria-label="Open companion inspection sheet">${medallionImg}</button><span class="partner-intent" data-key="partner:intent" role="img" aria-label="Companion intent: ${intent}" title="${intent}">${intentIcon}</span><div class="companion-body" data-key="partner:body"><div class="companion-title">${escapeHtml(partner.name)} · ${Math.ceil(partner.hp)}/${partner.maxHp}</div><div class="companion-needs">${(
         [
           ['Food', partner.food],
           ['Water', partner.water],

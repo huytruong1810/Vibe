@@ -1,0 +1,27 @@
+{
+  "asset": "env:house-aqualia",
+  "kind": "environment",
+  "ramps": {
+    "walls": "timber",
+    "roof": "teal",
+    "trim": "wood",
+    "windows": "glass"
+  },
+  "gen3d": { "seed": 1234, "steps": 50, "views": ["front", "left"] },
+  "environment": {
+    "footprint": [3, 3],
+    "split": { "layer": "roof", "aboveFraction": 0.50 },
+    "contactShadow": true
+  },
+  "concept": {
+    "template": "building-v1",
+    "fields": {
+      "building": "village dwelling house with timber-framed walls, teal slate pitched roof, and small leaded glass windows",
+      "region": "Aqualia canal village",
+      "description": "a traditional canal-side home with timber posts, dormer roof and stone footings",
+      "materials": "warm timber beams, whitewashed plaster walls, teal slate shingle roof, dark wood window trim, clear glass panes"
+    },
+    "references": []
+  },
+  "notes": "Golden environment sample (B19/B5). 3x2 tile footprint with depth stretch 2.0; roof split at 0.55 height fraction."
+}

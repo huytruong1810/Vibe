@@ -1,0 +1,16 @@
+{
+  "template": "winged",
+  "conceptTemplate": "creature-winged-v1",
+  "views": ["front", "left", "back"],
+  "size": [2304, 1344],
+  "source": "art/source/forge/work/selftest-creature-winged/animate.blend",
+  "sourceSha256": "9828265e4fb7ee7a5d1deb1e4e6282965e2c30ffddc5d9048bf2cffc66ddfb34",
+  "pose": {
+    "action": "idle",
+    "frame": 2
+  },
+  "script": "art/source/forge/blender/pose_guide.py",
+  "blender": "4.2.3",
+  "command": "uv run --project art/source/forge python art/source/forge/forge.py pose-guide --template winged",
+  "at": "2026-11-02T23:25:49Z"
+}

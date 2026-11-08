@@ -1,0 +1,66 @@
+{
+  "asset": "item:hoe",
+  "stage": "orient",
+  "inputsDigest": "7f917df18a1cea70f424ea87560456d7054c81d6835506f554997e2e79e1e3be",
+  "inputs": [
+    "art/source/forge/work/item-hoe/texture.blend",
+    "art/source/forge/work/item-hoe/orient_params.json",
+    "art/source/forge/blender/item_orient.py",
+    "art/source/forge/forgelib/item_orient.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/item-hoe/item_model.blend": "d6eb5bdd5a22dc025a548c6ab5c6e94a6ffbc38a0ebc8d2f67177c36ae62c3f3",
+    "art/source/forge/work/item-hoe/orient_preview.png": "3f225922587ef40cafc3ef020159ceea5a42212b6aabf768e35df47c7312fea1"
+  },
+  "extra": {
+    "matrix": [
+      [
+        0.000964,
+        1.109794,
+        -0.000358,
+        0.000171
+      ],
+      [
+        -1.10971,
+        0.00096,
+        -0.013657,
+        0.000592
+      ],
+      [
+        -0.013657,
+        0.00037,
+        1.10971,
+        -0.093743
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "grip": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "iconPivot": [
+      7.4e-05,
+      -0.007793,
+      0.140625
+    ],
+    "reachArtPx": 12.286,
+    "lengthArtPx": 15,
+    "haftWidthArtPx": 0.968,
+    "headFlipped": false,
+    "forwardFlipped": false,
+    "dimensions": [
+      0.037209,
+      0.214434,
+      0.46875
+    ],
+    "inflateArtPx": 1.079,
+    "iconScale": 1.4
+  },
+  "at": "2026-11-04T02:55:10Z"
+}

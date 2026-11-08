@@ -514,7 +514,6 @@ export class HudPresenter {
     status.textContent = offline
       ? 'Preparing your world with fallback dialogue...'
       : 'Checking local AI and preparing the world. A cold model can take a moment...';
-    const authoredToggle = document.getElementById('authored-toggle') as HTMLInputElement | null;
     const options = {
       endpoint: this.el<HTMLInputElement>('endpoint').value,
       model: this.el<HTMLSelectElement>('model').value,
@@ -523,7 +522,7 @@ export class HudPresenter {
       contextTokens: Number(this.el<HTMLInputElement>('context-tokens').value),
       seed: Number(this.el<HTMLInputElement>('seed').value),
       origin: Number(this.el<HTMLSelectElement>('origin').value),
-      authored: !!authoredToggle?.checked,
+      authored: true,
       resume,
       offline,
       image: this.imageSettings(),
@@ -647,13 +646,18 @@ export class HudPresenter {
       ? Math.floor(frame.player.y) * this.terrain.size + Math.floor(frame.player.x)
       : 0;
     const biome = this.terrain?.biome[i] ?? 0;
+    const inAqualiaVillage = frame.player.x < 90 && frame.player.y < 68;
+    const inVillage = distance < 45 || inAqualiaVillage;
+    const activeSettlement = inAqualiaVillage
+      ? (SETTLEMENTS.find((s) => s.id === 'settlement:aqualia') ?? settlement)
+      : settlement;
     const name = frame.scene.outside
-      ? distance < 25
-        ? settlement.name
+      ? inVillage
+        ? activeSettlement.name
         : BIOME_NAMES[biome]
       : (frame.scene.name ?? 'Interior');
     this.el('location-title').innerHTML =
-      `${escapeHtml(name)} <span>${!frame.scene.outside ? 'inside the elemental wilds' : distance < 25 ? ['among the mountain paths', 'and the riverlands', 'where the sea meets sky'][settlement.village] : 'beyond the village paths'}</span>`;
+      `${escapeHtml(name)} <span>${!frame.scene.outside ? 'inside the elemental wilds' : inVillage ? ['among the mountain paths', 'and the riverlands', 'where the sea meets sky'][activeSettlement.village] : 'beyond the village paths'}</span>`;
     this.el('season-label').textContent =
       `${['Spring', 'Summer', 'Autumn', 'Winter'][frame.season]}, day ${frame.day + 1}`;
     this.el('player-level').textContent = `LV ${frame.player.level}`;
@@ -671,7 +675,7 @@ export class HudPresenter {
       `Tick ${frame.tick} · simulation ${frame.performance.stepMs.toFixed(2)} ms · ${frame.performance.detailed} detailed creatures · ${frame.performance.paths} pending paths · ${stats.sprites} sprites · ${stats.chunks} chunks\nAI: ${usage?.requests ?? 0} requests · ${usage?.queued ?? 0} queued · ${usage?.errors ?? 0} errors · ${Math.round(usage?.lastMs ?? 0)} ms last request`;
     if (frame.performance.context)
       this.el('debug-stats').textContent +=
-        `\nContext: ${frame.performance.context.tokens}/${frame.performance.context.budget} tokens ? ${frame.performance.context.compactions} compactions${frame.performance.context.truncated ? ' ? truncated' : ''}`;
+        `\nContext: ${frame.performance.context.tokens}/${frame.performance.context.budget} tokens · ${frame.performance.context.compactions} compactions${frame.performance.context.truncated ? ' · truncated' : ''}`;
     this.el('debug-stats').textContent +=
       `\nRender CPU ${stats.renderMs?.toFixed(2) ?? '?'} ms · load ${stats.loadMs?.toFixed(0) ?? '?'} ms · tracked textures ${((stats.textureBytes ?? 0) / 1048576).toFixed(1)} MiB · framebuffer ${stats.framebufferScale ?? 1} · prototype actors ${stats.prototypeActors ?? 0}\nGPU: ${stats.gpu ?? 'unreported'}${stats.assetError ? `\n${stats.assetError}` : ''}`;
     if (this.el<HTMLInputElement>('debug').checked)
@@ -700,7 +704,7 @@ export class HudPresenter {
       ? `${human.forcedRest ? 'Exhausted · resting until 50%' : 'Sleeping'} · world at ${frame.timeScale}×`
       : human.rest < 0.2
         ? 'You feel tired. Find a safe place to rest.'
-        : `Human · ${human.elements.join(' / ')} · ${human.heightMeters.toFixed(2)} m ? ${human.massKg.toFixed(1)} kg ? ${human.nature.join(', ')}`;
+        : `Human · ${human.elements.join(' / ')} · ${human.heightMeters.toFixed(2)} m · ${human.massKg.toFixed(1)} kg · ${human.nature.join(', ')}`;
     this.el<HTMLButtonElement>('sleep-button').disabled = human.sleeping;
     this.el<HTMLButtonElement>('wake-button').disabled = !human.sleeping || human.forcedRest;
     this.el<HTMLButtonElement>('accelerate-button').disabled =
@@ -1240,9 +1244,11 @@ export class HudPresenter {
     this.appearance = new AppearanceResolver(catalog);
   }
   closeOverlay(): boolean {
-    const companion = this.el<HTMLDialogElement>('companion-sheet');
-    if (companion && companion.open) {
-      companion.close();
+    const openDialog = document.querySelector<HTMLDialogElement>(
+      '#map-dialog[open],#settings-dialog[open],#journal-dialog[open],#companion-sheet[open]',
+    );
+    if (openDialog) {
+      openDialog.close();
       return true;
     }
     for (const overlay of ['inventory', 'inspection'] as const)
@@ -1414,32 +1420,49 @@ export class HudPresenter {
       return;
     }
     const background = frame.scene.outside ? this.mapBackground : this.worldMapBackground;
-    if (background) context.drawImage(background, 0, 0, canvas.width, canvas.height);
+    const authored = frame.npcs.length === 10;
+    const mapScale = authored ? canvas.width / 128 : 1;
+    context.imageSmoothingEnabled = false;
+    if (background) {
+      if (authored)
+        context.drawImage(background, 0, 0, 128, 128, 0, 0, canvas.width, canvas.height);
+      else context.drawImage(background, 0, 0, canvas.width, canvas.height);
+    }
     context.font = '38px Silver';
     context.textAlign = 'center';
-    for (const s of SETTLEMENTS) {
+    const landmarks = authored
+      ? [
+          { id: 'aqualia', name: 'Aqualia', x: 64 * mapScale, y: 62 * mapScale },
+          { id: 'reedhaven', name: 'Reedhaven', x: 34 * mapScale, y: 92 * mapScale },
+          { id: 'tidecross', name: 'Tidecross', x: 96 * mapScale, y: 36 * mapScale },
+        ]
+      : SETTLEMENTS;
+    for (const s of landmarks) {
       context.fillStyle = '#243f36';
       context.fillRect(s.x - 4, s.y - 4, 8, 8);
       context.fillStyle = '#f1dc9c';
       context.fillRect(s.x - 2, s.y - 2, 4, 4);
+      const labelY = s.id.endsWith('-2') ? s.y + 28 : s.y - 10;
       context.strokeStyle = '#334f41';
       context.lineWidth = 3;
-      context.strokeText(s.name, s.x, s.y - 10);
+      context.strokeText(s.name, s.x, labelY);
       context.fillStyle = '#f2e9c9';
-      context.fillText(s.name, s.x, s.y - 10);
+      context.fillText(s.name, s.x, labelY);
     }
     const player = frame.scene.outside ? frame.player : this.worldMapPlayer;
     if (player) {
+      const px = player.x * mapScale,
+        py = player.y * mapScale;
       context.fillStyle = '#fff1be';
       context.beginPath();
-      context.arc(player.x, player.y, 4, 0, Math.PI * 2);
+      context.arc(px, py, 5, 0, Math.PI * 2);
       context.fill();
       context.strokeStyle = '#355046';
       context.lineWidth = 2;
       context.stroke();
       for (const marker of frame.markers) {
         context.strokeStyle = '#f0d49a';
-        context.strokeRect(marker.x - 3, marker.y - 3, 6, 6);
+        context.strokeRect(marker.x * mapScale - 3, marker.y * mapScale - 3, 6, 6);
       }
     }
   }

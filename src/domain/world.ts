@@ -1,13 +1,10 @@
 import {
   SETTLEMENTS,
   VILLAGES,
-  itemIds,
-  type ItemId,
   type Medium,
   type SettlementDefinition,
 } from '../content/definitions';
-import { SeededRandom, hashString } from './core';
-import { CONFIG, clamp, type WorldPosition } from './values';
+import { CONFIG, type WorldPosition } from './values';
 
 export enum Biome {
   Riverlands,
@@ -63,18 +60,6 @@ export interface WorldDelta {
   fluid: number;
   reactionUntil: number;
 }
-const SIMPLEX_F = (Math.sqrt(3) - 1) / 2,
-  SIMPLEX_G = (3 - Math.sqrt(3)) / 6;
-const GRADIENTS = [
-  [1, 1],
-  [-1, 1],
-  [1, -1],
-  [-1, -1],
-  [1, 0],
-  [-1, 0],
-  [0, 1],
-  [0, -1],
-] as const;
 
 /** Logical data never contains a Pixi object. Each chunk is a view over stable layers. */
 export class ChunkStore {
@@ -160,174 +145,8 @@ export class ChunkStore {
   }
 }
 
-/** Seeded 2D simplex noise, O(1) samples and no coordinate-dependent allocation. */
-export class ClimateSampler {
-  private readonly perm = new Uint8Array(512);
-  constructor(seed: number) {
-    const random = new SeededRandom(seed);
-    const p = Uint8Array.from({ length: 256 }, (_, i) => i);
-    for (let i = 255; i > 0; i--) {
-      const j = random.int(i + 1);
-      [p[i], p[j]] = [p[j]!, p[i]!];
-    }
-    for (let i = 0; i < 512; i++) this.perm[i] = p[i & 255]!;
-  }
-  noise(x: number, y: number): number {
-    const f = SIMPLEX_F,
-      g = SIMPLEX_G;
-    const s = (x + y) * f,
-      i = Math.floor(x + s),
-      j = Math.floor(y + s),
-      t = (i + j) * g;
-    const x0 = x - (i - t),
-      y0 = y - (j - t),
-      i1 = x0 > y0 ? 1 : 0,
-      j1 = 1 - i1;
-    const ii = i & 255,
-      jj = j & 255;
-    return (
-      70 *
-      (this.corner(x0, y0, this.perm[ii + this.perm[jj]!]!) +
-        this.corner(x0 - i1 + g, y0 - j1 + g, this.perm[ii + i1 + this.perm[jj + j1]!]!) +
-        this.corner(x0 - 1 + 2 * g, y0 - 1 + 2 * g, this.perm[ii + 1 + this.perm[jj + 1]!]!))
-    );
-  }
-  private corner(dx: number, dy: number, hash: number): number {
-    const m = 0.5 - dx * dx - dy * dy;
-    if (m <= 0) return 0;
-    const grad = GRADIENTS[hash & 7]!;
-    return m ** 4 * (grad[0] * dx + grad[1] * dy);
-  }
-  octave(x: number, y: number): number {
-    return (
-      (this.noise(x, y) + 0.5 * this.noise(x * 2, y * 2) + 0.25 * this.noise(x * 4, y * 4)) / 1.75
-    );
-  }
-}
-
-export class HydrologyGenerator {
-  sample(x: number, y: number, seed: number): { river: number; coast: number } {
-    const phase = (seed % 1000) / 1000;
-    const riverX = 258 + Math.sin(y / 39 + phase) * 24 + Math.sin(y / 101) * 17;
-    const tributaryY = 225 + Math.sin(x / 48 + phase) * 23;
-    return {
-      river: Math.min(Math.abs(x - riverX), Math.abs(y - tributaryY) * 1.6),
-      coast: 468 + Math.sin(y / 41) * 9 - x,
-    };
-  }
-}
-export class BiomeClassifier {
-  classify(
-    elevation: number,
-    moisture: number,
-    temperature: number,
-    river: number,
-    coast: number,
-    volcano: number,
-  ): Biome {
-    if (coast < 13) return Biome.Beach;
-    if (volcano < 39) return Biome.Volcano;
-    if (river < 9) return moisture > 0.53 && temperature > 0.4 ? Biome.Swamp : Biome.Riverlands;
-    if (elevation > 0.65) return Biome.Mountains;
-    if (moisture > 0.55) return Biome.Forest;
-    return Biome.Meadows;
-  }
-}
 
 export class SettlementPlanner {
-  place(world: ChunkStore): void {
-    for (const s of SETTLEMENTS) {
-      const radius = s.capital ? 16 : 7;
-      for (let y = s.y - radius; y <= s.y + radius; y++)
-        for (let x = s.x - radius; x <= s.x + radius; x++) {
-          const i = world.index(x, y);
-          world.elevation[i] = 0;
-          world.fluid[i] = Fluid.None;
-          world.flags[i] = TileFlag.Protected;
-          world.biome[i] =
-            s.village === 0 ? Biome.Mountains : s.village === 1 ? Biome.Riverlands : Biome.Beach;
-          world.resource[i] = 0;
-          world.quantity[i] = 0;
-          if (Math.abs(x - s.x) <= 1 || Math.abs(y - s.y) <= 1) world.flags[i] |= TileFlag.Road;
-        }
-      const count = s.capital ? 10 : 2;
-      for (let b = 0; b < count; b++) {
-        const x = s.x + (s.capital ? [-13, -7, 3, 9, 15][b % 5]! : b === 0 ? -4 : 4),
-          y = s.y + (s.capital ? (b < 5 ? -9 : 7) : -5);
-        world.buildings.push({
-          id: `${s.id}:home:${b}`,
-          x,
-          y,
-          village: s.village,
-          name: s.capital ? `${VILLAGES[s.village]!.name} cottage ${b + 1}` : `${s.name} shelter`,
-        });
-        for (let by = y - 1; by <= y; by++)
-          for (let bx = x - 1; bx <= x + 1; bx++)
-            world.flags[world.index(bx, by)]! |= TileFlag.Solid;
-      }
-      // Wells and starter forage are authored guarantees, not random generation accidents.
-      for (const [dx, dy, item] of [
-        [3, 2, 'flint'],
-        [4, 2, 'stick'],
-        [5, 2, 'fiber'],
-        [-3, 2, 'berries'],
-        [-4, 2, 'reeds'],
-        [-5, 2, 'fungi'],
-      ] as const) {
-        const i = world.index(s.x + dx, s.y + dy);
-        world.resource[i] = itemIds.indexOf(item) + 1;
-        world.quantity[i] = 8;
-      }
-      world.fluid[world.index(s.x + 4, s.y - 3)] = Fluid.Freshwater;
-    }
-    const road = (a: WorldPosition, b: WorldPosition): void => {
-      let x = Math.floor(a.x),
-        y = Math.floor(a.y);
-      let guard = 0;
-      while ((x !== Math.floor(b.x) || y !== Math.floor(b.y)) && guard++ < world.size * 2) {
-        for (let dy = -1; dy <= 1; dy++)
-          for (let dx = -1; dx <= 1; dx++) {
-            const i = world.index(x + dx, y + dy);
-            world.flags[i] = TileFlag.Road | TileFlag.Protected | TileFlag.Ramp;
-            world.fluid[i] = Fluid.None;
-            world.elevation[i] = 0;
-            world.resource[i] = 0;
-            world.quantity[i] = 0;
-          }
-        if (x !== Math.floor(b.x)) x += Math.sign(b.x - x);
-        else y += Math.sign(b.y - y);
-      }
-    };
-    for (const s of SETTLEMENTS) road(s, VILLAGES[s.village]!);
-    road(VILLAGES[0]!, VILLAGES[1]!);
-    road(VILLAGES[1]!, VILLAGES[2]!);
-    // Generation-time connectivity proof over the reserved road graph.
-    const visited = new Uint8Array(world.size ** 2),
-      queue = new Int32Array(world.size ** 2);
-    const targets = new Set(SETTLEMENTS.map((s) => world.index(s.x, s.y)));
-    let head = 0,
-      tail = 0;
-    const first = world.index(VILLAGES[0].x, VILLAGES[0].y);
-    queue[tail++] = first;
-    visited[first] = 1;
-    while (head < tail && targets.size) {
-      const i = queue[head++]!;
-      targets.delete(i);
-      for (const offset of [-1, 1, -world.size, world.size]) {
-        const next = i + offset;
-        if (
-          next < 0 ||
-          next >= visited.length ||
-          visited[next] ||
-          !(world.flags[next]! & TileFlag.Road)
-        )
-          continue;
-        visited[next] = 1;
-        queue[tail++] = next;
-      }
-    }
-    if (targets.size) throw new Error('Settlement road connectivity could not be established');
-  }
   locations(
     profileIndex: number,
   ): Record<'home' | 'work' | 'square' | 'shrine' | 'outpost', WorldPosition> {
@@ -341,65 +160,6 @@ export class SettlementPlanner {
       shrine: { x: v.x - 5 + (local % 3), y: v.y - 4 },
       outpost: { x: v.x - 44, y: v.y + 50 },
     };
-  }
-}
-
-export class WorldGenerator {
-  generate(seed: number): ChunkStore {
-    const world = new ChunkStore(CONFIG.worldSize, seed),
-      climate = new ClimateSampler(seed),
-      hydro = new HydrologyGenerator(),
-      classifier = new BiomeClassifier();
-    const random = new SeededRandom(hashString(`${seed}:resources`));
-    const resources: readonly (readonly ItemId[])[] = [
-      ['reeds', 'flint', 'wheat'],
-      ['berries', 'wheat', 'nectar'],
-      ['stick', 'berries', 'fungi'],
-      ['flint', 'ore', 'ashgrass'],
-      ['flint', 'nectar', 'berries'],
-      ['ashgrass', 'ore', 'nectar'],
-      ['fungi', 'reeds', 'stick'],
-    ];
-    for (let y = 0; y < world.size; y++)
-      for (let x = 0; x < world.size; x++) {
-        const i = world.index(x, y),
-          h = hydro.sample(x, y, seed);
-        const e = clamp(0.5 + climate.octave(x / 100, y / 100) * 0.38 + (180 - y) / 900);
-        const m = clamp(0.5 + climate.octave(x / 82 + 51, y / 82 - 17) * 0.45);
-        const t = clamp(0.65 - y / 1300 + climate.octave(x / 130 - 83, y / 130 + 29) * 0.2);
-        const volcano = Math.hypot((x - 112) * 0.9, y - 56);
-        const biome = classifier.classify(e, m, t, h.river, h.coast, volcano);
-        world.biome[i] = biome;
-        world.moisture[i] = m;
-        world.temperature[i] = t;
-        world.drainage[i] = h.river;
-        world.coastDistance[i] = h.coast;
-        world.elevation[i] = h.river < 7 || h.coast < 12 ? 0 : Math.floor(e * 3);
-        if (h.coast < 0) world.fluid[i] = Fluid.Saltwater;
-        else if (h.river < 3.5)
-          world.fluid[i] = biome === Biome.Swamp ? Fluid.Mud : Fluid.Freshwater;
-        else if (volcano < 13) world.fluid[i] = Fluid.Lava;
-        if (!world.contains(x, y)) world.flags[i] = TileFlag.Solid;
-        if (!world.fluid[i] && random.next() < 0.075) {
-          const choices = resources[biome]!;
-          world.resource[i] = itemIds.indexOf(choices[random.int(choices.length)]!) + 1;
-          world.quantity[i] = 2 + random.int(4);
-        }
-      }
-    // Natural ramps occur at selected one-level contour transitions.
-    for (let y = 1; y < world.size - 1; y++)
-      for (let x = 1; x < world.size - 1; x++) {
-        const i = world.index(x, y);
-        if (
-          (x * 17 + y * 31 + seed) % 7 === 0 &&
-          Math.abs(world.elevation[i]! - world.elevation[i + 1]!) === 1
-        ) {
-          world.flags[i]! |= TileFlag.Ramp;
-          world.flags[i + 1]! |= TileFlag.Ramp;
-        }
-      }
-    new SettlementPlanner().place(world);
-    return world;
   }
 }
 

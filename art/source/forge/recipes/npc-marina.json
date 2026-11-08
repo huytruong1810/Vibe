@@ -1,0 +1,29 @@
+{
+  "asset": "npc:marina",
+  "kind": "human",
+  "heightArtPx": 40,
+  "ramps": {
+    "skin": "skin-porcelain",
+    "hair": "hair-auburn",
+    "top": "reed",
+    "trousers": "teal",
+    "boots": "sand"
+  },
+  "gen3d": { "seed": 1234, "steps": 50, "views": ["front", "back"] },
+  "concept": {
+    "template": "human-apose-v1",
+    "fields": {
+      "name": "Marina",
+      "age": "19",
+      "role": "reed weaver and diver",
+      "home": "Aqualia canal settlement",
+      "personality": "playful, friendly, candid about her wanderlust",
+      "appearance": "slender athletic build, fair porcelain skin with sun freckles, long wavy auburn hair tied in a loose braid, wearing a light reed-green sleeveless woven tunic, fitted teal diving trousers, and soft sand-colored water moccasins. Proportions are 5 heads tall in clean stylized A-pose"
+    },
+    "poseGuide": "art/source/style/pose-guides/human.png",
+    "references": [
+      "public/assets/portraits/characters/portrait_npc_marina_128.png"
+    ]
+  },
+  "notes": "Aqualia reed weaver and diver (B21). Slender build, 5 heads tall, guided by human.png."
+}

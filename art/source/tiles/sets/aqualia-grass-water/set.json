@@ -1,0 +1,78 @@
+{
+  "set": "aqualia-grass-water",
+  "region": "aqualia",
+  "materials": [
+    {
+      "id": "grass",
+      "runtimeId": "ground_grass",
+      "binds": {
+        "layer": "ground",
+        "values": ["grass", "reedbed"]
+      },
+      "swatch": "swatches/grass.png",
+      "swatchTilePx": 128,
+      "values": ["foliage-deep.shadow", "foliage-deep.mid", "moss.mid", "reed.mid"],
+      "proportions": [0.12, 0.7, 0.13, 0.05],
+      "cluster": 0.5,
+      "variants": 3
+    },
+    {
+      "id": "freshwater",
+      "runtimeId": "ground_freshwater",
+      "swatch": "swatches/water.png",
+      "swatchTilePx": 128,
+      "values": ["water.shadow", "water.mid", "water.light", "water.highlight"],
+      "proportions": [0.22, 0.5, 0.2, 0.08],
+      "variants": 2
+    },
+    {
+      "id": "cliff",
+      "runtimeId": "cliff_grass",
+      "swatch": "swatches/grass.png",
+      "swatchTilePx": 128,
+      "wrap": "x",
+      "heightPx": 8,
+      "values": ["stone.deep", "stone.shadow", "stone.mid"],
+      "rows": {
+        "0": "moss.mid",
+        "-1": "stone.deep"
+      }
+    }
+  ],
+  "overlays": [
+    {
+      "id": "freshwater_shore",
+      "material": "freshwater",
+      "binds": {
+        "layer": "water",
+        "values": ["fresh_shallow", "fresh_deep"]
+      },
+      "runtimeIdTemplate": "shore_freshwater_mask_{mask}",
+      "edge": {
+        "inside": [
+          {
+            "px": 1,
+            "value": "water.highlight"
+          },
+          {
+            "px": 2,
+            "value": "water.light",
+            "dither": 0.5
+          }
+        ],
+        "outside": [
+          {
+            "px": 1,
+            "value": "timber.deep"
+          }
+        ]
+      }
+    }
+  ],
+  "pairs": [["grass", "freshwater"]],
+  "notes": "Codex C11 golden sample by claude: grass, freshwater body, freshwater shore overlay and a grass-lipped cliff strip. Swatches are procedural stand-ins from tilelib/selftest.py, not designed art; the communicator replaces them in M9.",
+  "preview": {
+    "level": "aqualia_village",
+    "rect": [0, 0, 90, 68]
+  }
+}

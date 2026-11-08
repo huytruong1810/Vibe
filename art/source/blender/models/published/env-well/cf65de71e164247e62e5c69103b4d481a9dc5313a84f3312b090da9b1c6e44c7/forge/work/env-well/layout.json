@@ -1,0 +1,48 @@
+{
+  "asset": "env:well",
+  "stage": "layout",
+  "inputsDigest": "e42ff2a69dda3185628913bde627dc9599c796b7d35f7cbca7faf650cee67b3f",
+  "inputs": [
+    "art/source/forge/work/env-well/texture.blend",
+    "art/source/forge/work/env-well/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-well/layout/base.blend": "f790caef4585fbb520dec9f1bffdb1e4d09cb9b47e757953d3d7101a985ed84b",
+    "art/source/forge/work/env-well/layout/roof.blend": "39274bb8a79652c079854dab2b0220f7d49913aabd676c2283c3c8cde0c2f755",
+    "art/source/forge/work/env-well/layout_preview.png": "01a7dbd0c5bdb0fe6991847933840c7e9e892b01baba22b02b7d6b0ac94800f0"
+  },
+  "extra": {
+    "scale": 0.158452,
+    "heightUnits": 2.5139,
+    "contactDepthTiles": 2.084,
+    "footprint": [
+      2,
+      2
+    ],
+    "canvas": {
+      "size": [
+        96,
+        130
+      ],
+      "anchor": [
+        48,
+        126
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -1.0,
+      0.0
+    ],
+    "layers": [
+      "base",
+      "roof"
+    ],
+    "faces": {
+      "base": 5719,
+      "roof": 8281
+    }
+  },
+  "at": "2026-11-03T04:40:40Z"
+}

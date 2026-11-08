@@ -1,0 +1,45 @@
+{
+  "asset": "env:shelf-books",
+  "stage": "layout",
+  "inputsDigest": "59aed2fb66a7d2a69a457b28de953df4e1ea20ae4143f0cb9f17cdd1de3314bc",
+  "inputs": [
+    "art/source/forge/work/env-shelf-books/texture.blend",
+    "art/source/forge/work/env-shelf-books/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-shelf-books/layout/base.blend": "90d5479148822dbb221e3617eea84e6d4a5539e9fab5f4db8c3c7e6f3670e11f",
+    "art/source/forge/work/env-shelf-books/layout_preview.png": "bd1aa7756b8e5429eb7284274cfb2ee36a848114f65dc09d9025c289515a0057"
+  },
+  "extra": {
+    "scale": 0.202636,
+    "heightUnits": 3.3322,
+    "contactDepthTiles": 1.101,
+    "footprint": [
+      2,
+      1
+    ],
+    "canvas": {
+      "size": [
+        128,
+        132
+      ],
+      "anchor": [
+        64,
+        128
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -0.5,
+      0.0
+    ],
+    "layers": [
+      "base"
+    ],
+    "faces": {
+      "base": 13999
+    }
+  },
+  "at": "2026-11-05T11:42:45Z"
+}

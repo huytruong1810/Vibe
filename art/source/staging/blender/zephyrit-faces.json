@@ -1,0 +1,2456 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/zephyrit--2026-11-05-zephyrit-faces-33befc31258d.md",
+  "approvalSha256": "874f453cd36b791ed07adfd51109ff12fdd89554e0cfc6310622b0f20c8fa098",
+  "asset": "zephyrit",
+  "bodyManifestSha256": "b8062ebcbe3be58fe35ef3b3e8442941602eadf82e8f3a53db022cac25772374",
+  "bodyPacketDigest": "5cf0c6947a17bbd6d15325123b792c87632bdc1c77d8b0ee905f0fb2a0add848",
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "neutral",
+      "facing": "s",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/neutral/s.png",
+      "sha256": "560d804fc63684b599d62c9260571fdfac73adf76539263574b599129695f559",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "neutral",
+      "facing": "se",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/neutral/se.png",
+      "sha256": "0d88f53fd7563b77735a3faa479c1b08d81e83802c3abcd9e47c412e1ea3adc6",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "neutral",
+      "facing": "sw",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/neutral/sw.png",
+      "sha256": "9b3709856a10d20ba3a229e61487552eb83df8e1f7190b79b9db24845fb7f64f",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "neutral",
+      "facing": "e",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/neutral/e.png",
+      "sha256": "c7f2bcc83dcd8b665c3254d4b4b91735077c7869e67c5e3a850ba8f3cd27c776",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "neutral",
+      "facing": "w",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/neutral/w.png",
+      "sha256": "9a9860408460555c6ddb218afe05cbc19c43e86938f82d58d9d0c58469329fe1",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "warm",
+      "facing": "s",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/warm/s.png",
+      "sha256": "9e55be0232387e28cd7b1377b1ba80489a3418f2ad6eed3551e0fbf008a9ad81",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "warm",
+      "facing": "se",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/warm/se.png",
+      "sha256": "438537b456ae9b0c8e0a776bdd1f963e452c459a8fef1aa69d8eda44b81c9603",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "warm",
+      "facing": "sw",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/warm/sw.png",
+      "sha256": "085275716ed3073e52099f7422bb91a97205b13713a9d5275b3cebcc85ca9948",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "warm",
+      "facing": "e",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/warm/e.png",
+      "sha256": "1d0def96ce3dfa6e33ec0ab911ffb9eff8c477d096951e1f1a6fc34e24ddc6d6",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "warm",
+      "facing": "w",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/warm/w.png",
+      "sha256": "45dce88e09ca630bacebd61fe2c62b92387391a0bf4312bae205d988a5ec105d",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "fearful",
+      "facing": "s",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/fearful/s.png",
+      "sha256": "bbddac7cb8bd7aaf7e73ed30dc26eeb05b09c881aa41f1680796d10a1d303cfa",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "fearful",
+      "facing": "se",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/fearful/se.png",
+      "sha256": "33003e938992223c692b629913f64a36a27925e7fbdfd2726afd2c6bc960a2ff",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "fearful",
+      "facing": "sw",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/fearful/sw.png",
+      "sha256": "d6f71205f258937b77b624a38c4cc474860ebd0bc74437c0e641d3db8bf24462",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "fearful",
+      "facing": "e",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/fearful/e.png",
+      "sha256": "657ee6a88fe6cf902f8ecf22647c1ba0195b440d8ad835fe071519ec9ab48555",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "fearful",
+      "facing": "w",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/fearful/w.png",
+      "sha256": "083c0bf21e11120f26b967be6f9528bcfc7274cf56a2a86bbd9cd453f442b510",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "hurt",
+      "facing": "s",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/hurt/s.png",
+      "sha256": "f0ad143c98ee7aa876bc78b8aa1b82fd9fe17d160d87ae7e4b970617f6c9a10d",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "hurt",
+      "facing": "se",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/hurt/se.png",
+      "sha256": "d5251b97c30df82763f0076abe8854cd28311b20e2f62861b6df1bb09d630c34",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "hurt",
+      "facing": "sw",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/hurt/sw.png",
+      "sha256": "3e5db620325a5b0499d9b523b512c69fedf99d82ff83ad1387972e334a0b5052",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "hurt",
+      "facing": "e",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/hurt/e.png",
+      "sha256": "fe38be4205ef96bbe98d552d6db4050fd376a2be42cf4a8e674caaf116ee8247",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "hurt",
+      "facing": "w",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/hurt/w.png",
+      "sha256": "cec7ccda16e39aafa6c09b2d44a522150ed34759f279150d95ad607cbdd4d8ad",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "sleep",
+      "facing": "s",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/sleep/s.png",
+      "sha256": "a0fc9f0157cd1a29e52655a18f7c3fa6ff472974c33f6d7ca83a56205e1a3de0",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "sleep",
+      "facing": "se",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/sleep/se.png",
+      "sha256": "c86f256c2ff0969055a4bbc11dd5dbaffd0d9489d9a43834a328f999cc8ec386",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "sleep",
+      "facing": "sw",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/sleep/sw.png",
+      "sha256": "dc61f833d84bd445d727b68a50fdbf4761f07edbd50e42c2793e6135b9c08e02",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "sleep",
+      "facing": "e",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/sleep/e.png",
+      "sha256": "84210f48847e9cf2fd56a1832a583bcff578236df381d0a8bb9f5f7dd45710fe",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "sleep",
+      "facing": "w",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/sleep/w.png",
+      "sha256": "b8dfb7fd7a3a2f34c957965bcb1c3ea6e7d6423f68ffd917050323c69800c633",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      }
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "neutral",
+      "facing": "s",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/compact/neutral/s.png",
+      "sha256": "015dee83c11e0017ef88e9880c552a9ab28c5464231d5b52099645b12e634751",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "neutral",
+      "facing": "se",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/compact/neutral/se.png",
+      "sha256": "768ca24d3bb871807d32bf727a61952108d6aada7f90ebe2fc9bb266d1f09f77",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "neutral",
+      "facing": "sw",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/compact/neutral/sw.png",
+      "sha256": "a001863c349f5b0860b93a3384834e2e721db9b9eb0ca9c202bf5ae6d06a9bc8",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "neutral",
+      "facing": "e",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/compact/neutral/e.png",
+      "sha256": "b9c282d077d05df6a4065ca0f08da3651d45a7ab4a0e8531b22dde18b69762f8",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "neutral",
+      "facing": "w",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/compact/neutral/w.png",
+      "sha256": "a2408bf3161bce91dafeee633091fa8b2ca95da0f73c25e56e7fd562b6e17f1e",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "warm",
+      "facing": "s",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/compact/warm/s.png",
+      "sha256": "42951041891acdd1a8a2fd697e096a3cfe9f42a66a2aa6edff42df8b2bdd64cd",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "warm",
+      "facing": "se",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/compact/warm/se.png",
+      "sha256": "2cf9d926b12456042f16742d3c03a7f75fed813ec57b2b381221bf3c080b1f0f",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "warm",
+      "facing": "sw",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/compact/warm/sw.png",
+      "sha256": "6c3dfa7cf3a31400bf858323173723acbc7a747932dd86525d3ba75140e007e2",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "warm",
+      "facing": "e",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/compact/warm/e.png",
+      "sha256": "4cf7b785c2e908395ef01519daddf5ccac7ef0efbb454cbf3943783dc72e1d8e",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "warm",
+      "facing": "w",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/compact/warm/w.png",
+      "sha256": "626451bd3f7fced177497707a51bf3c28c8066a8425dbc93a658ac940e3ecf26",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "fearful",
+      "facing": "s",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/compact/fearful/s.png",
+      "sha256": "bc8eeef64d64baf0690797b11dbe6b364bdcec293982f3e93233f91daf71dd59",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "fearful",
+      "facing": "se",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/compact/fearful/se.png",
+      "sha256": "3b505b3bfd069b52d62d187478ce2c7b4ca2bfc829a56b2af4af61a02fd162e8",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "fearful",
+      "facing": "sw",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/compact/fearful/sw.png",
+      "sha256": "199745c4974010bc7df04c7d328e5130d0f8e7d807f8aee92c0e2f75c8d2d6d0",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "fearful",
+      "facing": "e",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/compact/fearful/e.png",
+      "sha256": "71f236193b6911ed8cdd80c6600e402ba2437fb66d9b1194ed1997008a80817b",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "fearful",
+      "facing": "w",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/compact/fearful/w.png",
+      "sha256": "e89838b9e6d523e1f5392b82ddaf2ac26fa6bcd227d8c32ef602d0c85c8abee4",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "hurt",
+      "facing": "s",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/compact/hurt/s.png",
+      "sha256": "18091c9c5942b9abe19be8ad09fd3b4b62d27907e685eabc67e20b21dba08239",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "hurt",
+      "facing": "se",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/compact/hurt/se.png",
+      "sha256": "d6382f01085c8bd0d4e06e3567db45145ce28b60ee1ebaea347a5e03ad7fca78",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "hurt",
+      "facing": "sw",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/compact/hurt/sw.png",
+      "sha256": "7c4f137a8ead2844ac84e63181d8cb786f396c8dd0a7f8ddc7f0fc567bf77890",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "hurt",
+      "facing": "e",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/compact/hurt/e.png",
+      "sha256": "7b7d60d9f4f1b9333275c5b31d9462579d9eea594025ce00c2ca434e9f84bed9",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "hurt",
+      "facing": "w",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/compact/hurt/w.png",
+      "sha256": "b95e5d70396c77e7a2684c0a73e26d4b403ca8f9426ba10b10677973b5453c01",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "sleep",
+      "facing": "s",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/compact/sleep/s.png",
+      "sha256": "87574f29eaa3d4a21c19231b7811960911585610181465f8ca9ae71a78fd1ba8",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "sleep",
+      "facing": "se",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/compact/sleep/se.png",
+      "sha256": "2edba84d93bfa9d0aea8c6fe78af8634ff0ffeb54f3c7952a62548c9ec26e5ed",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "sleep",
+      "facing": "sw",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/compact/sleep/sw.png",
+      "sha256": "89ed496d5c611b6f4931db36a441c359596650993fa77bc86d7b708bfe1f4f22",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "sleep",
+      "facing": "e",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/compact/sleep/e.png",
+      "sha256": "f001ff092282241f920158a42bbe61136e41fd6879f59ad5490bd0e33d0e65f6",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    },
+    {
+      "anchorPx": {
+        "x": 16,
+        "y": 12
+      },
+      "expression": "sleep",
+      "facing": "w",
+      "file": "exports/zephyrit-faces/145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87/compact/sleep/w.png",
+      "sha256": "3f76ac39bcec4ef6be80a5d479b7ad8c57094438c0833f4e8dca371495aa9c0d",
+      "socket": "Socket_Head",
+      "sourceSize": {
+        "h": 24,
+        "w": 32
+      },
+      "variant": "compact"
+    }
+  ],
+  "generator": {
+    "note": "script-drawn palette-indexed decals; no Blender or generative model",
+    "path": "forge/forgelib/faces.py",
+    "sha256": "dd486fa1334838cea4475d34806438d3431ab4b2a94d513e24f7b22ec55f18a3"
+  },
+  "packet": "art/review/2026-11-05-zephyrit-faces-33befc31258d",
+  "packetDigest": "145ddbda931e638c15fb62d345f46180b3b80f8a3eba7268d9bdc83e24463a87",
+  "packetSha256": "c7f42572b3b005b7637b7de154abbf40ac86fb437971b80824ca8463f418ee42",
+  "registration": {
+    "eyesOnly": {
+      "zephyrit:element:e:3": [
+        -6,
+        10
+      ],
+      "zephyrit:element:e:4": [
+        -6,
+        10
+      ],
+      "zephyrit:element:e:5": [
+        -4,
+        8
+      ],
+      "zephyrit:element:e:6": [
+        -4,
+        10
+      ],
+      "zephyrit:element:e:8": [
+        -2,
+        12
+      ],
+      "zephyrit:element:e:9": [
+        -2,
+        10
+      ],
+      "zephyrit:element:sw:3": [
+        6,
+        8
+      ],
+      "zephyrit:element:sw:4": [
+        6,
+        8
+      ],
+      "zephyrit:element:sw:5": [
+        2,
+        10
+      ],
+      "zephyrit:element:sw:6": [
+        2,
+        10
+      ],
+      "zephyrit:element:sw:7": [
+        2,
+        10
+      ],
+      "zephyrit:element:w:3": [
+        4,
+        10
+      ],
+      "zephyrit:element:w:4": [
+        4,
+        10
+      ],
+      "zephyrit:element:w:5": [
+        2,
+        8
+      ],
+      "zephyrit:element:w:6": [
+        2,
+        10
+      ],
+      "zephyrit:hit:e:0": [
+        -6,
+        8
+      ],
+      "zephyrit:hit:e:1": [
+        -6,
+        8
+      ],
+      "zephyrit:hit:e:2": [
+        -2,
+        12
+      ],
+      "zephyrit:hit:sw:0": [
+        6,
+        10
+      ],
+      "zephyrit:hit:sw:1": [
+        4,
+        10
+      ],
+      "zephyrit:hit:sw:2": [
+        2,
+        12
+      ],
+      "zephyrit:hit:w:0": [
+        4,
+        10
+      ],
+      "zephyrit:hit:w:1": [
+        4,
+        10
+      ],
+      "zephyrit:hit:w:2": [
+        2,
+        10
+      ],
+      "zephyrit:strike:e:1": [
+        -2,
+        10
+      ]
+    },
+    "frames": {
+      "zephyrit:bathe:e:0": [
+        -6,
+        8
+      ],
+      "zephyrit:bathe:e:1": [
+        -6,
+        8
+      ],
+      "zephyrit:bathe:e:2": [
+        -6,
+        8
+      ],
+      "zephyrit:bathe:e:3": [
+        -6,
+        8
+      ],
+      "zephyrit:bathe:e:4": [
+        -6,
+        8
+      ],
+      "zephyrit:bathe:e:5": [
+        -6,
+        8
+      ],
+      "zephyrit:bathe:s:0": [
+        -2,
+        8
+      ],
+      "zephyrit:bathe:s:1": [
+        -2,
+        8
+      ],
+      "zephyrit:bathe:s:2": [
+        -2,
+        8
+      ],
+      "zephyrit:bathe:s:3": [
+        -2,
+        8
+      ],
+      "zephyrit:bathe:s:4": [
+        -2,
+        8
+      ],
+      "zephyrit:bathe:s:5": [
+        -2,
+        8
+      ],
+      "zephyrit:bathe:w:0": [
+        6,
+        8
+      ],
+      "zephyrit:bathe:w:1": [
+        6,
+        8
+      ],
+      "zephyrit:bathe:w:2": [
+        6,
+        8
+      ],
+      "zephyrit:bathe:w:3": [
+        6,
+        8
+      ],
+      "zephyrit:bathe:w:4": [
+        6,
+        8
+      ],
+      "zephyrit:bathe:w:5": [
+        6,
+        8
+      ],
+      "zephyrit:downed:e:0": [
+        -4,
+        8
+      ],
+      "zephyrit:downed:e:1": [
+        -2,
+        8
+      ],
+      "zephyrit:downed:e:2": [
+        -2,
+        8
+      ],
+      "zephyrit:downed:e:3": [
+        -2,
+        8
+      ],
+      "zephyrit:downed:e:4": [
+        -2,
+        8
+      ],
+      "zephyrit:downed:e:5": [
+        -2,
+        8
+      ],
+      "zephyrit:downed:s:0": [
+        -2,
+        14
+      ],
+      "zephyrit:downed:s:1": [
+        -2,
+        14
+      ],
+      "zephyrit:downed:s:2": [
+        -2,
+        12
+      ],
+      "zephyrit:downed:s:3": [
+        -2,
+        12
+      ],
+      "zephyrit:downed:s:4": [
+        -2,
+        12
+      ],
+      "zephyrit:downed:s:5": [
+        -2,
+        12
+      ],
+      "zephyrit:downed:w:0": [
+        4,
+        8
+      ],
+      "zephyrit:downed:w:1": [
+        2,
+        8
+      ],
+      "zephyrit:downed:w:2": [
+        2,
+        8
+      ],
+      "zephyrit:downed:w:3": [
+        2,
+        8
+      ],
+      "zephyrit:downed:w:4": [
+        2,
+        8
+      ],
+      "zephyrit:downed:w:5": [
+        2,
+        8
+      ],
+      "zephyrit:drink:e:0": [
+        -2,
+        8
+      ],
+      "zephyrit:drink:e:1": [
+        -2,
+        8
+      ],
+      "zephyrit:drink:e:2": [
+        -2,
+        8
+      ],
+      "zephyrit:drink:e:3": [
+        -2,
+        8
+      ],
+      "zephyrit:drink:e:4": [
+        -2,
+        8
+      ],
+      "zephyrit:drink:e:5": [
+        -2,
+        8
+      ],
+      "zephyrit:drink:s:0": [
+        0,
+        6
+      ],
+      "zephyrit:drink:s:1": [
+        0,
+        8
+      ],
+      "zephyrit:drink:s:2": [
+        0,
+        6
+      ],
+      "zephyrit:drink:s:3": [
+        0,
+        6
+      ],
+      "zephyrit:drink:s:4": [
+        0,
+        8
+      ],
+      "zephyrit:drink:s:5": [
+        0,
+        6
+      ],
+      "zephyrit:drink:w:0": [
+        2,
+        8
+      ],
+      "zephyrit:drink:w:1": [
+        2,
+        8
+      ],
+      "zephyrit:drink:w:2": [
+        2,
+        8
+      ],
+      "zephyrit:drink:w:3": [
+        2,
+        8
+      ],
+      "zephyrit:drink:w:4": [
+        2,
+        8
+      ],
+      "zephyrit:drink:w:5": [
+        2,
+        8
+      ],
+      "zephyrit:eat:e:0": [
+        -2,
+        8
+      ],
+      "zephyrit:eat:e:1": [
+        -2,
+        8
+      ],
+      "zephyrit:eat:e:2": [
+        -2,
+        8
+      ],
+      "zephyrit:eat:e:3": [
+        -2,
+        8
+      ],
+      "zephyrit:eat:e:4": [
+        -2,
+        8
+      ],
+      "zephyrit:eat:e:5": [
+        -2,
+        8
+      ],
+      "zephyrit:eat:s:0": [
+        -2,
+        10
+      ],
+      "zephyrit:eat:s:1": [
+        -2,
+        10
+      ],
+      "zephyrit:eat:s:2": [
+        -2,
+        10
+      ],
+      "zephyrit:eat:s:3": [
+        -2,
+        10
+      ],
+      "zephyrit:eat:s:4": [
+        -2,
+        10
+      ],
+      "zephyrit:eat:s:5": [
+        -2,
+        10
+      ],
+      "zephyrit:eat:w:0": [
+        2,
+        8
+      ],
+      "zephyrit:eat:w:1": [
+        2,
+        8
+      ],
+      "zephyrit:eat:w:2": [
+        2,
+        8
+      ],
+      "zephyrit:eat:w:3": [
+        2,
+        8
+      ],
+      "zephyrit:eat:w:4": [
+        2,
+        8
+      ],
+      "zephyrit:eat:w:5": [
+        2,
+        8
+      ],
+      "zephyrit:element:e:0": [
+        -6,
+        8
+      ],
+      "zephyrit:element:e:1": [
+        -6,
+        6
+      ],
+      "zephyrit:element:e:10": [
+        -6,
+        8
+      ],
+      "zephyrit:element:e:11": [
+        -6,
+        8
+      ],
+      "zephyrit:element:e:2": [
+        -6,
+        8
+      ],
+      "zephyrit:element:e:3": null,
+      "zephyrit:element:e:4": null,
+      "zephyrit:element:e:5": null,
+      "zephyrit:element:e:6": null,
+      "zephyrit:element:e:7": [
+        -6,
+        6
+      ],
+      "zephyrit:element:e:8": null,
+      "zephyrit:element:e:9": null,
+      "zephyrit:element:s:0": [
+        -2,
+        12
+      ],
+      "zephyrit:element:s:1": [
+        -2,
+        12
+      ],
+      "zephyrit:element:s:10": [
+        -2,
+        12
+      ],
+      "zephyrit:element:s:11": [
+        -2,
+        12
+      ],
+      "zephyrit:element:s:2": [
+        -2,
+        14
+      ],
+      "zephyrit:element:s:3": [
+        -2,
+        8
+      ],
+      "zephyrit:element:s:4": [
+        -2,
+        8
+      ],
+      "zephyrit:element:s:5": [
+        -2,
+        8
+      ],
+      "zephyrit:element:s:6": [
+        -2,
+        8
+      ],
+      "zephyrit:element:s:7": [
+        -2,
+        10
+      ],
+      "zephyrit:element:s:8": [
+        -2,
+        10
+      ],
+      "zephyrit:element:s:9": [
+        0,
+        16
+      ],
+      "zephyrit:element:se:0": [
+        -2,
+        12
+      ],
+      "zephyrit:element:se:1": [
+        -4,
+        8
+      ],
+      "zephyrit:element:se:10": [
+        -2,
+        12
+      ],
+      "zephyrit:element:se:11": [
+        -2,
+        8
+      ],
+      "zephyrit:element:se:2": [
+        -2,
+        10
+      ],
+      "zephyrit:element:se:3": null,
+      "zephyrit:element:se:4": null,
+      "zephyrit:element:se:5": [
+        -4,
+        10
+      ],
+      "zephyrit:element:se:6": [
+        -4,
+        10
+      ],
+      "zephyrit:element:se:7": [
+        -6,
+        12
+      ],
+      "zephyrit:element:se:8": [
+        -4,
+        12
+      ],
+      "zephyrit:element:se:9": [
+        -4,
+        8
+      ],
+      "zephyrit:element:sw:0": [
+        2,
+        16
+      ],
+      "zephyrit:element:sw:1": [
+        2,
+        8
+      ],
+      "zephyrit:element:sw:10": [
+        2,
+        14
+      ],
+      "zephyrit:element:sw:11": [
+        2,
+        16
+      ],
+      "zephyrit:element:sw:2": [
+        6,
+        16
+      ],
+      "zephyrit:element:sw:3": null,
+      "zephyrit:element:sw:4": null,
+      "zephyrit:element:sw:5": null,
+      "zephyrit:element:sw:6": null,
+      "zephyrit:element:sw:7": null,
+      "zephyrit:element:sw:8": [
+        6,
+        14
+      ],
+      "zephyrit:element:sw:9": [
+        4,
+        14
+      ],
+      "zephyrit:element:w:0": [
+        6,
+        8
+      ],
+      "zephyrit:element:w:1": [
+        6,
+        6
+      ],
+      "zephyrit:element:w:10": [
+        6,
+        8
+      ],
+      "zephyrit:element:w:11": [
+        6,
+        8
+      ],
+      "zephyrit:element:w:2": [
+        4,
+        8
+      ],
+      "zephyrit:element:w:3": null,
+      "zephyrit:element:w:4": null,
+      "zephyrit:element:w:5": null,
+      "zephyrit:element:w:6": null,
+      "zephyrit:element:w:7": [
+        6,
+        6
+      ],
+      "zephyrit:element:w:8": [
+        6,
+        6
+      ],
+      "zephyrit:element:w:9": [
+        6,
+        6
+      ],
+      "zephyrit:guard:e:0": [
+        -4,
+        8
+      ],
+      "zephyrit:guard:e:1": [
+        -4,
+        8
+      ],
+      "zephyrit:guard:e:2": [
+        -4,
+        8
+      ],
+      "zephyrit:guard:e:3": [
+        -4,
+        8
+      ],
+      "zephyrit:guard:s:0": [
+        -2,
+        14
+      ],
+      "zephyrit:guard:s:1": [
+        -2,
+        14
+      ],
+      "zephyrit:guard:s:2": [
+        -2,
+        14
+      ],
+      "zephyrit:guard:s:3": [
+        -2,
+        14
+      ],
+      "zephyrit:guard:se:0": [
+        0,
+        8
+      ],
+      "zephyrit:guard:se:1": [
+        0,
+        8
+      ],
+      "zephyrit:guard:se:2": [
+        0,
+        8
+      ],
+      "zephyrit:guard:se:3": [
+        0,
+        8
+      ],
+      "zephyrit:guard:sw:0": [
+        -2,
+        8
+      ],
+      "zephyrit:guard:sw:1": [
+        -2,
+        8
+      ],
+      "zephyrit:guard:sw:2": [
+        -2,
+        8
+      ],
+      "zephyrit:guard:sw:3": [
+        -2,
+        8
+      ],
+      "zephyrit:guard:w:0": [
+        4,
+        8
+      ],
+      "zephyrit:guard:w:1": [
+        4,
+        8
+      ],
+      "zephyrit:guard:w:2": [
+        4,
+        8
+      ],
+      "zephyrit:guard:w:3": [
+        4,
+        8
+      ],
+      "zephyrit:hit:e:0": null,
+      "zephyrit:hit:e:1": null,
+      "zephyrit:hit:e:2": null,
+      "zephyrit:hit:e:3": [
+        -6,
+        8
+      ],
+      "zephyrit:hit:s:0": [
+        0,
+        8
+      ],
+      "zephyrit:hit:s:1": [
+        0,
+        8
+      ],
+      "zephyrit:hit:s:2": [
+        -2,
+        10
+      ],
+      "zephyrit:hit:s:3": [
+        -2,
+        12
+      ],
+      "zephyrit:hit:se:0": [
+        -6,
+        8
+      ],
+      "zephyrit:hit:se:1": [
+        -6,
+        10
+      ],
+      "zephyrit:hit:se:2": [
+        -4,
+        10
+      ],
+      "zephyrit:hit:se:3": [
+        -2,
+        12
+      ],
+      "zephyrit:hit:sw:0": null,
+      "zephyrit:hit:sw:1": null,
+      "zephyrit:hit:sw:2": null,
+      "zephyrit:hit:sw:3": [
+        2,
+        16
+      ],
+      "zephyrit:hit:w:0": null,
+      "zephyrit:hit:w:1": null,
+      "zephyrit:hit:w:2": null,
+      "zephyrit:hit:w:3": [
+        6,
+        8
+      ],
+      "zephyrit:idle:e:0": [
+        -6,
+        8
+      ],
+      "zephyrit:idle:e:1": [
+        -6,
+        8
+      ],
+      "zephyrit:idle:e:2": [
+        -6,
+        8
+      ],
+      "zephyrit:idle:e:3": [
+        -6,
+        8
+      ],
+      "zephyrit:idle:e:4": [
+        -6,
+        8
+      ],
+      "zephyrit:idle:e:5": [
+        -6,
+        8
+      ],
+      "zephyrit:idle:s:0": [
+        -2,
+        12
+      ],
+      "zephyrit:idle:s:1": [
+        -2,
+        12
+      ],
+      "zephyrit:idle:s:2": [
+        -2,
+        12
+      ],
+      "zephyrit:idle:s:3": [
+        -2,
+        12
+      ],
+      "zephyrit:idle:s:4": [
+        -2,
+        10
+      ],
+      "zephyrit:idle:s:5": [
+        -2,
+        12
+      ],
+      "zephyrit:idle:se:0": [
+        -2,
+        8
+      ],
+      "zephyrit:idle:se:1": [
+        -2,
+        8
+      ],
+      "zephyrit:idle:se:2": [
+        -2,
+        12
+      ],
+      "zephyrit:idle:se:3": [
+        -2,
+        12
+      ],
+      "zephyrit:idle:se:4": [
+        -2,
+        12
+      ],
+      "zephyrit:idle:se:5": [
+        -2,
+        12
+      ],
+      "zephyrit:idle:sw:0": [
+        2,
+        16
+      ],
+      "zephyrit:idle:sw:1": [
+        2,
+        16
+      ],
+      "zephyrit:idle:sw:2": [
+        2,
+        16
+      ],
+      "zephyrit:idle:sw:3": [
+        2,
+        14
+      ],
+      "zephyrit:idle:sw:4": [
+        2,
+        14
+      ],
+      "zephyrit:idle:sw:5": [
+        2,
+        16
+      ],
+      "zephyrit:idle:w:0": [
+        4,
+        6
+      ],
+      "zephyrit:idle:w:1": [
+        6,
+        8
+      ],
+      "zephyrit:idle:w:2": [
+        6,
+        8
+      ],
+      "zephyrit:idle:w:3": [
+        6,
+        8
+      ],
+      "zephyrit:idle:w:4": [
+        6,
+        8
+      ],
+      "zephyrit:idle:w:5": [
+        6,
+        8
+      ],
+      "zephyrit:recovery:e:0": [
+        -2,
+        8
+      ],
+      "zephyrit:recovery:e:1": [
+        -2,
+        8
+      ],
+      "zephyrit:recovery:e:2": [
+        -4,
+        8
+      ],
+      "zephyrit:recovery:e:3": [
+        -6,
+        8
+      ],
+      "zephyrit:recovery:e:4": [
+        -6,
+        8
+      ],
+      "zephyrit:recovery:e:5": [
+        -6,
+        8
+      ],
+      "zephyrit:recovery:s:0": [
+        -2,
+        12
+      ],
+      "zephyrit:recovery:s:1": [
+        -2,
+        14
+      ],
+      "zephyrit:recovery:s:2": [
+        -2,
+        12
+      ],
+      "zephyrit:recovery:s:3": [
+        -2,
+        14
+      ],
+      "zephyrit:recovery:s:4": [
+        -2,
+        12
+      ],
+      "zephyrit:recovery:s:5": [
+        -2,
+        12
+      ],
+      "zephyrit:recovery:w:0": [
+        2,
+        8
+      ],
+      "zephyrit:recovery:w:1": [
+        2,
+        8
+      ],
+      "zephyrit:recovery:w:2": [
+        4,
+        8
+      ],
+      "zephyrit:recovery:w:3": [
+        6,
+        8
+      ],
+      "zephyrit:recovery:w:4": [
+        6,
+        8
+      ],
+      "zephyrit:recovery:w:5": [
+        6,
+        8
+      ],
+      "zephyrit:run:e:0": [
+        -4,
+        8
+      ],
+      "zephyrit:run:e:1": [
+        -4,
+        8
+      ],
+      "zephyrit:run:e:2": [
+        -4,
+        8
+      ],
+      "zephyrit:run:e:3": [
+        -4,
+        8
+      ],
+      "zephyrit:run:e:4": [
+        -4,
+        8
+      ],
+      "zephyrit:run:e:5": [
+        -4,
+        8
+      ],
+      "zephyrit:run:e:6": [
+        -4,
+        8
+      ],
+      "zephyrit:run:e:7": [
+        -4,
+        8
+      ],
+      "zephyrit:run:s:0": [
+        -2,
+        14
+      ],
+      "zephyrit:run:s:1": [
+        -2,
+        14
+      ],
+      "zephyrit:run:s:2": [
+        -2,
+        12
+      ],
+      "zephyrit:run:s:3": [
+        -2,
+        14
+      ],
+      "zephyrit:run:s:4": [
+        -2,
+        14
+      ],
+      "zephyrit:run:s:5": [
+        -2,
+        14
+      ],
+      "zephyrit:run:s:6": [
+        -2,
+        12
+      ],
+      "zephyrit:run:s:7": [
+        -2,
+        14
+      ],
+      "zephyrit:run:se:0": [
+        -2,
+        12
+      ],
+      "zephyrit:run:se:1": [
+        -2,
+        8
+      ],
+      "zephyrit:run:se:2": [
+        -2,
+        12
+      ],
+      "zephyrit:run:se:3": [
+        -2,
+        8
+      ],
+      "zephyrit:run:se:4": [
+        -2,
+        12
+      ],
+      "zephyrit:run:se:5": [
+        -2,
+        8
+      ],
+      "zephyrit:run:se:6": [
+        -2,
+        12
+      ],
+      "zephyrit:run:se:7": [
+        -2,
+        8
+      ],
+      "zephyrit:run:sw:0": [
+        2,
+        10
+      ],
+      "zephyrit:run:sw:1": [
+        0,
+        8
+      ],
+      "zephyrit:run:sw:2": [
+        0,
+        12
+      ],
+      "zephyrit:run:sw:3": [
+        0,
+        8
+      ],
+      "zephyrit:run:sw:4": [
+        2,
+        10
+      ],
+      "zephyrit:run:sw:5": [
+        0,
+        8
+      ],
+      "zephyrit:run:sw:6": [
+        0,
+        12
+      ],
+      "zephyrit:run:sw:7": [
+        0,
+        8
+      ],
+      "zephyrit:run:w:0": [
+        4,
+        8
+      ],
+      "zephyrit:run:w:1": [
+        4,
+        8
+      ],
+      "zephyrit:run:w:2": [
+        4,
+        8
+      ],
+      "zephyrit:run:w:3": [
+        4,
+        8
+      ],
+      "zephyrit:run:w:4": [
+        4,
+        8
+      ],
+      "zephyrit:run:w:5": [
+        4,
+        8
+      ],
+      "zephyrit:run:w:6": [
+        4,
+        8
+      ],
+      "zephyrit:run:w:7": [
+        4,
+        8
+      ],
+      "zephyrit:sleep:e:0": [
+        -2,
+        8
+      ],
+      "zephyrit:sleep:e:1": [
+        -2,
+        8
+      ],
+      "zephyrit:sleep:e:2": [
+        -2,
+        8
+      ],
+      "zephyrit:sleep:e:3": [
+        -2,
+        8
+      ],
+      "zephyrit:sleep:s:0": [
+        2,
+        6
+      ],
+      "zephyrit:sleep:s:1": [
+        2,
+        8
+      ],
+      "zephyrit:sleep:s:2": [
+        2,
+        8
+      ],
+      "zephyrit:sleep:s:3": [
+        2,
+        6
+      ],
+      "zephyrit:sleep:w:0": [
+        2,
+        8
+      ],
+      "zephyrit:sleep:w:1": [
+        2,
+        8
+      ],
+      "zephyrit:sleep:w:2": [
+        2,
+        8
+      ],
+      "zephyrit:sleep:w:3": [
+        2,
+        8
+      ],
+      "zephyrit:social:e:0": [
+        -6,
+        8
+      ],
+      "zephyrit:social:e:1": [
+        -6,
+        6
+      ],
+      "zephyrit:social:e:2": [
+        -6,
+        6
+      ],
+      "zephyrit:social:e:3": [
+        -6,
+        10
+      ],
+      "zephyrit:social:e:4": [
+        -6,
+        10
+      ],
+      "zephyrit:social:e:5": [
+        -6,
+        8
+      ],
+      "zephyrit:social:s:0": [
+        -2,
+        12
+      ],
+      "zephyrit:social:s:1": [
+        2,
+        12
+      ],
+      "zephyrit:social:s:2": [
+        2,
+        12
+      ],
+      "zephyrit:social:s:3": [
+        -4,
+        12
+      ],
+      "zephyrit:social:s:4": [
+        -4,
+        12
+      ],
+      "zephyrit:social:s:5": [
+        -2,
+        12
+      ],
+      "zephyrit:social:w:0": [
+        6,
+        8
+      ],
+      "zephyrit:social:w:1": [
+        6,
+        10
+      ],
+      "zephyrit:social:w:2": [
+        6,
+        10
+      ],
+      "zephyrit:social:w:3": [
+        6,
+        6
+      ],
+      "zephyrit:social:w:4": [
+        6,
+        6
+      ],
+      "zephyrit:social:w:5": [
+        6,
+        8
+      ],
+      "zephyrit:strike:e:0": [
+        -6,
+        8
+      ],
+      "zephyrit:strike:e:1": null,
+      "zephyrit:strike:e:10": [
+        -6,
+        8
+      ],
+      "zephyrit:strike:e:11": [
+        -6,
+        8
+      ],
+      "zephyrit:strike:e:2": [
+        -6,
+        8
+      ],
+      "zephyrit:strike:e:3": [
+        -2,
+        8
+      ],
+      "zephyrit:strike:e:4": [
+        -2,
+        8
+      ],
+      "zephyrit:strike:e:5": [
+        -2,
+        8
+      ],
+      "zephyrit:strike:e:6": [
+        -2,
+        8
+      ],
+      "zephyrit:strike:e:7": [
+        -2,
+        8
+      ],
+      "zephyrit:strike:e:8": [
+        -4,
+        10
+      ],
+      "zephyrit:strike:e:9": [
+        -4,
+        8
+      ],
+      "zephyrit:strike:s:0": [
+        -2,
+        12
+      ],
+      "zephyrit:strike:s:1": [
+        -2,
+        12
+      ],
+      "zephyrit:strike:s:10": [
+        -2,
+        10
+      ],
+      "zephyrit:strike:s:11": [
+        -2,
+        12
+      ],
+      "zephyrit:strike:s:2": [
+        -2,
+        12
+      ],
+      "zephyrit:strike:s:3": [
+        -2,
+        8
+      ],
+      "zephyrit:strike:s:4": [
+        -2,
+        8
+      ],
+      "zephyrit:strike:s:5": [
+        -2,
+        8
+      ],
+      "zephyrit:strike:s:6": [
+        -2,
+        8
+      ],
+      "zephyrit:strike:s:7": [
+        -2,
+        8
+      ],
+      "zephyrit:strike:s:8": [
+        -2,
+        8
+      ],
+      "zephyrit:strike:s:9": [
+        -2,
+        12
+      ],
+      "zephyrit:strike:se:0": [
+        -2,
+        12
+      ],
+      "zephyrit:strike:se:1": [
+        -2,
+        10
+      ],
+      "zephyrit:strike:se:10": [
+        -2,
+        12
+      ],
+      "zephyrit:strike:se:11": [
+        -2,
+        8
+      ],
+      "zephyrit:strike:se:2": [
+        -4,
+        8
+      ],
+      "zephyrit:strike:se:3": [
+        -2,
+        8
+      ],
+      "zephyrit:strike:se:4": [
+        -2,
+        8
+      ],
+      "zephyrit:strike:se:5": [
+        -2,
+        10
+      ],
+      "zephyrit:strike:se:6": [
+        -2,
+        12
+      ],
+      "zephyrit:strike:se:7": [
+        -4,
+        10
+      ],
+      "zephyrit:strike:se:8": [
+        -2,
+        12
+      ],
+      "zephyrit:strike:se:9": [
+        -2,
+        8
+      ],
+      "zephyrit:strike:sw:0": [
+        2,
+        16
+      ],
+      "zephyrit:strike:sw:1": [
+        2,
+        10
+      ],
+      "zephyrit:strike:sw:10": [
+        0,
+        12
+      ],
+      "zephyrit:strike:sw:11": [
+        2,
+        16
+      ],
+      "zephyrit:strike:sw:2": [
+        2,
+        8
+      ],
+      "zephyrit:strike:sw:3": [
+        2,
+        10
+      ],
+      "zephyrit:strike:sw:4": [
+        2,
+        10
+      ],
+      "zephyrit:strike:sw:5": [
+        2,
+        8
+      ],
+      "zephyrit:strike:sw:6": [
+        2,
+        10
+      ],
+      "zephyrit:strike:sw:7": [
+        2,
+        10
+      ],
+      "zephyrit:strike:sw:8": [
+        0,
+        12
+      ],
+      "zephyrit:strike:sw:9": [
+        2,
+        10
+      ],
+      "zephyrit:strike:w:0": [
+        6,
+        8
+      ],
+      "zephyrit:strike:w:1": [
+        6,
+        6
+      ],
+      "zephyrit:strike:w:10": [
+        6,
+        8
+      ],
+      "zephyrit:strike:w:11": [
+        4,
+        6
+      ],
+      "zephyrit:strike:w:2": [
+        6,
+        8
+      ],
+      "zephyrit:strike:w:3": [
+        2,
+        8
+      ],
+      "zephyrit:strike:w:4": [
+        2,
+        8
+      ],
+      "zephyrit:strike:w:5": [
+        2,
+        8
+      ],
+      "zephyrit:strike:w:6": [
+        2,
+        8
+      ],
+      "zephyrit:strike:w:7": [
+        2,
+        8
+      ],
+      "zephyrit:strike:w:8": [
+        4,
+        8
+      ],
+      "zephyrit:strike:w:9": [
+        4,
+        8
+      ],
+      "zephyrit:walk:e:0": [
+        -4,
+        8
+      ],
+      "zephyrit:walk:e:1": [
+        -4,
+        8
+      ],
+      "zephyrit:walk:e:2": [
+        -4,
+        8
+      ],
+      "zephyrit:walk:e:3": [
+        -4,
+        8
+      ],
+      "zephyrit:walk:e:4": [
+        -4,
+        8
+      ],
+      "zephyrit:walk:e:5": [
+        -4,
+        8
+      ],
+      "zephyrit:walk:e:6": [
+        -4,
+        8
+      ],
+      "zephyrit:walk:e:7": [
+        -4,
+        8
+      ],
+      "zephyrit:walk:s:0": [
+        -2,
+        14
+      ],
+      "zephyrit:walk:s:1": [
+        -2,
+        14
+      ],
+      "zephyrit:walk:s:2": [
+        -2,
+        14
+      ],
+      "zephyrit:walk:s:3": [
+        -2,
+        14
+      ],
+      "zephyrit:walk:s:4": [
+        -2,
+        14
+      ],
+      "zephyrit:walk:s:5": [
+        -2,
+        14
+      ],
+      "zephyrit:walk:s:6": [
+        -2,
+        14
+      ],
+      "zephyrit:walk:s:7": [
+        -2,
+        14
+      ],
+      "zephyrit:walk:se:0": [
+        -2,
+        10
+      ],
+      "zephyrit:walk:se:1": [
+        -2,
+        8
+      ],
+      "zephyrit:walk:se:2": [
+        -2,
+        12
+      ],
+      "zephyrit:walk:se:3": [
+        -2,
+        8
+      ],
+      "zephyrit:walk:se:4": [
+        -2,
+        10
+      ],
+      "zephyrit:walk:se:5": [
+        -2,
+        8
+      ],
+      "zephyrit:walk:se:6": [
+        -2,
+        12
+      ],
+      "zephyrit:walk:se:7": [
+        -2,
+        8
+      ],
+      "zephyrit:walk:sw:0": [
+        0,
+        10
+      ],
+      "zephyrit:walk:sw:1": [
+        0,
+        8
+      ],
+      "zephyrit:walk:sw:2": [
+        0,
+        12
+      ],
+      "zephyrit:walk:sw:3": [
+        0,
+        8
+      ],
+      "zephyrit:walk:sw:4": [
+        0,
+        10
+      ],
+      "zephyrit:walk:sw:5": [
+        0,
+        8
+      ],
+      "zephyrit:walk:sw:6": [
+        0,
+        12
+      ],
+      "zephyrit:walk:sw:7": [
+        0,
+        8
+      ],
+      "zephyrit:walk:w:0": [
+        4,
+        8
+      ],
+      "zephyrit:walk:w:1": [
+        4,
+        8
+      ],
+      "zephyrit:walk:w:2": [
+        4,
+        8
+      ],
+      "zephyrit:walk:w:3": [
+        4,
+        8
+      ],
+      "zephyrit:walk:w:4": [
+        4,
+        8
+      ],
+      "zephyrit:walk:w:5": [
+        4,
+        8
+      ],
+      "zephyrit:walk:w:6": [
+        4,
+        8
+      ],
+      "zephyrit:walk:w:7": [
+        4,
+        8
+      ],
+      "zephyrit:work:e:0": [
+        -2,
+        8
+      ],
+      "zephyrit:work:e:1": [
+        -2,
+        8
+      ],
+      "zephyrit:work:e:2": [
+        -2,
+        8
+      ],
+      "zephyrit:work:e:3": [
+        -2,
+        8
+      ],
+      "zephyrit:work:e:4": [
+        -2,
+        8
+      ],
+      "zephyrit:work:e:5": [
+        -2,
+        8
+      ],
+      "zephyrit:work:s:0": [
+        -2,
+        16
+      ],
+      "zephyrit:work:s:1": [
+        -2,
+        16
+      ],
+      "zephyrit:work:s:2": [
+        -2,
+        16
+      ],
+      "zephyrit:work:s:3": [
+        -2,
+        16
+      ],
+      "zephyrit:work:s:4": [
+        -2,
+        16
+      ],
+      "zephyrit:work:s:5": [
+        -2,
+        16
+      ],
+      "zephyrit:work:w:0": [
+        2,
+        8
+      ],
+      "zephyrit:work:w:1": [
+        2,
+        8
+      ],
+      "zephyrit:work:w:2": [
+        2,
+        8
+      ],
+      "zephyrit:work:w:3": [
+        2,
+        8
+      ],
+      "zephyrit:work:w:4": [
+        2,
+        8
+      ],
+      "zephyrit:work:w:5": [
+        2,
+        6
+      ]
+    },
+    "rule": "a frame listed in eyesOnly uses the compact/ decals at that offset; otherwise frames[id] is the full-decal offset, null hides the face",
+    "unit": "frame px from Socket_Head, added to the decal anchor. Horizontal offsets are per facing, already mirrored."
+  },
+  "schemaVersion": 1,
+  "scope": [
+    "faces"
+  ],
+  "socket": "Socket_Head"
+}

@@ -1,0 +1,37 @@
+{
+  "asset": "item:shortbow",
+  "kind": "item",
+  "ramps": {
+    "stave": "wood",
+    "grip": "leather",
+    "string": "linen",
+    "tips": "iron"
+  },
+  "gen3d": {
+    "seed": 1234,
+    "steps": 50
+  },
+  "orient": {
+    "lengthArtPx": 17,
+    "gripFraction": 0.47,
+    "minFeaturePx": 2.7
+  },
+  "item": {
+    "model": "auto",
+    "grip": "auto",
+    "socket": "Socket_Hand.R",
+    "iconPivot": "auto",
+    "iconScale": "auto"
+  },
+  "concept": {
+    "template": "prop-v1",
+    "fields": {
+      "object": "recurve wooden shortbow with reinforced leather center grip and braided string",
+      "owner": "an Aqualia river scout",
+      "materials": "curved yew wood bow stave with gentle recurve tips, wrapped leather center handle, taut linen bowstring, small iron tip nocks",
+      "scale": "compact shortbow, about 1.0 m unstrung"
+    },
+    "references": []
+  },
+  "notes": "T0 combat weapon (B22). Length 18 px, compact recurve shortbow."
+}

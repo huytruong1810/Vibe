@@ -133,10 +133,10 @@ test('art review is independent of Ollama and preserves missing identities and f
   await expect(page.locator('#art-status')).toContainText('missing');
   await expect(page.locator('#art-frame-label')).toHaveText('No frames for this selection');
   await page.getByLabel('Asset group').selectOption('npc');
-  await page.getByLabel('Identity', { exact: true }).selectOption('npc:npc:neris');
+  await page.getByLabel('Identity', { exact: true }).selectOption('npc:npc:vulkan');
   await expect(page.locator('#art-status')).toContainText('missing identity artwork');
-  await expect(page.locator('#art-metadata')).toContainText('npc:neris');
-  await page.screenshot({ path: 'artifacts/hd-gallery-missing-neris.png', fullPage: true });
+  await expect(page.locator('#art-metadata')).toContainText('npc:vulkan');
+  await page.screenshot({ path: 'artifacts/hd-gallery-missing-vulkan.png', fullPage: true });
   expect(inferenceRequests).toBe(0);
   expect(errors).toEqual([]);
 });
@@ -195,9 +195,9 @@ test('environment and item frames retain static bounds without inventing directi
   await page.getByLabel('Identity', { exact: true }).selectOption('environment:tree_oak');
   await expect(page.locator('#art-frame-label')).toContainText('Static frame');
   await expect(page.locator('#art-frame')).toHaveAttribute('aria-busy', 'false');
-  await expect(page.locator('#art-status')).toContainText('visual approval is separate');
-  await expect(page.locator('#art-metadata')).toContainText('128 × 160 pixels');
-  await expect(page.locator('#art-metadata')).toContainText('0.5, 0.94 (normalized)');
+  await expect(page.locator('#art-status')).toContainText('native HD source');
+  await expect(page.locator('#art-metadata')).toContainText('256 × 284 pixels');
+  await expect(page.locator('#art-metadata')).toContainText('0.5, 0.9718 (normalized)');
   await expect(page.getByRole('heading', { name: 'Static asset registration' })).toBeVisible();
   await expect(page.getByLabel('Static asset comparison').locator('figure:visible')).toHaveCount(1);
   await expect(page.getByLabel('Facing', { exact: true })).toBeDisabled();

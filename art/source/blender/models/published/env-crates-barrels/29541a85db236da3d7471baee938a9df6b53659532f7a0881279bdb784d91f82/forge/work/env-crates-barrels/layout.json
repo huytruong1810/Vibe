@@ -1,0 +1,45 @@
+{
+  "asset": "env:crates-barrels",
+  "stage": "layout",
+  "inputsDigest": "505a0821f6788fafaabc679d109b8530163e52b469f5516e2f1878d17379942d",
+  "inputs": [
+    "art/source/forge/work/env-crates-barrels/texture.blend",
+    "art/source/forge/work/env-crates-barrels/layout_params.json",
+    "art/source/forge/blender/env_layout.py"
+  ],
+  "outputs": {
+    "art/source/forge/work/env-crates-barrels/layout/base.blend": "b9d2b34b2147c29c7bb9ddc1167d1a173e1472abff48b7b554a74e42f2bfb5ef",
+    "art/source/forge/work/env-crates-barrels/layout_preview.png": "30726b8e4083d03fed7a74b1a28233f1bd14d71468bd47bafba55eddec5cd917"
+  },
+  "extra": {
+    "scale": 0.061022,
+    "heightUnits": 1.0089,
+    "contactDepthTiles": 0.915,
+    "footprint": [
+      1,
+      1
+    ],
+    "canvas": {
+      "size": [
+        64,
+        56
+      ],
+      "anchor": [
+        32,
+        52
+      ]
+    },
+    "rootPivot": [
+      0.0,
+      -0.5,
+      0.0
+    ],
+    "layers": [
+      "base"
+    ],
+    "faces": {
+      "base": 14000
+    }
+  },
+  "at": "2026-11-05T10:46:23Z"
+}

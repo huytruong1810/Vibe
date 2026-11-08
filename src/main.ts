@@ -122,7 +122,7 @@ export class GameBootstrap {
       export: () => this.exportSave(),
       import: async (file) => {
         await this.requireConnection();
-        await this.bridge.restore(this.repository.import(await file.text()));
+        await this.restoreWithWorld(this.repository.import(await file.text()));
         await this.bridge.send({ type: 'configureContext', settings: this.contextSettings });
         await this.save();
       },
@@ -247,6 +247,12 @@ export class GameBootstrap {
         __hearthwild: {
           command: (command: CommandPayload) => this.bridge.send(command),
           checkpoint: () => this.bridge.checkpoint(),
+          restore: (save: Parameters<WorkerBridge['restore']>[0]) => this.bridge.restore(save),
+          initialize: (
+            seed: number,
+            origin: number,
+            options?: Parameters<WorkerBridge['initialize']>[2],
+          ) => this.bridge.initialize(seed, origin, options),
           frame: () => this.frame,
           stats: () => ({ ...this.renderer.stats, hudMs: this.hudMs }),
           bookDiagnostics: () => this.bridge.diagnosticReceipt(),
@@ -329,19 +335,11 @@ export class GameBootstrap {
       const saved = await this.repository.restore();
       if (!saved)
         throw new Error('There is no saved journey in this browser yet. Begin a new journey.');
-      await this.bridge.restore(saved);
+      await this.restoreWithWorld(saved);
     } else {
-      let compiledWorld: unknown = undefined;
-      if (options.authored) {
-        try {
-          const res = await fetch(appUrl('assets/generated/aqualia-region.json'));
-          if (res.ok) compiledWorld = await res.json();
-        } catch {
-          /* fallback to procedural */
-        }
-      }
+      const compiledWorld = await this.fetchAuthoredWorld();
       await this.bridge.initialize(options.seed, options.origin, {
-        worldSource: options.authored && compiledWorld ? 'authored' : 'procedural',
+        worldSource: 'authored',
         compiledWorld,
       });
     }
@@ -546,6 +544,17 @@ export class GameBootstrap {
         this.paintingProgress.delete(id);
       }
   }
+  private async fetchAuthoredWorld(): Promise<unknown> {
+    const res = await fetch(appUrl('assets/generated/aqualia-region.json'));
+    if (!res.ok) {
+      throw new Error(`Failed to load authored world (aqualia-region.json): HTTP ${res.status}`);
+    }
+    return await res.json();
+  }
+  private async restoreWithWorld(saved: Parameters<WorkerBridge['restore']>[0]): Promise<void> {
+    const compiledWorld = await this.fetchAuthoredWorld();
+    await this.bridge.restore(saved, compiledWorld);
+  }
   private async save(): Promise<void> {
     await this.bridge.persistCheckpoint();
   }
@@ -553,7 +562,7 @@ export class GameBootstrap {
     await this.requireConnection();
     const saved = await this.repository.restore();
     if (!saved) throw new Error('No saved journey found');
-    await this.bridge.restore(saved);
+    await this.restoreWithWorld(saved);
     await this.bridge.send({ type: 'configureContext', settings: this.contextSettings });
   }
   private async exportSave(): Promise<void> {
@@ -565,110 +574,137 @@ export class GameBootstrap {
     link.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
+  private readonly inputController = new AbortController();
+  private resizeObserver: ResizeObserver | null = null;
   private send(command: CommandPayload): void {
     void this.hud.command(command);
   }
   private bindInput(): void {
-    window.addEventListener('keydown', (event) => {
-      const target = event.target as HTMLElement;
-      if (
-        (event.key === ' ' || event.key === 'Enter') &&
-        target.closest('button,a,summary,[role="tab"]')
-      )
-        return;
-      if (
-        target.matches('input, textarea, select') ||
-        event.metaKey ||
-        event.ctrlKey ||
-        event.altKey
-      )
-        return;
-      const key = event.key.toLowerCase();
-      if ([' ', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright'].includes(key))
-        event.preventDefault();
-      if (key === 'escape') {
-        if (!this.hud.closeOverlay()) this.hud.openMenu('settings-dialog');
-        return;
-      }
-      if (key === 'p') {
-        this.hud.intent({ type: 'toggle', overlay: 'companion' });
-        return;
-      }
-      if (this.hud.inputBlocked || !this.frame || event.repeat) return;
-      this.keys.add(key);
-      this.updateMovement();
-      if (key === 'e') {
-        const interaction = nearestInteraction(this.frame);
-        if (interaction.kind === 'portal') {
-          if (interaction.portal.allowed) void this.enterPortal(interaction.portal.id);
-          else
-            this.hud.notify(
-              interaction.portal.reason ?? 'That doorway is not currently accessible.',
-            );
-        } else if (interaction.kind === 'furniture')
-          void this.useFurniture(interaction.prop.id, interaction.prop.interaction === 'equip');
-        else if (interaction.kind === 'npc')
-          this.send({ type: 'interact', npcId: interaction.npc.profileId });
-        else this.send({ type: 'harvest' });
-      }
-      if (key === 'r') this.send({ type: 'harvest' });
-      if (key === 'c') this.send({ type: 'combine' });
-      if (key === 'q') this.send({ type: 'swap' });
-      if (key === '1' || key === '2') this.hud.useItem(key === '1' ? 0 : 1);
-      if (key === 'j' || key === 'k')
-        this.send({ type: 'attack', kind: key === 'j' ? 'strike' : 'element' });
-      if (key === ' ') this.send({ type: 'dash' });
-      if (key === 'g') this.updateGuard();
-      if (key === 'm') this.hud.openMenu('map-dialog');
-      if (key === 'i') this.hud.intent({ type: 'toggle', overlay: 'inventory' });
-      if (key === 'f' && !this.hud.inspectText())
-        this.hud.intent({ type: 'toggle', overlay: 'inspection' });
-      if (key === 'l') this.hud.intent({ type: 'toggle', overlay: 'journal' });
-    });
-    window.addEventListener('keyup', (event) => {
-      this.keys.delete(event.key.toLowerCase());
-      this.updateMovement();
-      this.updateGuard();
-    });
-    window.addEventListener('blur', () => {
-      this.keys.clear();
-      this.updateMovement();
-      this.updateGuard();
-    });
-    document.addEventListener('visibilitychange', () => {
-      this.keys.clear();
-      this.updateMovement();
-      this.updateGuard();
-      if (this.frame) this.send({ type: document.hidden ? 'pause' : 'resume', token: 'hidden' });
-    });
-    this.hud.gameElement.addEventListener('click', (event) => {
-      const canvas = this.renderer.app.canvas,
-        bounds = canvas.getBoundingClientRect();
-      if (!this.frame || this.hud.inputBlocked) return;
-      if (
-        event.clientX < bounds.left ||
-        event.clientY < bounds.top ||
-        event.clientX > bounds.right ||
-        event.clientY > bounds.bottom
-      )
-        return;
-      const picked = this.renderer.pickActor(event.clientX, event.clientY);
-      const creature = this.frame.creatures.find((c) => c.id === picked);
-      if (creature) this.hud.selectCreature(creature.id);
-      else {
-        const npc = this.frame.npcs.find((n) => n.entityId === picked);
-        if (npc) {
-          this.renderer.select(npc.entityId);
-          this.hud.showPanel('people');
+    const signal = this.inputController.signal;
+    window.addEventListener(
+      'keydown',
+      (event) => {
+        const target = event.target as HTMLElement;
+        if (
+          (event.key === ' ' || event.key === 'Enter') &&
+          target.closest('button,a,summary,[role="tab"]')
+        )
+          return;
+        if (
+          target.matches('input, textarea, select') ||
+          event.metaKey ||
+          event.ctrlKey ||
+          event.altKey
+        )
+          return;
+        const key = event.key.toLowerCase();
+        if ([' ', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright'].includes(key))
+          event.preventDefault();
+        if (key === 'escape') {
+          event.preventDefault();
+          if (!this.hud.closeOverlay()) this.hud.openMenu('settings-dialog');
+          return;
         }
-      }
-    });
+        if (key === 'p') {
+          this.hud.intent({ type: 'toggle', overlay: 'companion' });
+          return;
+        }
+        if (this.hud.inputBlocked || !this.frame || event.repeat) return;
+        this.keys.add(key);
+        this.updateMovement();
+        if (key === 'e') {
+          const interaction = nearestInteraction(this.frame);
+          if (interaction.kind === 'portal') {
+            if (interaction.portal.allowed) void this.enterPortal(interaction.portal.id);
+            else
+              this.hud.notify(
+                interaction.portal.reason ?? 'That doorway is not currently accessible.',
+              );
+          } else if (interaction.kind === 'furniture')
+            void this.useFurniture(interaction.prop.id, interaction.prop.interaction === 'equip');
+          else if (interaction.kind === 'npc')
+            this.send({ type: 'interact', npcId: interaction.npc.profileId });
+          else this.send({ type: 'harvest' });
+        }
+        if (key === 'r') this.send({ type: 'harvest' });
+        if (key === 'c') this.send({ type: 'combine' });
+        if (key === 'q') this.send({ type: 'swap' });
+        if (key === '1' || key === '2') this.hud.useItem(key === '1' ? 0 : 1);
+        if (key === 'j' || key === 'k')
+          this.send({ type: 'attack', kind: key === 'j' ? 'strike' : 'element' });
+        if (key === ' ') this.send({ type: 'dash' });
+        if (key === 'g') this.updateGuard();
+        if (key === 'm') this.hud.openMenu('map-dialog');
+        if (key === 'i') this.hud.intent({ type: 'toggle', overlay: 'inventory' });
+        if (key === 'f' && !this.hud.inspectText())
+          this.hud.intent({ type: 'toggle', overlay: 'inspection' });
+        if (key === 'l') this.hud.intent({ type: 'toggle', overlay: 'journal' });
+      },
+      { signal },
+    );
+    window.addEventListener(
+      'keyup',
+      (event) => {
+        this.keys.delete(event.key.toLowerCase());
+        this.updateMovement();
+        this.updateGuard();
+      },
+      { signal },
+    );
+    window.addEventListener(
+      'blur',
+      () => {
+        this.keys.clear();
+        this.updateMovement();
+        this.updateGuard();
+      },
+      { signal },
+    );
+    document.addEventListener(
+      'visibilitychange',
+      () => {
+        this.keys.clear();
+        this.updateMovement();
+        this.updateGuard();
+        if (this.frame) this.send({ type: document.hidden ? 'pause' : 'resume', token: 'hidden' });
+      },
+      { signal },
+    );
+    this.hud.gameElement.addEventListener(
+      'click',
+      (event) => {
+        const canvas = this.renderer.app.canvas,
+          bounds = canvas.getBoundingClientRect();
+        if (!this.frame || this.hud.inputBlocked) return;
+        if (
+          event.clientX < bounds.left ||
+          event.clientY < bounds.top ||
+          event.clientX > bounds.right ||
+          event.clientY > bounds.bottom
+        )
+          return;
+        const picked = this.renderer.pickActor(event.clientX, event.clientY);
+        const creature = this.frame.creatures.find((c) => c.id === picked);
+        if (creature) this.hud.selectCreature(creature.id);
+        else {
+          const npc = this.frame.npcs.find((n) => n.entityId === picked);
+          if (npc) {
+            this.renderer.select(npc.entityId);
+            this.hud.showPanel('people');
+          }
+        }
+      },
+      { signal },
+    );
     const resize = new ResizeObserver(() => {
       if (!this.renderer.app.canvas) return;
       this.renderer.fit(this.hud.gameElement.clientWidth, this.hud.gameElement.clientHeight);
     });
-    void this.rendererReady.then(() => resize.observe(this.hud.gameElement));
-    window.addEventListener('pagehide', () => this.dispose(), { once: true });
+    this.resizeObserver = resize;
+    void this.rendererReady.then(() => {
+      if (!signal.aborted) resize.observe(this.hud.gameElement);
+    });
+    window.addEventListener('pagehide', () => this.dispose(), { once: true, signal });
   }
   private updateMovement(): void {
     if (!this.frame) return;
@@ -724,6 +760,9 @@ export class GameBootstrap {
       this.hud.openInventory();
   }
   dispose(): void {
+    this.inputController.abort();
+    this.resizeObserver?.disconnect();
+    this.resizeObserver = null;
     clearInterval(this.autoSave);
     this.inference?.dispose();
     void this.gpu?.dispose().catch(() => {});

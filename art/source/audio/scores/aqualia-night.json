@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "title": "Aqualia Night (Canal Village Night Theme)",
+  "composer": "communicator",
+  "doctrine": ["AUD-1", "AUD-3.2", "AUD-4.1"],
+  "bpm": 92,
+  "timeSig": [6, 8],
+  "key": "D Lydian",
+  "loop": true,
+  "notes": "6/8 tranquil night theme in D Lydian sharing 92 BPM and four stems with Day: mellow pulse lead, harp arpeggios, nocturnal chimes, strings pad, soft brushed pulse, quoting bars 1-2 of Hearthwild motif exactly.",
+  "tracks": [
+    {
+      "name": "melody",
+      "instrument": "pulse25",
+      "stem": "melody",
+      "volume": 0.32,
+      "notes": "D5:1 E5:0.5 F#5:0.5 A5:1 | G5:0.5 F#5:0.5 E5:0.5 D5:1 B4:0.5 | F#5:1.5 A5:1.5 | F#5:1.5 r:1.5 | D5:1 E5:0.5 F#5:0.5 G#5:0.5 A5:0.5 | B5:0.5 C#6:0.5 B5:0.5 A5:1.5 | F#5:1 E5:0.5 D5:1 C#5:0.5 | D5:3"
+    },
+    {
+      "name": "harp",
+      "instrument": "harp",
+      "stem": "colour",
+      "volume": 0.35,
+      "notes": "D4:0.5 A4:0.5 D5:0.5 F#5:0.5 A4:0.5 D5:0.5 | G3:0.5 D4:0.5 G4:0.5 B4:0.5 D5:0.5 G4:0.5 | F#3:0.5 C#4:0.5 F#4:0.5 A4:0.5 C#5:0.5 A4:0.5 | A3:0.5 E4:0.5 A4:0.5 C#5:0.5 E4:0.5 A4:0.5 | D4:0.5 A4:0.5 D5:0.5 F#5:0.5 G#4:0.5 A4:0.5 | E3:0.5 B3:0.5 E4:0.5 G#4:0.5 B4:0.5 E5:0.5 | A3:0.5 E4:0.5 A4:0.5 C#5:0.5 A4:0.5 E4:0.5 | D4:0.5 F#4:0.5 A4:0.5 D5:1.5"
+    },
+    {
+      "name": "bell",
+      "instrument": "bell",
+      "stem": "colour",
+      "volume": 0.28,
+      "notes": "r:1.5 A5:1.5 | r:1.5 B4:1.5 | r:1.5 C#6:1.5 | r:1.5 A5:1.5 | r:1.5 A5:1.5 | r:1.5 G#5:1.5 | r:1.5 C#6:0.5 B5:0.5 A5:0.5 | F#5:1.5 D5:1.5"
+    },
+    {
+      "name": "strings",
+      "instrument": "strings",
+      "stem": "colour",
+      "volume": 0.22,
+      "notes": "D4+F#4+A4:3 | G3+B3+D4:3 | F#4+A4+C#5:3 | E4+A4+C#5:3 | D4+F#4+A4:3 | E4+G#4+B4:3 | E4+A4+C#5:3 | D4+F#4+A4:3"
+    },
+    {
+      "name": "bass",
+      "instrument": "triangle",
+      "stem": "base",
+      "volume": 0.4,
+      "notes": "D3:1.5 A2:1.5 | G2:1.5 D3:1.5 | F#2:1.5 C#3:1.5 | A2:1.5 E3:1.5 | D3:1.5 A2:1.5 | E3:1.5 B2:1.5 | A2:1.5 E3:1.5 | D3:3"
+    },
+    {
+      "name": "percussion",
+      "instrument": "noise",
+      "stem": "percussion",
+      "volume": 0.1,
+      "notes": "h:0.5 r:1 h:0.5 r:1 | h:0.5 r:1 h:0.5 r:1 | h:0.5 r:1 h:0.5 r:1 | h:0.5 r:1 h:0.5 r:1 | h:0.5 r:1 h:0.5 r:1 | h:0.5 r:1 h:0.5 r:1 | h:0.5 r:1 h:0.5 r:1 | r:3"
+    }
+  ]
+}

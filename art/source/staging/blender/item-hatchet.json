@@ -1,0 +1,1660 @@
+{
+  "approvalRecord": "docs/team/comms/director/approvals/item-hatchet--2026-11-05-item-hatchet.md",
+  "approvalSha256": "9e92c255f2ca5fa5fb697b48cc2d6969bdab879f312b420f33c8547e648c7ab4",
+  "asset": "item:hatchet",
+  "authoringProvenance": {
+    "command": "uv run --project art/source/forge python art/source/forge/forge.py publish --asset item:hatchet",
+    "id": "forge-item-hatchet",
+    "inputs": [
+      {
+        "path": "blender/models/published/item-hatchet/e5699fb15e810961489721b9e710fd91313f8b332f9ed215962800dcf363cbea/forge/blender/bake.py",
+        "role": "script",
+        "sha256": "aa29c174173b26ed78840fbe07dd7c3bbd11c2c41015556cfa01d5a6a2cc1cf9"
+      },
+      {
+        "path": "blender/models/published/item-hatchet/e5699fb15e810961489721b9e710fd91313f8b332f9ed215962800dcf363cbea/forge/blender/item_orient.py",
+        "role": "script",
+        "sha256": "8a27e1389c7bf96b9a6e47aa80a7e7d3af1caf5310cdad402bd81c17a1238599"
+      },
+      {
+        "path": "blender/models/published/item-hatchet/e5699fb15e810961489721b9e710fd91313f8b332f9ed215962800dcf363cbea/forge/forge.py",
+        "role": "script",
+        "sha256": "1a916c3c75af60a291bdfb1129f283d867e8c1b698e4e156efa4b50c7e472629"
+      },
+      {
+        "path": "blender/models/published/item-hatchet/e5699fb15e810961489721b9e710fd91313f8b332f9ed215962800dcf363cbea/forge/forgelib/item_orient.py",
+        "role": "script",
+        "sha256": "ed949856992b519c0af5631cb748405adae566fee90bc5bb4e9f999f912e476d"
+      },
+      {
+        "path": "blender/models/published/item-hatchet/e5699fb15e810961489721b9e710fd91313f8b332f9ed215962800dcf363cbea/forge/forgelib/item_render.py",
+        "role": "script",
+        "sha256": "3290c864b563263170efcc626acce2a1dc88141d320d9cf186f5bc48b3e6f2d0"
+      },
+      {
+        "path": "blender/models/published/item-hatchet/e5699fb15e810961489721b9e710fd91313f8b332f9ed215962800dcf363cbea/forge/forgelib/items.py",
+        "role": "script",
+        "sha256": "22221017285c31c893c28260a13caf407e646913c63e32ad723c8671f1a9d84c"
+      },
+      {
+        "path": "blender/models/published/item-hatchet/e5699fb15e810961489721b9e710fd91313f8b332f9ed215962800dcf363cbea/forge/forgelib/pixelize.py",
+        "role": "script",
+        "sha256": "6c3c06e5a091ef2693bd83bdff4c167b0372cd97cc6dcc01a7ffad84f246f3f7"
+      },
+      {
+        "path": "blender/models/published/item-hatchet/e5699fb15e810961489721b9e710fd91313f8b332f9ed215962800dcf363cbea/forge/forgelib/publish.py",
+        "role": "script",
+        "sha256": "2963b6c95098f03aadf7fffe21507c8b3aa6b4fb4d13e657a9b7921e761ba629"
+      },
+      {
+        "path": "blender/models/published/item-hatchet/e5699fb15e810961489721b9e710fd91313f8b332f9ed215962800dcf363cbea/forge/recipes/item-hatchet.json",
+        "role": "pose-config",
+        "sha256": "2d4b4e55100f586224d3452e6b57fe35ed1353454f2a2cc1637cabd60f402c95"
+      },
+      {
+        "path": "blender/models/published/item-hatchet/e5699fb15e810961489721b9e710fd91313f8b332f9ed215962800dcf363cbea/forge/spec/palette.json",
+        "role": "palette",
+        "sha256": "be64ab56d27d966ce3fe92bb7b014ff34b83094bbf5cc20e08a432c66bc9039a"
+      },
+      {
+        "path": "blender/models/published/item-hatchet/e5699fb15e810961489721b9e710fd91313f8b332f9ed215962800dcf363cbea/forge/spec/render_spec.json",
+        "role": "pose-config",
+        "sha256": "50283fdbef98e07ddd39bfe29d9345d896f0b8325e419a80a00c5e95b0fce976"
+      },
+      {
+        "path": "blender/models/published/item-hatchet/e5699fb15e810961489721b9e710fd91313f8b332f9ed215962800dcf363cbea/forge/uv.lock",
+        "role": "dependency-lock",
+        "sha256": "bff495b34aaf5820bcce27535a5eaf404d10531404700b4d32c109f3b32ad04a"
+      },
+      {
+        "path": "blender/models/published/item-hatchet/e5699fb15e810961489721b9e710fd91313f8b332f9ed215962800dcf363cbea/forge/work/item-hatchet/item_model.blend",
+        "role": "model",
+        "sha256": "5b6a2021709616ecfd710bd8a0470a0a27ba93ca1fff0c142215abf4c068e5b5"
+      },
+      {
+        "path": "blender/models/published/item-hatchet/e5699fb15e810961489721b9e710fd91313f8b332f9ed215962800dcf363cbea/forge/work/item-hatchet/orient.json",
+        "role": "pose-config",
+        "sha256": "aeef265bc21b5e77e1e6d384f303a23882d41a5f63230d19d090b409c8a10e49"
+      },
+      {
+        "path": "blender/models/published/item-hatchet/e5699fb15e810961489721b9e710fd91313f8b332f9ed215962800dcf363cbea/forge/work/item-hatchet/orient_params.json",
+        "role": "pose-config",
+        "sha256": "29a864cca686edc2ab9fc36acf74e526bc9bbbab09ac4c231092c381ea52e62f"
+      }
+    ],
+    "method": "blender-bake",
+    "toolchain": [
+      {
+        "name": "blender",
+        "version": "4.2.3"
+      }
+    ]
+  },
+  "frames": [
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_0/s_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-hatchet-held-s-0",
+      "sha256": "dcaac02b235cc1edf34e8c3c878cd4b7803d89050b12894d719a7d6e5d207d58",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_1/s_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-hatchet-held-s-1",
+      "sha256": "8f827cfa94541824a3b9883adf246c23ed601402d545c02a562087d361cae03f",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_2/s_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-hatchet-held-s-2",
+      "sha256": "47b9146d1380df77b93c9d6500b3eb77958e28db5c8868e8deadd9da818320ae",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_3/s_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-hatchet-held-s-3",
+      "sha256": "e0561cc2fdcfa469b980024eae49719d218ebdfe8992b1b212805d40b119baae",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_4/s_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-hatchet-held-s-4",
+      "sha256": "a169202bd4599da579f3a297d9c5785d0be1d98c675c529d29edf59e891396c8",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_5/s_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-hatchet-held-s-5",
+      "sha256": "1e16e3da2037d62e0206794df32d8340099ca18a4fc22119e1a9a11e1580b2aa",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_6/s_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-hatchet-held-s-6",
+      "sha256": "18639c1a5125c853f38fc7667227eff3fe56bc671065854d46d2d9ba65c9e98f",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "s",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_7/s_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-hatchet-held-s-7",
+      "sha256": "d1992b781d2994fb4157b2db48a351faf431179b14c92891875a241b99c9ed9d",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_0/se_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-hatchet-held-se-0",
+      "sha256": "ea535317a24bd9a50cfd17a6eca4a70eb767973a46cdb63f38c70f07a25a700b",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_1/se_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-hatchet-held-se-1",
+      "sha256": "f3f3ab59f48f4ff7521bb4e5bae829dbfea03a436f580a6c0fb85ae7770976b2",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_2/se_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-hatchet-held-se-2",
+      "sha256": "f56c122d2c5b341f795efb437f1d4d6c8299a789399bd06087f58b2f9d07fe28",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_3/se_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-hatchet-held-se-3",
+      "sha256": "1bdcf5690e75eaeec7c1bfdb431ec5810db120ace4df0ef7a1b0dea19de58fa4",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_4/se_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-hatchet-held-se-4",
+      "sha256": "7c344127eb730c02b745ac714b1117a335b11a6771be9e62b48d89f800d7efae",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_5/se_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-hatchet-held-se-5",
+      "sha256": "0d1bc49f38b3cb428c99c784d0f75294e619260a2eabfd8bac5ea14cde57e6fd",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_6/se_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-hatchet-held-se-6",
+      "sha256": "66aeb8eb57ecb747f67142f687ee46354b4841adebd2d56d28547d66291c86f4",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_7/se_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-hatchet-held-se-7",
+      "sha256": "b3a908ac990664f1fd228b18afaab2fe31d048268244c2c7026dddfa0120e57b",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_0/e_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-hatchet-held-e-0",
+      "sha256": "6ddac4bd53b36dc27d7540948645ddf81473e59988015a567fa4d11ec0365e99",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_1/e_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-hatchet-held-e-1",
+      "sha256": "ad7c371f13aec1428fb37478a571402fc71574e2d643ec84eab82ac91beff74d",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_2/e_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-hatchet-held-e-2",
+      "sha256": "33de7978f3c2b3d70e4cce5d9a63e0d7aad8ddb96e7b4639df02af8a533e5abd",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_3/e_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-hatchet-held-e-3",
+      "sha256": "0355620c593e74999b461344d695b7f32691c3d1821c9c85809654b0723fc694",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_4/e_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-hatchet-held-e-4",
+      "sha256": "0dec488f8921a23139ce2007e99cc0dd80056dc57c04304095ad09f436dc1f4c",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_5/e_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-hatchet-held-e-5",
+      "sha256": "e84ff199251d155261f76acb93aa663da70d3ca14014dd5230014c15bce74b20",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_6/e_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-hatchet-held-e-6",
+      "sha256": "eef5733383894cc1696410da472eb0ed383cb840450421ea72fce1bb734a9e97",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "e",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_7/e_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-hatchet-held-e-7",
+      "sha256": "e3b82b8493758a571991cd0cf525078c9ff8f23a31950c741124804880a20e64",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_0/ne_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-hatchet-held-ne-0",
+      "sha256": "007ab7259616d1e65a14adccf1335400db4437de8adcbb9a1669ac0bf87a1c54",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_1/ne_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-hatchet-held-ne-1",
+      "sha256": "9e5812d62bb17885a5a79dab41dcde8a94fa6f16889cb6754934021ba51812c4",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_2/ne_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-hatchet-held-ne-2",
+      "sha256": "e420fd1f7433f0bbe55a7adf4366af67e3623bb22343ac1a7e912d3713383a7f",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_3/ne_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-hatchet-held-ne-3",
+      "sha256": "f9dced2893350c9ae6e9b76123412977214019b52fcf6bf2aceddd1aaa38222c",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_4/ne_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-hatchet-held-ne-4",
+      "sha256": "c74c7599fa1290012ff90d6635da4e25b7e9ef4b454a86ab9259202fd29c9b3c",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_5/ne_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-hatchet-held-ne-5",
+      "sha256": "c4b7208aee4b43678f767260f5d4f25c2b4c00e8341ed398331f5c23701e5431",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_6/ne_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-hatchet-held-ne-6",
+      "sha256": "74af882aba7389467e5cb8136af2785f819786da16f729549c1d77f90d4b39dc",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "ne",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_7/ne_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-hatchet-held-ne-7",
+      "sha256": "824f2a953e732c6c0ebfb1c0702bdab33dd2f0b3390d2d4179d2b3d4cb5168e6",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_0/n_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-hatchet-held-n-0",
+      "sha256": "92266e9a78706eafc23c7569a9a3b3248b36cc384f576349a105b89d71d948a5",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_1/n_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-hatchet-held-n-1",
+      "sha256": "3d3dbe241d3063ad7aed9b37de63e1c96a6d6cc4b78da2679f395a9bcedd5a7f",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_2/n_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-hatchet-held-n-2",
+      "sha256": "3ab233e675dbb0c9608b56ea6eea588afe0aa9d92f40dafb39a7b8cfa48d4228",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_3/n_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-hatchet-held-n-3",
+      "sha256": "e8ccffc249d5987de984028d698f8745c195d768585ecb6f56ac731ce4dc9929",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_4/n_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-hatchet-held-n-4",
+      "sha256": "63b7347d41996d948bc581070626993bce2995a8bf73e3cc026bd6b57a4d36b8",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_5/n_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-hatchet-held-n-5",
+      "sha256": "8a2ccb6d956e1d4da5a134a1c1587d94209b5631ac1eb4364589a2091de84c34",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_6/n_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-hatchet-held-n-6",
+      "sha256": "f0f2bc335385e5b8b28d6409dcb30ebf7ce0b751a1cc7e8368cef111712d564b",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "n",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_7/n_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-hatchet-held-n-7",
+      "sha256": "87a7959b0d0f719ce4713026b5fd1ac890143ed4d3a6c4591dcd89346512178c",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_0/nw_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-hatchet-held-nw-0",
+      "sha256": "79f13b663298adabde247576f4363e6f3825c0e40b5b55bc9ba549f26e5e5440",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_1/nw_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-hatchet-held-nw-1",
+      "sha256": "b6db56daf9ee1e73280b60f6d1df9b20eb2106ae9ce9dd18d79c5df987c27da5",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_2/nw_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-hatchet-held-nw-2",
+      "sha256": "4f524369524531838b738f4b13b69eb840c487d0a6d6cb1befdee1febb4fdfc2",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_3/nw_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-hatchet-held-nw-3",
+      "sha256": "81b37cdca4f73f787a421b89ba64018fdab06760804212f6dda724965e99f4b1",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_4/nw_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-hatchet-held-nw-4",
+      "sha256": "db1e7420cce8c222519f9251e1506b95bc0bc00491bb83b6015ce3dc74a320b4",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_5/nw_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-hatchet-held-nw-5",
+      "sha256": "206b2624255cd58b061f489d5736b0a7d26808af0f77cb47804d7507e6188c52",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_6/nw_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-hatchet-held-nw-6",
+      "sha256": "9d55312892cbd88a021db679e4613914d7688c50f38b4ff339701e9424b05f71",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "nw",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_7/nw_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-hatchet-held-nw-7",
+      "sha256": "e8fe5f0cdfb61b45e8f09b2aead9a7b6c0c4390932f73e7dc533b27b07e20023",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_0/w_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-hatchet-held-w-0",
+      "sha256": "57deb8491b172c71f54cf7f7486e08bf4e0c02472ed04e69ea5cea655b232f99",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_1/w_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-hatchet-held-w-1",
+      "sha256": "16217f18870fa110d2a935f42215a0bc416bc198e7b16b4e9c0f90bc3bc67c3d",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_2/w_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-hatchet-held-w-2",
+      "sha256": "91b135faa3fc9f5b887b16720c704b3afbadaec918545f900549ebb886c602eb",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_3/w_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-hatchet-held-w-3",
+      "sha256": "c974183c2eb9a2ac158b3a8fff5f4d940d783bef5e8ddbc46cf6d7aadcefe640",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_4/w_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-hatchet-held-w-4",
+      "sha256": "a23fa9636098637a5cba5409cce2258e0bf78f934afb64dc8c674a66ed4ffcd6",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_5/w_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-hatchet-held-w-5",
+      "sha256": "f29810dfecc953f5c3543f023bffc48611730697333cf9057409d173128ae87b",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_6/w_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-hatchet-held-w-6",
+      "sha256": "dc9a1f350d4e92fc4a7f4d405541eeed8fa9727e9c32e9a10188af003bf80226",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "w",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_7/w_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-hatchet-held-w-7",
+      "sha256": "2493d868eb174d94281b437492c19dccada70e90e7b18566be4f191f2443f8f2",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_0/sw_0.png",
+      "gripBucket": 0,
+      "gripDegrees": 0.0,
+      "id": "item-hatchet-held-sw-0",
+      "sha256": "6695b13d4fc949c4444cd6a2c7b7797f3274ff266ef010fec3a573cabde6a198",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_1/sw_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-hatchet-held-sw-1",
+      "sha256": "d7fdf9af63b20b2d79b3744ed9e5fadf5039373befd70049658f45ecdf100333",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_2/sw_0.png",
+      "gripBucket": 2,
+      "gripDegrees": 90.0,
+      "id": "item-hatchet-held-sw-2",
+      "sha256": "84823e74aa47ccf72bbd665593481c5faf2fb8db769b74dc0d1599da02288f6e",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_3/sw_0.png",
+      "gripBucket": 3,
+      "gripDegrees": 135.0,
+      "id": "item-hatchet-held-sw-3",
+      "sha256": "0b4ee26c915a31e93f938a43ee0dec0789eca152f01491f4da8a40c6c8d05dee",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_4/sw_0.png",
+      "gripBucket": 4,
+      "gripDegrees": 180.0,
+      "id": "item-hatchet-held-sw-4",
+      "sha256": "48c05cf687177fabb086189fb708f9a40f09d5b7cc0843f796be9068a2e153ad",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_5/sw_0.png",
+      "gripBucket": 5,
+      "gripDegrees": 225.0,
+      "id": "item-hatchet-held-sw-5",
+      "sha256": "e531bf433b4efa0e3829dfe7ed93d4760ac7f9de756a0ace5f218a727b8bd0d4",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_6/sw_0.png",
+      "gripBucket": 6,
+      "gripDegrees": 270.0,
+      "id": "item-hatchet-held-sw-6",
+      "sha256": "e79875cf7290710f3fef438f7d3d57676e4a1d9dcfcd360899377318a14f81b6",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "sw",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/held_7/sw_0.png",
+      "gripBucket": 7,
+      "gripDegrees": 315.0,
+      "id": "item-hatchet-held-sw-7",
+      "sha256": "4c68f907b80150151449c55b90eb77724c5e9a0cfef019da0e204941d684fafa",
+      "socket": "Socket_Hand.R",
+      "sockets": {
+        "Socket_Hand.R": {
+          "x": 32,
+          "y": 32
+        }
+      },
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "held"
+    },
+    {
+      "anchorPx": {
+        "x": 32,
+        "y": 32
+      },
+      "facing": "se",
+      "file": "exports/item-hatchet/e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067/pix/export/icon/se_0.png",
+      "gripBucket": 1,
+      "gripDegrees": 45.0,
+      "id": "item-hatchet-icon",
+      "sha256": "94769338330a55a606506d622a01d9376fdd93d3e3136256e1216a023c42dbc7",
+      "socket": null,
+      "sockets": {},
+      "sourceSize": {
+        "h": 64,
+        "w": 64
+      },
+      "view": "icon"
+    }
+  ],
+  "gripConvention": "clockwise-screen-from-up-after-facing-yaw",
+  "packet": "art/review/2026-11-05-item-hatchet",
+  "packetDigest": "e15899a884d4c9f49cb34ed87527b5065a556a275203c462c7fd786821ac0067",
+  "packetSha256": "2f43804eb35b8ae6df6435216792013d8e0a5480047f58ba3efa5b7f6305ce7f",
+  "schemaVersion": 1,
+  "scope": [
+    "held-item",
+    "icon"
+  ],
+  "socket": "Socket_Hand.R"
+}

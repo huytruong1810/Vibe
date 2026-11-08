@@ -74,6 +74,7 @@ export type HitEffectiveness = 'effective' | 'resisted' | 'neutral' | 'immune';
 
 export interface PresentationCue {
   readonly strength?: number;
+  readonly damage?: number;
   readonly sequence: number;
   readonly tick: number;
   readonly actor: number;

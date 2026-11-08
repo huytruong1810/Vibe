@@ -6,19 +6,16 @@ import { migrateSave } from '../src/domain/save-schema';
 
 const days = Number(process.env.SOAK_DAYS ?? 28),
   ticks = Math.ceil(days * CONFIG.daySeconds * CONFIG.tickRate),
-  worldMode = process.env.SOAK_WORLD === 'authored' ? 'authored' : 'procedural';
-const compiledWorld =
-  worldMode === 'authored'
-    ? CompiledWorldSchema.parse(
-        JSON.parse(await readFile('public/assets/generated/aqualia-region.json', 'utf8')),
-      )
-    : undefined;
+  worldMode = 'authored';
+const compiledWorld = CompiledWorldSchema.parse(
+  JSON.parse(await readFile('public/assets/generated/aqualia-region.json', 'utf8')),
+);
 const host = new SimulationHost(
     42,
     1,
     1000,
     'world:soak',
-    compiledWorld ? { worldSource: 'authored', compiledWorld } : undefined,
+    { worldSource: 'authored', compiledWorld },
   ),
   started = performance.now();
 let checkpoints = 0,
@@ -78,7 +75,7 @@ const snapshot = migrateSave(host.snapshot()),
     1,
     0,
     'world:restored',
-    compiledWorld ? { worldSource: 'authored', compiledWorld } : undefined,
+    { worldSource: 'authored', compiledWorld },
   );
 restored.restore(snapshot);
 restored.advance(30);

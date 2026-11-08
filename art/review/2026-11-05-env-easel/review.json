@@ -1,0 +1,90 @@
+{
+ "asset": "env:easel",
+ "footprint": [
+  1,
+  1
+ ],
+ "frames": [
+  {
+   "anchorPx": {
+    "x": 64,
+    "y": 144
+   },
+   "file": "frames/shadow.png",
+   "id": "env-easel-shadow",
+   "layer": "shadow",
+   "sha256": "eeec1238181a17d3769f7247aa58db3a91a870ab99813640055e784421508158",
+   "sourceSize": {
+    "h": 152,
+    "w": 128
+   }
+  },
+  {
+   "anchorPx": {
+    "x": 64,
+    "y": 144
+   },
+   "file": "frames/base.png",
+   "id": "env-easel-base",
+   "layer": "base",
+   "sha256": "d09dc31e0c2780b6ad45ab535e9f23d8c2a1612628cc8d6e40915fb70b1fc0ba",
+   "sourceSize": {
+    "h": 152,
+    "w": 128
+   }
+  }
+ ],
+ "kind": "environment-review",
+ "lightPools": [],
+ "qa": [
+  {
+   "check": "footprint",
+   "detail": "ground contact 0.82 tiles deep vs declared 1 (width is scaled to fit)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-11.4"
+  },
+  {
+   "check": "canvas",
+   "detail": "64x76, width multiple of 32",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec canvases.environment"
+  },
+  {
+   "check": "margins",
+   "detail": "smallest transparent margin 2px",
+   "hard": true,
+   "pass": true,
+   "rule": "render_spec marginsArtPixels"
+  },
+  {
+   "check": "paletteMembership",
+   "detail": "0 off-palette colours",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.1"
+  },
+  {
+   "check": "colorCount",
+   "detail": "14 colours (environment limit 32)",
+   "hard": true,
+   "pass": true,
+   "rule": "ART-4.4"
+  },
+  {
+   "check": "blocks",
+   "detail": "exports are exact 2x blocks",
+   "hard": true,
+   "pass": true,
+   "rule": "L1"
+  }
+ ],
+ "schemaVersion": 1,
+ "scope": [
+  "shadow",
+  "base"
+ ],
+ "sourceDigest": "be95a16f3599d4481c5067d41cea88683cdb96eb05ece2a3cd48baa854452db9",
+ "status": "candidate"
+}

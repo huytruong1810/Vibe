@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "doctrine": ["PRD-3", "PRD-7.4", "ART-3.1", "ART-3.4", "ART-6.3", "L3"],
+  "note": "Machine-readable reference-sheet templates for `forge.py concept` (local image generation, 2026-11-02). Fixed clauses (CAPS) encode PRD-3 ({stance} per skeleton template: quadruped and shelled \"standing on all four paws with its body horizontal, never sitting or standing upright\", winged \"in flight with both wings spread wide\", mushroom-biped \"standing upright on two legs\") so image-to-3D gets clean input and stay verbatim; winged species use `creature-winged-v1` and mushroom-biped species `creature-biped-v1` (C27, 2026-11-02: creature-v1's fixed tail clause added tails to tailless bipeds and its views drifted to three-quarter and top-down for round bodies), each with its pose guide in art/source/style/pose-guides/; {fields} come from the recipe's concept.fields. `views` lists the subjects left to right as the image shows them; `size` is the generation size in pixels (each view lands about 1100-1300 px tall, above the PRD-3.1 1024 px floor). Protected spec: change under DOC-5.",
+  "templates": {
+    "creature-v1": {
+      "kinds": ["creature"],
+      "views": ["front", "left", "back"],
+      "size": [2304, 1344],
+      "text": "Creature model sheet of {species}, a {element}-element {size} creature: {description}. Anatomy: {anatomy}. Colours: {colours}. THREE VIEWS IN A ROW OF THE SAME CREATURE IN THE SAME POSE AT THE SAME SCALE, WIDELY SPACED: FRONT VIEW, LEFT SIDE VIEW, BACK VIEW. IN EVERY VIEW THE CREATURE IS {stance}, ALL LIMBS VISIBLE AND SEPARATED FROM THE BODY, TAIL EXTENDED AWAY FROM THE BODY, MOUTH CLOSED. ORTHOGRAPHIC VIEW, NO PERSPECTIVE, EVEN SOFT LIGHTING FROM THE UPPER LEFT, NO CAST SHADOWS. PLAIN FLAT LIGHT GREY BACKGROUND, NO TEXT, NO LABELS."
+    },
+    "creature-winged-v1": {
+      "kinds": ["creature"],
+      "views": ["front", "left", "back"],
+      "size": [2304, 1344],
+      "text": "Creature model sheet of {species}, a {element}-element {size} flying creature: {description}. Anatomy: {anatomy}. Colours: {colours}. THREE VIEWS IN A ROW OF THE SAME CREATURE IN THE SAME POSE AT THE SAME SCALE, WIDELY SPACED: FRONT VIEW LOOKING AT ITS FACE, LEFT SIDE VIEW AS A TRUE PROFILE WITH THE HEAD POINTING LEFT, BACK VIEW FROM DIRECTLY BEHIND AT EYE LEVEL, NOT FROM ABOVE. IN EVERY VIEW THE CREATURE IS HOVERING IN LEVEL FLIGHT WITH ITS BODY HORIZONTAL AND ITS HEAD FORWARD, BOTH WINGS RAISED AND SPREAD WIDE, LEGS TUCKED UNDER THE BODY, MOUTH CLOSED. ORTHOGRAPHIC VIEW, NO PERSPECTIVE, EVEN SOFT LIGHTING FROM THE UPPER LEFT, NO CAST SHADOWS. PLAIN FLAT LIGHT GREY BACKGROUND, NO TEXT, NO LABELS."
+    },
+    "creature-biped-v1": {
+      "kinds": ["creature"],
+      "views": ["front", "left", "back"],
+      "size": [2304, 1344],
+      "text": "Creature model sheet of {species}, a {element}-element {size} creature: {description}. Anatomy: {anatomy}. Colours: {colours}. THREE VIEWS IN A ROW OF THE SAME CREATURE IN THE SAME POSE AT THE SAME SCALE, WIDELY SPACED: FRONT VIEW LOOKING AT ITS FACE, LEFT SIDE VIEW AS A TRUE PROFILE FACING LEFT, BACK VIEW FROM DIRECTLY BEHIND. IN EVERY VIEW THE CREATURE IS STANDING STILL AND UPRIGHT ON TWO LEGS, FEET SIDE BY SIDE, NOT WALKING, ARMS HANGING CLEAR OF THE BODY, MOUTH CLOSED. ONLY THE BODY PARTS NAMED IN THE ANATOMY, NOTHING ADDED. ORTHOGRAPHIC VIEW, NO PERSPECTIVE, EVEN SOFT LIGHTING FROM THE UPPER LEFT, NO CAST SHADOWS. PLAIN FLAT LIGHT GREY BACKGROUND, NO TEXT, NO LABELS."
+    },
+    "human-apose-v1": {
+      "kinds": ["human"],
+      "views": ["front", "back"],
+      "size": [1664, 1408],
+      "text": "Character model sheet of {name}, a {age}-year-old {role} from {home}, {personality}. Appearance: {appearance}. TWO VIEWS SIDE BY SIDE, WIDELY SPACED: FRONT VIEW ON THE LEFT, BACK VIEW ON THE RIGHT, SAME CHARACTER, SAME SCALE. FULL BODY FROM HEAD TO FEET, A-POSE WITH ARMS ANGLED ABOUT 45 DEGREES AWAY FROM THE BODY, PALMS FACING INWARD, LEGS SLIGHTLY APART. STYLIZED PROPORTIONS, ABOUT 5 HEADS TALL, ADULT, FRIENDLY READABLE FACE, NEUTRAL EXPRESSION. ORTHOGRAPHIC VIEW, NO PERSPECTIVE DISTORTION, EVEN SOFT LIGHTING FROM THE UPPER LEFT, NO CAST SHADOWS. HANDS EMPTY, NO PROPS, NO WEAPONS, NO TOOLS, NO BAGS HELD. PLAIN FLAT LIGHT GREY BACKGROUND, NO TEXT, NO LABELS, NO FRAME."
+    },
+    "prop-v1": {
+      "kinds": ["item"],
+      "views": ["threeQuarter"],
+      "size": [1024, 1024],
+      "text": "Single object reference: {object} used by {owner}: {materials}, {scale}. THREE-QUARTER VIEW, OBJECT ALONE, CENTERED, ENTIRE OBJECT VISIBLE. CHUNKY READABLE SHAPES, NO THIN WIRES, NO FINE FILIGREE. EVEN SOFT LIGHTING FROM THE UPPER LEFT, NO CAST SHADOWS, PLAIN FLAT LIGHT GREY BACKGROUND, NO HANDS, NO TEXT."
+    },
+    "building-v1": {
+      "kinds": ["environment"],
+      "views": ["front", "left"],
+      "size": [2048, 1152],
+      "text": "Building reference sheet: {building} in {region}: {description}. Materials and colours: {materials}. TWO VIEWS SIDE BY SIDE AT THE SAME SCALE, WIDELY SPACED: FRONT VIEW ON THE LEFT, LEFT SIDE VIEW ON THE RIGHT. WHOLE STRUCTURE VISIBLE FROM GROUND TO ROOF RIDGE, STANDING ON NOTHING. ORTHOGRAPHIC ELEVATIONS, NO PERSPECTIVE, EVEN SOFT LIGHTING FROM THE UPPER LEFT, NO CAST SHADOWS. CHUNKY READABLE SHAPES. PLAIN FLAT LIGHT GREY BACKGROUND, NO PEOPLE, NO TEXT."
+    }
+  }
+}

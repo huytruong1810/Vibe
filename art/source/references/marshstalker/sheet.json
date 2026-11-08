@@ -1,0 +1,22 @@
+{
+  "asset": "creature:marshstalker",
+  "kind": "creature",
+  "species": "marshstalker",
+  "stance": "quadruped",
+  "identitySources": [
+    "public/assets/portraits/creatures/portrait_marshstalker_128.png"
+  ],
+  "views": {
+    "front": "front.png",
+    "left": "left.png",
+    "back": "back.png"
+  },
+  "ramps": {
+    "hide": "moss",
+    "scutes": "teal",
+    "belly": "reed",
+    "lure": "water"
+  },
+  "generations": 2,
+  "ledger": "docs/team/comms/communicator/image-ledger.md#marshstalker"
+}
